@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -12,13 +13,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "equipment_calibration")
-public class EquipmentCalibration {
+public class EquipmentCalibration implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long code;
+	private Long id;
 
 	private String calibratedBy;
 
@@ -33,7 +34,7 @@ public class EquipmentCalibration {
 	private String testerName;
 
 	@ManyToOne
-	@JoinColumn(name = "equipmentCalibrationCode", nullable = false)
+	@JoinColumn(name = "equipmentCalibrationId", nullable = false)
 	private EquipmentCalibration equipmentCalibration;
 
 	@ManyToOne
@@ -41,15 +42,15 @@ public class EquipmentCalibration {
 	private Plant plant;
 
 	@ManyToOne
-	@JoinColumn(name = "supplierCode", nullable = false)
+	@JoinColumn(name = "supplierId", nullable = false)
 	private Supplier supplier;
 
-	public Long getCode() {
-		return code;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCode(Long code) {
-		this.code = code;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCalibratedBy() {

@@ -1,12 +1,14 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant")
-public class Plant {
+public class Plant implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 

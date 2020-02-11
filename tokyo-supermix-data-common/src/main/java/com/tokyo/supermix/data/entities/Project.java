@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "project")
-public class Project {
+public class Project implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,7 +27,7 @@ public class Project {
 	private Date dateAndTime;
 
 	@ManyToOne
-	@JoinColumn(name = "customerCode", nullable = false)
+	@JoinColumn(name = "customerId", nullable = false)
 	private Customer customer;
 
 	@ManyToOne

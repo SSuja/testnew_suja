@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -10,7 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_design")
-public class MixDesign {
+public class MixDesign implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,7 +29,7 @@ public class MixDesign {
 	private Plant plant;
 
 	@ManyToOne
-	@JoinColumn(name = "materialQuantityCode", nullable = false)
+	@JoinColumn(name = "materialQuantityId", nullable = false)
 	private MaterialQuantity materialQuantity;
 
 	public String getCode() {

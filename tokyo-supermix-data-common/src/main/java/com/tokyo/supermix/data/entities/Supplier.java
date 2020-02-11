@@ -1,6 +1,10 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -8,12 +12,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "suppiler")
-public class Supplier {
+public class Supplier implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String code;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	private String name;
 
@@ -26,15 +31,15 @@ public class Supplier {
 	private String email;
 
 	@ManyToOne
-	@JoinColumn(name = "suppilerCategoryCode", nullable = false)
+	@JoinColumn(name = "suppilerCategoryId", nullable = false)
 	private SupplierCategory suppilerCategory;
 
-	public String getCode() {
-		return code;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

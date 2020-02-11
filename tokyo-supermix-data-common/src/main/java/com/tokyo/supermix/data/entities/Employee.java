@@ -1,8 +1,11 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -11,12 +14,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "employee")
-public class Employee {
+public class Employee implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private String code;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
 	private String firstName;
 
@@ -33,15 +37,15 @@ public class Employee {
 	private Plant plant;
 
 	@ManyToMany
-	@JoinColumn(name = "designationCode", nullable = false)
+	@JoinColumn(name = "designationId", nullable = false)
 	private List<Designation> designation;
 
-	public String getCode() {
-		return code;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {

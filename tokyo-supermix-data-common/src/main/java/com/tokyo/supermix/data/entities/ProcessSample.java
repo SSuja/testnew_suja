@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "process_sample")
-public class ProcessSample {
+public class ProcessSample implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
