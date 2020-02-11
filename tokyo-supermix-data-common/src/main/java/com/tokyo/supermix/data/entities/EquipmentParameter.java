@@ -19,17 +19,13 @@ public class EquipmentParameter implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String shortFormat;
-
 	@ManyToOne
 	@JoinColumn(name = "parameterMasterId", nullable = false)
 	private ParameterMaster parameterMaster;
-
 	@ManyToOne
 	@JoinColumn(name = "equipmentId", nullable = false)
 	private Equipment equipment;
-
 	@ManyToOne
 	@JoinColumn(name = "unitId", nullable = false)
 	private Unit unit;

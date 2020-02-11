@@ -17,21 +17,15 @@ public class IncomingSample implements Serializable{
 
 	@Id
 	private String code;
-
 	private String vehicleNo;
-
 	private Date dateAndTime;
-
 	private Boolean status;
-
 	@ManyToOne
 	@JoinColumn(name = "materialCode", nullable = false)
 	private Material material;
-
 	@ManyToOne
 	@JoinColumn(name = "plantCode", nullable = false)
 	private Plant plant;
-
 	@ManyToOne
 	@JoinColumn(name = "supplierId", nullable = false)
 	private Supplier supplier;

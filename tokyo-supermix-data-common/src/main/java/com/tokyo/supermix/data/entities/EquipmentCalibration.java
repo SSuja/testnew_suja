@@ -20,27 +20,18 @@ public class EquipmentCalibration implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String calibratedBy;
-
 	private Date calibratedDate;
-
 	private String companyName;
-
 	private String description;
-
 	private Date dueDate;
-
 	private String testerName;
-
 	@ManyToOne
 	@JoinColumn(name = "equipmentCalibrationId", nullable = false)
 	private EquipmentCalibration equipmentCalibration;
-
 	@ManyToOne
 	@JoinColumn(name = "plantCode", nullable = false)
 	private Plant plant;
-
 	@ManyToOne
 	@JoinColumn(name = "supplierId", nullable = false)
 	private Supplier supplier;

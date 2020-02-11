@@ -17,17 +17,12 @@ public class FinishProductSample implements Serializable{
 
 	@Id
 	private String code;
-
 	private Date dateAndTime;
-
 	private String sampleSize;
-
 	private String workOrderNo;
-
 	@ManyToOne
 	@JoinColumn(name = "mixDesignCode", nullable = false)
 	private MixDesign mixDesign;
-
 	@ManyToOne
 	@JoinColumn(name = "projectCode", nullable = false)
 	private Project project;

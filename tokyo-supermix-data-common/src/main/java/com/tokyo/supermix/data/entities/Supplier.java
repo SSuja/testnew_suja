@@ -19,17 +19,11 @@ public class Supplier implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String name;
-
 	private String companyName;
-
 	private String address;
-
 	private String phoneNumber;
-
 	private String email;
-
 	@ManyToOne
 	@JoinColumn(name = "suppilerCategoryId", nullable = false)
 	private SupplierCategory suppilerCategory;

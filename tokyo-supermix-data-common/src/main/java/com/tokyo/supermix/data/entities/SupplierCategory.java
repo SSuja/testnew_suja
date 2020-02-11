@@ -17,9 +17,7 @@ public class SupplierCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String category;
-
 	private String description;
 
 	public Long getId() {

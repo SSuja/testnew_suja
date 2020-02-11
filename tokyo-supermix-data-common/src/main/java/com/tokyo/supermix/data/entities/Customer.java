@@ -17,13 +17,9 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String name;
-
 	private String phoneNumber;
-
 	private String address;
-
 	private String email;
 
 	public Long getId() {

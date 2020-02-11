@@ -11,21 +11,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "load_material")
-public class LoadMaterial implements Serializable{
+public class MaterialLoad implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String code;
-
 	private String vehicleNo;
-
 	private Date dateAndTime;
-
 	private String measurement;
-
 	private String quantity;
-
 	@ManyToOne
 	@JoinColumn(name = "incomingSampleCode", nullable = false)
 	private IncomingSample incomingSample;

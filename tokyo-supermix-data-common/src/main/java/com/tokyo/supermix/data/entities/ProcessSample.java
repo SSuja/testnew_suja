@@ -11,24 +11,19 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "process_sample")
-public class ProcessSample implements Serializable{
+public class ProcessSample implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String code;
-
 	private Date expireDate;
-
 	private Date dateAndTime;
-
 	private Boolean status;
-
 	private String totalLoad;
-
 	@ManyToOne
-	@JoinColumn(name = "loadMaterialCode", nullable = false)
-	private LoadMaterial loadMaterial;
+	@JoinColumn(name = "materialLoadCode", nullable = false)
+	private MaterialLoad materialLoad;
 
 	public String getCode() {
 		return code;
@@ -70,12 +65,12 @@ public class ProcessSample implements Serializable{
 		this.totalLoad = totalLoad;
 	}
 
-	public LoadMaterial getLoadMaterial() {
-		return loadMaterial;
+	public MaterialLoad getMaterialLoad() {
+		return materialLoad;
 	}
 
-	public void setLoadMaterial(LoadMaterial loadMaterial) {
-		this.loadMaterial = loadMaterial;
+	public void setMaterialLoad(MaterialLoad materialLoad) {
+		this.materialLoad = materialLoad;
 	}
 
 	public static long getSerialversionuid() {

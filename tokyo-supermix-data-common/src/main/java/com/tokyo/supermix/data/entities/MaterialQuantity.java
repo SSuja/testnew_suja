@@ -19,11 +19,8 @@ public class MaterialQuantity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String measurement;
-
 	private String quantity;
-
 	@ManyToOne
 	@JoinColumn(name = "processSampleCode", nullable = false)
 	private ProcessSample processSample;

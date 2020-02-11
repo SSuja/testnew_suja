@@ -17,17 +17,12 @@ public class MixDesign implements Serializable{
 
 	@Id
 	private String code;
-
 	private String actualGrade;
-
 	private String expectedGrade;
-
 	private Date dateAndTime;
-
 	@ManyToOne
 	@JoinColumn(name = "plantCode", nullable = false)
 	private Plant plant;
-
 	@ManyToOne
 	@JoinColumn(name = "materialQuantityId", nullable = false)
 	private MaterialQuantity materialQuantity;

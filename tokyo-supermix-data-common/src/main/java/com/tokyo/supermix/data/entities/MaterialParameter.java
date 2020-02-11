@@ -19,21 +19,15 @@ public class MaterialParameter implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String minimumValue;
-
 	private String maximumValue;
-
 	private String name;
-
 	@ManyToOne
 	@JoinColumn(name = "materialCode", nullable = false)
 	private Material material;
-
 	@ManyToOne
 	@JoinColumn(name = "parameterMasterId", nullable = false)
 	private ParameterMaster parameterMaster;
-
 	@ManyToOne
 	@JoinColumn(name = "unitId", nullable = false)
 	private Unit unit;

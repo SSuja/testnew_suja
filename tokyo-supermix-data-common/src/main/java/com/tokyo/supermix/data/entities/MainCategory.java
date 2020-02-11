@@ -19,9 +19,7 @@ public class MainCategory implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String name;
-
 	@ManyToOne
 	@JoinColumn(name = "materialTypeId", nullable = false)
 	private MaterialType materialType;

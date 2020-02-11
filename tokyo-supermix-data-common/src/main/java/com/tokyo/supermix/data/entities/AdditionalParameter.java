@@ -19,11 +19,8 @@ public class AdditionalParameter implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String name;
-
 	private String shortFormat;
-
 	@ManyToOne
 	@JoinColumn(name = "unitId", nullable = false)
 	private Unit unit;

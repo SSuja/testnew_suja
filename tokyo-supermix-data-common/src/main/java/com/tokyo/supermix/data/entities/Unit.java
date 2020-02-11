@@ -17,7 +17,6 @@ public class Unit implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String unit;
 
 	public Long getId() {

@@ -17,19 +17,13 @@ public class Project implements Serializable{
 
 	@Id
 	private String code;
-
 	private String name;
-
 	private String contactNumber;
-
 	private String contactPerson;
-
 	private Date dateAndTime;
-
 	@ManyToOne
 	@JoinColumn(name = "customerId", nullable = false)
 	private Customer customer;
-
 	@ManyToOne
 	@JoinColumn(name = "plantCode", nullable = false)
 	private Plant plant;

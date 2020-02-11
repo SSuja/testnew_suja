@@ -19,13 +19,9 @@ public class Pour implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String name;
-
 	private String number;
-
 	private String description;
-
 	@OneToOne
 	@JoinColumn(name = "finishProductSampleCode", nullable = false)
 	private FinishProductSample finishProductSample;

@@ -10,15 +10,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "material")
-public class Material implements Serializable{
+public class Material implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String code;
-
 	private String name;
-
 	@ManyToOne
 	@JoinColumn(name = "subCategoryId", nullable = false)
 	private SubCategory subCategory;

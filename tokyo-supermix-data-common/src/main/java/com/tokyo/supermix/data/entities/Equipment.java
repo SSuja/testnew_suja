@@ -17,13 +17,9 @@ public class Equipment implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String brandName;
-
 	private String description;
-
 	private String modelName;
-
 	private String name;
 
 	public Long getId() {

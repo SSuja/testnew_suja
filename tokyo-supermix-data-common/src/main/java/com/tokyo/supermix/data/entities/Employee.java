@@ -21,21 +21,14 @@ public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
 	private String firstName;
-
 	private String lastName;
-
 	private String email;
-
 	private String phoneNumber;
-
 	private String address;
-
 	@ManyToOne
 	@JoinColumn(name = "plantCode", nullable = false)
 	private Plant plant;
-
 	@ManyToMany
 	@JoinColumn(name = "designationId", nullable = false)
 	private List<Designation> designation;
