@@ -47,7 +47,7 @@ public class PlantController {
 		}
 		Plant plant = mapper.map(plantDto, Plant.class);
 		plantService.createPlant(plant);
-		return new ResponseEntity<>(new ApiResponse(RestApiResponseStatus.OK), HttpStatus.OK);
+		return new ResponseEntity<>(new ApiResponse(RestApiResponseStatus.OK,Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
 
 	}
 

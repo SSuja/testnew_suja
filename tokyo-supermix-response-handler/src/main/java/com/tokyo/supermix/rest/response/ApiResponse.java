@@ -4,48 +4,54 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 
 /**
  * 
- * This base class contains all the common attributes that any REST web service response should contain. All the REST
- * web service Response classes should extend this!
+ * This base class contains all the common attributes that any REST web service
+ * response should contain. All the REST web service Response classes should
+ * extend this!
  *
  */
 
 public class ApiResponse {
-public static final ApiResponse OK = new ApiResponse(RestApiResponseStatus.OK);
+	public static final ApiResponse OK = new ApiResponse(RestApiResponseStatus.OK);
 
-  public ApiResponse(RestApiResponseStatus restApiResponseStatus) {
-    this.status = restApiResponseStatus.getStatus();
-    this.statusCode = restApiResponseStatus.getCode();
-  }
+	public ApiResponse(RestApiResponseStatus restApiResponseStatus) {
+		this.status = restApiResponseStatus.getStatus();
+		this.statusCode = restApiResponseStatus.getCode();
+	}
 
-  private String status;
+	public ApiResponse(RestApiResponseStatus restApiResponseStatus, String message) {
+		this.status = restApiResponseStatus.getStatus();
+		this.statusCode = restApiResponseStatus.getCode();
+		this.message = message;
+	}
 
-  private Integer statusCode;
-  
-  private String message;
+	private String status;
 
-  public String getStatus() {
-    return status;
-  }
+	private Integer statusCode;
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
+	private String message;
 
-  public Integer getStatusCode() {
-    return statusCode;
-  }
+	public String getStatus() {
+		return status;
+	}
 
-  public void setStatusCode(Integer statusCode) {
-    this.statusCode = statusCode;
-  }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-public String getMessage() {
-	return message;
-}
+	public Integer getStatusCode() {
+		return statusCode;
+	}
 
-public void setMessage(String message) {
-	this.message = message;
-}
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
 
-  
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 }
