@@ -18,17 +18,12 @@ public class ApiResponse {
 		this.statusCode = restApiResponseStatus.getCode();
 	}
 
-	public ApiResponse(RestApiResponseStatus restApiResponseStatus, String message) {
-		this.status = restApiResponseStatus.getStatus();
-		this.statusCode = restApiResponseStatus.getCode();
-		this.message = message;
-	}
 
 	private String status;
 
 	private Integer statusCode;
 
-	private String message;
+
 
 	public String getStatus() {
 		return status;
@@ -46,12 +41,6 @@ public class ApiResponse {
 		this.statusCode = statusCode;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
+	
 
 }
