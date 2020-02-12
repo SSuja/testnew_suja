@@ -23,6 +23,10 @@ public final class EndpointURI {
   public static final String UPDATE_PLANT = PLANT + CODE;
   public static final String GET_PLANT_BY_CODE = PLANT + CODE;
 
+  /*
+   *  Supplier Category apis
+   */
+  public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "suppliercategory";
   
 
   private EndpointURI() {}
