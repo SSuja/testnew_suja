@@ -42,7 +42,7 @@ public class SupplierCategoryController {
       logger.debug("Supplier Category already exists: createSupplierCategory(), category: {}");
       return new ResponseEntity<>(new BasicResponse<>(
           new ValidationFailure(Constants.SUPPLIER_CATEGORY_NAME,
-              validationFailureStatusCodes.getPlantAlreadyExist()),
+              validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),
           RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.SUPPLIER_CATEGORY_EXIST),
           HttpStatus.BAD_REQUEST);
     }
