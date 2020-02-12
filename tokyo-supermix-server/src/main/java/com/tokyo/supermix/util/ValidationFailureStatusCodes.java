@@ -35,4 +35,28 @@ public class ValidationFailureStatusCodes {
 		this.plantAlreadyExist = plantAlreadyExist;
 	}
 
+	// for designation
+
+	@Value("${validation.designation.notExists}")
+	private String designationNotExist;
+
+	@Value("${validation.designation.alreadyExist}")
+	private String designationAlreadyExist;
+
+	public String getDesignationNotExist() {
+		return designationNotExist;
+	}
+
+	public void setDesignationNotExist(String designationNotExist) {
+		this.designationNotExist = designationNotExist;
+	}
+
+	public String getDesignationAlreadyExist() {
+		return designationAlreadyExist;
+	}
+
+	public void setDesignationAlreadyExist(String designationAlreadyExist) {
+		this.designationAlreadyExist = designationAlreadyExist;
+	}
+
 }
