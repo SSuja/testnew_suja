@@ -1,9 +1,12 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,25 +37,22 @@ public class DesignationController {
 	private Mapper mapper;
 
 	private static final Logger logger = Logger.getLogger(DesignationController.class);
-
-	//post API for designation
+// post API for designation
 	@PostMapping(value = EndpointURI.DESIGNATION)
-	public ResponseEntity<Object> createPlant(@RequestBody DesignationDto designationDto) {
-
+	public ResponseEntity<Object> createDesignation(@RequestBody DesignationDto designationDto) {
 		if (designationService.isDesignationAlreadyExist(designationDto.getName())) {
-			logger.debug("Designation already exists: createDesignation(), designationName: {}");
-			return new ResponseEntity<>(
-					new BasicResponse<>(
-							new ValidationFailure(Constants.DESIGNATION_NAME,
-									validationFailureStatusCodes.getDesignationAlreadyExist()),
-							RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.DESIGNATION_EXIST),
-					HttpStatus.BAD_REQUEST);
+			logger.debug("Designation already exists: createDesignation(), dsesignationName: {}");
+			return new ResponseEntity<>(new ContentResponse<>(" ",
+					new ValidationFailure(Constants.DESIGNATION_NAME,
+							validationFailureStatusCodes.getDesignationAlreadyExist()),
+					RestApiResponseStatus.VALIDATION_FAILURE), HttpStatus.BAD_REQUEST);
 		}
 
 		Designation designation = mapper.map(designationDto, Designation.class);
 		designationService.createDesignation(designation);
-		return new ResponseEntity<>(new ApiResponse(RestApiResponseStatus.OK, Constants.ADD_DESIGNATION_SUCCESS),
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_DESIGNATION_SUCCESS),
 				HttpStatus.OK);
 
 	}
-}
+	
+	}
