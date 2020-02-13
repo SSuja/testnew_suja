@@ -1,17 +1,22 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
 public class SupplierCategoryDto {
 
-	private Long code;
+	private Long id;
+	@NotNull
 	private String category;
+	@Null
 	private String description;
 
-	public Long getCode() {
-		return code;
+	public Long getId() {
+		return id;
 	}
 
-	public void setCode(Long code) {
-		this.code = code;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getCategory() {
