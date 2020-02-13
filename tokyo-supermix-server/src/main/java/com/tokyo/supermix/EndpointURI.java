@@ -13,6 +13,7 @@ public final class EndpointURI {
 
 	private static final String SLASH = "/";
 	private static final String CODE = "/{code}";
+	private static final String ID = "/{id}";
 	private static final String SEARCH = "/search";
 
 	/*
@@ -26,9 +27,8 @@ public final class EndpointURI {
 	 * Designation API
 	 */
 	public static final String DESIGNATION = BASE_API_PATH + "designation";
-	public static final String UPDATE_DESIGNATION = DESIGNATION + CODE;
-	public static final String GET_DESIGNATION_BY_ID = DESIGNATION + CODE;
-	public static final String GET_ALL_DESIGNATION = BASE_API_PATH + "designation";
+	public static final String GET_DESIGNATION_BY_ID = DESIGNATION + ID;
+
 
 	private EndpointURI() {
 
