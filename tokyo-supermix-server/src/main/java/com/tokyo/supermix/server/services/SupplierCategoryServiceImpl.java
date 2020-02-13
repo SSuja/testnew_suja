@@ -13,7 +13,7 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
   @Autowired
   private SupplierCategoryRepository supplierCategoryRepository;
 
-  @Override
+  @Transactional
   public SupplierCategory createSupplierCategory(SupplierCategory supplierCategory) {
     return supplierCategoryRepository.save(supplierCategory);
   }

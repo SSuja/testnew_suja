@@ -26,7 +26,7 @@ public final class EndpointURI {
   /*
    *  Supplier Category apis
    */
-  public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "suppliercategory";
+  public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
   
 
   private EndpointURI() {}
