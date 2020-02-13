@@ -12,7 +12,9 @@ public class Constants {
 	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
 	public static final String NO_DATA_FOUND = "No Data Found";
 
-	
+
+	public static final String PLANT = "plant";
+
 	//encaptulate constructor to restrict modification from outside
 	private Constants() {
 	}

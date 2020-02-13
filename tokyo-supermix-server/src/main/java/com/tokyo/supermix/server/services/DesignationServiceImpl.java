@@ -10,25 +10,19 @@ import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 
 @Service
-public class DesignationServiceImpl implements DesignationService{
-	
+public class DesignationServiceImpl implements DesignationService {
 
 	@Autowired
 	private DesignationRepository designationRepository;
 
-	//check is designation already exists 
 	@Transactional(readOnly = true)
 	public boolean isDesignationAlreadyExist(String designation) {
 		return designationRepository.existsByName(designation);
 	}
 
-	//get all designation list
 	@Transactional
 	public List<Designation> getAllDesignations() {
 		return designationRepository.findAll();
 	}
-
-
-
 
 }
