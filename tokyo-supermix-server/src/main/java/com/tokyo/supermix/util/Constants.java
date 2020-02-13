@@ -1,18 +1,22 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-	public static final String PLANT_NAME = "Plant Name";
-	
-	//for designation
-	public static final String DESIGNATION_NAME = "Designation Name";
+  public static final String PLANT_NAME = "Plant Name";
 
-	
-	//Success Messages
-	public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
-	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
+  // for designation
+  public static final String DESIGNATION_NAME = "Designation Name";
 
-	
-	//encaptulate constructor to restrict modification from outside
-	private Constants() {
-	}
+
+  // Success Messages
+  public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
+  public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
+
+  public static final String PLANT = "plant";
+  
+  public static final String DESIGNATION = "designation";
+
+
+
+  // encaptulate constructor to restrict modification from outside
+  private Constants() {}
 }
