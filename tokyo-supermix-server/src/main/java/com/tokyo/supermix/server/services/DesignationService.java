@@ -10,3 +10,4 @@ public interface DesignationService {
 	public boolean isDesignationAlreadyExist(String designation);
 
 }
+

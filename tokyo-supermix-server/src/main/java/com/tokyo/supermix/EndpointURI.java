@@ -13,7 +13,6 @@ public final class EndpointURI {
 
 	private static final String SLASH = "/";
 	private static final String CODE = "/{code}";
-	private static final String ID= "/{id}";
 	private static final String SEARCH = "/search";
 
 	/*
