@@ -14,7 +14,7 @@ import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
-import com.tokyo.supermix.rest.validation.ValidationFailure;
+import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationConstance;
@@ -40,16 +40,13 @@ public class DesignationController {
 		if (designationService.isDesignationExist(id)) {
 			logger.debug("Get Designation by id ");
 			Designation designation = designationService.getDesignationById(id);
-			return new ResponseEntity<>(mapper.map(designation, DesignationDto.class), HttpStatus.OK);
+			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
+					mapper.map(designation, DesignationDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
 		} else {
-			logger.debug("Designation not exists ");
+			logger.debug("Designation doesn't exist ");
 		}
-		return new ResponseEntity<>(
-				new BasicResponse<>(
-						new ValidationFailure(Constants.DESIGNATION_NAME,
-								validationFailureStatusCodes.getDesignationNotExist()),
-						RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.DESIGNATION_NOT_EXIST),
-				HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
+				ValidationConstance.DESIGNATION_NOT_EXIST), HttpStatus.BAD_REQUEST);
 	}
 
 }
