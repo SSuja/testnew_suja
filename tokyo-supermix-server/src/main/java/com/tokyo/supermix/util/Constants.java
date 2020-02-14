@@ -16,14 +16,12 @@ public class Constants {
    */
   public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category added Successfully";
 
-  // encaptulate constructor to restrict modification from outside
-  private Constants() {}
-
   // constants for validation key
   public static final String SUPPLIER_CATEGORY = "supplier-category";
 
   // constants for validation key
   public static final String PLANT = "plant";
-
-
+		
+	//encaptulate constructor to restrict modification from outside
+	private Constants() {}
 }

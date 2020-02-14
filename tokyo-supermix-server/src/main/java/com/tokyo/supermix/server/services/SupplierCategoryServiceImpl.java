@@ -22,5 +22,4 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
   public boolean isSupplierCategoryAlreadyExist(String supplierCategory) {
     return supplierCategoryRepository.existsByCategory(supplierCategory);
   }
-
 }
