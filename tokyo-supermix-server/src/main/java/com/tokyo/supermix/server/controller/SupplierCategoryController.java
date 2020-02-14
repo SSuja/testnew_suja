@@ -38,7 +38,7 @@ public class SupplierCategoryController {
   @PostMapping(value = EndpointURI.SUPPLIER_CATEGORY)
   public ResponseEntity<Object> createSupplierCategory(
       @Valid @RequestBody SupplierCategoryDto supplierCategoryDto) {
-    if (supplierCategoryService.isSupplierCategoryAlreadyExist(supplierCategoryDto.getCategory())) {
+    if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryDto.getCategory())) {
       logger.debug("Supplier Category already exists: createSupplierCategory(), category: {}");
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
           new ValidationFailure(Constants.SUPPLIER_CATEGORY_NAME,

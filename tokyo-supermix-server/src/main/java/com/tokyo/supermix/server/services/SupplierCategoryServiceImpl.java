@@ -19,7 +19,7 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isSupplierCategoryAlreadyExist(String supplierCategory) {
+  public boolean isSupplierCategoryExist(String supplierCategory) {
     return supplierCategoryRepository.existsByCategory(supplierCategory);
   }
 }
