@@ -8,7 +8,6 @@ public class SupplierCategoryDto {
   private Long id;
   @NotNull(message = "{supplierCategoryDto.category.blank}")
   private String category;
-  @Column(nullable = true)
   private String description;
 
   public Long getId() {
