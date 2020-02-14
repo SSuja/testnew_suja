@@ -9,7 +9,7 @@ public class Constants {
 	
 	//Success Messages
 	public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
-	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
+
 	public static final String NO_DATA_FOUND = "No Data Found";
 
 

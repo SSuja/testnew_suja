@@ -16,8 +16,8 @@ public class DesignationServiceImpl implements DesignationService {
 	private DesignationRepository designationRepository;
 
 	@Transactional(readOnly = true)
-	public boolean isDesignationAlreadyExist(String designation) {
-		return designationRepository.existsByName(designation);
+	public boolean isDesignationExist(Long id) {
+		return designationRepository.existsById(id);
 	}
 
 	@Transactional
