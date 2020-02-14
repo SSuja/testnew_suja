@@ -15,11 +15,6 @@ public class DesignationServiceImpl implements DesignationService {
 	@Autowired
 	private DesignationRepository designationRepository;
 
-	@Transactional(readOnly = true)
-	public boolean isDesignationExist(Long id) {
-		return designationRepository.existsById(id);
-	}
-
 	@Transactional
 	public List<Designation> getAllDesignations() {
 		return designationRepository.findAll();
