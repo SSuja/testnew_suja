@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,10 +34,10 @@ public class PlantController {
 	private static final Logger logger = Logger.getLogger(PlantController.class);
 
 	@PostMapping(value = EndpointURI.PLANT)
-	public ResponseEntity<Object> createPlant(@RequestBody PlantDto plantDto) {
+	public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
 		if (plantService.isPlantAlreadyExist(plantDto.getName())) {
 			logger.debug("Plant already exists: createPlant(), plantName: {}");
-				 return new ResponseEntity<>(new ContentResponse<>("",
+				 return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
 			          new ValidationFailure(Constants.PLANT_NAME, validationFailureStatusCodes.getPlantAlreadyExist()),
 			          RestApiResponseStatus.VALIDATION_FAILURE), HttpStatus.BAD_REQUEST);
 		}
