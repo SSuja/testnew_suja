@@ -1,6 +1,5 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 
 public class SupplierCategoryDto {

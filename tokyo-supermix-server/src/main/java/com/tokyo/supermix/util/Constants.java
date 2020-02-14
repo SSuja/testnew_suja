@@ -21,4 +21,9 @@ public class Constants {
 
   // constants for validation key
   public static final String SUPPLIER_CATEGORY = "supplier-category";
+
+  // constants for validation key
+  public static final String PLANT = "plant";
+
+
 }
