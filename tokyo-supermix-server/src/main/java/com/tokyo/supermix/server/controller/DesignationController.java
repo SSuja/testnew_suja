@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.DesignationDto;
 import com.tokyo.supermix.data.entities.Designation;
@@ -37,7 +36,7 @@ public class DesignationController {
   // post API for designation
   @PostMapping(value = EndpointURI.DESIGNATION)
   public ResponseEntity<Object> createDesignation(@RequestBody DesignationDto designationDto) {
-    if (designationService.isDesignationAlreadyExist(designationDto.getName())) {
+    if (designationService.isDesignationExist(designationDto.getName())) {
       logger.debug("Designation already exists: createDesignation(), dsesignationName: {}");
       return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
           new ValidationFailure(Constants.DESIGNATION_NAME,
