@@ -36,8 +36,8 @@ public class DesignationController {
 
 	// get designation by id
 	@GetMapping(value = EndpointURI.GET_DESIGNATION_BY_ID)
-	public ResponseEntity<Object> getDesignationById(@PathVariable(Constants.DESIGNATION_PATH_VARIABLE) Long id) {
-		if (designationService.isDesignationIdAlreadyExist(id)) {
+	public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
+		if (designationService.isDesignationExist(id)) {
 			logger.debug("Get Designation by id ");
 			Designation designation = designationService.getDesignationById(id);
 			return new ResponseEntity<>(mapper.map(designation, DesignationDto.class), HttpStatus.OK);

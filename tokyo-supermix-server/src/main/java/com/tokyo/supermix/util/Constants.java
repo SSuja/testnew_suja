@@ -11,7 +11,6 @@ public class Constants {
 	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
 	public static final String NO_DATA_FOUND = "No Data Found";
 
-	public static final String DESIGNATION_PATH_VARIABLE = "id";
 
 	// constants for validation key
 	public static final String PLANT = "plant";
