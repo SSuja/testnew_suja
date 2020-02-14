@@ -34,8 +34,8 @@ public class DesignationController {
 
 	// delete api for designation
 	@DeleteMapping(value = EndpointURI.DELETE_DESIGNATION_BY_ID)
-	public ResponseEntity<Object> deleteDesignation(@PathVariable(Constants.DESIGNATION_PATH_VARIABLE) Long id) {
-		if (designationService.isDesignationIdAlreadyExist(id)) {
+	public ResponseEntity<Object> deleteDesignation(@PathVariable Long id) {
+		if (designationService.isDesignationExist(id)) {
 			designationService.deleteDesignation(id);
 			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.DESIGNATION_DELETED),
 					HttpStatus.OK);

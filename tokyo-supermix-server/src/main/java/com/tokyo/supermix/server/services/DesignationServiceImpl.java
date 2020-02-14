@@ -13,7 +13,7 @@ public class DesignationServiceImpl implements DesignationService {
 	private DesignationRepository designationRepository;
 
 	@Transactional(readOnly = true)
-	public boolean isDesignationIdAlreadyExist(Long id) {
+	public boolean isDesignationExist(Long id) {
 		return designationRepository.existsById(id);
 	}
 
