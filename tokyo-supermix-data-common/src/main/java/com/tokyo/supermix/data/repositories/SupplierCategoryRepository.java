@@ -1,5 +1,9 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface SupplierCategoryRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.tokyo.supermix.data.entities.SupplierCategory;
+
+public interface SupplierCategoryRepository extends JpaRepository<SupplierCategory, Long> {
+  boolean existsByCategory(String category);
 }
