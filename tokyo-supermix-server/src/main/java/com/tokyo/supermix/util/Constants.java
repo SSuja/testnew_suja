@@ -1,27 +1,34 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-  public static final String PLANT_NAME = "Plant Name";
+	public static final String PLANT_NAME = "Plant Name";
 
-  // Success Messages
-  public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
+	// for designation
+	public static final String DESIGNATION_NAME = "Designation Name";
 
-  /*
-   * Supplier Category
-   */
-  public static final String SUPPLIER_CATEGORY_NAME = "Supplier Category";
+	// Success Messages
+	public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
+	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
 
-  /*
-   * Success Messages for Supplier Category
-   */
-  public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category added Successfully";
+	// constants for validation key
+	public static final String PLANT = "plant";
 
-  // constants for validation key
-  public static final String SUPPLIER_CATEGORY = "supplier-category";
+	public static final String DESIGNATION = "designation";
 
-  // constants for validation key
-  public static final String PLANT = "plant";
-		
-	//encaptulate constructor to restrict modification from outside
-	private Constants() {}
+	/*
+	 * Supplier Category
+	 */
+	public static final String SUPPLIER_CATEGORY_NAME = "Supplier Category";
+
+	/*
+	 * Success Messages for Supplier Category
+	 */
+	public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category added Successfully";
+
+	// constants for validation key
+	public static final String SUPPLIER_CATEGORY = "supplier-category";
+
+	// encaptulate constructor to restrict modification from outside
+	private Constants() {
+	}
 }
