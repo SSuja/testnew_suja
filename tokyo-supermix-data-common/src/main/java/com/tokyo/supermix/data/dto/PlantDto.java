@@ -1,8 +1,11 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class PlantDto {
 	
 	private String code;
+	@NotNull(message = "{plantDto.name.blank}")
 	private String name;
 	private String address;
 	private String phoneNumber;

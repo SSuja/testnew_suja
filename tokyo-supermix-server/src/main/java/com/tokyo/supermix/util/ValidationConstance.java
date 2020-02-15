@@ -6,6 +6,10 @@ public class ValidationConstance {
 	//for designation
 	public static final String DESIGNATION_EXIST = "Designation already exist";
 
+	/*
+	 * Supplier Category
+	 */
+	public static final String SUPPLIER_CATEGORY_EXIST = "Category already exist";
 
 	private ValidationConstance() {
 	}
