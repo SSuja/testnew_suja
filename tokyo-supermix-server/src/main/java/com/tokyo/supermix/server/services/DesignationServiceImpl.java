@@ -1,9 +1,9 @@
 package com.tokyo.supermix.server.services;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
@@ -14,7 +14,7 @@ public class DesignationServiceImpl implements DesignationService {
 	@Autowired
 	private DesignationRepository designationRepository;
 
-	@Override
+	@Transactional(readOnly = true)
 	public boolean isDesignationExist(Long id) {
 		return designationRepository.existsById(id);
 	}
@@ -22,6 +22,22 @@ public class DesignationServiceImpl implements DesignationService {
 	@Transactional()
 	public Designation getDesignationById(Long id) {
 		return designationRepository.findById(id).get();
+	}
+
+	@Transactional(propagation = Propagation.NEVER)
+	public void deleteDesignation(Long id) {
+		designationRepository.deleteById(id);
+	}
+
+	@Transactional
+	public void createDesignation(Designation designation) {
+		designationRepository.save(designation);
+	}
+
+	@Transactional(readOnly = true)
+	public boolean isDesignationExist(String designation) {
+		return designationRepository.existsByName(designation);
+
 	}
 
 }

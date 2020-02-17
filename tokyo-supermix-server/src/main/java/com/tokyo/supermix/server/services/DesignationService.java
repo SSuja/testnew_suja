@@ -8,4 +8,10 @@ public interface DesignationService {
 
 	public Designation getDesignationById(Long id);
 
+	public void deleteDesignation(Long id);
+
+	public void createDesignation(Designation designation);
+
+	public boolean isDesignationExist(String designation);
+
 }
