@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @RestController
 public class DesignationController {
+
 	@Autowired
 	DesignationService designationService;
 
@@ -35,6 +37,19 @@ public class DesignationController {
 	private Mapper mapper;
 
 	private static final Logger logger = Logger.getLogger(DesignationController.class);
+
+	// get designation by id
+	@GetMapping(value = EndpointURI.GET_DESIGNATION_BY_ID)
+	public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
+		if (designationService.isDesignationExist(id)) {
+			logger.debug("Get Designation by id ");
+			Designation designation = designationService.getDesignationById(id);
+			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
+					mapper.map(designation, DesignationDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
+				ValidationConstance.DESIGNATION_NOT_EXIST), HttpStatus.BAD_REQUEST);
+	}
 
 	// delete api for designation
 	@DeleteMapping(value = EndpointURI.DELETE_DESIGNATION_BY_ID)

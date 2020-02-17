@@ -10,12 +10,18 @@ import com.tokyo.supermix.data.repositories.DesignationRepository;
 
 @Service
 public class DesignationServiceImpl implements DesignationService {
+
 	@Autowired
 	private DesignationRepository designationRepository;
 
 	@Transactional(readOnly = true)
 	public boolean isDesignationExist(Long id) {
 		return designationRepository.existsById(id);
+	}
+
+	@Transactional()
+	public Designation getDesignationById(Long id) {
+		return designationRepository.findById(id).get();
 	}
 
 	@Transactional(propagation = Propagation.NEVER)
