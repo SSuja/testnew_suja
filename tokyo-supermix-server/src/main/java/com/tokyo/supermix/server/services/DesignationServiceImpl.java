@@ -26,6 +26,11 @@ public class DesignationServiceImpl implements DesignationService {
 		return designationRepository.existsById(id);
 	}
 
+	@Transactional()
+	public Designation getDesignationById(Long id) {
+		return designationRepository.findById(id).get();
+	}
+
 	@Transactional(propagation = Propagation.NEVER)
 	public void deleteDesignation(Long id) {
 		designationRepository.deleteById(id);

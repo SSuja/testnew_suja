@@ -8,15 +8,14 @@ public class Constants {
 
 	public static final String NO_DATA_FOUND = "No Data Found";
 
+	public static final String PLANT_DELETED = "Plant Successfully Deleted";
 	// constants for validation key
 	public static final String PLANT = "plant";
 
-	public static final String PLANT_DELETED = "Plant Successfully Deleted";
-
-	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
+	// Designations
 
 	public static final String DESIGNATION_NAME = "Designation Name";
-
+	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
 	public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
 
 	public static final String DESIGNATION = "designation";

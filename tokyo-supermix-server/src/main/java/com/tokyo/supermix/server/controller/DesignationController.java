@@ -54,6 +54,19 @@ public class DesignationController {
 		return new ResponseEntity<>(new ListContentResponse<>(mapper.map(designationList, DesignationDto.class)),
 				HttpStatus.OK);
 	}
+	// get designation by id
+	@GetMapping(value = EndpointURI.GET_DESIGNATION_BY_ID)
+	public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
+		if (designationService.isDesignationExist(id)) {
+			logger.debug("Get Designation by id ");
+			Designation designation = designationService.getDesignationById(id);
+			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
+					mapper.map(designation, DesignationDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
+				ValidationConstance.DESIGNATION_NOT_EXIST), HttpStatus.BAD_REQUEST);
+
+	}
 
 	// delete api for designation
 	@DeleteMapping(value = EndpointURI.DELETE_DESIGNATION_BY_ID)
