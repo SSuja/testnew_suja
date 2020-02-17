@@ -6,7 +6,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tokyo.supermix.EndpointURI;
@@ -15,9 +19,12 @@ import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
+import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ListContentResponse;
+import com.tokyo.supermix.rest.validation.ValidationFailure;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @RestController
@@ -46,6 +53,41 @@ public class DesignationController {
 
 		return new ResponseEntity<>(new ListContentResponse<>(mapper.map(designationList, DesignationDto.class)),
 				HttpStatus.OK);
+	}
+
+	// delete api for designation
+	@DeleteMapping(value = EndpointURI.DELETE_DESIGNATION_BY_ID)
+	public ResponseEntity<Object> deleteDesignation(@PathVariable Long id) {
+		if (designationService.isDesignationExist(id)) {
+			designationService.deleteDesignation(id);
+			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.DESIGNATION_DELETED),
+					HttpStatus.OK);
+		}
+		return new ResponseEntity<>(
+				new BasicResponse<>(
+						new ValidationFailure(Constants.DESIGNATION_NAME,
+								validationFailureStatusCodes.getDesignationNotExist()),
+						RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.DESIGNATION_NOT_EXIST),
+				HttpStatus.BAD_REQUEST);
+
+	}
+
+	// post API for designation
+	@PostMapping(value = EndpointURI.DESIGNATION)
+	public ResponseEntity<Object> createDesignation(@RequestBody DesignationDto designationDto) {
+		if (designationService.isDesignationExist(designationDto.getName())) {
+			logger.debug("Designation already exists: createDesignation(), dsesignationName: {}");
+			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
+					new ValidationFailure(Constants.DESIGNATION_NAME,
+							validationFailureStatusCodes.getDesignationAlreadyExist()),
+					RestApiResponseStatus.VALIDATION_FAILURE), HttpStatus.BAD_REQUEST);
+		}
+
+		Designation designation = mapper.map(designationDto, Designation.class);
+		designationService.createDesignation(designation);
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_DESIGNATION_SUCCESS),
+				HttpStatus.OK);
+
 	}
 
 }
