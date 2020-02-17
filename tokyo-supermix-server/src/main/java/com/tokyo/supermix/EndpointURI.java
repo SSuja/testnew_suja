@@ -13,6 +13,9 @@ public final class EndpointURI {
 
 	private static final String SLASH = "/";
 	private static final String CODE = "/{code}";
+
+	private static final String ID = "/{id}";
+
 	private static final String SEARCH = "/search";
 
 	/*
@@ -25,12 +28,14 @@ public final class EndpointURI {
 	/*
 	 * Designation API
 	 */
+
 	public static final String DESIGNATION = BASE_API_PATH + "designation";
-  /*
-   *  Supplier Category apis
-   */
-  public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
-  
+	public static final String DELETE_DESIGNATION_BY_ID = DESIGNATION + ID;
+
+	/*
+	 * Supplier Category apis
+	 */
+	public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
 
 	private EndpointURI() {
 	}
