@@ -7,7 +7,7 @@ public class PlantDto {
 	
 	private String code;
 	@NotNull(message = "{plantDto.name.null}")
-	@NotEmpty(message = "{plantDto.name.blank}")
+	@NotEmpty(message = "{plantDto.name.empty}")
 	private String name;
 	private String address;
 	private String phoneNumber;
