@@ -1,14 +1,17 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-	public static final String PLANT_NAME = "Plant Name";
-
+	public static final String PLANT_NAME = "PlantName";
+	public static final String PLANTS = "plants";
+	
 	// Success Messages
 	public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
 	public static final String NO_DATA_FOUND = "No Data Found";
 	public static final String PLANT_DELETED = "Plant Successfully Deleted";
 	// constants for validation key
 	public static final String PLANT = "plant";
+	
+  
 
 	// Designations
 	public static final String DESIGNATION_NAME = "Designation Name";
