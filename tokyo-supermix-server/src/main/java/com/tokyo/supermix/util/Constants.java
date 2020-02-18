@@ -19,6 +19,7 @@ public class Constants {
 	public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
 
 	public static final String DESIGNATION = "designation";
+	public static final String DESIGNATIONS = "designations";
 
 	/*
 	 * Supplier Category

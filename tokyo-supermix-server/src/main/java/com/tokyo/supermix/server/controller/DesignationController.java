@@ -42,18 +42,15 @@ public class DesignationController {
 	private static final Logger logger = Logger.getLogger(DesignationController.class);
 
 	// get all designations
-	@GetMapping(value = EndpointURI.GET_ALL_DESIGNATIONS)
+	@GetMapping(value = EndpointURI.DESIGNATIONS)
 	public ResponseEntity<Object> getAllDesignations() {
 		List<Designation> designationList = designationService.getAllDesignations();
-		if (designationList.isEmpty()) {
-			logger.debug("Designation is Empty");
-			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.NO_DATA_FOUND),
-					HttpStatus.OK);
-		}
-
-		return new ResponseEntity<>(new ListContentResponse<>(mapper.map(designationList, DesignationDto.class)),
+		List<DesignationDto> designationDtoList = mapper.map(designationList, DesignationDto.class);
+		return new ResponseEntity<>(
+				new ContentResponse<>(Constants.DESIGNATIONS, designationDtoList, RestApiResponseStatus.OK), null,
 				HttpStatus.OK);
 	}
+
 	// get designation by id
 	@GetMapping(value = EndpointURI.GET_DESIGNATION_BY_ID)
 	public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
