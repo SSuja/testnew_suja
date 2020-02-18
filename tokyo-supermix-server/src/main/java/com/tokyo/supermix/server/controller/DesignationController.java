@@ -23,7 +23,6 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.validation.ValidationFailure;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
@@ -108,19 +107,18 @@ public class DesignationController {
 	public ResponseEntity<Object> updateDesignation(@Valid @RequestBody DesignationDto designationDto) {
 
 		if (designationService.isDesignationExist(designationDto.getId())) {
-			Designation designationObj = designationService.getDesignationById(designationDto.getId());
-
-			if (designationObj.getName().equalsIgnoreCase(designationDto.getName())) {
-				Designation designation = mapper.map(designationDto, Designation.class);
-				designationService.updateDesignation(designation);
-				return new ResponseEntity<>(
-						new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_DESIGNATION_SUCCESS),
-						HttpStatus.OK);
-			}
+			Designation designation = mapper.map(designationDto, Designation.class);
+			designationService.updateDesignation(designation);
+			return new ResponseEntity<>(
+					new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_DESIGNATION_SUCCESS), HttpStatus.OK);
 
 		}
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION_NAME,
-				validationFailureStatusCodes.getDesignationAlreadyExist()), HttpStatus.BAD_REQUEST);
 
+		logger.debug(" Designation already exists: createDesignation(), designationName: {}");
+		return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
+				new ValidationFailure(Constants.DESIGNATION_NAME,
+						validationFailureStatusCodes.getDesignationAlreadyExist()),
+				RestApiResponseStatus.VALIDATION_FAILURE), HttpStatus.BAD_REQUEST);
 	}
+
 }
