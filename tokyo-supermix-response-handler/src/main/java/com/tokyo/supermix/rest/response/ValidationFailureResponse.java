@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
-
+import com.tokyo.supermix.rest.validation.ValidationFailure;
 
 public class ValidationFailureResponse extends ApiResponse {
 
-  public ValidationFailureResponse(List<ValidationFailure> validationFailures) {
+  public ValidationFailureResponse(List<ValidationFailure> validationErrors) {
     super(RestApiResponseStatus.VALIDATION_FAILURE);
-    this.validationFailures = validationFailures;
+    this.validationFailures = validationErrors;
   }
 
   public ValidationFailureResponse(String field, String code) {
