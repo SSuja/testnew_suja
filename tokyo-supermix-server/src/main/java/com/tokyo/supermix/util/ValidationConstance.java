@@ -11,6 +11,7 @@ public class ValidationConstance {
 	 * Supplier Category
 	 */
 	public static final String SUPPLIER_CATEGORY_EXIST = "Category already exist";
+	public static final String SUPPLIER_CATEGORY_NOT_EXIST = "Supplier Category does not Exist";
 
 	private ValidationConstance() {
 	}

@@ -22,4 +22,14 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
   public boolean isSupplierCategoryExist(String supplierCategory) {
     return supplierCategoryRepository.existsByCategory(supplierCategory);
   }
+
+  @Transactional
+  public SupplierCategory getSupplierCategoryById(Long id) {
+    return supplierCategoryRepository.findById(id).get();
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isSupplierCategoryExist(Long id) {
+    return supplierCategoryRepository.existsById(id);
+  }
 }
