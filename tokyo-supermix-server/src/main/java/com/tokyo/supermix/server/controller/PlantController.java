@@ -16,6 +16,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailure;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -37,9 +38,9 @@ public class PlantController {
 	public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
 		if (plantService.isPlantAlreadyExist(plantDto.getName())) {
 			logger.debug("Plant already exists: createPlant(), plantName: {}");
-				 return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
-			          new ValidationFailure(Constants.PLANT_NAME, validationFailureStatusCodes.getPlantAlreadyExist()),
-			          RestApiResponseStatus.VALIDATION_FAILURE), HttpStatus.BAD_REQUEST);
+				 return new ResponseEntity<>(
+			          new ValidationFailureResponse(Constants.PLANT_NAME, validationFailureStatusCodes.getPlantAlreadyExist()),
+			          HttpStatus.BAD_REQUEST);
 		}
 		Plant plant = mapper.map(plantDto, Plant.class);
 		plantService.createPlant(plant);
