@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
@@ -56,6 +57,31 @@ public class PlantController {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.PLANTS, plantDtoList, RestApiResponseStatus.OK), null,
         HttpStatus.OK);
+  }
+  
+  @PutMapping(value = EndpointURI.UPDATE_PLANT)
+  public ResponseEntity<Object> updatePlant(@Valid @RequestBody PlantDto plantDto) {
+    if (plantService.isPlantExist(plantDto.getCode())) {
+      Plant plantData = plantService.getByCode(plantDto.getCode());
+      if (plantData.getName().equalsIgnoreCase(plantDto.getName())) {
+        Plant plant = mapper.map(plantDto, Plant.class);
+        plantService.updatePlant(plant);
+        return new ResponseEntity<>(
+            new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_SUCCESS),
+            HttpStatus.OK);
+      }
+      if (plantService.isPlantAlreadyExist(plantDto.getName())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
+            validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      Plant plant = mapper.map(plantDto, Plant.class);
+      plantService.updatePlant(plant);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
 }

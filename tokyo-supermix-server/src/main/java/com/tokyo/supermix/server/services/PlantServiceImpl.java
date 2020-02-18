@@ -29,4 +29,20 @@ public class PlantServiceImpl implements PlantService {
     return plantRepository.findAll();
   }
 
+  @Transactional(readOnly = true)
+  public boolean isPlantExist(String code) {
+    return plantRepository.existsByCode(code);
+  }
+
+  @Override
+  public Plant updatePlant(Plant plant) {
+    return plantRepository.save(plant);
+  }
+
+  @Transactional(readOnly = true)
+  public Plant getByCode(String code) {
+    return plantRepository.findPlantByCode(code);
+  }
+
+
 }
