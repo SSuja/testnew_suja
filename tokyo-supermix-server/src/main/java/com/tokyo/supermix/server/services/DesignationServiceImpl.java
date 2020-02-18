@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -13,6 +15,11 @@ public class DesignationServiceImpl implements DesignationService {
 
 	@Autowired
 	private DesignationRepository designationRepository;
+
+	@Transactional
+	public List<Designation> getAllDesignations() {
+		return designationRepository.findAll();
+	}
 
 	@Transactional(readOnly = true)
 	public boolean isDesignationExist(Long id) {

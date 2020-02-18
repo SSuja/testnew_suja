@@ -6,7 +6,9 @@ public class Constants {
 	
 	// Success Messages
 	public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
+
 	public static final String NO_DATA_FOUND = "No Data Found";
+
 	public static final String PLANT_DELETED = "Plant Successfully Deleted";
 	// constants for validation key
 	public static final String PLANT = "plant";
@@ -14,10 +16,13 @@ public class Constants {
   
 
 	// Designations
+
 	public static final String DESIGNATION_NAME = "Designation Name";
 	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
 	public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
+
 	public static final String DESIGNATION = "designation";
+	public static final String DESIGNATIONS = "designations";
 
 	/*
 	 * Supplier Category
@@ -33,6 +38,7 @@ public class Constants {
 	public static final String SUPPLIER_CATEGORY = "supplier-category";
 
 	// encaptulate constructor to restrict modification from outside
+
 	private Constants() {
 
 	}

@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,16 @@ public class DesignationController {
 
 	private static final Logger logger = Logger.getLogger(DesignationController.class);
 
+	// get all designations
+	@GetMapping(value = EndpointURI.DESIGNATIONS)
+	public ResponseEntity<Object> getAllDesignations() {
+		List<Designation> designationList = designationService.getAllDesignations();
+		List<DesignationDto> designationDtoList = mapper.map(designationList, DesignationDto.class);
+		return new ResponseEntity<>(
+				new ContentResponse<>(Constants.DESIGNATIONS, designationDtoList, RestApiResponseStatus.OK), null,
+				HttpStatus.OK);
+	}
+
 	// get designation by id
 	@GetMapping(value = EndpointURI.GET_DESIGNATION_BY_ID)
 	public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
@@ -49,6 +61,7 @@ public class DesignationController {
 		}
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
 				ValidationConstance.DESIGNATION_NOT_EXIST), HttpStatus.BAD_REQUEST);
+
 	}
 
 	// delete api for designation

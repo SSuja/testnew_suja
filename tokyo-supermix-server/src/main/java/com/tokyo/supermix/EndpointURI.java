@@ -28,7 +28,11 @@ public final class EndpointURI {
 	 * Designation API
 	 */
 	public static final String DESIGNATION = BASE_API_PATH + "designation";
+
+	public static final String DESIGNATIONS = BASE_API_PATH + "designations";
+
 	public static final String GET_DESIGNATION_BY_ID = DESIGNATION + ID;
+
 	public static final String DELETE_DESIGNATION_BY_ID = DESIGNATION + ID;
 
 	/*
@@ -37,5 +41,6 @@ public final class EndpointURI {
 	public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
 
 	private EndpointURI() {
+
 	}
 }
