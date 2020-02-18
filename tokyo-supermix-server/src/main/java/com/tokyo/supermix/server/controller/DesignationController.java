@@ -20,7 +20,6 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
-import com.tokyo.supermix.rest.response.ListContentResponse;
 import com.tokyo.supermix.rest.validation.ValidationFailure;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
