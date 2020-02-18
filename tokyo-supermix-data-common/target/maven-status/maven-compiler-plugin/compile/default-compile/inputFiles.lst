@@ -20,6 +20,7 @@ D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supe
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\IncomingSample.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\MaterialLoad.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\MixDesign.java
+D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\dto\DesignationDto.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\repositories\SupplierRepository.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\MaterialType.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\Customer.java
@@ -31,6 +32,7 @@ D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supe
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\repositories\EmployeeRepository.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\TestParameter.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\dto\PlantDto.java
+D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\dto\SupplierCategoryDto.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\AdditionalParameter.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\entities\ProcessSample.java
 D:\Training\TK\Workspace\TokyoGIT-development\tokyo-supermix-back-end\tokyo-supermix-data-common\src\main\java\com\tokyo\supermix\data\repositories\DesignationRepository.java
