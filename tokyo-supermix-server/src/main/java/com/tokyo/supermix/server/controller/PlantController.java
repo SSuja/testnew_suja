@@ -23,29 +23,29 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @RestController
 public class PlantController {
-	@Autowired
-	PlantService plantService;
-	
-	@Autowired
-	ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  PlantService plantService;
 
-	@Autowired
-	private Mapper mapper;
+  @Autowired
+  ValidationFailureStatusCodes validationFailureStatusCodes;
 
-	private static final Logger logger = Logger.getLogger(PlantController.class);
+  @Autowired
+  private Mapper mapper;
 
-	@PostMapping(value = EndpointURI.PLANT)
-	public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
-		if (plantService.isPlantAlreadyExist(plantDto.getName())) {
-			logger.debug("Plant already exists: createPlant(), plantName: {}");
-				 return new ResponseEntity<>(
-			          new ValidationFailureResponse(Constants.PLANT_NAME, validationFailureStatusCodes.getPlantAlreadyExist()),
-			          HttpStatus.BAD_REQUEST);
-		}
-		Plant plant = mapper.map(plantDto, Plant.class);
-		plantService.createPlant(plant);
-		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
+  private static final Logger logger = Logger.getLogger(PlantController.class);
 
-	}
+  @PostMapping(value = EndpointURI.PLANT)
+  public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
+    if (plantService.isPlantAlreadyExist(plantDto.getName())) {
+      logger.debug("Plant already exists: createPlant(), plantName: {}");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
+          validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    Plant plant = mapper.map(plantDto, Plant.class);
+    plantService.createPlant(plant);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
+
+  }
 
 }
