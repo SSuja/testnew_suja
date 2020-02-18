@@ -47,4 +47,9 @@ public class DesignationServiceImpl implements DesignationService {
 
 	}
 
+	@Transactional
+	public Designation updateDesignation(Designation designation) {
+		return designationRepository.save(designation);
+	}
+
 }

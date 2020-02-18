@@ -19,5 +19,6 @@ public interface DesignationService {
 
 	public boolean isDesignationExist(String designation);
 
+	public Designation updateDesignation (Designation designation);
 
 }

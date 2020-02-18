@@ -20,6 +20,7 @@ public class Constants {
 	public static final String DESIGNATION_NAME = "Designation Name";
 	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
 	public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
+	public static final String UPDATE_DESIGNATION_SUCCESS ="Designation updated Successfully";
 
 	public static final String DESIGNATION = "designation";
 	public static final String DESIGNATIONS = "designations";
