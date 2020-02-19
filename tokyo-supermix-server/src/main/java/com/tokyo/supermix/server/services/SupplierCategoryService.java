@@ -9,6 +9,7 @@ public interface SupplierCategoryService {
   public boolean isSupplierCategoryExist(String supplierCategory);
 
   public SupplierCategory getSupplierCategoryById(Long id);
+  public void deleteSupplierCategory(Long id);
 
   public boolean isSupplierCategoryExist(Long id);
   public List<SupplierCategory> getAllSupplierCategories();

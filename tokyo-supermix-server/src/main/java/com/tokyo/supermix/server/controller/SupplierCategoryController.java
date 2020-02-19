@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -57,13 +58,12 @@ public class SupplierCategoryController {
 
   }
 
-  @GetMapping(value = EndpointURI.SUPPLIER_CATEGORY_BY_ID)
-  public ResponseEntity<Object> getSupplierCategoryById(@PathVariable Long id) {
+  @DeleteMapping(EndpointURI.DELETE_SUPPLIER_CATEGORY)
+  public ResponseEntity<Object> deleteSupplierCategory(@PathVariable Long id) {
     if (supplierCategoryService.isSupplierCategoryExist(id)) {
-      SupplierCategory supplierCategory = supplierCategoryService.getSupplierCategoryById(id);
+      supplierCategoryService.deleteSupplierCategory(id);
       return new ResponseEntity<>(
-          new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
-              mapper.map(supplierCategory, SupplierCategoryDto.class), RestApiResponseStatus.OK),
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_SUPPLIER_CATEGORY_SCCESS),
           HttpStatus.OK);
     }
     logger.debug("No Supplier Category record exist for given id");
@@ -80,4 +80,19 @@ public class SupplierCategoryController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
         supplierCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.SUPPLIER_CATEGORY_BY_ID)
+  public ResponseEntity<Object> getSupplierCategoryById(@PathVariable Long id) {
+    if (supplierCategoryService.isSupplierCategoryExist(id)) {
+      SupplierCategory supplierCategory = supplierCategoryService.getSupplierCategoryById(id);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+              mapper.map(supplierCategory, SupplierCategoryDto.class), RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    logger.debug("No Supplier Category record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+        validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
 }
