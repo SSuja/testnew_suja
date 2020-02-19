@@ -63,7 +63,7 @@ public class PlantController {
         HttpStatus.OK);
   }
   
-  @PutMapping(value = EndpointURI.UPDATE_PLANT)
+  @PutMapping(value = EndpointURI.PLANT)
   public ResponseEntity<Object> updatePlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantExist(plantDto.getCode())) {
       if (plantService.isUpdatedPlantNameExist(plantDto.getCode(),plantDto.getName())) {
