@@ -71,15 +71,8 @@ public class SupplierCategoryController {
   public ResponseEntity<Object> updateSupplierCategory(
       @Valid @RequestBody SupplierCategoryDto supplierCategoryDto) {
     if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryDto.getId())) {
-      SupplierCategory supplierCategoryData =
-          supplierCategoryService.getSupplierCategoryById(supplierCategoryDto.getId());
-      if (supplierCategoryData.getCategory().equalsIgnoreCase(supplierCategoryDto.getCategory())) {
-        SupplierCategory supplierCategory = mapper.map(supplierCategoryDto, SupplierCategory.class);
-        supplierCategoryService.updateSupplierCategory(supplierCategory);
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.UPDATE_SUPPLIER_CATEGORY_SUCCESS), HttpStatus.OK);
-      }
-      if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryDto.getCategory())) {
+      if (supplierCategoryService.isUpdatedCategoryExist(supplierCategoryDto.getId(),
+          supplierCategoryDto.getCategory())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
                 validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),

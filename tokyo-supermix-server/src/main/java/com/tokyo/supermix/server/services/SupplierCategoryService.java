@@ -15,4 +15,6 @@ public interface SupplierCategoryService {
   public boolean isSupplierCategoryExist(Long id);
 
   public SupplierCategory getSupplierCategoryById(Long id);
+
+  public boolean isUpdatedCategoryExist( Long id, String category);
 }
