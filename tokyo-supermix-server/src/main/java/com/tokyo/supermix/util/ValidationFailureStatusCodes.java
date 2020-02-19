@@ -19,14 +19,24 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.plant.notExists}")
 	private String plantNotExist;
 
-	@Value("${validation.plant.alreadyExist}")
-	private String plantAlreadyExist;
+  @Value("${validation.plant.alreadyExist}")
+  private String plantAlreadyExist;
+  
+  @Value("${validation.plantName.alreadyExist}")
+  private String plantNameAlreadyExist;
+  
+  @Value("${validation.plantId.alreadyExist}")
+  private String plantIdAlreadyExist;
 
 	@Value("${plantDto.name.null")
 	private String plantNameIsNull;
 
-	@Value("${plantDto.name.empty")
-	private String plantNameIsEmpty;
+  @Value("${plantDto.name.empty")
+  private String plantNameIsEmpty;
+  
+  @Value("${plantDto.id.null")
+  private String plantIdIsNull;
+  
 
 	public String getPlantNotExist() {
 		return plantNotExist;
@@ -84,9 +94,33 @@ public class ValidationFailureStatusCodes {
 		this.plantNameIsEmpty = plantNameIsEmpty;
 	}
 
-	/*
-	 * Supplier Category
-	 */
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
+  }
+
+  public void setPlantIdIsNull(String plantIdIsNull) {
+    this.plantIdIsNull = plantIdIsNull;
+  }
+
+  public String getPlantNameAlreadyExist() {
+    return plantNameAlreadyExist;
+  }
+
+  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+    this.plantNameAlreadyExist = plantNameAlreadyExist;
+  }
+
+  public String getPlantIdAlreadyExist() {
+    return plantIdAlreadyExist;
+  }
+
+  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+    this.plantIdAlreadyExist = plantIdAlreadyExist;
+  }
+
+  /*
+   * Supplier Category
+   */
 
 	@Value("${validation.supplierCategory.alreadyExist}")
 	private String supplierCategoryAlreadyExist;
@@ -128,8 +162,7 @@ public class ValidationFailureStatusCodes {
 		return categoryIsEmpty;
 	}
 
-	public void setCategoryIsEmpty(String categoryIsEmpty) {
-		this.categoryIsEmpty = categoryIsEmpty;
-	}
-
+  public void setCategoryIsEmpty(String categoryIsEmpty) {
+    this.categoryIsEmpty = categoryIsEmpty;
+  }
 }
