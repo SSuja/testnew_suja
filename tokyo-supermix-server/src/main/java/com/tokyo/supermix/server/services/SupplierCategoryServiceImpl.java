@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +32,9 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
   @Transactional(readOnly = true)
   public boolean isSupplierCategoryExist(Long id) {
     return supplierCategoryRepository.existsById(id);
+  }
+
+  public List<SupplierCategory> getAllSupplierCategories() {
+    return supplierCategoryRepository.findAll();
   }
 }
