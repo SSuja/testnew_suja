@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotNull;
 
 public class SupplierCategoryDto {
-
+  
   private Long id;
   @NotNull(message = "{supplierCategoryDto.category.blank}")
   private String category;

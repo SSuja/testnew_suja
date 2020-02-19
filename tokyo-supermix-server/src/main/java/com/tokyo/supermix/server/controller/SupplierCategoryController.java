@@ -1,10 +1,14 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +23,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.rest.response.ValidationFailure;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.util.Constants;
 
 @RestController
@@ -52,4 +57,42 @@ public class SupplierCategoryController {
         HttpStatus.OK);
 
   }
+
+  @DeleteMapping(EndpointURI.DELETE_SUPPLIER_CATEGORY)
+  public ResponseEntity<Object> deleteSupplierCategory(@PathVariable Long id) {
+    if (supplierCategoryService.isSupplierCategoryExist(id)) {
+      supplierCategoryService.deleteSupplierCategory(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_SUPPLIER_CATEGORY_SCCESS),
+          HttpStatus.OK);
+    }
+    logger.debug("No Supplier Category record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+        validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SUPPLIER_CATEGORIES)
+  public ResponseEntity<Object> getAllSupplierCategories() {
+    List<SupplierCategory> supplierCategoryList =
+        supplierCategoryService.getAllSupplierCategories();
+    List<SupplierCategoryDto> supplierCategoryDtoList =
+        mapper.map(supplierCategoryList, SupplierCategoryDto.class);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+        supplierCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SUPPLIER_CATEGORY_BY_ID)
+  public ResponseEntity<Object> getSupplierCategoryById(@PathVariable Long id) {
+    if (supplierCategoryService.isSupplierCategoryExist(id)) {
+      SupplierCategory supplierCategory = supplierCategoryService.getSupplierCategoryById(id);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+              mapper.map(supplierCategory, SupplierCategoryDto.class), RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    logger.debug("No Supplier Category record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+        validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
 }

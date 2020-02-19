@@ -18,7 +18,7 @@ public interface DesignationService {
 	public void createDesignation(Designation designation);
 
 	public boolean isDesignationExist(String designation);
-
-	public Designation updateDesignation (Designation designation);
+	
+	public boolean isUpdatedDesignationNameExist( Long id,String designationName);
 
 }
