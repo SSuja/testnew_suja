@@ -34,6 +34,7 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
     return supplierCategoryRepository.existsById(id);
   }
 
+  @Transactional
   public List<SupplierCategory> getAllSupplierCategories() {
     return supplierCategoryRepository.findAll();
   }
