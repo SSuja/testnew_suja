@@ -1,11 +1,13 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +23,8 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.rest.response.ValidationFailure;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationConstance;
 
 @RestController
 public class SupplierCategoryController {
@@ -65,11 +67,17 @@ public class SupplierCategoryController {
           HttpStatus.OK);
     }
     logger.debug("No Supplier Category record exist for given id");
-    return new ResponseEntity<>(new BasicResponse<>(
-        new ValidationFailure(Constants.SUPPLIER_CATEGORY,
-            validationFailureStatusCodes.getSupplierCategoryNotExit()),
-        RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.SUPPLIER_CATEGORY_NOT_EXIST),
-        HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+        validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
   }
 
+  @GetMapping(value = EndpointURI.SUPPLIER_CATEGORIES)
+  public ResponseEntity<Object> getAllSupplierCategories() {
+    List<SupplierCategory> supplierCategoryList =
+        supplierCategoryService.getAllSupplierCategories();
+    List<SupplierCategoryDto> supplierCategoryDtoList =
+        mapper.map(supplierCategoryList, SupplierCategoryDto.class);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+        supplierCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }
