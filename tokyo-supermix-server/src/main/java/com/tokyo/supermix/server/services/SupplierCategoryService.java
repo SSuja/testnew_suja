@@ -5,16 +5,15 @@ import com.tokyo.supermix.data.entities.SupplierCategory;
 
 public interface SupplierCategoryService {
   public SupplierCategory createSupplierCategory(SupplierCategory supplierCategory);
-
   public boolean isSupplierCategoryExist(String supplierCategory);
 
+  public SupplierCategory getSupplierCategoryById(Long id);
+  public void deleteSupplierCategory(Long id);
+
+  public boolean isSupplierCategoryExist(Long id);
   public List<SupplierCategory> getAllSupplierCategories();
 
   public SupplierCategory updateSupplierCategory(SupplierCategory supplierCategory);
-
-  public boolean isSupplierCategoryExist(Long id);
-
-  public SupplierCategory getSupplierCategoryById(Long id);
 
   public boolean isUpdatedCategoryExist( Long id, String category);
 }

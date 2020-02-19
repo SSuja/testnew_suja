@@ -16,11 +16,11 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
 
+
   /*
    * Plant apis
    */
   public static final String PLANT = BASE_API_PATH + "plant";
-  public static final String UPDATE_PLANT = PLANT + CODE;
   public static final String GET_PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
 
@@ -38,8 +38,10 @@ public final class EndpointURI {
   /*
    * Supplier Category apis
    */
-  public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
   public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
+  public static final String SUPPLIER_CATEGORY_BY_ID = SUPPLIER_CATEGORY + ID;
+  public static final String DELETE_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + ID;
+  public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
 
   private EndpointURI() {
 

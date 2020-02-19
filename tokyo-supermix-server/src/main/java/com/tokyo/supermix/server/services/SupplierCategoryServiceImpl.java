@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tokyo.supermix.data.entities.SupplierCategory;
@@ -24,14 +25,9 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
     return supplierCategoryRepository.existsByCategory(supplierCategory);
   }
 
-  @Transactional
-  public List<SupplierCategory> getAllSupplierCategories() {
-    return supplierCategoryRepository.findAll();
-  }
-
-  @Transactional
-  public SupplierCategory updateSupplierCategory(SupplierCategory supplierCategory) {
-    return supplierCategoryRepository.save(supplierCategory);
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteSupplierCategory(Long id) {
+    supplierCategoryRepository.deleteById(id);
   }
 
   @Transactional(readOnly = true)
@@ -44,7 +40,16 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
     return supplierCategoryRepository.findById(id).get();
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
+  public List<SupplierCategory> getAllSupplierCategories() {
+    return supplierCategoryRepository.findAll();
+  }
+
+  @Transactional
+  public SupplierCategory updateSupplierCategory(SupplierCategory supplierCategory) {
+    return supplierCategoryRepository.save(supplierCategory);
+  }
+
   public boolean isUpdatedCategoryExist(Long id, String category) {
     if ((!getSupplierCategoryById(id).getCategory().equalsIgnoreCase(category))
         && (isSupplierCategoryExist(category))) {
