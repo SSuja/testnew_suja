@@ -1,18 +1,18 @@
 package com.tokyo.supermix.util;
 
 public class ValidationConstance {
-	public static final String PLANT_EXIST = "Plant already exist";
-	
-	//for designation
-	public static final String DESIGNATION_EXIST = "Designation already exist";
+  public static final String PLANT_EXIST = "Plant already exist";
 
-	public static final String DESIGNATION_NOT_EXIST = "Designation not exists";
-	/*
-	 * Supplier Category
-	 */
-	public static final String SUPPLIER_CATEGORY_EXIST = "Category already exist";
+  // for designation
+  public static final String DESIGNATION_EXIST = "Designation already exist";
 
-	private ValidationConstance() {
-	}
+  public static final String DESIGNATION_NOT_EXIST = "Designation not exists";
+  /*
+   * Supplier Category
+   */
+  public static final String SUPPLIER_CATEGORY_EXIST = "Category already exist";
+  public static final String SUPPLIER_CATEGORY_NOT_EXIST = "Supplier Category does not Exist";
+
+  private ValidationConstance() {}
 
 }
