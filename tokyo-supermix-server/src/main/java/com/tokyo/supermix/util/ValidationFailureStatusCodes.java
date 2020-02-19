@@ -118,6 +118,30 @@ public class ValidationFailureStatusCodes {
     this.plantIdAlreadyExist = plantIdAlreadyExist;
   }
 
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
+  }
+
+  public void setPlantIdIsNull(String plantIdIsNull) {
+    this.plantIdIsNull = plantIdIsNull;
+  }
+
+  public String getPlantNameAlreadyExist() {
+    return plantNameAlreadyExist;
+  }
+
+  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+    this.plantNameAlreadyExist = plantNameAlreadyExist;
+  }
+
+  public String getPlantIdAlreadyExist() {
+    return plantIdAlreadyExist;
+  }
+
+  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+    this.plantIdAlreadyExist = plantIdAlreadyExist;
+  }
+
   /*
    * Supplier Category
    */

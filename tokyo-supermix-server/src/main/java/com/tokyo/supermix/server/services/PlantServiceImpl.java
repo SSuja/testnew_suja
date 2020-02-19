@@ -13,13 +13,13 @@ public class PlantServiceImpl implements PlantService {
   private PlantRepository plantRepository;
 
   @Transactional
-  public void createPlant(Plant plant) {
+  public void savePlant(Plant plant) {
     plantRepository.save(plant);
   }
 
 
   @Transactional(readOnly = true)
-  public boolean isPlantAlreadyExist(String plant) {
+  public boolean isPlantNameExist(String plant) {
     return plantRepository.existsByName(plant);
   }
 
@@ -27,6 +27,23 @@ public class PlantServiceImpl implements PlantService {
   @Transactional(readOnly = true)
   public List<Plant> getAllPlants() {
     return plantRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPlantExist(String code) {
+    return plantRepository.existsByCode(code);
+  }
+
+  @Transactional(readOnly = true)
+  public Plant getByCode(String code) {
+    return plantRepository.findPlantByCode(code);
+  }
+
+  public boolean isUpdatedPlantNameExist(String code,String plantName) {
+    if ((!getByCode(code).getName().equalsIgnoreCase(plantName)) && (isPlantNameExist(plantName))) {
+      return true;
+    }
+    return false;
   }
 
 }

@@ -16,11 +16,11 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
 
+
   /*
    * Plant apis
    */
   public static final String PLANT = BASE_API_PATH + "plant";
-  public static final String UPDATE_PLANT = PLANT + CODE;
   public static final String GET_PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
 
