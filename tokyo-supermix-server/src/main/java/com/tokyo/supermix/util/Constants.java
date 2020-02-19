@@ -10,6 +10,7 @@ public class Constants {
   public static final String UPDATE_PLANT_SUCCESS = "Plant updated Successfully";
   public static final String NO_DATA_FOUND = "No Data Found";
   public static final String PLANT_DELETED = "Plant Successfully Deleted";
+
   // constants for validation key
   public static final String PLANT = "plant";
 
@@ -43,7 +44,5 @@ public class Constants {
       "Supplier Category delete successfully";
 
   // encaptulate constructor to restrict modification from outside
-  private Constants() {
-
-  }
+  private Constants() {}
 }

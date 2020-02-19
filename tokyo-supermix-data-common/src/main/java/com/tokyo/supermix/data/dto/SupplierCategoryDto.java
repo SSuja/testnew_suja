@@ -1,13 +1,11 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class SupplierCategoryDto {
-
+  
   private Long id;
-  @NotNull(message = "{supplierCategoryDto.category.null}")
-  @NotEmpty(message = "{supplierCategoryDto.category.empty}")
+  @NotNull(message = "{supplierCategoryDto.category.blank}")
   private String category;
   private String description;
 
