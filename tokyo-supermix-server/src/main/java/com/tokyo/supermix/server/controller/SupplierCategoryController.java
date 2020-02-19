@@ -1,10 +1,12 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,5 +53,15 @@ public class SupplierCategoryController {
         new BasicResponse<>(RestApiResponseStatus.CREATED, Constants.ADD_SUPPLIER_CATEGORY_SUCCESS),
         HttpStatus.OK);
 
+  }
+
+  @GetMapping(value = EndpointURI.SUPPLIER_CATEGORIES)
+  public ResponseEntity<Object> getAllSupplierCategories() {
+    List<SupplierCategory> supplierCategoryList =
+        supplierCategoryService.getAllSupplierCategories();
+    List<SupplierCategoryDto> supplierCategoryDtoList =
+        mapper.map(supplierCategoryList, SupplierCategoryDto.class);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+        supplierCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

@@ -21,9 +21,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.plant.alreadyExist}")
   private String plantAlreadyExist;
 
-  @Value("${validation.supplierCategory.alreadyExist}")
-  private String supplierCategoryAlreadyExist;
-
   @Value("${plantDto.name.null")
   private String plantNameIsNull;
 
@@ -44,14 +41,6 @@ public class ValidationFailureStatusCodes {
 
   public void setPlantAlreadyExist(String plantAlreadyExist) {
     this.plantAlreadyExist = plantAlreadyExist;
-  }
-
-  public String getSupplierCategoryAlreadyExist() {
-    return supplierCategoryAlreadyExist;
-  }
-
-  public void setSupplierCategoryAlreadyExist(String supplierCategoryAlreadyExist) {
-    this.supplierCategoryAlreadyExist = supplierCategoryAlreadyExist;
   }
 
   // for designation
@@ -93,4 +82,53 @@ public class ValidationFailureStatusCodes {
   public void setPlantNameIsEmpty(String plantNameIsEmpty) {
     this.plantNameIsEmpty = plantNameIsEmpty;
   }
+
+  /*
+   * Supplier Category
+   */
+
+  @Value("${validation.supplierCategory.alreadyExist}")
+  private String supplierCategoryAlreadyExist;
+
+  @Value("${validation.supplierCategory.notExist}")
+  private String supplierCategoryNotExit;
+
+  @Value("${supplierCategoryDto.category.null")
+  private String categoryIsNull;
+
+  @Value("${supplierCategoryDto.category.empty")
+  private String categoryIsEmpty;
+
+  public String getSupplierCategoryAlreadyExist() {
+    return supplierCategoryAlreadyExist;
+  }
+
+  public void setSupplierCategoryAlreadyExist(String supplierCategoryAlreadyExist) {
+    this.supplierCategoryAlreadyExist = supplierCategoryAlreadyExist;
+  }
+
+  public String getSupplierCategoryNotExit() {
+    return supplierCategoryNotExit;
+  }
+
+  public void setSupplierCategoryNotExit(String supplierCategoryNotExit) {
+    this.supplierCategoryNotExit = supplierCategoryNotExit;
+  }
+
+  public String getCategoryIsNull() {
+    return categoryIsNull;
+  }
+
+  public void setCategoryIsNull(String categoryIsNull) {
+    this.categoryIsNull = categoryIsNull;
+  }
+
+  public String getCategoryIsEmpty() {
+    return categoryIsEmpty;
+  }
+
+  public void setCategoryIsEmpty(String categoryIsEmpty) {
+    this.categoryIsEmpty = categoryIsEmpty;
+  }
+
 }
