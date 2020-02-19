@@ -16,6 +16,7 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
 
+
   /*
    * Plant apis
    */
