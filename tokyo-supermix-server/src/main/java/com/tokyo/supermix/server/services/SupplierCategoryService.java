@@ -9,4 +9,10 @@ public interface SupplierCategoryService {
   public boolean isSupplierCategoryExist(String supplierCategory);
 
   public List<SupplierCategory> getAllSupplierCategories();
+
+  public SupplierCategory updateSupplierCategory(SupplierCategory supplierCategory);
+
+  public boolean isSupplierCategoryExist(Long id);
+
+  public SupplierCategory getSupplierCategoryById(Long id);
 }
