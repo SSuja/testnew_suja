@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,7 @@ import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.rest.response.ValidationFailure;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationConstance;
 
 @RestController
 public class SupplierCategoryController {
@@ -52,4 +55,21 @@ public class SupplierCategoryController {
         HttpStatus.OK);
 
   }
+
+  @DeleteMapping(EndpointURI.DELETE_SUPPLIER_CATEGORY)
+  public ResponseEntity<Object> deleteSupplierCategory(@PathVariable Long id) {
+    if (supplierCategoryService.isSupplierCategoryExist(id)) {
+      supplierCategoryService.deleteSupplierCategory(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_SUPPLIER_CATEGORY_SCCESS),
+          HttpStatus.OK);
+    }
+    logger.debug("No Supplier Category record exist for given id");
+    return new ResponseEntity<>(new BasicResponse<>(
+        new ValidationFailure(Constants.SUPPLIER_CATEGORY,
+            validationFailureStatusCodes.getSupplierCategoryNotExit()),
+        RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.SUPPLIER_CATEGORY_NOT_EXIST),
+        HttpStatus.BAD_REQUEST);
+  }
+
 }
