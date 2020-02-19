@@ -20,6 +20,12 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.plant.alreadyExist}")
   private String plantAlreadyExist;
+  
+  @Value("${validation.plantName.alreadyExist}")
+  private String plantNameAlreadyExist;
+  
+  @Value("${validation.plantId.alreadyExist}")
+  private String plantIdAlreadyExist;
 
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
@@ -29,6 +35,10 @@ public class ValidationFailureStatusCodes {
 
   @Value("${plantDto.name.empty")
   private String plantNameIsEmpty;
+  
+  @Value("${plantDto.id.null")
+  private String plantIdIsNull;
+  
 
   public String getPlantNotExist() {
     return plantNotExist;
@@ -92,5 +102,29 @@ public class ValidationFailureStatusCodes {
 
   public void setPlantNameIsEmpty(String plantNameIsEmpty) {
     this.plantNameIsEmpty = plantNameIsEmpty;
+  }
+
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
+  }
+
+  public void setPlantIdIsNull(String plantIdIsNull) {
+    this.plantIdIsNull = plantIdIsNull;
+  }
+
+  public String getPlantNameAlreadyExist() {
+    return plantNameAlreadyExist;
+  }
+
+  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+    this.plantNameAlreadyExist = plantNameAlreadyExist;
+  }
+
+  public String getPlantIdAlreadyExist() {
+    return plantIdAlreadyExist;
+  }
+
+  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+    this.plantIdAlreadyExist = plantIdAlreadyExist;
   }
 }

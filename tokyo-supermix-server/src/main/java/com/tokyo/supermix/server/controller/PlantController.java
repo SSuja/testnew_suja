@@ -38,16 +38,20 @@ public class PlantController {
 
   @PostMapping(value = EndpointURI.PLANT)
   public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
-    if (plantService.isPlantAlreadyExist(plantDto.getName())) {
-      logger.debug("Plant already exists: createPlant(), plantName: {}");
+    if (plantService.isPlantNameExist(plantDto.getName())) {
+      logger.debug("PlantName already exists: createPlant(), plantName: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
-          validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
+          validationFailureStatusCodes.getPlantNameAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    if(plantService.isPlantExist(plantDto.getCode())) {
+      logger.debug("PlantId already exists: createPlant(), plantId: {}");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+          validationFailureStatusCodes.getPlantIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     Plant plant = mapper.map(plantDto, Plant.class);
-    plantService.createPlant(plant);
+    plantService.savePlant(plant);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
-
   }
 
   @GetMapping(value = EndpointURI.PLANTS)
@@ -62,20 +66,12 @@ public class PlantController {
   @PutMapping(value = EndpointURI.UPDATE_PLANT)
   public ResponseEntity<Object> updatePlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantExist(plantDto.getCode())) {
-      Plant plantData = plantService.getByCode(plantDto.getCode());
-      if (plantData.getName().equalsIgnoreCase(plantDto.getName())) {
-        Plant plant = mapper.map(plantDto, Plant.class);
-        plantService.updatePlant(plant);
-        return new ResponseEntity<>(
-            new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_SUCCESS),
-            HttpStatus.OK);
-      }
-      if (plantService.isPlantAlreadyExist(plantDto.getName())) {
+      if (plantService.isUpdatedPlantNameExist(plantDto.getCode(),plantDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
             validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       Plant plant = mapper.map(plantDto, Plant.class);
-      plantService.updatePlant(plant);
+      plantService.savePlant(plant);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_SUCCESS),
           HttpStatus.OK);
