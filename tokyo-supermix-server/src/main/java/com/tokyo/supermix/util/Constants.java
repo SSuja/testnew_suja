@@ -23,6 +23,13 @@ public class Constants {
   public static final String DESIGNATION = "designation";
   public static final String DESIGNATIONS = "designations";
 
+
+  /*
+   * Supplier Category
+   */
+  public static final String SUPPLIER_CATEGORY_NAME = "category";
+
+
   /*
    * Success Messages for Supplier Category
    */
@@ -33,7 +40,7 @@ public class Constants {
       "Supplier Category updated Successfully";
 
   // constants for validation key
-  public static final String SUPPLIER_CATEGORY = "SupplierCategory";
+  public static final String SUPPLIER_CATEGORY = "supplierCategory";
 
   public static final String DELETE_SUPPLIER_CATEGORY_SCCESS =
       "Supplier Category delete successfully";

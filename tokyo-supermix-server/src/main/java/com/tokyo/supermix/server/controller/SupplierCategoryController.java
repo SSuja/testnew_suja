@@ -46,7 +46,7 @@ public class SupplierCategoryController {
     if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryDto.getCategory())) {
       logger.debug("Supplier Category already exists: createSupplierCategory(), category: {}");
       return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+          new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY_NAME,
               validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
