@@ -26,7 +26,7 @@ public class DesignationServiceImpl implements DesignationService {
 		return designationRepository.existsById(id);
 	}
 
-	@Transactional()
+	@Transactional(readOnly = true)
 	public Designation getDesignationById(Long id) {
 		return designationRepository.findById(id).get();
 	}
@@ -37,7 +37,7 @@ public class DesignationServiceImpl implements DesignationService {
 	}
 
 	@Transactional
-	public void createDesignation(Designation designation) {
+	public void saveDesignation(Designation designation) {
 		designationRepository.save(designation);
 	}
 
@@ -45,6 +45,13 @@ public class DesignationServiceImpl implements DesignationService {
 	public boolean isDesignationExist(String designation) {
 		return designationRepository.existsByName(designation);
 
+	}
+
+	public boolean isUpdatedDesignationNameExist(Long id, String designationName) {
+		if ((!getDesignationById(id).getName().equalsIgnoreCase(designationName)) && (isDesignationExist(designationName))) {
+			return true;
+		}
+		return false;
 	}
 
 }

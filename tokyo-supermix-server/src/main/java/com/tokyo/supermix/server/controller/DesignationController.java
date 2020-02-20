@@ -2,6 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +23,7 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.validation.ValidationFailure;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
@@ -85,7 +89,7 @@ public class DesignationController {
 	@PostMapping(value = EndpointURI.DESIGNATION)
 	public ResponseEntity<Object> createDesignation(@RequestBody DesignationDto designationDto) {
 		if (designationService.isDesignationExist(designationDto.getName())) {
-			logger.debug("Designation already exists: createDesignation(), dsesignationName: {}");
+			logger.debug("Designation already exists: createDesignation(), designationName: {}");
 			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
 					new ValidationFailure(Constants.DESIGNATION_NAME,
 							validationFailureStatusCodes.getDesignationAlreadyExist()),
@@ -93,10 +97,27 @@ public class DesignationController {
 		}
 
 		Designation designation = mapper.map(designationDto, Designation.class);
-		designationService.createDesignation(designation);
+		designationService.saveDesignation(designation);
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_DESIGNATION_SUCCESS),
 				HttpStatus.OK);
 
 	}
 
+	// update API for designations
+	@PutMapping(value = EndpointURI.DESIGNATION)
+	public ResponseEntity<Object> updateDesignation(@Valid @RequestBody DesignationDto designationDto) {
+
+		if (designationService.isDesignationExist(designationDto.getId())) {
+			if (designationService.isUpdatedDesignationNameExist(designationDto.getId(), designationDto.getName())) {
+				return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION_NAME,
+						validationFailureStatusCodes.getDesignationAlreadyExist()), HttpStatus.BAD_REQUEST);
+			}
+			Designation designation = mapper.map(designationDto, Designation.class);
+			designationService.saveDesignation(designation);
+			return new ResponseEntity<>(
+					new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_DESIGNATION_SUCCESS), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION_NAME,
+				validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
+	}
 }
