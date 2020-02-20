@@ -45,14 +45,10 @@ public class SupplierController {
 	@GetMapping(value = EndpointURI.SUPPLIERS)
 	public ResponseEntity<Object> getSuppliers() {
 		List<Supplier> supplierList = supplierService.getSuppliers();
-		if (supplierList.isEmpty()) {
-			logger.debug("Supplier is empty");
-			return new ResponseEntity<>(
-					new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE, Constants.NO_DATA_FOUND),
-					HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(new ListContentResponse<>(mapper.map(supplierList, SupplierResponseDto.class)),
-				HttpStatus.OK);
+		List<SupplierResponseDto> supplierResponseDtoList = mapper.map(supplierList, SupplierResponseDto.class);
+		 return new ResponseEntity<>(
+			        new ContentResponse<>(Constants.SUPPLIER,supplierResponseDtoList , RestApiResponseStatus.OK), null,
+			        HttpStatus.OK);
 	}
 
 	@PostMapping(value = EndpointURI.SUPPLIER)
@@ -133,8 +129,10 @@ public class SupplierController {
 	public ResponseEntity<Object> getSupplierBySupplierCategoryById(@PathVariable Long supplierCategoryId) {
 		if (supplierService.existBySupplierCategoryId(supplierCategoryId)) {
 			List<Supplier> supplierList = supplierService.getBySupplierCategoryId(supplierCategoryId);
-			return new ResponseEntity<>(new ListContentResponse<>(mapper.map(supplierList, SupplierResponseDto.class)),
-					HttpStatus.OK);
+			List<SupplierResponseDto> supplierResponseDtoList = mapper.map(supplierList, SupplierResponseDto.class);
+			return new ResponseEntity<>(
+			        new ContentResponse<>(Constants.SUPPLIER,supplierResponseDtoList , RestApiResponseStatus.OK), null,
+			        HttpStatus.OK);
 		}
 		logger.debug("No Supplier record exist for given id");
 		return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,

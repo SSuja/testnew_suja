@@ -46,7 +46,7 @@ public class SupplierServiceImpl implements SupplierService {
 		supplierRepository.deleteById(id);
 	}
 
-	@Override
+	@Transactional
 	public Supplier getSupplierById(Long id) {
 		return supplierRepository.findSupplierById(id);
 	}
@@ -62,17 +62,17 @@ public class SupplierServiceImpl implements SupplierService {
 		return supplierRepository.existsByName(supplier);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Boolean isEmailExist(String email) {
 		return supplierRepository.existsByEmail(email);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Boolean isPhoneNumberExist(String phoneNumber) {
 		return supplierRepository.existsByPhoneNumber(phoneNumber);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Boolean isSupplierNameExistWithId(Long id, String name) {
 		if(supplierRepository.checkSupplierNameWithLockId(id, name)>0) {
 			return true;
@@ -80,7 +80,7 @@ public class SupplierServiceImpl implements SupplierService {
 		return false;
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Boolean isEmailExistWithId(Long id, String email) {
 		if(supplierRepository.checkSupplierNameWithLockId(id, email)>0) {
 			return true;
@@ -88,7 +88,7 @@ public class SupplierServiceImpl implements SupplierService {
 		return false;
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Boolean isPhoneNumberExistWithId(Long id, String phoneNumber) {
 		if(supplierRepository.checkSupplierNameWithLockId(id,phoneNumber )>0) {
 			return true;
