@@ -28,8 +28,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.plantId.alreadyExist}")
   private String plantIdAlreadyExist;
 
-
-
   @Value("${plantDto.name.null")
   private String plantNameIsNull;
 
@@ -38,7 +36,6 @@ public class ValidationFailureStatusCodes {
 
   @Value("${plantDto.id.null")
   private String plantIdIsNull;
-
 
   public String getPlantNotExist() {
     return plantNotExist;
@@ -56,22 +53,29 @@ public class ValidationFailureStatusCodes {
     this.plantAlreadyExist = plantAlreadyExist;
   }
 
+  public String getPlantNameAlreadyExist() {
+    return plantNameAlreadyExist;
+  }
 
+  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+    this.plantNameAlreadyExist = plantNameAlreadyExist;
+  }
 
-  // for designation
+  public String getPlantIdAlreadyExist() {
+    return plantIdAlreadyExist;
+  }
+
+  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+    this.plantIdAlreadyExist = plantIdAlreadyExist;
+  }
 
   public String getPlantNameIsNull() {
     return plantNameIsNull;
   }
 
-
   public void setPlantNameIsNull(String plantNameIsNull) {
     this.plantNameIsNull = plantNameIsNull;
   }
-
-
-
-  // for designation
 
   public String getPlantNameIsEmpty() {
     return plantNameIsEmpty;
@@ -81,14 +85,15 @@ public class ValidationFailureStatusCodes {
     this.plantNameIsEmpty = plantNameIsEmpty;
   }
 
-  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
-    this.plantIdAlreadyExist = plantIdAlreadyExist;
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
   }
 
-
+  public void setPlantIdIsNull(String plantIdIsNull) {
+    this.plantIdIsNull = plantIdIsNull;
+  }
 
   // for designation
-
   @Value("${validation.designation.notExists}")
   private String designationNotExist;
 
@@ -103,6 +108,7 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.designationName.alreadyExist}")
   private String designationNameAlreadyExist;
+
 
   public String getDesignationNotExist() {
     return designationNotExist;
@@ -119,33 +125,6 @@ public class ValidationFailureStatusCodes {
   public void setDesignationAlreadyExist(String designationAlreadyExist) {
     this.designationAlreadyExist = designationAlreadyExist;
   }
-
-
-  public String getPlantIdIsNull() {
-    return plantIdIsNull;
-  }
-
-  public void setPlantIdIsNull(String plantIdIsNull) {
-    this.plantIdIsNull = plantIdIsNull;
-  }
-
-  public String getPlantNameAlreadyExist() {
-    return plantNameAlreadyExist;
-  }
-
-  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
-    this.plantNameAlreadyExist = plantNameAlreadyExist;
-  }
-
-  public String getPlantIdAlreadyExist() {
-    return plantIdAlreadyExist;
-  }
-
-
-
-  /*
-   * Supplier Category
-   */
 
   public String getDesignationNameIsNull() {
     return designationNameIsNull;
@@ -174,7 +153,6 @@ public class ValidationFailureStatusCodes {
   /*
    * Supplier Category
    */
-
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
 
@@ -218,4 +196,51 @@ public class ValidationFailureStatusCodes {
   public void setCategoryIsEmpty(String categoryIsEmpty) {
     this.categoryIsEmpty = categoryIsEmpty;
   }
+
+  // for employee
+  @Value("${validation.employee.notExists}")
+
+  private String employeeNotExist;
+
+  @Value("${validation.employee.alreadyExist}")
+  private String employeeAlreadyExist;
+
+  @Value("${employeeDto.firstName.null")
+  private String employeeFirstNameIsNull;
+
+  @Value("${employeeDto.firstName.empty")
+  private String employeeFirstNameIsEmpty;
+
+  public String getEmployeeNotExist() {
+    return employeeNotExist;
+  }
+
+  public void setEmployeeNotExist(String employeeNotExist) {
+    this.employeeNotExist = employeeNotExist;
+  }
+
+  public String getEmployeeAlreadyExist() {
+    return employeeAlreadyExist;
+  }
+
+  public void setEmployeeAlreadyExist(String employeeAlreadyExist) {
+    this.employeeAlreadyExist = employeeAlreadyExist;
+  }
+
+  public String getEmployeeFirstNameIsNull() {
+    return employeeFirstNameIsNull;
+  }
+
+  public void setEmployeeFirstNameIsNull(String employeeFirstNameIsNull) {
+    this.employeeFirstNameIsNull = employeeFirstNameIsNull;
+  }
+
+  public String getEmployeeFirstNameIsEmpty() {
+    return employeeFirstNameIsEmpty;
+  }
+
+  public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
+    this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+  }
+
 }
