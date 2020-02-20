@@ -35,12 +35,12 @@ public class PlantServiceImpl implements PlantService {
   }
 
   @Transactional(readOnly = true)
-  public Plant getByCode(String code) {
+  public Plant getPlantByCode(String code) {
     return plantRepository.findPlantByCode(code);
   }
 
   public boolean isUpdatedPlantNameExist(String code,String plantName) {
-    if ((!getByCode(code).getName().equalsIgnoreCase(plantName)) && (isPlantNameExist(plantName))) {
+    if ((!getPlantByCode(code).getName().equalsIgnoreCase(plantName)) && (isPlantNameExist(plantName))) {
       return true;
     }
     return false;
