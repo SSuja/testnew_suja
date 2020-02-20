@@ -15,7 +15,7 @@ public interface DesignationService {
 
 	public void deleteDesignation(Long id);
 
-	public void createDesignation(Designation designation);
+	public void saveDesignation(Designation designation);
 
 	public boolean isDesignationExist(String designation);
 	

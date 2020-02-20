@@ -37,7 +37,7 @@ public class DesignationServiceImpl implements DesignationService {
 	}
 
 	@Transactional
-	public void createDesignation(Designation designation) {
+	public void saveDesignation(Designation designation) {
 		designationRepository.save(designation);
 	}
 

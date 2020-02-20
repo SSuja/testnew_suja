@@ -97,7 +97,7 @@ public class DesignationController {
 		}
 
 		Designation designation = mapper.map(designationDto, Designation.class);
-		designationService.createDesignation(designation);
+		designationService.saveDesignation(designation);
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_DESIGNATION_SUCCESS),
 				HttpStatus.OK);
 
@@ -113,7 +113,7 @@ public class DesignationController {
 						validationFailureStatusCodes.getDesignationAlreadyExist()), HttpStatus.BAD_REQUEST);
 			}
 			Designation designation = mapper.map(designationDto, Designation.class);
-			designationService.createDesignation(designation);
+			designationService.saveDesignation(designation);
 			return new ResponseEntity<>(
 					new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_DESIGNATION_SUCCESS), HttpStatus.OK);
 		}
