@@ -38,7 +38,7 @@ public class Constants {
       "Supplier Category delete successfully";
 
   // constants for validation key
-  public static final String SUPPLIER_CATEGORY = "supplier-category";
+  public static final String SUPPLIER_CATEGORY = "supplierCategory";
 
   /*
    * Success Messages for Supplier
