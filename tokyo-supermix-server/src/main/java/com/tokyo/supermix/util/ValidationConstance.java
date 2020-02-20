@@ -12,7 +12,16 @@ public class ValidationConstance {
    */
   public static final String SUPPLIER_CATEGORY_EXIST = "Category already exist";
   public static final String SUPPLIER_CATEGORY_NOT_EXIST = "Supplier Category does not Exist";
+  
+  /*
+   * Supplier
+   */
 
+  public static final String SUPPLIER_FOR_CATEGORY_NOT_EXIST = "Supplier Not exist for this category";
+  public static final String SUPPLIER__NOT_EXIST = "Supplier Not exist for this id";
+  public static final String SUPPLIER_NAME = " Supplier name is already exist";
+  public static final String EMAIL = "Email is already exist";
+  public static final String PHONE_NUMBER = "Phone Number is already exist";
   private ValidationConstance() {}
 
 }

@@ -43,6 +43,15 @@ public final class EndpointURI {
   public static final String DELETE_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + ID;
   public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
 
+  /*
+   * Supplier Apis
+   */
+  public static final String SUPPLIER = BASE_API_PATH + "supplier";
+  public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
+  private static final String SUPPLIER_CATEGORY_ID = "/{supplierCategoryId}";
+  public static final String GET_SUPPLIERS_BY_CATEGORY = SUPPLIERS + SUPPLIER_CATEGORY_ID;
+  public static final String UPDATE_SUPPLIER = SUPPLIER;
+  public static final String DELETE_SUPPLIER = SUPPLIER + ID;
   private EndpointURI() {
 
   }

@@ -1,4 +1,4 @@
-  
+
 package com.tokyo.supermix.util;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -19,24 +19,23 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.plant.notExists}")
 	private String plantNotExist;
 
-  @Value("${validation.plant.alreadyExist}")
-  private String plantAlreadyExist;
-  
-  @Value("${validation.plantName.alreadyExist}")
-  private String plantNameAlreadyExist;
-  
-  @Value("${validation.plantId.alreadyExist}")
-  private String plantIdAlreadyExist;
+	@Value("${validation.plant.alreadyExist}")
+	private String plantAlreadyExist;
+
+	@Value("${validation.plantName.alreadyExist}")
+	private String plantNameAlreadyExist;
+
+	@Value("${validation.plantId.alreadyExist}")
+	private String plantIdAlreadyExist;
 
 	@Value("${plantDto.name.null")
 	private String plantNameIsNull;
 
-  @Value("${plantDto.name.empty")
-  private String plantNameIsEmpty;
-  
-  @Value("${plantDto.id.null")
-  private String plantIdIsNull;
-  
+	@Value("${plantDto.name.empty")
+	private String plantNameIsEmpty;
+
+	@Value("${plantDto.id.null")
+	private String plantIdIsNull;
 
 	public String getPlantNotExist() {
 		return plantNotExist;
@@ -94,57 +93,58 @@ public class ValidationFailureStatusCodes {
 		this.plantNameIsEmpty = plantNameIsEmpty;
 	}
 
-  public String getPlantIdIsNull() {
-    return plantIdIsNull;
-  }
+	public String getPlantIdIsNull() {
+		return plantIdIsNull;
+	}
 
-  public void setPlantIdIsNull(String plantIdIsNull) {
-    this.plantIdIsNull = plantIdIsNull;
-  }
+	public void setPlantIdIsNull(String plantIdIsNull) {
+		this.plantIdIsNull = plantIdIsNull;
+	}
 
-  public String getPlantNameAlreadyExist() {
-    return plantNameAlreadyExist;
-  }
+//
+//  public String getPlantNameAlreadyExist() {
+//    return plantNameAlreadyExist;
+//  }
+//
+//  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+//    this.plantNameAlreadyExist = plantNameAlreadyExist;
+//  }
+//
+//  public String getPlantIdAlreadyExist() {
+//    return plantIdAlreadyExist;
+//  }
+//
+//  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+//    this.plantIdAlreadyExist = plantIdAlreadyExist;
+//  }
+//
+//  public String getPlantIdIsNull() {
+//    return plantIdIsNull;
+//  }
+//
+//  public void setPlantIdIsNull(String plantIdIsNull) {
+//    this.plantIdIsNull = plantIdIsNull;
+//  }
+//
+	public String getPlantNameAlreadyExist() {
+		return plantNameAlreadyExist;
+	}
 
-  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
-    this.plantNameAlreadyExist = plantNameAlreadyExist;
-  }
+	public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+		this.plantNameAlreadyExist = plantNameAlreadyExist;
+	}
 
-  public String getPlantIdAlreadyExist() {
-    return plantIdAlreadyExist;
-  }
+	public String getPlantIdAlreadyExist() {
+		return plantIdAlreadyExist;
+	}
 
-  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
-    this.plantIdAlreadyExist = plantIdAlreadyExist;
-  }
+	public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+		this.plantIdAlreadyExist = plantIdAlreadyExist;
+	}
 
-  public String getPlantIdIsNull() {
-    return plantIdIsNull;
-  }
-
-  public void setPlantIdIsNull(String plantIdIsNull) {
-    this.plantIdIsNull = plantIdIsNull;
-  }
-
-  public String getPlantNameAlreadyExist() {
-    return plantNameAlreadyExist;
-  }
-
-  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
-    this.plantNameAlreadyExist = plantNameAlreadyExist;
-  }
-
-  public String getPlantIdAlreadyExist() {
-    return plantIdAlreadyExist;
-  }
-
-  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
-    this.plantIdAlreadyExist = plantIdAlreadyExist;
-  }
-
-  /*
-   * Supplier Category
-   */
+	/*
+	 * Supplier Category
+	 */
 
 	@Value("${validation.supplierCategory.alreadyExist}")
 	private String supplierCategoryAlreadyExist;
@@ -186,7 +186,77 @@ public class ValidationFailureStatusCodes {
 		return categoryIsEmpty;
 	}
 
-  public void setCategoryIsEmpty(String categoryIsEmpty) {
-    this.categoryIsEmpty = categoryIsEmpty;
-  }
+	public void setCategoryIsEmpty(String categoryIsEmpty) {
+		this.categoryIsEmpty = categoryIsEmpty;
+	}
+
+	/*
+	 * Supplier
+	 */
+
+	@Value("${validation.supplier.alreadyExist}")
+	private String supplierAlreadyExist;
+
+	@Value("${validation.supplier.notExist}")
+	private String supplierNotExit;
+
+	@Value("${supplierDto.name.null")
+	private String supplierNameIsNull;
+
+	@Value("${supplierDto.name.empty")
+	private String supplierNameIsEmpty;
+
+	@Value("${supplierDto.email.null")
+	private String emailIsNull;
+
+	@Value("${supplierDto.email.empty")
+	private String emailIsEmpty;
+
+	public String getSupplierAlreadyExist() {
+		return supplierAlreadyExist;
+	}
+
+	public void setSupplierAlreadyExist(String supplierAlreadyExist) {
+		this.supplierAlreadyExist = supplierAlreadyExist;
+	}
+
+	public String getSupplierNotExit() {
+		return supplierNotExit;
+	}
+
+	public void setSupplierNotExit(String supplierNotExit) {
+		this.supplierNotExit = supplierNotExit;
+	}
+
+	public String getSupplierNameIsNull() {
+		return supplierNameIsNull;
+	}
+
+	public void setSupplierNameIsNull(String supplierNameIsNull) {
+		this.supplierNameIsNull = supplierNameIsNull;
+	}
+
+	public String getSupplierNameIsEmpty() {
+		return supplierNameIsEmpty;
+	}
+
+	public void setSupplierNameIsEmpty(String supplierNameIsEmpty) {
+		this.supplierNameIsEmpty = supplierNameIsEmpty;
+	}
+
+	public String getEmailIsNull() {
+		return emailIsNull;
+	}
+
+	public void setEmailIsNull(String emailIsNull) {
+		this.emailIsNull = emailIsNull;
+	}
+
+	public String getEmailIsEmpty() {
+		return emailIsEmpty;
+	}
+
+	public void setEmailIsEmpty(String emailIsEmpty) {
+		this.emailIsEmpty = emailIsEmpty;
+	}
 }
