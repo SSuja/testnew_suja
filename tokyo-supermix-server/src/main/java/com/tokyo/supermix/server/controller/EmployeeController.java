@@ -27,7 +27,7 @@ import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RestController
 public class EmployeeController {
   @Autowired
