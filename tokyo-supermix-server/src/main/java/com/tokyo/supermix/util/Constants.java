@@ -56,10 +56,8 @@ public class Constants {
 
 
 
-<<<<<<< HEAD
   public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
       "Supplier Category updated Successfully";
-=======
   /*
    * Employee
    */
@@ -73,9 +71,6 @@ public class Constants {
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
 
-
-
->>>>>>> 891e533e007ebdd843c5a34f46b2ec5c95c378cd
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

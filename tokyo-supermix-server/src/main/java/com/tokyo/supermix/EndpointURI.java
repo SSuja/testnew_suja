@@ -48,6 +48,14 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
   public static final String DELETE_SUPPLIER = SUPPLIER + ID;
 
+   * Employee apis
+   */
+  public static final String EMPLOYEE = BASE_API_PATH + "employee";
+  public static final String DELETE_EMPLOYEE = EMPLOYEE + ID;
+  public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
+  public static final String UPDATE_EMPLOYEE = EMPLOYEE;
+  public static final String EMPLOYEES = BASE_API_PATH + "employees";
+
   private EndpointURI() {
 
   }
