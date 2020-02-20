@@ -42,7 +42,7 @@ public class Constants {
    * Employee
    */
   // constants for validation key
-  public static final String EMPLOYEE_EMAIL = "Email";
+  public static final String EMAIL = "Email";
   public static final String EMPLOYEE_ID = "EmployeeId";
   public static final String EMPLOYEES = "employees";
   public static final String EMPLOYEE = "employee";

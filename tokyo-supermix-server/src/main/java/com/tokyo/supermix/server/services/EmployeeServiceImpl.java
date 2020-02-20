@@ -9,26 +9,22 @@ import com.tokyo.supermix.data.repositories.EmployeeRepository;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-
   @Autowired
   private EmployeeRepository employeeRepository;
 
   @Transactional()
   public void createEmployee(Employee employee) {
     employeeRepository.save(employee);
-
   }
 
   @Transactional(readOnly = true)
   public boolean isEmailExist(String email) {
     return employeeRepository.existsByEmail(email);
-
   }
 
   @Transactional()
   public void deleteEmployee(Long id) {
     employeeRepository.deleteById(id);
-
   }
 
   @Transactional(readOnly = true)
@@ -49,7 +45,6 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Transactional()
   public Employee updateEmployee(Employee employee) {
     return employeeRepository.save(employee);
-
   }
 
   @Override

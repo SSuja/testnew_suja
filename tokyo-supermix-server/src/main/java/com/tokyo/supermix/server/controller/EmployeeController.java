@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,50 +26,39 @@ import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-@CrossOrigin("*")
 @RestController
 public class EmployeeController {
-
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
   @Autowired
   private EmployeeService employeeService;
-
   private static final Logger logger = Logger.getLogger(EmployeeController.class);
 
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
   public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
-
     if (employeeService.isEmailExist(employeeDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_EMAIL,
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-
     Employee employee = mapper.map(employeeDto, Employee.class);
-
     employeeService.createEmployee(employee);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
-
   }
 
   // Delete Employee
   @DeleteMapping(value = EndpointURI.DELETE_EMPLOYEE)
   public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
-
     if (employeeService.isEmployeeExist(id)) {
       logger.debug("delete employee by id");
       employeeService.deleteEmployee(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.EMPLOYEE_DELETED), HttpStatus.OK);
-
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
         validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
@@ -92,15 +80,14 @@ public class EmployeeController {
 
   // Update Employee
   @PutMapping(value = EndpointURI.UPDATE_EMPLOYEE)
-  public ResponseEntity<Object> updateEmployee(
-      @Valid @RequestBody EmployeeRequestDto employeeRequestDto) {
-    if (employeeService.isEmployeeExist(employeeRequestDto.getId())) {
-      if (employeeService.isUpdatedEmployeeEmailExist(employeeRequestDto.getId(),
-          employeeRequestDto.getEmail())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_EMAIL,
+  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
+    if (employeeService.isEmployeeExist(employeeDto.getId())) {
+      if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
+          employeeDto.getEmail())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      Employee employee = mapper.map(employeeRequestDto, Employee.class);
+      Employee employee = mapper.map(employeeDto, Employee.class);
       employeeService.updateEmployee(employee);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
@@ -108,7 +95,6 @@ public class EmployeeController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
         validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   /* Get All Employees */

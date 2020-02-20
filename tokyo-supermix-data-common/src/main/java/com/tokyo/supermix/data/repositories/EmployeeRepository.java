@@ -8,5 +8,4 @@ import com.tokyo.supermix.data.entities.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
   /* Check Existing email */
   boolean existsByEmail(String mail);
-
 }
