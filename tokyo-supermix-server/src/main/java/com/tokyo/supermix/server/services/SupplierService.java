@@ -1,5 +1,18 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.List;
+import com.tokyo.supermix.data.entities.Supplier;
+
 public interface SupplierService {
+  public List<Supplier> getSuppliers();
+  public Supplier createSupplier(Supplier supplier);
+  public Supplier getSupplierById(Long id);
+  public void updateSupplier(Supplier supplier);
+  public void deleteSupplierById(Long id);
+  public boolean isSupplierExist(Long id);
+  public boolean isEmailExist(String email);
+  public boolean isPhoneNumberExist(String phoneNumber);
+  public boolean isUpdatedEmailExist(Long id, String email);
+  public boolean isUpdatedPhoneNumberExist(Long id, String phoneNumber);
 
 }

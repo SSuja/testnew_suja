@@ -126,6 +126,11 @@ public class ValidationFailureStatusCodes {
     this.designationAlreadyExist = designationAlreadyExist;
   }
 
+
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
+  }
+
   public String getDesignationNameIsNull() {
     return designationNameIsNull;
   }
@@ -151,8 +156,46 @@ public class ValidationFailureStatusCodes {
   }
 
   /*
-   * Supplier Category
+   * Supplier
    */
+
+
+  @Value("${validation.supplier.alreadyExist}")
+  private String supplierAlreadyExist;
+
+  @Value("${validation.supplier.notExist}")
+  private String supplierNotExit;
+
+  @Value("${supplierDto.name.null")
+  private String supplierNameIsNull;
+
+  @Value("${supplierDto.name.empty")
+  private String supplierNameIsEmpty;
+
+  @Value("${supplierDto.email.null")
+  private String emailIsNull;
+
+  @Value("${supplierDto.email.empty")
+  private String emailIsEmpty;
+  @Value("${supplierDto.phoneNumber.null")
+  private String phoneNumberIsNull;
+
+  @Value("${supplierDto.phoneNumber.empty")
+  private String phoneNumberIsEmpty;
+
+  public String getSupplierAlreadyExist() {
+    return supplierAlreadyExist;
+  }
+
+  public void setSupplierAlreadyExist(String supplierAlreadyExist) {
+    this.supplierAlreadyExist = supplierAlreadyExist;
+  }
+
+  public String getSupplierNotExit() {
+    return supplierNotExit;
+  }
+
+
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
 
@@ -189,12 +232,56 @@ public class ValidationFailureStatusCodes {
     this.categoryIsNull = categoryIsNull;
   }
 
+  public void setSupplierNotExit(String supplierNotExit) {
+    this.supplierNotExit = supplierNotExit;
+  }
+
   public String getCategoryIsEmpty() {
     return categoryIsEmpty;
   }
 
-  public void setCategoryIsEmpty(String categoryIsEmpty) {
-    this.categoryIsEmpty = categoryIsEmpty;
+  public String getSupplierNameIsNull() {
+    return supplierNameIsNull;
+  }
+
+  public void setSupplierNameIsNull(String supplierNameIsNull) {
+    this.supplierNameIsNull = supplierNameIsNull;
+  }
+
+  public String getSupplierNameIsEmpty() {
+    return supplierNameIsEmpty;
+  }
+
+  public void setSupplierNameIsEmpty(String supplierNameIsEmpty) {
+    this.supplierNameIsEmpty = supplierNameIsEmpty;
+  }
+
+  public String getEmailIsNull() {
+    return emailIsNull;
+  }
+
+  public void setEmailIsNull(String emailIsNull) {
+    this.emailIsNull = emailIsNull;
+  }
+
+  public String getEmailIsEmpty() {
+    return emailIsEmpty;
+  }
+
+  public void setEmailIsEmpty(String emailIsEmpty) {
+    this.emailIsEmpty = emailIsEmpty;
+  }
+
+  public String getPhoneNumberIsNull() {
+    return phoneNumberIsNull;
+  }
+
+  public void setPhoneNumberIsNull(String phoneNumberIsNull) {
+    this.phoneNumberIsNull = phoneNumberIsNull;
+  }
+
+  public String getPhoneNumberIsEmpty() {
+    return phoneNumberIsEmpty;
   }
 
   // for employee
