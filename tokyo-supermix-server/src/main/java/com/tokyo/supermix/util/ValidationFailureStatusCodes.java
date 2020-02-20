@@ -33,7 +33,6 @@ public class ValidationFailureStatusCodes {
   @Value("${plantDto.name.null")
   private String plantNameIsNull;
 
-
   @Value("${plantDto.name.empty")
   private String plantNameIsEmpty;
 
@@ -59,9 +58,12 @@ public class ValidationFailureStatusCodes {
 
 
 
+  // for designation
+
   public String getPlantNameIsNull() {
     return plantNameIsNull;
   }
+
 
   public void setPlantNameIsNull(String plantNameIsNull) {
     this.plantNameIsNull = plantNameIsNull;
@@ -118,14 +120,6 @@ public class ValidationFailureStatusCodes {
     this.designationAlreadyExist = designationAlreadyExist;
   }
 
-  public String getDesignationNameIsEmpty() {
-    return designationNameIsEmpty;
-  }
-
-  public void setDesignationNameIsEmpty(String designationNameIsEmpty) {
-    this.designationNameIsEmpty = designationNameIsEmpty;
-  }
-
 
   public String getPlantIdIsNull() {
     return plantIdIsNull;
@@ -147,6 +141,12 @@ public class ValidationFailureStatusCodes {
     return plantIdAlreadyExist;
   }
 
+
+
+  /*
+   * Supplier Category
+   */
+
   public String getDesignationNameIsNull() {
     return designationNameIsNull;
   }
@@ -155,6 +155,13 @@ public class ValidationFailureStatusCodes {
     this.designationNameIsNull = designationNameIsNull;
   }
 
+  public String getDesignationNameIsEmpty() {
+    return designationNameIsEmpty;
+  }
+
+  public void setDesignationNameIsEmpty(String designationNameIsEmpty) {
+    this.designationNameIsEmpty = designationNameIsEmpty;
+  }
 
   public String getDesignationNameAlreadyExist() {
     return designationNameAlreadyExist;
@@ -163,7 +170,6 @@ public class ValidationFailureStatusCodes {
   public void setDesignationNameAlreadyExist(String designationNameAlreadyExist) {
     this.designationNameAlreadyExist = designationNameAlreadyExist;
   }
-
 
   /*
    * Supplier Category
