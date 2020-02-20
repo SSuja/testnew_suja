@@ -10,11 +10,9 @@ public class Constants {
   public static final String UPDATE_PLANT_SUCCESS = "Plant updated Successfully";
   public static final String NO_DATA_FOUND = "No Data Found";
   public static final String PLANT_DELETED = "Plant Successfully Deleted";
-  
+
   // constants for validation key
   public static final String PLANT = "plant";
-
-
 
   // Designations
 
@@ -39,7 +37,21 @@ public class Constants {
       "Supplier Category delete successfully";
   // constants for validation key
   public static final String SUPPLIER_CATEGORY = "supplier-category";
-  
+
+  /*
+   * Employee
+   */
+  // constants for validation key
+  public static final String EMPLOYEE_EMAIL = "Email";
+  public static final String EMPLOYEE_ID = "EmployeeId";
+  public static final String EMPLOYEES = "employees";
+  public static final String EMPLOYEE = "employee";
+  // Success Messages
+  public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
+  public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
+  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
