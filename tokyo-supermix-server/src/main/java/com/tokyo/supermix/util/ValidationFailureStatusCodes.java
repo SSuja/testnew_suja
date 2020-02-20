@@ -85,10 +85,6 @@ public class ValidationFailureStatusCodes {
     this.plantNameIsEmpty = plantNameIsEmpty;
   }
 
-  public String getPlantIdIsNull() {
-    return plantIdIsNull;
-  }
-
   public void setPlantIdIsNull(String plantIdIsNull) {
     this.plantIdIsNull = plantIdIsNull;
   }
