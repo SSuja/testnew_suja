@@ -37,6 +37,7 @@ public class ValidationFailureStatusCodes {
   @Value("${plantDto.id.null")
   private String plantIdIsNull;
 
+
   public String getPlantNotExist() {
     return plantNotExist;
   }
@@ -53,33 +54,38 @@ public class ValidationFailureStatusCodes {
     this.plantAlreadyExist = plantAlreadyExist;
   }
 
-  public String getPlantNameAlreadyExist() {
-    return plantNameAlreadyExist;
+
+
+  // for designation
+
+  public String getPlantNameIsNull() {
+    return plantNameIsNull;
   }
 
-  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
-    this.plantNameAlreadyExist = plantNameAlreadyExist;
+
+  public void setPlantNameIsNull(String plantNameIsNull) {
+    this.plantNameIsNull = plantNameIsNull;
   }
 
-  public String getPlantIdAlreadyExist() {
-    return plantIdAlreadyExist;
+
+
+  // for designation
+
+  public String getPlantNameIsEmpty() {
+    return plantNameIsEmpty;
+  }
+
+  public void setPlantNameIsEmpty(String plantNameIsEmpty) {
+    this.plantNameIsEmpty = plantNameIsEmpty;
   }
 
   public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
     this.plantIdAlreadyExist = plantIdAlreadyExist;
   }
 
-  public String getPlantNameIsNull() {
-    return plantNameIsNull;
-  }
 
-  public void setPlantNameIsNull(String plantNameIsNull) {
-    this.plantNameIsNull = plantNameIsNull;
-  }
 
-  public String getPlantNameIsEmpty() {
-    return plantNameIsEmpty;
-  }
+  // for designation
 
   @Value("${validation.designation.notExists}")
   private String designationNotExist;
@@ -113,14 +119,15 @@ public class ValidationFailureStatusCodes {
   }
 
 
-  public void setCategoryIsEmpty(String categoryIsEmpty) {
-    this.categoryIsEmpty = categoryIsEmpty;
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
   }
 
 
   /*
    * Supplier Category
    */
+
 
 
 

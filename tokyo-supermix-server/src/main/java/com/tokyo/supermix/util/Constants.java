@@ -56,8 +56,26 @@ public class Constants {
 
 
 
+<<<<<<< HEAD
   public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
       "Supplier Category updated Successfully";
+=======
+  /*
+   * Employee
+   */
+  // constants for validation key
+  public static final String EMAIL = "Email";
+  public static final String EMPLOYEE_ID = "EmployeeId";
+  public static final String EMPLOYEES = "employees";
+  public static final String EMPLOYEE = "employee";
+  // Success Messages
+  public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
+  public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
+  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+
+
+
+>>>>>>> 891e533e007ebdd843c5a34f46b2ec5c95c378cd
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
