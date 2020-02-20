@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.dto.EmployeeRequestDto;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 
@@ -54,8 +53,12 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public boolean isNotSameEmailExists(Employee employeeData, EmployeeRequestDto employeeDto) {
-    return employeeData.getEmail().equalsIgnoreCase(employeeDto.getEmail());
-
+  public boolean isUpdatedEmployeeEmailExist(Long id, String email) {
+    if ((!getEmployeeById(id).getEmail().equalsIgnoreCase(email)) && (isEmailExist(email))) {
+      return true;
+    }
+    return false;
   }
+
+
 }

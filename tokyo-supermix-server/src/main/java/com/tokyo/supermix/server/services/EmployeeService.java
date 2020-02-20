@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import com.tokyo.supermix.data.dto.EmployeeRequestDto;
 import com.tokyo.supermix.data.entities.Employee;
 
 public interface EmployeeService {
@@ -23,8 +22,8 @@ public interface EmployeeService {
   /* Update Employee */
   public Employee updateEmployee(Employee employee);
 
-  /* Check Emails */
-  boolean isNotSameEmailExists(Employee employeeData, EmployeeRequestDto employeeDto);
+  /* Check updated Email */
+  public boolean isUpdatedEmployeeEmailExist(Long id, String email);
 
   /* Get All Employees */
   public List<Employee> getAllEmployees();
