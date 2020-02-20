@@ -5,14 +5,16 @@ import javax.validation.constraints.NotNull;
 
 public class SupplierRequestDto {
   private Long id;
-  @NotNull(message = "{supplierDto.name.null}")
-  @NotEmpty(message = "{supplierDto.name.empty}")
+  @NotNull(message = "{supplierRequestDto.name.null}")
+  @NotEmpty(message = "{supplierRequestDto.name.empty}")
   private String name;
   private String companyName;
   private String address;
+  @NotNull(message = "{supplierRequestDto.phoneNumber.null}")
+  @NotEmpty(message = "{supplierRequestDto.phoneNumber.empty}")
   private String phoneNumber;
-  @NotNull(message = "{supplierDto.name.null}")
-  @NotEmpty(message = "{supplierDto.name.empty}")
+  @NotNull(message = "{supplierRequestDto.email.null}")
+  @NotEmpty(message = "{supplierRequestDto.email.empty}")
   private String email;
   private Long suppilerCategoryId;
 
