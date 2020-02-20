@@ -53,28 +53,20 @@ public class ValidationFailureStatusCodes {
     this.plantAlreadyExist = plantAlreadyExist;
   }
 
-  // for designation
-
-  @Value("${validation.designation.notExists}")
-  private String designationNotExist;
-
-  @Value("${validation.designation.alreadyExist}")
-  private String designationAlreadyExist;
-
-  public String getDesignationNotExist() {
-    return designationNotExist;
+  public String getPlantNameAlreadyExist() {
+    return plantNameAlreadyExist;
   }
 
-  public void setDesignationNotExist(String designationNotExist) {
-    this.designationNotExist = designationNotExist;
+  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+    this.plantNameAlreadyExist = plantNameAlreadyExist;
   }
 
-  public String getDesignationAlreadyExist() {
-    return designationAlreadyExist;
+  public String getPlantIdAlreadyExist() {
+    return plantIdAlreadyExist;
   }
 
-  public void setDesignationAlreadyExist(String designationAlreadyExist) {
-    this.designationAlreadyExist = designationAlreadyExist;
+  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+    this.plantIdAlreadyExist = plantIdAlreadyExist;
   }
 
   public String getPlantNameIsNull() {
@@ -101,68 +93,70 @@ public class ValidationFailureStatusCodes {
     this.plantIdIsNull = plantIdIsNull;
   }
 
-  public String getPlantNameAlreadyExist() {
-    return plantNameAlreadyExist;
+  @Value("${validation.designation.notExists}")
+  private String designationNotExist;
+
+  @Value("${validation.designation.alreadyExist}")
+  private String designationAlreadyExist;
+
+  @Value("${designationDto.name.null")
+  private String designationNameIsNull;
+
+  @Value("${designationDto.name.empty")
+  private String designationNameIsEmpty;
+
+  @Value("${validation.designationName.alreadyExist}")
+  private String designationNameAlreadyExist;
+
+  public String getDesignationNotExist() {
+    return designationNotExist;
   }
 
-  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
-    this.plantNameAlreadyExist = plantNameAlreadyExist;
+  public void setDesignationNotExist(String designationNotExist) {
+    this.designationNotExist = designationNotExist;
   }
 
-  public String getPlantIdAlreadyExist() {
-    return plantIdAlreadyExist;
+  public String getDesignationAlreadyExist() {
+    return designationAlreadyExist;
   }
 
-  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
-    this.plantIdAlreadyExist = plantIdAlreadyExist;
+  public void setDesignationAlreadyExist(String designationAlreadyExist) {
+    this.designationAlreadyExist = designationAlreadyExist;
   }
+
+
+  public void setCategoryIsEmpty(String categoryIsEmpty) {
+    this.categoryIsEmpty = categoryIsEmpty;
+  }
+
 
   /*
    * Supplier Category
    */
 
-  @Value("${validation.supplierCategory.alreadyExist}")
-  private String supplierCategoryAlreadyExist;
-
-  @Value("${validation.supplierCategory.notExist}")
-  private String supplierCategoryNotExit;
-
-  @Value("${supplierCategoryDto.category.null")
-  private String categoryIsNull;
-
-  @Value("${supplierCategoryDto.category.empty")
-  private String categoryIsEmpty;
-
-  public String getSupplierCategoryAlreadyExist() {
-    return supplierCategoryAlreadyExist;
+  public String getDesignationNameIsNull() {
+    return designationNameIsNull;
   }
 
-  public void setSupplierCategoryAlreadyExist(String supplierCategoryAlreadyExist) {
-    this.supplierCategoryAlreadyExist = supplierCategoryAlreadyExist;
+  public void setDesignationNameIsNull(String designationNameIsNull) {
+    this.designationNameIsNull = designationNameIsNull;
   }
 
-  public String getSupplierCategoryNotExit() {
-    return supplierCategoryNotExit;
+  public String getDesignationNameIsEmpty() {
+    return designationNameIsEmpty;
   }
 
-  public void setSupplierCategoryNotExit(String supplierCategoryNotExit) {
-    this.supplierCategoryNotExit = supplierCategoryNotExit;
+  public void setDesignationNameIsEmpty(String designationNameIsEmpty) {
+    this.designationNameIsEmpty = designationNameIsEmpty;
   }
 
-  public String getCategoryIsNull() {
-    return categoryIsNull;
+  public String getDesignationNameAlreadyExist() {
+    return designationNameAlreadyExist;
   }
 
-  public void setCategoryIsNull(String categoryIsNull) {
-    this.categoryIsNull = categoryIsNull;
-  }
+  public void setDesignationNameAlreadyExist(String designationNameAlreadyExist) {
+    this.designationNameAlreadyExist = designationNameAlreadyExist;
 
-  public String getCategoryIsEmpty() {
-    return categoryIsEmpty;
-  }
-
-  public void setCategoryIsEmpty(String categoryIsEmpty) {
-    this.categoryIsEmpty = categoryIsEmpty;
   }
 
   /*
@@ -204,8 +198,48 @@ public class ValidationFailureStatusCodes {
     return supplierNotExit;
   }
 
+  @Value("${validation.supplierCategory.alreadyExist}")
+  private String supplierCategoryAlreadyExist;
+
+  @Value("${validation.supplierCategory.notExist}")
+  private String supplierCategoryNotExit;
+
+  @Value("${supplierCategoryDto.category.null")
+  private String categoryIsNull;
+
+  @Value("${supplierCategoryDto.category.empty")
+  private String categoryIsEmpty;
+
+  public String getSupplierCategoryAlreadyExist() {
+    return supplierCategoryAlreadyExist;
+  }
+
+  public void setSupplierCategoryAlreadyExist(String supplierCategoryAlreadyExist) {
+    this.supplierCategoryAlreadyExist = supplierCategoryAlreadyExist;
+  }
+
+  public String getSupplierCategoryNotExit() {
+    return supplierCategoryNotExit;
+  }
+
+  public void setSupplierCategoryNotExit(String supplierCategoryNotExit) {
+    this.supplierCategoryNotExit = supplierCategoryNotExit;
+  }
+
+  public String getCategoryIsNull() {
+    return categoryIsNull;
+  }
+
+  public void setCategoryIsNull(String categoryIsNull) {
+    this.categoryIsNull = categoryIsNull;
+  }
+
   public void setSupplierNotExit(String supplierNotExit) {
     this.supplierNotExit = supplierNotExit;
+  }
+
+  public String getCategoryIsEmpty() {
+    return categoryIsEmpty;
   }
 
   public String getSupplierNameIsNull() {
@@ -255,5 +289,5 @@ public class ValidationFailureStatusCodes {
   public void setPhoneNumberIsEmpty(String phoneNumberIsEmpty) {
     this.phoneNumberIsEmpty = phoneNumberIsEmpty;
   }
-  
+
 }
