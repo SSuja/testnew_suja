@@ -53,28 +53,20 @@ public class ValidationFailureStatusCodes {
     this.plantAlreadyExist = plantAlreadyExist;
   }
 
-  // for designation
-
-  @Value("${validation.designation.notExists}")
-  private String designationNotExist;
-
-  @Value("${validation.designation.alreadyExist}")
-  private String designationAlreadyExist;
-
-  public String getDesignationNotExist() {
-    return designationNotExist;
+  public String getPlantNameAlreadyExist() {
+    return plantNameAlreadyExist;
   }
 
-  public void setDesignationNotExist(String designationNotExist) {
-    this.designationNotExist = designationNotExist;
+  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
+    this.plantNameAlreadyExist = plantNameAlreadyExist;
   }
 
-  public String getDesignationAlreadyExist() {
-    return designationAlreadyExist;
+  public String getPlantIdAlreadyExist() {
+    return plantIdAlreadyExist;
   }
 
-  public void setDesignationAlreadyExist(String designationAlreadyExist) {
-    this.designationAlreadyExist = designationAlreadyExist;
+  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
+    this.plantIdAlreadyExist = plantIdAlreadyExist;
   }
 
   public String getPlantNameIsNull() {
@@ -101,26 +93,66 @@ public class ValidationFailureStatusCodes {
     this.plantIdIsNull = plantIdIsNull;
   }
 
-  public String getPlantNameAlreadyExist() {
-    return plantNameAlreadyExist;
+  // for designation
+  @Value("${validation.designation.notExists}")
+  private String designationNotExist;
+
+  @Value("${validation.designation.alreadyExist}")
+  private String designationAlreadyExist;
+
+  @Value("${designationDto.name.null")
+  private String designationNameIsNull;
+
+  @Value("${designationDto.name.empty")
+  private String designationNameIsEmpty;
+
+  @Value("${validation.designationName.alreadyExist}")
+  private String designationNameAlreadyExist;
+
+
+  public String getDesignationNotExist() {
+    return designationNotExist;
   }
 
-  public void setPlantIdAlreadyExist(String plantIdAlreadyExist) {
-    this.plantIdAlreadyExist = plantIdAlreadyExist;
+  public void setDesignationNotExist(String designationNotExist) {
+    this.designationNotExist = designationNotExist;
   }
 
-  public void setPlantNameAlreadyExist(String plantNameAlreadyExist) {
-    this.plantNameAlreadyExist = plantNameAlreadyExist;
+  public String getDesignationAlreadyExist() {
+    return designationAlreadyExist;
   }
 
-  public String getPlantIdAlreadyExist() {
-    return plantIdAlreadyExist;
+  public void setDesignationAlreadyExist(String designationAlreadyExist) {
+    this.designationAlreadyExist = designationAlreadyExist;
+  }
+
+  public String getDesignationNameIsNull() {
+    return designationNameIsNull;
+  }
+
+  public void setDesignationNameIsNull(String designationNameIsNull) {
+    this.designationNameIsNull = designationNameIsNull;
+  }
+
+  public String getDesignationNameIsEmpty() {
+    return designationNameIsEmpty;
+  }
+
+  public void setDesignationNameIsEmpty(String designationNameIsEmpty) {
+    this.designationNameIsEmpty = designationNameIsEmpty;
+  }
+
+  public String getDesignationNameAlreadyExist() {
+    return designationNameAlreadyExist;
+  }
+
+  public void setDesignationNameAlreadyExist(String designationNameAlreadyExist) {
+    this.designationNameAlreadyExist = designationNameAlreadyExist;
   }
 
   /*
    * Supplier Category
    */
-
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
 
@@ -167,6 +199,7 @@ public class ValidationFailureStatusCodes {
 
   // for employee
   @Value("${validation.employee.notExists}")
+
   private String employeeNotExist;
 
   @Value("${validation.employee.alreadyExist}")
@@ -209,4 +242,5 @@ public class ValidationFailureStatusCodes {
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
+
 }

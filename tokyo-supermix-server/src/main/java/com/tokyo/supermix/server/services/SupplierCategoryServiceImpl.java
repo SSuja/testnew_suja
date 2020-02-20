@@ -44,4 +44,17 @@ public class SupplierCategoryServiceImpl implements SupplierCategoryService {
   public List<SupplierCategory> getAllSupplierCategories() {
     return supplierCategoryRepository.findAll();
   }
+
+  @Transactional
+  public SupplierCategory updateSupplierCategory(SupplierCategory supplierCategory) {
+    return supplierCategoryRepository.save(supplierCategory);
+  }
+
+  public boolean isUpdatedCategoryExist(Long id, String category) {
+    if ((!getSupplierCategoryById(id).getCategory().equalsIgnoreCase(category))
+        && (isSupplierCategoryExist(category))) {
+      return true;
+    }
+    return false;
+  }
 }

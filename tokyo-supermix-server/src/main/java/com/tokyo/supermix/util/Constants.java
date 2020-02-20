@@ -19,24 +19,31 @@ public class Constants {
   public static final String DESIGNATION_NAME = "Designation Name";
   public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
   public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
-
+  public static final String UPDATE_DESIGNATION_SUCCESS = "Designation updated Successfully";
   public static final String DESIGNATION = "designation";
   public static final String DESIGNATIONS = "designations";
+
 
   /*
    * Supplier Category
    */
-  public static final String SUPPLIER_CATEGORY_NAME = "Supplier Category";
+  public static final String SUPPLIER_CATEGORY_NAME = "category";
+
 
   /*
    * Success Messages for Supplier Category
    */
   public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category added Successfully";
 
+
+  public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
+      "Supplier Category updated Successfully";
+
+  // constants for validation key
+  public static final String SUPPLIER_CATEGORY = "supplierCategory";
+
   public static final String DELETE_SUPPLIER_CATEGORY_SCCESS =
       "Supplier Category delete successfully";
-  // constants for validation key
-  public static final String SUPPLIER_CATEGORY = "supplier-category";
 
   /*
    * Employee
@@ -50,6 +57,7 @@ public class Constants {
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+
 
 
   // encaptulate constructor to restrict modification from outside

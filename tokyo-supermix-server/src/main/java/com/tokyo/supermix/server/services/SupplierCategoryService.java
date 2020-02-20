@@ -12,4 +12,8 @@ public interface SupplierCategoryService {
 
   public boolean isSupplierCategoryExist(Long id);
   public List<SupplierCategory> getAllSupplierCategories();
+
+  public SupplierCategory updateSupplierCategory(SupplierCategory supplierCategory);
+
+  public boolean isUpdatedCategoryExist( Long id, String category);
 }
