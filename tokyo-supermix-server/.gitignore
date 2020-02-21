@@ -34,3 +34,7 @@ build/
 .classpath
 .project
 .settings/
+
+# Maven
+log/
+target/
