@@ -25,10 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.rest.validation.ValidationFailure;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @RestController
@@ -65,8 +63,9 @@ public class DesignationController {
 			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
 					mapper.map(designation, DesignationDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
-				ValidationConstance.DESIGNATION_NOT_EXIST), HttpStatus.BAD_REQUEST);
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
+				validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
 
 	}
 
@@ -78,24 +77,19 @@ public class DesignationController {
 			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.DESIGNATION_DELETED),
 					HttpStatus.OK);
 		}
-		return new ResponseEntity<>(
-				new BasicResponse<>(
-						new ValidationFailure(Constants.DESIGNATION_NAME,
-								validationFailureStatusCodes.getDesignationNotExist()),
-						RestApiResponseStatus.VALIDATION_FAILURE, ValidationConstance.DESIGNATION_NOT_EXIST),
-				HttpStatus.BAD_REQUEST);
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
+				validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
 
 	}
 
 	// post API for designation
 	@PostMapping(value = EndpointURI.DESIGNATION)
-	public ResponseEntity<Object> createDesignation(@RequestBody DesignationDto designationDto) {
+	public ResponseEntity<Object> createDesignation(@Valid @RequestBody DesignationDto designationDto) {
 		if (designationService.isDesignationExist(designationDto.getName())) {
 			logger.debug("Designation already exists: createDesignation(), designationName: {}");
-			return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
-					new ValidationFailure(Constants.DESIGNATION_NAME,
-							validationFailureStatusCodes.getDesignationAlreadyExist()),
-					RestApiResponseStatus.VALIDATION_FAILURE), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION_NAME,
+					validationFailureStatusCodes.getDesignationNameAlreadyExist()), HttpStatus.BAD_REQUEST);
 		}
 
 		Designation designation = mapper.map(designationDto, Designation.class);

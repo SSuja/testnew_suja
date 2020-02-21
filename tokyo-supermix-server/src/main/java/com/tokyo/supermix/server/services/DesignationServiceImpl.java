@@ -16,7 +16,7 @@ public class DesignationServiceImpl implements DesignationService {
 	@Autowired
 	private DesignationRepository designationRepository;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Designation> getAllDesignations() {
 		return designationRepository.findAll();
 	}
