@@ -1,29 +1,29 @@
 package com.tokyo.supermix.rest.response;
 
 public class ValidationFailure {
-	public ValidationFailure(String field, String code) {
-		this.message = field;
-		this.code = code;
-	}
+  public ValidationFailure(String field, String code) {
+    this.field = field;
+    this.code = code;
+  }
 
-	private String message;
+  private String field;
 
-	private String code;
+  private String code;
 
-	public String getMessage() {
-		return message;
-	}
+  public String getField() {
+    return field;
+  }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+  public void setField(String field) {
+    this.field = field;
+  }
 
-	public String getCode() {
-		return code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
 }
