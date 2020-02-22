@@ -42,10 +42,10 @@ public class SupplierController {
   @GetMapping(value = EndpointURI.SUPPLIERS)
   public ResponseEntity<Object> getSuppliers() {
     List<Supplier> supplierList = supplierService.getSuppliers();
-    List<SupplierResponseDto> supplierResponseDtoList =
-        mapper.map(supplierList, SupplierResponseDto.class);
-    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER, supplierResponseDtoList,
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.SUPPLIER,
+            mapper.map(supplierList, SupplierResponseDto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   @PostMapping(value = EndpointURI.SUPPLIER)
@@ -58,8 +58,7 @@ public class SupplierController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
           validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    Supplier supplier = mapper.map(supplierDto, Supplier.class);
-    supplierService.createSupplier(supplier);
+    supplierService.createSupplier(mapper.map(supplierDto, Supplier.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SUPPLIER_SUCCESS),
         HttpStatus.OK);
@@ -78,8 +77,7 @@ public class SupplierController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
             validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      Supplier supplier = mapper.map(supplierDto, Supplier.class);
-      supplierService.updateSupplier(supplier);
+      supplierService.updateSupplier(mapper.map(supplierDto, Supplier.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SUPPLIER_SUCCESS),
           HttpStatus.OK);

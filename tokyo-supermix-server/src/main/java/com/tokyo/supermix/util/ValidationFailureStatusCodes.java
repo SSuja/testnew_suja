@@ -162,21 +162,22 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.supplier.notExist}")
   private String supplierNotExit;
 
-  @Value("${supplierDto.name.null")
+  @Value("${supplierRequestDto.name.null}")
   private String supplierNameIsNull;
 
-  @Value("${supplierDto.name.empty")
+  @Value("${supplierRequestDto.name.empty}")
   private String supplierNameIsEmpty;
 
-  @Value("${supplierDto.email.null")
+  @Value("${supplierRequestDto.email.null}")
   private String emailIsNull;
 
-  @Value("${supplierDto.email.empty")
+  @Value("${supplierRequestDto.email.empty}")
   private String emailIsEmpty;
-  @Value("${supplierDto.phoneNumber.null")
+  
+  @Value("${supplierRequestDto.phoneNumber.null}")
   private String phoneNumberIsNull;
-
-  @Value("${supplierDto.phoneNumber.empty")
+  
+  @Value("${supplierRequestDto.phoneNumber.empty}")
   private String phoneNumberIsEmpty;
 
   public String getSupplierAlreadyExist() {
@@ -279,6 +280,22 @@ public class ValidationFailureStatusCodes {
   public String getPhoneNumberIsEmpty() {
     return phoneNumberIsEmpty;
   }
+//
+//  public String getSuppilerCategoryIdIsNull() {
+//    return suppilerCategoryIdIsNull;
+//  }
+//
+//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+//  }
+//
+//  public String getSuppilerCategoryIdIsEmpty() {
+//    return suppilerCategoryIdIsEmpty;
+//  }
+//
+//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+//  }
 
   // for employee
   @Value("${validation.employee.notExists}")
