@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.DesignationDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -67,14 +66,14 @@ public class PlantController {
         HttpStatus.OK);
   }
 
-  // get designation by id
+  // get plant by id
   @GetMapping(value = EndpointURI.GET_PLANT_BY_CODE)
   public ResponseEntity<Object> getPlantByCode(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       logger.debug("Get plant by plantCode ");
       PlantDto plantDto = mapper.map(plantService.getPlantByCode(code), PlantDto.class);
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
-          mapper.map(plantDto, DesignationDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+          mapper.map(plantDto, PlantDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
