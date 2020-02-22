@@ -13,7 +13,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   private EmployeeRepository employeeRepository;
 
   @Transactional()
-  public void createEmployee(Employee employee) {
+  public void saveEmployee(Employee employee) {
     employeeRepository.save(employee);
   }
 
@@ -40,11 +40,6 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Transactional()
   public List<Employee> getAllEmployees() {
     return employeeRepository.findAll();
-  }
-
-  @Transactional()
-  public Employee updateEmployee(Employee employee) {
-    return employeeRepository.save(employee);
   }
 
   @Override

@@ -1,25 +1,16 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class EmployeeResponseDto {
   private Long id;
-  @NotNull(message = "{employeeDto.firstName.null}")
-  @NotEmpty(message = "{employeeDto.firstName.empty}")
   private String firstName;
-  @NotNull(message = "{employeeDto.lastName.null}")
-  @NotEmpty(message = "{employeeDto.lastName.empty}")
   private String lastName;
-  @NotNull(message = "{employeeDto.email.null}")
-  @NotEmpty(message = "{employeeDto.email.empty}")
   private String email;
   private String phoneNumber;
   private String address;
-  @NotNull(message = "{employeeDto.plantCode.null}")
-  @NotEmpty(message = "{employeeDto.plantCode.empty}")
   private String plantName;
   private String designationName;
+  private String plantCode;
+  private Long designationId;
 
   public Long getId() {
     return id;
@@ -85,6 +76,20 @@ public class EmployeeResponseDto {
     this.designationName = designationName;
   }
 
+  public String getPlantCode() {
+    return plantCode;
+  }
 
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
+  }
+
+  public Long getDesignationId() {
+    return designationId;
+  }
+
+  public void setDesignationId(Long designationId) {
+    this.designationId = designationId;
+  }
 
 }
