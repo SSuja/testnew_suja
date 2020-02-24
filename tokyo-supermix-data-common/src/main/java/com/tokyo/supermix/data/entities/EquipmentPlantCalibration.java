@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "equipment_calibration")
+@Table(schema = "tokyo-supermix", name = "equipment_plant_calibration")
 public class EquipmentPlantCalibration implements Serializable {
 
   private static final long serialVersionUID = 1L;

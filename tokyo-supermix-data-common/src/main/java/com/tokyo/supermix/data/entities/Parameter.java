@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "parameter_master")
+@Table(schema = "tokyo-supermix", name = "parameter")
 public class Parameter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
