@@ -4,8 +4,8 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.Employee;
 
 public interface EmployeeService {
-  /* Add Employee */
-  public void createEmployee(Employee employee);
+  /* Save Employee */
+  public void saveEmployee(Employee employee);
 
   /* Check Existing email */
   public boolean isEmailExist(String email);
@@ -18,9 +18,6 @@ public interface EmployeeService {
 
   /* Get Employee By Id */
   public Employee getEmployeeById(Long id);
-
-  /* Update Employee */
-  public Employee updateEmployee(Employee employee);
 
   /* Check updated Email */
   public boolean isUpdatedEmployeeEmailExist(Long id, String email);
