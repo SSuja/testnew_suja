@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "main_sub_category")
+@Table(schema = "tokyo-supermix", name = "material_sub_category")
 public class MaterialSubCategory implements Serializable {
 
   private static final long serialVersionUID = 1L;
