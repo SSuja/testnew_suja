@@ -19,8 +19,7 @@ public class FinishProductSample implements Serializable {
   @Id
   private String code;
   private Date dateAndTime;
-  private String sampleSize;
-  private String workOrderNo;
+  private String salesOrderNo;
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
@@ -47,20 +46,12 @@ public class FinishProductSample implements Serializable {
     this.dateAndTime = dateAndTime;
   }
 
-  public String getSampleSize() {
-    return sampleSize;
+  public String getSalesOrderNo() {
+    return salesOrderNo;
   }
 
-  public void setSampleSize(String sampleSize) {
-    this.sampleSize = sampleSize;
-  }
-
-  public String getWorkOrderNo() {
-    return workOrderNo;
-  }
-
-  public void setWorkOrderNo(String workOrderNo) {
-    this.workOrderNo = workOrderNo;
+  public void setSalesOrderNo(String salesOrderNo) {
+    this.salesOrderNo = salesOrderNo;
   }
 
   public MixDesign getMixDesign() {
@@ -79,16 +70,16 @@ public class FinishProductSample implements Serializable {
     this.project = project;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
   public Pour getPour() {
     return pour;
   }
 
   public void setPour(Pour pour) {
     this.pour = pour;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 
 }
