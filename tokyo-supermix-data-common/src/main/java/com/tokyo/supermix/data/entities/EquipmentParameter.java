@@ -14,64 +14,64 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "equipment_parameter")
 public class EquipmentParameter implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String shortFormat;
-	@ManyToOne
-	@JoinColumn(name = "parameterMasterId", nullable = false)
-	private ParameterMaster parameterMaster;
-	@ManyToOne
-	@JoinColumn(name = "equipmentId", nullable = false)
-	private Equipment equipment;
-	@ManyToOne
-	@JoinColumn(name = "unitId", nullable = false)
-	private Unit unit;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String shortFormat;
+  @ManyToOne
+  @JoinColumn(name = "parameterId", nullable = false)
+  private Parameter parameter;
+  @ManyToOne
+  @JoinColumn(name = "equipmentId", nullable = false)
+  private Equipment equipment;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public String getShortFormat() {
-		return shortFormat;
-	}
+  public String getShortFormat() {
+    return shortFormat;
+  }
 
-	public void setShortFormat(String shortFormat) {
-		this.shortFormat = shortFormat;
-	}
+  public void setShortFormat(String shortFormat) {
+    this.shortFormat = shortFormat;
+  }
 
-	public ParameterMaster getParameterMaster() {
-		return parameterMaster;
-	}
+  public Parameter getParameter() {
+    return parameter;
+  }
 
-	public void setParameterMaster(ParameterMaster parameterMaster) {
-		this.parameterMaster = parameterMaster;
-	}
+  public void setParameter(Parameter parameter) {
+    this.parameter = parameter;
+  }
 
-	public Equipment getEquipment() {
-		return equipment;
-	}
+  public Equipment getEquipment() {
+    return equipment;
+  }
 
-	public void setEquipment(Equipment equipment) {
-		this.equipment = equipment;
-	}
+  public void setEquipment(Equipment equipment) {
+    this.equipment = equipment;
+  }
 
-	public Unit getUnit() {
-		return unit;
-	}
+  public Unit getUnit() {
+    return unit;
+  }
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
+  public void setUnit(Unit unit) {
+    this.unit = unit;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }
