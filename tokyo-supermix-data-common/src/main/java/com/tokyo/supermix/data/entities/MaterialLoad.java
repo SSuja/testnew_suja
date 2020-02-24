@@ -10,71 +10,91 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "load_material")
-public class MaterialLoad implements Serializable{
+@Table(schema = "tokyo-supermix", name = "material_load")
+public class MaterialLoad implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	private String code;
-	private String vehicleNo;
-	private Date dateAndTime;
-	private String measurement;
-	private String quantity;
-	@ManyToOne
-	@JoinColumn(name = "incomingSampleCode", nullable = false)
-	private IncomingSample incomingSample;
+  @Id
+  private String code;
+  private String vehicleNo;
+  private Date dateAndTime;
+  private String measurement;
+  private String quantity;
+  private Date expiryDate;
+  @ManyToOne
+  @JoinColumn(name = "incomingSampleCode", nullable = false)
+  private IncomingSample incomingSample;
+  @ManyToOne
+  @JoinColumn(name = "processSampleCode", nullable = false)
+  private ProcessSample processSample;
 
-	public String getCode() {
-		return code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public String getVehicleNo() {
-		return vehicleNo;
-	}
+  public String getVehicleNo() {
+    return vehicleNo;
+  }
 
-	public void setVehicleNo(String vehicleNo) {
-		this.vehicleNo = vehicleNo;
-	}
+  public void setVehicleNo(String vehicleNo) {
+    this.vehicleNo = vehicleNo;
+  }
 
-	public Date getDateAndTime() {
-		return dateAndTime;
-	}
+  public Date getDateAndTime() {
+    return dateAndTime;
+  }
 
-	public void setDateAndTime(Date dateAndTime) {
-		this.dateAndTime = dateAndTime;
-	}
+  public void setDateAndTime(Date dateAndTime) {
+    this.dateAndTime = dateAndTime;
+  }
 
-	public String getMeasurement() {
-		return measurement;
-	}
+  public String getMeasurement() {
+    return measurement;
+  }
 
-	public void setMeasurement(String measurement) {
-		this.measurement = measurement;
-	}
+  public void setMeasurement(String measurement) {
+    this.measurement = measurement;
+  }
 
-	public String getQuantity() {
-		return quantity;
-	}
+  public String getQuantity() {
+    return quantity;
+  }
 
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
+  public void setQuantity(String quantity) {
+    this.quantity = quantity;
+  }
 
-	public IncomingSample getIncomingSample() {
-		return incomingSample;
-	}
+  public IncomingSample getIncomingSample() {
+    return incomingSample;
+  }
 
-	public void setIncomingSample(IncomingSample incomingSample) {
-		this.incomingSample = incomingSample;
-	}
+  public void setIncomingSample(IncomingSample incomingSample) {
+    this.incomingSample = incomingSample;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public Date getExpiryDate() {
+    return expiryDate;
+  }
+
+  public void setExpiryDate(Date expiryDate) {
+    this.expiryDate = expiryDate;
+  }
+
+  public ProcessSample getProcessSample() {
+    return processSample;
+  }
+
+  public void setProcessSample(ProcessSample processSample) {
+    this.processSample = processSample;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

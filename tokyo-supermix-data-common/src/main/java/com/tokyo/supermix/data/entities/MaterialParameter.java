@@ -14,82 +14,100 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "material_parameter")
 public class MaterialParameter implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String minimumValue;
-	private String maximumValue;
-	private String name;
-	@ManyToOne
-	@JoinColumn(name = "materialCode", nullable = false)
-	private Material material;
-	@ManyToOne
-	@JoinColumn(name = "parameterMasterId", nullable = false)
-	private ParameterMaster parameterMaster;
-	@ManyToOne
-	@JoinColumn(name = "unitId", nullable = false)
-	private Unit unit;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String minimumValue;
+  private String maximumValue;
+  private String name;
+  private String shortFormat;
+  private String parameterAdditional;
+  @ManyToOne
+  @JoinColumn(name = "materialCategoryId", nullable = false)
+  private MaterialCategory materialCategory;
+  @ManyToOne
+  @JoinColumn(name = "parameterId", nullable = false)
+  private Parameter parameter;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public String getMinimumValue() {
-		return minimumValue;
-	}
+  public String getMinimumValue() {
+    return minimumValue;
+  }
 
-	public void setMinimumValue(String minimumValue) {
-		this.minimumValue = minimumValue;
-	}
+  public void setMinimumValue(String minimumValue) {
+    this.minimumValue = minimumValue;
+  }
 
-	public String getMaximumValue() {
-		return maximumValue;
-	}
+  public String getMaximumValue() {
+    return maximumValue;
+  }
 
-	public void setMaximumValue(String maximumValue) {
-		this.maximumValue = maximumValue;
-	}
+  public void setMaximumValue(String maximumValue) {
+    this.maximumValue = maximumValue;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public Material getMaterial() {
-		return material;
-	}
+  public MaterialCategory getMaterialCategory() {
+    return materialCategory;
+  }
 
-	public void setMaterial(Material material) {
-		this.material = material;
-	}
+  public void setMaterialCategory(MaterialCategory materialCategory) {
+    this.materialCategory = materialCategory;
+  }
 
-	public ParameterMaster getParameterMaster() {
-		return parameterMaster;
-	}
+  public Parameter getParameter() {
+    return parameter;
+  }
 
-	public void setParameterMaster(ParameterMaster parameterMaster) {
-		this.parameterMaster = parameterMaster;
-	}
+  public void setParameter(Parameter parameter) {
+    this.parameter = parameter;
+  }
 
-	public Unit getUnit() {
-		return unit;
-	}
+  public Unit getUnit() {
+    return unit;
+  }
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
+  public void setUnit(Unit unit) {
+    this.unit = unit;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public String getShortFormat() {
+    return shortFormat;
+  }
+
+  public void setShortFormat(String shortFormat) {
+    this.shortFormat = shortFormat;
+  }
+
+  public String getParameterAdditional() {
+    return parameterAdditional;
+  }
+
+  public void setParameterAdditional(String parameterAdditional) {
+    this.parameterAdditional = parameterAdditional;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

@@ -11,81 +11,81 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "project")
-public class Project implements Serializable{
+public class Project implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	private String code;
-	private String name;
-	private String contactNumber;
-	private String contactPerson;
-	private Date dateAndTime;
-	@ManyToOne
-	@JoinColumn(name = "customerId", nullable = false)
-	private Customer customer;
-	@ManyToOne
-	@JoinColumn(name = "plantCode", nullable = false)
-	private Plant plant;
+  @Id
+  private String code;
+  private String name;
+  private String contactNumber;
+  private String contactPerson;
+  private Date dateAndTime;
+  @ManyToOne
+  @JoinColumn(name = "customerId", nullable = false)
+  private Customer customer;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = false)
+  private Plant plant;
 
-	public String getCode() {
-		return code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public String getContactNumber() {
-		return contactNumber;
-	}
+  public String getContactNumber() {
+    return contactNumber;
+  }
 
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
+  public void setContactNumber(String contactNumber) {
+    this.contactNumber = contactNumber;
+  }
 
-	public String getContactPerson() {
-		return contactPerson;
-	}
+  public String getContactPerson() {
+    return contactPerson;
+  }
 
-	public void setContactPerson(String contactPerson) {
-		this.contactPerson = contactPerson;
-	}
+  public void setContactPerson(String contactPerson) {
+    this.contactPerson = contactPerson;
+  }
 
-	public Date getDateAndTime() {
-		return dateAndTime;
-	}
+  public Date getDateAndTime() {
+    return dateAndTime;
+  }
 
-	public void setDateAndTime(Date dateAndTime) {
-		this.dateAndTime = dateAndTime;
-	}
+  public void setDateAndTime(Date dateAndTime) {
+    this.dateAndTime = dateAndTime;
+  }
 
-	public Customer getCustomer() {
-		return customer;
-	}
+  public Customer getCustomer() {
+    return customer;
+  }
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
 
-	public Plant getPlant() {
-		return plant;
-	}
+  public Plant getPlant() {
+    return plant;
+  }
 
-	public void setPlant(Plant plant) {
-		this.plant = plant;
-	}
+  public void setPlant(Plant plant) {
+    this.plant = plant;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

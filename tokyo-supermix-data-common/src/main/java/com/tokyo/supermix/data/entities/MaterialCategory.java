@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "customer")
-public class Customer implements Serializable {
+@Table(schema = "tokyo-supermix", name = "material_category")
+public class MaterialCategory implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -18,9 +18,6 @@ public class Customer implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  private String phoneNumber;
-  private String address;
-  private String email;
 
   public Long getId() {
     return id;
@@ -38,32 +35,8 @@ public class Customer implements Serializable {
     this.name = name;
   }
 
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
+  
 }
