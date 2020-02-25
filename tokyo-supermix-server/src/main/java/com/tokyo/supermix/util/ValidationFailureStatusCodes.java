@@ -342,5 +342,74 @@ public class ValidationFailureStatusCodes {
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
+  
+  // for customer
+  @Value("${validation.customer.alreadyExist}")
+  private String customerAlreadyExist;
+
+  @Value("${customerDto.name.null")
+  private String customerNameIsNull;
+
+  @Value("${customerDto.name.empty")
+  private String customerNameIsEmpty;
+
+  @Value("${customerDto.phoneNumber.null}")
+  private String customerPhoneNumberIsnull;
+
+  @Value("${customerDto.email.null}")
+  private String customerEmailIsnull;
+
+
+  public String getCustomerNameIsNull() {
+    return customerNameIsNull;
+  }
+
+  public void setCustomerNameIsNull(String customerNameIsNull) {
+    this.customerNameIsNull = customerNameIsNull;
+  }
+
+  public String getCustomerNameIsEmpty() {
+    return customerNameIsEmpty;
+  }
+
+  public void setCustomerNameIsEmpty(String customerNameIsEmpty) {
+    this.customerNameIsEmpty = customerNameIsEmpty;
+  }
+
+  public String getCustomerPhoneNumberIsnull() {
+    return customerPhoneNumberIsnull;
+  }
+
+  public void setCustomerPhoneNumberIsnull(String customerPhoneNumberIsnull) {
+    this.customerPhoneNumberIsnull = customerPhoneNumberIsnull;
+  }
+
+  public String getCustomerEmailIsnull() {
+    return customerEmailIsnull;
+  }
+
+  public void setCustomerEmailIsnull(String customerEmailIsnull) {
+    this.customerEmailIsnull = customerEmailIsnull;
+  }
+
+  @Value("${validation.customer.notExists}")
+  private String customerNotExist;
+
+  public String getCustomerNotExist() {
+    return customerNotExist;
+  }
+
+  public void setCustomerNotExist(String customerNotExist) {
+    this.customerNotExist = customerNotExist;
+  }
+
+  public String getCustomerAlreadyExist() {
+    return customerAlreadyExist;
+  }
+
+  public void setCustomerAlreadyExist(String customerAlreadyExist) {
+    this.customerAlreadyExist = customerAlreadyExist;
+  }
+
 
 }
