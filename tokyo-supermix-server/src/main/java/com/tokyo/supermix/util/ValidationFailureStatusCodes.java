@@ -105,7 +105,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.designationName.alreadyExist}")
   private String designationNameAlreadyExist;
 
-
   public String getDesignationNotExist() {
     return designationNotExist;
   }
@@ -121,7 +120,6 @@ public class ValidationFailureStatusCodes {
   public void setDesignationAlreadyExist(String designationAlreadyExist) {
     this.designationAlreadyExist = designationAlreadyExist;
   }
-
 
   public String getPlantIdIsNull() {
     return plantIdIsNull;
@@ -155,7 +153,6 @@ public class ValidationFailureStatusCodes {
    * Supplier
    */
 
-
   @Value("${validation.supplier.alreadyExist}")
   private String supplierAlreadyExist;
 
@@ -173,10 +170,10 @@ public class ValidationFailureStatusCodes {
 
   @Value("${supplierRequestDto.email.empty}")
   private String emailIsEmpty;
-  
+
   @Value("${supplierRequestDto.phoneNumber.null}")
   private String phoneNumberIsNull;
-  
+
   @Value("${supplierRequestDto.phoneNumber.empty}")
   private String phoneNumberIsEmpty;
 
@@ -191,7 +188,6 @@ public class ValidationFailureStatusCodes {
   public String getSupplierNotExit() {
     return supplierNotExit;
   }
-
 
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
@@ -280,22 +276,22 @@ public class ValidationFailureStatusCodes {
   public String getPhoneNumberIsEmpty() {
     return phoneNumberIsEmpty;
   }
-//
-//  public String getSuppilerCategoryIdIsNull() {
-//    return suppilerCategoryIdIsNull;
-//  }
-//
-//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-//  }
-//
-//  public String getSuppilerCategoryIdIsEmpty() {
-//    return suppilerCategoryIdIsEmpty;
-//  }
-//
-//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-//  }
+  //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
 
   // for employee
   @Value("${validation.employee.notExists}")
@@ -341,6 +337,20 @@ public class ValidationFailureStatusCodes {
 
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+  }
+
+  // for EquipmentPlantCalibration
+  @Value("${validation.equipmentPlantCalibration.notExists}")
+  private String equipmentPlantCalibrationNotExist;
+  
+  
+
+  public String getEquipmentPlantCalibrationNotExist() {
+    return equipmentPlantCalibrationNotExist;
+  }
+
+  public void setEquipmentPlantCalibrationNotExist(String equipmentPlantCalibrationNotExist) {
+    this.equipmentPlantCalibrationNotExist = equipmentPlantCalibrationNotExist;
   }
 
 }

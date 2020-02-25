@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,119 +13,96 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "equipment_plant_calibration")
 public class EquipmentPlantCalibration implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private Date calibratedDate;
+	private Date dueDate;
+	private String calibratedBy;
+	private String testerName;
+	private String description;
+	@ManyToOne
+	@JoinColumn(name = "equipmentPlantId", nullable = false)
+	private EquipmentPlant equipmentPlant;
+	@ManyToOne
+	@JoinColumn(name = "supplierId", nullable = false)
+	private Supplier supplier;
+	private String status;
 
-  private static final long serialVersionUID = 1L;
+	public Long getId() {
+		return id;
+	}
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  private String calibratedBy;
-  private Date calibratedDate;
-  private String companyName;
-  private String description;
-  private Date dueDate;
-  private String testerName;
-  private String status;
-  @ManyToOne
-  @JoinColumn(name = "equipmentPlantId", nullable = false)
-  private EquipmentPlant equipmentPlant;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
-  @ManyToOne
-  @JoinColumn(name = "supplierId", nullable = false)
-  private Supplier supplier;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Date getCalibratedDate() {
+		return calibratedDate;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setCalibratedDate(Date calibratedDate) {
+		this.calibratedDate = calibratedDate;
+	}
 
-  public String getCalibratedBy() {
-    return calibratedBy;
-  }
+	public Date getDueDate() {
+		return dueDate;
+	}
 
-  public void setCalibratedBy(String calibratedBy) {
-    this.calibratedBy = calibratedBy;
-  }
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
 
-  public Date getCalibratedDate() {
-    return calibratedDate;
-  }
+	public String getCalibratedBy() {
+		return calibratedBy;
+	}
 
-  public void setCalibratedDate(Date calibratedDate) {
-    this.calibratedDate = calibratedDate;
-  }
+	public void setCalibratedBy(String calibratedBy) {
+		this.calibratedBy = calibratedBy;
+	}
 
-  public String getCompanyName() {
-    return companyName;
-  }
+	public String getTesterName() {
+		return testerName;
+	}
 
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
-  }
+	public void setTesterName(String testerName) {
+		this.testerName = testerName;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public String getDescription() {
+		return description;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  public Date getDueDate() {
-    return dueDate;
-  }
+	public EquipmentPlant getEquipmentPlant() {
+		return equipmentPlant;
+	}
 
-  public void setDueDate(Date dueDate) {
-    this.dueDate = dueDate;
-  }
+	public void setEquipmentPlant(EquipmentPlant equipmentPlant) {
+		this.equipmentPlant = equipmentPlant;
+	}
 
-  public String getTesterName() {
-    return testerName;
-  }
+	public Supplier getSupplier() {
+		return supplier;
+	}
 
-  public void setTesterName(String testerName) {
-    this.testerName = testerName;
-  }
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 
-  public EquipmentPlant getEquipmentPlant() {
-    return equipmentPlant;
-  }
+	public String getStatus() {
+		return status;
+	}
 
-  public void setEquipmentPlant(EquipmentPlant equipmentPlant) {
-    this.equipmentPlant = equipmentPlant;
-  }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
-
-  public Supplier getSupplier() {
-    return supplier;
-  }
-
-  public void setSupplier(Supplier supplier) {
-    this.supplier = supplier;
-  }
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
