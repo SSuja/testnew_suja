@@ -69,6 +69,18 @@ public class Constants {
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+  
+  /*
+   * Parameter
+   */
+  public static final String PARAMETER_NAME = "parameterName";
+  public static final String ADD_PARAMETER_SUCCESS = "Parameter added Successfully";
+  public static final String PARAMETER_DELETED = "Parameter Successfully Deleted";
+  public static final String UPDATE_PARAMETER_SUCCESS = "Parameter updated Successfully";
+  public static final String PARAMETER = "parameter";
+  public static final String PARAMETERS = "parameters";
+  public static final String PARAMETER_ID = "parameterId";
+ 
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

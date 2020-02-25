@@ -343,4 +343,27 @@ public class ValidationFailureStatusCodes {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
 
+  // for parameter
+  @Value("${validation.parameter.notExists}")
+  private String parameterNotExist;
+
+  @Value("${validation.parameter.alreadyExist}")
+  private String parameterAlreadyExist;
+
+  public String getParameterNotExist() {
+    return parameterNotExist;
+  }
+
+  public void setParameterNotExist(String parameterNotExist) {
+    this.parameterNotExist = parameterNotExist;
+  }
+
+  public String getParameterAlreadyExist() {
+    return parameterAlreadyExist;
+  }
+
+  public void setParameterAlreadyExist(String parameterAlreadyExist) {
+    this.parameterAlreadyExist = parameterAlreadyExist;
+  }
+
 }
