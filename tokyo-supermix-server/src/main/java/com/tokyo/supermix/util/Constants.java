@@ -69,6 +69,19 @@ public class Constants {
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+  /*
+   * EquipmentPlant
+   */
+  // constants for validation key
+
+  public static final String EQUIPMENTPLANTS = "equipmentPlants";
+  public static final String EQUIPMENTPLANT = "equipmentPlant";
+  public static final String EQUIPMENT_SERIALNO = "equipmentPlantSerialNo";
+  // Success Messages
+  public static final String ADD_EQUIPMENTPLANT_SUCCESS = "EquipmentPlant added Successfully";
+  public static final String EQUIPMENT_DELETED = "EquipmentPlant Deleted Succeessfully";
+  public static final String UPDATE_EQUIPMENTPLANT_SUCCESS = "EquipmentPlant updated Successfully";
+
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

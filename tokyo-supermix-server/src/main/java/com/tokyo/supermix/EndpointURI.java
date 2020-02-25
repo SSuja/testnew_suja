@@ -15,6 +15,7 @@ public final class EndpointURI {
   private static final String CODE = "/{code}";
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
+  private static final String SERIALNO = "/{serialNo}";
 
 
   /*
@@ -55,6 +56,14 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  /*
+   * EquipmentPlant
+   * 
+   */
+  public static final String EQUIPMENTPLANT = BASE_API_PATH + "equipmentplant";
+  public static final String EQUIPMENTPLANTS = BASE_API_PATH + "equipmentplants";
+  public static final String DELETE_EQUIPMENTPLANT = EQUIPMENTPLANT + SERIALNO;
+  public static final String GET_EQUIPMENTPLANT_BY_SERIALNO = EQUIPMENTPLANT + SERIALNO;
 
   private EndpointURI() {
 

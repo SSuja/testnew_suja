@@ -1,9 +1,8 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,40 +11,69 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "equipment_plant")
 public class EquipmentPlant implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Id
+	private String serialNo;
+	private String brandName;
+	private String modelName;
+	private String description;
+	@ManyToOne
+	@JoinColumn(name = "plantCode", nullable = false)
+	private Plant plant;
+	@ManyToOne
+	@JoinColumn(name = "euipmentId", nullable = false)
+	private Equipment equipment;
 
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  @ManyToOne
-  @JoinColumn(name = "equipmentId", nullable = false)
-  private Equipment equipment;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
+	public String getSerialNo() {
+		return serialNo;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public void setSerialNo(String serialNo) {
+		this.serialNo = serialNo;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public String getBrandName() {
+		return brandName;
+	}
 
-  public Equipment getEquipment() {
-    return equipment;
-  }
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
 
-  public void setEquipment(Equipment equipment) {
-    this.equipment = equipment;
-  }
+	public String getModelName() {
+		return modelName;
+	}
 
-  public Plant getPlant() {
-    return plant;
-  }
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
 
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Plant getPlant() {
+		return plant;
+	}
+
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
+
+	public Equipment getEquipment() {
+		return equipment;
+	}
+
+	public void setEquipment(Equipment equipment) {
+		this.equipment = equipment;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 }
