@@ -69,6 +69,19 @@ public class Constants {
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+  /*
+   * Material Category
+   */
+  // constants for validation key
+  public static final String MATERIAL_CATEGORY_NAME = "name";
+  public static final String MATERIAL_CATEGORIES = "materialCategories";
+  public static final String MATERIAL_CATEGORY = "materialCategory";
+  public static final String MATERIAL_CATEGORY_ID = "materialCategoryId";
+  // Success Messages
+  public static final String ADD_MATERIAL_CATEGORY_SUCCESS = "Material Category added Successfully";
+  public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
+  public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
+      "Material Category updated Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
