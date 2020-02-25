@@ -173,10 +173,10 @@ public class ValidationFailureStatusCodes {
 
   @Value("${supplierRequestDto.email.empty}")
   private String emailIsEmpty;
-  
+
   @Value("${supplierRequestDto.phoneNumber.null}")
   private String phoneNumberIsNull;
-  
+
   @Value("${supplierRequestDto.phoneNumber.empty}")
   private String phoneNumberIsEmpty;
 
@@ -280,22 +280,22 @@ public class ValidationFailureStatusCodes {
   public String getPhoneNumberIsEmpty() {
     return phoneNumberIsEmpty;
   }
-//
-//  public String getSuppilerCategoryIdIsNull() {
-//    return suppilerCategoryIdIsNull;
-//  }
-//
-//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-//  }
-//
-//  public String getSuppilerCategoryIdIsEmpty() {
-//    return suppilerCategoryIdIsEmpty;
-//  }
-//
-//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-//  }
+  //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
 
   // for employee
   @Value("${validation.employee.notExists}")
@@ -343,4 +343,57 @@ public class ValidationFailureStatusCodes {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
 
+  /*
+   * Material
+   */
+  @Value("${validation.material.notExists}")
+  private String materialNotExist;
+  @Value("${validation.material.alreadyExist}")
+  private String materialAlreadyExist;
+  @Value("${materialRequestDto.code.null")
+  private String materialCodeIsNull;
+  @Value("${materialRequestDto.name.null")
+  private String materialNameIsNull;
+  @Value("${materialRequestDto.name.empty")
+  private String materialNameIsEmpty;
+
+  public String getMaterialNotExist() {
+    return materialNotExist;
+  }
+
+  public void setMaterialNotExist(String materialNotExist) {
+    this.materialNotExist = materialNotExist;
+  }
+
+  public String getMaterialAlreadyExist() {
+    return materialAlreadyExist;
+  }
+
+  public void setMaterialAlreadyExist(String materialAlreadyExist) {
+    this.materialAlreadyExist = materialAlreadyExist;
+  }
+
+  public String getMaterialCodeIsNull() {
+    return materialCodeIsNull;
+  }
+
+  public void setMaterialCodeIsNull(String materialCodeIsNull) {
+    this.materialCodeIsNull = materialCodeIsNull;
+  }
+
+  public String getMaterialNameIsNull() {
+    return materialNameIsNull;
+  }
+
+  public void setMaterialNameIsNull(String materialNameIsNull) {
+    this.materialNameIsNull = materialNameIsNull;
+  }
+
+  public String getMaterialNameIsEmpty() {
+    return materialNameIsEmpty;
+  }
+
+  public void setMaterialNameIsEmpty(String materialNameIsEmpty) {
+    this.materialNameIsEmpty = materialNameIsEmpty;
+  }
 }

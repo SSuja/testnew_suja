@@ -70,6 +70,16 @@ public class Constants {
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
 
+  /*
+   * Material
+   */
+  public static final String MATERIAL_NAME = "name";
+  public static final String MATERIAL = "material";
+  public static final String MATERIAL_CODE = "code";
+  public static final String ADD_MATERIAL_SUCCESS = "Material added Successfully";
+  public static final String UPDATE_MATERIAL_SUCCESS = "Material updated Successfully";
+  public static final String DELETE_MATERIAL_SCCESS = "Material delete successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
