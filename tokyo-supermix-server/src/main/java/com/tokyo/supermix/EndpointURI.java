@@ -16,7 +16,6 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
 
-
   /*
    * Plant apis
    */
@@ -55,6 +54,14 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
+
+  /*
+   * Material State
+   */
+  public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
+  public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
+  public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
+  public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
 
   private EndpointURI() {
 

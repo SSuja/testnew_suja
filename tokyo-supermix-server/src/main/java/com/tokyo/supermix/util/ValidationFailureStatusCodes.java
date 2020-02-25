@@ -173,10 +173,10 @@ public class ValidationFailureStatusCodes {
 
   @Value("${supplierRequestDto.email.empty}")
   private String emailIsEmpty;
-  
+
   @Value("${supplierRequestDto.phoneNumber.null}")
   private String phoneNumberIsNull;
-  
+
   @Value("${supplierRequestDto.phoneNumber.empty}")
   private String phoneNumberIsEmpty;
 
@@ -280,22 +280,22 @@ public class ValidationFailureStatusCodes {
   public String getPhoneNumberIsEmpty() {
     return phoneNumberIsEmpty;
   }
-//
-//  public String getSuppilerCategoryIdIsNull() {
-//    return suppilerCategoryIdIsNull;
-//  }
-//
-//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-//  }
-//
-//  public String getSuppilerCategoryIdIsEmpty() {
-//    return suppilerCategoryIdIsEmpty;
-//  }
-//
-//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-//  }
+  //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
 
   // for employee
   @Value("${validation.employee.notExists}")
@@ -341,6 +341,50 @@ public class ValidationFailureStatusCodes {
 
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+  }
+
+  /*
+   * Material State
+   */
+  @Value("${validation.materialState.notExists}")
+  private String materialStateNotExist;
+  @Value("${validation.materialState.alreadyExist}")
+  private String materialStateAlreadyExist;
+  @Value("${materialStateDto.materialState.null")
+  private String materialStateIsNull;
+  @Value("${materialStateDto.materialState.empty")
+  private String materialStateIsEmpty;
+
+  public String getMaterialStateNotExist() {
+    return materialStateNotExist;
+  }
+
+  public void setMaterialStateNotExist(String materialStateNotExist) {
+    this.materialStateNotExist = materialStateNotExist;
+  }
+
+  public String getMaterialStateAlreadyExist() {
+    return materialStateAlreadyExist;
+  }
+
+  public void setMaterialStateAlreadyExist(String materialStateAlreadyExist) {
+    this.materialStateAlreadyExist = materialStateAlreadyExist;
+  }
+
+  public String getMaterialStateIsNull() {
+    return materialStateIsNull;
+  }
+
+  public void setMaterialStateIsNull(String materialStateIsNull) {
+    this.materialStateIsNull = materialStateIsNull;
+  }
+
+  public String getMaterialStateIsEmpty() {
+    return materialStateIsEmpty;
+  }
+
+  public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
+    this.materialStateIsEmpty = materialStateIsEmpty;
   }
 
 }
