@@ -287,6 +287,23 @@ public class ValidationFailureStatusCodes {
 	@Value("${employeeDto.firstName.null")
 	private String employeeFirstNameIsNull;
 
+//
+//  public String getSuppilerCategoryIdIsNull() {
+//    return suppilerCategoryIdIsNull;
+//  }
+//
+//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+//  }
+//
+//  public String getSuppilerCategoryIdIsEmpty() {
+//    return suppilerCategoryIdIsEmpty;
+//  }
+//
+//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+//  }
+
 	@Value("${employeeDto.firstName.empty")
 	private String employeeFirstNameIsEmpty;
 
@@ -321,6 +338,7 @@ public class ValidationFailureStatusCodes {
 	public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
 		this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
 	}
+	
 
 	// unit
 	@Value("${validation.unit.notExists}")

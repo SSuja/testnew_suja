@@ -9,16 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "material_nature")
-public class MaterialNature implements Serializable {
+@Table(schema = "tokyo-supermix", name = "parameter")
+public class Parameter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String materialNature;
-
+	private String name;
+	
 	public Long getId() {
 		return id;
 	}
@@ -27,12 +27,12 @@ public class MaterialNature implements Serializable {
 		this.id = id;
 	}
 
-	public String getMaterialNature() {
-		return materialNature;
+	public String getName() {
+		return name;
 	}
 
-	public void setMaterialNature(String materialNature) {
-		this.materialNature = materialNature;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public static long getSerialversionuid() {

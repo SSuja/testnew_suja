@@ -2,14 +2,17 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class EmployeeRequestDto {
   private Long id;
   @NotNull(message = "{employeeDto.firstName.null}")
   @NotEmpty(message = "{employeeDto.firstName.empty}")
+  @Pattern(regexp = "^[a-zA-Z\\s]+$*", message = "{employeeDto.firstName.specialcharacter}")
   private String firstName;
   @NotNull(message = "{employeeDto.lastName.null}")
   @NotEmpty(message = "{employeeDto.lastName.empty}")
+  @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "{employeeDto.lastName.specialcharacter}")
   private String lastName;
   @NotNull(message = "{employeeDto.email.null}")
   @NotEmpty(message = "{employeeDto.email.empty}")

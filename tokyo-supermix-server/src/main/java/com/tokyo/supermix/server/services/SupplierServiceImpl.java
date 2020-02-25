@@ -63,7 +63,7 @@ public class SupplierServiceImpl implements SupplierService {
 
   public boolean isUpdatedPhoneNumberExist(Long id, String phoneNumber) {
     if ((!getSupplierById(id).getPhoneNumber().equalsIgnoreCase(phoneNumber))
-        && (isEmailExist(phoneNumber))) {
+        && (isPhoneNumberExist(phoneNumber))) {
       return true;
     }
     return false;

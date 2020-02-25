@@ -1,5 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-public class SubCategoryServiceImpl {
+public interface MaterialService {
 
 }

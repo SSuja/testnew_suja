@@ -11,72 +11,63 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_design")
-public class MixDesign implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class MixDesign implements Serializable {
 
-	@Id
-	private String code;
-	private String actualGrade;
-	private String expectedGrade;
-	private Date dateAndTime;
-	@ManyToOne
-	@JoinColumn(name = "plantCode", nullable = false)
-	private Plant plant;
-	@ManyToOne
-	@JoinColumn(name = "materialQuantityId", nullable = false)
-	private MaterialQuantity materialQuantity;
+  private static final long serialVersionUID = 1L;
 
-	public String getCode() {
-		return code;
-	}
+  @Id
+  private String code;
+  private String grade;
+  private Date dateAndTime;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = false)
+  private Plant plant;
+  @ManyToOne
+  @JoinColumn(name = "materialCode", nullable = false)
+  private Material material;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public String getActualGrade() {
-		return actualGrade;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public void setActualGrade(String actualGrade) {
-		this.actualGrade = actualGrade;
-	}
+  public String getGrade() {
+    return grade;
+  }
 
-	public String getExpectedGrade() {
-		return expectedGrade;
-	}
+  public void setGrade(String grade) {
+    this.grade = grade;
+  }
 
-	public void setExpectedGrade(String expectedGrade) {
-		this.expectedGrade = expectedGrade;
-	}
+  public Date getDateAndTime() {
+    return dateAndTime;
+  }
 
-	public Date getDateAndTime() {
-		return dateAndTime;
-	}
+  public void setDateAndTime(Date dateAndTime) {
+    this.dateAndTime = dateAndTime;
+  }
 
-	public void setDateAndTime(Date dateAndTime) {
-		this.dateAndTime = dateAndTime;
-	}
+  public Plant getPlant() {
+    return plant;
+  }
 
-	public Plant getPlant() {
-		return plant;
-	}
+  public void setPlant(Plant plant) {
+    this.plant = plant;
+  }
 
-	public void setPlant(Plant plant) {
-		this.plant = plant;
-	}
+  public Material getMaterial() {
+    return material;
+  }
 
-	public MaterialQuantity getMaterialQuantity() {
-		return materialQuantity;
-	}
+  public void setMaterial(Material material) {
+    this.material = material;
+  }
 
-	public void setMaterialQuantity(MaterialQuantity materialQuantity) {
-		this.materialQuantity = materialQuantity;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

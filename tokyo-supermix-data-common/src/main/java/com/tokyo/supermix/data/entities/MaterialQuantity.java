@@ -14,51 +14,62 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "material_quantity")
 public class MaterialQuantity implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String measurement;
-	private String quantity;
-	@ManyToOne
-	@JoinColumn(name = "processSampleCode", nullable = false)
-	private ProcessSample processSample;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String measurement;
+  private String quantity;
+  @ManyToOne
+  @JoinColumn(name = "mixDesignCode", nullable = false)
+  private MixDesign mixDesign;
+  @ManyToOne
+  @JoinColumn(name = "materialCode", nullable = false)
+  private Material material;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public String getMeasurement() {
-		return measurement;
-	}
+  public String getMeasurement() {
+    return measurement;
+  }
 
-	public void setMeasurement(String measurement) {
-		this.measurement = measurement;
-	}
+  public void setMeasurement(String measurement) {
+    this.measurement = measurement;
+  }
 
-	public String getQuantity() {
-		return quantity;
-	}
+  public String getQuantity() {
+    return quantity;
+  }
 
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
+  public void setQuantity(String quantity) {
+    this.quantity = quantity;
+  }
 
-	public ProcessSample getProcessSample() {
-		return processSample;
-	}
+  public MixDesign getMixDesign() {
+    return mixDesign;
+  }
 
-	public void setProcessSample(ProcessSample processSample) {
-		this.processSample = processSample;
-	}
+  public void setMixDesign(MixDesign mixDesign) {
+    this.mixDesign = mixDesign;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public Material getMaterial() {
+    return material;
+  }
+
+  public void setMaterial(Material material) {
+    this.material = material;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

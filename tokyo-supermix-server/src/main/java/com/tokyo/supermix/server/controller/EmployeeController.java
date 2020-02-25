@@ -46,8 +46,7 @@ public class EmployeeController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    Employee employee = mapper.map(employeeDto, Employee.class);
-    employeeService.createEmployee(employee);
+    employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -71,10 +70,9 @@ public class EmployeeController {
   public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
     if (employeeService.isEmployeeExist(id)) {
       logger.debug("Get Employee By Id");
-      Employee employee = employeeService.getEmployeeById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEE,
-          mapper.map(employee, EmployeeResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          mapper.map(employeeService.getEmployeeById(id), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
         validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
@@ -89,8 +87,7 @@ public class EmployeeController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      Employee employee = mapper.map(employeeDto, Employee.class);
-      employeeService.updateEmployee(employee);
+      employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
           HttpStatus.OK);

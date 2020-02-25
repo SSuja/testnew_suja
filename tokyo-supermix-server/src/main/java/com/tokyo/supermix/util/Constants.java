@@ -1,6 +1,7 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
+
 	public static final String PLANT_NAME = "PlantName";
 	public static final String PLANT_ID = "PlantId";
 	public static final String PLANTS = "plants";
@@ -75,4 +76,5 @@ public class Constants {
 	private Constants() {
 
 	}
+
 }
