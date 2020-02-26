@@ -173,10 +173,10 @@ public class ValidationFailureStatusCodes {
 
   @Value("${supplierRequestDto.email.empty}")
   private String emailIsEmpty;
-  
+
   @Value("${supplierRequestDto.phoneNumber.null}")
   private String phoneNumberIsNull;
-  
+
   @Value("${supplierRequestDto.phoneNumber.empty}")
   private String phoneNumberIsEmpty;
 
@@ -280,22 +280,22 @@ public class ValidationFailureStatusCodes {
   public String getPhoneNumberIsEmpty() {
     return phoneNumberIsEmpty;
   }
-//
-//  public String getSuppilerCategoryIdIsNull() {
-//    return suppilerCategoryIdIsNull;
-//  }
-//
-//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-//  }
-//
-//  public String getSuppilerCategoryIdIsEmpty() {
-//    return suppilerCategoryIdIsEmpty;
-//  }
-//
-//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-//  }
+  //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
 
   // for employee
   @Value("${validation.employee.notExists}")
@@ -341,6 +341,28 @@ public class ValidationFailureStatusCodes {
 
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+  }
+
+  // for equation
+  @Value("${validation.equation.notExists}")
+  private String equationNotExist;
+  @Value("${validation.equation.alreadyExist}")
+  private String equationAlreadyExist;
+
+  public String getEquationNotExist() {
+    return equationNotExist;
+  }
+
+  public void setEquationNotExist(String equationNotExist) {
+    this.equationNotExist = equationNotExist;
+  }
+
+  public String getEquationAlreadyExist() {
+    return equationAlreadyExist;
+  }
+
+  public void setEquationAlreadyExist(String equationAlreadyExist) {
+    this.equationAlreadyExist = equationAlreadyExist;
   }
 
 }

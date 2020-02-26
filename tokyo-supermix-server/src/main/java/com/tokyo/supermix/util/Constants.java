@@ -70,6 +70,19 @@ public class Constants {
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
 
+  /*
+   * Equation
+   */
+  // constants for validation key
+  public static final String EQUATION_FORMULA = "formula";
+  public static final String EQUATIONS = "equations";
+  public static final String EQUATION = "equation";
+  public static final String EQUATION_ID = "equationId";
+  // Success Messages
+  public static final String ADD_EQUATION_SUCCESS = "Equation added Succeessfully";
+  public static final String DELETE_EQUATION_SUCCESS = "Equation deleted Succeessfully";
+  public static final String UPDATE_EQUATION_SUCCESS = "Equation updated Succeessfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

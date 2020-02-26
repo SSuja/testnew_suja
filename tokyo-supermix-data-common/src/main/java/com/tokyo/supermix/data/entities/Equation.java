@@ -8,15 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "equation_configuration")
-public class EquationConfiguration implements Serializable {
-
+@Table(schema = "tokyo-supermix", name = "equation")
+public class Equation implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String equation;
-  private String type;
+  private String formula;
 
   public Long getId() {
     return id;
@@ -26,20 +24,15 @@ public class EquationConfiguration implements Serializable {
     this.id = id;
   }
 
-  public String getEquation() {
-    return equation;
+  public String getFormula() {
+    return formula;
   }
 
-  public void setEquation(String equation) {
-    this.equation = equation;
+  public void setFormula(String formula) {
+    this.formula = formula;
   }
 
-  public String getType() {
-    return type;
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
-
-  public void setType(String type) {
-    this.type = type;
-  }
-
 }

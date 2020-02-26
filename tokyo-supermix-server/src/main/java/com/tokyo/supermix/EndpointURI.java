@@ -55,6 +55,13 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  /*
+   * Equation APIs
+   */
+  public static final String EQUATION = BASE_API_PATH + "equation";
+  public static final String EQUATIONS = BASE_API_PATH + "equations";
+  public static final String EQUATION_BY_ID = EQUATION + ID;
+
 
   private EndpointURI() {
 
