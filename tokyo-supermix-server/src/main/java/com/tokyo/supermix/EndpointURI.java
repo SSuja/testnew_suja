@@ -61,7 +61,13 @@ public final class EndpointURI {
   public static final String EQUATION = BASE_API_PATH + "equation";
   public static final String EQUATIONS = BASE_API_PATH + "equations";
   public static final String EQUATION_BY_ID = EQUATION + ID;
-
+  /*
+   * Material Category APIs
+   */
+  public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
+  public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
+  public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
+  public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
 
   private EndpointURI() {
 

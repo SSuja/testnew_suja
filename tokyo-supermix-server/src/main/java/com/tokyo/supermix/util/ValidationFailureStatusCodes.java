@@ -365,4 +365,26 @@ public class ValidationFailureStatusCodes {
     this.equationAlreadyExist = equationAlreadyExist;
   }
 
+  // For Material Category
+  @Value("${validation.materialCategory.notExists}")
+  private String MaterialCategoryNotExist;
+  @Value("${validation.materialCategory.alreadyExist}")
+  private String MaterialCategoryAlreadyExist;
+
+  public String getMaterialCategoryNotExist() {
+    return MaterialCategoryNotExist;
+  }
+
+  public void setMaterialCategoryNotExist(String materialCategoryNotExist) {
+    MaterialCategoryNotExist = materialCategoryNotExist;
+  }
+
+  public String getMaterialCategoryAlreadyExist() {
+    return MaterialCategoryAlreadyExist;
+  }
+
+  public void setMaterialCategoryAlreadyExist(String materialCategoryAlreadyExist) {
+    MaterialCategoryAlreadyExist = materialCategoryAlreadyExist;
+  }
+
 }
