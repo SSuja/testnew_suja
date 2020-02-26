@@ -82,6 +82,17 @@ public class Constants {
   public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
   public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
       "Material Category updated Successfully";
+  /*
+   * Employee
+   */
+  // constants for validation key
+  public static final String TEST_TYPE_ID = "testTypeId";
+  public static final String TEST_TYPES = "testTypes";
+  public static final String TEST_TYPE = "testType";
+  // Success Messages
+  public static final String TEST_TYPE_DELETED = "testType Deleted Successfully";
+  public static final String ADD_TEST_TYPE_SUCCESS = "testType added Successfully";
+  public static final String UPDATE_TEST_TYPE_SUCCESS = "testType updated Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

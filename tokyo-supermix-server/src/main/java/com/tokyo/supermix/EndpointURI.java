@@ -62,6 +62,13 @@ public final class EndpointURI {
   public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
   public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
   public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
+  /*
+   * TestType
+   */
+  public static final String TEST_TYPE = BASE_API_PATH + "test-type";
+  public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
+  public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
+  public static final String TEST_TYPES = BASE_API_PATH + "test-types";
 
   private EndpointURI() {
 

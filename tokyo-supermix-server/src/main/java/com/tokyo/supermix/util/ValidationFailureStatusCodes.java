@@ -105,7 +105,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.designationName.alreadyExist}")
   private String designationNameAlreadyExist;
 
-
   public String getDesignationNotExist() {
     return designationNotExist;
   }
@@ -121,7 +120,6 @@ public class ValidationFailureStatusCodes {
   public void setDesignationAlreadyExist(String designationAlreadyExist) {
     this.designationAlreadyExist = designationAlreadyExist;
   }
-
 
   public String getPlantIdIsNull() {
     return plantIdIsNull;
@@ -154,7 +152,6 @@ public class ValidationFailureStatusCodes {
   /*
    * Supplier
    */
-
 
   @Value("${validation.supplier.alreadyExist}")
   private String supplierAlreadyExist;
@@ -191,7 +188,6 @@ public class ValidationFailureStatusCodes {
   public String getSupplierNotExit() {
     return supplierNotExit;
   }
-
 
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
@@ -363,6 +359,48 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialCategoryAlreadyExist(String materialCategoryAlreadyExist) {
     MaterialCategoryAlreadyExist = materialCategoryAlreadyExist;
+  }
+
+  // For TestTypes
+  @Value("${validation.testType.notExists}")
+  private String testTypeNotExist;
+  @Value("${validation.testType.alreadyExists}")
+  private String testTypealreadyExists;
+  @Value("${testTypeDto.type.null}")
+  private String testTypeIsNull;
+  @Value("${estTypeDto.type.empty}")
+  private String testTypeIsEmpty;
+
+  public String getTestTypeNotExist() {
+    return testTypeNotExist;
+  }
+
+  public void setTestTypeNotExist(String testTypeNotExist) {
+    this.testTypeNotExist = testTypeNotExist;
+  }
+
+  public String getTestTypealreadyExists() {
+    return testTypealreadyExists;
+  }
+
+  public void setTestTypealreadyExists(String testTypealreadyExists) {
+    this.testTypealreadyExists = testTypealreadyExists;
+  }
+
+  public String getTestTypeIsNull() {
+    return testTypeIsNull;
+  }
+
+  public void setTestTypeIsNull(String testTypeIsNull) {
+    this.testTypeIsNull = testTypeIsNull;
+  }
+
+  public String getTestTypeIsEmpty() {
+    return testTypeIsEmpty;
+  }
+
+  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
+    this.testTypeIsEmpty = testTypeIsEmpty;
   }
 
 }
