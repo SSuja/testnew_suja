@@ -18,6 +18,7 @@ public class Parameter implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
+	private String abbreviation;
 	
 	public Long getId() {
 		return id;
@@ -38,5 +39,13 @@ public class Parameter implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+  public String getAbbreviation() {
+    return abbreviation;
+  }
+
+  public void setAbbreviation(String abbreviation) {
+    this.abbreviation = abbreviation;
+  }
 
 }

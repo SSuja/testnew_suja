@@ -6,5 +6,6 @@ import com.tokyo.supermix.data.entities.Parameter;
 
 public interface ParameterRepository extends JpaRepository<Parameter, Long> {
 	  boolean existsByName(String name);
+	  boolean existsByAbbreviation(String abbreviation);
 
 }

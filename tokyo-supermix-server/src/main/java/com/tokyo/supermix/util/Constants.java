@@ -80,6 +80,8 @@ public class Constants {
   public static final String PARAMETER = "parameter";
   public static final String PARAMETERS = "parameters";
   public static final String PARAMETER_ID = "parameterId";
+  public static final String PARAMETER_ABBREVIATION = "abbreviation";
+
  
 
   // encaptulate constructor to restrict modification from outside

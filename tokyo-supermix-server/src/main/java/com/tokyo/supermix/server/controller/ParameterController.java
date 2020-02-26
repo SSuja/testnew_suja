@@ -47,10 +47,17 @@ public class ParameterController {
 
   @PostMapping(value = EndpointURI.PARAMETER)
   public ResponseEntity<Object> createParameter(@Valid @RequestBody ParameterDto parameterDto) {
-    if (parameterService.isParameterExist(parameterDto.getName())) {
+    if (parameterService.isNameExist(parameterDto.getName())) {
       logger.debug("parameter already exists: createparameter(), parameterName: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
           validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+
+    if (parameterService.isAbbreviationExist(parameterDto.getAbbreviation())) {
+      logger.debug("parameter already exists: createparameter(), parameterAbbreviation: {}");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_ABBREVIATION,
+          validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+
     }
     parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
     return new ResponseEntity<Object>(
@@ -87,9 +94,14 @@ public class ParameterController {
   @PutMapping(value = EndpointURI.PARAMETER)
   public ResponseEntity<Object> UpdateParameter(@Valid @RequestBody ParameterDto parameterDto) {
     if (parameterService.isParameterExist(parameterDto.getId())) {
-      if (parameterService.isUpdatedParameterNameExist(parameterDto.getId(),
-          parameterDto.getName())) {
+      if (parameterService.isUpdatedNameExist(parameterDto.getId(), parameterDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
+            validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+
+      if (parameterService.isUpdatedAbbreviationExist(parameterDto.getId(),
+          parameterDto.getAbbreviation())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_ABBREVIATION,
             validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));

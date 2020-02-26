@@ -349,6 +349,57 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.parameter.alreadyExist}")
   private String parameterAlreadyExist;
+  
+
+  @Value("${parameterDto.abbreviation.null}")
+  private String abbreviationIsNull;
+  
+  @Value("${parameterDto.abbreviation.empty}")
+  private String abbreviationIsempty;
+  
+  @Value("${parameterDto.name.null}")
+  private String nameIsNull;
+ 
+
+  public String getAbbreviationIsNull() {
+    return abbreviationIsNull;
+  }
+
+  public void setAbbreviationIsNull(String abbreviationIsNull) {
+    this.abbreviationIsNull = abbreviationIsNull;
+  }
+
+  public String getAbbreviationIsempty() {
+    return abbreviationIsempty;
+  }
+
+  public void setAbbreviationIsempty(String abbreviationIsempty) {
+    this.abbreviationIsempty = abbreviationIsempty;
+  }
+
+  public String getNameIsNull() {
+    return nameIsNull;
+  }
+
+  public void setNameIsNull(String nameIsNull) {
+    this.nameIsNull = nameIsNull;
+  }
+
+  public String getNameIsempty() {
+    return nameIsempty;
+  }
+
+  public void setNameIsempty(String nameIsempty) {
+    this.nameIsempty = nameIsempty;
+  }
+
+  public void setCategoryIsEmpty(String categoryIsEmpty) {
+    this.categoryIsEmpty = categoryIsEmpty;
+  }
+
+  @Value("${parameterDto.name.empty}")
+  private String nameIsempty;
+
 
   public String getParameterNotExist() {
     return parameterNotExist;

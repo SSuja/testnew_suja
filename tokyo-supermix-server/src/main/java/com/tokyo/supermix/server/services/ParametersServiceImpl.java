@@ -40,17 +40,31 @@ public class ParametersServiceImpl implements ParameterService {
     return parameterRepository.findById(id).get();
   }
 
-  public boolean isUpdatedParameterNameExist(Long id, String name) {
-    if ((!getParameterById(id).getName().equalsIgnoreCase(name)) && (isParameterExist(name))) {
+  public boolean isUpdatedNameExist(Long id, String name) {
+    if ((!getParameterById(id).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
       return true;
     }
     return false;
   }
 
   @Transactional(readOnly = true)
-  public boolean isParameterExist(String name) {
+  public boolean isNameExist(String name) {
     return parameterRepository.existsByName(name);
   }
 
+
+  @Transactional(readOnly = true)
+  public boolean isAbbreviationExist(String abbreviation) {
+    return parameterRepository.existsByAbbreviation(abbreviation);
+  }
+
+  @Override
+  public boolean isUpdatedAbbreviationExist(Long id, String abbreviation) {
+    if ((!getParameterById(id).getAbbreviation().equalsIgnoreCase(abbreviation))
+        && (isAbbreviationExist(abbreviation))) {
+      return true;
+    }
+    return false;
+  }
 
 }
