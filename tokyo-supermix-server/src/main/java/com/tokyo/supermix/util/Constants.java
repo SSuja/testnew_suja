@@ -83,6 +83,15 @@ public class Constants {
   public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
       "Material Category updated Successfully";
 
+  /*
+   * Test
+   */
+  public static final String TEST = "test";
+  public static final String TEST_ID = "id";
+  public static final String ADD_TEST_SUCCESS = "Test added Successfully";
+  public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
+  public static final String DELETE_TEST_SCCESS = "Test delete successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
