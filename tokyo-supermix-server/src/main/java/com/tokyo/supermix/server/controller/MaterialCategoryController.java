@@ -59,9 +59,8 @@ public class MaterialCategoryController {
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORIES)
   public ResponseEntity<Object> getAllMaterialCategory() {
     logger.debug("get all material categories");
-    List<MaterialCategory> materialCategoryList = materialCategoryService.getAllMainCategories();
     List<MaterialCategoryDto> materialCategoryDtoList =
-        mapper.map(materialCategoryList, MaterialCategoryDto.class);
+        mapper.map(materialCategoryService.getAllMainCategories(), MaterialCategoryDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORIES,
         materialCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
@@ -95,7 +94,7 @@ public class MaterialCategoryController {
   }
 
   // Update Material Category
-  @PutMapping(value = EndpointURI.UPDATE_MATERIAL_CATEGORY)
+  @PutMapping(value = EndpointURI.MATERIAL_CATEGORY)
   public ResponseEntity<Object> updateMaterialCategory(
       @Valid @RequestBody MaterialCategoryDto materialCategoryDto) {
     if (materialCategoryService.isMaterialCategoryExist(materialCategoryDto.getId())) {

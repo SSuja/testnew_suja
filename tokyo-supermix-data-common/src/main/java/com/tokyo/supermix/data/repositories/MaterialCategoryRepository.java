@@ -6,6 +6,5 @@ import com.tokyo.supermix.data.entities.MaterialCategory;
 
 @Repository
 public interface MaterialCategoryRepository extends JpaRepository<MaterialCategory, Long> {
-  /* Check Existing name */
   boolean existsByName(String name);
 }

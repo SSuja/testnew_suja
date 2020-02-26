@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.repositories.MaterialCategoryRepository;
@@ -12,7 +13,7 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
   @Autowired
   private MaterialCategoryRepository materialCategoryRepository;
 
-  @Transactional()
+  @Transactional
   public void saveMaterialCategory(MaterialCategory materialCategory) {
     materialCategoryRepository.save(materialCategory);
   }
@@ -22,7 +23,7 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     return materialCategoryRepository.existsByName(name);
   }
 
-  @Transactional()
+  @Transactional(readOnly = true)
   public List<MaterialCategory> getAllMainCategories() {
     return materialCategoryRepository.findAll();
   }
@@ -32,17 +33,16 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     return materialCategoryRepository.existsById(id);
   }
 
-  @Transactional()
+  @Transactional(readOnly = true)
   public MaterialCategory getMaterialCategoryById(Long id) {
     return materialCategoryRepository.findById(id).get();
   }
 
-  @Transactional()
+  @Transactional(propagation = Propagation.NEVER)
   public void deleteMaterialCategory(Long id) {
     materialCategoryRepository.deleteById(id);
   }
 
-  @Override
   public boolean isUpdatedNameExist(Long id, String name) {
     if ((!getMaterialCategoryById(id).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
       return true;
