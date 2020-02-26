@@ -57,9 +57,8 @@ public class MaterialStateController {
 
   @GetMapping(value = EndpointURI.MATERIAL_STATES)
   public ResponseEntity<Object> getAllMaterialStates() {
-    List<MaterialState> materialStateList = materialStateService.getAllMaterialStates();
     List<MaterialStateDto> materialStateDtoList =
-        mapper.map(materialStateList, MaterialStateDto.class);
+        mapper.map(materialStateService.getAllMaterialStates(), MaterialStateDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_STATE,
         materialStateDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
