@@ -70,17 +70,17 @@ public class Constants {
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
   /*
-   * EquipmentPlant
+   * PlantEquipment
    */
   // constants for validation key
 
-  public static final String EQUIPMENTPLANTS = "equipmentPlants";
-  public static final String EQUIPMENTPLANT = "equipmentPlant";
-  public static final String EQUIPMENT_SERIALNO = "equipmentPlantSerialNo";
+  public static final String PLANTEQUIPMENTS = "Plantequipments";
+  public static final String PLANTEQUIPMENT = "Plantequipment";
+  public static final String PLANTEQUIPMENT_SERIALNO = "PlantequipmentSerialNo";
   // Success Messages
-  public static final String ADD_EQUIPMENTPLANT_SUCCESS = "EquipmentPlant added Successfully";
-  public static final String EQUIPMENT_DELETED = "EquipmentPlant Deleted Succeessfully";
-  public static final String UPDATE_EQUIPMENTPLANT_SUCCESS = "EquipmentPlant updated Successfully";
+  public static final String ADD_PLANTEQUIPMENT_SUCCESS = "Plantequipment added Successfully";
+  public static final String PLANTEQUIPMENT_DELETED = "Plantequipment Deleted Succeessfully";
+  public static final String UPDATE_PLANTEQUIPMENT_SUCCESS = "Plantequipment updated Successfully";
 
 
   // encaptulate constructor to restrict modification from outside

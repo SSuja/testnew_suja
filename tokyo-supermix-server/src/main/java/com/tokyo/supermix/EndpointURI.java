@@ -57,13 +57,13 @@ public final class EndpointURI {
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
   /*
-   * EquipmentPlant
+   * PlantEquipment
    * 
    */
-  public static final String EQUIPMENTPLANT = BASE_API_PATH + "equipmentplant";
-  public static final String EQUIPMENTPLANTS = BASE_API_PATH + "equipmentplants";
-  public static final String DELETE_EQUIPMENTPLANT = EQUIPMENTPLANT + SERIALNO;
-  public static final String GET_EQUIPMENTPLANT_BY_SERIALNO = EQUIPMENTPLANT + SERIALNO;
+  public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
+  public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
+  public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
+  public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
 
   private EndpointURI() {
 
