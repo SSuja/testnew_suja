@@ -62,7 +62,6 @@ public final class EndpointURI {
   public static final String CUSTOMER = BASE_API_PATH + "customer";
   public static final String CUSTOMERS = BASE_API_PATH + "customers";
   public static final String DELETE_CUSTOMER = CUSTOMER + ID;
-  public static final String UPDATE_CUSTOMER = CUSTOMER;
   public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
 
   private EndpointURI() {

@@ -173,10 +173,10 @@ public class ValidationFailureStatusCodes {
 
   @Value("${supplierRequestDto.email.empty}")
   private String emailIsEmpty;
-  
+
   @Value("${supplierRequestDto.phoneNumber.null}")
   private String phoneNumberIsNull;
-  
+
   @Value("${supplierRequestDto.phoneNumber.empty}")
   private String phoneNumberIsEmpty;
 
@@ -280,22 +280,22 @@ public class ValidationFailureStatusCodes {
   public String getPhoneNumberIsEmpty() {
     return phoneNumberIsEmpty;
   }
-//
-//  public String getSuppilerCategoryIdIsNull() {
-//    return suppilerCategoryIdIsNull;
-//  }
-//
-//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-//  }
-//
-//  public String getSuppilerCategoryIdIsEmpty() {
-//    return suppilerCategoryIdIsEmpty;
-//  }
-//
-//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-//  }
+  //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
 
   // for employee
   @Value("${validation.employee.notExists}")
@@ -342,7 +342,7 @@ public class ValidationFailureStatusCodes {
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
-  
+
   // for customer
   @Value("${validation.customer.alreadyExist}")
   private String customerAlreadyExist;
@@ -358,6 +358,21 @@ public class ValidationFailureStatusCodes {
 
   @Value("${customerDto.email.null}")
   private String customerEmailIsnull;
+
+  @Value("${validation.customer.notExists}")
+  private String customerNotExist;
+
+  @Value("${customerDto.email.empty}")
+  private String customerEmailIsEmpty;
+
+  public String getCustomerEmailIsEmpty() {
+    return customerEmailIsEmpty;
+  }
+
+  public void setCustomerEmailIsEmpty(String customerEmailIsEmpty) {
+    this.customerEmailIsEmpty = customerEmailIsEmpty;
+  }
+
 
 
   public String getCustomerNameIsNull() {
@@ -391,9 +406,6 @@ public class ValidationFailureStatusCodes {
   public void setCustomerEmailIsnull(String customerEmailIsnull) {
     this.customerEmailIsnull = customerEmailIsnull;
   }
-
-  @Value("${validation.customer.notExists}")
-  private String customerNotExist;
 
   public String getCustomerNotExist() {
     return customerNotExist;
