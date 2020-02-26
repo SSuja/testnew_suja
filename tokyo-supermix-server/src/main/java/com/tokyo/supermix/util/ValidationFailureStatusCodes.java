@@ -339,18 +339,39 @@ public class ValidationFailureStatusCodes {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
 
-  // for EquipmentPlantCalibration
-  @Value("${validation.equipmentPlantCalibration.notExists}")
-  private String equipmentPlantCalibrationNotExist;
-  
-  
+  // for plantEquipmentCalibration
+  @Value("${validation.plantEquipmentCalibration.notExists}")
+  private String plantEquipmentCalibrationNotExist;
+  @Value("${validation.PlantEquipmentCalibrationRequestDto.userId.null}")
+  private String PlantEquipmentCalibrationRequestDtoUserIdIsNull;
+  @Value("${validation.PlantEquipmentCalibrationRequestDto.supplierId.null}")
+  private String PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
 
-  public String getEquipmentPlantCalibrationNotExist() {
-    return equipmentPlantCalibrationNotExist;
+  public String getPlantEquipmentCalibrationRequestDtoUserIdIsNull() {
+    return PlantEquipmentCalibrationRequestDtoUserIdIsNull;
   }
 
-  public void setEquipmentPlantCalibrationNotExist(String equipmentPlantCalibrationNotExist) {
-    this.equipmentPlantCalibrationNotExist = equipmentPlantCalibrationNotExist;
+  public void setPlantEquipmentCalibrationRequestDtoUserIdIsNull(
+      String plantEquipmentCalibrationRequestDtoUserIdIsNull) {
+    PlantEquipmentCalibrationRequestDtoUserIdIsNull =
+        plantEquipmentCalibrationRequestDtoUserIdIsNull;
   }
 
+  public String getPlantEquipmentCalibrationNotExist() {
+    return plantEquipmentCalibrationNotExist;
+  }
+
+  public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+    this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+  }
+
+  public String getPlantEquipmentCalibrationRequestDtoSupplierIdIsNull() {
+    return PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+  }
+
+  public void setPlantEquipmentCalibrationRequestDtoSupplierIdIsNull(
+      String plantEquipmentCalibrationRequestDtoSupplierIdIsNull) {
+    PlantEquipmentCalibrationRequestDtoSupplierIdIsNull =
+        plantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+  }
 }

@@ -3,23 +3,24 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 
 
-public class EquipmentPlantCalibrationResponceDto {
+public class PlantEquipmentCalibrationResponceDto {
   private Long id;
   private Date calibratedDate;
   private Date dueDate;
-  private String calibratedBy;
-  private String testerName;
+  private String calibrationType;
+  private Long userId;
+  private String userUsername;
   private String description;
-  private Long equipmentPlantId;
+  private Long plantEquipmentId;
   private Long supplierId;
   private String status;
   private String supplierName;
-  private String equipmentPlantEquipmentName;
-  public String getEquipmentPlantEquipmentName() {
-    return equipmentPlantEquipmentName;
+  private String plantEquipmentEquipmentName;
+  public String getplantEquipmentEquipmentName() {
+    return plantEquipmentEquipmentName;
   }
-  public void setEquipmentPlantEquipmentName(String equipmentPlantEquipmentName) {
-    this.equipmentPlantEquipmentName = equipmentPlantEquipmentName;
+  public void setplantEquipmentEquipmentName(String plantEquipmentEquipmentName) {
+    this.plantEquipmentEquipmentName = plantEquipmentEquipmentName;
   }
   public Long getId() {
     return id;
@@ -39,17 +40,17 @@ public class EquipmentPlantCalibrationResponceDto {
   public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
-  public String getCalibratedBy() {
-    return calibratedBy;
+  public String getcalibrationType() {
+    return calibrationType;
   }
-  public void setCalibratedBy(String calibratedBy) {
-    this.calibratedBy = calibratedBy;
+  public void setcalibrationType(String calibrationType) {
+    this.calibrationType = calibrationType;
   }
-  public String getTesterName() {
-    return testerName;
+  public Long getuserId() {
+    return userId;
   }
-  public void setTesterName(String testerName) {
-    this.testerName = testerName;
+  public void setuserId(Long userId) {
+    this.userId = userId;
   }
   public String getDescription() {
     return description;
@@ -57,11 +58,11 @@ public class EquipmentPlantCalibrationResponceDto {
   public void setDescription(String description) {
     this.description = description;
   }
-  public Long getEquipmentPlantId() {
-    return equipmentPlantId;
+  public Long getplantEquipmentId() {
+    return plantEquipmentId;
   }
-  public void setEquipmentPlantId(Long equipmentPlantId) {
-    this.equipmentPlantId = equipmentPlantId;
+  public void setplantEquipmentId(Long plantEquipmentId) {
+    this.plantEquipmentId = plantEquipmentId;
   }
   public Long getSupplierId() {
     return supplierId;
@@ -80,6 +81,12 @@ public class EquipmentPlantCalibrationResponceDto {
   }
   public void setSupplierName(String supplierName) {
     this.supplierName = supplierName;
+  }
+  public String getUserUsername() {
+    return userUsername;
+  }
+  public void setUserUsername(String userUsername) {
+    this.userUsername = userUsername;
   }
  
 

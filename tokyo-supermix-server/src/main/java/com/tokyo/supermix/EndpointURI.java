@@ -5,65 +5,67 @@ package com.tokyo.supermix;
  */
 public final class EndpointURI {
 
-	private static final String BASE_API_PATH = "/api/v1/";
+  private static final String BASE_API_PATH = "/api/v1/";
 
-	/*
-	 * private constructor to avoid instantiating this class.
-	 */
+  /*
+   * private constructor to avoid instantiating this class.
+   */
 
-	private static final String SLASH = "/";
-	private static final String CODE = "/{code}";
-	private static final String ID = "/{id}";
-	private static final String SEARCH = "/search";
+  private static final String SLASH = "/";
+  private static final String CODE = "/{code}";
+  private static final String ID = "/{id}";
+  private static final String SEARCH = "/search";
 
-	/*
-	 * Plant apis
-	 */
-	public static final String PLANT = BASE_API_PATH + "plant";
-	public static final String GET_PLANT_BY_CODE = PLANT + CODE;
-	public static final String PLANTS = BASE_API_PATH + "plants";
+  /*
+   * Plant apis
+   */
+  public static final String PLANT = BASE_API_PATH + "plant";
+  public static final String GET_PLANT_BY_CODE = PLANT + CODE;
+  public static final String PLANTS = BASE_API_PATH + "plants";
 
-	/*
-	 * Designation API
-	 */
-	public static final String DESIGNATION = BASE_API_PATH + "designation";
-	public static final String DESIGNATIONS = BASE_API_PATH + "designations";
-	public static final String GET_DESIGNATION_BY_ID = DESIGNATION + ID;
-	public static final String DELETE_DESIGNATION_BY_ID = DESIGNATION + ID;
+  /*
+   * Designation API
+   */
+  public static final String DESIGNATION = BASE_API_PATH + "designation";
+  public static final String DESIGNATIONS = BASE_API_PATH + "designations";
+  public static final String GET_DESIGNATION_BY_ID = DESIGNATION + ID;
+  public static final String DELETE_DESIGNATION_BY_ID = DESIGNATION + ID;
 
-	/*
-	 * Supplier Category apis
-	 */
-	public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
-	public static final String SUPPLIER_CATEGORY_BY_ID = SUPPLIER_CATEGORY + ID;
-	public static final String DELETE_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + ID;
-	public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
+  /*
+   * Supplier Category apis
+   */
+  public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
+  public static final String SUPPLIER_CATEGORY_BY_ID = SUPPLIER_CATEGORY + ID;
+  public static final String DELETE_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + ID;
+  public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
 
-	/*
-	 * Supplier Apis
-	 */
-	public static final String SUPPLIER = BASE_API_PATH + "supplier";
-	public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
-	public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
-	public static final String DELETE_SUPPLIER = SUPPLIER + ID;
-	/*
-	 * Employee apis
-	 */
-	public static final String EMPLOYEE = BASE_API_PATH + "employee";
-	public static final String DELETE_EMPLOYEE = EMPLOYEE + ID;
-	public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
-	public static final String UPDATE_EMPLOYEE = EMPLOYEE;
-	public static final String EMPLOYEES = BASE_API_PATH + "employees";
-	/*
-	 * EquipmentPlantCalibration apis
-	 */
-	public static final String EQUIPMENT_PLANT_CALIBRATION = BASE_API_PATH + "equipment-plant-calibration";
-	public static final String EQUIPMENT_PLANT_CALIBRATIONS = BASE_API_PATH + "equipment-plant-calibrations";
-	public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
-	public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
-	public static final String UPDATE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION;
+  /*
+   * Supplier Apis
+   */
+  public static final String SUPPLIER = BASE_API_PATH + "supplier";
+  public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
+  public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
+  public static final String DELETE_SUPPLIER = SUPPLIER + ID;
+  /*
+   * Employee apis
+   */
+  public static final String EMPLOYEE = BASE_API_PATH + "employee";
+  public static final String DELETE_EMPLOYEE = EMPLOYEE + ID;
+  public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
+  public static final String UPDATE_EMPLOYEE = EMPLOYEE;
+  public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  /*
+   * EquipmentPlantCalibration apis
+   */
+  public static final String EQUIPMENT_PLANT_CALIBRATION =
+      BASE_API_PATH + "plant-equipment-calibration";
+  public static final String EQUIPMENT_PLANT_CALIBRATIONS =
+      BASE_API_PATH + "plant-equipment-calibrations";
+  public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID =
+      EQUIPMENT_PLANT_CALIBRATION + ID;
+  public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
 
-	private EndpointURI() {
+  private EndpointURI() {
 
-	}
+  }
 }
