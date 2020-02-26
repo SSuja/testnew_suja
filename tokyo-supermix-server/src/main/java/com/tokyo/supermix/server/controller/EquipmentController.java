@@ -55,8 +55,8 @@ public class EquipmentController {
   @GetMapping(value = EndpointURI.EQUIPMENTS)
   public ResponseEntity<Object> getAllEquipments() {
     logger.debug("get all equipments");
-    List<Equipment> equipmentList = equipmentService.getAllEquipments();
-    List<EquipmentDto> equipmentDtoList = mapper.map(equipmentList, EquipmentDto.class);
+    List<EquipmentDto> equipmentDtoList =
+        mapper.map(equipmentService.getAllEquipments(), EquipmentDto.class);
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.EQUIPMENTS, equipmentDtoList, RestApiResponseStatus.OK),
         null, HttpStatus.OK);
@@ -90,7 +90,7 @@ public class EquipmentController {
   }
 
   // Update Equipment
-  @PutMapping(value = EndpointURI.UPDATE_EQUIPMENT)
+  @PutMapping(value = EndpointURI.EQUIPMENT)
   public ResponseEntity<Object> updateEquipment(@Valid @RequestBody EquipmentDto equipmentDto) {
     if (equipmentService.isEquipmentExist(equipmentDto.getId())) {
       if (equipmentService.isUpdatedNameExist(equipmentDto.getId(), equipmentDto.getName())) {

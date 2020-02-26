@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.Equipment;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
@@ -17,12 +18,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     return equipmentRepository.existsByName(name);
   }
 
-  @Transactional()
+  @Transactional
   public void saveEquipment(Equipment equipment) {
     equipmentRepository.save(equipment);
   }
 
-  @Transactional()
+  @Transactional(readOnly = true)
   public List<Equipment> getAllEquipments() {
     return equipmentRepository.findAll();
   }
@@ -32,17 +33,16 @@ public class EquipmentServiceImpl implements EquipmentService {
     return equipmentRepository.existsById(id);
   }
 
-  @Transactional()
+  @Transactional(propagation = Propagation.NEVER)
   public void deleteEquipment(Long id) {
     equipmentRepository.deleteById(id);
   }
 
-  @Transactional()
+  @Transactional(readOnly = true)
   public Equipment getEquipmentById(Long id) {
     return equipmentRepository.findById(id).get();
   }
 
-  @Override
   public boolean isUpdatedNameExist(Long id, String name) {
     if ((!getEquipmentById(id).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
       return true;

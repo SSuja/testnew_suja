@@ -62,7 +62,7 @@ public final class EndpointURI {
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
-  public static final String UPDATE_EQUIPMENT = EQUIPMENT;
+
 
   private EndpointURI() {
 

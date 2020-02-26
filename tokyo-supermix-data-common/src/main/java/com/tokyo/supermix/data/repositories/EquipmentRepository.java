@@ -6,6 +6,5 @@ import com.tokyo.supermix.data.entities.Equipment;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
-  /* Check Existing name */
   boolean existsByName(String name);
 }
