@@ -71,14 +71,14 @@ public class Constants {
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
 
   /*
-   * Material
+   * Raw Material
    */
-  public static final String MATERIAL_NAME = "name";
-  public static final String MATERIAL = "material";
-  public static final String MATERIAL_CODE = "code";
-  public static final String ADD_MATERIAL_SUCCESS = "Material added Successfully";
-  public static final String UPDATE_MATERIAL_SUCCESS = "Material updated Successfully";
-  public static final String DELETE_MATERIAL_SCCESS = "Material delete successfully";
+  public static final String RAW_MATERIAL_NAME = "name";
+  public static final String RAW_MATERIAL = "rawMaterial";
+  public static final String RAW_MATERIAL_ID = "id";
+  public static final String ADD_RAW_MATERIAL_SUCCESS = "Raw Material added Successfully";
+  public static final String UPDATE_RAW_MATERIAL_SUCCESS = "Raw Material updated Successfully";
+  public static final String DELETE_RAW_MATERIAL_SCCESS = "Raw Material delete successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

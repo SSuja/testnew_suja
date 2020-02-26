@@ -57,12 +57,12 @@ public final class EndpointURI {
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
 
   /*
-   * Material apis
+   * Raw Material apis
    */
-  public static final String MATERIAL = BASE_API_PATH + "material";
-  public static final String MATERIALS = BASE_API_PATH + "materials";
-  public static final String GET_MATERIAL_BY_CODE = MATERIAL + CODE;
-  public static final String DELETE_MATERIAL = MATERIAL + CODE;
+  public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";
+  public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
+  public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
+  public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
   private EndpointURI() {
 

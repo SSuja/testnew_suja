@@ -344,56 +344,47 @@ public class ValidationFailureStatusCodes {
   }
 
   /*
-   * Material
+   * Raw Material
    */
-  @Value("${validation.material.notExists}")
-  private String materialNotExist;
-  @Value("${validation.material.alreadyExist}")
-  private String materialAlreadyExist;
-  @Value("${materialRequestDto.code.null")
-  private String materialCodeIsNull;
-  @Value("${materialRequestDto.name.null")
-  private String materialNameIsNull;
-  @Value("${materialRequestDto.name.empty")
-  private String materialNameIsEmpty;
+  @Value("${validation.rawMaterial.notExists}")
+  private String rawMaterialNotExist;
+  @Value("${validation.rawMaterial.alreadyExist}")
+  private String rawMaterialAlreadyExist;
+  @Value("${rawMaterialRequestDto.name.null")
+  private String rawMaterialNameIsNull;
+  @Value("${rawMaterialRequestDto.name.empty")
+  private String rawMaterialNameIsEmpty;
 
-  public String getMaterialNotExist() {
-    return materialNotExist;
+  public String getRawMaterialNotExist() {
+    return rawMaterialNotExist;
   }
 
-  public void setMaterialNotExist(String materialNotExist) {
-    this.materialNotExist = materialNotExist;
+  public void setRawMaterialNotExist(String rawMaterialNotExist) {
+    this.rawMaterialNotExist = rawMaterialNotExist;
   }
 
-  public String getMaterialAlreadyExist() {
-    return materialAlreadyExist;
+  public String getRawMaterialAlreadyExist() {
+    return rawMaterialAlreadyExist;
   }
 
-  public void setMaterialAlreadyExist(String materialAlreadyExist) {
-    this.materialAlreadyExist = materialAlreadyExist;
+  public void setRawMaterialAlreadyExist(String rawMaterialAlreadyExist) {
+    this.rawMaterialAlreadyExist = rawMaterialAlreadyExist;
   }
 
-  public String getMaterialCodeIsNull() {
-    return materialCodeIsNull;
+  public String getRawMaterialNameIsNull() {
+    return rawMaterialNameIsNull;
   }
 
-  public void setMaterialCodeIsNull(String materialCodeIsNull) {
-    this.materialCodeIsNull = materialCodeIsNull;
+  public void setRawMaterialNameIsNull(String rawMaterialNameIsNull) {
+    this.rawMaterialNameIsNull = rawMaterialNameIsNull;
   }
 
-  public String getMaterialNameIsNull() {
-    return materialNameIsNull;
+  public String getRawMaterialNameIsEmpty() {
+    return rawMaterialNameIsEmpty;
   }
 
-  public void setMaterialNameIsNull(String materialNameIsNull) {
-    this.materialNameIsNull = materialNameIsNull;
+  public void setRawMaterialNameIsEmpty(String rawMaterialNameIsEmpty) {
+    this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
   }
 
-  public String getMaterialNameIsEmpty() {
-    return materialNameIsEmpty;
-  }
-
-  public void setMaterialNameIsEmpty(String materialNameIsEmpty) {
-    this.materialNameIsEmpty = materialNameIsEmpty;
-  }
 }

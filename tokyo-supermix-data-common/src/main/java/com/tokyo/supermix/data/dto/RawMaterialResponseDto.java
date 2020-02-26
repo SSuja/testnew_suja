@@ -1,19 +1,22 @@
 package com.tokyo.supermix.data.dto;
 
-public class MaterialResponseDto {
-  private String code;
+import com.tokyo.supermix.data.enums.Nature;
+
+public class RawMaterialResponseDto {
+  private Long id;
   private String name;
+  private Nature nature;
   private Long materialSubCategoryId;
   private String materialSubCategoryName;
   private String materialSubCategoryMaterialCategoryId;
   private String materialSubCategoryMaterialCategoryName;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -22,6 +25,14 @@ public class MaterialResponseDto {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Nature getNature() {
+    return nature;
+  }
+
+  public void setNature(Nature nature) {
+    this.nature = nature;
   }
 
   public Long getMaterialSubCategoryId() {
