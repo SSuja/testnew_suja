@@ -6,10 +6,7 @@ public class RawMaterialResponseDto {
   private Long id;
   private String name;
   private Nature nature;
-  private Long materialSubCategoryId;
-  private String materialSubCategoryName;
-  private String materialSubCategoryMaterialCategoryId;
-  private String materialSubCategoryMaterialCategoryName;
+  private MaterialSubCategoryResponseDto materialSubCategory;
 
   public Long getId() {
     return id;
@@ -35,37 +32,12 @@ public class RawMaterialResponseDto {
     this.nature = nature;
   }
 
-  public Long getMaterialSubCategoryId() {
-    return materialSubCategoryId;
+  public MaterialSubCategoryResponseDto getMaterialSubCategory() {
+    return materialSubCategory;
   }
 
-  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
-    this.materialSubCategoryId = materialSubCategoryId;
+  public void setMaterialSubCategory(MaterialSubCategoryResponseDto materialSubCategory) {
+    this.materialSubCategory = materialSubCategory;
   }
 
-  public String getMaterialSubCategoryName() {
-    return materialSubCategoryName;
-  }
-
-  public void setMaterialSubCategoryName(String materialSubCategoryName) {
-    this.materialSubCategoryName = materialSubCategoryName;
-  }
-
-  public String getMaterialSubCategoryMaterialCategoryId() {
-    return materialSubCategoryMaterialCategoryId;
-  }
-
-  public void setMaterialSubCategoryMaterialCategoryId(
-      String materialSubCategoryMaterialCategoryId) {
-    this.materialSubCategoryMaterialCategoryId = materialSubCategoryMaterialCategoryId;
-  }
-
-  public String getMaterialSubCategoryMaterialCategoryName() {
-    return materialSubCategoryMaterialCategoryName;
-  }
-
-  public void setMaterialSubCategoryMaterialCategoryName(
-      String materialSubCategoryMaterialCategoryName) {
-    this.materialSubCategoryMaterialCategoryName = materialSubCategoryMaterialCategoryName;
-  }
 }
