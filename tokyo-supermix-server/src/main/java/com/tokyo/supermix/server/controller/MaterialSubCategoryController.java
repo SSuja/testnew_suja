@@ -46,7 +46,7 @@ public class MaterialSubCategoryController {
 	@GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
 	public ResponseEntity<Object> getMaterialSubCategory() {
 		List<MaterialSubCategory> materialSubCategories = materialSubCategoryService.getMaterialSubCategories();
-		return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+		return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
 				mapper.map(materialSubCategories, MaterialSubCategoryResponseDto.class), RestApiResponseStatus.OK),
 				null, HttpStatus.OK);
 	}
@@ -119,7 +119,7 @@ public class MaterialSubCategoryController {
 		MaterialCategory materialCategory = materialCategoryService.getMaterialCategoryById(materialCategoryId);
 		if (materialCategory != null) {
 			return new ResponseEntity<>(
-					new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+					new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
 							mapper.map(materialSubCategoryService.getMaterialSubCategoryByCategory(materialCategory),
 									MaterialSubCategoryResponseDto.class),
 							RestApiResponseStatus.OK),

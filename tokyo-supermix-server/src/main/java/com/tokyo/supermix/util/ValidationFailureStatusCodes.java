@@ -346,9 +346,9 @@ public class ValidationFailureStatusCodes {
 	private String materialSubCategoryNotExist;
 	@Value("${validation.materialSubCategory.alreadyExist}")
 	private String materialSubCategoryAlreadyExist;
-	@Value("${MaterialSubCategoryRequestDto.name.null}")
+	@Value("${materialSubCategoryRequestDto.name.null}")
 	private String materialSubCategoryNameIsNull;
-	@Value("${MaterialSubCategoryRequestDto.name.empty}")
+	@Value("${materialSubCategoryRequestDto.name.empty}")
 	private String materialSubCategoryNameIsEmpty;
 
 	public String getMaterialSubCategoryNotExist() {

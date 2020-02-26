@@ -15,12 +15,12 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 	@Autowired
 	private MaterialSubCategoryRepository materialSubCategoryRepository;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<MaterialSubCategory> getMaterialSubCategories() {
 		return materialSubCategoryRepository.findAll();
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public MaterialSubCategory getMaterialSubCategoryById(long id) {
 		return materialSubCategoryRepository.findById(id).get();
 	}
@@ -45,7 +45,7 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 		return materialSubCategoryRepository.existsByName(name);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public boolean isUpdatedMaterialSubCategoryNameExist(Long id, String name) {
 		if ((!getMaterialSubCategoryById(id).getName().equalsIgnoreCase(name))
 				&& (isMaterialSubCategoryNameExist(name))) {
@@ -54,7 +54,7 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 		return false;
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<MaterialSubCategory> getMaterialSubCategoryByCategory(MaterialCategory materialCategory) {
 		return materialSubCategoryRepository.findByMaterialCategory(materialCategory);
 	}
