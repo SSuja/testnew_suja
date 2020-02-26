@@ -63,8 +63,7 @@ public class UnitController {
 	// get all unit api
 	@GetMapping(value = EndpointURI.UNITS)
 	public ResponseEntity<Object> getAllUnits() {
-		List<Unit> unitList = unitService.getAllUnits();
-		List<UnitDto> unitDtoList = mapper.map(unitList, UnitDto.class);
+		List<UnitDto> unitDtoList = mapper.map(unitService.getAllUnits(), UnitDto.class);
 		return new ResponseEntity<>(new ContentResponse<>(Constants.UNITS, unitDtoList, RestApiResponseStatus.OK), null,
 				HttpStatus.OK);
 	}
@@ -77,7 +76,6 @@ public class UnitController {
 			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.UNIT_DELETED),
 					HttpStatus.OK);
 		}
-
 		logger.debug("Invalid Id");
 		return new ResponseEntity<>(
 				new ValidationFailureResponse(Constants.UNIT, validationFailureStatusCodes.getUnitNotExist()),
@@ -108,13 +106,11 @@ public class UnitController {
 				return new ResponseEntity<>(new ValidationFailureResponse(Constants.UNIT,
 						validationFailureStatusCodes.getUnitAlreadyExist()), HttpStatus.BAD_REQUEST);
 			}
-
 			Unit unit = mapper.map(unitDto, Unit.class);
 			unitService.saveUnit(unit);
 			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.UNIT_UPDATED_SUCCESS),
 					HttpStatus.OK);
 		}
-
 		return new ResponseEntity<>(
 				new ValidationFailureResponse(Constants.UNIT, validationFailureStatusCodes.getUnitNotExist()),
 				HttpStatus.BAD_REQUEST);

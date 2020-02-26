@@ -338,7 +338,6 @@ public class ValidationFailureStatusCodes {
 	public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
 		this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
 	}
-	
 
 	// unit
 	@Value("${validation.unit.notExists}")
