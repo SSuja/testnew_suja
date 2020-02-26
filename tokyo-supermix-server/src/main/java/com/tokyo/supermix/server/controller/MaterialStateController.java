@@ -49,7 +49,7 @@ public class MaterialStateController {
           validationFailureStatusCodes.getMaterialStateAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     MaterialState materialState = mapper.map(materialStateDto, MaterialState.class);
-    materialStateService.createMaterialState(materialState);
+    materialStateService.saveMaterialState(materialState);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MATERIAL_STATE_SUCCESS),
         HttpStatus.OK);
@@ -90,7 +90,7 @@ public class MaterialStateController {
             HttpStatus.BAD_REQUEST);
       }
       MaterialState materialState = mapper.map(materialStateDto, MaterialState.class);
-      materialStateService.updateMaterialState(materialState);
+      materialStateService.saveMaterialState(materialState);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_MATERIAL_STATE_SUCCESS),
           HttpStatus.OK);

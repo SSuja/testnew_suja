@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialState;
 import com.tokyo.supermix.data.repositories.MaterialStateRepository;
@@ -14,7 +15,7 @@ public class MaterialStateServiceImpl implements MaterialStateService {
   private MaterialStateRepository materialStateRepository;
 
   @Transactional
-  public MaterialState createMaterialState(MaterialState materialState) {
+  public MaterialState saveMaterialState(MaterialState materialState) {
     return materialStateRepository.save(materialState);
   }
 
@@ -28,19 +29,14 @@ public class MaterialStateServiceImpl implements MaterialStateService {
     return materialStateRepository.existsById(id);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public List<MaterialState> getAllMaterialStates() {
     return materialStateRepository.findAll();
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public MaterialState getMaterialStateById(Long id) {
     return materialStateRepository.findById(id).get();
-  }
-
-  @Transactional
-  public MaterialState updateMaterialState(MaterialState materialState) {
-    return materialStateRepository.save(materialState);
   }
 
   public boolean isUpdatedMaterialStateExist(Long id, String materialState) {
@@ -51,7 +47,7 @@ public class MaterialStateServiceImpl implements MaterialStateService {
     return false;
   }
 
-  @Transactional
+  @Transactional(propagation = Propagation.NEVER)
   public void deleteMaterialState(Long id) {
     materialStateRepository.deleteById(id);
   }
