@@ -56,6 +56,13 @@ public final class EndpointURI {
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
 
+  /*
+   * IncomingSample Apis
+   */
+  public static final String INCOMING_SAMPLE = BASE_API_PATH + "incoming-sample";
+  public static final String INCOMING_SAMPLES = BASE_API_PATH + "incoming-samples";
+  public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
+
   private EndpointURI() {
 
   }

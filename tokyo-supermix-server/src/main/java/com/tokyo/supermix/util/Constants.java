@@ -70,6 +70,18 @@ public class Constants {
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
 
+  /*
+   * IncomingSample
+   */
+  // constants for validation key
+  public static final String INCOMING_SAMPLE_CODE = "incomingSampleCode";
+  public static final String INCOMING_SAMPLE = "incomingSample";
+  public static final String INCOMING_SAMPLES = "incomingSamples";
+  // Success Messages
+  public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
+  public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
+  public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
