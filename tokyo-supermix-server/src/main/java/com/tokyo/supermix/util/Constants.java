@@ -84,6 +84,14 @@ public class Constants {
       "Material Category updated Successfully";
 
   /*
+   * Material State
+   */
+  public static final String MATERIAL_STATE = "materialState";
+  public static final String MATERIAL_STATE_ID = "id";
+  public static final String ADD_MATERIAL_STATE_SUCCESS = "Material State added Successfully";
+  public static final String UPDATE_MATERIAL_STATE_SUCCESS = "Material State updated Successfully";
+  public static final String DELETE_MATERIAL_STATE_SCCESS = "Material State delete successfully";
+  /*
    * Raw Material
    */
   public static final String RAW_MATERIAL_NAME = "name";
