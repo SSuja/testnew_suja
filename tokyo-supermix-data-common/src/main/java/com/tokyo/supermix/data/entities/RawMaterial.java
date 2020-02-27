@@ -3,29 +3,37 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.Nature;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "material")
-public class Material implements Serializable {
+@Table(schema = "tokyo-supermix", name = "raw_material")
+public class RawMaterial implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
-  private String code;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private String name;
+  @Enumerated(EnumType.ORDINAL)
+  private Nature nature;
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = false)
   private MaterialSubCategory materialSubCategory;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getName() {
@@ -34,6 +42,14 @@ public class Material implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Nature getNature() {
+    return nature;
+  }
+
+  public void setNature(Nature nature) {
+    this.nature = nature;
   }
 
   public MaterialSubCategory getMaterialSubCategory() {
