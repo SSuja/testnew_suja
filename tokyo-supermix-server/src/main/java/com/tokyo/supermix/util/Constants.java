@@ -82,6 +82,18 @@ public class Constants {
   public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
   public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
       "Material Category updated Successfully";
+  
+  
+  /*
+   * mix design
+   */
+ 
+  public static final String ADD_MIXDESIGN_SUCCESS = "mix design added Successfully";
+  public static final String MIXDESIGN = "mixdesign";
+  public static final String MIXDESIGNS = "mixdesigns";
+  public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
+  public static final String MIXDESIGN_ID = "mixdesignId";
+  
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
