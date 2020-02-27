@@ -70,6 +70,12 @@ public final class EndpointURI {
   public static final String TESTS = BASE_API_PATH + "tests";
   public static final String GET_TEST_BY_ID = TEST + ID;
   public static final String DELETE_TEST = TEST + ID;
+   * Raw Material apis
+   */
+  public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";
+  public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
+  public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
+  public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
   private EndpointURI() {
 
