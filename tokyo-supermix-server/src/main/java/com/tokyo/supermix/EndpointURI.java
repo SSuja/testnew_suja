@@ -65,4 +65,42 @@ public final class EndpointURI {
 	private EndpointURI() {
 
 	}
+
+	/*
+	 * Equipment APIs
+	 */
+	public static final String EQUIPMENT = BASE_API_PATH + "equipment";
+	public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
+	public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
+	public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
+	/*
+	 * Material Category APIs
+	 */
+	public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
+	public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
+	public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
+	public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
+
+	/*
+	 * Test
+	 */
+	public static final String TEST = BASE_API_PATH + "test";
+	public static final String TESTS = BASE_API_PATH + "tests";
+	public static final String GET_TEST_BY_ID = TEST + ID;
+	public static final String DELETE_TEST = TEST + ID;
+	/*
+	 * Material State
+	 */
+	public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
+	public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
+	public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
+	public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
+	/*
+	 * Raw Material apis
+	 */
+	public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";
+	public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
+	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
+	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
+
 }

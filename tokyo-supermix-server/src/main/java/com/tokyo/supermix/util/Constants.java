@@ -72,6 +72,56 @@ public class Constants {
 	public static final String UNIT_DELETED = "Unit Successfully deleted";
 	public static final String UNIT_UPDATED_SUCCESS = "Unit Successfully Updated";
 
+	/*
+	 * Material Category
+	 */
+	// constants for validation key
+	public static final String MATERIAL_CATEGORY_NAME = "name";
+	public static final String MATERIAL_CATEGORIES = "materialCategories";
+	public static final String MATERIAL_CATEGORY = "materialCategory";
+	public static final String MATERIAL_CATEGORY_ID = "materialCategoryId";
+	// Success Messages
+	public static final String ADD_MATERIAL_CATEGORY_SUCCESS = "Material Category added Successfully";
+	public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
+	public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS = "Material Category updated Successfully";
+
+	/*
+	 * Test
+	 */
+	public static final String TEST = "test";
+	public static final String TEST_ID = "id";
+	public static final String ADD_TEST_SUCCESS = "Test added Successfully";
+	public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
+	public static final String DELETE_TEST_SCCESS = "Test delete successfully";
+	/*
+	 * Material State
+	 */
+	public static final String MATERIAL_STATE = "materialState";
+	public static final String MATERIAL_STATE_ID = "id";
+	public static final String ADD_MATERIAL_STATE_SUCCESS = "Material State added Successfully";
+	public static final String UPDATE_MATERIAL_STATE_SUCCESS = "Material State updated Successfully";
+	public static final String DELETE_MATERIAL_STATE_SCCESS = "Material State delete successfully";
+	/*
+	 * Raw Material
+	 */
+	public static final String RAW_MATERIAL_NAME = "name";
+	public static final String RAW_MATERIAL = "rawMaterial";
+	public static final String RAW_MATERIAL_ID = "id";
+	public static final String ADD_RAW_MATERIAL_SUCCESS = "Raw Material added Successfully";
+	public static final String UPDATE_RAW_MATERIAL_SUCCESS = "Raw Material updated Successfully";
+	public static final String DELETE_RAW_MATERIAL_SCCESS = "Raw Material delete successfully";
+
+	/* Equipment */
+	// constants for validation key
+	public static final String EQUIPMENT_NAME = "name";
+	public static final String EQUIPMENTS = "equipments";
+	public static final String EQUIPMENMT_ID = "equipmentId";
+	public static final String EQUIPMENT = "equipment";
+	// Success Messages
+	public static final String ADD_EQUIPMENT_SUCCESS = "Equipment added Successfully";
+	public static final String EQUIPMENT_DELETED = "Equipment Deleted Succeessfully";
+	public static final String UPDATE_EQUIPMENT_SUCCESS = "Equipment updated Successfully";
+
 	// encaptulate constructor to restrict modification from outside
 	private Constants() {
 
