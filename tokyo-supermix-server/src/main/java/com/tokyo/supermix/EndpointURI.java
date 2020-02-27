@@ -119,7 +119,17 @@ public final class EndpointURI {
 	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
 	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
-	private EndpointURI() {
+
+  /*
+   * Parameter apis
+   * 
+   */
+  public static final String PARAMETER = BASE_API_PATH + "parameter";
+  public static final String PARAMETERS = BASE_API_PATH + "parameters";
+  public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
+  public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
+
+  private EndpointURI() {
 
 	}
 }
