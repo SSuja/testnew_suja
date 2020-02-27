@@ -91,6 +91,13 @@ public class Constants {
   public static final String ADD_TEST_SUCCESS = "Test added Successfully";
   public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test delete successfully";
+   * Material State
+   */
+  public static final String MATERIAL_STATE = "materialState";
+  public static final String MATERIAL_STATE_ID = "id";
+  public static final String ADD_MATERIAL_STATE_SUCCESS = "Material State added Successfully";
+  public static final String UPDATE_MATERIAL_STATE_SUCCESS = "Material State updated Successfully";
+  public static final String DELETE_MATERIAL_STATE_SCCESS = "Material State delete successfully";
   /*
    * Raw Material
    */

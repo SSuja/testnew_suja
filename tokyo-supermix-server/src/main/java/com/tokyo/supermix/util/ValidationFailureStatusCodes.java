@@ -344,6 +344,47 @@ public class ValidationFailureStatusCodes {
   }
 
   /*
+   * Material State
+   */
+  @Value("${validation.materialState.notExists}")
+  private String materialStateNotExist;
+  @Value("${validation.materialState.alreadyExist}")
+  private String materialStateAlreadyExist;
+  @Value("${materialStateDto.materialState.null")
+  private String materialStateIsNull;
+  @Value("${materialStateDto.materialState.empty")
+  private String materialStateIsEmpty;
+
+  public String getMaterialStateNotExist() {
+    return materialStateNotExist;
+  }
+
+  public void setMaterialStateNotExist(String materialStateNotExist) {
+    this.materialStateNotExist = materialStateNotExist;
+  }
+
+  public String getMaterialStateAlreadyExist() {
+    return materialStateAlreadyExist;
+  }
+
+  public void setMaterialStateAlreadyExist(String materialStateAlreadyExist) {
+    this.materialStateAlreadyExist = materialStateAlreadyExist;
+  }
+
+  public String getMaterialStateIsNull() {
+    return materialStateIsNull;
+  }
+
+  public void setMaterialStateIsNull(String materialStateIsNull) {
+    this.materialStateIsNull = materialStateIsNull;
+  }
+
+  public String getMaterialStateIsEmpty() {
+    return materialStateIsEmpty;
+  }
+
+  public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
+    this.materialStateIsEmpty = materialStateIsEmpty;
    * Raw Material
    */
   @Value("${validation.rawMaterial.notExists}")
