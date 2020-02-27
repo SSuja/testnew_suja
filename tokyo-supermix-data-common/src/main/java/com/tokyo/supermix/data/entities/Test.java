@@ -2,6 +2,8 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -12,74 +14,46 @@ import javax.persistence.Table;
 public class Test implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  private String code;
-  private String testName;
-  private String description;
-  private String procedure;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String name;
   @ManyToOne
-  @JoinColumn(name = "materialSubCategoryId", nullable = false)
-  private MaterialSubCategory materialSubCategory;
+  @JoinColumn(name = "testTypeId", nullable = false)
+  private TestType testType;
   @ManyToOne
-  @JoinColumn(name = "materialParameterId", nullable = false)
-  private MaterialParameter materialParameter;
-  @ManyToOne
-  @JoinColumn(name = "equationConfigurationId", nullable = false)
-  private EquationConfiguration equationConfiguration;
+  @JoinColumn(name = "equationId", nullable = true)
+  private Equation equation;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public String getTestName() {
-    return testName;
+  public String getName() {
+    return name;
   }
 
-  public void setTestName(String testName) {
-    this.testName = testName;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public String getDescription() {
-    return description;
+  public TestType getTestType() {
+    return testType;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setTestType(TestType testType) {
+    this.testType = testType;
   }
 
-  public String getProcedure() {
-    return procedure;
+  public Equation getEquation() {
+    return equation;
   }
 
-  public void setProcedure(String procedure) {
-    this.procedure = procedure;
-  }
-
-  public MaterialSubCategory getMaterialSubCategory() {
-    return materialSubCategory;
-  }
-
-  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
-  }
-
-  public MaterialParameter getMaterialParameter() {
-    return materialParameter;
-  }
-
-  public void setMaterialParameter(MaterialParameter materialParameter) {
-    this.materialParameter = materialParameter;
-  }
-
-  public EquationConfiguration getEquationConfiguration() {
-    return equationConfiguration;
-  }
-
-  public void setEquationConfiguration(EquationConfiguration equationConfiguration) {
-    this.equationConfiguration = equationConfiguration;
+  public void setEquation(Equation equation) {
+    this.equation = equation;
   }
 
   public static long getSerialversionuid() {
