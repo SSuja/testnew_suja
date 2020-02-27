@@ -105,6 +105,21 @@ public class Constants {
   public static final String EQUIPMENT_PLANT_CALIBRATIONS = "equipmentPlantCalibrations";
 
 
+  /*
+   * Equation
+   */
+  // constants for validation key
+  public static final String EQUATION_FORMULA = "formula";
+  public static final String EQUATIONS = "equations";
+  public static final String EQUATION = "equation";
+  public static final String EQUATION_ID = "equationId";
+  // Success Messages
+  public static final String ADD_EQUATION_SUCCESS = "Equation added Succeessfully";
+  public static final String DELETE_EQUATION_SUCCESS = "Equation deleted Succeessfully";
+  public static final String UPDATE_EQUATION_SUCCESS = "Equation updated Succeessfully";
+
+ 
+  
   public static final String PLANTEQUIPMENTS = "Plantequipments";
   public static final String PLANTEQUIPMENT = "Plantequipment";
   public static final String PLANTEQUIPMENT_SERIALNO = "PlantequipmentSerialNo";

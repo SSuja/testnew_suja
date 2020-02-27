@@ -126,6 +126,13 @@ public final class EndpointURI {
 	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
 	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
+  /*
+   * Equation APIs
+   */
+  public static final String EQUATION = BASE_API_PATH + "equation";
+  public static final String EQUATIONS = BASE_API_PATH + "equations";
+  public static final String EQUATION_BY_ID = EQUATION + ID;
+
 	/*
 	 * Parameter apis
 	 * 

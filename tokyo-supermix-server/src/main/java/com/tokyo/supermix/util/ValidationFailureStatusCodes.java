@@ -434,11 +434,7 @@ public class ValidationFailureStatusCodes {
 	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
 	// }
 
-	// For Material Category
-	@Value("${validation.materialCategory.notExists}")
-	private String MaterialCategoryNotExist;
-	@Value("${validation.materialCategory.alreadyExist}")
-	private String MaterialCategoryAlreadyExist;
+	
 
 	public String getMaterialCategoryNotExist() {
 		return MaterialCategoryNotExist;
@@ -848,6 +844,33 @@ public class ValidationFailureStatusCodes {
   @Value("${parameterDto.name.empty}")
   private String nameIsempty;
 
+  // for equation
+  @Value("${validation.equation.notExists}")
+  private String equationNotExist;
+  @Value("${validation.equation.alreadyExist}")
+  private String equationAlreadyExist;
+
+  public String getEquationNotExist() {
+    return equationNotExist;
+  }
+
+  public void setEquationNotExist(String equationNotExist) {
+    this.equationNotExist = equationNotExist;
+  }
+
+  public String getEquationAlreadyExist() {
+    return equationAlreadyExist;
+  }
+
+  public void setEquationAlreadyExist(String equationAlreadyExist) {
+    this.equationAlreadyExist = equationAlreadyExist;
+  }
+
+  // For Material Category
+  @Value("${validation.materialCategory.notExists}")
+  private String MaterialCategoryNotExist;
+  @Value("${validation.materialCategory.alreadyExist}")
+  private String MaterialCategoryAlreadyExist;
 
   public String getParameterNotExist() {
     return parameterNotExist;
