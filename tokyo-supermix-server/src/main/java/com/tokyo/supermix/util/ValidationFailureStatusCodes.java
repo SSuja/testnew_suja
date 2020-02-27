@@ -105,10 +105,6 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.designationName.alreadyExist}")
 	private String designationNameAlreadyExist;
 
-	public String getDesignationNotExist() {
-		return designationNotExist;
-	}
-
 	public void setDesignationNotExist(String designationNotExist) {
 		this.designationNotExist = designationNotExist;
 	}
@@ -119,10 +115,6 @@ public class ValidationFailureStatusCodes {
 
 	public void setDesignationAlreadyExist(String designationAlreadyExist) {
 		this.designationAlreadyExist = designationAlreadyExist;
-	}
-
-	public String getPlantIdIsNull() {
-		return plantIdIsNull;
 	}
 
 	public String getDesignationNameIsNull() {
@@ -249,33 +241,6 @@ public class ValidationFailureStatusCodes {
 		this.supplierNameIsEmpty = supplierNameIsEmpty;
 	}
 
-	public String getEmailIsNull() {
-		return emailIsNull;
-	}
-
-	public void setEmailIsNull(String emailIsNull) {
-		this.emailIsNull = emailIsNull;
-	}
-
-	public String getEmailIsEmpty() {
-		return emailIsEmpty;
-	}
-
-	public void setEmailIsEmpty(String emailIsEmpty) {
-		this.emailIsEmpty = emailIsEmpty;
-	}
-
-	public String getPhoneNumberIsNull() {
-		return phoneNumberIsNull;
-	}
-
-	public void setPhoneNumberIsNull(String phoneNumberIsNull) {
-		this.phoneNumberIsNull = phoneNumberIsNull;
-	}
-
-	public String getPhoneNumberIsEmpty() {
-		return phoneNumberIsEmpty;
-	}
 	//
 	// public String getSuppilerCategoryIdIsNull() {
 	// return suppilerCategoryIdIsNull;
@@ -293,57 +258,44 @@ public class ValidationFailureStatusCodes {
 	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
 	// }
 
-	// for employee
-	@Value("${validation.employee.notExists}")
-
-	private String employeeNotExist;
-
-	@Value("${validation.employee.alreadyExist}")
-	private String employeeAlreadyExist;
-
-	@Value("${employeeDto.firstName.null")
-	private String employeeFirstNameIsNull;
-
-	@Value("${employeeDto.firstName.empty")
-	private String employeeFirstNameIsEmpty;
-
-	public String getEmployeeNotExist() {
-		return employeeNotExist;
-	}
-
-	public void setEmployeeNotExist(String employeeNotExist) {
-		this.employeeNotExist = employeeNotExist;
-	}
-
-	public String getEmployeeAlreadyExist() {
-		return employeeAlreadyExist;
-	}
-
-	public void setEmployeeAlreadyExist(String employeeAlreadyExist) {
-		this.employeeAlreadyExist = employeeAlreadyExist;
-	}
-
-	public String getEmployeeFirstNameIsNull() {
-		return employeeFirstNameIsNull;
-	}
-
-	public void setEmployeeFirstNameIsNull(String employeeFirstNameIsNull) {
-		this.employeeFirstNameIsNull = employeeFirstNameIsNull;
-	}
-
-	public String getEmployeeFirstNameIsEmpty() {
-		return employeeFirstNameIsEmpty;
-	}
-
-	public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
-		this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
-	}
-
 	/*
 	 * MaterialSubCategory
 	 */
 	@Value("${validation.materialSubCategory.notExists}")
 	private String materialSubCategoryNotExist;
+
+	public String getMaterialSubCategoryNameIsNull() {
+		return materialSubCategoryNameIsNull;
+	}
+
+	public void setMaterialSubCategoryNameIsNull(String materialSubCategoryNameIsNull) {
+		this.materialSubCategoryNameIsNull = materialSubCategoryNameIsNull;
+	}
+
+	public String getMaterialSubCategoryNameIsEmpty() {
+		return materialSubCategoryNameIsEmpty;
+	}
+
+	public void setMaterialSubCategoryNameIsEmpty(String materialSubCategoryNameIsEmpty) {
+		this.materialSubCategoryNameIsEmpty = materialSubCategoryNameIsEmpty;
+	}
+
+	public String getPlantIdIsNull() {
+		return plantIdIsNull;
+	}
+
+	public String getDesignationNotExist() {
+		return designationNotExist;
+	}
+
+	public void setPhoneNumberIsEmpty(String phoneNumberIsEmpty) {
+		this.phoneNumberIsEmpty = phoneNumberIsEmpty;
+	}
+
+	public void setCategoryIsEmpty(String categoryIsEmpty) {
+		this.categoryIsEmpty = categoryIsEmpty;
+	}
+
 	@Value("${validation.materialSubCategory.alreadyExist}")
 	private String materialSubCategoryAlreadyExist;
 	@Value("${materialSubCategoryRequestDto.name.null}")
@@ -631,12 +583,169 @@ public class ValidationFailureStatusCodes {
 		this.customerNotExist = customerNotExist;
 	}
 
+	public String getEmailIsNull() {
+		return emailIsNull;
+	}
+
+	public void setEmailIsNull(String emailIsNull) {
+		this.emailIsNull = emailIsNull;
+	}
+
+	public String getEmailIsEmpty() {
+		return emailIsEmpty;
+	}
+
+	public void setEmailIsEmpty(String emailIsEmpty) {
+		this.emailIsEmpty = emailIsEmpty;
+	}
+
+	public String getPhoneNumberIsNull() {
+		return phoneNumberIsNull;
+	}
+
+	public void setPhoneNumberIsNull(String phoneNumberIsNull) {
+		this.phoneNumberIsNull = phoneNumberIsNull;
+	}
+
+	public String getPhoneNumberIsEmpty() {
+		return phoneNumberIsEmpty;
+	}
+	//
+	// public String getSuppilerCategoryIdIsNull() {
+	// return suppilerCategoryIdIsNull;
+	// }
+	//
+	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+	// }
+	//
+	// public String getSuppilerCategoryIdIsEmpty() {
+	// return suppilerCategoryIdIsEmpty;
+	// }
+	//
+	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+	// }
+
+	// for employee
+	@Value("${validation.employee.notExists}")
+	private String employeeNotExist;
+
+	@Value("${validation.employee.alreadyExist}")
+	private String employeeAlreadyExist;
+
+	@Value("${employeeDto.firstName.null")
+	private String employeeFirstNameIsNull;
+
+	@Value("${employeeDto.firstName.empty")
+	private String employeeFirstNameIsEmpty;
+
+	public String getEmployeeNotExist() {
+		return employeeNotExist;
+	}
+
+	public void setEmployeeNotExist(String employeeNotExist) {
+		this.employeeNotExist = employeeNotExist;
+	}
+
+	public String getEmployeeAlreadyExist() {
+		return employeeAlreadyExist;
+	}
+
+	public void setEmployeeAlreadyExist(String employeeAlreadyExist) {
+		this.employeeAlreadyExist = employeeAlreadyExist;
+	}
+
+	public String getEmployeeFirstNameIsNull() {
+		return employeeFirstNameIsNull;
+	}
+
+	public void setEmployeeFirstNameIsNull(String employeeFirstNameIsNull) {
+		this.employeeFirstNameIsNull = employeeFirstNameIsNull;
+	}
+
+	public String getEmployeeFirstNameIsEmpty() {
+		return employeeFirstNameIsEmpty;
+	}
+
+	public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
+		this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+	}
+
 	public String getCustomerAlreadyExist() {
 		return customerAlreadyExist;
 	}
 
 	public void setCustomerAlreadyExist(String customerAlreadyExist) {
 		this.customerAlreadyExist = customerAlreadyExist;
+	}
+
+	// for PlantEquipment
+
+	@Value("${validation.plantEquipment.alreadyExist}")
+	private String plantEquipmentAlreadyExist;
+
+	@Value("${validation.plantEquipment.notExist}")
+	private String plantEquipmentNotExist;
+
+	@Value("${plantEquipmentDto.serialNo.empty}")
+	private String plantEquipmentSerialNoIsEmpty;
+
+	@Value("${plantEquipmentDto.serialNo.null}")
+	private String plantEquipmentSerialNoIsNull;
+
+	@Value("${plantEquipmentDto.brandName.null}")
+	private String plantEquipmentBrandNameIsNull;
+
+	@Value("${plantEquipmentDto.brandName.empty}")
+	private String plantEquipmentBrandNameIsEmpty;
+
+	public String getPlantEquipmentAlreadyExist() {
+		return plantEquipmentAlreadyExist;
+	}
+
+	public void setPlantEquipmentAlreadyExist(String plantEquipmentAlreadyExist) {
+		this.plantEquipmentAlreadyExist = plantEquipmentAlreadyExist;
+	}
+
+	public String getPlantEquipmentNotExist() {
+		return plantEquipmentNotExist;
+	}
+
+	public void setPlantEquipmentNotExist(String plantEquipmentNotExist) {
+		this.plantEquipmentNotExist = plantEquipmentNotExist;
+	}
+
+	public String getPlantEquipmentSerialNoIsEmpty() {
+		return plantEquipmentSerialNoIsEmpty;
+	}
+
+	public void setPlantEquipmentSerialNoIsEmpty(String plantEquipmentSerialNoIsEmpty) {
+		this.plantEquipmentSerialNoIsEmpty = plantEquipmentSerialNoIsEmpty;
+	}
+
+	public String getPlantEquipmentSerialNoIsNull() {
+		return plantEquipmentSerialNoIsNull;
+	}
+
+	public void setPlantEquipmentSerialNoIsNull(String plantEquipmentSerialNoIsNull) {
+		this.plantEquipmentSerialNoIsNull = plantEquipmentSerialNoIsNull;
+	}
+
+	public String getPlantEquipmentBrandNameIsNull() {
+		return plantEquipmentBrandNameIsNull;
+	}
+
+	public void setPlantEquipmentBrandNameIsNull(String plantEquipmentBrandNameIsNull) {
+		this.plantEquipmentBrandNameIsNull = plantEquipmentBrandNameIsNull;
+	}
+
+	public String getPlantEquipmentBrandNameIsEmpty() {
+		return plantEquipmentBrandNameIsEmpty;
+	}
+
+	public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
+		this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
 	}
 
 }
