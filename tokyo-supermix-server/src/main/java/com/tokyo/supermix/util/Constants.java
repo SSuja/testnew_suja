@@ -82,7 +82,14 @@ public class Constants {
   public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
   public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
       "Material Category updated Successfully";
-
+  
+  public static final String ADD_POUR_SUCCESS = "Pour added Successfully";
+  public static final String POUR_DELETED = "Pour Deleted Succeessfully";
+  public static final String UPDATE_POUR_SUCCESS =
+      "Pour updated Successfully";
+  public static final String POUR = "Pour";
+  public static final String POURS = "Pours";
+  
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

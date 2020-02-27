@@ -105,7 +105,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.designationName.alreadyExist}")
   private String designationNameAlreadyExist;
 
-
   public String getDesignationNotExist() {
     return designationNotExist;
   }
@@ -121,7 +120,6 @@ public class ValidationFailureStatusCodes {
   public void setDesignationAlreadyExist(String designationAlreadyExist) {
     this.designationAlreadyExist = designationAlreadyExist;
   }
-
 
   public String getPlantIdIsNull() {
     return plantIdIsNull;
@@ -154,7 +152,6 @@ public class ValidationFailureStatusCodes {
   /*
    * Supplier
    */
-
 
   @Value("${validation.supplier.alreadyExist}")
   private String supplierAlreadyExist;
@@ -191,7 +188,6 @@ public class ValidationFailureStatusCodes {
   public String getSupplierNotExit() {
     return supplierNotExit;
   }
-
 
   @Value("${validation.supplierCategory.alreadyExist}")
   private String supplierCategoryAlreadyExist;
@@ -365,4 +361,25 @@ public class ValidationFailureStatusCodes {
     MaterialCategoryAlreadyExist = materialCategoryAlreadyExist;
   }
 
+  // Pour
+  @Value("${validation.Pour.AlreadyExist}")
+  private String PourAlreadyExist;
+  @Value("${validation.Pour.NotExist}")
+  private String PourNotExist;
+
+  public String getPourAlreadyExist() {
+    return PourAlreadyExist;
+  }
+
+  public void setPourAlreadyExist(String pourAlreadyExist) {
+    PourAlreadyExist = pourAlreadyExist;
+  }
+
+  public String getPourNotExist() {
+    return PourNotExist;
+  }
+
+  public void setPourNotExist(String pourNotExist) {
+    PourNotExist = pourNotExist;
+  }
 }
