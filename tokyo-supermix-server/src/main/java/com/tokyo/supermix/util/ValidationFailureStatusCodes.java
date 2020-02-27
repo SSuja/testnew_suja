@@ -177,12 +177,12 @@ public class ValidationFailureStatusCodes {
 	@Value("${supplierRequestDto.phoneNumber.empty}")
 	private String phoneNumberIsEmpty;
 
-	public String getSupplierAlreadyExist() {
-		return supplierAlreadyExist;
-	}
-
 	public void setSupplierAlreadyExist(String supplierAlreadyExist) {
 		this.supplierAlreadyExist = supplierAlreadyExist;
+	}
+
+	public String getSupplierAlreadyExist() {
+		return supplierAlreadyExist;
 	}
 
 	public String getSupplierNotExit() {
@@ -273,25 +273,26 @@ public class ValidationFailureStatusCodes {
 		this.phoneNumberIsNull = phoneNumberIsNull;
 	}
 
-	public String getPhoneNumberIsEmpty() {
-		return phoneNumberIsEmpty;
-	}
-//
-//  public String getSuppilerCategoryIdIsNull() {
-//    return suppilerCategoryIdIsNull;
-//  }
-//
-//  public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-//    this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-//  }
-//
-//  public String getSuppilerCategoryIdIsEmpty() {
-//    return suppilerCategoryIdIsEmpty;
-//  }
-//
-//  public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-//    this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-//  }
+  public String getPhoneNumberIsEmpty() {
+    return phoneNumberIsEmpty;
+  }
+  //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
+
 
 	// for employee
 	@Value("${validation.employee.notExists}")
@@ -366,5 +367,183 @@ public class ValidationFailureStatusCodes {
 	public void setMaterialSubCategoryAlreadyExist(String materialSubCategoryAlreadyExist) {
 		this.materialSubCategoryAlreadyExist = materialSubCategoryAlreadyExist;
 	}
+
+
+  // for equipment
+  @Value("${validation.equipment.notExists}")
+
+  private String equipmentNotExist;
+  @Value("${validation.equipment.alreadyExist}")
+  private String equipmentAlreadyExist;
+
+  public String getEquipmentNotExist() {
+    return equipmentNotExist;
+  }
+
+  public void setEquipmentNotExist(String equipmentNotExist) {
+    this.equipmentNotExist = equipmentNotExist;
+  }
+
+  public String getEquipmentAlreadyExist() {
+    return equipmentAlreadyExist;
+  }
+
+  public void setEquipmentAlreadyExist(String equipmentAlreadyExist) {
+    this.equipmentAlreadyExist = equipmentAlreadyExist;
+  }
+
+  /*
+   * Material State
+   */
+  @Value("${validation.materialState.notExists}")
+  private String materialStateNotExist;
+  @Value("${validation.materialState.alreadyExist}")
+  private String materialStateAlreadyExist;
+  @Value("${materialStateDto.materialState.null")
+  private String materialStateIsNull;
+  @Value("${materialStateDto.materialState.empty")
+  private String materialStateIsEmpty;
+
+  public String getMaterialStateNotExist() {
+    return materialStateNotExist;
+  }
+
+  public void setMaterialStateNotExist(String materialStateNotExist) {
+    this.materialStateNotExist = materialStateNotExist;
+  }
+
+  public String getMaterialStateAlreadyExist() {
+    return materialStateAlreadyExist;
+  }
+
+  public void setMaterialStateAlreadyExist(String materialStateAlreadyExist) {
+    this.materialStateAlreadyExist = materialStateAlreadyExist;
+  }
+
+  public String getMaterialStateIsNull() {
+    return materialStateIsNull;
+  }
+
+  public void setMaterialStateIsNull(String materialStateIsNull) {
+    this.materialStateIsNull = materialStateIsNull;
+  }
+
+  public String getMaterialStateIsEmpty() {
+    return materialStateIsEmpty;
+  }
+
+  public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
+    this.materialStateIsEmpty = materialStateIsEmpty;
+  }
+
+  /*
+   * Raw Material
+   */
+  @Value("${validation.rawMaterial.notExists}")
+  private String rawMaterialNotExist;
+  @Value("${validation.rawMaterial.alreadyExist}")
+  private String rawMaterialAlreadyExist;
+  @Value("${rawMaterialRequestDto.name.null")
+  private String rawMaterialNameIsNull;
+  @Value("${rawMaterialRequestDto.name.empty")
+  private String rawMaterialNameIsEmpty;
+
+  public String getRawMaterialNotExist() {
+    return rawMaterialNotExist;
+  }
+
+  public void setRawMaterialNotExist(String rawMaterialNotExist) {
+    this.rawMaterialNotExist = rawMaterialNotExist;
+  }
+
+  public String getRawMaterialAlreadyExist() {
+    return rawMaterialAlreadyExist;
+  }
+
+  public void setRawMaterialAlreadyExist(String rawMaterialAlreadyExist) {
+    this.rawMaterialAlreadyExist = rawMaterialAlreadyExist;
+  }
+
+  public String getRawMaterialNameIsNull() {
+    return rawMaterialNameIsNull;
+  }
+
+  public void setRawMaterialNameIsNull(String rawMaterialNameIsNull) {
+    this.rawMaterialNameIsNull = rawMaterialNameIsNull;
+  }
+
+  public String getRawMaterialNameIsEmpty() {
+    return rawMaterialNameIsEmpty;
+  }
+
+  public void setRawMaterialNameIsEmpty(String rawMaterialNameIsEmpty) {
+    this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
+  }
+
+  // For Material Category
+  @Value("${validation.materialCategory.notExists}")
+  private String MaterialCategoryNotExist;
+  @Value("${validation.materialCategory.alreadyExist}")
+  private String MaterialCategoryAlreadyExist;
+
+  public String getMaterialCategoryNotExist() {
+    return MaterialCategoryNotExist;
+  }
+
+  public void setMaterialCategoryNotExist(String materialCategoryNotExist) {
+    MaterialCategoryNotExist = materialCategoryNotExist;
+  }
+
+  public String getMaterialCategoryAlreadyExist() {
+    return MaterialCategoryAlreadyExist;
+  }
+
+  public void setMaterialCategoryAlreadyExist(String materialCategoryAlreadyExist) {
+    MaterialCategoryAlreadyExist = materialCategoryAlreadyExist;
+  }
+
+  /*
+   * Test
+   */
+  @Value("${validation.test.notExists}")
+  private String testNotExist;
+  @Value("${validation.test.alreadyExist}")
+  private String testAlreadyExist;
+  @Value("${testRequestDto.name.null")
+  private String testNameIsNull;
+  @Value("${testRequestDto.name.empty")
+  private String testNameIsEmpty;
+
+  public String getTestNotExist() {
+    return testNotExist;
+  }
+
+  public void setTestNotExist(String testNotExist) {
+    this.testNotExist = testNotExist;
+  }
+
+  public String getTestAlreadyExist() {
+    return testAlreadyExist;
+  }
+
+  public void setTestAlreadyExist(String testAlreadyExist) {
+    this.testAlreadyExist = testAlreadyExist;
+  }
+
+  public String getTestNameIsNull() {
+    return testNameIsNull;
+  }
+
+  public void setTestNameIsNull(String testNameIsNull) {
+    this.testNameIsNull = testNameIsNull;
+  }
+
+  public String getTestNameIsEmpty() {
+    return testNameIsEmpty;
+  }
+
+  public void setTestNameIsEmpty(String testNameIsEmpty) {
+    this.testNameIsEmpty = testNameIsEmpty;
+  }
 
 }
