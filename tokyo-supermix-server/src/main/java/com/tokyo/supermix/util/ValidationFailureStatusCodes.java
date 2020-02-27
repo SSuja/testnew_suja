@@ -159,29 +159,30 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.supplier.notExist}")
 	private String supplierNotExit;
 
-	@Value("${supplierDto.name.null")
+	@Value("${supplierRequestDto.name.null}")
 	private String supplierNameIsNull;
 
-	@Value("${supplierDto.name.empty")
+	@Value("${supplierRequestDto.name.empty}")
 	private String supplierNameIsEmpty;
 
-	@Value("${supplierDto.email.null")
+	@Value("${supplierRequestDto.email.null}")
 	private String emailIsNull;
 
-	@Value("${supplierDto.email.empty")
+	@Value("${supplierRequestDto.email.empty}")
 	private String emailIsEmpty;
-	@Value("${supplierDto.phoneNumber.null")
+
+	@Value("${supplierRequestDto.phoneNumber.null}")
 	private String phoneNumberIsNull;
 
-	@Value("${supplierDto.phoneNumber.empty")
+	@Value("${supplierRequestDto.phoneNumber.empty}")
 	private String phoneNumberIsEmpty;
-
-	public String getSupplierAlreadyExist() {
-		return supplierAlreadyExist;
-	}
 
 	public void setSupplierAlreadyExist(String supplierAlreadyExist) {
 		this.supplierAlreadyExist = supplierAlreadyExist;
+	}
+
+	public String getSupplierAlreadyExist() {
+		return supplierAlreadyExist;
 	}
 
 	public String getSupplierNotExit() {
@@ -276,7 +277,6 @@ public class ValidationFailureStatusCodes {
 		return phoneNumberIsEmpty;
 	}
 
-	// for employee
 	@Value("${validation.employee.notExists}")
 
 	private String employeeNotExist;
@@ -324,6 +324,7 @@ public class ValidationFailureStatusCodes {
 
 	// unit
 	@Value("${validation.unit.notExists}")
+
 	private String unitNotExist;
 
 	@Value("${validation.unit.alreadyExist}")
@@ -384,6 +385,34 @@ public class ValidationFailureStatusCodes {
 
 	public void setCategoryIsEmpty(String categoryIsEmpty) {
 		this.categoryIsEmpty = categoryIsEmpty;
+	}
+
+	/*
+	 * MaterialSubCategory
+	 */
+	@Value("${validation.materialSubCategory.notExists}")
+	private String materialSubCategoryNotExist;
+	@Value("${validation.materialSubCategory.alreadyExist}")
+	private String materialSubCategoryAlreadyExist;
+	@Value("${materialSubCategoryRequestDto.name.null}")
+	private String materialSubCategoryNameIsNull;
+	@Value("${materialSubCategoryRequestDto.name.empty}")
+	private String materialSubCategoryNameIsEmpty;
+
+	public String getMaterialSubCategoryNotExist() {
+		return materialSubCategoryNotExist;
+	}
+
+	public void setMaterialSubCategoryNotExist(String materialSubCategoryNotExist) {
+		this.materialSubCategoryNotExist = materialSubCategoryNotExist;
+	}
+
+	public String getMaterialSubCategoryAlreadyExist() {
+		return materialSubCategoryAlreadyExist;
+	}
+
+	public void setMaterialSubCategoryAlreadyExist(String materialSubCategoryAlreadyExist) {
+		this.materialSubCategoryAlreadyExist = materialSubCategoryAlreadyExist;
 	}
 
 	// for equipment
