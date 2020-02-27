@@ -71,7 +71,7 @@ public final class EndpointURI {
 	public static final String MATERIAL_SUB_CATEGORIES = BASE_API_PATH + "material-sub-categories";
 	public static final String MATERIAL_CATEGORY_ID = "/{materialCategoryId}";
 	public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY = MATERIAL_SUB_CATEGORY + "/category"
-			+ MATERIAL_CATEGORY_ID;
+	+ MATERIAL_CATEGORY_ID;
 	public static final String GET_MATERIAL_SUB_CATEGORY_BY_ID = MATERIAL_SUB_CATEGORY + ID;
 	public static final String DELETE_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORY + ID;
 	/*
@@ -162,7 +162,7 @@ public final class EndpointURI {
 	public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
 	public static final String TEST_TYPES = BASE_API_PATH + "test-types";
 
-	private EndpointURI() {
+	
 
   /*
    * IncomingSample Apis
@@ -172,5 +172,5 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
 
   private EndpointURI() {
-
+  }
 }
