@@ -55,6 +55,13 @@ public final class EndpointURI {
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
   /*
+   * Equipment APIs
+   */
+  public static final String EQUIPMENT = BASE_API_PATH + "equipment";
+  public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
+  public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
+  public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
+  /*
    * Material Category APIs
    */
   public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
@@ -76,7 +83,6 @@ public final class EndpointURI {
   public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
   public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
   public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
-
   /*
    * Raw Material apis
    */

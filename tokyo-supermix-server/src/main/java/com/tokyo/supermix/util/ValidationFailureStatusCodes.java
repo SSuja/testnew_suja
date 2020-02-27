@@ -343,6 +343,30 @@ public class ValidationFailureStatusCodes {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
 
+
+  // for equipment
+  @Value("${validation.equipment.notExists}")
+
+  private String equipmentNotExist;
+  @Value("${validation.equipment.alreadyExist}")
+  private String equipmentAlreadyExist;
+
+  public String getEquipmentNotExist() {
+    return equipmentNotExist;
+  }
+
+  public void setEquipmentNotExist(String equipmentNotExist) {
+    this.equipmentNotExist = equipmentNotExist;
+  }
+
+  public String getEquipmentAlreadyExist() {
+    return equipmentAlreadyExist;
+  }
+
+  public void setEquipmentAlreadyExist(String equipmentAlreadyExist) {
+    this.equipmentAlreadyExist = equipmentAlreadyExist;
+  }
+
   /*
    * Material State
    */

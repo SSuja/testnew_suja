@@ -109,6 +109,17 @@ public class Constants {
   public static final String UPDATE_RAW_MATERIAL_SUCCESS = "Raw Material updated Successfully";
   public static final String DELETE_RAW_MATERIAL_SCCESS = "Raw Material delete successfully";
 
+  /* Equipment */
+  // constants for validation key
+  public static final String EQUIPMENT_NAME = "name";
+  public static final String EQUIPMENTS = "equipments";
+  public static final String EQUIPMENMT_ID = "equipmentId";
+  public static final String EQUIPMENT = "equipment";
+  // Success Messages
+  public static final String ADD_EQUIPMENT_SUCCESS = "Equipment added Successfully";
+  public static final String EQUIPMENT_DELETED = "Equipment Deleted Succeessfully";
+  public static final String UPDATE_EQUIPMENT_SUCCESS = "Equipment updated Successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
