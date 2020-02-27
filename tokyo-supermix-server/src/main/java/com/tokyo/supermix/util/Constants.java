@@ -69,6 +69,37 @@ public class Constants {
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
+  /*
+   * Material Category
+   */
+  // constants for validation key
+  public static final String MATERIAL_CATEGORY_NAME = "name";
+  public static final String MATERIAL_CATEGORIES = "materialCategories";
+  public static final String MATERIAL_CATEGORY = "materialCategory";
+  public static final String MATERIAL_CATEGORY_ID = "materialCategoryId";
+  // Success Messages
+  public static final String ADD_MATERIAL_CATEGORY_SUCCESS = "Material Category added Successfully";
+  public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
+  public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
+      "Material Category updated Successfully";
+
+  /*
+   * Material State
+   */
+  public static final String MATERIAL_STATE = "materialState";
+  public static final String MATERIAL_STATE_ID = "id";
+  public static final String ADD_MATERIAL_STATE_SUCCESS = "Material State added Successfully";
+  public static final String UPDATE_MATERIAL_STATE_SUCCESS = "Material State updated Successfully";
+  public static final String DELETE_MATERIAL_STATE_SCCESS = "Material State delete successfully";
+  /*
+   * Raw Material
+   */
+  public static final String RAW_MATERIAL_NAME = "name";
+  public static final String RAW_MATERIAL = "rawMaterial";
+  public static final String RAW_MATERIAL_ID = "id";
+  public static final String ADD_RAW_MATERIAL_SUCCESS = "Raw Material added Successfully";
+  public static final String UPDATE_RAW_MATERIAL_SUCCESS = "Raw Material updated Successfully";
+  public static final String DELETE_RAW_MATERIAL_SCCESS = "Raw Material delete successfully";
 
   /* Equipment */
   // constants for validation key
