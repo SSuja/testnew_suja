@@ -126,17 +126,24 @@ public final class EndpointURI {
 	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
 	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
+	/*
+	 * Parameter apis
+	 * 
+	 */
+	public static final String PARAMETER = BASE_API_PATH + "parameter";
+	public static final String PARAMETERS = BASE_API_PATH + "parameters";
+	public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
+	public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
 
-  /*
-   * Parameter apis
-   * 
-   */
-  public static final String PARAMETER = BASE_API_PATH + "parameter";
-  public static final String PARAMETERS = BASE_API_PATH + "parameters";
-  public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
-  public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
+	/*
+	 * TestType
+	 */
+	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
+	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
+	public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
+	public static final String TEST_TYPES = BASE_API_PATH + "test-types";
 
-  private EndpointURI() {
+	private EndpointURI() {
 
 	}
 }

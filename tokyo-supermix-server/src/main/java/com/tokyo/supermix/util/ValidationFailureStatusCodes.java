@@ -99,6 +99,9 @@ public class ValidationFailureStatusCodes {
 	@Value("${designationDto.name.null")
 	private String designationNameIsNull;
 
+  public String getDesignationNotExist() {
+    return designationNotExist;
+  }
 	@Value("${designationDto.name.empty")
 	private String designationNameIsEmpty;
 
@@ -117,6 +120,9 @@ public class ValidationFailureStatusCodes {
 		this.designationAlreadyExist = designationAlreadyExist;
 	}
 
+  public String getPlantIdIsNull() {
+    return plantIdIsNull;
+  }
 	public String getDesignationNameIsNull() {
 		return designationNameIsNull;
 	}
@@ -187,8 +193,6 @@ public class ValidationFailureStatusCodes {
 	@Value("${supplierCategoryDto.category.null")
 	private String categoryIsNull;
 
-	@Value("${validation.supplierCategory.alreadyExist}")
-	private String supplierCategoryAlreadyExist;
 	@Value("${supplierCategoryDto.category.empty")
 	private String categoryIsEmpty;
 
@@ -269,14 +273,6 @@ public class ValidationFailureStatusCodes {
 
 	public void setMaterialSubCategoryNameIsEmpty(String materialSubCategoryNameIsEmpty) {
 		this.materialSubCategoryNameIsEmpty = materialSubCategoryNameIsEmpty;
-	}
-
-	public String getPlantIdIsNull() {
-		return plantIdIsNull;
-	}
-
-	public String getDesignationNotExist() {
-		return designationNotExist;
 	}
 
 	public void setPhoneNumberIsEmpty(String phoneNumberIsEmpty) {
@@ -594,6 +590,8 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.employee.notExists}")
 	private String employeeNotExist;
 
+  @Value("${validation.supplierCategory.alreadyExist}")
+  private String supplierCategoryAlreadyExist;
 	@Value("${validation.employee.alreadyExist}")
 	private String employeeAlreadyExist;
 
@@ -865,6 +863,48 @@ public class ValidationFailureStatusCodes {
 
   public void setParameterAlreadyExist(String parameterAlreadyExist) {
     this.parameterAlreadyExist = parameterAlreadyExist;
+  }
+
+  // For TestTypes
+  @Value("${validation.testType.notExists}")
+  private String testTypeNotExist;
+  @Value("${validation.testType.alreadyExists}")
+  private String testTypealreadyExists;
+  @Value("${testTypeDto.type.null}")
+  private String testTypeIsNull;
+  @Value("${estTypeDto.type.empty}")
+  private String testTypeIsEmpty;
+
+  public String getTestTypeNotExist() {
+    return testTypeNotExist;
+  }
+
+  public void setTestTypeNotExist(String testTypeNotExist) {
+    this.testTypeNotExist = testTypeNotExist;
+  }
+
+  public String getTestTypealreadyExists() {
+    return testTypealreadyExists;
+  }
+
+  public void setTestTypealreadyExists(String testTypealreadyExists) {
+    this.testTypealreadyExists = testTypealreadyExists;
+  }
+
+  public String getTestTypeIsNull() {
+    return testTypeIsNull;
+  }
+
+  public void setTestTypeIsNull(String testTypeIsNull) {
+    this.testTypeIsNull = testTypeIsNull;
+  }
+
+  public String getTestTypeIsEmpty() {
+    return testTypeIsEmpty;
+  }
+
+  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
+    this.testTypeIsEmpty = testTypeIsEmpty;
   }
 
 }
