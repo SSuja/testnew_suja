@@ -99,9 +99,10 @@ public class ValidationFailureStatusCodes {
 	@Value("${designationDto.name.null")
 	private String designationNameIsNull;
 
-  public String getDesignationNotExist() {
-    return designationNotExist;
-  }
+	public String getDesignationNotExist() {
+		return designationNotExist;
+	}
+
 	@Value("${designationDto.name.empty")
 	private String designationNameIsEmpty;
 
@@ -120,9 +121,10 @@ public class ValidationFailureStatusCodes {
 		this.designationAlreadyExist = designationAlreadyExist;
 	}
 
-  public String getPlantIdIsNull() {
-    return plantIdIsNull;
-  }
+	public String getPlantIdIsNull() {
+		return plantIdIsNull;
+	}
+
 	public String getDesignationNameIsNull() {
 		return designationNameIsNull;
 	}
@@ -236,28 +238,9 @@ public class ValidationFailureStatusCodes {
 		this.supplierNameIsNull = supplierNameIsNull;
 	}
 
-	//
-	// public String getSuppilerCategoryIdIsNull() {
-	// return suppilerCategoryIdIsNull;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-	// }
-	//
-	// public String getSuppilerCategoryIdIsEmpty() {
-	// return suppilerCategoryIdIsEmpty;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-	// }
-
 	/*
 	 * MaterialSubCategory
 	 */
-	@Value("${validation.materialSubCategory.notExists}")
-	private String materialSubCategoryNotExist;
 
 	public String getMaterialSubCategoryNameIsNull() {
 		return materialSubCategoryNameIsNull;
@@ -275,21 +258,6 @@ public class ValidationFailureStatusCodes {
 		this.materialSubCategoryNameIsEmpty = materialSubCategoryNameIsEmpty;
 	}
 
-	public void setPhoneNumberIsEmpty(String phoneNumberIsEmpty) {
-		this.phoneNumberIsEmpty = phoneNumberIsEmpty;
-	}
-
-	public void setCategoryIsEmpty(String categoryIsEmpty) {
-		this.categoryIsEmpty = categoryIsEmpty;
-	}
-
-	@Value("${validation.materialSubCategory.alreadyExist}")
-	private String materialSubCategoryAlreadyExist;
-	@Value("${materialSubCategoryRequestDto.name.null}")
-	private String materialSubCategoryNameIsNull;
-	@Value("${materialSubCategoryRequestDto.name.empty}")
-	private String materialSubCategoryNameIsEmpty;
-
 	public String getMaterialSubCategoryNotExist() {
 		return materialSubCategoryNotExist;
 	}
@@ -304,6 +272,245 @@ public class ValidationFailureStatusCodes {
 
 	public void setMaterialSubCategoryAlreadyExist(String materialSubCategoryAlreadyExist) {
 		this.materialSubCategoryAlreadyExist = materialSubCategoryAlreadyExist;
+	}
+
+	// for customer
+	@Value("${validation.customer.alreadyExist}")
+	private String customerAlreadyExist;
+
+	@Value("${customerDto.name.null")
+	private String customerNameIsNull;
+
+	@Value("${customerDto.name.empty")
+	private String customerNameIsEmpty;
+
+	@Value("${customerDto.phoneNumber.null}")
+	private String customerPhoneNumberIsnull;
+
+	@Value("${customerDto.email.null}")
+	private String customerEmailIsnull;
+
+	@Value("${validation.customer.notExists}")
+	private String customerNotExist;
+
+	@Value("${customerDto.email.empty}")
+	private String customerEmailIsEmpty;
+
+	public String getCustomerEmailIsEmpty() {
+		return customerEmailIsEmpty;
+	}
+
+	public void setCustomerEmailIsEmpty(String customerEmailIsEmpty) {
+		this.customerEmailIsEmpty = customerEmailIsEmpty;
+	}
+
+	public String getCustomerNameIsNull() {
+		return customerNameIsNull;
+	}
+
+	public void setCustomerNameIsNull(String customerNameIsNull) {
+		this.customerNameIsNull = customerNameIsNull;
+	}
+
+	public String getCustomerNameIsEmpty() {
+		return customerNameIsEmpty;
+	}
+
+	public void setCustomerNameIsEmpty(String customerNameIsEmpty) {
+		this.customerNameIsEmpty = customerNameIsEmpty;
+	}
+
+	public String getCustomerPhoneNumberIsnull() {
+		return customerPhoneNumberIsnull;
+	}
+
+	public void setCustomerPhoneNumberIsnull(String customerPhoneNumberIsnull) {
+		this.customerPhoneNumberIsnull = customerPhoneNumberIsnull;
+	}
+
+	public String getCustomerEmailIsnull() {
+		return customerEmailIsnull;
+	}
+
+	public void setCustomerEmailIsnull(String customerEmailIsnull) {
+		this.customerEmailIsnull = customerEmailIsnull;
+	}
+
+	public String getCustomerNotExist() {
+		return customerNotExist;
+	}
+
+	public void setCustomerNotExist(String customerNotExist) {
+		this.customerNotExist = customerNotExist;
+	}
+
+	// for employee
+	@Value("${validation.employee.notExists}")
+
+	private String employeeNotExist;
+
+	@Value("${validation.supplierCategory.alreadyExist}")
+	private String supplierCategoryAlreadyExist;
+	@Value("${validation.employee.alreadyExist}")
+	private String employeeAlreadyExist;
+
+	@Value("${employeeDto.firstName.null")
+	private String employeeFirstNameIsNull;
+
+	@Value("${employeeDto.firstName.empty")
+	private String employeeFirstNameIsEmpty;
+
+	public String getEmployeeNotExist() {
+		return employeeNotExist;
+	}
+
+	public void setEmployeeNotExist(String employeeNotExist) {
+		this.employeeNotExist = employeeNotExist;
+	}
+
+	public String getEmployeeAlreadyExist() {
+		return employeeAlreadyExist;
+	}
+
+	public void setEmployeeAlreadyExist(String employeeAlreadyExist) {
+		this.employeeAlreadyExist = employeeAlreadyExist;
+	}
+
+	public String getEmployeeFirstNameIsNull() {
+		return employeeFirstNameIsNull;
+	}
+
+	public void setEmployeeFirstNameIsNull(String employeeFirstNameIsNull) {
+		this.employeeFirstNameIsNull = employeeFirstNameIsNull;
+	}
+
+	public String getEmployeeFirstNameIsEmpty() {
+		return employeeFirstNameIsEmpty;
+	}
+
+	public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
+		this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+	}
+
+	// unit
+	@Value("${validation.unit.notExists}")
+
+	private String unitNotExist;
+
+	@Value("${validation.unit.alreadyExist}")
+	private String unitAlreadyExist;
+
+	@Value("${unitDto.unit.null")
+	private String unitIsNull;
+
+	@Value("${unitDto.unit.empty")
+	private String unitIsEmpty;
+
+	@Value("${unitDto.unit.specialCharacter}")
+	private String unitIsSpecialCharacter;
+
+	public String getUnitNotExist() {
+		return unitNotExist;
+	}
+
+	public void setUnitNotExist(String unitNotExist) {
+		this.unitNotExist = unitNotExist;
+	}
+
+	public String getUnitAlreadyExist() {
+		return unitAlreadyExist;
+	}
+
+	public void setUnitAlreadyExist(String unitAlreadyExist) {
+		this.unitAlreadyExist = unitAlreadyExist;
+	}
+
+	public String getUnitIsNull() {
+		return unitIsNull;
+	}
+
+	public void setUnitIsNull(String unitIsNull) {
+		this.unitIsNull = unitIsNull;
+	}
+
+	public String getUnitIsEmpty() {
+		return unitIsEmpty;
+	}
+
+	public void setUnitIsEmpty(String unitIsEmpty) {
+		this.unitIsEmpty = unitIsEmpty;
+	}
+
+	public String getUnitIsSpecialCharacter() {
+		return unitIsSpecialCharacter;
+	}
+
+	public void setUnitIsSpecialCharacter(String unitIsSpecialCharacter) {
+		this.unitIsSpecialCharacter = unitIsSpecialCharacter;
+	}
+
+	public void setPhoneNumberIsEmpty(String phoneNumberIsEmpty) {
+		this.phoneNumberIsEmpty = phoneNumberIsEmpty;
+	}
+
+	public void setCategoryIsEmpty(String categoryIsEmpty) {
+		this.categoryIsEmpty = categoryIsEmpty;
+	}
+
+	/*
+	 * MaterialSubCategory
+	 */
+	@Value("${validation.materialSubCategory.notExists}")
+	private String materialSubCategoryNotExist;
+	@Value("${validation.materialSubCategory.alreadyExist}")
+	private String materialSubCategoryAlreadyExist;
+	@Value("${materialSubCategoryRequestDto.name.null}")
+	private String materialSubCategoryNameIsNull;
+	@Value("${materialSubCategoryRequestDto.name.empty}")
+	private String materialSubCategoryNameIsEmpty;
+
+	public String getCustomerAlreadyExist() {
+		return customerAlreadyExist;
+	}
+
+	public void setCustomerAlreadyExist(String customerAlreadyExist) {
+		this.customerAlreadyExist = customerAlreadyExist;
+	}
+
+	// for PlantEquipment
+
+	@Value("${validation.plantEquipment.alreadyExist}")
+	private String plantEquipmentAlreadyExist;
+
+	@Value("${validation.plantEquipment.notExist}")
+	private String plantEquipmentNotExist;
+
+	@Value("${plantEquipmentDto.serialNo.empty}")
+	private String plantEquipmentSerialNoIsEmpty;
+
+	@Value("${plantEquipmentDto.serialNo.null}")
+	private String plantEquipmentSerialNoIsNull;
+
+	@Value("${plantEquipmentDto.brandName.null}")
+	private String plantEquipmentBrandNameIsNull;
+
+	@Value("${plantEquipmentDto.brandName.empty}")
+	private String plantEquipmentBrandNameIsEmpty;
+
+	public String getPlantEquipmentAlreadyExist() {
+		return plantEquipmentAlreadyExist;
+	}
+
+	public void setPlantEquipmentAlreadyExist(String plantEquipmentAlreadyExist) {
+		this.plantEquipmentAlreadyExist = plantEquipmentAlreadyExist;
+	}
+
+	public String getPlantEquipmentNotExist() {
+		return plantEquipmentNotExist;
+	}
+
+	public void setPlantEquipmentNotExist(String plantEquipmentNotExist) {
+		this.plantEquipmentNotExist = plantEquipmentNotExist;
 	}
 
 	// for equipment
@@ -417,25 +624,6 @@ public class ValidationFailureStatusCodes {
 		this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
 	}
 
-	//
-	// public String getSuppilerCategoryIdIsNull() {
-	// return suppilerCategoryIdIsNull;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-	// }
-	//
-	// public String getSuppilerCategoryIdIsEmpty() {
-	// return suppilerCategoryIdIsEmpty;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-	// }
-
-	
-
 	public String getMaterialCategoryNotExist() {
 		return MaterialCategoryNotExist;
 	}
@@ -494,183 +682,6 @@ public class ValidationFailureStatusCodes {
 
 	public void setTestNameIsEmpty(String testNameIsEmpty) {
 		this.testNameIsEmpty = testNameIsEmpty;
-	}
-
-	// for customer
-	@Value("${validation.customer.alreadyExist}")
-	private String customerAlreadyExist;
-
-	@Value("${customerDto.name.null")
-	private String customerNameIsNull;
-
-	@Value("${customerDto.name.empty")
-	private String customerNameIsEmpty;
-
-	@Value("${customerDto.phoneNumber.null}")
-	private String customerPhoneNumberIsnull;
-
-	@Value("${customerDto.email.null}")
-	private String customerEmailIsnull;
-
-	@Value("${validation.customer.notExists}")
-	private String customerNotExist;
-
-	@Value("${customerDto.email.empty}")
-	private String customerEmailIsEmpty;
-
-	public String getCustomerEmailIsEmpty() {
-		return customerEmailIsEmpty;
-	}
-
-	public void setCustomerEmailIsEmpty(String customerEmailIsEmpty) {
-		this.customerEmailIsEmpty = customerEmailIsEmpty;
-	}
-
-	public String getCustomerNameIsNull() {
-		return customerNameIsNull;
-	}
-
-	public void setCustomerNameIsNull(String customerNameIsNull) {
-		this.customerNameIsNull = customerNameIsNull;
-	}
-
-	public String getCustomerNameIsEmpty() {
-		return customerNameIsEmpty;
-	}
-
-	public void setCustomerNameIsEmpty(String customerNameIsEmpty) {
-		this.customerNameIsEmpty = customerNameIsEmpty;
-	}
-
-	public String getCustomerPhoneNumberIsnull() {
-		return customerPhoneNumberIsnull;
-	}
-
-	public void setCustomerPhoneNumberIsnull(String customerPhoneNumberIsnull) {
-		this.customerPhoneNumberIsnull = customerPhoneNumberIsnull;
-	}
-
-	public String getCustomerEmailIsnull() {
-		return customerEmailIsnull;
-	}
-
-	public void setCustomerEmailIsnull(String customerEmailIsnull) {
-		this.customerEmailIsnull = customerEmailIsnull;
-	}
-
-	public String getCustomerNotExist() {
-		return customerNotExist;
-	}
-
-	public void setCustomerNotExist(String customerNotExist) {
-		this.customerNotExist = customerNotExist;
-	}
-	//
-	// public String getSuppilerCategoryIdIsNull() {
-	// return suppilerCategoryIdIsNull;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-	// }
-	//
-	// public String getSuppilerCategoryIdIsEmpty() {
-	// return suppilerCategoryIdIsEmpty;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-	// }
-
-	// for employee
-	@Value("${validation.employee.notExists}")
-	private String employeeNotExist;
-
-  @Value("${validation.supplierCategory.alreadyExist}")
-  private String supplierCategoryAlreadyExist;
-	@Value("${validation.employee.alreadyExist}")
-	private String employeeAlreadyExist;
-
-	@Value("${employeeDto.firstName.null")
-	private String employeeFirstNameIsNull;
-
-	@Value("${employeeDto.firstName.empty")
-	private String employeeFirstNameIsEmpty;
-
-	public String getEmployeeNotExist() {
-		return employeeNotExist;
-	}
-
-	public void setEmployeeNotExist(String employeeNotExist) {
-		this.employeeNotExist = employeeNotExist;
-	}
-
-	public String getEmployeeAlreadyExist() {
-		return employeeAlreadyExist;
-	}
-
-	public void setEmployeeAlreadyExist(String employeeAlreadyExist) {
-		this.employeeAlreadyExist = employeeAlreadyExist;
-	}
-
-	public String getEmployeeFirstNameIsNull() {
-		return employeeFirstNameIsNull;
-	}
-
-	public void setEmployeeFirstNameIsNull(String employeeFirstNameIsNull) {
-		this.employeeFirstNameIsNull = employeeFirstNameIsNull;
-	}
-
-	public String getEmployeeFirstNameIsEmpty() {
-		return employeeFirstNameIsEmpty;
-	}
-
-	public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
-		this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
-	}
-
-	public String getCustomerAlreadyExist() {
-		return customerAlreadyExist;
-	}
-
-	public void setCustomerAlreadyExist(String customerAlreadyExist) {
-		this.customerAlreadyExist = customerAlreadyExist;
-	}
-
-	// for PlantEquipment
-
-	@Value("${validation.plantEquipment.alreadyExist}")
-	private String plantEquipmentAlreadyExist;
-
-	@Value("${validation.plantEquipment.notExist}")
-	private String plantEquipmentNotExist;
-
-	@Value("${plantEquipmentDto.serialNo.empty}")
-	private String plantEquipmentSerialNoIsEmpty;
-
-	@Value("${plantEquipmentDto.serialNo.null}")
-	private String plantEquipmentSerialNoIsNull;
-
-	@Value("${plantEquipmentDto.brandName.null}")
-	private String plantEquipmentBrandNameIsNull;
-
-	@Value("${plantEquipmentDto.brandName.empty}")
-	private String plantEquipmentBrandNameIsEmpty;
-
-	public String getPlantEquipmentAlreadyExist() {
-		return plantEquipmentAlreadyExist;
-	}
-
-	public void setPlantEquipmentAlreadyExist(String plantEquipmentAlreadyExist) {
-		this.plantEquipmentAlreadyExist = plantEquipmentAlreadyExist;
-	}
-
-	public String getPlantEquipmentNotExist() {
-		return plantEquipmentNotExist;
-	}
-
-	public void setPlantEquipmentNotExist(String plantEquipmentNotExist) {
-		this.plantEquipmentNotExist = plantEquipmentNotExist;
 	}
 
 	public String getPlantEquipmentSerialNoIsEmpty() {
@@ -790,144 +801,142 @@ public class ValidationFailureStatusCodes {
 			String plantEquipmentCalibrationRequestDtoSupplierIdIsNull) {
 		PlantEquipmentCalibrationRequestDtoSupplierIdIsNull = plantEquipmentCalibrationRequestDtoSupplierIdIsNull;
 	}
-  // for parameter
-  @Value("${validation.parameter.notExists}")
-  private String parameterNotExist;
 
-  @Value("${validation.parameter.alreadyExist}")
-  private String parameterAlreadyExist;
-  
+	// for parameter
+	@Value("${validation.parameter.notExists}")
+	private String parameterNotExist;
 
-  @Value("${parameterDto.abbreviation.null}")
-  private String abbreviationIsNull;
-  
-  @Value("${parameterDto.abbreviation.empty}")
-  private String abbreviationIsempty;
-  
-  @Value("${parameterDto.name.null}")
-  private String nameIsNull;
- 
+	@Value("${validation.parameter.alreadyExist}")
+	private String parameterAlreadyExist;
 
-  public String getAbbreviationIsNull() {
-    return abbreviationIsNull;
-  }
+	@Value("${parameterDto.abbreviation.null}")
+	private String abbreviationIsNull;
 
-  public void setAbbreviationIsNull(String abbreviationIsNull) {
-    this.abbreviationIsNull = abbreviationIsNull;
-  }
+	@Value("${parameterDto.abbreviation.empty}")
+	private String abbreviationIsempty;
 
-  public String getAbbreviationIsempty() {
-    return abbreviationIsempty;
-  }
+	@Value("${parameterDto.name.null}")
+	private String nameIsNull;
 
-  public void setAbbreviationIsempty(String abbreviationIsempty) {
-    this.abbreviationIsempty = abbreviationIsempty;
-  }
+	public String getAbbreviationIsNull() {
+		return abbreviationIsNull;
+	}
 
-  public String getNameIsNull() {
-    return nameIsNull;
-  }
+	public void setAbbreviationIsNull(String abbreviationIsNull) {
+		this.abbreviationIsNull = abbreviationIsNull;
+	}
 
-  public void setNameIsNull(String nameIsNull) {
-    this.nameIsNull = nameIsNull;
-  }
+	public String getAbbreviationIsempty() {
+		return abbreviationIsempty;
+	}
 
-  public String getNameIsempty() {
-    return nameIsempty;
-  }
+	public void setAbbreviationIsempty(String abbreviationIsempty) {
+		this.abbreviationIsempty = abbreviationIsempty;
+	}
 
-  public void setNameIsempty(String nameIsempty) {
-    this.nameIsempty = nameIsempty;
-  }
+	public String getNameIsNull() {
+		return nameIsNull;
+	}
 
+	public void setNameIsNull(String nameIsNull) {
+		this.nameIsNull = nameIsNull;
+	}
 
-  @Value("${parameterDto.name.empty}")
-  private String nameIsempty;
+	public String getNameIsempty() {
+		return nameIsempty;
+	}
 
-  // for equation
-  @Value("${validation.equation.notExists}")
-  private String equationNotExist;
-  @Value("${validation.equation.alreadyExist}")
-  private String equationAlreadyExist;
+	public void setNameIsempty(String nameIsempty) {
+		this.nameIsempty = nameIsempty;
+	}
 
-  public String getEquationNotExist() {
-    return equationNotExist;
-  }
+	@Value("${parameterDto.name.empty}")
+	private String nameIsempty;
 
-  public void setEquationNotExist(String equationNotExist) {
-    this.equationNotExist = equationNotExist;
-  }
+	// for equation
+	@Value("${validation.equation.notExists}")
+	private String equationNotExist;
+	@Value("${validation.equation.alreadyExist}")
+	private String equationAlreadyExist;
 
-  public String getEquationAlreadyExist() {
-    return equationAlreadyExist;
-  }
+	public String getEquationNotExist() {
+		return equationNotExist;
+	}
 
-  public void setEquationAlreadyExist(String equationAlreadyExist) {
-    this.equationAlreadyExist = equationAlreadyExist;
-  }
+	public void setEquationNotExist(String equationNotExist) {
+		this.equationNotExist = equationNotExist;
+	}
 
-  // For Material Category
-  @Value("${validation.materialCategory.notExists}")
-  private String MaterialCategoryNotExist;
-  @Value("${validation.materialCategory.alreadyExist}")
-  private String MaterialCategoryAlreadyExist;
+	public String getEquationAlreadyExist() {
+		return equationAlreadyExist;
+	}
 
-  public String getParameterNotExist() {
-    return parameterNotExist;
-  }
+	public void setEquationAlreadyExist(String equationAlreadyExist) {
+		this.equationAlreadyExist = equationAlreadyExist;
+	}
 
-  public void setParameterNotExist(String parameterNotExist) {
-    this.parameterNotExist = parameterNotExist;
-  }
+	// For Material Category
+	@Value("${validation.materialCategory.notExists}")
+	private String MaterialCategoryNotExist;
+	@Value("${validation.materialCategory.alreadyExist}")
+	private String MaterialCategoryAlreadyExist;
 
-  public String getParameterAlreadyExist() {
-    return parameterAlreadyExist;
-  }
+	public String getParameterNotExist() {
+		return parameterNotExist;
+	}
 
-  public void setParameterAlreadyExist(String parameterAlreadyExist) {
-    this.parameterAlreadyExist = parameterAlreadyExist;
-  }
+	public void setParameterNotExist(String parameterNotExist) {
+		this.parameterNotExist = parameterNotExist;
+	}
 
-  // For TestTypes
-  @Value("${validation.testType.notExists}")
-  private String testTypeNotExist;
-  @Value("${validation.testType.alreadyExists}")
-  private String testTypealreadyExists;
-  @Value("${testTypeDto.type.null}")
-  private String testTypeIsNull;
-  @Value("${estTypeDto.type.empty}")
-  private String testTypeIsEmpty;
+	public String getParameterAlreadyExist() {
+		return parameterAlreadyExist;
+	}
 
-  public String getTestTypeNotExist() {
-    return testTypeNotExist;
-  }
+	public void setParameterAlreadyExist(String parameterAlreadyExist) {
+		this.parameterAlreadyExist = parameterAlreadyExist;
+	}
 
-  public void setTestTypeNotExist(String testTypeNotExist) {
-    this.testTypeNotExist = testTypeNotExist;
-  }
+	// For TestTypes
+	@Value("${validation.testType.notExists}")
+	private String testTypeNotExist;
+	@Value("${validation.testType.alreadyExists}")
+	private String testTypealreadyExists;
+	@Value("${testTypeDto.type.null}")
+	private String testTypeIsNull;
+	@Value("${estTypeDto.type.empty}")
+	private String testTypeIsEmpty;
 
-  public String getTestTypealreadyExists() {
-    return testTypealreadyExists;
-  }
+	public String getTestTypeNotExist() {
+		return testTypeNotExist;
+	}
 
-  public void setTestTypealreadyExists(String testTypealreadyExists) {
-    this.testTypealreadyExists = testTypealreadyExists;
-  }
+	public void setTestTypeNotExist(String testTypeNotExist) {
+		this.testTypeNotExist = testTypeNotExist;
+	}
 
-  public String getTestTypeIsNull() {
-    return testTypeIsNull;
-  }
+	public String getTestTypealreadyExists() {
+		return testTypealreadyExists;
+	}
 
-  public void setTestTypeIsNull(String testTypeIsNull) {
-    this.testTypeIsNull = testTypeIsNull;
-  }
+	public void setTestTypealreadyExists(String testTypealreadyExists) {
+		this.testTypealreadyExists = testTypealreadyExists;
+	}
 
-  public String getTestTypeIsEmpty() {
-    return testTypeIsEmpty;
-  }
+	public String getTestTypeIsNull() {
+		return testTypeIsNull;
+	}
 
-  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
-    this.testTypeIsEmpty = testTypeIsEmpty;
-  }
+	public void setTestTypeIsNull(String testTypeIsNull) {
+		this.testTypeIsNull = testTypeIsNull;
+	}
+
+	public String getTestTypeIsEmpty() {
+		return testTypeIsEmpty;
+	}
+
+	public void setTestTypeIsEmpty(String testTypeIsEmpty) {
+		this.testTypeIsEmpty = testTypeIsEmpty;
+	}
 
 }

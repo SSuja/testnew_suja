@@ -10,12 +10,12 @@ public final class EndpointURI {
 	/*
 	 * private constructor to avoid instantiating this class.
 	 */
-
 	private static final String SLASH = "/";
 	private static final String CODE = "/{code}";
 	private static final String ID = "/{id}";
 	private static final String SEARCH = "/search";
 	private static final String SERIALNO = "/{serialNo}";
+
 
 	/*
 	 * Plant apis
@@ -55,30 +55,15 @@ public final class EndpointURI {
 	public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
 	public static final String UPDATE_EMPLOYEE = EMPLOYEE;
 	public static final String EMPLOYEES = BASE_API_PATH + "employees";
-	/*
-	 * EquipmentPlantCalibration apis
-	 */
-	public static final String EQUIPMENT_PLANT_CALIBRATION = BASE_API_PATH + "plant-equipment-calibration";
-	public static final String EQUIPMENT_PLANT_CALIBRATIONS = BASE_API_PATH + "plant-equipment-calibrations";
-	public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
-	public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
 
 	/*
-	 * PlantEquipment
-	 * 
+	 * Unit apis
 	 */
-	public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
-	public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
-	public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
-	public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
+	public static final String UNIT = BASE_API_PATH + "unit";
+	public static final String UNITS = BASE_API_PATH + "units";
+	public static final String GET_UNIT_BY_ID = UNIT + ID;
+	public static final String DELETE_UNIT_BY_ID = UNIT + ID;
 
-	/*
-	 * Customer apis
-	 */
-	public static final String CUSTOMER = BASE_API_PATH + "customer";
-	public static final String CUSTOMERS = BASE_API_PATH + "customers";
-	public static final String DELETE_CUSTOMER = CUSTOMER + ID;
-	public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
 	/*
 	 * MaterialSubCategory Apis
 	 */
@@ -126,6 +111,33 @@ public final class EndpointURI {
 	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
 	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
+
+
+	/*
+	 * EquipmentPlantCalibration apis
+	 */
+	public static final String EQUIPMENT_PLANT_CALIBRATION = BASE_API_PATH + "plant-equipment-calibration";
+	public static final String EQUIPMENT_PLANT_CALIBRATIONS = BASE_API_PATH + "plant-equipment-calibrations";
+	public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
+	public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
+
+	/*
+	 * PlantEquipment
+	 * 
+	 */
+	public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
+	public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
+	public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
+	public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
+
+	/*
+	 * Customer apis
+	 */
+	public static final String CUSTOMER = BASE_API_PATH + "customer";
+	public static final String CUSTOMERS = BASE_API_PATH + "customers";
+	public static final String DELETE_CUSTOMER = CUSTOMER + ID;
+	public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
+	
   /*
    * Equation APIs
    */
@@ -153,4 +165,5 @@ public final class EndpointURI {
 	private EndpointURI() {
 
 	}
+
 }

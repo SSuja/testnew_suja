@@ -1,132 +1,127 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-  public static final String PLANT_NAME = "PlantName";
-  public static final String PLANT_ID = "PlantId";
-  public static final String PLANTS = "plants";
 
-  // Success Messages
-  public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
-  public static final String UPDATE_PLANT_SUCCESS = "Plant updated Successfully";
-  public static final String NO_DATA_FOUND = "No Data Found";
-  public static final String PLANT_DELETED = "Plant Successfully Deleted";
+	public static final String PLANT_NAME = "PlantName";
+	public static final String PLANT_ID = "PlantId";
+	public static final String PLANTS = "plants";
 
-  // constants for validation key
-  public static final String PLANT = "plant";
+	// Success Messages
+	public static final String ADD_PLANT_SUCCESS = "Plant added Successfully";
+	public static final String UPDATE_PLANT_SUCCESS = "Plant updated Successfully";
+	public static final String NO_DATA_FOUND = "No Data Found";
+	public static final String PLANT_DELETED = "Plant Successfully Deleted";
 
-  // Designations
+	// constants for validation key
+	public static final String PLANT = "plant";
 
-  public static final String DESIGNATION_NAME = "Designation Name";
-  public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
-  public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
-  public static final String UPDATE_DESIGNATION_SUCCESS = "Designation updated Successfully";
-  public static final String DESIGNATION = "designation";
-  public static final String DESIGNATIONS = "designations";
+	// Designations
 
+	public static final String DESIGNATION_NAME = "Designation Name";
+	public static final String ADD_DESIGNATION_SUCCESS = "Designation added Successfully";
+	public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
+	public static final String UPDATE_DESIGNATION_SUCCESS = "Designation updated Successfully";
+	public static final String DESIGNATION = "designation";
+	public static final String DESIGNATIONS = "designations";
 
-  /*
-   * Supplier Category
-   */
-  public static final String SUPPLIER_CATEGORY_NAME = "category";
+	/*
+	 * Supplier Category
+	 */
+	public static final String SUPPLIER_CATEGORY_NAME = "category";
 
+	/*
+	 * Success Messages for Supplier Category
+	 */
+	public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category added Successfully";
+	public static final String DELETE_SUPPLIER_CATEGORY_SCCESS = "Supplier Category delete successfully";
 
-  /*
-   * Success Messages for Supplier Category
-   */
-  public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category added Successfully";
-  public static final String DELETE_SUPPLIER_CATEGORY_SCCESS =
-      "Supplier Category delete successfully";
+	// constants for validation key
+	public static final String SUPPLIER_CATEGORY = "supplierCategory";
 
-  // constants for validation key
-  public static final String SUPPLIER_CATEGORY = "supplierCategory";
+	/*
+	 * Success Messages for Supplier
+	 */
+	public static final String ADD_SUPPLIER_SUCCESS = "Supplier added Successfully";
+	public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier updated Successfully";
+	public static final String DELETE_SUPPLIER_SUCCESS = "Supplier deleted Successfully";
+	/*
+	 * Constants for Supplier
+	 */
+	public static final String SUPPLIER = "Supplier";
+	public static final String SUPPLIER_NAME = "name";
+	public static final String EMAIL = "email";
+	public static final String PHONE_NUMBER = "phoneNumber";
 
-  /*
-   * Success Messages for Supplier
-   */
-  public static final String ADD_SUPPLIER_SUCCESS = "Supplier added Successfully";
-  public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier updated Successfully";
-  public static final String DELETE_SUPPLIER_SUCCESS = "Supplier deleted Successfully";
-  /*
-   * Constants for Supplier
-   */
-  public static final String SUPPLIER = "Supplier";
-  public static final String SUPPLIER_NAME = "name";
-  public static final String EMAIL = "email";
-  public static final String PHONE_NUMBER = "phoneNumber";
+	public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category updated Successfully";
+	/*
+	 * Employee
+	 */
+	// constants for validation key
+	public static final String EMPLOYEE_ID = "EmployeeId";
+	public static final String EMPLOYEES = "employees";
+	public static final String EMPLOYEE = "employee";
+	// Success Messages
+	public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
+	public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
+	public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
 
+	// unit
+	public static final String UNIT = "unit";
+	public static final String UNITS = "units";
+	public static final String ADD_UNIT_SUCCESS = "Unit added Successfully";
+	public static final String UNIT_DELETED = "Unit Successfully deleted";
+	public static final String UNIT_UPDATED_SUCCESS = "Unit Successfully Updated";
 
+	/*
+	 * Employee
+	 */
+	// constants for validation key
+	public static final String TEST_TYPE_ID = "testTypeId";
+	public static final String TEST_TYPES = "testTypes";
+	public static final String TEST_TYPE = "testType";
+	// Success Messages
+	public static final String TEST_TYPE_DELETED = "testType Deleted Successfully";
+	public static final String ADD_TEST_TYPE_SUCCESS = "testType added Successfully";
+	public static final String UPDATE_TEST_TYPE_SUCCESS = "testType updated Successfully";
+	public static final String PARAMETER_NAME = "parameterName";
+	public static final String ADD_PARAMETER_SUCCESS = "Parameter added Successfully";
+	public static final String PARAMETER_DELETED = "Parameter Successfully Deleted";
+	public static final String UPDATE_PARAMETER_SUCCESS = "Parameter updated Successfully";
+	public static final String PARAMETER = "parameter";
+	public static final String PARAMETERS = "parameters";
+	public static final String PARAMETER_ID = "parameterId";
+	public static final String PARAMETER_ABBREVIATION = "abbreviation";
 
-  public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
-      "Supplier Category updated Successfully";
-  /*
-   * Employee
-   */
-  // constants for validation key
-  public static final String EMPLOYEE_ID = "employeeId";
-  public static final String EMPLOYEES = "employees";
-  public static final String EMPLOYEE = "employee";
-  // Success Messages
-  public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
-  public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
-  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
-  
-  /*
-   * Employee
-   */
-  // constants for validation key
-  public static final String TEST_TYPE_ID = "testTypeId";
-  public static final String TEST_TYPES = "testTypes";
-  public static final String TEST_TYPE = "testType";
-  // Success Messages
-  public static final String TEST_TYPE_DELETED = "testType Deleted Successfully";
-  public static final String ADD_TEST_TYPE_SUCCESS = "testType added Successfully";
-  public static final String UPDATE_TEST_TYPE_SUCCESS = "testType updated Successfully";
-  public static final String PARAMETER_NAME = "parameterName";
-  public static final String ADD_PARAMETER_SUCCESS = "Parameter added Successfully";
-  public static final String PARAMETER_DELETED = "Parameter Successfully Deleted";
-  public static final String UPDATE_PARAMETER_SUCCESS = "Parameter updated Successfully";
-  public static final String PARAMETER = "parameter";
-  public static final String PARAMETERS = "parameters";
-  public static final String PARAMETER_ID = "parameterId";
-  public static final String PARAMETER_ABBREVIATION = "abbreviation";
+	/*
+	 * EquipmentPlantCalibration
+	 */
 
- 
-  /*
-   * EquipmentPlantCalibration
-   */
+	public static final String ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS = "equipmentPlantCalibration added Successfully";
+	public static final String EQUIPMENT_PLANT_CALIBRATION_DELETED = "equipmentPlantCalibration Successfully Deleted";
+	public static final String UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS = "equipmentPlantCalibration updated Successfully";
+	public static final String EQUIPMENT_PLANT_CALIBRATION = "equipmentPlantCalibration";
+	public static final String EQUIPMENT_PLANT_CALIBRATIONS = "equipmentPlantCalibrations";
 
-  public static final String ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS =
-      "equipmentPlantCalibration added Successfully";
-  public static final String EQUIPMENT_PLANT_CALIBRATION_DELETED =
-      "equipmentPlantCalibration Successfully Deleted";
-  public static final String UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS =
-      "equipmentPlantCalibration updated Successfully";
-  public static final String EQUIPMENT_PLANT_CALIBRATION = "equipmentPlantCalibration";
-  public static final String EQUIPMENT_PLANT_CALIBRATIONS = "equipmentPlantCalibrations";
+	/*
+	 * Equation
+	 */
+	// constants for validation key
+	public static final String EQUATION_FORMULA = "formula";
+	public static final String EQUATIONS = "equations";
+	public static final String EQUATION = "equation";
+	public static final String EQUATION_ID = "equationId";
+	// Success Messages
+	public static final String ADD_EQUATION_SUCCESS = "Equation added Succeessfully";
+	public static final String DELETE_EQUATION_SUCCESS = "Equation deleted Succeessfully";
+	public static final String UPDATE_EQUATION_SUCCESS = "Equation updated Succeessfully";
 
-
-  /*
-   * Equation
-   */
-  // constants for validation key
-  public static final String EQUATION_FORMULA = "formula";
-  public static final String EQUATIONS = "equations";
-  public static final String EQUATION = "equation";
-  public static final String EQUATION_ID = "equationId";
-  // Success Messages
-  public static final String ADD_EQUATION_SUCCESS = "Equation added Succeessfully";
-  public static final String DELETE_EQUATION_SUCCESS = "Equation deleted Succeessfully";
-  public static final String UPDATE_EQUATION_SUCCESS = "Equation updated Succeessfully";
-
- 
-  
-  public static final String PLANTEQUIPMENTS = "Plantequipments";
-  public static final String PLANTEQUIPMENT = "Plantequipment";
-  public static final String PLANTEQUIPMENT_SERIALNO = "PlantequipmentSerialNo";
-  // Success Messages
-  public static final String ADD_PLANTEQUIPMENT_SUCCESS = "Plantequipment added Successfully";
-  public static final String PLANTEQUIPMENT_DELETED = "Plantequipment Deleted Succeessfully";
-  public static final String UPDATE_PLANTEQUIPMENT_SUCCESS = "Plantequipment updated Successfully";
+	public static final String PLANTEQUIPMENTS = "Plantequipments";
+	public static final String PLANTEQUIPMENT = "Plantequipment";
+	public static final String PLANTEQUIPMENT_SERIALNO = "PlantequipmentSerialNo";
+	// Success Messages
+	public static final String ADD_PLANTEQUIPMENT_SUCCESS = "Plantequipment added Successfully";
+	public static final String PLANTEQUIPMENT_DELETED = "Plantequipment Deleted Succeessfully";
+	public static final String UPDATE_PLANTEQUIPMENT_SUCCESS = "Plantequipment updated Successfully";
 
 	/*
 	 * Customer
