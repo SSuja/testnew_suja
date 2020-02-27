@@ -385,6 +385,47 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
     this.materialStateIsEmpty = materialStateIsEmpty;
+   * Raw Material
+   */
+  @Value("${validation.rawMaterial.notExists}")
+  private String rawMaterialNotExist;
+  @Value("${validation.rawMaterial.alreadyExist}")
+  private String rawMaterialAlreadyExist;
+  @Value("${rawMaterialRequestDto.name.null")
+  private String rawMaterialNameIsNull;
+  @Value("${rawMaterialRequestDto.name.empty")
+  private String rawMaterialNameIsEmpty;
+
+  public String getRawMaterialNotExist() {
+    return rawMaterialNotExist;
+  }
+
+  public void setRawMaterialNotExist(String rawMaterialNotExist) {
+    this.rawMaterialNotExist = rawMaterialNotExist;
+  }
+
+  public String getRawMaterialAlreadyExist() {
+    return rawMaterialAlreadyExist;
+  }
+
+  public void setRawMaterialAlreadyExist(String rawMaterialAlreadyExist) {
+    this.rawMaterialAlreadyExist = rawMaterialAlreadyExist;
+  }
+
+  public String getRawMaterialNameIsNull() {
+    return rawMaterialNameIsNull;
+  }
+
+  public void setRawMaterialNameIsNull(String rawMaterialNameIsNull) {
+    this.rawMaterialNameIsNull = rawMaterialNameIsNull;
+  }
+
+  public String getRawMaterialNameIsEmpty() {
+    return rawMaterialNameIsEmpty;
+  }
+
+  public void setRawMaterialNameIsEmpty(String rawMaterialNameIsEmpty) {
+    this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
   // For Material Category
   @Value("${validation.materialCategory.notExists}")
   private String MaterialCategoryNotExist;
