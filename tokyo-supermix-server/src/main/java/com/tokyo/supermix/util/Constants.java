@@ -84,8 +84,18 @@ public class Constants {
 
  
   /*
-   * PlantEquipment
+   * EquipmentPlantCalibration
    */
+
+  public static final String ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS =
+      "equipmentPlantCalibration added Successfully";
+  public static final String EQUIPMENT_PLANT_CALIBRATION_DELETED =
+      "equipmentPlantCalibration Successfully Deleted";
+  public static final String UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS =
+      "equipmentPlantCalibration updated Successfully";
+  public static final String EQUIPMENT_PLANT_CALIBRATION = "equipmentPlantCalibration";
+  public static final String EQUIPMENT_PLANT_CALIBRATIONS = "equipmentPlantCalibrations";
+
 
   public static final String PLANTEQUIPMENTS = "Plantequipments";
   public static final String PLANTEQUIPMENT = "Plantequipment";

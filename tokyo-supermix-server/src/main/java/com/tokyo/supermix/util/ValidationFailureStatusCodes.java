@@ -160,6 +160,14 @@ public class ValidationFailureStatusCodes {
 	@Value("${supplierRequestDto.email.null}")
 	private String emailIsNull;
 
+	public void setSupplierAlreadyExist(String supplierAlreadyExist) {
+		this.supplierAlreadyExist = supplierAlreadyExist;
+	}
+
+	public String getSupplierAlreadyExist() {
+		return supplierAlreadyExist;
+	}
+
 	@Value("${supplierRequestDto.email.empty}")
 	private String emailIsEmpty;
 
@@ -169,20 +177,9 @@ public class ValidationFailureStatusCodes {
 	@Value("${supplierRequestDto.phoneNumber.empty}")
 	private String phoneNumberIsEmpty;
 
-	public void setSupplierAlreadyExist(String supplierAlreadyExist) {
-		this.supplierAlreadyExist = supplierAlreadyExist;
-	}
-
-	public String getSupplierAlreadyExist() {
-		return supplierAlreadyExist;
-	}
-
 	public String getSupplierNotExit() {
 		return supplierNotExit;
 	}
-
-	@Value("${validation.supplierCategory.alreadyExist}")
-	private String supplierCategoryAlreadyExist;
 
 	@Value("${validation.supplierCategory.notExist}")
 	private String supplierCategoryNotExit;
@@ -190,6 +187,8 @@ public class ValidationFailureStatusCodes {
 	@Value("${supplierCategoryDto.category.null")
 	private String categoryIsNull;
 
+	@Value("${validation.supplierCategory.alreadyExist}")
+	private String supplierCategoryAlreadyExist;
 	@Value("${supplierCategoryDto.category.empty")
 	private String categoryIsEmpty;
 
@@ -231,14 +230,6 @@ public class ValidationFailureStatusCodes {
 
 	public void setSupplierNameIsNull(String supplierNameIsNull) {
 		this.supplierNameIsNull = supplierNameIsNull;
-	}
-
-	public String getSupplierNameIsEmpty() {
-		return supplierNameIsEmpty;
-	}
-
-	public void setSupplierNameIsEmpty(String supplierNameIsEmpty) {
-		this.supplierNameIsEmpty = supplierNameIsEmpty;
 	}
 
 	//
@@ -582,34 +573,6 @@ public class ValidationFailureStatusCodes {
 	public void setCustomerNotExist(String customerNotExist) {
 		this.customerNotExist = customerNotExist;
 	}
-
-	public String getEmailIsNull() {
-		return emailIsNull;
-	}
-
-	public void setEmailIsNull(String emailIsNull) {
-		this.emailIsNull = emailIsNull;
-	}
-
-	public String getEmailIsEmpty() {
-		return emailIsEmpty;
-	}
-
-	public void setEmailIsEmpty(String emailIsEmpty) {
-		this.emailIsEmpty = emailIsEmpty;
-	}
-
-	public String getPhoneNumberIsNull() {
-		return phoneNumberIsNull;
-	}
-
-	public void setPhoneNumberIsNull(String phoneNumberIsNull) {
-		this.phoneNumberIsNull = phoneNumberIsNull;
-	}
-
-	public String getPhoneNumberIsEmpty() {
-		return phoneNumberIsEmpty;
-	}
 	//
 	// public String getSuppilerCategoryIdIsNull() {
 	// return suppilerCategoryIdIsNull;
@@ -744,10 +707,95 @@ public class ValidationFailureStatusCodes {
 		return plantEquipmentBrandNameIsEmpty;
 	}
 
+	public String getSupplierNameIsEmpty() {
+		return supplierNameIsEmpty;
+	}
+
+	public void setSupplierNameIsEmpty(String supplierNameIsEmpty) {
+		this.supplierNameIsEmpty = supplierNameIsEmpty;
+	}
+
+	public String getEmailIsNull() {
+		return emailIsNull;
+	}
+
+	public void setEmailIsNull(String emailIsNull) {
+		this.emailIsNull = emailIsNull;
+	}
+
+	public String getEmailIsEmpty() {
+		return emailIsEmpty;
+	}
+
+	public void setEmailIsEmpty(String emailIsEmpty) {
+		this.emailIsEmpty = emailIsEmpty;
+	}
+
+	public String getPhoneNumberIsNull() {
+		return phoneNumberIsNull;
+	}
+
+	public void setPhoneNumberIsNull(String phoneNumberIsNull) {
+		this.phoneNumberIsNull = phoneNumberIsNull;
+	}
+
+	public String getPhoneNumberIsEmpty() {
+		return phoneNumberIsEmpty;
+	}
+	//
+	// public String getSuppilerCategoryIdIsNull() {
+	// return suppilerCategoryIdIsNull;
+	// }
+	//
+	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+	// }
+	//
+	// public String getSuppilerCategoryIdIsEmpty() {
+	// return suppilerCategoryIdIsEmpty;
+	// }
+	//
+	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+	// }
+
 	public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
 		this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
 	}
 
+	// for plantEquipmentCalibration
+	@Value("${validation.plantEquipmentCalibration.notExists}")
+	private String plantEquipmentCalibrationNotExist;
+	@Value("${validation.PlantEquipmentCalibrationRequestDto.userId.null}")
+	private String PlantEquipmentCalibrationRequestDtoUserIdIsNull;
+	@Value("${validation.PlantEquipmentCalibrationRequestDto.supplierId.null}")
+	private String PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+
+	public String getPlantEquipmentCalibrationRequestDtoUserIdIsNull() {
+		return PlantEquipmentCalibrationRequestDtoUserIdIsNull;
+	}
+
+	public void setPlantEquipmentCalibrationRequestDtoUserIdIsNull(
+			String plantEquipmentCalibrationRequestDtoUserIdIsNull) {
+		PlantEquipmentCalibrationRequestDtoUserIdIsNull = plantEquipmentCalibrationRequestDtoUserIdIsNull;
+	}
+
+	public String getPlantEquipmentCalibrationNotExist() {
+		return plantEquipmentCalibrationNotExist;
+	}
+
+	public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+		this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+	}
+
+	public String getPlantEquipmentCalibrationRequestDtoSupplierIdIsNull() {
+		return PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+	}
+
+	public void setPlantEquipmentCalibrationRequestDtoSupplierIdIsNull(
+			String plantEquipmentCalibrationRequestDtoSupplierIdIsNull) {
+		PlantEquipmentCalibrationRequestDtoSupplierIdIsNull = plantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+	}
   // for parameter
   @Value("${validation.parameter.notExists}")
   private String parameterNotExist;
