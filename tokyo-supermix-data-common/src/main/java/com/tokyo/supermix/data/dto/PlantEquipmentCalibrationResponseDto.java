@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 
 
-public class PlantEquipmentCalibrationResponceDto {
+public class PlantEquipmentCalibrationResponseDto {
   private Long id;
   private Date calibratedDate;
   private Date dueDate;
@@ -11,9 +11,9 @@ public class PlantEquipmentCalibrationResponceDto {
   private Long userId;
   private String userUsername;
   private String description;
-  private Long plantEquipmentId;
-  private Long supplierId;
+  private String plantEquipmentSerialNo;
   private String status;
+  private Long supplierId;
   private String supplierName;
   private String plantEquipmentEquipmentName;
   public String getplantEquipmentEquipmentName() {
@@ -58,11 +58,12 @@ public class PlantEquipmentCalibrationResponceDto {
   public void setDescription(String description) {
     this.description = description;
   }
-  public Long getplantEquipmentId() {
-    return plantEquipmentId;
+ 
+  public String getPlantEquipmentSerialNo() {
+    return plantEquipmentSerialNo;
   }
-  public void setplantEquipmentId(Long plantEquipmentId) {
-    this.plantEquipmentId = plantEquipmentId;
+  public void setPlantEquipmentSerialNo(String plantEquipmentSerialNo) {
+    this.plantEquipmentSerialNo = plantEquipmentSerialNo;
   }
   public Long getSupplierId() {
     return supplierId;

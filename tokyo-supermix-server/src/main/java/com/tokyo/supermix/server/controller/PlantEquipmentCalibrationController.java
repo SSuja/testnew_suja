@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationRequestDto;
-import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationResponceDto;
+import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationResponseDto;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.enums.CalibrationType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -74,7 +74,7 @@ public class PlantEquipmentCalibrationController {
     List<PlantEquipmentCalibration> PlantEquipmentCalibrationList =
         plantEquipmentCalibrationService.getAllPlantEquipmentCalibration();
     return new ResponseEntity<Object>(new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-        mapper.map(PlantEquipmentCalibrationList, PlantEquipmentCalibrationResponceDto.class),
+        mapper.map(PlantEquipmentCalibrationList, PlantEquipmentCalibrationResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
@@ -86,7 +86,7 @@ public class PlantEquipmentCalibrationController {
       PlantEquipmentCalibration plantEquipmentCalibration =
           plantEquipmentCalibrationService.getPlantEquipmentCalibrationById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATION,
-          mapper.map(plantEquipmentCalibration, PlantEquipmentCalibrationResponceDto.class),
+          mapper.map(plantEquipmentCalibration, PlantEquipmentCalibrationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("invalid");

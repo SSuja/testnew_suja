@@ -29,7 +29,7 @@ public class PlantEquipmentCalibration implements Serializable {
   private User user;
   private String description;
   @ManyToOne
-  @JoinColumn(name = "plantEquipmentId", nullable = false)
+  @JoinColumn(name = "plantEquipmentSerialNo", nullable = false)
   private PlantEquipment plantEquipment;
   @ManyToOne
   @JoinColumn(name = "supplierId", nullable = true)

@@ -7,15 +7,16 @@ import com.tokyo.supermix.data.enums.CalibrationType;
 
 public class PlantEquipmentCalibrationRequestDto {
   private Long id;
-  @NotNull(message = "{PlantEquipmentCalibrationRequestDto.calibratedDate.null}")
+  @NotNull(message = "{plantEquipmentCalibrationRequestDto.calibratedDate.null}")
   private Date calibratedDate;
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.dueDate.null}")
   private Date dueDate;
   private CalibrationType calibrationType;
   private Long userId;
   private String description;
-  @NotNull(message = "{plantEquipmentCalibrationRequestDto.plantEquipmentId.null}")
-  private Long plantEquipmentId;
+  @NotNull(message = "{plantEquipmentCalibrationRequestDto.plantEquipmentSerialNo.null}")
+  @NotEmpty(message = "{plantEquipmentCalibrationRequestDto.plantEquipmentSerialNo.empty}")
+  private String plantEquipmentSerialNo;
   private Long supplierId;
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.status.null}")
   @NotEmpty(message = "{plantEquipmentCalibrationRequestDto.status.empty}")
@@ -69,12 +70,12 @@ public class PlantEquipmentCalibrationRequestDto {
     this.description = description;
   }
 
-  public Long getPlantEquipmentId() {
-    return plantEquipmentId;
+  public String getPlantEquipmentSerialNo() {
+    return plantEquipmentSerialNo;
   }
 
-  public void setPlantEquipmentId(Long plantEquipmentId) {
-    this.plantEquipmentId = plantEquipmentId;
+  public void setPlantEquipmentSerialNo(String plantEquipmentSerialNo) {
+    this.plantEquipmentSerialNo = plantEquipmentSerialNo;
   }
 
   public Long getSupplierId() {
