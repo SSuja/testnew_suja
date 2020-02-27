@@ -63,6 +63,14 @@ public final class EndpointURI {
   public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
   public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
 
+  /*
+   * Raw Material apis
+   */
+  public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";
+  public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
+  public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
+  public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
+
   private EndpointURI() {
 
   }
