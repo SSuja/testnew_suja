@@ -63,21 +63,21 @@ public final class EndpointURI {
   public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
 
   /*
-<<<<<<< HEAD
    * Test
    */
   public static final String TEST = BASE_API_PATH + "test";
   public static final String TESTS = BASE_API_PATH + "tests";
   public static final String GET_TEST_BY_ID = TEST + ID;
   public static final String DELETE_TEST = TEST + ID;
-=======
+  /*
    * Material State
    */
   public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
   public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
   public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
   public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
->>>>>>> 9e16de51bd716d270cb2b2c116d1e57cf12e48d8
+
+  /*
    * Raw Material apis
    */
   public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";

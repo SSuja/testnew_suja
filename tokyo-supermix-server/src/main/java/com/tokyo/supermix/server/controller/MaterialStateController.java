@@ -38,7 +38,7 @@ public class MaterialStateController {
   @Autowired
   private Mapper mapper;
 
-  private static final Logger logger = Logger.getLogger(MaterialController.class);
+  private static final Logger logger = Logger.getLogger(MaterialStateController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_STATE)
   public ResponseEntity<Object> createMaterialState(

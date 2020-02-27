@@ -385,6 +385,9 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
     this.materialStateIsEmpty = materialStateIsEmpty;
+  }
+
+  /*
    * Raw Material
    */
   @Value("${validation.rawMaterial.notExists}")
@@ -426,6 +429,8 @@ public class ValidationFailureStatusCodes {
 
   public void setRawMaterialNameIsEmpty(String rawMaterialNameIsEmpty) {
     this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
+  }
+
   // For Material Category
   @Value("${validation.materialCategory.notExists}")
   private String MaterialCategoryNotExist;
