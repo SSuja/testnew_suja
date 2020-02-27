@@ -385,6 +385,9 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
     this.materialStateIsEmpty = materialStateIsEmpty;
+  }
+
+  /*
    * Raw Material
    */
   @Value("${validation.rawMaterial.notExists}")
@@ -426,6 +429,8 @@ public class ValidationFailureStatusCodes {
 
   public void setRawMaterialNameIsEmpty(String rawMaterialNameIsEmpty) {
     this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
+  }
+
   // For Material Category
   @Value("${validation.materialCategory.notExists}")
   private String MaterialCategoryNotExist;
@@ -446,6 +451,50 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialCategoryAlreadyExist(String materialCategoryAlreadyExist) {
     MaterialCategoryAlreadyExist = materialCategoryAlreadyExist;
+  }
+
+  /*
+   * Test
+   */
+  @Value("${validation.test.notExists}")
+  private String testNotExist;
+  @Value("${validation.test.alreadyExist}")
+  private String testAlreadyExist;
+  @Value("${testRequestDto.name.null")
+  private String testNameIsNull;
+  @Value("${testRequestDto.name.empty")
+  private String testNameIsEmpty;
+
+  public String getTestNotExist() {
+    return testNotExist;
+  }
+
+  public void setTestNotExist(String testNotExist) {
+    this.testNotExist = testNotExist;
+  }
+
+  public String getTestAlreadyExist() {
+    return testAlreadyExist;
+  }
+
+  public void setTestAlreadyExist(String testAlreadyExist) {
+    this.testAlreadyExist = testAlreadyExist;
+  }
+
+  public String getTestNameIsNull() {
+    return testNameIsNull;
+  }
+
+  public void setTestNameIsNull(String testNameIsNull) {
+    this.testNameIsNull = testNameIsNull;
+  }
+
+  public String getTestNameIsEmpty() {
+    return testNameIsEmpty;
+  }
+
+  public void setTestNameIsEmpty(String testNameIsEmpty) {
+    this.testNameIsEmpty = testNameIsEmpty;
   }
 
 }

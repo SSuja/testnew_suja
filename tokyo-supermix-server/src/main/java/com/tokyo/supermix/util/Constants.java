@@ -84,6 +84,14 @@ public class Constants {
       "Material Category updated Successfully";
 
   /*
+   * Test
+   */
+  public static final String TEST = "test";
+  public static final String TEST_ID = "id";
+  public static final String ADD_TEST_SUCCESS = "Test added Successfully";
+  public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
+  public static final String DELETE_TEST_SCCESS = "Test delete successfully";
+  /*
    * Material State
    */
   public static final String MATERIAL_STATE = "materialState";
