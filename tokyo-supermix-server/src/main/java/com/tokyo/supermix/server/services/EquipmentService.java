@@ -4,7 +4,6 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.Equipment;
 
 public interface EquipmentService {
-
   public boolean isNameExist(String name);
 
   public void saveEquipment(Equipment equipment);

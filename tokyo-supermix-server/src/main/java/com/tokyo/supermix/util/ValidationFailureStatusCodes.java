@@ -343,9 +343,10 @@ public class ValidationFailureStatusCodes {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
 
-<<<<<<< HEAD
+
   // for equipment
   @Value("${validation.equipment.notExists}")
+
   private String equipmentNotExist;
   @Value("${validation.equipment.alreadyExist}")
   private String equipmentAlreadyExist;
@@ -364,7 +365,8 @@ public class ValidationFailureStatusCodes {
 
   public void setEquipmentAlreadyExist(String equipmentAlreadyExist) {
     this.equipmentAlreadyExist = equipmentAlreadyExist;
-=======
+  }
+
   /*
    * Material State
    */
@@ -407,6 +409,9 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialStateIsEmpty(String materialStateIsEmpty) {
     this.materialStateIsEmpty = materialStateIsEmpty;
+  }
+
+  /*
    * Raw Material
    */
   @Value("${validation.rawMaterial.notExists}")
@@ -448,6 +453,8 @@ public class ValidationFailureStatusCodes {
 
   public void setRawMaterialNameIsEmpty(String rawMaterialNameIsEmpty) {
     this.rawMaterialNameIsEmpty = rawMaterialNameIsEmpty;
+  }
+
   // For Material Category
   @Value("${validation.materialCategory.notExists}")
   private String MaterialCategoryNotExist;
@@ -468,7 +475,5 @@ public class ValidationFailureStatusCodes {
 
   public void setMaterialCategoryAlreadyExist(String materialCategoryAlreadyExist) {
     MaterialCategoryAlreadyExist = materialCategoryAlreadyExist;
->>>>>>> 9e16de51bd716d270cb2b2c116d1e57cf12e48d8
   }
-
 }
