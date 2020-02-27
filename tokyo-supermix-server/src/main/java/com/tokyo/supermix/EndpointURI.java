@@ -14,6 +14,8 @@ public final class EndpointURI {
 	private static final String CODE = "/{code}";
 	private static final String ID = "/{id}";
 	private static final String SEARCH = "/search";
+	private static final String SERIALNO = "/{serialNo}";
+
 
 	/*
 	 * Plant apis
@@ -108,6 +110,57 @@ public final class EndpointURI {
 	public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
 	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
 	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
+
+
+
+	/*
+	 * EquipmentPlantCalibration apis
+	 */
+	public static final String EQUIPMENT_PLANT_CALIBRATION = BASE_API_PATH + "plant-equipment-calibration";
+	public static final String EQUIPMENT_PLANT_CALIBRATIONS = BASE_API_PATH + "plant-equipment-calibrations";
+	public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
+	public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
+
+	/*
+	 * PlantEquipment
+	 * 
+	 */
+	public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
+	public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
+	public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
+	public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
+
+	/*
+	 * Customer apis
+	 */
+	public static final String CUSTOMER = BASE_API_PATH + "customer";
+	public static final String CUSTOMERS = BASE_API_PATH + "customers";
+	public static final String DELETE_CUSTOMER = CUSTOMER + ID;
+	public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
+	
+  /*
+   * Equation APIs
+   */
+  public static final String EQUATION = BASE_API_PATH + "equation";
+  public static final String EQUATIONS = BASE_API_PATH + "equations";
+  public static final String EQUATION_BY_ID = EQUATION + ID;
+
+	/*
+	 * Parameter apis
+	 * 
+	 */
+	public static final String PARAMETER = BASE_API_PATH + "parameter";
+	public static final String PARAMETERS = BASE_API_PATH + "parameters";
+	public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
+	public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
+
+	/*
+	 * TestType
+	 */
+	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
+	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
+	public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
+	public static final String TEST_TYPES = BASE_API_PATH + "test-types";
 
 	private EndpointURI() {
 

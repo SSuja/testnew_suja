@@ -73,6 +73,82 @@ public class Constants {
 	public static final String UNIT_UPDATED_SUCCESS = "Unit Successfully Updated";
 
 	/*
+	 * Employee
+	 */
+	// constants for validation key
+	public static final String TEST_TYPE_ID = "testTypeId";
+	public static final String TEST_TYPES = "testTypes";
+	public static final String TEST_TYPE = "testType";
+	// Success Messages
+	public static final String TEST_TYPE_DELETED = "testType Deleted Successfully";
+	public static final String ADD_TEST_TYPE_SUCCESS = "testType added Successfully";
+	public static final String UPDATE_TEST_TYPE_SUCCESS = "testType updated Successfully";
+	public static final String PARAMETER_NAME = "parameterName";
+	public static final String ADD_PARAMETER_SUCCESS = "Parameter added Successfully";
+	public static final String PARAMETER_DELETED = "Parameter Successfully Deleted";
+	public static final String UPDATE_PARAMETER_SUCCESS = "Parameter updated Successfully";
+	public static final String PARAMETER = "parameter";
+	public static final String PARAMETERS = "parameters";
+	public static final String PARAMETER_ID = "parameterId";
+	public static final String PARAMETER_ABBREVIATION = "abbreviation";
+
+	/*
+	 * EquipmentPlantCalibration
+	 */
+
+	public static final String ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS = "equipmentPlantCalibration added Successfully";
+	public static final String EQUIPMENT_PLANT_CALIBRATION_DELETED = "equipmentPlantCalibration Successfully Deleted";
+	public static final String UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS = "equipmentPlantCalibration updated Successfully";
+	public static final String EQUIPMENT_PLANT_CALIBRATION = "equipmentPlantCalibration";
+	public static final String EQUIPMENT_PLANT_CALIBRATIONS = "equipmentPlantCalibrations";
+
+	/*
+	 * Equation
+	 */
+	// constants for validation key
+	public static final String EQUATION_FORMULA = "formula";
+	public static final String EQUATIONS = "equations";
+	public static final String EQUATION = "equation";
+	public static final String EQUATION_ID = "equationId";
+	// Success Messages
+	public static final String ADD_EQUATION_SUCCESS = "Equation added Succeessfully";
+	public static final String DELETE_EQUATION_SUCCESS = "Equation deleted Succeessfully";
+	public static final String UPDATE_EQUATION_SUCCESS = "Equation updated Succeessfully";
+
+	public static final String PLANTEQUIPMENTS = "Plantequipments";
+	public static final String PLANTEQUIPMENT = "Plantequipment";
+	public static final String PLANTEQUIPMENT_SERIALNO = "PlantequipmentSerialNo";
+	// Success Messages
+	public static final String ADD_PLANTEQUIPMENT_SUCCESS = "Plantequipment added Successfully";
+	public static final String PLANTEQUIPMENT_DELETED = "Plantequipment Deleted Succeessfully";
+	public static final String UPDATE_PLANTEQUIPMENT_SUCCESS = "Plantequipment updated Successfully";
+
+	/*
+	 * Customer
+	 * 
+	 */
+	// constants for validation key
+	public static final String CUSTOMERS = "customers";
+	public static final String CUSTOMER = "customer";
+	public static final String CUSTOMER_ID = "CustomerId";
+	// Success Messages
+	public static final String ADD_CUSTOMER_SUCCESS = "Customer added Successfully";
+	public static final String CUSTOMER_DELETED = "Customer Deleted Succeessfully";
+	public static final String UPDATE_CUSTOMER_SUCCESS = "Customer updated Successfully";
+
+	/*
+	 * MaterialSubCategory
+	 */
+	// constants for validation key
+	public static final String MATERIAL_SUB_CATEGORY_ID = "materialSubCategoryId";
+	public static final String MATERIAL_SUB_CATEGORIES = "materialSubCategories";
+	public static final String MATERIAL_SUB_CATEGORY = "materialSubCategory";
+	public static final String MATERIAL_SUB_CATEGORY_NAME = "name";
+	// Success Messages
+	public static final String ADD_MATERIAL_SUB_CATEGORY_SUCCESS = "MaterialSubCategory created Successfully";
+	public static final String UPDATE_MATERIAL_SUB_CATEGORY_SUCCESS = "MaterialSubCategory updated Successfully";
+	public static final String DELETE_MATERIAL_SUB_CATEGORY_SUCCESS = "MaterialSubCategory deleted Successfully";
+	/*
 	 * Material Category
 	 */
 	// constants for validation key
@@ -122,23 +198,8 @@ public class Constants {
 	public static final String EQUIPMENT_DELETED = "Equipment Deleted Succeessfully";
 	public static final String UPDATE_EQUIPMENT_SUCCESS = "Equipment updated Successfully";
 
-	/*
-	 * 
-	 * MaterialSubCategory
-	 */
-	// constants for validation key
-	public static final String MATERIAL_SUB_CATEGORY_ID = "materialSubCategoryId";
-	public static final String MATERIAL_SUB_CATEGORIES = "materialSubCategories";
-	public static final String MATERIAL_SUB_CATEGORY = "materialSubCategory";
-	public static final String MATERIAL_SUB_CATEGORY_NAME = "name";
-	// Success Messages
-	public static final String ADD_MATERIAL_SUB_CATEGORY_SUCCESS = "MaterialSubCategory created Successfully";
-	public static final String UPDATE_MATERIAL_SUB_CATEGORY_SUCCESS = "MaterialSubCategory updated Successfully";
-	public static final String DELETE_MATERIAL_SUB_CATEGORY_SUCCESS = "MaterialSubCategory deleted Successfully";
-
 	// encaptulate constructor to restrict modification from outside
 	private Constants() {
 
 	}
-
 }
