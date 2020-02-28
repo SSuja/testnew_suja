@@ -90,6 +90,7 @@ public final class EndpointURI {
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
+
   /*
    * Test
    */
@@ -170,6 +171,13 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE = BASE_API_PATH + "incoming-sample";
   public static final String INCOMING_SAMPLES = BASE_API_PATH + "incoming-samples";
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
+  /*
+   * Project APIs
+   */
+  public static final String PROJECT = BASE_API_PATH + "project";
+  public static final String PROJECT_BY_ID = PROJECT + CODE;
+  public static final String PROJECTS = BASE_API_PATH + "projects";
+
 
   /*
    * Mix design apis

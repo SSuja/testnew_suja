@@ -10,6 +10,24 @@ public class PlantEquipmentResponseDto {
   private String description;
   private String plantName;
   private String equipmentName;
+  private String plantCode;
+  private Long equipmentId;
+
+  public String getPlantCode() {
+    return plantCode;
+  }
+
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
+  }
+
+  public Long getEquipmentId() {
+    return equipmentId;
+  }
+
+  public void setEquipmentId(Long equipmentId) {
+    this.equipmentId = equipmentId;
+  }
 
   public String getSerialNo() {
     return serialNo;

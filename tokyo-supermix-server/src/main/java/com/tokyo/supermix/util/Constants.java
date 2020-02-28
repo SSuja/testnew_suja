@@ -65,19 +65,6 @@ public class Constants {
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
-  /*
-   * Material Category
-   */
-  // constants for validation key
-  public static final String MATERIAL_CATEGORY_NAME = "name";
-  public static final String MATERIAL_CATEGORIES = "materialCategories";
-  public static final String MATERIAL_CATEGORY = "materialCategory";
-  public static final String MATERIAL_CATEGORY_ID = "materialCategoryId";
-  // Success Messages
-  public static final String ADD_MATERIAL_CATEGORY_SUCCESS = "Material Category added Successfully";
-  public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
-  public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
-      "Material Category updated Successfully";
   // pour
   public static final String ADD_POUR_SUCCESS = "Pour added Successfully";
   public static final String POUR_DELETED = "Pour Deleted Succeessfully";
@@ -168,6 +155,20 @@ public class Constants {
   public static final String DELETE_MATERIAL_SUB_CATEGORY_SUCCESS =
       "MaterialSubCategory deleted Successfully";
   /*
+   * Material Category
+   */
+  // constants for validation key
+  public static final String MATERIAL_CATEGORY_NAME = "name";
+  public static final String MATERIAL_CATEGORIES = "materialCategories";
+  public static final String MATERIAL_CATEGORY = "materialCategory";
+  public static final String MATERIAL_CATEGORY_ID = "materialCategoryId";
+  // Success Messages
+  public static final String ADD_MATERIAL_CATEGORY_SUCCESS = "Material Category added Successfully";
+  public static final String MATERIAL_CATEGORY_DELETED = "Material Category Deleted Succeessfully";
+  public static final String UPDATE_MATERIAL_CATEGORY_SUCCESS =
+      "Material Category updated Successfully";
+
+  /*
    * Test
    */
   public static final String TEST = "test";
@@ -213,6 +214,18 @@ public class Constants {
   public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
   public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
   public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
+  /*
+   * Project
+   */
+  // constants for validation key
+  public static final String PROJECT_CODE = "projectcode";
+  public static final String PROJECT = "project";
+  public static final String PROJECTS = "projects";
+  public static final String PROJECT_NAME = "name";
+  // Success Messages
+  public static final String PROJECT_DELETED = "project Deleted Succeessfully";
+  public static final String ADD_PROJECT_SUCCESS = "project added Successfully";
+  public static final String UPDATE_PROJECT_SUCCESS = "project updated Successfully";
   /*
    * mix design
    */

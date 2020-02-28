@@ -1057,4 +1057,27 @@ public class ValidationFailureStatusCodes {
     this.incomingSampleAlreadyExist = incomingSampleAlreadyExist;
   }
 
+  // for project
+  @Value("${validation.project.notExists}")
+  private String projectNotExist;
+
+  public String getProjectNotExist() {
+    return projectNotExist;
+  }
+
+  public void setProjectNotExist(String projectNotExist) {
+    this.projectNotExist = projectNotExist;
+  }
+
+  public String getProjectAlreadyExist() {
+    return projectAlreadyExist;
+  }
+
+  public void setProjectAlreadyExist(String projectAlreadyExist) {
+    this.projectAlreadyExist = projectAlreadyExist;
+  }
+
+  @Value("${validation.project.alreadyExist}")
+  private String projectAlreadyExist;
+
 }
