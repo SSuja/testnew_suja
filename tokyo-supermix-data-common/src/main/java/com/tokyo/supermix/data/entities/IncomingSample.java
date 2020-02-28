@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,17 +11,15 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "incoming_sample")
 public class IncomingSample implements Serializable {
-
   private static final long serialVersionUID = 1L;
-
   @Id
   private String code;
   private String vehicleNo;
-  private Date dateAndTime;
+  private Date date;
   private Boolean status;
   @ManyToOne
-  @JoinColumn(name = "materialCode", nullable = false)
-  private MaterialCategory material;
+  @JoinColumn(name = "rawMaterialId", nullable = false)
+  private RawMaterial rawMaterial;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
@@ -46,12 +43,12 @@ public class IncomingSample implements Serializable {
     this.vehicleNo = vehicleNo;
   }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getDate() {
+    return date;
   }
 
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public Boolean getStatus() {
@@ -62,12 +59,12 @@ public class IncomingSample implements Serializable {
     this.status = status;
   }
 
-  public MaterialCategory getMaterial() {
-    return material;
+  public RawMaterial getRawMaterial() {
+    return rawMaterial;
   }
 
-  public void setMaterial(MaterialCategory material) {
-    this.material = material;
+  public void setRawMaterial(RawMaterial rawMaterial) {
+    this.rawMaterial = rawMaterial;
   }
 
   public Plant getPlant() {
@@ -89,5 +86,4 @@ public class IncomingSample implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }
