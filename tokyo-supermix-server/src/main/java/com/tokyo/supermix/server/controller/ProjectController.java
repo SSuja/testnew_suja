@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,5 +47,17 @@ public class ProjectController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PROJECT_SUCCESS),
         HttpStatus.OK);
   }
+//Delete Project
+ @DeleteMapping(value = EndpointURI.PROJECT_BY_ID)
+ public ResponseEntity<Object> deleteProject(@PathVariable String code) {
+   if (projectService.isProjectExist(code)) {
+     logger.debug("delete project by code");
+     projectService.deleteProject(code);
+     return new ResponseEntity<>(
+         new BasicResponse<>(RestApiResponseStatus.OK, Constants.PROJECT_DELETED), HttpStatus.OK);
+   }
+   return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_CODE,
+       validationFailureStatusCodes.getProjectNotExist()), HttpStatus.BAD_REQUEST);
+ }
 
 }
