@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,15 +11,13 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "project")
 public class Project implements Serializable {
-
   private static final long serialVersionUID = 1L;
-
   @Id
   private String code;
   private String name;
   private String contactNumber;
   private String contactPerson;
-  private Date dateAndTime;
+  private Date startDate;
   @ManyToOne
   @JoinColumn(name = "customerId", nullable = false)
   private Customer customer;
@@ -60,12 +57,12 @@ public class Project implements Serializable {
     this.contactPerson = contactPerson;
   }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getStartDate() {
+    return startDate;
   }
 
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
   }
 
   public Customer getCustomer() {
