@@ -46,7 +46,7 @@ public class PlantEquipmentController {
     if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {
       logger.debug("PlantEquipment SerailNumber already exists: ");
       return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.PLANTEQUIPMENT,
+          new ValidationFailureResponse(Constants.PLANTEQUIPMENT_SERIALNO,
               validationFailureStatusCodes.getPlantEquipmentAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
@@ -88,7 +88,7 @@ public class PlantEquipmentController {
       PlantEquipmentResponseDto PlantequipmentResponseDto =
           mapper.map(plantEquipmentService.getPlantEquipmentBySerialNo(serialNo),
               PlantEquipmentResponseDto.class);
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENT,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENT_SERIALNO,
           mapper.map(PlantequipmentResponseDto, PlantEquipmentResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }

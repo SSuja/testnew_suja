@@ -5,5 +5,4 @@ import com.tokyo.supermix.data.entities.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, String> {
   boolean existsByName(String name);
-  boolean existsById(String code);
 }

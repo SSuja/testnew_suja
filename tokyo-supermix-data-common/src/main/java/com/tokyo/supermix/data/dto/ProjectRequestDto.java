@@ -5,20 +5,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ProjectRequestDto {
-  @NotNull(message = "{ProjectRequestDto.code.null}")
-  @NotEmpty(message = "{ProjectRequestDto.code.empty}")
+  @NotNull(message = "{projectRequestDto.code.null}")
+  @NotEmpty(message = "{projectRequestDto.code.empty}")
   private String code;
-  @NotNull(message = "{ProjectRequestDto.name.null}")
-  @NotEmpty(message = "{ProjectRequestDto.name.empty}")
+  @NotNull(message = "{projectRequestDto.name.null}")
+  @NotEmpty(message = "{projectRequestDto.name.empty}")
   private String name;
-  @NotNull(message = "{ProjectRequestDto.contactNumber.null}")
-  @NotEmpty(message = "{ProjectRequestDto.contactNumber.empty}")
+  @NotNull(message = "{projectRequestDto.contactNumber.null}")
+  @NotEmpty(message = "{projectRequestDto.contactNumber.empty}")
   private String contactNumber;
   private String contactPerson;
   private Date startDate;
   private Long customerId;
-  @NotNull(message = "{ProjectRequestDto.plantCode.null}")
-  @NotEmpty(message = "{ProjectRequestDto.plantCode.empty}")
+  @NotNull(message = "{projectRequestDto.plantCode.null}")
+  @NotEmpty(message = "{projectRequestDto.plantCode.empty}")
   private String plantCode;
 
   public String getCode() {
