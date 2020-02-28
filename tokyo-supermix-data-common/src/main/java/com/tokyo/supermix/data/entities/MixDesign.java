@@ -13,61 +13,78 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "mix_design")
 public class MixDesign implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Id
-  private String code;
-  private String grade;
-  private Date dateAndTime;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
-  @ManyToOne
-  @JoinColumn(name = "materialCode", nullable = false)
-  private Material material;
+	  @Id
+	  private String code;
+	  private String grade;
+	  private Date date;
+	  private String targetStrength;
+	  private String waterCementRatio;
+	  private String waterBinderRatio;
 
-  public String getCode() {
-    return code;
-  }
+	  @ManyToOne
+	  @JoinColumn(name = "plantCode", nullable = false)
+	  private Plant plant;
 
-  public void setCode(String code) {
-    this.code = code;
-  }
+	  public String getCode() {
+	    return code;
+	  }
 
-  public String getGrade() {
-    return grade;
-  }
+	  public void setCode(String code) {
+	    this.code = code;
+	  }
 
-  public void setGrade(String grade) {
-    this.grade = grade;
-  }
+	  public String getGrade() {
+	    return grade;
+	  }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
-  }
+	  public void setGrade(String grade) {
+	    this.grade = grade;
+	  }
 
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
-  }
+	  public Date getDate() {
+	    return date;
+	  }
 
-  public Plant getPlant() {
-    return plant;
-  }
+	public void setDate(Date date) {
+	    this.date = date;
+	  }
 
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
+	  public String getTargetStrength() {
+	    return targetStrength;
+	  }
 
-  public Material getMaterial() {
-    return material;
-  }
+	  public void setTargetStrength(String targetStrength) {
+	    this.targetStrength = targetStrength;
+	  }
 
-  public void setMaterial(Material material) {
-    this.material = material;
-  }
+	  public String getWaterCementRatio() {
+	    return waterCementRatio;
+	  }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+	  public void setWaterCementRatio(String waterCementRatio) {
+	    this.waterCementRatio = waterCementRatio;
+	  }
+
+	  public String getWaterBinderRatio() {
+	    return waterBinderRatio;
+	  }
+
+	  public void setWaterBinderRatio(String waterBinderRatio) {
+	    this.waterBinderRatio = waterBinderRatio;
+	  }
+
+	  public Plant getPlant() {
+	    return plant;
+	  }
+
+	  public void setPlant(Plant plant) {
+	    this.plant = plant;
+	  }
+
+	  public static long getSerialversionuid() {
+	    return serialVersionUID;
+	  }
 
 }
