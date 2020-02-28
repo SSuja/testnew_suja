@@ -9,4 +9,13 @@ public interface ProjectService {
 
   public boolean isNameExist(String name);
   public List<Project> getAllProjects();
+
+  public boolean isProjectExist(String code);
+
+  public void deleteProject(String code);
+
+  public Project getProjectByCode(String code);
+
+  public boolean isUpdatedProjectExist(String code, String name);
+
 }
