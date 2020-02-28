@@ -23,6 +23,11 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   @Transactional(readOnly = true)
+  public Project getProjectByCode(String code) {
+    return projectRepository.findById(code).get();
+  }
+
+  @Transactional(readOnly = true)
   public boolean isProjectExist(String code) {
     return projectRepository.existsById(code);
   }
@@ -30,6 +35,12 @@ public class ProjectServiceImpl implements ProjectService {
   @Transactional(propagation = Propagation.NEVER)
   public void deleteProject(String code) {
     projectRepository.deleteById(code);
-
+  }
+  
+  public boolean isUpdatedProjectExist(String code, String name) {
+    if ((!getProjectByCode(code).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
+      return true;
+    }
+    return false;
   }
 }

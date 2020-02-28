@@ -10,4 +10,9 @@ public interface ProjectService {
   public boolean isProjectExist(String code);
 
   public void deleteProject(String code);
+
+  public Project getProjectByCode(String code);
+
+  public boolean isUpdatedProjectExist(String code, String name);
+
 }
