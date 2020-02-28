@@ -4,9 +4,7 @@ package com.tokyo.supermix;
  * Contains all the rest endpoint url constants
  */
 public final class EndpointURI {
-
   private static final String BASE_API_PATH = "/api/v1/";
-
   /*
    * private constructor to avoid instantiating this class.
    */
@@ -15,8 +13,6 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
-
-
   /*
    * Plant apis
    */
@@ -55,7 +51,20 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
-
+  /*
+   * Material Category APIs
+   */
+  public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
+  public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
+  public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
+  public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
+  /*
+   * Material Category APIs
+   */
+  public static final String POUR = BASE_API_PATH + "pour";
+  public static final String POURS = BASE_API_PATH + "pours";
+  public static final String GET_POUR_BY_ID = POUR + ID;
+  public static final String DELETE_POUR = POUR + ID;
   /*
    * Unit apis
    */
@@ -81,13 +90,6 @@ public final class EndpointURI {
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
-  /*
-   * Material Category APIs
-   */
-  public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
-  public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
-  public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
-  public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
 
   /*
    * Test
@@ -110,8 +112,6 @@ public final class EndpointURI {
   public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
-
-
 
   /*
    * EquipmentPlantCalibration apis
@@ -165,8 +165,6 @@ public final class EndpointURI {
   public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
 
-
-
   /*
    * IncomingSample Apis
    */
@@ -180,6 +178,15 @@ public final class EndpointURI {
   public static final String PROJECT_BY_ID = PROJECT + CODE;
   public static final String PROJECTS = BASE_API_PATH + "projects";
 
+
+  /*
+   * Mix design apis
+   * 
+   */
+  public static final String MIXDESIGN = BASE_API_PATH + "mixdesign";
+  public static final String MIXDESIGNS = BASE_API_PATH + "mixdesigns";
+  public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
+  public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
 
   private EndpointURI() {}
 }

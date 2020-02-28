@@ -1,7 +1,6 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
   public static final String PLANTS = "plants";
@@ -23,12 +22,10 @@ public class Constants {
   public static final String UPDATE_DESIGNATION_SUCCESS = "Designation updated Successfully";
   public static final String DESIGNATION = "designation";
   public static final String DESIGNATIONS = "designations";
-
   /*
    * Supplier Category
    */
   public static final String SUPPLIER_CATEGORY_NAME = "category";
-
   /*
    * Success Messages for Supplier Category
    */
@@ -53,27 +50,33 @@ public class Constants {
   public static final String EMAIL = "email";
   public static final String PHONE_NUMBER = "phoneNumber";
 
+
+
   public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
       "Supplier Category updated Successfully";
   /*
    * Employee
    */
   // constants for validation key
-  public static final String EMPLOYEE_ID = "EmployeeId";
+  public static final String EMPLOYEE_ID = "employeeId";
   public static final String EMPLOYEES = "employees";
   public static final String EMPLOYEE = "employee";
   // Success Messages
   public static final String EMPLOYEE_DELETED = "Employee Deleted Succeessfully";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee updated Successfully";
-
+  // pour
+  public static final String ADD_POUR_SUCCESS = "Pour added Successfully";
+  public static final String POUR_DELETED = "Pour Deleted Succeessfully";
+  public static final String UPDATE_POUR_SUCCESS = "Pour updated Successfully";
+  public static final String POUR = "Pour";
+  public static final String POURS = "Pours";
   // unit
   public static final String UNIT = "unit";
   public static final String UNITS = "units";
   public static final String ADD_UNIT_SUCCESS = "Unit added Successfully";
   public static final String UNIT_DELETED = "Unit Successfully deleted";
   public static final String UNIT_UPDATED_SUCCESS = "Unit Successfully Updated";
-
   /*
    * Employee
    */
@@ -93,11 +96,9 @@ public class Constants {
   public static final String PARAMETERS = "parameters";
   public static final String PARAMETER_ID = "parameterId";
   public static final String PARAMETER_ABBREVIATION = "abbreviation";
-
   /*
    * EquipmentPlantCalibration
    */
-
   public static final String ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS =
       "equipmentPlantCalibration added Successfully";
   public static final String EQUIPMENT_PLANT_CALIBRATION_DELETED =
@@ -106,7 +107,6 @@ public class Constants {
       "equipmentPlantCalibration updated Successfully";
   public static final String EQUIPMENT_PLANT_CALIBRATION = "equipmentPlantCalibration";
   public static final String EQUIPMENT_PLANT_CALIBRATIONS = "equipmentPlantCalibrations";
-
   /*
    * Equation
    */
@@ -127,7 +127,6 @@ public class Constants {
   public static final String ADD_PLANTEQUIPMENT_SUCCESS = "Plantequipment added Successfully";
   public static final String PLANTEQUIPMENT_DELETED = "Plantequipment Deleted Succeessfully";
   public static final String UPDATE_PLANTEQUIPMENT_SUCCESS = "Plantequipment updated Successfully";
-
   /*
    * Customer
    * 
@@ -140,7 +139,6 @@ public class Constants {
   public static final String ADD_CUSTOMER_SUCCESS = "Customer added Successfully";
   public static final String CUSTOMER_DELETED = "Customer Deleted Succeessfully";
   public static final String UPDATE_CUSTOMER_SUCCESS = "Customer updated Successfully";
-
   /*
    * MaterialSubCategory
    */
@@ -213,7 +211,6 @@ public class Constants {
   public static final String INCOMING_SAMPLE_CODE = "incomingSampleCode";
   public static final String INCOMING_SAMPLE = "incomingSample";
   public static final String INCOMING_SAMPLES = "incomingSamples";
-  // Success Messages
   public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
   public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
   public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
@@ -229,6 +226,14 @@ public class Constants {
   public static final String PROJECT_DELETED = "project Deleted Succeessfully";
   public static final String ADD_PROJECT_SUCCESS = "project added Successfully";
   public static final String UPDATE_PROJECT_SUCCESS = "project updated Successfully";
+  /*
+   * mix design
+   */
+  public static final String ADD_MIXDESIGN_SUCCESS = "mix design added Successfully";
+  public static final String MIXDESIGN = "mixdesign";
+  public static final String MIXDESIGNS = "mixdesigns";
+  public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
+  public static final String MIXDESIGN_ID = "mixdesignId";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
