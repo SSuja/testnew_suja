@@ -922,7 +922,73 @@ public class ValidationFailureStatusCodes {
   public void setTestTypealreadyExists(String testTypealreadyExists) {
       this.testTypealreadyExists = testTypealreadyExists;
   }
+  @Value("${validation.mixDesign.notExist}")
+  private String mixDesignNotExist;
+  
+  @Value("${validation.mixDesign.alreadyExist}")
+  private String mixDesignAlreadyExist;
+  
+  @Value("${MixDesignRequestDto.grade.null}")
+  private String gradenotnull;
+  
+  @Value("${MixDesignRequestDto.grade.empty}")
+  private String gradenotempty;
+  
+  @Value("${MixDesignRequestDto.targetStrength.null}")
+  private String targetStrengthnotnull;
+  
+  @Value("${MixDesignRequestDto.grade.empty}")
+  private String targetStrengthnotempty;
+  
+  @Value("${MixDesignRequestDto.waterCementRatio.null}")
+  private String waterCementRationotnull;
+  
+  @Value("${MixDesignRequestDto.waterCementRatio.empty}")
+  private String waterCementRationotempty;
+  
+  @Value("${MixDesignRequestDto.waterBinderRatio.null}")
+  private String waterBinderRationotnull;
+  
+  @Value("${MixDesignRequestDto.waterBinderRatio.empty}")
+  private String waterBinderRationotempty;
+  
+  @Value("${MixDesignRequestDto.date.null}")
+  private String datenotnull;
+  
+  
+  
 
+  public String getGradenotnull() {
+	return gradenotnull;
+}
+
+public void setGradenotnull(String gradenotnull) {
+	this.gradenotnull = gradenotnull;
+}
+
+public String getGradenotempty() {
+	return gradenotempty;
+}
+
+public void setGradenotempty(String gradenotempty) {
+	this.gradenotempty = gradenotempty;
+}
+
+public String getMixDesignAlreadyExist() {
+    return mixDesignAlreadyExist;
+  }
+
+  public void setMixDesignAlreadyExist(String mixDesignAlreadyExist) {
+    this.mixDesignAlreadyExist = mixDesignAlreadyExist;
+  }
+
+  public String getMixDesignNotExist() {
+    return mixDesignNotExist;
+  }
+
+  public void setMixDesignNotExist(String mixDesignNotExist) {
+    this.mixDesignNotExist = mixDesignNotExist;
+  }
   public String getTestTypeIsNull() {
       return testTypeIsNull;
   }

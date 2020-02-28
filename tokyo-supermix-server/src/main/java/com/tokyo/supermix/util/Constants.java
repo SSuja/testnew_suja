@@ -198,16 +198,26 @@ public class Constants {
 	public static final String EQUIPMENT_DELETED = "Equipment Deleted Succeessfully";
 	public static final String UPDATE_EQUIPMENT_SUCCESS = "Equipment updated Successfully";
 	/*
-   * IncomingSample
-   */
-  // constants for validation key
-  public static final String INCOMING_SAMPLE_CODE = "incomingSampleCode";
-  public static final String INCOMING_SAMPLE = "incomingSample";
-  public static final String INCOMING_SAMPLES = "incomingSamples";
-  // Success Messages
-  public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
-  public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
-  public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
+	 * IncomingSample
+	 */
+	// constants for validation key
+	public static final String INCOMING_SAMPLE_CODE = "incomingSampleCode";
+	public static final String INCOMING_SAMPLE = "incomingSample";
+	public static final String INCOMING_SAMPLES = "incomingSamples";
+
+	/*
+	 * mix design
+	 */
+
+	public static final String ADD_MIXDESIGN_SUCCESS = "mix design added Successfully";
+	public static final String MIXDESIGN = "mixdesign";
+	public static final String MIXDESIGNS = "mixdesigns";
+	public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
+	public static final String MIXDESIGN_ID = "mixdesignId";
+
+	public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
+	public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
+	public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
 
 	// encaptulate constructor to restrict modification from outside
 	private Constants() {
