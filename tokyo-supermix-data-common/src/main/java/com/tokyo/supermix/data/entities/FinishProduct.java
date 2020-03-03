@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,15 +13,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "finish_product_sample")
-public class FinishProductSample implements Serializable {
+@Table(schema = "tokyo-supermix", name = "finish_product")
+public class FinishProduct implements Serializable {
 
   private static final long serialVersionUID = 1L;
-
   @Id
-  private String code;
-  private Date dateAndTime;
-  private String salesOrderNo;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private Date date;
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
@@ -30,28 +31,20 @@ public class FinishProductSample implements Serializable {
   @JoinColumn(name = "pourId", nullable = false)
   private Pour pour;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getDate() {
+    return date;
   }
 
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
-  }
-
-  public String getSalesOrderNo() {
-    return salesOrderNo;
-  }
-
-  public void setSalesOrderNo(String salesOrderNo) {
-    this.salesOrderNo = salesOrderNo;
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public MixDesign getMixDesign() {

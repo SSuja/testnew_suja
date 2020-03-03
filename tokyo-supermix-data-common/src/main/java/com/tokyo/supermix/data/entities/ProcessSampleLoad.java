@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -10,21 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "material_load")
-public class MaterialLoad implements Serializable {
-
+@Table(schema = "tokyo-supermix", name = "process_sample_load")
+public class ProcessSampleLoad implements Serializable {
   private static final long serialVersionUID = 1L;
-
   @Id
   private String code;
   private String vehicleNo;
-  private Date dateAndTime;
   private String measurement;
-  private String quantity;
+  private Long quantity;
+  private Date dateAndTime;
   private Date expiryDate;
-  @ManyToOne
-  @JoinColumn(name = "incomingSampleCode", nullable = false)
-  private IncomingSample incomingSample;
   @ManyToOne
   @JoinColumn(name = "processSampleCode", nullable = false)
   private ProcessSample processSample;
@@ -45,14 +39,6 @@ public class MaterialLoad implements Serializable {
     this.vehicleNo = vehicleNo;
   }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
-  }
-
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
-  }
-
   public String getMeasurement() {
     return measurement;
   }
@@ -61,20 +47,20 @@ public class MaterialLoad implements Serializable {
     this.measurement = measurement;
   }
 
-  public String getQuantity() {
+  public Long getQuantity() {
     return quantity;
   }
 
-  public void setQuantity(String quantity) {
+  public void setQuantity(Long quantity) {
     this.quantity = quantity;
   }
 
-  public IncomingSample getIncomingSample() {
-    return incomingSample;
+  public Date getDateAndTime() {
+    return dateAndTime;
   }
 
-  public void setIncomingSample(IncomingSample incomingSample) {
-    this.incomingSample = incomingSample;
+  public void setDateAndTime(Date dateAndTime) {
+    this.dateAndTime = dateAndTime;
   }
 
   public Date getExpiryDate() {

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.enums.CalibrationType;
+import com.tokyo.supermix.data.enums.Status;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant_equipment_calibration")
@@ -34,7 +35,8 @@ public class PlantEquipmentCalibration implements Serializable {
   @ManyToOne
   @JoinColumn(name = "supplierId", nullable = true)
   private Supplier supplier;
-  private String status;
+  @Enumerated(EnumType.ORDINAL)
+  private Status status;
 
   public Long getId() {
     return id;
@@ -68,6 +70,14 @@ public class PlantEquipmentCalibration implements Serializable {
     this.calibrationType = calibrationType;
   }
 
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
   public String getDescription() {
     return description;
   }
@@ -92,11 +102,11 @@ public class PlantEquipmentCalibration implements Serializable {
     this.supplier = supplier;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
@@ -104,11 +114,4 @@ public class PlantEquipmentCalibration implements Serializable {
     return serialVersionUID;
   }
 
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
 }
