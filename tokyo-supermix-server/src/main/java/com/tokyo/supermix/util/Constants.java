@@ -235,6 +235,13 @@ public class Constants {
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
 
+  //finish product
+  public static final String FINISH_PRODUCT = "finishProduct";
+  public static final String FINISH_PRODUCTS = "finishProducts";
+  public static final String ADD_FINISH_PRODUCT_SUCCESS = "Finish Product Added Successfully";
+  public static final String FINISH_PRODUCT_DELETED = "Finish Product Successfully Deleted";
+  public static final String FINISH_PRODUCT_UPDATED_SUCCESS = "Finish Product Successfully Updated";
+  
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
