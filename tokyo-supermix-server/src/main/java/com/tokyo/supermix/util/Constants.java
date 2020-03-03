@@ -214,6 +214,7 @@ public class Constants {
   public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
   public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
   public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
+  public static final String UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS = "IncomingSample Status updated Successfully";
   /*
    * Project
    */
