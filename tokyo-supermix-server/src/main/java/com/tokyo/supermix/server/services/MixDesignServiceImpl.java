@@ -11,7 +11,7 @@ import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 
 @Service
-public class MixDesignImpl implements MixDesignService {
+public class MixDesignServiceImpl implements MixDesignService {
 	@Autowired
 	public MixDesignRepository mixDesignRepository;
 
