@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleRequestDto {
   @NotNull(message = "{incomingSampleRequestDto.code.null}")
@@ -10,7 +11,7 @@ public class IncomingSampleRequestDto {
   private String vehicleNo;
   @NotNull(message = "{incomingSampleRequestDto.date.null}")
   private Date date;
-  private Boolean status = false;
+  private Status status;
   private Long rawMaterialId;
   @NotNull(message = "{incomingSampleRequestDto.plantCode.null}")
   @NotNull(message = "{incomingSampleRequestDto.plantCode.empty}")
@@ -41,11 +42,11 @@ public class IncomingSampleRequestDto {
     this.date = date;
   }
 
-  public Boolean getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(Boolean status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
