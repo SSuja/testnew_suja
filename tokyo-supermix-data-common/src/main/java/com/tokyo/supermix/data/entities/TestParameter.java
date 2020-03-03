@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,21 +10,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "equipment_parameter")
-public class EquipmentParameter implements Serializable {
-
+@Table(schema = "tokyo-supermix", name = "test_parameter")
+public class TestParameter implements Serializable {
   private static final long serialVersionUID = 1L;
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String shortFormat;
+  @ManyToOne
+  @JoinColumn(name = "testId", nullable = false)
+  private Test test;
   @ManyToOne
   @JoinColumn(name = "parameterId", nullable = false)
   private Parameter parameter;
-  @ManyToOne
-  @JoinColumn(name = "equipmentId", nullable = false)
-  private Equipment equipment;
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
@@ -38,12 +34,12 @@ public class EquipmentParameter implements Serializable {
     this.id = id;
   }
 
-  public String getShortFormat() {
-    return shortFormat;
+  public Test getTest() {
+    return test;
   }
 
-  public void setShortFormat(String shortFormat) {
-    this.shortFormat = shortFormat;
+  public void setTest(Test test) {
+    this.test = test;
   }
 
   public Parameter getParameter() {
@@ -52,14 +48,6 @@ public class EquipmentParameter implements Serializable {
 
   public void setParameter(Parameter parameter) {
     this.parameter = parameter;
-  }
-
-  public Equipment getEquipment() {
-    return equipment;
-  }
-
-  public void setEquipment(Equipment equipment) {
-    this.equipment = equipment;
   }
 
   public Unit getUnit() {

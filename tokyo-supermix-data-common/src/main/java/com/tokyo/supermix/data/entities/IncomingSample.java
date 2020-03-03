@@ -3,10 +3,13 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.Status;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "incoming_sample")
@@ -16,7 +19,8 @@ public class IncomingSample implements Serializable {
   private String code;
   private String vehicleNo;
   private Date date;
-  private Boolean status;
+  @Enumerated(EnumType.ORDINAL)
+  private Status status;
   @ManyToOne
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
@@ -51,11 +55,11 @@ public class IncomingSample implements Serializable {
     this.date = date;
   }
 
-  public Boolean getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(Boolean status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
@@ -86,4 +90,5 @@ public class IncomingSample implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
 }

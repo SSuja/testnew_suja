@@ -13,78 +13,86 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "mix_design")
 public class MixDesign implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	  @Id
-	  private String code;
-	  private String grade;
-	  private Date date;
-	  private String targetStrength;
-	  private String waterCementRatio;
-	  private String waterBinderRatio;
+  @Id
+  private String code;
+  private Double actualGrade;
+  private Date date;
+  private Double targetSlump;
+  private Double targetGrade;
+  private Double waterCementRatio;
+  private Double waterBinderRatio;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = false)
+  private Plant plant;
 
-	  @ManyToOne
-	  @JoinColumn(name = "plantCode", nullable = false)
-	  private Plant plant;
+  public String getCode() {
+    return code;
+  }
 
-	  public String getCode() {
-	    return code;
-	  }
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	  public void setCode(String code) {
-	    this.code = code;
-	  }
+  public Double getActualGrade() {
+    return actualGrade;
+  }
 
-	  public String getGrade() {
-	    return grade;
-	  }
+  public void setActualGrade(Double actualGrade) {
+    this.actualGrade = actualGrade;
+  }
 
-	  public void setGrade(String grade) {
-	    this.grade = grade;
-	  }
+  public Date getDate() {
+    return date;
+  }
 
-	  public Date getDate() {
-	    return date;
-	  }
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
-	public void setDate(Date date) {
-	    this.date = date;
-	  }
+  public Double getTargetSlump() {
+    return targetSlump;
+  }
 
-	  public String getTargetStrength() {
-	    return targetStrength;
-	  }
+  public void setTargetSlump(Double targetSlump) {
+    this.targetSlump = targetSlump;
+  }
 
-	  public void setTargetStrength(String targetStrength) {
-	    this.targetStrength = targetStrength;
-	  }
+  public Double getTargetGrade() {
+    return targetGrade;
+  }
 
-	  public String getWaterCementRatio() {
-	    return waterCementRatio;
-	  }
+  public void setTargetGrade(Double targetGrade) {
+    this.targetGrade = targetGrade;
+  }
 
-	  public void setWaterCementRatio(String waterCementRatio) {
-	    this.waterCementRatio = waterCementRatio;
-	  }
+  public Double getWaterCementRatio() {
+    return waterCementRatio;
+  }
 
-	  public String getWaterBinderRatio() {
-	    return waterBinderRatio;
-	  }
+  public void setWaterCementRatio(Double waterCementRatio) {
+    this.waterCementRatio = waterCementRatio;
+  }
 
-	  public void setWaterBinderRatio(String waterBinderRatio) {
-	    this.waterBinderRatio = waterBinderRatio;
-	  }
+  public Double getWaterBinderRatio() {
+    return waterBinderRatio;
+  }
 
-	  public Plant getPlant() {
-	    return plant;
-	  }
+  public void setWaterBinderRatio(Double waterBinderRatio) {
+    this.waterBinderRatio = waterBinderRatio;
+  }
 
-	  public void setPlant(Plant plant) {
-	    this.plant = plant;
-	  }
+  public Plant getPlant() {
+    return plant;
+  }
 
-	  public static long getSerialversionuid() {
-	    return serialVersionUID;
-	  }
+  public void setPlant(Plant plant) {
+    this.plant = plant;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

@@ -1,7 +1,10 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -9,27 +12,28 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "process_sample")
-public class ProcessSample implements Serializable {
+@Table(schema = "tokyo-supermix", name = "material_stock")
+public class MaterialStock implements Serializable {
 
   private static final long serialVersionUID = 1L;
+
   @Id
-  private String code;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private Long quantity;
-  private Long remainInQuantity;
-  @OneToOne
-  @JoinColumn(name = "incomingSampleCode", nullable = false)
-  private IncomingSample incomingSample;
   @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
+  @OneToOne
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public Long getQuantity() {
@@ -40,20 +44,12 @@ public class ProcessSample implements Serializable {
     this.quantity = quantity;
   }
 
-  public Long getRemainInQuantity() {
-    return remainInQuantity;
+  public Unit getUnit() {
+    return unit;
   }
 
-  public void setRemainInQuantity(Long remainInQuantity) {
-    this.remainInQuantity = remainInQuantity;
-  }
-
-  public IncomingSample getIncomingSample() {
-    return incomingSample;
-  }
-
-  public void setIncomingSample(IncomingSample incomingSample) {
-    this.incomingSample = incomingSample;
+  public void setUnit(Unit unit) {
+    this.unit = unit;
   }
 
   public RawMaterial getRawMaterial() {

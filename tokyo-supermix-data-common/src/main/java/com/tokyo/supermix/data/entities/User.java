@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,10 +18,9 @@ public class User implements Serializable {
   private Long id;
   private String username;
   private String password;
-  private String email;
-  @ManyToOne
-  @JoinColumn(name = "designationId", nullable = false)
-  private Designation designation;
+  @OneToOne
+  @JoinColumn(name = "employeeId", nullable = false)
+  private Employee employee;
 
   public Long getId() {
     return id;
@@ -47,20 +46,12 @@ public class User implements Serializable {
     this.password = password;
   }
 
-  public String getEmail() {
-    return email;
+  public Employee getEmployee() {
+    return employee;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public Designation getDesignation() {
-    return designation;
-  }
-
-  public void setDesignation(Designation designation) {
-    this.designation = designation;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
   public static long getSerialversionuid() {
