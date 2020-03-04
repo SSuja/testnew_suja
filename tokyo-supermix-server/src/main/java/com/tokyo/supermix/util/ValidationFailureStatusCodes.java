@@ -1080,4 +1080,68 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
 
+  /*
+   * User
+   */
+  @Value("${validation.user.notExists}")
+  private String userNotExist;
+  @Value("${validation.user.aleadyExists}")
+  private String userAlreadyExist;
+  @Value("${userRequestDto.username.empty}")
+  private String usernameNotEmpty;
+  @Value("${userRequestDto.username.null}")
+  private String usernameNotNull;
+  @Value("${userRequestDto.password.empty}")
+  private String passwordNotEmpty;
+  @Value("${userRequestDto.password.null}")
+  private String passwordNotNull;
+
+  public String getUserNotExist() {
+    return userNotExist;
+  }
+
+  public void setUserNotExist(String userNotExist) {
+    this.userNotExist = userNotExist;
+  }
+
+  public String getUserAlreadyExist() {
+    return userAlreadyExist;
+  }
+
+  public void setUserAlreadyExist(String userAlreadyExist) {
+    this.userAlreadyExist = userAlreadyExist;
+  }
+
+  public String getUsernameNotEmpty() {
+    return usernameNotEmpty;
+  }
+
+  public void setUsernameNotEmpty(String usernameNotEmpty) {
+    this.usernameNotEmpty = usernameNotEmpty;
+  }
+
+  public String getUsernameNotNull() {
+    return usernameNotNull;
+  }
+
+  public void setUsernameNotNull(String usernameNotNull) {
+    this.usernameNotNull = usernameNotNull;
+  }
+
+  public String getPasswordNotEmpty() {
+    return passwordNotEmpty;
+  }
+
+  public void setPasswordNotEmpty(String passwordNotEmpty) {
+    this.passwordNotEmpty = passwordNotEmpty;
+  }
+
+  public String getPasswordNotNull() {
+    return passwordNotNull;
+  }
+
+  public void setPasswordNotNull(String passwordNotNull) {
+    this.passwordNotNull = passwordNotNull;
+  }
+
 }
