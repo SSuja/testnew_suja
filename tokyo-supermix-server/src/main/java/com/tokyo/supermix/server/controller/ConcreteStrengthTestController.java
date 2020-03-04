@@ -63,10 +63,10 @@ public class ConcreteStrengthTestController {
   public ResponseEntity<Object> getConcreteStrengthTestById(@PathVariable Long id) {
     if (concreteStrengthTestService.isConcreteStrengthTestExist(id)) {
       logger.debug("Get ConcreteStrengthTest By Id");
-      ConcreteStrengthTest concreteStrengthTest =
-          concreteStrengthTestService.getConcreteStrengthTestById(id);
+     
+          
       return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH_TEST,
-          mapper.map(concreteStrengthTest, ConcreteStrengthTestResponseDto.class),
+          mapper.map(concreteStrengthTestService.getConcreteStrengthTestById(id), ConcreteStrengthTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(
