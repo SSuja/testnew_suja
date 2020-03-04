@@ -187,8 +187,8 @@ public final class EndpointURI {
 	/*
 	 * Finish Product APIs
 	 */
-	public static final String FINISH_PRODUCT = BASE_API_PATH + "finish-product";
-	public static final String FINISH_PRODUCTS = BASE_API_PATH + "finish-products";
+	public static final String FINISH_PRODUCT = BASE_API_PATH + "finishproduct";
+	public static final String FINISH_PRODUCTS = BASE_API_PATH + "finishproducts";
 	public static final String FINISH_PRODUCT_BY_ID = FINISH_PRODUCT + ID;
 
 	private EndpointURI() {

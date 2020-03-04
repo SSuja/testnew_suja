@@ -6,11 +6,11 @@ public class FinishProductResponseDto {
 
 	private Long id;
 	private String mixDesignCode;
-	private String projectName;
 	private String projectCode;
+	private String projectName;
 	private Date date;
+	private Long pourId;
 	private String pourName;
-	private String pourId;
 
 	public Long getId() {
 		return id;
@@ -28,12 +28,12 @@ public class FinishProductResponseDto {
 		this.mixDesignCode = mixDesignCode;
 	}
 
-	public String getProjectName() {
-		return projectName;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getProjectCode() {
@@ -44,12 +44,20 @@ public class FinishProductResponseDto {
 		this.projectCode = projectCode;
 	}
 
-	public Date getDate() {
-		return date;
+	public String getProjectName() {
+		return projectName;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public Long getPourId() {
+		return pourId;
+	}
+
+	public void setPourId(Long pourId) {
+		this.pourId = pourId;
 	}
 
 	public String getPourName() {
@@ -58,14 +66,6 @@ public class FinishProductResponseDto {
 
 	public void setPourName(String pourName) {
 		this.pourName = pourName;
-	}
-
-	public String getPourId() {
-		return pourId;
-	}
-
-	public void setPourId(String pourId) {
-		this.pourId = pourId;
 	}
 
 }

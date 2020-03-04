@@ -2,13 +2,20 @@ package com.tokyo.supermix.data.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class FinishProductRequestDto {
 
 	private Long id;
+	@NotNull(message = "{finishProductRequestDto.mixDesignCode.null}")
+	@NotEmpty(message = "{finishProductRequestDto.mixDesignCode.empty}")
 	private String mixDesignCode;
+	@NotNull(message = "{finishProductRequestDto.projectCode.null}")
+	@NotEmpty(message = "{finishProductRequestDto.projectCode.empty}")
 	private String projectCode;
 	private Date date;
-	private String pourId;
+	private Long pourId;
 	
 	public Long getId() {
 		return id;
@@ -34,10 +41,10 @@ public class FinishProductRequestDto {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public String getPourId() {
+	public Long getPourId() {
 		return pourId;
 	}
-	public void setPourId(String pourId) {
+	public void setPourId(Long pourId) {
 		this.pourId = pourId;
 	}
 	
