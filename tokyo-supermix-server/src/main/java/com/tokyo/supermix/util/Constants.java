@@ -234,7 +234,15 @@ public class Constants {
   public static final String MIXDESIGNS = "mixdesigns";
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
-
+  /*
+   * processSampleLoad
+   */
+  public static final String PROCESS_SAMPLE_LOAD_ID = "processSampleLoadId";
+  public static final String PROCESS_SAMPLE_LOAD = "processSampleLoad";
+  public static final String PROCESS_SAMPLE_LOADS = "processSampleLoads";
+  public static final String PROCESS_SAMPLE_LOAD_DELETED = "ProcessSampleLoad Deleted Succeessfully";
+  public static final String ADD_PROCESS_SAMPLE_LOAD_SUCCESS = "ProcessSampleLoad added Successfully";
+  public static final String UPDATE_PROCESS_SAMPLE_LOAD_SUCCESS = "ProcessSampleLoad updated Successfully";
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
