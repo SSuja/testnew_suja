@@ -188,5 +188,14 @@ public final class EndpointURI {
   public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
 
+  /*
+   * Test Parameter APIs
+   * 
+   */
+  public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
+  public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
+  public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
+  public static final String GET_TEST_PARAMETER_BY_TEST_ID = TEST_PARAMETER + "/test" + "/{testid}";
+
   private EndpointURI() {}
 }

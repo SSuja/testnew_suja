@@ -234,6 +234,16 @@ public class Constants {
   public static final String MIXDESIGNS = "mixdesigns";
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
+  /*
+   * Test Parameter
+   */
+  public static final String ADD_TEST_PARAMETER_SUCCESS = "Test parameter added Successfully";
+  public static final String TEST_PARAMETERS = "testparameters";
+  public static final String TEST_PARAMETER = "testparameter";
+  public static final String TEST_PARAMETER_ID = "testParameterId";
+  public static final String TEST_PARAMETER_DELETED = "Test Parameter Deleted Succeessfully";
+  public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test parameter updated Successfully";
+
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
