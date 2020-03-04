@@ -1079,5 +1079,55 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
+  
+//for mixDesignProportion
+  
+  @Value("${validation.mixDesignProportion.notExist}")
+  private String mixDesignProportionNotExist;
+
+  @Value("${validation.mixDesignProportion.alreadyExist}")
+  private String mixDesignProportionAlreadyExist;
+  
+  
+  @Value("${mixDesignProportionRequestDto.quantity.null}")
+  private String quantityNotNull;
+
+  @Value("${mixDesignProportionRequestDto.quantity.empty}")
+  private String quantityNotEmpty;
+ 
+public String getMixDesignProportionNotExist() {
+    return mixDesignProportionNotExist;
+}
+
+public void setMixDesignProportionNotExist(String mixDesignProportionNotExist) {
+    this.mixDesignProportionNotExist = mixDesignProportionNotExist;
+}
+
+public String getMixDesignProportionAlreadyExist() {
+    return mixDesignProportionAlreadyExist;
+}
+
+public void setMixDesignProportionAlreadyExist(String mixDesignProportionAlreadyExist) {
+    this.mixDesignProportionAlreadyExist = mixDesignProportionAlreadyExist;
+}
+
+public String getQuantityNotNull() {
+  return quantityNotNull;
+}
+
+public void setQuantityNotNull(String quantityNotNull) {
+  this.quantityNotNull = quantityNotNull;
+}
+
+public String getQuantityNotEmpty() {
+  return quantityNotEmpty;
+}
+
+public void setQuantityNotEmpty(String quantityNotEmpty) {
+  this.quantityNotEmpty = quantityNotEmpty;
+}
+
+
+  
 
 }

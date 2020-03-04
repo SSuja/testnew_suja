@@ -234,6 +234,15 @@ public class Constants {
   public static final String MIXDESIGNS = "mixdesigns";
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
+  
+  /*
+   * mix design proportion
+   */
+  public static final String ADD_MIXDESIGN_PROPORTION_SUCCESS = "mix design proporation added Successfully";
+  public static final String MIXDESIGN_PROPORTION = "mix design proporation";
+  public static final String MIXDESIGN_PROPORTIONS = "mixdesignproporations";
+  public static final String MIXDESIGN_PROPORTION_DELETED = "mix design proporation Successfully Deleted";
+  public static final String MIXDESIGN_PROPORTION_ID = "mixdesignproporationId";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
