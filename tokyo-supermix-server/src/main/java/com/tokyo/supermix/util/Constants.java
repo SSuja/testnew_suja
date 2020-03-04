@@ -235,6 +235,24 @@ public class Constants {
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
 
+
+  /*
+   * Concrete Strength Test
+   */
+  // constants for validation key
+  public static final String CONCRETE_STRENGTH_TEST_ID = "concreteStrengthTestId";
+  public static final String CONCRETE_STRENGTH_TEST = "concreteStrengthTest";
+  public static final String CONCRETE_STRENGTH_TESTS = "concreteStrengthTests";
+
+
+  // Success Messages
+  public static final String CONCRETE_STRENGTH_TEST_DELETED =
+      "concreteStrengthTest Deleted Succeessfully";
+  public static final String ADD_CONCRETE_STRENGTH_TEST_SUCCESS =
+      "concreteStrengthTest added Successfully";
+  public static final String UPDATE_CONCRETE_STRENGTH_TEST_SUCCESS =
+      "concreteStrengthTest updated Successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

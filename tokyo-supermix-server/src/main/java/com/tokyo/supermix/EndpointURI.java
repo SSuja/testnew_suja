@@ -188,5 +188,13 @@ public final class EndpointURI {
   public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
 
+  /*
+   * ConcreteStrengthTest APIs
+   */
+  public static final String CONCRETE_STRENGTH_TEST = BASE_API_PATH + "concrete-strength-test";
+  public static final String CONCRETE_STRENGTH_TESTS = BASE_API_PATH + "concrete-strength-tests";
+  public static final String CONCRETE_STRENGTH_TEST_BY_ID = CONCRETE_STRENGTH_TEST + ID;
+
+
   private EndpointURI() {}
 }

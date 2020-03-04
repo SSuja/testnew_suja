@@ -1080,4 +1080,16 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
 
+  // for ConcreteStrengthTest
+  @Value("${validation.concreteStrengthTest.notExists}")
+  private String concreteStrengthTestNotExist;
+
+  public String getConcreteStrengthTestNotExist() {
+    return concreteStrengthTestNotExist;
+  }
+
+  public void setConcreteStrengthTestNotExist(String concreteStrengthTestNotExist) {
+    this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
+  }
+
 }
