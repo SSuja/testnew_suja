@@ -4,14 +4,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ProcessSampleRequestDto {
-  @NotNull(message = "{ProcessSampleRequestDto.code.null}")
-  @NotEmpty(message = "{ProcessSampleRequestDto.code.empty}")
+  @NotNull(message = "{processSampleRequestDto.code.null}")
+  @NotEmpty(message = "{processSampleRequestDto.code.empty}")
   private String code;
-  @NotNull(message = "{ProcessSampleRequestDto.incomingSampleCode.null}")
-  @NotEmpty(message = "{ProcessSampleRequestDto.incomingSampleCode.empty}")
+  @NotNull(message = "{processSampleRequestDto.incomingSampleCode.null}")
+  @NotEmpty(message = "{processSampleRequestDto.incomingSampleCode.empty}")
   private String incomingSampleCode;
   private Long rawMaterialId;
-  @NotNull(message = "{ProcessSampleRequestDto.quantity.null}")
+  @NotNull(message = "{processSampleRequestDto.quantity.null}")
   private Long quantity;
 
   public String getCode() {
