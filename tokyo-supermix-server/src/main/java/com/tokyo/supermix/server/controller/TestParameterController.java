@@ -90,7 +90,7 @@ public class TestParameterController {
 
   @GetMapping(value = EndpointURI.GET_TEST_PARAMETER_BY_TEST_ID)
   public ResponseEntity<Object> get(@PathVariable Long testid) {
-    if (testParameterService.isTestIdExist(testid) != false) {
+    if (testParameterService.isTestIdExist(testid)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
           mapper.map(testParameterService.getTestParameterByTestId(testid),
               TestParameterResponseDto.class),
