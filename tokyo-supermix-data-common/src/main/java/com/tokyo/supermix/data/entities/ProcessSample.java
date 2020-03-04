@@ -16,7 +16,6 @@ public class ProcessSample implements Serializable {
   @Id
   private String code;
   private Long quantity;
-  private Long remainInQuantity;
   @OneToOne
   @JoinColumn(name = "incomingSampleCode", nullable = false)
   private IncomingSample incomingSample;
@@ -38,14 +37,6 @@ public class ProcessSample implements Serializable {
 
   public void setQuantity(Long quantity) {
     this.quantity = quantity;
-  }
-
-  public Long getRemainInQuantity() {
-    return remainInQuantity;
-  }
-
-  public void setRemainInQuantity(Long remainInQuantity) {
-    this.remainInQuantity = remainInQuantity;
   }
 
   public IncomingSample getIncomingSample() {

@@ -980,8 +980,6 @@ public class ValidationFailureStatusCodes {
   @Value("${MixDesignRequestDto.date.null}")
   private String datenotnull;
 
-
-
   public String getGradenotnull() {
     return gradenotnull;
   }
@@ -1029,7 +1027,6 @@ public class ValidationFailureStatusCodes {
   public void setTestTypeIsEmpty(String testTypeIsEmpty) {
     this.testTypeIsEmpty = testTypeIsEmpty;
   }
-
 
   /*
    * IncomingSample
@@ -1079,5 +1076,28 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
+
+
+  // for ProcessSample
+  @Value("${validation.processSample.alreadyExist}")
+  private String processSampleAlreadyExist;
+  @Value("${validation.processSample.notExists}")
+  private String processSampleNotExist;
+
+  public String getProcessSampleAlreadyExist() {
+    return processSampleAlreadyExist;
+  }
+
+  public void setProcessSampleAlreadyExist(String processSampleAlreadyExist) {
+    this.processSampleAlreadyExist = processSampleAlreadyExist;
+  }
+
+  public String getProcessSampleNotExist() {
+    return processSampleNotExist;
+  }
+
+  public void setProcessSampleNotExist(String processSampleNotExist) {
+    this.processSampleNotExist = processSampleNotExist;
+  }
 
 }
