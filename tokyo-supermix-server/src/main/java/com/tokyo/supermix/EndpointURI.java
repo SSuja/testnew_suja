@@ -187,6 +187,15 @@ public final class EndpointURI {
   public static final String MIXDESIGNS = BASE_API_PATH + "mixdesigns";
   public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
+  /*
+   * concreteTest
+   * 
+   */
+  public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
+  public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
+  public static final String DELETE_CONCRETE_TEST = CONCRETE_TEST + ID;
+  public static final String GET_CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
+
 
   private EndpointURI() {}
 }
