@@ -10,9 +10,18 @@ public class ProcessSampleRequestDto {
   @NotNull(message = "{processSampleRequestDto.incomingSampleCode.null}")
   @NotEmpty(message = "{processSampleRequestDto.incomingSampleCode.empty}")
   private String incomingSampleCode;
-  private Long rawMaterialId;
   @NotNull(message = "{processSampleRequestDto.quantity.null}")
   private Long quantity;
+  @NotNull(message = "{processSampleRequestDto.unitId.null}")
+  private Long unitId;
+
+  public Long getUnitId() {
+    return unitId;
+  }
+
+  public void setUnitId(Long unitId) {
+    this.unitId = unitId;
+  }
 
   public String getCode() {
     return code;
@@ -28,14 +37,6 @@ public class ProcessSampleRequestDto {
 
   public void setIncomingSampleCode(String incomingSampleCode) {
     this.incomingSampleCode = incomingSampleCode;
-  }
-
-  public Long getRawMaterialId() {
-    return rawMaterialId;
-  }
-
-  public void setRawMaterialId(Long rawMaterialId) {
-    this.rawMaterialId = rawMaterialId;
   }
 
   public Long getQuantity() {

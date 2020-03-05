@@ -1,29 +1,20 @@
 package com.tokyo.supermix.data.dto;
 
-import java.util.Date;
-
 public class ProcessSampleResponseDto {
   private String code;
-  private String incomingSampleCode;
-  private Long rawMaterialId;
   private Long quantity;
+  private Long unitId;
+  private String unit;
+  private Long rawMaterialId;
   private String rawMaterialName;
-  private Date incomingSampleDate;
+  private IncomingSampleResponseDto incomingSample;
 
-  public String getCode() {
-    return code;
+  public String getRawMaterialName() {
+    return rawMaterialName;
   }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getIncomingSampleCode() {
-    return incomingSampleCode;
-  }
-
-  public void setIncomingSampleCode(String incomingSampleCode) {
-    this.incomingSampleCode = incomingSampleCode;
+  public void setRawMaterialName(String rawMaterialName) {
+    this.rawMaterialName = rawMaterialName;
   }
 
   public Long getRawMaterialId() {
@@ -34,6 +25,14 @@ public class ProcessSampleResponseDto {
     this.rawMaterialId = rawMaterialId;
   }
 
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
+
   public Long getQuantity() {
     return quantity;
   }
@@ -42,20 +41,27 @@ public class ProcessSampleResponseDto {
     this.quantity = quantity;
   }
 
-  public String getRawMaterialName() {
-    return rawMaterialName;
+  public Long getUnitId() {
+    return unitId;
   }
 
-  public void setRawMaterialName(String rawMaterialName) {
-    this.rawMaterialName = rawMaterialName;
+  public void setUnitId(Long unitId) {
+    this.unitId = unitId;
   }
 
-  public Date getIncomingSampleDate() {
-    return incomingSampleDate;
+  public String getUnit() {
+    return unit;
   }
 
-  public void setIncomingSampleDate(Date incomingSampleDate) {
-    this.incomingSampleDate = incomingSampleDate;
+  public void setUnit(String unit) {
+    this.unit = unit;
   }
 
+  public IncomingSampleResponseDto getIncomingSample() {
+    return incomingSample;
+  }
+
+  public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
+    this.incomingSample = incomingSample;
+  }
 }

@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +30,6 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @CrossOrigin(origins = "*")
 @RestController
 public class ProcessSampleController {
-
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -42,10 +39,10 @@ public class ProcessSampleController {
   private static final Logger logger = Logger.getLogger(ProcessSampleController.class);
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
-  public ResponseEntity<Object> createEquipmentPlant(
+  public ResponseEntity<Object> createProcessSample(
       @Valid @RequestBody ProcessSampleRequestDto processSampleRequestDto) {
     if (processSampleService.isProcessSampleExist(processSampleRequestDto.getCode())) {
-      logger.debug("ProcessSample  code already exists: ");
+      logger.debug("ProcessSample code already exists: ");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_CODE,
           validationFailureStatusCodes.getProcessSampleAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -102,6 +99,4 @@ public class ProcessSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_CODE,
         validationFailureStatusCodes.getProcessSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-
 }
