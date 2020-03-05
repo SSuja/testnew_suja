@@ -771,20 +771,10 @@ public class ValidationFailureStatusCodes {
   // for plantEquipmentCalibration
   @Value("${validation.plantEquipmentCalibration.notExists}")
   private String plantEquipmentCalibrationNotExist;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.employeeId.null}")
-  private String PlantEquipmentCalibrationRequestDtoEmployeeIdIsNull;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.supplierId.null}")
-  private String PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-
-  public String getPlantEquipmentCalibrationRequestDtoEmployeeIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoEmployeeIdIsNull;
-  }
-
-  public void setPlantEquipmentCalibrationRequestDtoEmployeeIdIsNull(
-      String plantEquipmentCalibrationRequestDtoEmployeeIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoEmployeeIdIsNull =
-        plantEquipmentCalibrationRequestDtoEmployeeIdIsNull;
-  }
+  @Value("${validation.employeeId.null}")
+  private String EmployeeIdIsNull;
+  @Value("${validation.supplierId.null}")
+  private String SupplierIdIsNull;
 
   public String getPlantEquipmentCalibrationNotExist() {
     return plantEquipmentCalibrationNotExist;
@@ -794,14 +784,20 @@ public class ValidationFailureStatusCodes {
     this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
   }
 
-  public String getPlantEquipmentCalibrationRequestDtoSupplierIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+  public String getEmployeeIdIsNull() {
+    return EmployeeIdIsNull;
   }
 
-  public void setPlantEquipmentCalibrationRequestDtoSupplierIdIsNull(
-      String plantEquipmentCalibrationRequestDtoSupplierIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoSupplierIdIsNull =
-        plantEquipmentCalibrationRequestDtoSupplierIdIsNull;
+  public void setEmployeeIdIsNull(String employeeIdIsNull) {
+    EmployeeIdIsNull = employeeIdIsNull;
+  }
+
+  public String getSupplierIdIsNull() {
+    return SupplierIdIsNull;
+  }
+
+  public void setSupplierIdIsNull(String supplierIdIsNull) {
+    SupplierIdIsNull = supplierIdIsNull;
   }
 
   // for parameter
