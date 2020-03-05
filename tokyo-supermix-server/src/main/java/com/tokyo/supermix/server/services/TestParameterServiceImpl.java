@@ -48,8 +48,8 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameterRepository.existsByTestId(id);
   }
 
-  public boolean isDuplicateRowExists(Long paramId, Long testId, Long unitId) {
-    if (testParameterRepository.isDuplicateRow(paramId, testId, unitId) != null) {
+  public boolean isDuplicateRowExists(Long parameterId, Long testId, Long unitId) {
+    if (testParameterRepository.isDuplicateRow(parameterId, testId, unitId) != null) {
       return true;
     }
     return false;

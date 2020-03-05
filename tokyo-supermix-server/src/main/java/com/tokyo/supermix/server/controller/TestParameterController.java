@@ -39,10 +39,10 @@ public class TestParameterController {
 
   @PostMapping(value = EndpointURI.TEST_PARAMETER)
   public ResponseEntity<Object> createTestParameter(
-      @RequestBody List<TestParameterRequestDto> testParameterRequestDto) {
-    for (TestParameterRequestDto testParameterRequestDtos : testParameterRequestDto) {
-      if ((testParameterService.isDuplicateRowExists(testParameterRequestDtos.getParameterId(),
-          testParameterRequestDtos.getTestId(), testParameterRequestDtos.getUnitId()))) {
+      @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
+    for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
+      if ((testParameterService.isDuplicateRowExists(testParameterRequestDto.getParameterId(),
+          testParameterRequestDto.getTestId(), testParameterRequestDto.getUnitId()))) {
         logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,
@@ -51,7 +51,7 @@ public class TestParameterController {
       }
     }
     testParameterService
-        .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
+        .saveTestParameter(mapper.map(testParameterRequestDtoList, TestParameter.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_PARAMETER_SUCCESS),
         HttpStatus.OK);
