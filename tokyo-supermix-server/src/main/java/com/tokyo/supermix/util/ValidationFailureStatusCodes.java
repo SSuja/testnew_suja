@@ -1079,5 +1079,18 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
+  /*
+   * Equation Parameter
+   */
+  @Value("${validation.equationParameter.notExists}")
+  private String equationParameterNotExist;
+
+  public String getEquationParameterNotExist() {
+    return equationParameterNotExist;
+  }
+
+  public void setEquationParameterNotExist(String equationParameterNotExist) {
+    this.equationParameterNotExist = equationParameterNotExist;
+  }
 
 }

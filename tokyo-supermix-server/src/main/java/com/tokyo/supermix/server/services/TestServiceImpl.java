@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.Test;
+import com.tokyo.supermix.data.entities.TestType;
 import com.tokyo.supermix.data.repositories.TestRepository;
 
 @Service
@@ -48,6 +49,11 @@ public class TestServiceImpl implements TestService {
   @Transactional(propagation = Propagation.NEVER)
   public void deleteTest(Long id) {
     testRepository.deleteById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Test> getTestByTestType(TestType testType) {
+    return testRepository.findByTestType(testType);
   }
 
 }

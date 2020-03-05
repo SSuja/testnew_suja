@@ -234,6 +234,13 @@ public class Constants {
   public static final String MIXDESIGNS = "mixdesigns";
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
+  /*
+   * Equation Parameter
+   */
+  public static final String EQUATION_PARAMETER = "equationParameter";
+  public static final String EQUATION_PARAMETER_ID = "id";
+  public static final String ADD_EQUATION_PARAMETER_SUCCESS =
+      "Equation Parameter added Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
