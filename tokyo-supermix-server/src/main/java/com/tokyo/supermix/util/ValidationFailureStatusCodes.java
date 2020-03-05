@@ -1063,7 +1063,7 @@ public class ValidationFailureStatusCodes {
 
   public void setConcreteTestNotExist(String concreteTestNotExist) {
     this.concreteTestNotExist = concreteTestNotExist;
-  
+  }
 //for mixDesignProportion
   
   @Value("${validation.mixDesignProportion.notExist}")
