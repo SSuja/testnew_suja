@@ -771,19 +771,19 @@ public class ValidationFailureStatusCodes {
   // for plantEquipmentCalibration
   @Value("${validation.plantEquipmentCalibration.notExists}")
   private String plantEquipmentCalibrationNotExist;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.userId.null}")
-  private String PlantEquipmentCalibrationRequestDtoUserIdIsNull;
+  @Value("${validation.PlantEquipmentCalibrationRequestDto.employeeId.null}")
+  private String PlantEquipmentCalibrationRequestDtoEmployeeIdIsNull;
   @Value("${validation.PlantEquipmentCalibrationRequestDto.supplierId.null}")
   private String PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
 
-  public String getPlantEquipmentCalibrationRequestDtoUserIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoUserIdIsNull;
+  public String getPlantEquipmentCalibrationRequestDtoEmployeeIdIsNull() {
+    return PlantEquipmentCalibrationRequestDtoEmployeeIdIsNull;
   }
 
-  public void setPlantEquipmentCalibrationRequestDtoUserIdIsNull(
-      String plantEquipmentCalibrationRequestDtoUserIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoUserIdIsNull =
-        plantEquipmentCalibrationRequestDtoUserIdIsNull;
+  public void setPlantEquipmentCalibrationRequestDtoEmployeeIdIsNull(
+      String plantEquipmentCalibrationRequestDtoEmployeeIdIsNull) {
+    PlantEquipmentCalibrationRequestDtoEmployeeIdIsNull =
+        plantEquipmentCalibrationRequestDtoEmployeeIdIsNull;
   }
 
   public String getPlantEquipmentCalibrationNotExist() {

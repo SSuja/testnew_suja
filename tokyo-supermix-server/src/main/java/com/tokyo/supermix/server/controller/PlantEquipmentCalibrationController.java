@@ -44,10 +44,10 @@ public class PlantEquipmentCalibrationController {
   public ResponseEntity<Object> createPlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
-      if (plantEquipmentCalibrationRequestDto.getuserId() == null) {
+      if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.EQUIPMENT_PLANT_CALIBRATION,
-                validationFailureStatusCodes.getPlantEquipmentCalibrationRequestDtoUserIdIsNull()),
+                validationFailureStatusCodes.getPlantEquipmentCalibrationRequestDtoEmployeeIdIsNull()),
             HttpStatus.BAD_REQUEST);
       }
       plantEquipmentCalibrationService.savePlantEquipmentCalibration(

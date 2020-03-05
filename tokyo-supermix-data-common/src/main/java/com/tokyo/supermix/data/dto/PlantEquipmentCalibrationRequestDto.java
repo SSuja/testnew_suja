@@ -12,6 +12,7 @@ public class PlantEquipmentCalibrationRequestDto {
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.dueDate.null}")
   private Date dueDate;
   private CalibrationType calibrationType;
+  @NotNull(message = "{plantEquipmentCalibrationRequestDto.userId.null}")
   private Long userId;
   private String description;
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.plantEquipmentSerialNo.null}")
@@ -21,6 +22,15 @@ public class PlantEquipmentCalibrationRequestDto {
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.status.null}")
   @NotEmpty(message = "{plantEquipmentCalibrationRequestDto.status.empty}")
   private String status;
+  private Long employeeId;
+
+  public Long getEmployeeId() {
+    return employeeId;
+  }
+
+  public void setEmployeeId(Long employeeId) {
+    this.employeeId = employeeId;
+  }
 
   public Long getId() {
     return id;
