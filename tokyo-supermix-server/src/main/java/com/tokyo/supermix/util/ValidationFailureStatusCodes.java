@@ -1087,10 +1087,10 @@ public class ValidationFailureStatusCodes {
   private String userNotExist;
   @Value("${validation.user.aleadyExists}")
   private String userAlreadyExist;
-  @Value("${userRequestDto.username.empty}")
-  private String usernameIsEmpty;
-  @Value("${userRequestDto.username.null}")
-  private String usernameIsNull;
+  @Value("${userRequestDto.userName.empty}")
+  private String userNameIsEmpty;
+  @Value("${userRequestDto.userName.null}")
+  private String userNameIsNull;
   @Value("${userRequestDto.password.empty}")
   private String passwordIsEmpty;
   @Value("${userRequestDto.password.null}")
@@ -1112,20 +1112,20 @@ public class ValidationFailureStatusCodes {
     this.userAlreadyExist = userAlreadyExist;
   }
 
-  public String getUsernameIsEmpty() {
-    return usernameIsEmpty;
+  public String getUserNameIsEmpty() {
+    return userNameIsEmpty;
   }
 
-  public void setUsernameIsEmpty(String usernameIsEmpty) {
-    this.usernameIsEmpty = usernameIsEmpty;
+  public void setUserNameIsEmpty(String userNameIsEmpty) {
+    this.userNameIsEmpty = userNameIsEmpty;
   }
 
-  public String getUsernameIsNull() {
-    return usernameIsNull;
+  public String getUserNameIsNull() {
+    return userNameIsNull;
   }
 
-  public void setUsernameIsNull(String usernameIsNull) {
-    this.usernameIsNull = usernameIsNull;
+  public void setUserNameIsNull(String userNameIsNull) {
+    this.userNameIsNull = userNameIsNull;
   }
 
   public String getPasswordIsEmpty() {

@@ -6,7 +6,7 @@ import com.tokyo.supermix.data.entities.User;
 public interface UserService {
   User saveUser(User user);
 
-  public boolean isUsernameExist(String userName);
+  public boolean isUserNameExist(String userName);
 
   public boolean isEmployeeExist(Long employeeId);
 

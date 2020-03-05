@@ -39,7 +39,7 @@ public class UserController {
 
   @PostMapping(value = EndpointURI.USER)
   public ResponseEntity<Object> createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-    if (userService.isUsernameExist(userRequestDto.getUserName())) {
+    if (userService.isUserNameExist(userRequestDto.getUserName())) {
       logger.debug("User already exists: createUser(), username: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
           validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
