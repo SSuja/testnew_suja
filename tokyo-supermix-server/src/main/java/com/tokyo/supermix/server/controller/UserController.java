@@ -39,7 +39,7 @@ public class UserController {
 
   @PostMapping(value = EndpointURI.USER)
   public ResponseEntity<Object> createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-    if (userService.isUsernameExist(userRequestDto.getUsername())) {
+    if (userService.isUsernameExist(userRequestDto.getUserName())) {
       logger.debug("User already exists: createUser(), username: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
           validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
@@ -90,7 +90,7 @@ public class UserController {
   @PutMapping(value = EndpointURI.USER)
   public ResponseEntity<Object> updateUser(@Valid @RequestBody UserRequestDto userRequestDto) {
     if (userService.isUserExist(userRequestDto.getId())) {
-      if (userService.isUpdatedUserExist(userRequestDto.getId(), userRequestDto.getUsername())) {
+      if (userService.isUpdatedUserExist(userRequestDto.getId(), userRequestDto.getUserName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
             validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
       }

@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isUsernameExist(String username) {
-    return userRepository.existsByUsername(username);
+  public boolean isUsernameExist(String userName) {
+    return userRepository.existsByUsername(userName);
   }
 
   @Transactional(readOnly = true)
@@ -54,9 +54,9 @@ public class UserServiceImpl implements UserService {
     return userRepository.findById(id).get();
   }
 
-  public boolean isUpdatedUserExist(Long id, String username) {
-    if ((!getUserById(id).getUsername().equalsIgnoreCase(username))
-        && (isUsernameExist(username))) {
+  public boolean isUpdatedUserExist(Long id, String userName) {
+    if ((!getUserById(id).getUserName().equalsIgnoreCase(userName))
+        && (isUsernameExist(userName))) {
       return true;
     }
     return false;

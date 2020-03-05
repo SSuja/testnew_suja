@@ -5,7 +5,7 @@ import com.tokyo.supermix.data.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-  boolean existsByUsername(String username);
+  boolean existsByUsername(String userName);
 
   boolean existsByEmployeeId(Long employeeId);
 }

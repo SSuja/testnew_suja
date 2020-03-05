@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 public class UserRequestDto {
   private Long id;
-  @NotNull(message = "{userRequestDto.username.null}")
-  @NotEmpty(message = "{userRequestDto.username.empty}")
-  private String username;
+  @NotNull(message = "{userRequestDto.userName.null}")
+  @NotEmpty(message = "{userRequestDto.userName.empty}")
+  private String userName;
   @NotNull(message = "{userRequestDto.password.null}")
   @NotEmpty(message = "{userRequestDto.password.empty}")
   private String password;
@@ -21,12 +21,12 @@ public class UserRequestDto {
     this.id = id;
   }
 
-  public String getUsername() {
-    return username;
+  public String getUserName() {
+    return userName;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  public void setUserName(String userName) {
+    this.userName = userName;
   }
 
   public String getPassword() {
