@@ -928,7 +928,7 @@ public class ValidationFailureStatusCodes {
   private String testTypealreadyExists;
   @Value("${testTypeDto.type.null}")
   private String testTypeIsNull;
-  @Value("${estTypeDto.type.empty}")
+  @Value("${testTypeDto.type.empty}")
   private String testTypeIsEmpty;
 
   public String getTestTypeNotExist() {
@@ -1076,6 +1076,118 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
+  
+  /*
+   * ProcessSampleLoad
+   */
+
+  @Value("${validation.processSampleLoad.notExists}")
+  private String processSampleLoadNotExist;
+
+  @Value("${validation.processSampleLoad.alreadyExist}")
+  private String processSampleLoadAlreadyExist;
+
+  public String getProcessSampleLoadNotExist() {
+    return processSampleLoadNotExist;
+  }
+
+  public void setProcessSampleLoadNotExist(String processSampleLoadNotExist) {
+    this.processSampleLoadNotExist = processSampleLoadNotExist;
+  }
+
+  public String getProcessSampleLoadAlreadyExist() {
+    return processSampleLoadAlreadyExist;
+  }
+
+  public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
+    this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
+  }
+  
+  @Value("${validation.testParameter.notExists}")
+  private String testParameterNotExist;
+
+  @Value("${validation.testParameter.alreadyExist}")
+  private String testParameterAlreadyExist;
+
+  public String getTestParameterNotExist() {
+    return testParameterNotExist;
+  }
+
+  public void setTestParameterNotExist(String testParameterExist) {
+    this.testParameterNotExist = testParameterExist;
+  }
+
+  public String getTestParameterAlreadyExist() {
+    return testParameterAlreadyExist;
+  }
+
+  public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
+    this.testParameterAlreadyExist = testParameterAlreadyExist;
+  }
+
+  /*
+   * User
+   */
+  @Value("${validation.user.notExists}")
+  private String userNotExist;
+  @Value("${validation.user.aleadyExists}")
+  private String userAlreadyExist;
+  @Value("${userRequestDto.userName.empty}")
+  private String userNameIsEmpty;
+  @Value("${userRequestDto.userName.null}")
+  private String userNameIsNull;
+  @Value("${userRequestDto.password.empty}")
+  private String passwordIsEmpty;
+  @Value("${userRequestDto.password.null}")
+  private String passwordIsNull;
+
+  public String getUserNotExist() {
+    return userNotExist;
+  }
+
+  public void setUserNotExist(String userNotExist) {
+    this.userNotExist = userNotExist;
+  }
+
+  public String getUserAlreadyExist() {
+    return userAlreadyExist;
+  }
+
+  public void setUserAlreadyExist(String userAlreadyExist) {
+    this.userAlreadyExist = userAlreadyExist;
+  }
+
+  public String getUserNameIsEmpty() {
+    return userNameIsEmpty;
+  }
+
+  public void setUserNameIsEmpty(String userNameIsEmpty) {
+    this.userNameIsEmpty = userNameIsEmpty;
+  }
+
+  public String getUserNameIsNull() {
+    return userNameIsNull;
+  }
+
+  public void setUserNameIsNull(String userNameIsNull) {
+    this.userNameIsNull = userNameIsNull;
+  }
+
+  public String getPasswordIsEmpty() {
+    return passwordIsEmpty;
+  }
+
+  public void setPasswordIsEmpty(String passwordIsEmpty) {
+    this.passwordIsEmpty = passwordIsEmpty;
+  }
+
+  public String getPasswordIsNull() {
+    return passwordIsNull;
+  }
+
+  public void setPasswordIsNull(String passwordIsNull) {
+    this.passwordIsNull = passwordIsNull;
+  }
 
 
   // for ProcessSample
