@@ -58,7 +58,7 @@ public class ConcreteTestController {
   }
 
   // get ConcreteTest by id
-  @GetMapping(value = EndpointURI.GET_CONCRETE_TEST_BY_ID)
+  @GetMapping(value = EndpointURI.CONCRETE_TEST_BY_ID)
   public ResponseEntity<Object> getConcreteTestById(@PathVariable Long id) {
     if (concreteTestService.isConcreteTestExit(id)) {
       logger.debug("Get ConcreteTest by id ");
@@ -72,7 +72,7 @@ public class ConcreteTestController {
   }
 
   // get ConcreteTest Delete
-  @DeleteMapping(value = EndpointURI.DELETE_CONCRETE_TEST)
+  @DeleteMapping(value = EndpointURI.CONCRETE_TEST_BY_ID)
   public ResponseEntity<Object> deleteConcreteTest(@PathVariable Long id) {
     if (concreteTestService.isConcreteTestExit(id)) {
       concreteTestService.deleteConcreteTest(id);

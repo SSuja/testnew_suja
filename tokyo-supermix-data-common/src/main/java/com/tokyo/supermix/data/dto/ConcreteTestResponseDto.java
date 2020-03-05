@@ -13,6 +13,15 @@ public class ConcreteTestResponseDto {
   private Double waterBinderRatio;
   private Status status;
   private String plantCode;
+  private String plantName;
+
+  public String getPlantName() {
+    return plantName;
+  }
+
+  public void setPlantName(String plantName) {
+    this.plantName = plantName;
+  }
 
   public Long getId() {
     return id;

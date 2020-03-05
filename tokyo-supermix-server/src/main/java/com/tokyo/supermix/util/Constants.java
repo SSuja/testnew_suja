@@ -235,13 +235,16 @@ public class Constants {
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
   public static final String MIXDESIGN_ID = "mixdesignId";
   /*
-   *concreteTest*
+   * concreteTest*
    */
   public static final String ADD_CONCRETE_TEST_SUCCESS = "ConcreteTest added Successfully";
   public static final String CONCRETE_TEST_DELETED = "ConcreteTest Successfully Deleted";
   public static final String UPDATE_CONCRETE_TEST_SUCCESS = "ConcreteTest updated Successfully";
-  public static final String CONCRETE_TEST= "concreteTest";
-  public static final String CONCRETE_TESTS= "concreteTests";
+  public static final String CONCRETE_TEST = "concreteTest";
+  public static final String CONCRETE_TESTS = "concreteTests";
+  public static final String RAW_MATERIAL_CEMENT = "cement";
+  public static final String RAW_MATERIAL_FLYASH = "flyAsh";
+  public static final String DECIMAL_FORMAT = "#.####";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
