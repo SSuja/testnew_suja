@@ -947,53 +947,30 @@ public class ValidationFailureStatusCodes {
     this.testTypealreadyExists = testTypealreadyExists;
   }
 
+  // For MixDesign
   @Value("${validation.mixDesign.notExist}")
   private String mixDesignNotExist;
 
   @Value("${validation.mixDesign.alreadyExist}")
   private String mixDesignAlreadyExist;
 
-  @Value("${MixDesignRequestDto.grade.null}")
-  private String gradenotnull;
+  @Value("${mixDesignRequestDto.targetGrade.null}")
+  private String targetGradeNotNull;
 
-  @Value("${MixDesignRequestDto.grade.empty}")
-  private String gradenotempty;
+  @Value("${mixDesignRequestDto.targetSlump.null}")
+  private String targetSlumpNotNull;
 
-  @Value("${MixDesignRequestDto.targetStrength.null}")
-  private String targetStrengthnotnull;
+  @Value("${mixDesignRequestDto.date.null}")
+  private String dateNotNull;
 
-  @Value("${MixDesignRequestDto.grade.empty}")
-  private String targetStrengthnotempty;
 
-  @Value("${MixDesignRequestDto.waterCementRatio.null}")
-  private String waterCementRationotnull;
 
-  @Value("${MixDesignRequestDto.waterCementRatio.empty}")
-  private String waterCementRationotempty;
-
-  @Value("${MixDesignRequestDto.waterBinderRatio.null}")
-  private String waterBinderRationotnull;
-
-  @Value("${MixDesignRequestDto.waterBinderRatio.empty}")
-  private String waterBinderRationotempty;
-
-  @Value("${MixDesignRequestDto.date.null}")
-  private String datenotnull;
-
-  public String getGradenotnull() {
-    return gradenotnull;
+  public String getMixDesignNotExist() {
+    return mixDesignNotExist;
   }
 
-  public void setGradenotnull(String gradenotnull) {
-    this.gradenotnull = gradenotnull;
-  }
-
-  public String getGradenotempty() {
-    return gradenotempty;
-  }
-
-  public void setGradenotempty(String gradenotempty) {
-    this.gradenotempty = gradenotempty;
+  public void setMixDesignNotExist(String mixDesignNotExist) {
+    this.mixDesignNotExist = mixDesignNotExist;
   }
 
   public String getMixDesignAlreadyExist() {
@@ -1004,28 +981,28 @@ public class ValidationFailureStatusCodes {
     this.mixDesignAlreadyExist = mixDesignAlreadyExist;
   }
 
-  public String getMixDesignNotExist() {
-    return mixDesignNotExist;
+  public String getTargetGradeNotNull() {
+    return targetGradeNotNull;
   }
 
-  public void setMixDesignNotExist(String mixDesignNotExist) {
-    this.mixDesignNotExist = mixDesignNotExist;
+  public void setTargetGradeNotNull(String targetGradeNotNull) {
+    this.targetGradeNotNull = targetGradeNotNull;
   }
 
-  public String getTestTypeIsNull() {
-    return testTypeIsNull;
+  public String getTargetSlumpNotNull() {
+    return targetSlumpNotNull;
   }
 
-  public void setTestTypeIsNull(String testTypeIsNull) {
-    this.testTypeIsNull = testTypeIsNull;
+  public void setTargetSlumpNotNull(String targetSlumpNotNull) {
+    this.targetSlumpNotNull = targetSlumpNotNull;
   }
 
-  public String getTestTypeIsEmpty() {
-    return testTypeIsEmpty;
+  public String getDateNotNull() {
+    return dateNotNull;
   }
 
-  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
-    this.testTypeIsEmpty = testTypeIsEmpty;
+  public void setDateNotNull(String dateNotNull) {
+    this.dateNotNull = dateNotNull;
   }
 
   /*
@@ -1076,7 +1053,7 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
-  
+
   /*
    * ProcessSampleLoad
    */
@@ -1102,7 +1079,7 @@ public class ValidationFailureStatusCodes {
   public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
     this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
   }
-  
+
   @Value("${validation.testParameter.notExists}")
   private String testParameterNotExist;
 

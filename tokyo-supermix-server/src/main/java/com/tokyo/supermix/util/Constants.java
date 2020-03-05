@@ -228,11 +228,15 @@ public class Constants {
   /*
    * mix design
    */
-  public static final String ADD_MIXDESIGN_SUCCESS = "mix design added Successfully";
-  public static final String MIXDESIGN = "mixdesign";
-  public static final String MIXDESIGNS = "mixdesigns";
-  public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
-  public static final String MIXDESIGN_ID = "mixdesignId";
+
+  public static final String ADD_MIX_DESIGN_SUCCESS = "mix design added Successfully";
+  public static final String MIX_DESIGN = "mixDesign";
+  public static final String MIX_DESIGNS = "mixDesigns";
+  public static final String MIX_DESIGN_DELETED = "mix design Successfully Deleted";
+  public static final String MIX_DESIGN_CODE = "mixDesignCode";
+  public static final String UPDATE_MIX_DESIGN_SUCCESS = "mix design updated Successfully";
+  
+ 
   /*
    * processSampleLoad
    */
@@ -242,8 +246,7 @@ public class Constants {
   public static final String PROCESS_SAMPLE_LOAD_DELETED = "ProcessSampleLoad Deleted Succeessfully";
   public static final String ADD_PROCESS_SAMPLE_LOAD_SUCCESS = "ProcessSampleLoad added Successfully";
   public static final String UPDATE_PROCESS_SAMPLE_LOAD_SUCCESS = "ProcessSampleLoad updated Successfully";
-  /* 
-  * Test Parameter
+   /* Test Parameter
    */
   public static final String ADD_TEST_PARAMETER_SUCCESS = "Test parameter added Successfully";
   public static final String TEST_PARAMETERS = "testparameters";
