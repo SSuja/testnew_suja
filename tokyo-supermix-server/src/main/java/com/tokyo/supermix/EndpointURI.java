@@ -195,6 +195,6 @@ public final class EndpointURI {
   public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
   public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
   public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
-
+  public static final String GET_PARAMETERS_BY_EQUATION_ID = EQUATION_PARAMETER + "/equation" + "/{equationId}";
   private EndpointURI() {}
 }

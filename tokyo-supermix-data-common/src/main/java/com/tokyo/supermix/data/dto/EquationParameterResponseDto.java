@@ -2,8 +2,11 @@ package com.tokyo.supermix.data.dto;
 
 public class EquationParameterResponseDto {
   private Long id;
-  private EquationDto equation;
-  private ParameterDto parameter;
+  private Long parameterId;
+  private String parameterName;
+  private String parameterAbbreviation;
+  private String equationFormula;
+  private Long equationId;
 
   public Long getId() {
     return id;
@@ -13,20 +16,44 @@ public class EquationParameterResponseDto {
     this.id = id;
   }
 
-  public EquationDto getEquation() {
-    return equation;
+  public Long getParameterId() {
+    return parameterId;
   }
 
-  public void setEquation(EquationDto equation) {
-    this.equation = equation;
+  public void setParameterId(Long parameterId) {
+    this.parameterId = parameterId;
   }
 
-  public ParameterDto getParameter() {
-    return parameter;
+  public String getParameterName() {
+    return parameterName;
   }
 
-  public void setParameter(ParameterDto parameter) {
-    this.parameter = parameter;
+  public void setParameterName(String parameterName) {
+    this.parameterName = parameterName;
+  }
+
+  public String getParameterAbbreviation() {
+    return parameterAbbreviation;
+  }
+
+  public void setParameterAbbreviation(String parameterAbbreviation) {
+    this.parameterAbbreviation = parameterAbbreviation;
+  }
+
+  public String getEquationFormula() {
+    return equationFormula;
+  }
+
+  public void setEquationFormula(String equationFormula) {
+    this.equationFormula = equationFormula;
+  }
+
+  public Long getEquationId() {
+    return equationId;
+  }
+
+  public void setEquationId(Long equationId) {
+    this.equationId = equationId;
   }
 
 }

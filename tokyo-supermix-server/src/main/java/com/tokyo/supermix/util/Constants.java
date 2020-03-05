@@ -238,9 +238,13 @@ public class Constants {
    * Equation Parameter
    */
   public static final String EQUATION_PARAMETER = "equationParameter";
-  public static final String EQUATION_PARAMETER_ID = "id";
+  public static final String EQUATION_PARAMETERS = "equationParameters";
+  public static final String EQUATION_PARAMETER_ID = "equationParameterId";
   public static final String ADD_EQUATION_PARAMETER_SUCCESS =
       "Equation Parameter added Successfully";
+  public static final String DELETED_EQUATION_PARAMETER =
+      "Equation Parameter deleted Successfully";
+
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

@@ -11,4 +11,10 @@ public interface EquationParameterService {
   public EquationParameter getEquationParameterById(Long id);
 
   public boolean isEquationParameterExist(Long id);
+
+  public List<EquationParameter> getEquationByEquationId(Long test);
+
+  public void deleteTestParameter(Long id);
+
+  public boolean isDuplicateRowExists(Long equationId, Long parameterId);
 }
