@@ -48,6 +48,12 @@ public class FinishProductController {
 	// create finish product api
 	@PostMapping(value = EndpointURI.FINISH_PRODUCT)
 	public ResponseEntity<Object> createFinishProduct(@Valid @RequestBody FinishProductRequestDto finishProductDto) {
+		if (finishProductService.isPourIdExists(finishProductDto.getPourId())) {
+			logger.debug("Pour already exists");
+			return new ResponseEntity<>(
+					new ValidationFailureResponse(Constants.POUR, validationFailureStatusCodes.getPourAlreadyExist()),
+					HttpStatus.BAD_REQUEST);
+		}
 		FinishProduct finishProduct = mapper.map(finishProductDto, FinishProduct.class);
 		finishProductService.saveFinishProduct(finishProduct);
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_SUCCESS),
@@ -97,6 +103,11 @@ public class FinishProductController {
 	public ResponseEntity<Object> updateFinishProduct(@Valid @RequestBody FinishProductRequestDto finishProductDto) {
 		if (finishProductService.isFinishProductExists(finishProductDto.getId())) {
 			logger.debug("Id exists");
+
+			if (finishProductService.isUpdatedPourExist(finishProductDto.getId(), finishProductDto.getPourId())) {
+				return new ResponseEntity<>(new ValidationFailureResponse(Constants.POUR,
+						validationFailureStatusCodes.getPourAlreadyExist()), HttpStatus.BAD_REQUEST);
+			}
 			FinishProduct finishProduct = mapper.map(finishProductDto, FinishProduct.class);
 			finishProductService.saveFinishProduct(finishProduct);
 			return new ResponseEntity<>(

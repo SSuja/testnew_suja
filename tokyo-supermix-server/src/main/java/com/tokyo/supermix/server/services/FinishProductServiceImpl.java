@@ -43,17 +43,14 @@ public class FinishProductServiceImpl implements FinishProductService {
 	}
 
 	@Transactional(readOnly = true)
-	public boolean isProjectCodeExists(String projectCode) {
-		return finishProductRepository.existsByProjectCode(projectCode);
-	}
-
-	@Transactional(readOnly = true)
-	public boolean isMixDesignCodeExists(String mixDesignCode) {
-		return finishProductRepository.existsByMixDesignCode(mixDesignCode);
-	}
-
-	@Transactional(readOnly = true)
 	public boolean isPourIdExists(Long pourId) {
 		return finishProductRepository.existsByPourId(pourId);
+	}
+
+	public boolean isUpdatedPourExist(Long id, Long pourId) {
+		if ((!getById(id).getPour().equals(pourId)) && (isPourIdExists(pourId))) {
+			return true;
+		}
+		return false;
 	}
 }
