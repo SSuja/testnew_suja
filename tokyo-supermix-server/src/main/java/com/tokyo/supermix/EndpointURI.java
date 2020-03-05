@@ -226,5 +226,13 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_BY_MIXDESIGNCODE = MIX_DESIGN_PROPORTION +"/mix-design"+ "/{mixDesignCode}";
 
+  /*
+   * ConcreteStrengthTest APIs
+   */
+  public static final String CONCRETE_STRENGTH_TEST = BASE_API_PATH + "concrete-strength-test";
+  public static final String CONCRETE_STRENGTH_TESTS = BASE_API_PATH + "concrete-strength-tests";
+  public static final String CONCRETE_STRENGTH_TEST_BY_ID = CONCRETE_STRENGTH_TEST + ID;
+
+
   private EndpointURI() {}
 }

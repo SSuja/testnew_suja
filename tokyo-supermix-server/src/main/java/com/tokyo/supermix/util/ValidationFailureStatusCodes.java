@@ -1239,4 +1239,16 @@ public void setQuantityNotEmpty(String quantityNotEmpty) {
     this.processSampleNotExist = processSampleNotExist;
   }
 
+  // for ConcreteStrengthTest
+  @Value("${validation.concreteStrengthTest.notExists}")
+  private String concreteStrengthTestNotExist;
+
+  public String getConcreteStrengthTestNotExist() {
+    return concreteStrengthTestNotExist;
+  }
+
+  public void setConcreteStrengthTestNotExist(String concreteStrengthTestNotExist) {
+    this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
+  }
+
 }
