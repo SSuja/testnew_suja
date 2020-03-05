@@ -76,8 +76,9 @@ public class EquationParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_PARAMETERS_BY_EQUATION_ID)
-  public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long equationId) {
-    if (equationParameterService.isEquationParameterExist(equationId)) {
+  public ResponseEntity<Object> getAllParameterByEquationId(@PathVariable Long equationId) {
+    if (equationParameterService.isEquationIdExist(equationId)) {
+      System.out.println("good");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.EQUATION_PARAMETERS,
               mapper.map(equationParameterService.getEquationByEquationId(equationId),
@@ -86,7 +87,7 @@ public class EquationParameterController {
           null, HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+        validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @DeleteMapping(EndpointURI.EQUATION_PARAMETER_BY_ID)

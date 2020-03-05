@@ -13,6 +13,7 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
+
   /*
    * Plant apis
    */
@@ -195,6 +196,9 @@ public final class EndpointURI {
   public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
   public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
   public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
-  public static final String GET_PARAMETERS_BY_EQUATION_ID = EQUATION_PARAMETER + "/equation" + "/{equationId}";
+  public static final String EQUATION_ID="/{equationId}";
+  public static final String GET_PARAMETERS_BY_EQUATION_ID =
+      EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
+
   private EndpointURI() {}
 }

@@ -49,4 +49,9 @@ public class EquationParameterServiceImpl implements EquationParameterService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isEquationIdExist(Long equationId) {
+    return equationParameterRepository.existsByEquationId(equationId);
+  }
 }
