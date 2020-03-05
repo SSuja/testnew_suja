@@ -171,6 +171,7 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE = BASE_API_PATH + "incoming-sample";
   public static final String INCOMING_SAMPLES = BASE_API_PATH + "incoming-samples";
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
+  public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS = INCOMING_SAMPLE_BY_CODE +"/test-status"+ "/{status}";
   /*
    * Project APIs
    */
@@ -193,5 +194,21 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
   public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
   public static final String PROCESS_SAMPLE_LOAD_BY_ID =PROCESS_SAMPLE_LOAD  + ID;
+   * User
+   */
+  public static final String USER = BASE_API_PATH + "user";
+  public static final String USERS = BASE_API_PATH + "users";
+  public static final String USER_BY_ID = USER + ID;
+
+
+  /*
+   * Test Parameter APIs
+   * 
+   */
+  public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
+  public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
+  public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
+  public static final String GET_TEST_PARAMETER_BY_TEST_ID = TEST_PARAMETER + "/test" + "/{testId}";
+
   private EndpointURI() {}
 }

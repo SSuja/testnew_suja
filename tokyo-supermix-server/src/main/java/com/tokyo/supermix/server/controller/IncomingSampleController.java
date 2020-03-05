@@ -19,6 +19,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
 import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -97,6 +98,17 @@ public class IncomingSampleController {
       incomingSampleService.deleteIncomingSample(code);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.INCOMING_SAMPLE_DELETED),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  @PutMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE_AND_STATUS)
+  public ResponseEntity<Object> updateStatusIncomingSample(@PathVariable String code,@PathVariable Status status) {
+    if (incomingSampleService.isIncomingSampleExist(code)) {
+      incomingSampleService.updateStatusForIncomingSample(code, status);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS),
           HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,

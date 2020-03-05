@@ -214,6 +214,7 @@ public class Constants {
   public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
   public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
   public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
+  public static final String UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS = "IncomingSample Status updated Successfully";
   /*
    * Project
    */
@@ -243,6 +244,24 @@ public class Constants {
   public static final String PROCESS_SAMPLE_LOAD_DELETED = "ProcessSampleLoad Deleted Succeessfully";
   public static final String ADD_PROCESS_SAMPLE_LOAD_SUCCESS = "ProcessSampleLoad added Successfully";
   public static final String UPDATE_PROCESS_SAMPLE_LOAD_SUCCESS = "ProcessSampleLoad updated Successfully";
+   * Test Parameter
+   */
+  public static final String ADD_TEST_PARAMETER_SUCCESS = "Test parameter added Successfully";
+  public static final String TEST_PARAMETERS = "testparameters";
+  public static final String TEST_PARAMETER = "testparameter";
+  public static final String TEST_PARAMETER_ID = "testParameterId";
+  public static final String TEST_PARAMETER_DELETED = "Test Parameter Deleted Succeessfully";
+  public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test parameter updated Successfully";
+  /*
+   * User
+   */
+  public static final String USER_NAME = "username";
+  public static final String USER = "user";
+  public static final String USER_ID = "id";
+  public static final String ADD_USER_SUCCESS = "User added Successfully";
+  public static final String UPDATE_USER_SUCCESS = "User updated Successfully";
+  public static final String DELETE_USER_SCCESS = "User delete successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
