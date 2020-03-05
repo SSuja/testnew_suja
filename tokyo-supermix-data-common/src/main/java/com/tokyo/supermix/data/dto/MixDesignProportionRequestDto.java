@@ -1,18 +1,14 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class MixDesignProportionRequestDto {
-
   private Long id;
    @NotNull(message = "{mixDesignProportionRequestDto.quantity.null}")
-   @NotEmpty(message = "{mixDesignProportionRequestDto.quantity.empty}")
-  private Long quantity;
-  private String unitId;
-  private String mixDesignCode;
-  private String rawMaterialId;
-
+   private Long quantity;
+   private Long unitId;
+   private String mixDesignCode;
+   private Long rawMaterialId;
   public Long getId() {
     return id;
   }
@@ -29,11 +25,11 @@ public class MixDesignProportionRequestDto {
     this.quantity = quantity;
   }
 
-  public String getUnitId() {
+  public Long getUnitId() {
     return unitId;
   }
 
-  public void setUnitId(String unitId) {
+  public void setUnitId(Long unitId) {
     this.unitId = unitId;
   }
 
@@ -45,11 +41,11 @@ public class MixDesignProportionRequestDto {
     this.mixDesignCode = mixDesignCode;
   }
 
-  public String getRawMaterialId() {
+  public Long getRawMaterialId() {
     return rawMaterialId;
   }
 
-  public void setRawMaterialId(String rawMaterialId) {
+  public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
   }
 

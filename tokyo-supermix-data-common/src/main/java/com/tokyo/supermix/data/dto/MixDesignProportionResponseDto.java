@@ -3,10 +3,10 @@ package com.tokyo.supermix.data.dto;
 public class MixDesignProportionResponseDto {
   private Long id;
   private Long quantity;
-  private String unitId;
-  private String unitUnit;
+  private Long unitId;
+  private String unit;
   private String mixDesignCode;
-  private String rawMaterialId;
+  private Long rawMaterialId;
   private String rawMaterialName;
 
   public Long getId() {
@@ -25,20 +25,21 @@ public class MixDesignProportionResponseDto {
     this.quantity = quantity;
   }
 
-  public String getUnitId() {
+  public Long getUnitId() {
     return unitId;
   }
 
-  public void setUnitId(String unitId) {
+  public void setUnitId(Long unitId) {
     this.unitId = unitId;
   }
 
-  public String getUnitUnit() {
-    return unitUnit;
+  
+  public String getUnit() {
+    return unit;
   }
 
-  public void setUnitUnit(String unitUnit) {
-    this.unitUnit = unitUnit;
+  public void setUnit(String unit) {
+    this.unit = unit;
   }
 
   public String getMixDesignCode() {
@@ -49,11 +50,11 @@ public class MixDesignProportionResponseDto {
     this.mixDesignCode = mixDesignCode;
   }
 
-  public String getRawMaterialId() {
+  public Long getRawMaterialId() {
     return rawMaterialId;
   }
 
-  public void setRawMaterialId(String rawMaterialId) {
+  public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
   }
 

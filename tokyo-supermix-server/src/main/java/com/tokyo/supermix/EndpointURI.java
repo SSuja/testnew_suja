@@ -189,14 +189,14 @@ public final class EndpointURI {
   public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   
   /*
-   * Mix design propation apis
+   * Mix design proportion apis
    * 
    */
   
-  public static final String MIXDESIGN_PROPORTION = BASE_API_PATH + "mixdesign-proporation";
-  public static final String MIXDESIGN_PROPORTIONS = BASE_API_PATH + "mixdesign-proporations";
-  public static final String MIXDESIGN_PROPORTION_BY_ID = MIXDESIGN_PROPORTION + ID;
-  public static final String MIXDESIGN_PROPORTION_BY_MIXDESIGNCODE = MIXDESIGN_PROPORTION +"/mixdesign"+ "/{mixDesignCode}";
+  public static final String MIX_DESIGN_PROPORTION = BASE_API_PATH + "mix-design-proportion";
+  public static final String MIX_DESIGN_PROPORTIONS = BASE_API_PATH + "mix-design-proportions";
+  public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
+  public static final String MIX_DESIGN_PROPORTION_BY_MIXDESIGNCODE = MIX_DESIGN_PROPORTION +"/mixdesign"+ "/{mixDesignCode}";
 
   private EndpointURI() {}
 }

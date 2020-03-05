@@ -24,7 +24,6 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MixDesignProportionService;
-import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -33,93 +32,94 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class MixDesignProportionController {
   @Autowired
   MixDesignProportionService mixDesignProportionService;
-
-  @Autowired
-  MixDesignService mixDesignService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(MixDesignProportionController.class);
 
-  @PostMapping(value = EndpointURI.MIXDESIGN_PROPORTION)
+  @PostMapping(value = EndpointURI.MIX_DESIGN_PROPORTION)
   public ResponseEntity<Object> saveMixDesignProportion(
       @Valid @RequestBody List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList) {
-    mixDesignProportionRequestDtoList.stream().forEach(
+    mixDesignProportionRequestDtoList.forEach(
         mixDesignProportionRequestDtoObj -> mixDesignProportionService.saveMixDesignProportion(
             mapper.map(mixDesignProportionRequestDtoObj, MixDesignProportion.class)));
     return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIXDESIGN_PROPORTION_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_PROPORTION_SUCCESS),
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.MIXDESIGN_PROPORTIONS)
+  @GetMapping(value = EndpointURI.MIX_DESIGN_PROPORTIONS)
   public ResponseEntity<Object> getAllMixDesignProportions() {
-    List<MixDesignProportion> mixDesignProportionList =
-        mixDesignProportionService.getAllMixDesignProportions();
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.MIXDESIGN_PROPORTIONS,
-        mapper.map(mixDesignProportionList, MixDesignProportionResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
-
+    return new ResponseEntity<Object>(
+        new ContentResponse<>(Constants.MIX_DESIGN_PROPORTIONS,
+            mapper.map(mixDesignProportionService.getAllMixDesignProportions(),
+                MixDesignProportionResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
-  @DeleteMapping(value = EndpointURI.MIXDESIGN_PROPORTION_BY_ID)
-  public ResponseEntity<Object> deleteMixDesignPropotion(@PathVariable Long id) {
+  @DeleteMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_ID)
+  public ResponseEntity<Object> deleteMixDesignProportion(@PathVariable Long id) {
     if (mixDesignProportionService.isMixDesignProportionExist(id)) {
       mixDesignProportionService.deleteById(id);
       return new ResponseEntity<Object>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.MIXDESIGN_PROPORTION_DELETED),
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.MIX_DESIGN_PROPORTION_DELETED),
           HttpStatus.OK);
     }
     logger.debug("Invalid Id");
     return new ResponseEntity<>(
-        new ValidationFailureResponse(Constants.MIXDESIGN_DELETED,
+        new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION_ID,
             validationFailureStatusCodes.getMixDesignProportionAlreadyExist()),
         HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.MIXDESIGN_PROPORTION_BY_ID)
+  @GetMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_ID)
   public ResponseEntity<Object> getMixDesignProportionById(@PathVariable Long id) {
     if (mixDesignProportionService.isMixDesignProportionExist(id)) {
       logger.debug("Get mix design proportion by id ");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MIXDESIGN_PROPORTION_ID,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION_ID,
           mapper.map(mixDesignProportionService.getMixDesignProportionById(id),
               MixDesignProportionResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("Invalid Id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIXDESIGN_PROPORTION_ID,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION_ID,
         validationFailureStatusCodes.getMixDesignProportionNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping(value = EndpointURI.MIXDESIGN_PROPORTION)
+  @PutMapping(value = EndpointURI.MIX_DESIGN_PROPORTION)
   public ResponseEntity<Object> updateMixDesignProportion(
       @Valid @RequestBody MixDesignProportionRequestDto mixDesignProportionRequestDto) {
     if (mixDesignProportionService
         .isMixDesignProportionExist(mixDesignProportionRequestDto.getId())) {
       mixDesignProportionService.saveMixDesignProportion(
           mapper.map(mixDesignProportionRequestDto, MixDesignProportion.class));
-      return new ResponseEntity<Object>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIXDESIGN_PROPORTION_SUCCESS),
-          HttpStatus.OK);
+      return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_MIX_DESIGN_PROPORTION_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(
-        new ValidationFailureResponse(Constants.MIXDESIGN_PROPORTION,
+        new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION,
             validationFailureStatusCodes.getMixDesignProportionAlreadyExist()),
         HttpStatus.BAD_REQUEST);
 
   }
 
-  @GetMapping(value = EndpointURI.MIXDESIGN_PROPORTION_BY_MIXDESIGNCODE)
+  @GetMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_MIXDESIGNCODE)
   public ResponseEntity<Object> getMixDesignProportionByMixDesignCode(
       @PathVariable String mixDesignCode) {
-    logger.debug("Get mix design proportion by id ");
+    if(mixDesignProportionService.existsByMixDesignCode(mixDesignCode)) {
+      return new ResponseEntity<Object>(
+          new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION,
+              mapper.map(mixDesignProportionService.getAllMixDesignProportions(),
+                  MixDesignProportionResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.MIXDESIGN_PROPORTION_ID,
-            mixDesignProportionService.findByMixDesign(
-                mixDesignService.getMixDesignById(mixDesignCode)),
-            RestApiResponseStatus.OK),
-        HttpStatus.OK);
+        new ValidationFailureResponse(Constants.MIXDESIGN_CODE,
+            validationFailureStatusCodes.getMixDesignProportionNotExist()),
+        HttpStatus.BAD_REQUEST);
   }
 
 }

@@ -1090,10 +1090,10 @@ public class ValidationFailureStatusCodes {
   
   
   @Value("${mixDesignProportionRequestDto.quantity.null}")
-  private String quantityNotNull;
+  private String quantityIsNull;
 
   @Value("${mixDesignProportionRequestDto.quantity.empty}")
-  private String quantityNotEmpty;
+  private String quantityIsEmpty;
  
 public String getMixDesignProportionNotExist() {
     return mixDesignProportionNotExist;
@@ -1112,19 +1112,19 @@ public void setMixDesignProportionAlreadyExist(String mixDesignProportionAlready
 }
 
 public String getQuantityNotNull() {
-  return quantityNotNull;
+  return quantityIsNull;
 }
 
 public void setQuantityNotNull(String quantityNotNull) {
-  this.quantityNotNull = quantityNotNull;
+  this.quantityIsNull = quantityNotNull;
 }
 
 public String getQuantityNotEmpty() {
-  return quantityNotEmpty;
+  return quantityIsEmpty;
 }
 
 public void setQuantityNotEmpty(String quantityNotEmpty) {
-  this.quantityNotEmpty = quantityNotEmpty;
+  this.quantityIsEmpty = quantityNotEmpty;
 }
 
 

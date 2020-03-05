@@ -233,16 +233,17 @@ public class Constants {
   public static final String MIXDESIGN = "mixdesign";
   public static final String MIXDESIGNS = "mixdesigns";
   public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
-  public static final String MIXDESIGN_ID = "mixdesignId";
+  public static final String MIXDESIGN_CODE = "mixdesignCode";
   
   /*
    * mix design proportion
    */
-  public static final String ADD_MIXDESIGN_PROPORTION_SUCCESS = "mix design proporation added Successfully";
-  public static final String MIXDESIGN_PROPORTION = "mix design proporation";
-  public static final String MIXDESIGN_PROPORTIONS = "mixdesignproporations";
-  public static final String MIXDESIGN_PROPORTION_DELETED = "mix design proporation Successfully Deleted";
-  public static final String MIXDESIGN_PROPORTION_ID = "mixdesignproporationId";
+  public static final String ADD_MIX_DESIGN_PROPORTION_SUCCESS = "mix design proportion added Successfully";
+  public static final String MIX_DESIGN_PROPORTION = "mixDesignProportion";
+  public static final String MIX_DESIGN_PROPORTIONS = "mixDesignProportions";
+  public static final String MIX_DESIGN_PROPORTION_DELETED = "mix design proportion Successfully Deleted";
+  public static final String MIX_DESIGN_PROPORTION_ID = "mixDesignProportionId";
+  public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS = "mix design proportion updated Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
