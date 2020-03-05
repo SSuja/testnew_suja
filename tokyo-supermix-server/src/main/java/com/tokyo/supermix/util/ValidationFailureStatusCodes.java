@@ -947,86 +947,63 @@ public class ValidationFailureStatusCodes {
     this.testTypealreadyExists = testTypealreadyExists;
   }
 
-//For MixDesign
- @Value("${validation.mixDesign.notExist}")
- private String mixDesignNotExist;
+  // For MixDesign
+  @Value("${validation.mixDesign.notExist}")
+  private String mixDesignNotExist;
 
- @Value("${validation.mixDesign.alreadyExist}")
- private String mixDesignAlreadyExist;
+  @Value("${validation.mixDesign.alreadyExist}")
+  private String mixDesignAlreadyExist;
 
- @Value("${MixDesignRequestDto.targetGrade.null}")
- private String targetGradeNotNull;
+  @Value("${mixDesignRequestDto.targetGrade.null}")
+  private String targetGradeNotNull;
 
- @Value("${MixDesignRequestDto.targetGrade.empty}")
- private String targetGradeEmpty;
+  @Value("${mixDesignRequestDto.targetSlump.null}")
+  private String targetSlumpNotNull;
 
- @Value("${MixDesignRequestDto.targetSlump.null}")
- private String targetSlumpNotNull;
-
- @Value("${MixDesignRequestDto.targetSlump.empty}")
- private String targetSlumpNotEmpty;
-
-
- @Value("${MixDesignRequestDto.date.null}")
- private String dateNotNull;
+  @Value("${mixDesignRequestDto.date.null}")
+  private String dateNotNull;
 
 
 
- public String getMixDesignNotExist() {
-   return mixDesignNotExist;
- }
+  public String getMixDesignNotExist() {
+    return mixDesignNotExist;
+  }
 
- public void setMixDesignNotExist(String mixDesignNotExist) {
-   this.mixDesignNotExist = mixDesignNotExist;
- }
+  public void setMixDesignNotExist(String mixDesignNotExist) {
+    this.mixDesignNotExist = mixDesignNotExist;
+  }
 
- public String getMixDesignAlreadyExist() {
-   return mixDesignAlreadyExist;
- }
+  public String getMixDesignAlreadyExist() {
+    return mixDesignAlreadyExist;
+  }
 
- public void setMixDesignAlreadyExist(String mixDesignAlreadyExist) {
-   this.mixDesignAlreadyExist = mixDesignAlreadyExist;
- }
+  public void setMixDesignAlreadyExist(String mixDesignAlreadyExist) {
+    this.mixDesignAlreadyExist = mixDesignAlreadyExist;
+  }
 
- public String getTargetGradeNotNull() {
-   return targetGradeNotNull;
- }
+  public String getTargetGradeNotNull() {
+    return targetGradeNotNull;
+  }
 
- public void setTargetGradeNotNull(String targetGradeNotNull) {
-   this.targetGradeNotNull = targetGradeNotNull;
- }
+  public void setTargetGradeNotNull(String targetGradeNotNull) {
+    this.targetGradeNotNull = targetGradeNotNull;
+  }
 
- public String getTargetGradeEmpty() {
-   return targetGradeEmpty;
- }
+  public String getTargetSlumpNotNull() {
+    return targetSlumpNotNull;
+  }
 
- public void setTargetGradeEmpty(String targetGradeEmpty) {
-   this.targetGradeEmpty = targetGradeEmpty;
- }
+  public void setTargetSlumpNotNull(String targetSlumpNotNull) {
+    this.targetSlumpNotNull = targetSlumpNotNull;
+  }
 
- public String getTargetSlumpNotNull() {
-   return targetSlumpNotNull;
- }
+  public String getDateNotNull() {
+    return dateNotNull;
+  }
 
- public void setTargetSlumpNotNull(String targetSlumpNotNull) {
-   this.targetSlumpNotNull = targetSlumpNotNull;
- }
-
- public String getTargetSlumpNotEmpty() {
-   return targetSlumpNotEmpty;
- }
-
- public void setTargetSlumpNotEmpty(String targetSlumpNotEmpty) {
-   this.targetSlumpNotEmpty = targetSlumpNotEmpty;
- }
-
- public String getDateNotNull() {
-   return dateNotNull;
- }
-
- public void setDateNotNull(String dateNotNull) {
-   this.dateNotNull = dateNotNull;
- }
+  public void setDateNotNull(String dateNotNull) {
+    this.dateNotNull = dateNotNull;
+  }
 
 
   /*
@@ -1077,7 +1054,7 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
-  
+
   /*
    * ProcessSampleLoad
    */
@@ -1103,7 +1080,7 @@ public class ValidationFailureStatusCodes {
   public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
     this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
   }
-  
+
   @Value("${validation.testParameter.notExists}")
   private String testParameterNotExist;
 
