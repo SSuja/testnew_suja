@@ -27,14 +27,14 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
     List<MixDesignProportion> mixDesignProportionList =
         mixDesignProportionService.findByMixDesign(mixDesign);
     Long quantity = null;
-    Long binderquantity = null;
+    Long binderquantity = 0L;
     for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
-      if (mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase("cement")
-          || mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase("Fly Ash")) {
+      if (mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase("cement")) {
         quantity = mixDesignProportion.getQuantity();
+      }
+      if (mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase("FlyAsh")) {
         binderquantity = mixDesignProportion.getQuantity();
       }
-
     }
     concreteTest.setWaterCementRatio(concreteTest.getWaterContent() / quantity.doubleValue());
     concreteTest.setWaterBinderRatio(
@@ -61,4 +61,5 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
   public boolean isConcreteTestExit(Long id) {
     return ConcreteTestRepository.existsById(id);
   }
+
 }

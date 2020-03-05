@@ -62,12 +62,9 @@ public class ConcreteTestController {
   public ResponseEntity<Object> getConcreteTestById(@PathVariable Long id) {
     if (concreteTestService.isConcreteTestExit(id)) {
       logger.debug("Get ConcreteTest by id ");
-
-      ConcreteTest concreteTest = concreteTestService.getConcreteTestById(id);
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.CONCRETE_TEST,
-              mapper.map(concreteTest, ConcreteTestResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST,
+          mapper.map(concreteTestService.getConcreteTestById(id), ConcreteTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
@@ -94,7 +91,8 @@ public class ConcreteTestController {
     if (concreteTestService.isConcreteTestExit(concreteTestRequestDto.getId())) {
       concreteTestService.saveConcreteTest(mapper.map(concreteTestRequestDto, ConcreteTest.class));
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CONCRETE_TEST_SUCCESS), HttpStatus.OK);
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CONCRETE_TEST_SUCCESS),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
         validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);

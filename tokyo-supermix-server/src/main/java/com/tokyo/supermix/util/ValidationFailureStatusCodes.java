@@ -1081,13 +1081,14 @@ public class ValidationFailureStatusCodes {
   private String projectAlreadyExist;
   // for concreteTest
   @Value("${validation.concreteTest.notExists}")
-  private String ConcreteTestNotExist;
+  private String concreteTestNotExist;
 
   public String getConcreteTestNotExist() {
-    return ConcreteTestNotExist;
+    return concreteTestNotExist;
   }
 
   public void setConcreteTestNotExist(String concreteTestNotExist) {
-    ConcreteTestNotExist = concreteTestNotExist;
+    this.concreteTestNotExist = concreteTestNotExist;
   }
+
 }

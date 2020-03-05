@@ -240,8 +240,8 @@ public class Constants {
   public static final String ADD_CONCRETE_TEST_SUCCESS = "ConcreteTest added Successfully";
   public static final String CONCRETE_TEST_DELETED = "ConcreteTest Successfully Deleted";
   public static final String UPDATE_CONCRETE_TEST_SUCCESS = "ConcreteTest updated Successfully";
-  public static final String CONCRETE_TEST= "concretetest";
-  public static final String CONCRETE_TESTS= "concretetests";
+  public static final String CONCRETE_TEST= "concreteTest";
+  public static final String CONCRETE_TESTS= "concreteTests";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
