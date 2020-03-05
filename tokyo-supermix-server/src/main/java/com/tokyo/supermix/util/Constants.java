@@ -50,8 +50,6 @@ public class Constants {
   public static final String EMAIL = "email";
   public static final String PHONE_NUMBER = "phoneNumber";
 
-
-
   public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
       "Supplier Category updated Successfully";
   /*
@@ -265,6 +263,19 @@ public class Constants {
   public static final String ADD_USER_SUCCESS = "User added Successfully";
   public static final String UPDATE_USER_SUCCESS = "User updated Successfully";
   public static final String DELETE_USER_SCCESS = "User delete successfully";
+
+  /*
+   * ProcessSample
+   */
+  // constants for validation key
+  public static final String PROCESS_SAMPLE_CODE = "processSampleCode";
+  public static final String PROCESS_SAMPLE = "processSample";
+  public static final String PROCESS_SAMPLES = "processSamples";
+
+  // Success Messages
+  public static final String PROCESS_SAMPLE_DELETED = "processSample Deleted Succeessfully";
+  public static final String ADD_PROCESS_SAMPLE_SUCCESS = "processSample added Successfully";
+  public static final String UPDATE_PROCESS_SAMPLE_SUCCESS = "processSample updated Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

@@ -179,7 +179,6 @@ public final class EndpointURI {
   public static final String PROJECT_BY_ID = PROJECT + CODE;
   public static final String PROJECTS = BASE_API_PATH + "projects";
 
-
   /*
    * Mix design apis
    * 
@@ -209,6 +208,13 @@ public final class EndpointURI {
   public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
   public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
   public static final String GET_TEST_PARAMETER_BY_TEST_ID = TEST_PARAMETER + "/test" + "/{testId}";
+
+  /*
+   * ProcessSample APIs
+   */
+  public static final String PROCESS_SAMPLE = BASE_API_PATH + "process-sample";
+  public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
+  public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
 
   private EndpointURI() {}
 }

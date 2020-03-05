@@ -928,7 +928,7 @@ public class ValidationFailureStatusCodes {
   private String testTypealreadyExists;
   @Value("${testTypeDto.type.null}")
   private String testTypeIsNull;
-  @Value("${estTypeDto.type.empty}")
+  @Value("${testTypeDto.type.empty}")
   private String testTypeIsEmpty;
 
   public String getTestTypeNotExist() {
@@ -1004,7 +1004,6 @@ public class ValidationFailureStatusCodes {
   public void setDateNotNull(String dateNotNull) {
     this.dateNotNull = dateNotNull;
   }
-
 
   /*
    * IncomingSample
@@ -1165,6 +1164,29 @@ public class ValidationFailureStatusCodes {
 
   public void setPasswordIsNull(String passwordIsNull) {
     this.passwordIsNull = passwordIsNull;
+  }
+
+
+  // for ProcessSample
+  @Value("${validation.processSample.alreadyExist}")
+  private String processSampleAlreadyExist;
+  @Value("${validation.processSample.notExists}")
+  private String processSampleNotExist;
+
+  public String getProcessSampleAlreadyExist() {
+    return processSampleAlreadyExist;
+  }
+
+  public void setProcessSampleAlreadyExist(String processSampleAlreadyExist) {
+    this.processSampleAlreadyExist = processSampleAlreadyExist;
+  }
+
+  public String getProcessSampleNotExist() {
+    return processSampleNotExist;
+  }
+
+  public void setProcessSampleNotExist(String processSampleNotExist) {
+    this.processSampleNotExist = processSampleNotExist;
   }
 
 }
