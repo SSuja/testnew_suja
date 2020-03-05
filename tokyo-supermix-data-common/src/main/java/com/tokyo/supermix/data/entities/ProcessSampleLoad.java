@@ -3,6 +3,8 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,22 +15,25 @@ import javax.persistence.Table;
 public class ProcessSampleLoad implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  private String code;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private String vehicleNo;
-  private String measurement;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
   private Long quantity;
-  private Date dateAndTime;
+  private Date date;
   private Date expiryDate;
   @ManyToOne
   @JoinColumn(name = "processSampleCode", nullable = false)
   private ProcessSample processSample;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getVehicleNo() {
@@ -39,12 +44,12 @@ public class ProcessSampleLoad implements Serializable {
     this.vehicleNo = vehicleNo;
   }
 
-  public String getMeasurement() {
-    return measurement;
+  public Unit getUnit() {
+    return unit;
   }
 
-  public void setMeasurement(String measurement) {
-    this.measurement = measurement;
+  public void setUnit(Unit unit) {
+    this.unit = unit;
   }
 
   public Long getQuantity() {
@@ -55,12 +60,12 @@ public class ProcessSampleLoad implements Serializable {
     this.quantity = quantity;
   }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getDate() {
+    return date;
   }
 
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public Date getExpiryDate() {
@@ -77,10 +82,6 @@ public class ProcessSampleLoad implements Serializable {
 
   public void setProcessSample(ProcessSample processSample) {
     this.processSample = processSample;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
   }
 
 }

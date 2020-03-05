@@ -1,5 +1,8 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface ConcreteTestRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tokyo.supermix.data.entities.ConcreteTest;
+
+public interface ConcreteTestRepository extends JpaRepository<ConcreteTest, Long> {
 
 }
