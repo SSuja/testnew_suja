@@ -228,7 +228,6 @@ public class Constants {
   /*
    * mix design
    */
-
   public static final String ADD_MIX_DESIGN_SUCCESS = "mix design added Successfully";
   public static final String MIX_DESIGN = "mixDesign";
   public static final String MIX_DESIGNS = "mixDesigns";
@@ -236,7 +235,7 @@ public class Constants {
   public static final String MIX_DESIGN_CODE = "mixDesignCode";
   public static final String UPDATE_MIX_DESIGN_SUCCESS = "mix design updated Successfully";
   
- 
+  
   /*
    * processSampleLoad
    */
@@ -276,6 +275,16 @@ public class Constants {
   public static final String PROCESS_SAMPLE_DELETED = "processSample Deleted Succeessfully";
   public static final String ADD_PROCESS_SAMPLE_SUCCESS = "processSample added Successfully";
   public static final String UPDATE_PROCESS_SAMPLE_SUCCESS = "processSample updated Successfully";
+
+  /*
+   * mix design proportion
+   */
+  public static final String ADD_MIX_DESIGN_PROPORTION_SUCCESS = "mix design proportion added Successfully";
+  public static final String MIX_DESIGN_PROPORTION = "mixDesignProportion";
+  public static final String MIX_DESIGN_PROPORTIONS = "mixDesignProportions";
+  public static final String MIX_DESIGN_PROPORTION_DELETED = "mix design proportion Successfully Deleted";
+  public static final String MIX_DESIGN_PROPORTION_ID = "mixDesignProportionId";
+  public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS = "mix design proportion updated Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
