@@ -189,6 +189,11 @@ public final class EndpointURI {
   public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   /*
+   * ProcessSampleLoad Apis
+   */
+  public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
+  public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
+  public static final String PROCESS_SAMPLE_LOAD_BY_ID =PROCESS_SAMPLE_LOAD  + ID;
    * User
    */
   public static final String USER = BASE_API_PATH + "user";

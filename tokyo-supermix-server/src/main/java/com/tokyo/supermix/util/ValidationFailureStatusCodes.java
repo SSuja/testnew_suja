@@ -1079,7 +1079,33 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
+  
+  /*
+   * ProcessSampleLoad
+   */
 
+  @Value("${validation.processSampleLoad.notExists}")
+  private String processSampleLoadNotExist;
+
+  @Value("${validation.processSampleLoad.alreadyExist}")
+  private String processSampleLoadAlreadyExist;
+
+  public String getProcessSampleLoadNotExist() {
+    return processSampleLoadNotExist;
+  }
+
+  public void setProcessSampleLoadNotExist(String processSampleLoadNotExist) {
+    this.processSampleLoadNotExist = processSampleLoadNotExist;
+  }
+
+  public String getProcessSampleLoadAlreadyExist() {
+    return processSampleLoadAlreadyExist;
+  }
+
+  public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
+    this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
+  }
+  
   @Value("${validation.testParameter.notExists}")
   private String testParameterNotExist;
 
