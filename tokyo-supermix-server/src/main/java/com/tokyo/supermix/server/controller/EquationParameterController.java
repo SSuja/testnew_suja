@@ -42,8 +42,10 @@ public class EquationParameterController {
     if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
         equationParameterRequestDto.getParameterId())) {
       logger.debug("row is already exists: createEquationParameter(), isDuplicateRowExists: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_PARAMETER,
-          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.EQUATION_PARAMETER,
+              validationFailureStatusCodes.getEquationParameterAlreadyExist()),
+          HttpStatus.BAD_REQUEST);
     }
     equationParameterService
         .saveEquationParameter(mapper.map(equationParameterRequestDto, EquationParameter.class));
@@ -100,6 +102,6 @@ public class EquationParameterController {
     }
     logger.debug("No Equation Parameter record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+        validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

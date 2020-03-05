@@ -1084,6 +1084,16 @@ public class ValidationFailureStatusCodes {
    */
   @Value("${validation.equationParameter.notExists}")
   private String equationParameterNotExist;
+  @Value("${validation.equationParameter.alreadyExist}")
+  private String equationParameterAlreadyExist;
+
+  public String getEquationParameterAlreadyExist() {
+    return equationParameterAlreadyExist;
+  }
+
+  public void setEquationParameterAlreadyExist(String equationParameterAlreadyExist) {
+    this.equationParameterAlreadyExist = equationParameterAlreadyExist;
+  }
 
   public String getEquationParameterNotExist() {
     return equationParameterNotExist;
@@ -1092,5 +1102,4 @@ public class ValidationFailureStatusCodes {
   public void setEquationParameterNotExist(String equationParameterNotExist) {
     this.equationParameterNotExist = equationParameterNotExist;
   }
-
 }
