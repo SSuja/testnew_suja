@@ -1088,13 +1088,13 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.user.aleadyExists}")
   private String userAlreadyExist;
   @Value("${userRequestDto.username.empty}")
-  private String usernameNotEmpty;
+  private String usernameIsEmpty;
   @Value("${userRequestDto.username.null}")
-  private String usernameNotNull;
+  private String usernameIsNull;
   @Value("${userRequestDto.password.empty}")
-  private String passwordNotEmpty;
+  private String passwordIsEmpty;
   @Value("${userRequestDto.password.null}")
-  private String passwordNotNull;
+  private String passwordIsNull;
 
   public String getUserNotExist() {
     return userNotExist;
@@ -1112,36 +1112,36 @@ public class ValidationFailureStatusCodes {
     this.userAlreadyExist = userAlreadyExist;
   }
 
-  public String getUsernameNotEmpty() {
-    return usernameNotEmpty;
+  public String getUsernameIsEmpty() {
+    return usernameIsEmpty;
   }
 
-  public void setUsernameNotEmpty(String usernameNotEmpty) {
-    this.usernameNotEmpty = usernameNotEmpty;
+  public void setUsernameIsEmpty(String usernameIsEmpty) {
+    this.usernameIsEmpty = usernameIsEmpty;
   }
 
-  public String getUsernameNotNull() {
-    return usernameNotNull;
+  public String getUsernameIsNull() {
+    return usernameIsNull;
   }
 
-  public void setUsernameNotNull(String usernameNotNull) {
-    this.usernameNotNull = usernameNotNull;
+  public void setUsernameIsNull(String usernameIsNull) {
+    this.usernameIsNull = usernameIsNull;
   }
 
-  public String getPasswordNotEmpty() {
-    return passwordNotEmpty;
+  public String getPasswordIsEmpty() {
+    return passwordIsEmpty;
   }
 
-  public void setPasswordNotEmpty(String passwordNotEmpty) {
-    this.passwordNotEmpty = passwordNotEmpty;
+  public void setPasswordIsEmpty(String passwordIsEmpty) {
+    this.passwordIsEmpty = passwordIsEmpty;
   }
 
-  public String getPasswordNotNull() {
-    return passwordNotNull;
+  public String getPasswordIsNull() {
+    return passwordIsNull;
   }
 
-  public void setPasswordNotNull(String passwordNotNull) {
-    this.passwordNotNull = passwordNotNull;
+  public void setPasswordIsNull(String passwordIsNull) {
+    this.passwordIsNull = passwordIsNull;
   }
 
 }
