@@ -22,7 +22,7 @@ public class ProcessSampleLoad implements Serializable {
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
   private Long quantity;
-  private Date dateAndTime;
+  private Date date;
   private Date expiryDate;
   @ManyToOne
   @JoinColumn(name = "processSampleCode", nullable = false)
@@ -60,12 +60,12 @@ public class ProcessSampleLoad implements Serializable {
     this.quantity = quantity;
   }
 
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getDate() {
+    return date;
   }
 
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public Date getExpiryDate() {

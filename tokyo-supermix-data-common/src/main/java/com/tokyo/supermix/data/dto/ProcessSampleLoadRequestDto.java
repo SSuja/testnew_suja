@@ -1,13 +1,22 @@
 package com.tokyo.supermix.data.dto;
 import java.sql.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ProcessSampleLoadRequestDto {
   private Long id;
+  @NotNull(message = "{processSampleLoadRequestDto.vehicleNo.null}")
   private String vehicleNo;
+  @NotNull(message = "{processSampleLoadRequestDto.unitId.null}")
   private Long unitId;
+  @NotNull(message = "{processSampleLoadRequestDto.quantity.null}")
   private Long quantity;
-  private Date dateAndTime;
+  @NotNull(message = "{processSampleLoadRequestDto.date.null}")
+  private Date date;
+  @NotNull(message = "{processSampleLoadRequestDto.expiryDate.null}")
   private Date expiryDate;
+  @NotNull(message = "{processSampleLoadRequestDto.processSampleCode.null}")
+  @NotEmpty(message = "{processSampleLoadRequestDto.processSampleCode.empty}")
   private String processSampleCode;
   public Long getId() {
     return id;
@@ -33,11 +42,11 @@ public class ProcessSampleLoadRequestDto {
   public void setQuantity(Long quantity) {
     this.quantity = quantity;
   }
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getDate() {
+    return date;
   }
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
+  public void setDate(Date date) {
+    this.date = date;
   }
   public Date getExpiryDate() {
     return expiryDate;

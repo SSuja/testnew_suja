@@ -5,10 +5,11 @@ import java.sql.Date;
 public class ProcessSampleLoadResponseDto {
   private Long id;
   private String vehicleNo;
-  private UnitDto unit;
   private Long quantity;
   private Date dateAndTime;
   private Date expiryDate;
+  private String unit;
+  private Long unitId;
   private ProcessSampleResponseDto processSample;
   public Long getId() {
     return id;
@@ -22,12 +23,17 @@ public class ProcessSampleLoadResponseDto {
   public void setVehicleNo(String vehicleNo) {
     this.vehicleNo = vehicleNo;
   }
-  
-  public UnitDto getUnit() {
+  public String getUnit() {
     return unit;
   }
-  public void setUnit(UnitDto unit) {
+  public void setUnit(String unit) {
     this.unit = unit;
+  }
+  public Long getUnitId() {
+    return unitId;
+  }
+  public void setUnitId(Long unitId) {
+    this.unitId = unitId;
   }
   public Long getQuantity() {
     return quantity;

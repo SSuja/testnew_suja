@@ -1,6 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,15 +39,15 @@ public class ProcessSampleLoadController {
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOADS)
   public ResponseEntity<Object> getProcessSampleLoads() {
-    List<ProcessSampleLoad> ProcessSampleLoadList =
-        processSampleLoadService.getAllProcessSampleLoads();
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_LOADS,
-        mapper.map(ProcessSampleLoadList, ProcessSampleLoadResponseDto.class),
+        mapper.map(processSampleLoadService.getAllProcessSampleLoads(),
+            ProcessSampleLoadResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD)
   public ResponseEntity<Object> createProcessSampleLoad(
-      @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
+      @Valid @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
     processSampleLoadService
         .saveProcessSampleLoad(mapper.map(processSampleLoadRequestDto, ProcessSampleLoad.class));
     return new ResponseEntity<>(
@@ -59,17 +59,18 @@ public class ProcessSampleLoadController {
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID)
   public ResponseEntity<Object> getProcessSampleLoadById(@PathVariable Long id) {
     if (processSampleLoadService.isProcessSampleLoadExist(id)) {
-      ProcessSampleLoad ProcessSampleLoad = processSampleLoadService.getProcessSampleLoadById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_LOAD,
-          mapper.map(ProcessSampleLoad, ProcessSampleLoadResponseDto.class),
+          mapper.map(processSampleLoadService.getProcessSampleLoadById(id),
+              ProcessSampleLoadResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_LOAD_ID,
         validationFailureStatusCodes.getProcessSampleLoadNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @PutMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD)
   public ResponseEntity<Object> updateProcessSampleLoad(
-      @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
+      @Valid @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
     if (processSampleLoadService.isProcessSampleLoadExist(processSampleLoadRequestDto.getId())) {
       processSampleLoadService
           .saveProcessSampleLoad(mapper.map(processSampleLoadRequestDto, ProcessSampleLoad.class));
@@ -79,6 +80,7 @@ public class ProcessSampleLoadController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_LOAD,
         validationFailureStatusCodes.getProcessSampleLoadNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID)
   public ResponseEntity<Object> deleteProcessSampleLoadById(@PathVariable Long id) {
     if (processSampleLoadService.isProcessSampleLoadExist(id)) {
