@@ -1,12 +1,13 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
+import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleResponseDto {
   private String code;
   private String vehicleNo;
   private Date date;
-  private Boolean status;
+  private Status status;
   private RawMaterialResponseDto rawMaterial;
   private PlantDto plant;
   private SupplierResponseDto supplier;
@@ -35,11 +36,11 @@ public class IncomingSampleResponseDto {
     this.date = date;
   }
 
-  public Boolean getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(Boolean status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
