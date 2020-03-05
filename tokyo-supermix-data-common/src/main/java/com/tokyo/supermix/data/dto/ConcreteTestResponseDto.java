@@ -1,39 +1,27 @@
-package com.tokyo.supermix.data.entities;
+package com.tokyo.supermix.data.dto;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import com.tokyo.supermix.data.enums.Status;
 
-@Entity
-@Table(schema = "tokyo-supermix", name = "concrete_test")
-public class ConcreteTest implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+public class ConcreteTestResponseDto {
   private Long id;
+  private String mixDesignCode;
   private Double slump;
   private String temperature;
   private Double waterContent;
   private Double slumpGradeRatio;
   private Double waterCementRatio;
   private Double waterBinderRatio;
-  @Enumerated(EnumType.ORDINAL)
   private Status status;
-  @OneToOne
-  @JoinColumn(name = "mixDesignCode", nullable = false)
-  private MixDesign mixDesign;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
+  private String plantCode;
+  private String plantName;
+
+  public String getPlantName() {
+    return plantName;
+  }
+
+  public void setPlantName(String plantName) {
+    this.plantName = plantName;
+  }
 
   public Long getId() {
     return id;
@@ -41,6 +29,14 @@ public class ConcreteTest implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getMixDesignCode() {
+    return mixDesignCode;
+  }
+
+  public void setMixDesignCode(String mixDesignCode) {
+    this.mixDesignCode = mixDesignCode;
   }
 
   public Double getSlump() {
@@ -99,23 +95,11 @@ public class ConcreteTest implements Serializable {
     this.status = status;
   }
 
-  public MixDesign getMixDesign() {
-    return mixDesign;
+  public String getPlantCode() {
+    return plantCode;
   }
 
-  public void setMixDesign(MixDesign mixDesign) {
-    this.mixDesign = mixDesign;
-  }
-
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
   }
 }

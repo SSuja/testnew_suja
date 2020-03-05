@@ -928,7 +928,7 @@ public class ValidationFailureStatusCodes {
   private String testTypealreadyExists;
   @Value("${testTypeDto.type.null}")
   private String testTypeIsNull;
-  @Value("${estTypeDto.type.empty}")
+  @Value("${testTypeDto.type.empty}")
   private String testTypeIsEmpty;
 
   public String getTestTypeNotExist() {
@@ -947,55 +947,28 @@ public class ValidationFailureStatusCodes {
     this.testTypealreadyExists = testTypealreadyExists;
   }
 
+  // For MixDesign
   @Value("${validation.mixDesign.notExist}")
   private String mixDesignNotExist;
 
   @Value("${validation.mixDesign.alreadyExist}")
   private String mixDesignAlreadyExist;
 
-  @Value("${MixDesignRequestDto.grade.null}")
-  private String gradenotnull;
+  @Value("${mixDesignRequestDto.targetGrade.null}")
+  private String targetGradeNotNull;
 
-  @Value("${MixDesignRequestDto.grade.empty}")
-  private String gradenotempty;
+  @Value("${mixDesignRequestDto.targetSlump.null}")
+  private String targetSlumpNotNull;
 
-  @Value("${MixDesignRequestDto.targetStrength.null}")
-  private String targetStrengthnotnull;
+  @Value("${mixDesignRequestDto.date.null}")
+  private String dateNotNull;
 
-  @Value("${MixDesignRequestDto.grade.empty}")
-  private String targetStrengthnotempty;
-
-  @Value("${MixDesignRequestDto.waterCementRatio.null}")
-  private String waterCementRationotnull;
-
-  @Value("${MixDesignRequestDto.waterCementRatio.empty}")
-  private String waterCementRationotempty;
-
-  @Value("${MixDesignRequestDto.waterBinderRatio.null}")
-  private String waterBinderRationotnull;
-
-  @Value("${MixDesignRequestDto.waterBinderRatio.empty}")
-  private String waterBinderRationotempty;
-
-  @Value("${MixDesignRequestDto.date.null}")
-  private String datenotnull;
-
-
-
-  public String getGradenotnull() {
-    return gradenotnull;
+  public String getMixDesignNotExist() {
+    return mixDesignNotExist;
   }
 
-  public void setGradenotnull(String gradenotnull) {
-    this.gradenotnull = gradenotnull;
-  }
-
-  public String getGradenotempty() {
-    return gradenotempty;
-  }
-
-  public void setGradenotempty(String gradenotempty) {
-    this.gradenotempty = gradenotempty;
+  public void setMixDesignNotExist(String mixDesignNotExist) {
+    this.mixDesignNotExist = mixDesignNotExist;
   }
 
   public String getMixDesignAlreadyExist() {
@@ -1006,30 +979,29 @@ public class ValidationFailureStatusCodes {
     this.mixDesignAlreadyExist = mixDesignAlreadyExist;
   }
 
-  public String getMixDesignNotExist() {
-    return mixDesignNotExist;
+  public String getTargetGradeNotNull() {
+    return targetGradeNotNull;
   }
 
-  public void setMixDesignNotExist(String mixDesignNotExist) {
-    this.mixDesignNotExist = mixDesignNotExist;
+  public void setTargetGradeNotNull(String targetGradeNotNull) {
+    this.targetGradeNotNull = targetGradeNotNull;
   }
 
-  public String getTestTypeIsNull() {
-    return testTypeIsNull;
+  public String getTargetSlumpNotNull() {
+    return targetSlumpNotNull;
   }
 
-  public void setTestTypeIsNull(String testTypeIsNull) {
-    this.testTypeIsNull = testTypeIsNull;
+  public void setTargetSlumpNotNull(String targetSlumpNotNull) {
+    this.targetSlumpNotNull = targetSlumpNotNull;
   }
 
-  public String getTestTypeIsEmpty() {
-    return testTypeIsEmpty;
+  public String getDateNotNull() {
+    return dateNotNull;
   }
 
-  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
-    this.testTypeIsEmpty = testTypeIsEmpty;
+  public void setDateNotNull(String dateNotNull) {
+    this.dateNotNull = dateNotNull;
   }
-
 
   /*
    * IncomingSample
@@ -1061,6 +1033,305 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.notExists}")
   private String projectNotExist;
 
+
+  // for concreteTest
+  @Value("${validation.concreteTest.notExists}")
+  private String concreteTestNotExist;
+
+  public String getConcreteTestNotExist() {
+    return concreteTestNotExist;
+  }
+
+  public void setConcreteTestNotExist(String concreteTestNotExist) {
+    this.concreteTestNotExist = concreteTestNotExist;
+  }
+  // for mixDesignProportion
+
+  @Value("${validation.mixDesignProportion.notExist}")
+  private String mixDesignProportionNotExist;
+
+  @Value("${validation.mixDesignProportion.alreadyExist}")
+  private String mixDesignProportionAlreadyExist;
+
+  @Value("${mixDesignProportionRequestDto.quantity.null}")
+  private String quantityIsNull;
+
+  @Value("${mixDesignProportionRequestDto.quantity.empty}")
+  private String quantityIsEmpty;
+
+  public String getMixDesignProportionNotExist() {
+    return mixDesignProportionNotExist;
+  }
+
+  public void setMixDesignProportionNotExist(String mixDesignProportionNotExist) {
+    this.mixDesignProportionNotExist = mixDesignProportionNotExist;
+  }
+
+  public String getMixDesignProportionAlreadyExist() {
+    return mixDesignProportionAlreadyExist;
+  }
+
+  public void setMixDesignProportionAlreadyExist(String mixDesignProportionAlreadyExist) {
+    this.mixDesignProportionAlreadyExist = mixDesignProportionAlreadyExist;
+  }
+
+  public String getQuantityNotNull() {
+    return quantityIsNull;
+  }
+
+  public void setQuantityNotNull(String quantityNotNull) {
+    this.quantityIsNull = quantityNotNull;
+  }
+
+  public String getQuantityNotEmpty() {
+    return quantityIsEmpty;
+  }
+
+  public void setQuantityNotEmpty(String quantityNotEmpty) {
+    this.quantityIsEmpty = quantityNotEmpty;
+  }
+
+  /*
+   * ProcessSampleLoad
+   */
+
+  @Value("${validation.processSampleLoad.notExists}")
+  private String processSampleLoadNotExist;
+
+  @Value("${validation.processSampleLoad.alreadyExist}")
+  private String processSampleLoadAlreadyExist;
+
+  public String getProcessSampleLoadNotExist() {
+    return processSampleLoadNotExist;
+  }
+
+  public void setProcessSampleLoadNotExist(String processSampleLoadNotExist) {
+    this.processSampleLoadNotExist = processSampleLoadNotExist;
+  }
+
+  public String getProcessSampleLoadAlreadyExist() {
+    return processSampleLoadAlreadyExist;
+  }
+
+  public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
+    this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
+  }
+
+  @Value("${validation.testParameter.notExists}")
+  private String testParameterNotExist;
+
+  @Value("${validation.testParameter.alreadyExist}")
+  private String testParameterAlreadyExist;
+
+  public String getTestParameterNotExist() {
+    return testParameterNotExist;
+  }
+
+  public void setTestParameterNotExist(String testParameterExist) {
+    this.testParameterNotExist = testParameterExist;
+  }
+
+  public String getTestParameterAlreadyExist() {
+    return testParameterAlreadyExist;
+  }
+
+  public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
+    this.testParameterAlreadyExist = testParameterAlreadyExist;
+  }
+
+  /*
+   * User
+   */
+  @Value("${validation.user.notExists}")
+  private String userNotExist;
+  @Value("${validation.user.aleadyExists}")
+  private String userAlreadyExist;
+  @Value("${userRequestDto.userName.empty}")
+  private String userNameIsEmpty;
+  @Value("${userRequestDto.userName.null}")
+  private String userNameIsNull;
+  @Value("${userRequestDto.password.empty}")
+  private String passwordIsEmpty;
+  @Value("${userRequestDto.password.null}")
+  private String passwordIsNull;
+
+  public String getUserNotExist() {
+    return userNotExist;
+  }
+
+  public void setUserNotExist(String userNotExist) {
+    this.userNotExist = userNotExist;
+  }
+
+  public String getUserAlreadyExist() {
+    return userAlreadyExist;
+  }
+
+  public void setUserAlreadyExist(String userAlreadyExist) {
+    this.userAlreadyExist = userAlreadyExist;
+  }
+
+  public String getUserNameIsEmpty() {
+    return userNameIsEmpty;
+  }
+
+  public void setUserNameIsEmpty(String userNameIsEmpty) {
+    this.userNameIsEmpty = userNameIsEmpty;
+  }
+
+  public String getUserNameIsNull() {
+    return userNameIsNull;
+  }
+
+  public void setUserNameIsNull(String userNameIsNull) {
+    this.userNameIsNull = userNameIsNull;
+  }
+
+  public String getPasswordIsEmpty() {
+    return passwordIsEmpty;
+  }
+
+  public void setPasswordIsEmpty(String passwordIsEmpty) {
+    this.passwordIsEmpty = passwordIsEmpty;
+  }
+
+  public String getPasswordIsNull() {
+    return passwordIsNull;
+  }
+
+  public void setPasswordIsNull(String passwordIsNull) {
+    this.passwordIsNull = passwordIsNull;
+  }
+
+  // for ProcessSample
+  @Value("${validation.processSample.alreadyExist}")
+  private String processSampleAlreadyExist;
+  @Value("${validation.processSample.notExists}")
+  private String processSampleNotExist;
+
+  public String getProcessSampleAlreadyExist() {
+    return processSampleAlreadyExist;
+  }
+
+  public void setProcessSampleAlreadyExist(String processSampleAlreadyExist) {
+    this.processSampleAlreadyExist = processSampleAlreadyExist;
+  }
+
+  public String getProcessSampleNotExist() {
+    return processSampleNotExist;
+  }
+
+  public void setProcessSampleNotExist(String processSampleNotExist) {
+    this.processSampleNotExist = processSampleNotExist;
+  }
+
+  // for ConcreteStrengthTest
+  @Value("${validation.concreteStrengthTest.notExists}")
+  private String concreteStrengthTestNotExist;
+
+  public String getConcreteStrengthTestNotExist() {
+    return concreteStrengthTestNotExist;
+  }
+
+  public void setConcreteStrengthTestNotExist(String concreteStrengthTestNotExist) {
+    this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
+  }
+
+  // for finish product
+  @Value("${validation.finishProduct.notExist}")
+  private String finishProductNotExist;
+
+  @Value("${validation.finishProduct.alreadyExist}")
+  private String finishProductAlreadyExist;
+
+  @Value("${finishProductRequestDto.mixDesignCode.empty}")
+  private String mixDesignCodeIsEmpty;
+
+  @Value("${finishProductRequestDto.mixDesignCode.null}")
+  private String mixDesignCodeIsNull;
+
+  @Value("${finishProductRequestDto.projectCode.empty}")
+  private String projectCodeIsEmpty;
+
+  @Value("${finishProductRequestDto.projectCode.null}")
+  private String projectCodeIsNull;
+
+  public String getTestTypeIsNull() {
+    return testTypeIsNull;
+  }
+
+  public void setTestTypeIsNull(String testTypeIsNull) {
+    this.testTypeIsNull = testTypeIsNull;
+  }
+
+  public String getTestTypeIsEmpty() {
+    return testTypeIsEmpty;
+  }
+
+  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
+    this.testTypeIsEmpty = testTypeIsEmpty;
+  }
+
+  public String getQuantityIsNull() {
+    return quantityIsNull;
+  }
+
+  public void setQuantityIsNull(String quantityIsNull) {
+    this.quantityIsNull = quantityIsNull;
+  }
+
+  public String getQuantityIsEmpty() {
+    return quantityIsEmpty;
+  }
+
+  public void setQuantityIsEmpty(String quantityIsEmpty) {
+    this.quantityIsEmpty = quantityIsEmpty;
+  }
+
+  public String getFinishProductNotExist() {
+    return finishProductNotExist;
+  }
+
+  public void setFinishProductNotExist(String finishProductNotExist) {
+    this.finishProductNotExist = finishProductNotExist;
+  }
+
+  public String getFinishProductAlreadyExist() {
+    return finishProductAlreadyExist;
+  }
+
+  public void setFinishProductAlreadyExist(String finishProductAlreadyExist) {
+    this.finishProductAlreadyExist = finishProductAlreadyExist;
+  }
+
+  public String getMixDesignCodeIsEmpty() {
+    return mixDesignCodeIsEmpty;
+  }
+
+  public void setMixDesignCodeIsEmpty(String mixDesignCodeIsEmpty) {
+    this.mixDesignCodeIsEmpty = mixDesignCodeIsEmpty;
+  }
+
+  public String getMixDesignCodeIsNull() {
+    return mixDesignCodeIsNull;
+  }
+
+  public void setMixDesignCodeIsNull(String mixDesignCodeIsNull) {
+    this.mixDesignCodeIsNull = mixDesignCodeIsNull;
+  }
+
+  public String getProjectCodeIsEmpty() {
+    return projectCodeIsEmpty;
+  }
+
+  public void setProjectCodeIsEmpty(String projectCodeIsEmpty) {
+    this.projectCodeIsEmpty = projectCodeIsEmpty;
+  }
+
+  public String getProjectCodeIsNull() {
+    return projectCodeIsNull;
+  }
+
   public String getProjectNotExist() {
     return projectNotExist;
   }
@@ -1086,6 +1357,10 @@ public class ValidationFailureStatusCodes {
   private String equationParameterNotExist;
   @Value("${validation.equationParameter.alreadyExist}")
   private String equationParameterAlreadyExist;
+
+  public void setProjectCodeIsNull(String projectCodeIsNull) {
+    this.projectCodeIsNull = projectCodeIsNull;
+  }
 
   public String getEquationParameterAlreadyExist() {
     return equationParameterAlreadyExist;

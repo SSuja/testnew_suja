@@ -50,8 +50,6 @@ public class Constants {
   public static final String EMAIL = "email";
   public static final String PHONE_NUMBER = "phoneNumber";
 
-
-
   public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
       "Supplier Category updated Successfully";
   /*
@@ -214,6 +212,8 @@ public class Constants {
   public static final String INCOMING_SAMPLE_DELETED = "IncomingSample Deleted Succeessfully";
   public static final String ADD_INCOMING_SAMPLE_SUCCESS = "IncomingSample added Successfully";
   public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
+  public static final String UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS =
+      "IncomingSample Status updated Successfully";
   /*
    * Project
    */
@@ -229,11 +229,103 @@ public class Constants {
   /*
    * mix design
    */
-  public static final String ADD_MIXDESIGN_SUCCESS = "mix design added Successfully";
-  public static final String MIXDESIGN = "mixdesign";
-  public static final String MIXDESIGNS = "mixdesigns";
-  public static final String MIXDESIGN_DELETED = "mix design Successfully Deleted";
-  public static final String MIXDESIGN_ID = "mixdesignId";
+  public static final String ADD_MIX_DESIGN_SUCCESS = "mix design added Successfully";
+  public static final String MIX_DESIGN = "mixDesign";
+  public static final String MIX_DESIGNS = "mixDesigns";
+  public static final String MIX_DESIGN_DELETED = "mix design Successfully Deleted";
+  public static final String MIX_DESIGN_CODE = "mixDesignCode";
+  public static final String UPDATE_MIX_DESIGN_SUCCESS = "mix design updated Successfully";
+
+  /*
+   * processSampleLoad
+   */
+  public static final String PROCESS_SAMPLE_LOAD_ID = "processSampleLoadId";
+  public static final String PROCESS_SAMPLE_LOAD = "processSampleLoad";
+  public static final String PROCESS_SAMPLE_LOADS = "processSampleLoads";
+  public static final String PROCESS_SAMPLE_LOAD_DELETED =
+      "ProcessSampleLoad Deleted Succeessfully";
+  public static final String ADD_PROCESS_SAMPLE_LOAD_SUCCESS =
+      "ProcessSampleLoad added Successfully";
+  public static final String UPDATE_PROCESS_SAMPLE_LOAD_SUCCESS =
+      "ProcessSampleLoad updated Successfully";
+  /*
+   * Test Parameter
+   */
+  public static final String ADD_TEST_PARAMETER_SUCCESS = "Test parameter added Successfully";
+  public static final String TEST_PARAMETERS = "testparameters";
+  public static final String TEST_PARAMETER = "testparameter";
+  public static final String TEST_PARAMETER_ID = "testParameterId";
+  public static final String TEST_PARAMETER_DELETED = "Test Parameter Deleted Succeessfully";
+  public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test parameter updated Successfully";
+  /*
+   * User
+   */
+  public static final String USER_NAME = "username";
+  public static final String USER = "user";
+  public static final String USER_ID = "id";
+  public static final String ADD_USER_SUCCESS = "User added Successfully";
+  public static final String UPDATE_USER_SUCCESS = "User updated Successfully";
+  public static final String DELETE_USER_SCCESS = "User delete successfully";
+
+  /*
+   * ProcessSample
+   */
+  // constants for validation key
+  public static final String PROCESS_SAMPLE_CODE = "processSampleCode";
+  public static final String PROCESS_SAMPLE = "processSample";
+  public static final String PROCESS_SAMPLES = "processSamples";
+
+  // Success Messages
+  public static final String PROCESS_SAMPLE_DELETED = "processSample Deleted Succeessfully";
+  public static final String ADD_PROCESS_SAMPLE_SUCCESS = "processSample added Successfully";
+  public static final String UPDATE_PROCESS_SAMPLE_SUCCESS = "processSample updated Successfully";
+
+  /*
+   * mix design proportion
+   */
+  public static final String ADD_MIX_DESIGN_PROPORTION_SUCCESS =
+      "mix design proportion added Successfully";
+  public static final String MIX_DESIGN_PROPORTION = "mixDesignProportion";
+  public static final String MIX_DESIGN_PROPORTIONS = "mixDesignProportions";
+  public static final String MIX_DESIGN_PROPORTION_DELETED =
+      "mix design proportion Successfully Deleted";
+  public static final String MIX_DESIGN_PROPORTION_ID = "mixDesignProportionId";
+  public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
+      "mix design proportion updated Successfully";
+
+  /*
+   * Concrete Strength Test
+   */
+  // constants for validation key
+  public static final String CONCRETE_STRENGTH_TEST_ID = "concreteStrengthTestId";
+  public static final String CONCRETE_STRENGTH_TEST = "concreteStrengthTest";
+  public static final String CONCRETE_STRENGTH_TESTS = "concreteStrengthTests";
+
+  // Success Messages
+  public static final String CONCRETE_STRENGTH_TEST_DELETED =
+      "concreteStrengthTest Deleted Succeessfully";
+  public static final String ADD_CONCRETE_STRENGTH_TEST_SUCCESS =
+      "concreteStrengthTest added Successfully";
+  public static final String UPDATE_CONCRETE_STRENGTH_TEST_SUCCESS =
+      "concreteStrengthTest updated Successfully";
+  /*
+   * concreteTest*
+   */
+  public static final String ADD_CONCRETE_TEST_SUCCESS = "ConcreteTest added Successfully";
+  public static final String CONCRETE_TEST_DELETED = "ConcreteTest Successfully Deleted";
+  public static final String UPDATE_CONCRETE_TEST_SUCCESS = "ConcreteTest updated Successfully";
+  public static final String CONCRETE_TEST = "concreteTest";
+  public static final String CONCRETE_TESTS = "concreteTests";
+  public static final String RAW_MATERIAL_CEMENT = "cement";
+  public static final String RAW_MATERIAL_FLYASH = "flyAsh";
+  public static final String DECIMAL_FORMAT = "#.####";
+
+  // finish product
+  public static final String FINISH_PRODUCT = "FinishProduct";
+  public static final String FINISH_PRODUCTS = "FinishProducts";
+  public static final String ADD_FINISH_PRODUCT_SUCCESS = "Finish Product Added Successfully";
+  public static final String FINISH_PRODUCT_DELETED = "Finish Product Successfully Deleted";
+  public static final String FINISH_PRODUCT_UPDATED_SUCCESS = "Finish Product Successfully Updated";
   /*
    * Equation Parameter
    */
@@ -242,9 +334,7 @@ public class Constants {
   public static final String EQUATION_PARAMETER_ID = "equationParameterId";
   public static final String ADD_EQUATION_PARAMETER_SUCCESS =
       "Equation Parameter added Successfully";
-  public static final String DELETED_EQUATION_PARAMETER =
-      "Equation Parameter deleted Successfully";
-
+  public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
