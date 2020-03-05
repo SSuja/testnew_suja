@@ -11,18 +11,27 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "process_sample")
 public class ProcessSample implements Serializable {
-
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
   private Long quantity;
-  private Long remainInQuantity;
   @OneToOne
   @JoinColumn(name = "incomingSampleCode", nullable = false)
   private IncomingSample incomingSample;
   @ManyToOne
-  @JoinColumn(name = "rawMaterialId", nullable = false)
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
+  @ManyToOne
+  @JoinColumn(name = "rawMaterialId", nullable = true)
   private RawMaterial rawMaterial;
+
+  public RawMaterial getRawMaterial() {
+    return rawMaterial;
+  }
+
+  public void setRawMaterial(RawMaterial rawMaterial) {
+    this.rawMaterial = rawMaterial;
+  }
 
   public String getCode() {
     return code;
@@ -40,14 +49,6 @@ public class ProcessSample implements Serializable {
     this.quantity = quantity;
   }
 
-  public Long getRemainInQuantity() {
-    return remainInQuantity;
-  }
-
-  public void setRemainInQuantity(Long remainInQuantity) {
-    this.remainInQuantity = remainInQuantity;
-  }
-
   public IncomingSample getIncomingSample() {
     return incomingSample;
   }
@@ -56,16 +57,15 @@ public class ProcessSample implements Serializable {
     this.incomingSample = incomingSample;
   }
 
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
+  public Unit getUnit() {
+    return unit;
   }
 
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
+  public void setUnit(Unit unit) {
+    this.unit = unit;
   }
 
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }
