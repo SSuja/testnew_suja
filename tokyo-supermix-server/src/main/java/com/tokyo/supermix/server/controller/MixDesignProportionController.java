@@ -117,7 +117,7 @@ public class MixDesignProportionController {
           null, HttpStatus.OK);
     }
     return new ResponseEntity<>(
-        new ValidationFailureResponse(Constants.MIXDESIGN_CODE,
+        new ValidationFailureResponse(Constants.MIX_DESIGN_CODE,
             validationFailureStatusCodes.getMixDesignProportionNotExist()),
         HttpStatus.BAD_REQUEST);
   }
