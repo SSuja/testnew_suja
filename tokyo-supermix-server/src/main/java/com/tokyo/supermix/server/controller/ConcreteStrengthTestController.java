@@ -39,7 +39,7 @@ public class ConcreteStrengthTestController {
   private static final Logger logger = Logger.getLogger(ConcreteStrengthTestController.class);
 
   @GetMapping(value = EndpointURI.CONCRETE_STRENGTH_TESTS)
-  public ResponseEntity<Object> getAllCocreteStrengthTests() {
+  public ResponseEntity<Object> getAllConcreteStrengthTests() {
     List<ConcreteStrengthTestResponseDto> ConcreteStrengthTestResponseDtoList =
         mapper.map(concreteStrengthTestService.getAllConcreteStrengthTests(),
             ConcreteStrengthTestResponseDto.class);
@@ -58,15 +58,13 @@ public class ConcreteStrengthTestController {
         HttpStatus.OK);
   }
 
-
   @GetMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST_BY_ID)
   public ResponseEntity<Object> getConcreteStrengthTestById(@PathVariable Long id) {
     if (concreteStrengthTestService.isConcreteStrengthTestExist(id)) {
       logger.debug("Get ConcreteStrengthTest By Id");
-     
-          
       return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH_TEST,
-          mapper.map(concreteStrengthTestService.getConcreteStrengthTestById(id), ConcreteStrengthTestResponseDto.class),
+          mapper.map(concreteStrengthTestService.getConcreteStrengthTestById(id),
+              ConcreteStrengthTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(
@@ -76,9 +74,8 @@ public class ConcreteStrengthTestController {
   }
 
   @DeleteMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST_BY_ID)
-  public ResponseEntity<Object> deleteCustomer(@PathVariable Long id) {
+  public ResponseEntity<Object> deleteConcreteStrengthTest(@PathVariable Long id) {
     if (concreteStrengthTestService.isConcreteStrengthTestExist(id)) {
-
       concreteStrengthTestService.deleteConcreteStrengthTest(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.CONCRETE_STRENGTH_TEST_DELETED),
@@ -91,7 +88,7 @@ public class ConcreteStrengthTestController {
   }
 
   @PutMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST)
-  public ResponseEntity<Object> updateCustomer(
+  public ResponseEntity<Object> updateConcreteStrengthTest(
       @Valid @RequestBody ConcreteStrengthTestRequestDto concreteStrengthTestRequestDto) {
     if (concreteStrengthTestService
         .isConcreteStrengthTestExist(concreteStrengthTestRequestDto.getId())) {
