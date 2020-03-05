@@ -243,7 +243,15 @@ public class Constants {
   public static final String TEST_PARAMETER_ID = "testParameterId";
   public static final String TEST_PARAMETER_DELETED = "Test Parameter Deleted Succeessfully";
   public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test parameter updated Successfully";
-
+  /*
+   * User
+   */
+  public static final String USER_NAME = "username";
+  public static final String USER = "user";
+  public static final String USER_ID = "id";
+  public static final String ADD_USER_SUCCESS = "User added Successfully";
+  public static final String UPDATE_USER_SUCCESS = "User updated Successfully";
+  public static final String DELETE_USER_SCCESS = "User delete successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

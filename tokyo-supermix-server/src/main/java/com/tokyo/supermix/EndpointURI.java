@@ -187,6 +187,13 @@ public final class EndpointURI {
   public static final String MIXDESIGNS = BASE_API_PATH + "mixdesigns";
   public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
   public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
+  /*
+   * User
+   */
+  public static final String USER = BASE_API_PATH + "user";
+  public static final String USERS = BASE_API_PATH + "users";
+  public static final String USER_BY_ID = USER + ID;
+
 
   /*
    * Test Parameter APIs
