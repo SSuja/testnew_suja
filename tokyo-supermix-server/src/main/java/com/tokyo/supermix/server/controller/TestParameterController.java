@@ -58,14 +58,14 @@ public class TestParameterController {
   }
 
   @GetMapping(value = EndpointURI.TEST_PARAMETERS)
-  public ResponseEntity<Object> getAllRawMaterials() {
+  public ResponseEntity<Object> getTestParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
         mapper.map(testParameterService.getAllTestParameters(), TestParameterResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.TEST_PARAMETER_BY_ID)
-  public ResponseEntity<Object> getTestParameterByTestParameterId(@PathVariable("id") Long id) {
+  public ResponseEntity<Object> getTestParameterById(@PathVariable Long id) {
     if (testParameterService.isTestParameterExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETER,
           mapper.map(testParameterService.getTestParameterById(id), TestParameterResponseDto.class),
@@ -78,7 +78,7 @@ public class TestParameterController {
   @DeleteMapping(EndpointURI.TEST_PARAMETER_BY_ID)
   public ResponseEntity<Object> deleteTestParameter(@PathVariable Long id) {
     if (testParameterService.isTestParameterExist(id)) {
-      testParameterService.deleteTestParameter(id);;
+      testParameterService.deleteTestParameter(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.TEST_PARAMETER_DELETED),
           HttpStatus.OK);
@@ -89,10 +89,10 @@ public class TestParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_TEST_PARAMETER_BY_TEST_ID)
-  public ResponseEntity<Object> get(@PathVariable Long testid) {
-    if (testParameterService.isTestIdExist(testid)) {
+  public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long testId) {
+    if (testParameterService.isTestIdExist(testId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
-          mapper.map(testParameterService.getTestParameterByTestId(testid),
+          mapper.map(testParameterService.getTestParameterByTestId(testId),
               TestParameterResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
