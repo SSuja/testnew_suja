@@ -16,4 +16,10 @@ public interface FinishProductService {
 
 	public void deleteFinishProduct(Long id);
 
+	public boolean isProjectCodeExists(String projectCode);
+
+	public boolean isMixDesignCodeExists(String mixDesignCode);
+
+	public boolean isPourIdExists(Long pourId);
+
 }
