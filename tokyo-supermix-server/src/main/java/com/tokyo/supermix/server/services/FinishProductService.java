@@ -5,7 +5,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.FinishProduct;
 
 public interface FinishProductService {
-	
+
 	public void saveFinishProduct(FinishProduct finishProduct);
 
 	public List<FinishProduct> getAllFinishProducts();

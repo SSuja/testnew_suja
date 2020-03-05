@@ -225,8 +225,8 @@ public class Constants {
 	public static final String MIXDESIGN_ID = "mixdesignId";
 
 	// finish product
-	public static final String FINISH_PRODUCT = "finishproduct";
-	public static final String FINISH_PRODUCTS = "finishproducts";
+	public static final String FINISH_PRODUCT = "FinishProduct";
+	public static final String FINISH_PRODUCTS = "FinishProducts";
 	public static final String ADD_FINISH_PRODUCT_SUCCESS = "Finish Product Added Successfully";
 	public static final String FINISH_PRODUCT_DELETED = "Finish Product Successfully Deleted";
 	public static final String FINISH_PRODUCT_UPDATED_SUCCESS = "Finish Product Successfully Updated";
