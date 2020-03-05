@@ -1080,6 +1080,28 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
 
+  @Value("${validation.testParameter.notExists}")
+  private String testParameterNotExist;
+
+  @Value("${validation.testParameter.alreadyExist}")
+  private String testParameterAlreadyExist;
+
+  public String getTestParameterNotExist() {
+    return testParameterNotExist;
+  }
+
+  public void setTestParameterNotExist(String testParameterExist) {
+    this.testParameterNotExist = testParameterExist;
+  }
+
+  public String getTestParameterAlreadyExist() {
+    return testParameterAlreadyExist;
+  }
+
+  public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
+    this.testParameterAlreadyExist = testParameterAlreadyExist;
+  }
+
   /*
    * User
    */
