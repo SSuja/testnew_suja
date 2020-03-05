@@ -6,7 +6,7 @@ public class ProcessSampleLoadResponseDto {
   private Long id;
   private String vehicleNo;
   private Long quantity;
-  private Date dateAndTime;
+  private Date date;
   private Date expiryDate;
   private String unit;
   private Long unitId;
@@ -41,11 +41,11 @@ public class ProcessSampleLoadResponseDto {
   public void setQuantity(Long quantity) {
     this.quantity = quantity;
   }
-  public Date getDateAndTime() {
-    return dateAndTime;
+  public Date getDate() {
+    return date;
   }
-  public void setDateAndTime(Date dateAndTime) {
-    this.dateAndTime = dateAndTime;
+  public void setDate(Date date) {
+    this.date = date;
   }
   public Date getExpiryDate() {
     return expiryDate;
