@@ -1,82 +1,81 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class MixDesignRequestDto {
-	private String code;
-	@NotNull(message = "{MixDesignRequestDto.grade.null}")
-	@NotEmpty(message = "{MixDesignRequestDto.grade.empty}")
-	private String grade;
-	@NotNull(message = "{MixDesignRequestDto.date.null}")
-	private Date date;
-	@NotNull(message = "{MixDesignRequestDto.targetStrength.null}")
-	@NotEmpty(message = "{MixDesignRequestDto.targetStrength.empty}")
-	private String targetStrength;
-	@NotNull(message = "{MixDesignRequestDto.waterCementRatio.null}")
-	@NotEmpty(message = "{MixDesignRequestDto.waterCementRatio.empty}")
-	private String waterCementRatio;
-	@NotNull(message = "{MixDesignRequestDto.waterBinderRatio.null}")
-	@NotEmpty(message = "{MixDesignRequestDto.waterBinderRatio.empty}")
-	private String waterBinderRatio;
-	private String plantCode;
+  private String code;
+  private Double targetGrade;
+  private Double actualGrade;
+  @NotNull(message = "{MixDesignRequestDto.date.null}")
+  private Date date;
+  private Double targetSlump;
+  private Double waterCementRatio;
+  private Double waterBinderRatio;
+  private String plantCode;
 
-	public String getCode() {
-		return code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public String getGrade() {
-		return grade;
-	}
+  public Double getTargetGrade() {
+    return targetGrade;
+  }
 
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
+  public void setTargetGrade(Double targetGrade) {
+    this.targetGrade = targetGrade;
+  }
 
-	public Date getDate() {
-		return date;
-	}
+  public Double getActualGrade() {
+    return actualGrade;
+  }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+  public void setActualGrade(Double actualGrade) {
+    this.actualGrade = actualGrade;
+  }
 
-	public String getTargetStrength() {
-		return targetStrength;
-	}
+  public Date getDate() {
+    return date;
+  }
 
-	public void setTargetStrength(String targetStrength) {
-		this.targetStrength = targetStrength;
-	}
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
-	public String getWaterCementRatio() {
-		return waterCementRatio;
-	}
+  public Double getTargetSlump() {
+    return targetSlump;
+  }
 
-	public void setWaterCementRatio(String waterCementRatio) {
-		this.waterCementRatio = waterCementRatio;
-	}
+  public void setTargetSlump(Double targetSlump) {
+    this.targetSlump = targetSlump;
+  }
 
-	public String getWaterBinderRatio() {
-		return waterBinderRatio;
-	}
+  public Double getWaterCementRatio() {
+    return waterCementRatio;
+  }
 
-	public void setWaterBinderRatio(String waterBinderRatio) {
-		this.waterBinderRatio = waterBinderRatio;
-	}
+  public void setWaterCementRatio(Double waterCementRatio) {
+    this.waterCementRatio = waterCementRatio;
+  }
 
-	public String getPlantCode() {
-		return plantCode;
-	}
+  public Double getWaterBinderRatio() {
+    return waterBinderRatio;
+  }
 
-	public void setPlantCode(String plantCode) {
-		this.plantCode = plantCode;
-	}
+  public void setWaterBinderRatio(Double waterBinderRatio) {
+    this.waterBinderRatio = waterBinderRatio;
+  }
+
+  public String getPlantCode() {
+    return plantCode;
+  }
+
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
+  }
 
 }

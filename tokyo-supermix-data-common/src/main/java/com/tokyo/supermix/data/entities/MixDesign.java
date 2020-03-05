@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,17 +11,16 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_design")
 public class MixDesign implements Serializable {
-
   private static final long serialVersionUID = 1L;
-
   @Id
   private String code;
   private Double actualGrade;
+  private Double targetGrade;
   private Date date;
   private Double targetSlump;
-  private Double targetGrade;
   private Double waterCementRatio;
   private Double waterBinderRatio;
+
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
@@ -43,6 +41,14 @@ public class MixDesign implements Serializable {
     this.actualGrade = actualGrade;
   }
 
+  public Double getTargetGrade() {
+    return targetGrade;
+  }
+
+  public void setTargetGrade(Double targetGrade) {
+    this.targetGrade = targetGrade;
+  }
+
   public Date getDate() {
     return date;
   }
@@ -57,14 +63,6 @@ public class MixDesign implements Serializable {
 
   public void setTargetSlump(Double targetSlump) {
     this.targetSlump = targetSlump;
-  }
-
-  public Double getTargetGrade() {
-    return targetGrade;
-  }
-
-  public void setTargetGrade(Double targetGrade) {
-    this.targetGrade = targetGrade;
   }
 
   public Double getWaterCementRatio() {
@@ -94,5 +92,4 @@ public class MixDesign implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

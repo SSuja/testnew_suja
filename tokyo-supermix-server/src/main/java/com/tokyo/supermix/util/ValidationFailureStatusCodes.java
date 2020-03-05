@@ -947,88 +947,86 @@ public class ValidationFailureStatusCodes {
     this.testTypealreadyExists = testTypealreadyExists;
   }
 
-  @Value("${validation.mixDesign.notExist}")
-  private String mixDesignNotExist;
+//For MixDesign
+ @Value("${validation.mixDesign.notExist}")
+ private String mixDesignNotExist;
 
-  @Value("${validation.mixDesign.alreadyExist}")
-  private String mixDesignAlreadyExist;
+ @Value("${validation.mixDesign.alreadyExist}")
+ private String mixDesignAlreadyExist;
 
-  @Value("${MixDesignRequestDto.grade.null}")
-  private String gradenotnull;
+ @Value("${MixDesignRequestDto.targetGrade.null}")
+ private String targetGradeNotNull;
 
-  @Value("${MixDesignRequestDto.grade.empty}")
-  private String gradenotempty;
+ @Value("${MixDesignRequestDto.targetGrade.empty}")
+ private String targetGradeEmpty;
 
-  @Value("${MixDesignRequestDto.targetStrength.null}")
-  private String targetStrengthnotnull;
+ @Value("${MixDesignRequestDto.targetSlump.null}")
+ private String targetSlumpNotNull;
 
-  @Value("${MixDesignRequestDto.grade.empty}")
-  private String targetStrengthnotempty;
+ @Value("${MixDesignRequestDto.targetSlump.empty}")
+ private String targetSlumpNotEmpty;
 
-  @Value("${MixDesignRequestDto.waterCementRatio.null}")
-  private String waterCementRationotnull;
 
-  @Value("${MixDesignRequestDto.waterCementRatio.empty}")
-  private String waterCementRationotempty;
-
-  @Value("${MixDesignRequestDto.waterBinderRatio.null}")
-  private String waterBinderRationotnull;
-
-  @Value("${MixDesignRequestDto.waterBinderRatio.empty}")
-  private String waterBinderRationotempty;
-
-  @Value("${MixDesignRequestDto.date.null}")
-  private String datenotnull;
+ @Value("${MixDesignRequestDto.date.null}")
+ private String dateNotNull;
 
 
 
-  public String getGradenotnull() {
-    return gradenotnull;
-  }
+ public String getMixDesignNotExist() {
+   return mixDesignNotExist;
+ }
 
-  public void setGradenotnull(String gradenotnull) {
-    this.gradenotnull = gradenotnull;
-  }
+ public void setMixDesignNotExist(String mixDesignNotExist) {
+   this.mixDesignNotExist = mixDesignNotExist;
+ }
 
-  public String getGradenotempty() {
-    return gradenotempty;
-  }
+ public String getMixDesignAlreadyExist() {
+   return mixDesignAlreadyExist;
+ }
 
-  public void setGradenotempty(String gradenotempty) {
-    this.gradenotempty = gradenotempty;
-  }
+ public void setMixDesignAlreadyExist(String mixDesignAlreadyExist) {
+   this.mixDesignAlreadyExist = mixDesignAlreadyExist;
+ }
 
-  public String getMixDesignAlreadyExist() {
-    return mixDesignAlreadyExist;
-  }
+ public String getTargetGradeNotNull() {
+   return targetGradeNotNull;
+ }
 
-  public void setMixDesignAlreadyExist(String mixDesignAlreadyExist) {
-    this.mixDesignAlreadyExist = mixDesignAlreadyExist;
-  }
+ public void setTargetGradeNotNull(String targetGradeNotNull) {
+   this.targetGradeNotNull = targetGradeNotNull;
+ }
 
-  public String getMixDesignNotExist() {
-    return mixDesignNotExist;
-  }
+ public String getTargetGradeEmpty() {
+   return targetGradeEmpty;
+ }
 
-  public void setMixDesignNotExist(String mixDesignNotExist) {
-    this.mixDesignNotExist = mixDesignNotExist;
-  }
+ public void setTargetGradeEmpty(String targetGradeEmpty) {
+   this.targetGradeEmpty = targetGradeEmpty;
+ }
 
-  public String getTestTypeIsNull() {
-    return testTypeIsNull;
-  }
+ public String getTargetSlumpNotNull() {
+   return targetSlumpNotNull;
+ }
 
-  public void setTestTypeIsNull(String testTypeIsNull) {
-    this.testTypeIsNull = testTypeIsNull;
-  }
+ public void setTargetSlumpNotNull(String targetSlumpNotNull) {
+   this.targetSlumpNotNull = targetSlumpNotNull;
+ }
 
-  public String getTestTypeIsEmpty() {
-    return testTypeIsEmpty;
-  }
+ public String getTargetSlumpNotEmpty() {
+   return targetSlumpNotEmpty;
+ }
 
-  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
-    this.testTypeIsEmpty = testTypeIsEmpty;
-  }
+ public void setTargetSlumpNotEmpty(String targetSlumpNotEmpty) {
+   this.targetSlumpNotEmpty = targetSlumpNotEmpty;
+ }
+
+ public String getDateNotNull() {
+   return dateNotNull;
+ }
+
+ public void setDateNotNull(String dateNotNull) {
+   this.dateNotNull = dateNotNull;
+ }
 
 
   /*

@@ -183,10 +183,9 @@ public final class EndpointURI {
    * Mix design apis
    * 
    */
-  public static final String MIXDESIGN = BASE_API_PATH + "mixdesign";
-  public static final String MIXDESIGNS = BASE_API_PATH + "mixdesigns";
-  public static final String GET_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
-  public static final String DELETE_MIXDESIGN_BY_ID = MIXDESIGN + CODE;
+  public static final String MIX_DESIGN = BASE_API_PATH + "mix_design";
+  public static final String MIX_DESIGNS = BASE_API_PATH + "mix_designs";
+  public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
 
   private EndpointURI() {}
 }
