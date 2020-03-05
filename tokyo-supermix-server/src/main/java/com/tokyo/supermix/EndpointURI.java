@@ -232,7 +232,13 @@ public final class EndpointURI {
   public static final String CONCRETE_STRENGTH_TEST = BASE_API_PATH + "concrete-strength-test";
   public static final String CONCRETE_STRENGTH_TESTS = BASE_API_PATH + "concrete-strength-tests";
   public static final String CONCRETE_STRENGTH_TEST_BY_ID = CONCRETE_STRENGTH_TEST + ID;
-
+/*
+   * concreteTest
+   * 
+   */
+  public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
+  public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
+  public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
 
   private EndpointURI() {}
 }

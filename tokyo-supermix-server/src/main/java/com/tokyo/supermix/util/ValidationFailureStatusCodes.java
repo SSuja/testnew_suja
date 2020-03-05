@@ -1053,7 +1053,17 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
-  
+  // for concreteTest
+  @Value("${validation.concreteTest.notExists}")
+  private String concreteTestNotExist;
+
+  public String getConcreteTestNotExist() {
+    return concreteTestNotExist;
+  }
+
+  public void setConcreteTestNotExist(String concreteTestNotExist) {
+    this.concreteTestNotExist = concreteTestNotExist;
+  }
 //for mixDesignProportion
   
   @Value("${validation.mixDesignProportion.notExist}")
