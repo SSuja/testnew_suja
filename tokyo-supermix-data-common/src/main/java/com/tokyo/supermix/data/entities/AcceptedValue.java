@@ -28,6 +28,21 @@ public class AcceptedValue implements Serializable {
   @ManyToOne
   @JoinColumn(name = "parameterId", nullable = false)
   private Parameter parameter;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
+
+  public Unit getUnit() {
+    return unit;
+  }
+
+  public void setUnit(Unit unit) {
+    this.unit = unit;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
   public Long getId() {
     return id;
