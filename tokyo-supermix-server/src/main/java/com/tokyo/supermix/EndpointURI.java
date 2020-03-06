@@ -98,6 +98,8 @@ public final class EndpointURI {
 	public static final String TESTS = BASE_API_PATH + "tests";
 	public static final String GET_TEST_BY_ID = TEST + ID;
 	public static final String DELETE_TEST = TEST + ID;
+	public static final String GET_TEST_BY_TEST_TYPE_ID =
+	      TEST + SLASH + "test-type" + SLASH + "{testTypeId}";
 	/*
 	 * Material State
 	 */
@@ -244,7 +246,15 @@ public final class EndpointURI {
 	public static final String FINISH_PRODUCT = BASE_API_PATH + "finish-product";
 	public static final String FINISH_PRODUCTS = BASE_API_PATH + "finish-products";
 	public static final String FINISH_PRODUCT_BY_ID = FINISH_PRODUCT + ID;
-
+/*
+   * Equation Parameter
+   */
+  public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
+  public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
+  public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
+  public static final String EQUATION_ID="/{equationId}";
+  public static final String GET_PARAMETERS_BY_EQUATION_ID =
+      EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
 	private EndpointURI() {
 	}
 }
