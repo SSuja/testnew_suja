@@ -44,28 +44,26 @@ public class PlantEquipmentCalibrationController {
   public ResponseEntity<Object> createPlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
-      if (plantEquipmentCalibrationRequestDto.getuserId() == null) {
+      if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
         return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.EQUIPMENT_PLANT_CALIBRATION,
-                validationFailureStatusCodes.getPlantEquipmentCalibrationRequestDtoUserIdIsNull()),
+            new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+                validationFailureStatusCodes
+                    .getEmployeeIdIsNull()),
             HttpStatus.BAD_REQUEST);
       }
+      
+    }else if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.SUPPLIER,
+              validationFailureStatusCodes
+              .getSupplierIdIsNull()),
+          HttpStatus.BAD_REQUEST);
+    }
       plantEquipmentCalibrationService.savePlantEquipmentCalibration(
           mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
-    }
-    if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.EQUIPMENT_PLANT_CALIBRATION,
-              validationFailureStatusCodes
-                  .getPlantEquipmentCalibrationRequestDtoSupplierIdIsNull()),
-          HttpStatus.BAD_REQUEST);
-    }
-    plantEquipmentCalibrationService.savePlantEquipmentCalibration(
-        mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
-    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-        Constants.ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
+    
   }
 
   // get all PlantEquipmentCalibration
@@ -114,17 +112,27 @@ public class PlantEquipmentCalibrationController {
   // update API for PlantEquipmentCalibration
   @PutMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
   public ResponseEntity<Object> updatePlantEquipmentCalibration(
-      @Valid @RequestBody PlantEquipmentCalibrationRequestDto PlantEquipmentCalibrationDto) {
-    if (plantEquipmentCalibrationService
-        .isPlantEquipmentCalibrationExit(PlantEquipmentCalibrationDto.getId())) {
+      @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
+    if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
+      if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+                validationFailureStatusCodes
+                    .getEmployeeIdIsNull()),
+            HttpStatus.BAD_REQUEST);
+      }
+      
+    }else if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.SUPPLIER,
+              validationFailureStatusCodes
+              .getSupplierIdIsNull()),
+          HttpStatus.BAD_REQUEST);
+    }
       plantEquipmentCalibrationService.savePlantEquipmentCalibration(
-          mapper.map(PlantEquipmentCalibrationDto, PlantEquipmentCalibration.class));
+          mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(
-        new ValidationFailureResponse(Constants.EQUIPMENT_PLANT_CALIBRATION,
-            validationFailureStatusCodes.getPlantEquipmentCalibrationNotExist()),
-        HttpStatus.BAD_REQUEST);
+    
   }
 }

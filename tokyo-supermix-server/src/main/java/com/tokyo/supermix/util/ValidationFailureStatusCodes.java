@@ -1,4 +1,3 @@
-
 package com.tokyo.supermix.util;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -767,43 +766,6 @@ public class ValidationFailureStatusCodes {
   public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
     this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
   }
-
-  // for plantEquipmentCalibration
-  @Value("${validation.plantEquipmentCalibration.notExists}")
-  private String plantEquipmentCalibrationNotExist;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.userId.null}")
-  private String PlantEquipmentCalibrationRequestDtoUserIdIsNull;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.supplierId.null}")
-  private String PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-
-  public String getPlantEquipmentCalibrationRequestDtoUserIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoUserIdIsNull;
-  }
-
-  public void setPlantEquipmentCalibrationRequestDtoUserIdIsNull(
-      String plantEquipmentCalibrationRequestDtoUserIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoUserIdIsNull =
-        plantEquipmentCalibrationRequestDtoUserIdIsNull;
-  }
-
-  public String getPlantEquipmentCalibrationNotExist() {
-    return plantEquipmentCalibrationNotExist;
-  }
-
-  public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
-    this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
-  }
-
-  public String getPlantEquipmentCalibrationRequestDtoSupplierIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-  }
-
-  public void setPlantEquipmentCalibrationRequestDtoSupplierIdIsNull(
-      String plantEquipmentCalibrationRequestDtoSupplierIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoSupplierIdIsNull =
-        plantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-  }
-
   // for parameter
   @Value("${validation.parameter.notExists}")
   private String parameterNotExist;
@@ -1377,4 +1339,36 @@ public class ValidationFailureStatusCodes {
   public void setEquationParameterNotExist(String equationParameterNotExist) {
     this.equationParameterNotExist = equationParameterNotExist;
   }
+  // for plantEquipmentCalibration
+    @Value("${validation.plantEquipmentCalibration.notExists}")
+    private String plantEquipmentCalibrationNotExist;
+    @Value("${validation.employeeId.null}")
+    private String EmployeeIdIsNull;
+    @Value("${validation.supplierId.null}")
+    private String SupplierIdIsNull;
+
+    public String getPlantEquipmentCalibrationNotExist() {
+      return plantEquipmentCalibrationNotExist;
+    }
+
+    public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+      this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+    }
+
+    public String getEmployeeIdIsNull() {
+      return EmployeeIdIsNull;
+    }
+
+    public void setEmployeeIdIsNull(String employeeIdIsNull) {
+      EmployeeIdIsNull = employeeIdIsNull;
+    }
+
+    public String getSupplierIdIsNull() {
+      return SupplierIdIsNull;
+    }
+
+    public void setSupplierIdIsNull(String supplierIdIsNull) {
+      SupplierIdIsNull = supplierIdIsNull;
+    }
 }
+	
