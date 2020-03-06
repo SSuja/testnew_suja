@@ -24,6 +24,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.TestService;
+import com.tokyo.supermix.server.services.TestTypeService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -32,6 +33,8 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class TestController {
   @Autowired
   private TestService testService;
+  @Autowired
+  private TestTypeService testTypeService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
 
@@ -101,5 +104,19 @@ public class TestController {
     logger.debug("No Test record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
         validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.GET_TEST_BY_TEST_TYPE_ID)
+  public ResponseEntity<Object> getTestByTestTypeId(@PathVariable Long testTypeId) {
+    if (testTypeService.isTestTypeIdExist(testTypeId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPE,
+          mapper.map(testService.getTestByTestType(testTypeService.getTestTypeById(testTypeId)),
+              TestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Test record exist for given Test type id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE_ID,
+          validationFailureStatusCodes.getTestTypeNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }
