@@ -255,6 +255,12 @@ public final class EndpointURI {
   public static final String EQUATION_ID="/{equationId}";
   public static final String GET_PARAMETERS_BY_EQUATION_ID =
       EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
+  /*
+   * AcceptedValue
+   */
+  public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
+  public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
+  public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
 	private EndpointURI() {
 	}
 }

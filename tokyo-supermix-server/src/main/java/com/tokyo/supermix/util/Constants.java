@@ -335,7 +335,14 @@ public class Constants {
   public static final String ADD_EQUATION_PARAMETER_SUCCESS =
       "Equation Parameter added Successfully";
   public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
-
+  /*
+   * Equation Parameter
+   */
+  public static final String ACCEPTED_VALUE = "acceptedValue";
+  public static final String ACCEPTED_VALUES = "acceptedValues";
+  public static final String ACCEPTED_VALUE_ID = "acceptedValuesId";
+  public static final String  ACCEPTED_VALUE_DELETED = "AcceptedValue Successfully Deleted";
+  public static final String ADD_ACCEPTED_VALUE_SUCCESS = "AcceptedValue Added Successfully";
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

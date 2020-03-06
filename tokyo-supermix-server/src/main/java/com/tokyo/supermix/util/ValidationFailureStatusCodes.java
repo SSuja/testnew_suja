@@ -1370,5 +1370,17 @@ public class ValidationFailureStatusCodes {
     public void setSupplierIdIsNull(String supplierIdIsNull) {
       SupplierIdIsNull = supplierIdIsNull;
     }
+ // for acceptedValue
+    @Value("${validation.acceptedValue.notExists}")
+    private String acceptedValueNotExist;
+
+    public String getAcceptedValueNotExist() {
+      return acceptedValueNotExist;
+    }
+
+    public void setAcceptedValueNotExist(String acceptedValueNotExist) {
+      this.acceptedValueNotExist = acceptedValueNotExist;
+    }
+       
 }
 	
