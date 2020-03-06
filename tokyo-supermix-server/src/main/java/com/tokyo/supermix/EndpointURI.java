@@ -255,6 +255,13 @@ public final class EndpointURI {
   public static final String EQUATION_ID="/{equationId}";
   public static final String GET_PARAMETERS_BY_EQUATION_ID =
       EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
+  
+  /*
+	 * AdmixtureAcceptedValue Apis
+	 */
+	public static final String ADMIXTURE_ACCEPTED_VALUE = BASE_API_PATH + "admixture-accepted-value";
+	public static final String ADMIXTURE_ACCEPTED_VALUES = BASE_API_PATH + "admixture-accepted-values";
+	public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
 	private EndpointURI() {
 	}
 }

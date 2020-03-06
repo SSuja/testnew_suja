@@ -1370,5 +1370,17 @@ public class ValidationFailureStatusCodes {
     public void setSupplierIdIsNull(String supplierIdIsNull) {
       SupplierIdIsNull = supplierIdIsNull;
     }
+    
+    @Value("${validation.admixtureAcceptedValue.notExists}")
+    private String admixtureAcceptedValueNotExist;
+
+	public String getAdmixtureAcceptedValueNotExist() {
+		return admixtureAcceptedValueNotExist;
+	}
+
+	public void setAdmixtureAcceptedValueNotExist(String admixtureAcceptedValueNotExist) {
+		this.admixtureAcceptedValueNotExist = admixtureAcceptedValueNotExist;
+	}
+    
 }
 	
