@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.EquationParameter;
 
 public interface EquationParameterService {
-  public EquationParameter saveEquationParameter(EquationParameter equationParameter);
+  public List<EquationParameter> saveEquationParameter(List<EquationParameter> equationParameter);
 
   public List<EquationParameter> getAllEquationParameters();
 
