@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.Test;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 
 @Service
@@ -37,6 +38,24 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   @Transactional(propagation = Propagation.NEVER)
   public void deleteAcceptedValue(Long id) {
     acceptedValueRepository.deleteById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public List<AcceptedValue> getAcceptedValueByTest(Test test) {
+    return acceptedValueRepository.findByTest(test);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAcceptedValueByTestId(Long testId) {
+    return acceptedValueRepository.existsAcceptedValueByTestId(testId);
+  }
+
+  public boolean isUpdatedAcceptedValueTestIdExist(Long id, Long testId) {
+    if ((!getAcceptedValueById(id).getTest().getId().equals(testId))
+        && (isAcceptedValueByTestId(testId))) {
+      return true;
+    }
+    return false;
   }
 
 }

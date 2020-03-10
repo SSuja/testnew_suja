@@ -170,7 +170,7 @@ public class Constants {
    * Test
    */
   public static final String TEST = "test";
-  public static final String TEST_ID = "id";
+  public static final String TEST_ID = "testId";
   public static final String ADD_TEST_SUCCESS = "Test added Successfully";
   public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test delete successfully";
@@ -336,13 +336,16 @@ public class Constants {
       "Equation Parameter added Successfully";
   public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
   /*
-   * Equation Parameter
+   * AcceptedValue
    */
   public static final String ACCEPTED_VALUE = "acceptedValue";
   public static final String ACCEPTED_VALUES = "acceptedValues";
-  public static final String ACCEPTED_VALUE_ID = "acceptedValuesId";
-  public static final String  ACCEPTED_VALUE_DELETED = "AcceptedValue Successfully Deleted";
+  public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
+  public static final String ACCEPTED_VALUE_TEST_ID = "acceptedValueTestId";
+  public static final String ACCEPTED_VALUE_DELETED = "AcceptedValue Successfully Deleted";
   public static final String ADD_ACCEPTED_VALUE_SUCCESS = "AcceptedValue Added Successfully";
+  public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "AcceptedValue Successfully updated";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
