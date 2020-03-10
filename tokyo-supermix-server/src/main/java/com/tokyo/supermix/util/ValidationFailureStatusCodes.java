@@ -1381,6 +1381,15 @@ public class ValidationFailureStatusCodes {
 	public void setAdmixtureAcceptedValueNotExist(String admixtureAcceptedValueNotExist) {
 		this.admixtureAcceptedValueNotExist = admixtureAcceptedValueNotExist;
 	}
-    
+//  for AdmixtureAcceptedValue
+  @Value("${validation.testId.alreadyExist}")
+  private String testIdAlreadyExist;
+  public String getTestIdAlreadyExist() {
+    return testIdAlreadyExist;
+  }
+
+  public void setTestIdAlreadyExist(String testIdAlreadyExist) {
+    this.testIdAlreadyExist = testIdAlreadyExist;
+  }
 }
 	

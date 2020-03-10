@@ -13,8 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Table(schema = "tokyo-supermix", name = "accepted_value")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "accepted_value")
 public class AcceptedValue implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
