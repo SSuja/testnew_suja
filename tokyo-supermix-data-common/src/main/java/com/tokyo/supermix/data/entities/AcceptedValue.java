@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "accepted_value")
+@Table(schema = "tokyo-supermix",name = "accepted_value")
 public class AcceptedValue implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
