@@ -9,8 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-@Table(schema = "tokyo-supermix", name = "admixture_accepted_value")
-public class AdmixtureAcceptedValue extends AcceptedValue implements Serializable{
+@Table(name = "admixture_accepted_value")
+public class AdmixtureAcceptedValue extends AcceptedValue implements Serializable {
   private static final long serialVersionUID = 1L;
   @ManyToOne
   @JoinColumn(name = "rawMaterialId", nullable = false)

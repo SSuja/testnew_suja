@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,17 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "pour")
-public class Pour implements Serializable {
+@Table(schema = "tokyo-supermix", name = "material_test_trial")
+public class MaterialTestTrial implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private String name;
-  private String description;
+  private Long trialNo;
+  private Double result;
   @ManyToOne
-  @JoinColumn(name = "projectCode", nullable = true)
-  private Project project;
+  @JoinColumn(name = "materialTestId", nullable = false)
+  private MaterialTest materialTest;
 
   public Long getId() {
     return id;
@@ -31,28 +30,28 @@ public class Pour implements Serializable {
     this.id = id;
   }
 
-  public String getName() {
-    return name;
+  public Long getTrialNo() {
+    return trialNo;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setTrialNo(Long trialNo) {
+    this.trialNo = trialNo;
   }
 
-  public String getDescription() {
-    return description;
+  public Double getResult() {
+    return result;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setResult(Double result) {
+    this.result = result;
   }
 
-  public Project getProject() {
-    return project;
+  public MaterialTest getMaterialTest() {
+    return materialTest;
   }
 
-  public void setProject(Project project) {
-    this.project = project;
+  public void setMaterialTest(MaterialTest materialTest) {
+    this.materialTest = materialTest;
   }
 
   public static long getSerialversionuid() {

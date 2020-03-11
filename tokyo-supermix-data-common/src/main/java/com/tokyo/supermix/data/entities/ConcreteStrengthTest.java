@@ -27,9 +27,6 @@ public class ConcreteStrengthTest implements Serializable {
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
 
   public Long getId() {
     return id;
@@ -77,14 +74,6 @@ public class ConcreteStrengthTest implements Serializable {
 
   public void setMixDesign(MixDesign mixDesign) {
     this.mixDesign = mixDesign;
-  }
-
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
   }
 
   public static long getSerialversionuid() {
