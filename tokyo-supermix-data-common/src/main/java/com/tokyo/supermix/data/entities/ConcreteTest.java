@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.enums.Status;
@@ -31,9 +30,6 @@ public class ConcreteTest implements Serializable {
   @OneToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
 
   public Long getId() {
     return id;
@@ -107,15 +103,8 @@ public class ConcreteTest implements Serializable {
     this.mixDesign = mixDesign;
   }
 
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
-
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
 }
