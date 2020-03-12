@@ -12,16 +12,6 @@ public class ConcreteTestResponseDto {
   private Double waterCementRatio;
   private Double waterBinderRatio;
   private Status status;
-  private String plantCode;
-  private String plantName;
-
-  public String getPlantName() {
-    return plantName;
-  }
-
-  public void setPlantName(String plantName) {
-    this.plantName = plantName;
-  }
 
   public Long getId() {
     return id;
@@ -93,13 +83,5 @@ public class ConcreteTestResponseDto {
 
   public void setStatus(Status status) {
     this.status = status;
-  }
-
-  public String getPlantCode() {
-    return plantCode;
-  }
-
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
   }
 }

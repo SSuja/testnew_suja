@@ -17,9 +17,6 @@ public class ConcreteTestRequestDto {
   @NotNull(message = "{concreteTestRequestDto.waterContent.null}")
   private Double waterContent;
   private Status status;
-  @NotNull(message = "{concreteTestRequestDto.plantCode.null}")
-  @NotEmpty(message = "{concreteTestRequestDto.plantCode.empty}")
-  private String plantCode;
 
   public Long getId() {
     return id;
@@ -67,13 +64,5 @@ public class ConcreteTestRequestDto {
 
   public void setStatus(Status status) {
     this.status = status;
-  }
-
-  public String getPlantCode() {
-    return plantCode;
-  }
-
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
   }
 }
