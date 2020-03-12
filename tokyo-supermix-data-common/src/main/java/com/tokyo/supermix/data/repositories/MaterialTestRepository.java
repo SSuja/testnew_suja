@@ -1,5 +1,9 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface MaterialTestRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.tokyo.supermix.data.entities.MaterialTest;
+
+public interface MaterialTestRepository extends JpaRepository<MaterialTest, Long> {
 
 }
