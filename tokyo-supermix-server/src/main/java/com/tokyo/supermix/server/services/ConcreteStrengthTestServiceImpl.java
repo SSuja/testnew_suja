@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,19 +9,24 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.ConcreteStrengthTest;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.repositories.ConcreteStrengthTestRepository;
+import com.tokyo.supermix.util.Constants;
 
 @Service
 public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestService {
 
   @Autowired
   private ConcreteStrengthTestRepository concreteStrengthTestRepository;
-
   @Autowired
   private MixDesignService mixDesignService;
 
   @Transactional
   public void saveConcreteStrengthTest(ConcreteStrengthTest concreteStrengthTest) {
     concreteStrengthTestRepository.save(calculateConcreteStrengthRatio(concreteStrengthTest));
+  }
+
+  private Double roundDoubleValue(Double value) {
+    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+    return Double.valueOf(decimalFormat.format(value));
   }
 
   @Transactional(readOnly = true)
@@ -47,8 +53,8 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
       ConcreteStrengthTest concreteStrengthTest) {
     MixDesign mixDesign =
         mixDesignService.getMixDesignByCode(concreteStrengthTest.getMixDesign().getCode());
-    concreteStrengthTest
-        .setStrengthGradeRatio(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade());
+    concreteStrengthTest.setStrengthGradeRatio(
+        roundDoubleValue(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade()));
     return concreteStrengthTest;
   }
 

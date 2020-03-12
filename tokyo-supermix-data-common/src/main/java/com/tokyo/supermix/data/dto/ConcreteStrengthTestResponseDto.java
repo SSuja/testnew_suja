@@ -6,8 +6,6 @@ public class ConcreteStrengthTestResponseDto {
   private Long id;
   private String mixDesignCode;
   private double mixDesignTargetGrade;
-  private String plantCode;
-  private String plantName;
   private Long concreteAge;
   private Double strength;
   private Double strengthGradeRatio;
@@ -35,22 +33,6 @@ public class ConcreteStrengthTestResponseDto {
 
   public void setMixDesignTargetGrade(double mixDesignTargetGrade) {
     this.mixDesignTargetGrade = mixDesignTargetGrade;
-  }
-
-  public String getPlantCode() {
-    return plantCode;
-  }
-
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
-  }
-
-  public String getPlantName() {
-    return plantName;
-  }
-
-  public void setPlantName(String plantName) {
-    this.plantName = plantName;
   }
 
   public Long getConcreteAge() {
