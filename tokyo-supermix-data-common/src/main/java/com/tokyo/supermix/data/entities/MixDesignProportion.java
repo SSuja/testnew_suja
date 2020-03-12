@@ -20,7 +20,6 @@ public class MixDesignProportion implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private Long quantity;
-
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;

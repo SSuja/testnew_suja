@@ -1,4 +1,3 @@
-
 package com.tokyo.supermix.util;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -767,43 +766,6 @@ public class ValidationFailureStatusCodes {
   public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
     this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
   }
-
-  // for plantEquipmentCalibration
-  @Value("${validation.plantEquipmentCalibration.notExists}")
-  private String plantEquipmentCalibrationNotExist;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.userId.null}")
-  private String PlantEquipmentCalibrationRequestDtoUserIdIsNull;
-  @Value("${validation.PlantEquipmentCalibrationRequestDto.supplierId.null}")
-  private String PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-
-  public String getPlantEquipmentCalibrationRequestDtoUserIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoUserIdIsNull;
-  }
-
-  public void setPlantEquipmentCalibrationRequestDtoUserIdIsNull(
-      String plantEquipmentCalibrationRequestDtoUserIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoUserIdIsNull =
-        plantEquipmentCalibrationRequestDtoUserIdIsNull;
-  }
-
-  public String getPlantEquipmentCalibrationNotExist() {
-    return plantEquipmentCalibrationNotExist;
-  }
-
-  public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
-    this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
-  }
-
-  public String getPlantEquipmentCalibrationRequestDtoSupplierIdIsNull() {
-    return PlantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-  }
-
-  public void setPlantEquipmentCalibrationRequestDtoSupplierIdIsNull(
-      String plantEquipmentCalibrationRequestDtoSupplierIdIsNull) {
-    PlantEquipmentCalibrationRequestDtoSupplierIdIsNull =
-        plantEquipmentCalibrationRequestDtoSupplierIdIsNull;
-  }
-
   // for parameter
   @Value("${validation.parameter.notExists}")
   private String parameterNotExist;
@@ -963,8 +925,6 @@ public class ValidationFailureStatusCodes {
   @Value("${mixDesignRequestDto.date.null}")
   private String dateNotNull;
 
-
-
   public String getMixDesignNotExist() {
     return mixDesignNotExist;
   }
@@ -1035,74 +995,63 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.notExists}")
   private String projectNotExist;
 
-  public String getProjectNotExist() {
-    return projectNotExist;
+
+  // for concreteTest
+  @Value("${validation.concreteTest.notExists}")
+  private String concreteTestNotExist;
+
+  public String getConcreteTestNotExist() {
+    return concreteTestNotExist;
   }
 
-  public void setProjectNotExist(String projectNotExist) {
-    this.projectNotExist = projectNotExist;
+  public void setConcreteTestNotExist(String concreteTestNotExist) {
+    this.concreteTestNotExist = concreteTestNotExist;
   }
+  // for mixDesignProportion
 
-  public String getProjectAlreadyExist() {
-    return projectAlreadyExist;
-  }
-
-  public void setProjectAlreadyExist(String projectAlreadyExist) {
-    this.projectAlreadyExist = projectAlreadyExist;
-  }
-
-  @Value("${validation.project.alreadyExist}")
-  private String projectAlreadyExist;
-  
-//for mixDesignProportion
-  
   @Value("${validation.mixDesignProportion.notExist}")
   private String mixDesignProportionNotExist;
 
   @Value("${validation.mixDesignProportion.alreadyExist}")
   private String mixDesignProportionAlreadyExist;
-  
-  
+
   @Value("${mixDesignProportionRequestDto.quantity.null}")
   private String quantityIsNull;
 
   @Value("${mixDesignProportionRequestDto.quantity.empty}")
   private String quantityIsEmpty;
- 
-public String getMixDesignProportionNotExist() {
+
+  public String getMixDesignProportionNotExist() {
     return mixDesignProportionNotExist;
-}
+  }
 
-public void setMixDesignProportionNotExist(String mixDesignProportionNotExist) {
+  public void setMixDesignProportionNotExist(String mixDesignProportionNotExist) {
     this.mixDesignProportionNotExist = mixDesignProportionNotExist;
-}
+  }
 
-public String getMixDesignProportionAlreadyExist() {
+  public String getMixDesignProportionAlreadyExist() {
     return mixDesignProportionAlreadyExist;
-}
+  }
 
-public void setMixDesignProportionAlreadyExist(String mixDesignProportionAlreadyExist) {
+  public void setMixDesignProportionAlreadyExist(String mixDesignProportionAlreadyExist) {
     this.mixDesignProportionAlreadyExist = mixDesignProportionAlreadyExist;
-}
+  }
 
-public String getQuantityNotNull() {
-  return quantityIsNull;
-}
+  public String getQuantityNotNull() {
+    return quantityIsNull;
+  }
 
-public void setQuantityNotNull(String quantityNotNull) {
-  this.quantityIsNull = quantityNotNull;
-}
+  public void setQuantityNotNull(String quantityNotNull) {
+    this.quantityIsNull = quantityNotNull;
+  }
 
-public String getQuantityNotEmpty() {
-  return quantityIsEmpty;
-}
+  public String getQuantityNotEmpty() {
+    return quantityIsEmpty;
+  }
 
-public void setQuantityNotEmpty(String quantityNotEmpty) {
-  this.quantityIsEmpty = quantityNotEmpty;
-}
-
-
-  
+  public void setQuantityNotEmpty(String quantityNotEmpty) {
+    this.quantityIsEmpty = quantityNotEmpty;
+  }
 
   /*
    * ProcessSampleLoad
@@ -1216,7 +1165,6 @@ public void setQuantityNotEmpty(String quantityNotEmpty) {
     this.passwordIsNull = passwordIsNull;
   }
 
-
   // for ProcessSample
   @Value("${validation.processSample.alreadyExist}")
   private String processSampleAlreadyExist;
@@ -1251,4 +1199,176 @@ public void setQuantityNotEmpty(String quantityNotEmpty) {
     this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
   }
 
+  // for finish product
+  @Value("${validation.finishProduct.notExist}")
+  private String finishProductNotExist;
+
+  @Value("${validation.finishProduct.alreadyExist}")
+  private String finishProductAlreadyExist;
+
+  @Value("${finishProductRequestDto.mixDesignCode.empty}")
+  private String mixDesignCodeIsEmpty;
+
+  @Value("${finishProductRequestDto.mixDesignCode.null}")
+  private String mixDesignCodeIsNull;
+
+  @Value("${finishProductRequestDto.projectCode.empty}")
+  private String projectCodeIsEmpty;
+
+  @Value("${finishProductRequestDto.projectCode.null}")
+  private String projectCodeIsNull;
+
+  public String getTestTypeIsNull() {
+    return testTypeIsNull;
+  }
+
+  public void setTestTypeIsNull(String testTypeIsNull) {
+    this.testTypeIsNull = testTypeIsNull;
+  }
+
+  public String getTestTypeIsEmpty() {
+    return testTypeIsEmpty;
+  }
+
+  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
+    this.testTypeIsEmpty = testTypeIsEmpty;
+  }
+
+  public String getQuantityIsNull() {
+    return quantityIsNull;
+  }
+
+  public void setQuantityIsNull(String quantityIsNull) {
+    this.quantityIsNull = quantityIsNull;
+  }
+
+  public String getQuantityIsEmpty() {
+    return quantityIsEmpty;
+  }
+
+  public void setQuantityIsEmpty(String quantityIsEmpty) {
+    this.quantityIsEmpty = quantityIsEmpty;
+  }
+
+  public String getFinishProductNotExist() {
+    return finishProductNotExist;
+  }
+
+  public void setFinishProductNotExist(String finishProductNotExist) {
+    this.finishProductNotExist = finishProductNotExist;
+  }
+
+  public String getFinishProductAlreadyExist() {
+    return finishProductAlreadyExist;
+  }
+
+  public void setFinishProductAlreadyExist(String finishProductAlreadyExist) {
+    this.finishProductAlreadyExist = finishProductAlreadyExist;
+  }
+
+  public String getMixDesignCodeIsEmpty() {
+    return mixDesignCodeIsEmpty;
+  }
+
+  public void setMixDesignCodeIsEmpty(String mixDesignCodeIsEmpty) {
+    this.mixDesignCodeIsEmpty = mixDesignCodeIsEmpty;
+  }
+
+  public String getMixDesignCodeIsNull() {
+    return mixDesignCodeIsNull;
+  }
+
+  public void setMixDesignCodeIsNull(String mixDesignCodeIsNull) {
+    this.mixDesignCodeIsNull = mixDesignCodeIsNull;
+  }
+
+  public String getProjectCodeIsEmpty() {
+    return projectCodeIsEmpty;
+  }
+
+  public void setProjectCodeIsEmpty(String projectCodeIsEmpty) {
+    this.projectCodeIsEmpty = projectCodeIsEmpty;
+  }
+
+  public String getProjectCodeIsNull() {
+    return projectCodeIsNull;
+  }
+
+  public String getProjectNotExist() {
+    return projectNotExist;
+  }
+
+  public void setProjectNotExist(String projectNotExist) {
+    this.projectNotExist = projectNotExist;
+  }
+
+  public String getProjectAlreadyExist() {
+    return projectAlreadyExist;
+  }
+
+  public void setProjectAlreadyExist(String projectAlreadyExist) {
+    this.projectAlreadyExist = projectAlreadyExist;
+  }
+
+  @Value("${validation.project.alreadyExist}")
+  private String projectAlreadyExist;
+  /*
+   * Equation Parameter
+   */
+  @Value("${validation.equationParameter.notExists}")
+  private String equationParameterNotExist;
+  @Value("${validation.equationParameter.alreadyExist}")
+  private String equationParameterAlreadyExist;
+
+  public void setProjectCodeIsNull(String projectCodeIsNull) {
+    this.projectCodeIsNull = projectCodeIsNull;
+  }
+
+  public String getEquationParameterAlreadyExist() {
+    return equationParameterAlreadyExist;
+  }
+
+  public void setEquationParameterAlreadyExist(String equationParameterAlreadyExist) {
+    this.equationParameterAlreadyExist = equationParameterAlreadyExist;
+  }
+
+  public String getEquationParameterNotExist() {
+    return equationParameterNotExist;
+  }
+
+  public void setEquationParameterNotExist(String equationParameterNotExist) {
+    this.equationParameterNotExist = equationParameterNotExist;
+  }
+  // for plantEquipmentCalibration
+    @Value("${validation.plantEquipmentCalibration.notExists}")
+    private String plantEquipmentCalibrationNotExist;
+    @Value("${validation.employeeId.null}")
+    private String EmployeeIdIsNull;
+    @Value("${validation.supplierId.null}")
+    private String SupplierIdIsNull;
+
+    public String getPlantEquipmentCalibrationNotExist() {
+      return plantEquipmentCalibrationNotExist;
+    }
+
+    public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+      this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+    }
+
+    public String getEmployeeIdIsNull() {
+      return EmployeeIdIsNull;
+    }
+
+    public void setEmployeeIdIsNull(String employeeIdIsNull) {
+      EmployeeIdIsNull = employeeIdIsNull;
+    }
+
+    public String getSupplierIdIsNull() {
+      return SupplierIdIsNull;
+    }
+
+    public void setSupplierIdIsNull(String supplierIdIsNull) {
+      SupplierIdIsNull = supplierIdIsNull;
+    }
 }
+	

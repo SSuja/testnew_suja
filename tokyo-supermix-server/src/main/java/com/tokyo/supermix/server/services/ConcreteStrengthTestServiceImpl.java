@@ -53,8 +53,8 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
       ConcreteStrengthTest concreteStrengthTest) {
     MixDesign mixDesign =
         mixDesignService.getMixDesignByCode(concreteStrengthTest.getMixDesign().getCode());
-    concreteStrengthTest
-        .setStrengthGradeRatio(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade());
+    concreteStrengthTest.setStrengthGradeRatio(
+        roundDoubleValue(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade()));
     return concreteStrengthTest;
   }
 

@@ -20,7 +20,6 @@ public class MixDesign implements Serializable {
   private Double targetSlump;
   private Double waterCementRatio;
   private Double waterBinderRatio;
-
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;

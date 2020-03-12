@@ -26,7 +26,7 @@ public class PlantEquipmentCalibration implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private CalibrationType calibrationType;
   @ManyToOne
-  @JoinColumn(name = "userId", nullable = true)
+  @JoinColumn(name = "userId", nullable = false)
   private User user;
   private String description;
   @ManyToOne
@@ -37,6 +37,17 @@ public class PlantEquipmentCalibration implements Serializable {
   private Supplier supplier;
   @Enumerated(EnumType.ORDINAL)
   private Status status;
+  @ManyToOne
+  @JoinColumn(name = "employeeId", nullable = true)
+  private Employee employee;
+
+  public Employee getEmployee() {
+    return employee;
+  }
+
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
+  }
 
   public Long getId() {
     return id;
