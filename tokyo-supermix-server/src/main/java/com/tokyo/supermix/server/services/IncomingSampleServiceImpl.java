@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 
 @Service
@@ -39,4 +40,11 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
 	public boolean isIncomingSampleExist(String code) {
 		return incomingSampleRepository.existsByCode(code);
 	}
+
+  @Override
+  public void updateStatusForIncomingSample(String code, Status status) {
+    IncomingSample incomingSample = incomingSampleRepository.findById(code).get();
+    incomingSample.setStatus(status);
+    incomingSampleRepository.save(incomingSample);
+  }
 }

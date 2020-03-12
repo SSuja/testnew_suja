@@ -21,11 +21,7 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
 
   @Transactional
   public void saveConcreteStrengthTest(ConcreteStrengthTest concreteStrengthTest) {
-    MixDesign mixDesign =
-        mixDesignService.getMixDesignById(concreteStrengthTest.getMixDesign().getCode());
-    concreteStrengthTest.setStrengthGradeRatio(
-        roundDoubleValue(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade()));
-    concreteStrengthTestRepository.save(concreteStrengthTest);
+    concreteStrengthTestRepository.save(calculateConcreteStrengthRatio(concreteStrengthTest));
   }
 
   private Double roundDoubleValue(Double value) {
@@ -50,7 +46,16 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
 
   @Transactional(readOnly = true)
   public boolean isConcreteStrengthTestExist(Long id) {
-
     return concreteStrengthTestRepository.existsById(id);
   }
+
+  private ConcreteStrengthTest calculateConcreteStrengthRatio(
+      ConcreteStrengthTest concreteStrengthTest) {
+    MixDesign mixDesign =
+        mixDesignService.getMixDesignByCode(concreteStrengthTest.getMixDesign().getCode());
+    concreteStrengthTest
+        .setStrengthGradeRatio(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade());
+    return concreteStrengthTest;
+  }
+
 }
