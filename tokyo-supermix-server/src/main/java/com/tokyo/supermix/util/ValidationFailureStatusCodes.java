@@ -766,6 +766,7 @@ public class ValidationFailureStatusCodes {
   public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
     this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
   }
+
   // for parameter
   @Value("${validation.parameter.notExists}")
   private String parameterNotExist;
@@ -1339,36 +1340,58 @@ public class ValidationFailureStatusCodes {
   public void setEquationParameterNotExist(String equationParameterNotExist) {
     this.equationParameterNotExist = equationParameterNotExist;
   }
+
   // for plantEquipmentCalibration
-    @Value("${validation.plantEquipmentCalibration.notExists}")
-    private String plantEquipmentCalibrationNotExist;
-    @Value("${validation.employeeId.null}")
-    private String EmployeeIdIsNull;
-    @Value("${validation.supplierId.null}")
-    private String SupplierIdIsNull;
+  @Value("${validation.plantEquipmentCalibration.notExists}")
+  private String plantEquipmentCalibrationNotExist;
+  @Value("${validation.employeeId.null}")
+  private String EmployeeIdIsNull;
+  @Value("${validation.supplierId.null}")
+  private String SupplierIdIsNull;
 
-    public String getPlantEquipmentCalibrationNotExist() {
-      return plantEquipmentCalibrationNotExist;
-    }
+  public String getPlantEquipmentCalibrationNotExist() {
+    return plantEquipmentCalibrationNotExist;
+  }
 
-    public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
-      this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
-    }
+  public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+    this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+  }
 
-    public String getEmployeeIdIsNull() {
-      return EmployeeIdIsNull;
-    }
+  public String getEmployeeIdIsNull() {
+    return EmployeeIdIsNull;
+  }
 
-    public void setEmployeeIdIsNull(String employeeIdIsNull) {
-      EmployeeIdIsNull = employeeIdIsNull;
-    }
+  public void setEmployeeIdIsNull(String employeeIdIsNull) {
+    EmployeeIdIsNull = employeeIdIsNull;
+  }
 
-    public String getSupplierIdIsNull() {
-      return SupplierIdIsNull;
-    }
+  public String getSupplierIdIsNull() {
+    return SupplierIdIsNull;
+  }
 
-    public void setSupplierIdIsNull(String supplierIdIsNull) {
-      SupplierIdIsNull = supplierIdIsNull;
-    }
+  public void setSupplierIdIsNull(String supplierIdIsNull) {
+    SupplierIdIsNull = supplierIdIsNull;
+  }
+
+  // for MaterialTestTrail
+  @Value("${validation.materialTestTrail.alreadyExist}")
+  private String materialTestTrailAlreadyExist;
+  @Value("${validation.materialTestTrail.notExists}")
+  private String materialTestTrailNotExist;
+
+  public String getMaterialTestTrailAlreadyExist() {
+    return materialTestTrailAlreadyExist;
+  }
+
+  public void setMaterialTestTrailAlreadyExist(String materialTestTrailAlreadyExist) {
+    this.materialTestTrailAlreadyExist = materialTestTrailAlreadyExist;
+  }
+
+  public String getMaterialTestTrailNotExist() {
+    return materialTestTrailNotExist;
+  }
+
+  public void setMaterialTestTrailNotExist(String materialTestTrailNotExist) {
+    this.materialTestTrailNotExist = materialTestTrailNotExist;
+  }
 }
-	

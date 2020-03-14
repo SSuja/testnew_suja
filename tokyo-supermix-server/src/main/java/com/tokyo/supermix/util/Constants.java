@@ -335,7 +335,20 @@ public class Constants {
   public static final String ADD_EQUATION_PARAMETER_SUCCESS =
       "Equation Parameter added Successfully";
   public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
-
+  /*
+   * material-test-trial
+   */
+  public static final String MATERIAL_TEST_TRIAL = "materialTestTrial";
+  public static final String MATERIAL_TEST_TRIALS = "materialTestTrials";
+  public static final String MATERIAL_TEST_TRIAL_CODE = "materialTestTrialCode";
+  public static final String ADD_MATERIAL_TEST_TRIAL_SUCCESS =
+          "material test trial added Successfully";
+  public static final String MATERIAL_TEST_TRIAL_DELETED =
+      "material test trial Deleted Succeessfully";
+  public static final String UPDATE_MATERIAL_TEST_TRIAL_SUCCESS =
+      "material test trial update Successfully";
+  public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
+      "material test trial average,status updated Successfully";
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
