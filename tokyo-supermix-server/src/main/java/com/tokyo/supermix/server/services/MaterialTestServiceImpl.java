@@ -33,7 +33,24 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
 	@Transactional(propagation = Propagation.NEVER)
 	public void deleteMaterialTest(Long id) {
-		materialTestRepository.deleteById(id);	
+		materialTestRepository.deleteById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public boolean isMaterialTestExists(Long id) {
+		return materialTestRepository.existsById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<MaterialTest> getMaterialTestByStatus(String status) {
+		return materialTestRepository.findByStatus(status);
+	}
+
+	@Override
+	public List<MaterialTest> getMaterialTestByTest(Long testId) {
+		
+		return null;
+	}
+
+	
 }

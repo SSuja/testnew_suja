@@ -2,14 +2,17 @@ package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
 
+import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TestLevel;
+
 public class MaterialTestRequestDto {
 
 	private Long id;
 	private Date date;
 	private Long noOfTrial;
 	private Double average;
-	private String status;
-	private String testLevel;
+	private Status status;
+	private TestLevel testLevel;
 	private String incomingSampleCode;
 	private Long testId;
 	private Long materialStateId;
@@ -46,19 +49,19 @@ public class MaterialTestRequestDto {
 		this.average = average;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public String getTestLevel() {
+	public TestLevel getTestLevel() {
 		return testLevel;
 	}
 
-	public void setTestLevel(String testLevel) {
+	public void setTestLevel(TestLevel testLevel) {
 		this.testLevel = testLevel;
 	}
 
