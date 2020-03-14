@@ -336,6 +336,17 @@ public class Constants {
       "Equation Parameter added Successfully";
   public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
 
+  // constants for validation key
+  public static final String PARAMETER_RESULT = "parameterResult";
+  public static final String PARAMETER_RESULTS = "parameterResults";
+  public static final String PARAMETER_RESULT_ID = "parameterResultId";
+
+  // Success Messages
+  public static final String ADD_PARAMETER_RESULT_SUCCESS = "parameterResult added Successfully";
+  public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Succeessfully";
+  public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
+      "parameterResult updated Successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
