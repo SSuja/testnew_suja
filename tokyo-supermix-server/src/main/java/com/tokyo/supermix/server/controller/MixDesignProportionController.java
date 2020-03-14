@@ -105,20 +105,20 @@ public class MixDesignProportionController {
 
   }
 
-  @GetMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_MIXDESIGNCODE)
+  @GetMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE)
   public ResponseEntity<Object> getMixDesignProportionByMixDesignCode(
       @PathVariable String mixDesignCode) {
     if(mixDesignProportionService.existsByMixDesignCode(mixDesignCode)) {
       return new ResponseEntity<Object>(
-          new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION,
-              mapper.map(mixDesignProportionService.getAllMixDesignProportions(),
+          new ContentResponse<>(Constants.MIX_DESIGN_PROPORTIONS,
+              mapper.map(mixDesignProportionService.findByMixDesignCode(mixDesignCode),
                   MixDesignProportionResponseDto.class),
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.MIX_DESIGN_CODE,
-            validationFailureStatusCodes.getMixDesignProportionNotExist()),
+            validationFailureStatusCodes.getMixDesignNotExist()),
         HttpStatus.BAD_REQUEST);
   }
 
