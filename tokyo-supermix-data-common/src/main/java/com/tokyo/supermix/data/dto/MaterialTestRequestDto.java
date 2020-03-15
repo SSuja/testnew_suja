@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.enums.TestLevel;
 
 public class MaterialTestRequestDto {
 
-	private Long id;
+	private String code;
 	private Date date;
 	private Long noOfTrial;
 	private Double average;
@@ -17,12 +17,12 @@ public class MaterialTestRequestDto {
 	private Long testId;
 	private Long materialStateId;
 
-	public Long getId() {
-		return id;
+	public String getCode() {
+		return code;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Date getDate() {

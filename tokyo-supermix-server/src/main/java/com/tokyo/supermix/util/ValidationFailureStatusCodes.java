@@ -1378,12 +1378,34 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.materialTest.notExists}")
 	private String materialTestNotExist;
 
+	@Value("${validation.materialTest.alreadyExist}")
+	private String materialTestAlreadyExists;
+
+	@Value("${validation.status.notExixts}")
+	private String materialTestStatusNotExists;
+
 	public String getMaterialTestNotExist() {
 		return materialTestNotExist;
 	}
 
 	public void setMaterialTestNotExist(String materialTestNotExist) {
 		this.materialTestNotExist = materialTestNotExist;
+	}
+
+	public String getMaterialTestStatusNotExists() {
+		return materialTestStatusNotExists;
+	}
+
+	public void setMaterialTestStatusNotExists(String materialTestStatusNotExists) {
+		this.materialTestStatusNotExists = materialTestStatusNotExists;
+	}
+
+	public String getMaterialTestAlreadyExists() {
+		return materialTestAlreadyExists;
+	}
+
+	public void setMaterialTestAlreadyExists(String materialTestAlreadyExists) {
+		this.materialTestAlreadyExists = materialTestAlreadyExists;
 	}
 
 }

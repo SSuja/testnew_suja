@@ -245,6 +245,7 @@ public final class EndpointURI {
 	public static final String FINISH_PRODUCT = BASE_API_PATH + "finish-product";
 	public static final String FINISH_PRODUCTS = BASE_API_PATH + "finish-products";
 	public static final String FINISH_PRODUCT_BY_ID = FINISH_PRODUCT + ID;
+
 	/*
 	 * Equation Parameter
 	 */
@@ -259,7 +260,11 @@ public final class EndpointURI {
 	 */
 	public static final String MATERIAL_TEST = BASE_API_PATH + "material-test";
 	public static final String MATERIAL_TESTS = BASE_API_PATH + "material-tests";
-	public static final String MATERIAL_TESTS_BY_ID = BASE_API_PATH + ID;
+	public static final String MATERIAL_TESTS_BY_CODE = MATERIAL_TEST + CODE;
+	public static final String TEST_ID = "/{testId}";
+	public static final String STATUS = "/{status}";
+	public static final String MATERIAL_TEST_BY_TEST = MATERIAL_TESTS + "/test" + TEST_ID;
+	public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
 
 	private EndpointURI() {
 	}

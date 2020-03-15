@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 
@@ -22,8 +21,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 	}
 
 	@Transactional(readOnly = true)
-	public MaterialTest getMaterialTestById(Long id) {
-		return materialTestRepository.findById(id).get();
+	public MaterialTest getMaterialTestByCode(String code) {
+		return materialTestRepository.findByCode(code);
 	}
 
 	@Transactional(readOnly = true)
@@ -32,13 +31,13 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 	}
 
 	@Transactional(propagation = Propagation.NEVER)
-	public void deleteMaterialTest(Long id) {
-		materialTestRepository.deleteById(id);
+	public void deleteMaterialTest(String code) {
+		materialTestRepository.deleteById(code);
 	}
 
 	@Transactional(readOnly = true)
-	public boolean isMaterialTestExists(Long id) {
-		return materialTestRepository.existsById(id);
+	public boolean isMaterialTestExists(String code) {
+		return materialTestRepository.existsByCode(code);
 	}
 
 	@Transactional(readOnly = true)
@@ -46,11 +45,19 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 		return materialTestRepository.findByStatus(status);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<MaterialTest> getMaterialTestByTest(Long testId) {
-		
-		return null;
+		return materialTestRepository.findByTest(testId);
 	}
 
-	
+	@Transactional(readOnly = true)
+	public boolean isMaterialTestStatusExists(String status) {
+		return materialTestRepository.existsByStatus(status);
+	}
+
+	@Transactional(readOnly = true)
+	public boolean isMaterialTestByTestExists(Long testId) {
+		return materialTestRepository.existsByTest(testId);
+	}
+
 }

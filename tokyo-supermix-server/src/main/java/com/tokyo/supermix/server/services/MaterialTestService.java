@@ -8,16 +8,20 @@ public interface MaterialTestService {
 
 	public void saveMaterialTest(MaterialTest materialTest);
 
-	public boolean isMaterialTestExists(Long id);
+	public boolean isMaterialTestExists(String code);
 
-	public MaterialTest getMaterialTestById(Long id);
+	public MaterialTest getMaterialTestByCode(String code);
 
 	public List<MaterialTest> getAllMaterialTests();
 
-	public void deleteMaterialTest(Long id);
+	public void deleteMaterialTest(String code);
 
-	public List <MaterialTest> getMaterialTestByStatus(String status);
-	
-	public List <MaterialTest> getMaterialTestByTest(Long testId);
+	public boolean isMaterialTestStatusExists(String status);
+
+	public boolean isMaterialTestByTestExists(Long testId);
+
+	public List<MaterialTest> getMaterialTestByStatus(String status);
+
+	public List<MaterialTest> getMaterialTestByTest(Long testId);
 
 }

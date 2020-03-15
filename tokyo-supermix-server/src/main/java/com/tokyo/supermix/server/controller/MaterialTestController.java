@@ -48,6 +48,12 @@ public class MaterialTestController {
 	// create material tests
 	@PostMapping(value = EndpointURI.MATERIAL_TEST)
 	public ResponseEntity<Object> createMaterialTest(@Valid @RequestBody MaterialTestRequestDto materialTestDto) {
+
+		if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
+			logger.debug("Code already exists");
+			return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+					validationFailureStatusCodes.getMaterialTestAlreadyExists()), HttpStatus.BAD_REQUEST);
+		}
 		MaterialTest materialTest = mapper.map(materialTestDto, MaterialTest.class);
 		materialTestService.saveMaterialTest(materialTest);
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MATERIAL_TEST_SUCCESS),
@@ -65,12 +71,12 @@ public class MaterialTestController {
 	}
 
 	// get material test by id
-	@GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_ID)
-	public ResponseEntity<Object> getMaterialTestById(@PathVariable Long id) {
-		if (materialTestService.isMaterialTestExists(id)) {
+	@GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
+	public ResponseEntity<Object> getMaterialTestById(@PathVariable String code) {
+		if (materialTestService.isMaterialTestExists(code)) {
 			logger.debug("Id Exists");
 			return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST,
-					mapper.map(materialTestService.getMaterialTestById(id), MaterialTestResponseDto.class),
+					mapper.map(materialTestService.getMaterialTestByCode(code), MaterialTestResponseDto.class),
 					RestApiResponseStatus.OK), HttpStatus.OK);
 		}
 		logger.debug("Invalid Id");
@@ -79,10 +85,10 @@ public class MaterialTestController {
 	}
 
 	// delete material test by id
-	@DeleteMapping(value = EndpointURI.MATERIAL_TESTS_BY_ID)
-	public ResponseEntity<Object> deleteMaterialTest(@PathVariable Long id) {
-		if (materialTestService.isMaterialTestExists(id)) {
-			materialTestService.deleteMaterialTest(id);
+	@DeleteMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
+	public ResponseEntity<Object> deleteMaterialTest(@PathVariable String code) {
+		if (materialTestService.isMaterialTestExists(code)) {
+			materialTestService.deleteMaterialTest(code);
 			logger.debug("Material Test deleted");
 			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_DELETED),
 					HttpStatus.OK);
@@ -95,7 +101,7 @@ public class MaterialTestController {
 	// update finish product
 	@PutMapping(value = EndpointURI.MATERIAL_TEST)
 	public ResponseEntity<Object> updateMaterialTest(@Valid @RequestBody MaterialTestRequestDto materialTestDto) {
-		if (materialTestService.isMaterialTestExists(materialTestDto.getId())) {
+		if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
 			logger.debug("Id exists");
 			MaterialTest materialTest = mapper.map(materialTestDto, MaterialTest.class);
 			materialTestService.saveMaterialTest(materialTest);
@@ -107,10 +113,40 @@ public class MaterialTestController {
 				validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
 	}
 
-	// get mock data
-	@GetMapping(value = EndpointURI.MATERIAL_TEST)
-	public MaterialTestRequestDto getMockMaterialTest() {
-		return new MaterialTestRequestDto();
+	// get all material test by status
+	@GetMapping(value = EndpointURI.MATERIAL_TEST_BY_STATUS)
+	public ResponseEntity<Object> getAllMaterialTestByStatus(@PathVariable String status) {
+		if (materialTestService.isMaterialTestStatusExists(status)) {
+			logger.debug("status exists");
+			return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST,
+					mapper.map(materialTestService.getMaterialTestByStatus(status), MaterialTestResponseDto.class),
+					RestApiResponseStatus.OK), HttpStatus.OK);
+		}
+
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+				validationFailureStatusCodes.getMaterialTestStatusNotExists()), HttpStatus.BAD_REQUEST);
 	}
+
+	// get all material test by test
+	@GetMapping(value = EndpointURI.MATERIAL_TEST_BY_TEST)
+	public ResponseEntity<Object> getAllMaterialTestByTest(@PathVariable Long testId) {
+		if (materialTestService.isMaterialTestByTestExists(testId)) {
+			logger.debug("test exists");
+			return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST,
+					mapper.map(materialTestService.getMaterialTestByTest(testId), MaterialTestResponseDto.class),
+					RestApiResponseStatus.OK), HttpStatus.OK);
+		}
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(
+				new ValidationFailureResponse(Constants.MATERIAL_TEST, validationFailureStatusCodes.getTestNotExist()),
+				HttpStatus.BAD_REQUEST);
+	}
+
+	// get mock data
+//	@GetMapping(value = EndpointURI.MATERIAL_TEST)
+//	public MaterialTestRequestDto getMockMaterialTest() {
+//		return new MaterialTestRequestDto();
+//	}
 
 }
