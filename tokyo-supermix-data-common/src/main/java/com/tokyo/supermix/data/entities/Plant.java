@@ -8,50 +8,50 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant")
-public class Plant implements Serializable{
+public class Plant implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	private String code;
-	private String name;
-	private String address;
-	private String phoneNumber;
+  @Id
+  private String code;
+  private String name;
+  private String address;
+  private String phoneNumber;
 
-	public String getCode() {
-		return code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public String getAddress() {
-		return address;
-	}
+  public String getAddress() {
+    return address;
+  }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
 
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }
