@@ -18,6 +18,7 @@ public class User implements Serializable {
   private Long id;
   private String userName;
   private String password;
+  private String email;
   @OneToOne
   @JoinColumn(name = "employeeId", nullable = false)
   private Employee employee;
@@ -52,6 +53,14 @@ public class User implements Serializable {
 
   public void setEmployee(Employee employee) {
     this.employee = employee;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public static long getSerialversionuid() {

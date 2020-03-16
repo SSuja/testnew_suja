@@ -84,4 +84,8 @@ public class ProcessSampleLoad implements Serializable {
     this.processSample = processSample;
   }
 
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
 }

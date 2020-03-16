@@ -12,33 +12,33 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "parameter")
 public class Parameter implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String name;
-	private String abbreviation;
-	
-	public Long getId() {
-		return id;
-	}
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String name;
+  private String abbreviation;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
   public String getAbbreviation() {
     return abbreviation;

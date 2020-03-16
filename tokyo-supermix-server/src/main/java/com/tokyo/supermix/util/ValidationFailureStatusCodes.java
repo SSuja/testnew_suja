@@ -766,6 +766,7 @@ public class ValidationFailureStatusCodes {
   public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
     this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
   }
+
   // for parameter
   @Value("${validation.parameter.notExists}")
   private String parameterNotExist;
@@ -1339,6 +1340,7 @@ public class ValidationFailureStatusCodes {
   public void setEquationParameterNotExist(String equationParameterNotExist) {
     this.equationParameterNotExist = equationParameterNotExist;
   }
+
   // for plantEquipmentCalibration
     @Value("${validation.plantEquipmentCalibration.notExists}")
     private String plantEquipmentCalibrationNotExist;
@@ -1391,5 +1393,57 @@ public class ValidationFailureStatusCodes {
   public void setTestIdAlreadyExist(String testIdAlreadyExist) {
     this.testIdAlreadyExist = testIdAlreadyExist;
   }
+  @Value("${validation.plantEquipmentCalibration.notExists}")
+  private String plantEquipmentCalibrationNotExist;
+  @Value("${validation.employeeId.null}")
+  private String EmployeeIdIsNull;
+  @Value("${validation.supplierId.null}")
+  private String SupplierIdIsNull;
+
+  public String getPlantEquipmentCalibrationNotExist() {
+    return plantEquipmentCalibrationNotExist;
+  }
+
+  public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+    this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+  }
+
+  public String getEmployeeIdIsNull() {
+    return EmployeeIdIsNull;
+  }
+
+  public void setEmployeeIdIsNull(String employeeIdIsNull) {
+    EmployeeIdIsNull = employeeIdIsNull;
+  }
+
+  public String getSupplierIdIsNull() {
+    return SupplierIdIsNull;
+  }
+
+  public void setSupplierIdIsNull(String supplierIdIsNull) {
+    SupplierIdIsNull = supplierIdIsNull;
+  }
+
+  // for acceptedValue
+  @Value("${validation.acceptedValue.notExists}")
+  private String acceptedValueNotExist;
+  @Value("${validation.acceptedValue.alreadyTestIdExists}")
+  private String acceptedValueTestIdAlreadyExist;
+
+  public String getAcceptedValueTestIdAlreadyExist() {
+    return acceptedValueTestIdAlreadyExist;
+  }
+
+  public void setAcceptedValueTestIdAlreadyExist(String acceptedValueTestIdAlreadyExist) {
+    this.acceptedValueTestIdAlreadyExist = acceptedValueTestIdAlreadyExist;
+  }
+
+  public String getAcceptedValueNotExist() {
+    return acceptedValueNotExist;
+  }
+
+  public void setAcceptedValueNotExist(String acceptedValueNotExist) {
+    this.acceptedValueNotExist = acceptedValueNotExist;
+  }
+
 }
-	

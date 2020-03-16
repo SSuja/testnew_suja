@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,19 @@ public class EquationParameterController {
 
   @PostMapping(value = EndpointURI.EQUATION_PARAMETER)
   public ResponseEntity<Object> createEquationParameter(
-      @Valid @RequestBody EquationParameterRequestDto equationParameterRequestDto) {
-    if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
-        equationParameterRequestDto.getParameterId())) {
-      logger.debug("row is already exists: createEquationParameter(), isDuplicateRowExists: {}");
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.EQUATION_PARAMETER,
-              validationFailureStatusCodes.getEquationParameterAlreadyExist()),
-          HttpStatus.BAD_REQUEST);
+      @Valid @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
+    for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
+      if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
+          equationParameterRequestDto.getParameterId())) {
+        logger.debug("row is already exists: createEquationParameter(), isDuplicateRowExists: {}");
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.EQUATION_PARAMETER,
+                validationFailureStatusCodes.getEquationParameterAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
     }
-    equationParameterService
-        .saveEquationParameter(mapper.map(equationParameterRequestDto, EquationParameter.class));
+    equationParameterService.saveEquationParameter(
+        mapper.map(equationParameterRequestDtoList, EquationParameter.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_PARAMETER_SUCCESS),
         HttpStatus.OK);
@@ -80,7 +83,6 @@ public class EquationParameterController {
   @GetMapping(value = EndpointURI.GET_PARAMETERS_BY_EQUATION_ID)
   public ResponseEntity<Object> getAllParameterByEquationId(@PathVariable Long equationId) {
     if (equationParameterService.isEquationIdExist(equationId)) {
-      System.out.println("good");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.EQUATION_PARAMETERS,
               mapper.map(equationParameterService.getEquationByEquationId(equationId),

@@ -14,8 +14,8 @@ public class EquationParameterServiceImpl implements EquationParameterService {
   private EquationParameterRepository equationParameterRepository;
 
   @Transactional
-  public EquationParameter saveEquationParameter(EquationParameter equationParameter) {
-    return equationParameterRepository.save(equationParameter);
+  public List<EquationParameter> saveEquationParameter(List<EquationParameter> equationParameter) {
+    return equationParameterRepository.saveAll(equationParameter);
   }
 
   @Transactional(readOnly = true)
