@@ -1342,37 +1342,57 @@ public class ValidationFailureStatusCodes {
   }
 
   // for plantEquipmentCalibration
-  @Value("${validation.plantEquipmentCalibration.notExists}")
-  private String plantEquipmentCalibrationNotExist;
-  @Value("${validation.employeeId.null}")
-  private String EmployeeIdIsNull;
-  @Value("${validation.supplierId.null}")
-  private String SupplierIdIsNull;
+    @Value("${validation.plantEquipmentCalibration.notExists}")
+    private String plantEquipmentCalibrationNotExist;
+    @Value("${validation.employeeId.null}")
+    private String EmployeeIdIsNull;
+    @Value("${validation.supplierId.null}")
+    private String SupplierIdIsNull;
 
-  public String getPlantEquipmentCalibrationNotExist() {
-    return plantEquipmentCalibrationNotExist;
+    public String getPlantEquipmentCalibrationNotExist() {
+      return plantEquipmentCalibrationNotExist;
+    }
+
+    public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+      this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+    }
+
+    public String getEmployeeIdIsNull() {
+      return EmployeeIdIsNull;
+    }
+
+    public void setEmployeeIdIsNull(String employeeIdIsNull) {
+      EmployeeIdIsNull = employeeIdIsNull;
+    }
+
+    public String getSupplierIdIsNull() {
+      return SupplierIdIsNull;
+    }
+
+    public void setSupplierIdIsNull(String supplierIdIsNull) {
+      SupplierIdIsNull = supplierIdIsNull;
+    }
+    
+    @Value("${validation.admixtureAcceptedValue.notExists}")
+    private String admixtureAcceptedValueNotExist;
+
+	public String getAdmixtureAcceptedValueNotExist() {
+		return admixtureAcceptedValueNotExist;
+	}
+
+	public void setAdmixtureAcceptedValueNotExist(String admixtureAcceptedValueNotExist) {
+		this.admixtureAcceptedValueNotExist = admixtureAcceptedValueNotExist;
+	}
+//  for AdmixtureAcceptedValue
+  @Value("${validation.testId.alreadyExist}")
+  private String testIdAlreadyExist;
+  public String getTestIdAlreadyExist() {
+    return testIdAlreadyExist;
   }
 
-  public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
-    this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+  public void setTestIdAlreadyExist(String testIdAlreadyExist) {
+    this.testIdAlreadyExist = testIdAlreadyExist;
   }
-
-  public String getEmployeeIdIsNull() {
-    return EmployeeIdIsNull;
-  }
-
-  public void setEmployeeIdIsNull(String employeeIdIsNull) {
-    EmployeeIdIsNull = employeeIdIsNull;
-  }
-
-  public String getSupplierIdIsNull() {
-    return SupplierIdIsNull;
-  }
-
-  public void setSupplierIdIsNull(String supplierIdIsNull) {
-    SupplierIdIsNull = supplierIdIsNull;
-  }
-
   // for acceptedValue
   @Value("${validation.acceptedValue.notExists}")
   private String acceptedValueNotExist;
