@@ -91,28 +91,29 @@ public final class EndpointURI {
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
 
-	/*
-	 * Test
-	 */
-	public static final String TEST = BASE_API_PATH + "test";
-	public static final String TESTS = BASE_API_PATH + "tests";
-	public static final String GET_TEST_BY_ID = TEST + ID;
-	public static final String DELETE_TEST = TEST + ID;
-	public static final String GET_TEST_BY_TEST_TYPE_ID = TEST + SLASH + "test-type" + SLASH + "{testTypeId}";
-	/*
-	 * Material State
-	 */
-	public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
-	public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
-	public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
-	public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
-	/*
-	 * Raw Material apis
-	 */
-	public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";
-	public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
-	public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
-	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
+  /*
+   * Test
+   */
+  public static final String TEST = BASE_API_PATH + "test";
+  public static final String TESTS = BASE_API_PATH + "tests";
+  public static final String GET_TEST_BY_ID = TEST + ID;
+  public static final String DELETE_TEST = TEST + ID;
+  public static final String GET_TEST_BY_TEST_TYPE_ID =
+      TEST + SLASH + "test-type" + SLASH + "{testTypeId}";
+  /*
+   * Material State
+   */
+  public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
+  public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
+  public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
+  public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
+  /*
+   * Raw Material apis
+   */
+  public static final String RAW_MATERIAL = BASE_API_PATH + "raw-material";
+  public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
+  public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
+  public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 
   /*
    * EquipmentPlantCalibration apis
@@ -171,6 +172,8 @@ public final class EndpointURI {
    */
   public static final String INCOMING_SAMPLE = BASE_API_PATH + "incoming-sample";
   public static final String INCOMING_SAMPLES = BASE_API_PATH + "incoming-samples";
+  public static final String INCOMING_SAMPLE_BY_STATUS =
+      INCOMING_SAMPLE + "/test-status" + "/{status}";
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
   public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
       INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
@@ -221,7 +224,6 @@ public final class EndpointURI {
    * Mix design proportion apis
    * 
    */
-
   public static final String MIX_DESIGN_PROPORTION = BASE_API_PATH + "mix-design-proportion";
   public static final String MIX_DESIGN_PROPORTIONS = BASE_API_PATH + "mix-design-proportions";
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
@@ -292,7 +294,6 @@ public final class EndpointURI {
   public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
 
-	private EndpointURI() {
-	}
+  private EndpointURI() {}
 
 }

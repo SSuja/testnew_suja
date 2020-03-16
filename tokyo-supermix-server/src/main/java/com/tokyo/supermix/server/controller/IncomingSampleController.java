@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,15 +102,28 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @PutMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE_AND_STATUS)
-  public ResponseEntity<Object> updateStatusIncomingSample(@PathVariable String code,@PathVariable Status status) {
+  public ResponseEntity<Object> updateStatusIncomingSample(@PathVariable String code,
+      @PathVariable Status status) {
     if (incomingSampleService.isIncomingSampleExist(code)) {
       incomingSampleService.updateStatusForIncomingSample(code, status);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_STATUS)
+  public ResponseEntity<Object> getIncomingSampleByStatus(@PathVariable Status status) {
+    if (incomingSampleService.isIncomingSampleStatusExist(status)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE,
+          mapper.map(incomingSampleService.getIncomingSampleByStatus(status),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_STATUS,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
