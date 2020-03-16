@@ -161,7 +161,7 @@ public class Constants {
 	 * Test
 	 */
 	public static final String TEST = "test";
-	public static final String TEST_ID = "id";
+	public static final String TEST_ID = "testId";
 	public static final String ADD_TEST_SUCCESS = "Test added Successfully";
 	public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
 	public static final String DELETE_TEST_SCCESS = "Test delete successfully";
@@ -315,6 +315,25 @@ public class Constants {
 	public static final String EQUATION_PARAMETER_ID = "equationParameterId";
 	public static final String ADD_EQUATION_PARAMETER_SUCCESS = "Equation Parameter added Successfully";
 	public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
+	/*
+	 * Admixture Accepted Value
+	 */
+	public static final String ADMIXTURE_ACCEPTED_VALUE_ID = "admixtureAcceptedValueId";
+	public static final String ADMIXTURE_ACCEPTED_VALUE = "admixtureAcceptedValue";
+	public static final String ADMIXTURE_ACCEPTED_VALUES = "admixtureAcceptedValues";
+	public static final String ADMIXTURE_ACCEPTED_VALUE_DELETED = "admixtureAcceptedValue Deleted Succeessfully";
+	public static final String ADD_ADMIXTURE_ACCEPTED_VALUE_SUCCESS = "admixtureAcceptedValue added Successfully";
+	public static final String UPDATE_ADMIXTURE_ACCEPTED_VALUE_SUCCESS = "admixtureAcceptedValue updated Successfully";
+	/*
+	 * AcceptedValue
+	 */
+	public static final String ACCEPTED_VALUE = "acceptedValue";
+	public static final String ACCEPTED_VALUES = "acceptedValues";
+	public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
+	public static final String ACCEPTED_VALUE_TEST_ID = "acceptedValueTestId";
+	public static final String ACCEPTED_VALUE_DELETED = "AcceptedValue Successfully Deleted";
+	public static final String ADD_ACCEPTED_VALUE_SUCCESS = "AcceptedValue Added Successfully";
+	public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "AcceptedValue Successfully updated";
 
 	/*
 	 * Material Test

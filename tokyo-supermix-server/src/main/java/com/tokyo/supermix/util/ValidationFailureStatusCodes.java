@@ -1041,6 +1041,42 @@ public class ValidationFailureStatusCodes {
 		return quantityIsNull;
 	}
 
+	/*
+	 * Material Test
+	 */
+	@Value("${validation.materialTest.notExists}")
+	private String materialTestNotExist;
+
+	@Value("${validation.materialTest.alreadyExist}")
+	private String materialTestAlreadyExists;
+
+	@Value("${validation.status.notExixts}")
+	private String materialTestStatusNotExists;
+
+	public String getMaterialTestNotExist() {
+		return materialTestNotExist;
+	}
+
+	public void setMaterialTestNotExist(String materialTestNotExist) {
+		this.materialTestNotExist = materialTestNotExist;
+	}
+
+	public String getMaterialTestStatusNotExists() {
+		return materialTestStatusNotExists;
+	}
+
+	public void setMaterialTestStatusNotExists(String materialTestStatusNotExists) {
+		this.materialTestStatusNotExists = materialTestStatusNotExists;
+	}
+
+	public String getMaterialTestAlreadyExists() {
+		return materialTestAlreadyExists;
+	}
+
+	public void setMaterialTestAlreadyExists(String materialTestAlreadyExists) {
+		this.materialTestAlreadyExists = materialTestAlreadyExists;
+	}
+
 	public void setQuantityNotNull(String quantityNotNull) {
 		this.quantityIsNull = quantityNotNull;
 	}
@@ -1372,40 +1408,49 @@ public class ValidationFailureStatusCodes {
 		SupplierIdIsNull = supplierIdIsNull;
 	}
 
-	/*
-	 * Material Test
-	 */
-	@Value("${validation.materialTest.notExists}")
-	private String materialTestNotExist;
+	@Value("${validation.admixtureAcceptedValue.notExists}")
+	private String admixtureAcceptedValueNotExist;
 
-	@Value("${validation.materialTest.alreadyExist}")
-	private String materialTestAlreadyExists;
-
-	@Value("${validation.status.notExixts}")
-	private String materialTestStatusNotExists;
-
-	public String getMaterialTestNotExist() {
-		return materialTestNotExist;
+	public String getAdmixtureAcceptedValueNotExist() {
+		return admixtureAcceptedValueNotExist;
 	}
 
-	public void setMaterialTestNotExist(String materialTestNotExist) {
-		this.materialTestNotExist = materialTestNotExist;
+	public void setAdmixtureAcceptedValueNotExist(String admixtureAcceptedValueNotExist) {
+		this.admixtureAcceptedValueNotExist = admixtureAcceptedValueNotExist;
 	}
 
-	public String getMaterialTestStatusNotExists() {
-		return materialTestStatusNotExists;
+//  for AdmixtureAcceptedValue
+	@Value("${validation.testId.alreadyExist}")
+	private String testIdAlreadyExist;
+
+	public String getTestIdAlreadyExist() {
+		return testIdAlreadyExist;
 	}
 
-	public void setMaterialTestStatusNotExists(String materialTestStatusNotExists) {
-		this.materialTestStatusNotExists = materialTestStatusNotExists;
+	public void setTestIdAlreadyExist(String testIdAlreadyExist) {
+		this.testIdAlreadyExist = testIdAlreadyExist;
 	}
 
-	public String getMaterialTestAlreadyExists() {
-		return materialTestAlreadyExists;
+	// for acceptedValue
+	@Value("${validation.acceptedValue.notExists}")
+	private String acceptedValueNotExist;
+	@Value("${validation.acceptedValue.alreadyTestIdExists}")
+	private String acceptedValueTestIdAlreadyExist;
+
+	public String getAcceptedValueTestIdAlreadyExist() {
+		return acceptedValueTestIdAlreadyExist;
 	}
 
-	public void setMaterialTestAlreadyExists(String materialTestAlreadyExists) {
-		this.materialTestAlreadyExists = materialTestAlreadyExists;
+	public void setAcceptedValueTestIdAlreadyExist(String acceptedValueTestIdAlreadyExist) {
+		this.acceptedValueTestIdAlreadyExist = acceptedValueTestIdAlreadyExist;
+	}
+
+	public String getAcceptedValueNotExist() {
+		return acceptedValueNotExist;
+	}
+
+	public void setAcceptedValueNotExist(String acceptedValueNotExist) {
+		this.acceptedValueNotExist = acceptedValueNotExist;
 	}
 
 }
