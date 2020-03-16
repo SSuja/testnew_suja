@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -15,8 +16,6 @@ import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   @Autowired
   private MaterialTestTrialRepository materialTestTrialRepository;
-  @Autowired
-  private MaterialTestService materialTestService;
   @Autowired
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
@@ -67,9 +66,9 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     Long testId = materialTestRepository.findById(materialTestCode).get().getTest().getId();
     if (acceptedValueRepository.findByTestId(testId).getMinValue() <= avarage
         && acceptedValueRepository.findByTestId(testId).getMaxValue() >= avarage) {
-      materialTestService.updateAverage(avarage, materialTestCode, Status.PASS);
+      updateAverage(avarage, materialTestCode, Status.PASS);
     } else {
-      materialTestService.updateAverage(avarage, materialTestCode, Status.FAIL);
+      updateAverage(avarage, materialTestCode, Status.FAIL);
 
     }
   }
@@ -85,5 +84,13 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
       trialTotal = listMaterialTestTrial.size();
     }
     return (totalResult / trialTotal);
+  }
+
+  @Transactional
+  public MaterialTest updateAverage(Double average, String code, Status status) {
+    MaterialTest materialTest = materialTestRepository.findById(code).get();
+    materialTest.setAverage(average);
+    materialTest.setStatus(status);
+    return materialTestRepository.save(materialTest);
   }
 }
