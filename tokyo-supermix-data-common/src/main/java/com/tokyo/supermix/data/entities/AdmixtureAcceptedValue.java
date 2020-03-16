@@ -9,18 +9,19 @@ import javax.persistence.Table;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
-@Table( name = "admixture_accepted_value")
-public class AdmixtureAcceptedValue extends AcceptedValue implements Serializable{
-  private static final long serialVersionUID = 1L;
-  @ManyToOne
-  @JoinColumn(name = "rawMaterialId", nullable = false)
-  private RawMaterial rawMaterial;
+@Table(name = "admixture_accepted_value")
+public class AdmixtureAcceptedValue extends AcceptedValue implements Serializable {
 
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
-  }
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
+	@JoinColumn(name = "rawMaterialId", nullable = false)
+	private RawMaterial rawMaterial;
 
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
-  }
+	public RawMaterial getRawMaterial() {
+		return rawMaterial;
+	}
+
+	public void setRawMaterial(RawMaterial rawMaterial) {
+		this.rawMaterial = rawMaterial;
+	}
 }
