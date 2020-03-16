@@ -33,7 +33,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
 	@Transactional(readOnly = true)
 	public MaterialTestTrial getMaterialTestTrialByCode(String code) {
-		return materialTestTrialRepository.findById(code).get();
+		return materialTestTrialRepository.findByCode(code);
 	}
 
 	@Transactional(propagation = Propagation.NEVER)
@@ -42,38 +42,38 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 	}
 
 	@Transactional(readOnly = true)
-	public boolean isMaterialTestTrialExit(String code) {
-		return materialTestTrialRepository.existsById(code);
+	public boolean isMaterialTestTrialExits(String code) {
+		return materialTestTrialRepository.existsByCode(code);
 	}
 
 	@Transactional(readOnly = true)
-	public List<MaterialTestTrial> getMaterialTestTrialByMaterialTestId(String materialTestCode) {
+	public List<MaterialTestTrial> getMaterialTestTrialByMaterialTestCode(String materialTestCode) {
 		return materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
 	}
 
 	@Transactional(readOnly = true)
-	public boolean isMaterialTestIdExit(String materialTestCode) {
+	public boolean isMaterialTestIdExits(String materialTestCode) {
 		return materialTestTrialRepository.existsByMaterialTestCode(materialTestCode);
 	}
 
 	@Transactional
 	public void getAverageAndStatus(String materialTestCode) {
-		compareWithAvarage(calculateAvarage(materialTestCode), materialTestCode);
+		compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
 
 	}
 
-	private void compareWithAvarage(Double avarage, String materialTestCode) {
-		Long testId = materialTestRepository.findById(materialTestCode).get().getTest().getId();
-		if (acceptedValueRepository.findByTestId(testId).getMinValue() <= avarage
-				&& acceptedValueRepository.findByTestId(testId).getMaxValue() >= avarage) {
-			updateAverage(avarage, materialTestCode, Status.PASS);
+	private void compareWithAverage(Double average, String materialTestCode) {
+		Long testId = materialTestRepository.findByCode(materialTestCode).getTest().getId();
+		if (acceptedValueRepository.findByTestId(testId).getMinValue() <= average
+				&& acceptedValueRepository.findByTestId(testId).getMaxValue() >= average) {
+			updateAverage(average, materialTestCode, Status.PASS);
 		} else {
-			updateAverage(avarage, materialTestCode, Status.FAIL);
+			updateAverage(average, materialTestCode, Status.FAIL);
 
 		}
 	}
 
-	private Double calculateAvarage(String materialTestCode) {
+	private Double calculateAverage(String materialTestCode) {
 		Double totalResult = 0.0;
 		int trialTotal = 0;
 		List<MaterialTestTrial> listMaterialTestTrial = materialTestTrialRepository
@@ -87,7 +87,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
 	@Transactional
 	public MaterialTest updateAverage(Double average, String code, Status status) {
-		MaterialTest materialTest = materialTestRepository.findById(code).get();
+		MaterialTest materialTest = materialTestRepository.findByCode(code);
 		materialTest.setAverage(average);
 		materialTest.setStatus(status);
 		return materialTestRepository.save(materialTest);

@@ -350,10 +350,10 @@ public class Constants {
 	public static final String MATERIAL_TEST_TRIAL = "materialTestTrial";
 	public static final String MATERIAL_TEST_TRIALS = "materialTestTrials";
 	public static final String MATERIAL_TEST_TRIAL_CODE = "materialTestTrialCode";
-	public static final String ADD_MATERIAL_TEST_TRIAL_SUCCESS = "material test trial added Successfully";
-	public static final String MATERIAL_TEST_TRIAL_DELETED = "material test trial Deleted Succeessfully";
-	public static final String UPDATE_MATERIAL_TEST_TRIAL_SUCCESS = "material test trial update Successfully";
-	public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS = "material test trial average,status updated Successfully";
+	public static final String ADD_MATERIAL_TEST_TRIAL_SUCCESS = "Material Test Trial added successfully";
+	public static final String MATERIAL_TEST_TRIAL_DELETED = "Material Test Trial Deleted Succeessfully";
+	public static final String UPDATE_MATERIAL_TEST_TRIAL_SUCCESS = "Material Test Trial Update Successfully";
+	public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS = "Material Test Trial Average,Status Updated Successfully";
 
 	// encaptulate constructor to restrict modification from outside
 	private Constants() {

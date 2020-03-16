@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestTrialRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResponseDto;
@@ -41,10 +42,8 @@ public class MaterialTestTrialController {
   // get all MaterialTestTrial
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIALS)
   public ResponseEntity<Object> getAllMaterialTestTrial() {
-    List<MaterialTestTrial> materialTestTrialList =
-        materialTestTrialService.getAllMaterialTestTrial();
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
-        mapper.map(materialTestTrialList, MaterialTestTrialResponseDto.class),
+       return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+        mapper.map(materialTestTrialService.getAllMaterialTestTrial(), MaterialTestTrialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
@@ -52,7 +51,7 @@ public class MaterialTestTrialController {
   @PostMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
   public ResponseEntity<Object> createMaterialTestTrial(
       @Valid @RequestBody MaterialTestTrialRequestDto materialTestTrialRequestDto) {
-    if (materialTestTrialService.isMaterialTestTrialExit(materialTestTrialRequestDto.getCode())) {
+    if (materialTestTrialService.isMaterialTestTrialExits(materialTestTrialRequestDto.getCode())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
               validationFailureStatusCodes.getMaterialTestTrailAlreadyExist()),
@@ -68,7 +67,7 @@ public class MaterialTestTrialController {
   // get MaterialTestTrial By Id
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_CODE)
   public ResponseEntity<Object> getMaterialTestTrialByCode(@PathVariable String code) {
-    if (materialTestTrialService.isMaterialTestTrialExit(code)) {
+    if (materialTestTrialService.isMaterialTestTrialExits(code)) {
       logger.debug("Get MaterialTestTrial by code ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
           mapper.map(materialTestTrialService.getMaterialTestTrialByCode(code),
@@ -83,7 +82,7 @@ public class MaterialTestTrialController {
   // get MaterialTestTrial Delete
   @DeleteMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_CODE)
   public ResponseEntity<Object> deleteMaterialTestTrial(@PathVariable String code) {
-    if (materialTestTrialService.isMaterialTestTrialExit(code)) {
+    if (materialTestTrialService.isMaterialTestTrialExits(code)) {
       materialTestTrialService.deleteMaterialTestTrial(code);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_TRIAL_DELETED),
@@ -98,11 +97,11 @@ public class MaterialTestTrialController {
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getAllMaterialTestTrialByMaterialTestCode(
       @PathVariable String materialTestCode) {
-    if (materialTestTrialService.isMaterialTestIdExit(materialTestCode)) {
+    if (materialTestTrialService.isMaterialTestIdExits(materialTestCode)) {
       logger.debug("Get MaterialTest by code ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST,
           mapper.map(
-              materialTestTrialService.getMaterialTestTrialByMaterialTestId(materialTestCode),
+              materialTestTrialService.getMaterialTestTrialByMaterialTestCode(materialTestCode),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -114,7 +113,7 @@ public class MaterialTestTrialController {
   @PutMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
   public ResponseEntity<Object> updateMaterialTestTrial(
       @Valid @RequestBody MaterialTestTrialRequestDto materialTestTrialRequestDto) {
-    if (materialTestTrialService.isMaterialTestTrialExit(materialTestTrialRequestDto.getCode())) {
+    if (materialTestTrialService.isMaterialTestTrialExits(materialTestTrialRequestDto.getCode())) {
       materialTestTrialService
           .saveMaterialTestTrial(mapper.map(materialTestTrialRequestDto, MaterialTestTrial.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

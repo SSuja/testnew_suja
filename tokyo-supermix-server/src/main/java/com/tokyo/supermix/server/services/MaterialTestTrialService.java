@@ -12,11 +12,11 @@ public interface MaterialTestTrialService {
 
   public void deleteMaterialTestTrial(String code);
 
-  public boolean isMaterialTestTrialExit(String code);
+  public boolean isMaterialTestTrialExits(String code);
 
-  public List<MaterialTestTrial> getMaterialTestTrialByMaterialTestId(String materialTestCode);
+  public List<MaterialTestTrial> getMaterialTestTrialByMaterialTestCode(String materialTestCode);
 
-  public boolean isMaterialTestIdExit(String materialTestCode);
+  public boolean isMaterialTestIdExits(String materialTestCode);
   
   public void getAverageAndStatus(String materialTestCode);
 }

@@ -5,11 +5,11 @@ import javax.validation.constraints.NotNull;
 
 public class MaterialTestTrialRequestDto {
   private String code;
-  @NotNull(message = "{MaterialTestTrialRequestDto.trialNo.null}")
+  @NotNull(message = "{materialTestTrialRequestDto.trialNo.null}")
   private Long trialNo;
   private Double result;
-  @NotNull(message = "{MaterialTestTrialRequestDto.materialTestCode.null}")
-  @NotEmpty(message = "{MaterialTestTrialRequestDto.materialTestCode.empty}")
+  @NotNull(message = "{materialTestTrialRequestDto.materialTestCode.null}")
+  @NotEmpty(message = "{materialTestTrialRequestDto.materialTestCode.empty}")
   private String materialTestCode;
 
   public String getMaterialTestCode() {
