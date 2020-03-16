@@ -128,7 +128,7 @@ public class MaterialTestTrialController {
   @PutMapping(value = EndpointURI.AVERAGE_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
-    materialTestTrialService.getAverage(materialTestCode);
+    materialTestTrialService.getAverageAndStatus(materialTestCode);
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
   }

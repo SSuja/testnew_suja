@@ -18,5 +18,5 @@ public interface MaterialTestTrialService {
 
   public boolean isMaterialTestIdExit(String materialTestCode);
   
-  public void getAverage(String materialTestCode);
+  public void getAverageAndStatus(String materialTestCode);
 }
