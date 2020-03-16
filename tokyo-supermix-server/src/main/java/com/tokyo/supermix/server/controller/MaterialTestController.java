@@ -72,7 +72,7 @@ public class MaterialTestController {
 
 	// get material test by id
 	@GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
-	public ResponseEntity<Object> getMaterialTestById(@PathVariable String code) {
+	public ResponseEntity<Object> getMaterialTestByCode(@PathVariable String code) {
 		if (materialTestService.isMaterialTestExists(code)) {
 			logger.debug("Id Exists");
 			return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST,
@@ -98,7 +98,7 @@ public class MaterialTestController {
 				validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
 	}
 
-	// update finish product
+	// update material test
 	@PutMapping(value = EndpointURI.MATERIAL_TEST)
 	public ResponseEntity<Object> updateMaterialTest(@Valid @RequestBody MaterialTestRequestDto materialTestDto) {
 		if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
@@ -112,5 +112,4 @@ public class MaterialTestController {
 		return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
 				validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
 	}
-
 }
