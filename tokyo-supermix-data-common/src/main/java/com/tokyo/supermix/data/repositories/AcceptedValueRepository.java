@@ -9,4 +9,6 @@ public interface AcceptedValueRepository extends JpaRepository<AcceptedValue, Lo
   List<AcceptedValue> findByTest(Test test);
 
   public boolean existsAcceptedValueByTestId(Long testId);
+  
+  AcceptedValue findByTestId(Long testId);
 }

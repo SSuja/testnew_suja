@@ -224,12 +224,11 @@ public final class EndpointURI {
    * Mix design proportion apis
    * 
    */
-
-	public static final String MIX_DESIGN_PROPORTION = BASE_API_PATH + "mix-design-proportion";
-	public static final String MIX_DESIGN_PROPORTIONS = BASE_API_PATH + "mix-design-proportions";
-	public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
-	public static final String MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE = MIX_DESIGN_PROPORTION + "/mix-design"
-			+ "/{mixDesignCode}";
+  public static final String MIX_DESIGN_PROPORTION = BASE_API_PATH + "mix-design-proportion";
+  public static final String MIX_DESIGN_PROPORTIONS = BASE_API_PATH + "mix-design-proportions";
+  public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
+  public static final String MIX_DESIGN_PROPORTION_BY_MIXDESIGNCODE =
+      MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
 
   /*
    * ConcreteStrengthTest APIs
@@ -244,51 +243,56 @@ public final class EndpointURI {
   public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
   public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
   public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
+	/*
+	 * Finish Product APIs
+	 */
+	public static final String FINISH_PRODUCT = BASE_API_PATH + "finish-product";
+	public static final String FINISH_PRODUCTS = BASE_API_PATH + "finish-products";
+	public static final String FINISH_PRODUCT_BY_ID = FINISH_PRODUCT + ID;
+	/*
+	 * Equation Parameter
+	 */
+	public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
+	public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
+	public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
+	public static final String EQUATION_ID = "/{equationId}";
+	public static final String GET_PARAMETERS_BY_EQUATION_ID = EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
 
-  /*
-   * Material Tests
+	/*
+	 * AdmixtureAcceptedValue Apis
+	 */
+	public static final String ADMIXTURE_ACCEPTED_VALUE = BASE_API_PATH + "admixture-accepted-value";
+	public static final String ADMIXTURE_ACCEPTED_VALUES = BASE_API_PATH + "admixture-accepted-values";
+	public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
+	public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_ID = ADMIXTURE_ACCEPTED_VALUE + "/test" + "/{testId}";
+	/*
+	 * AcceptedValue
+	 */
+	public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
+	public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
+	public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
+	public static final String GET_ACCEPTED_VALUE_BY_TEST_ID = ACCEPTED_VALUE + SLASH + "test" + SLASH + "{testId}";
+/*
+	 * Material Tests
+	 */
+	public static final String MATERIAL_TEST = BASE_API_PATH + "material-test";
+	public static final String MATERIAL_TESTS = BASE_API_PATH + "material-tests";
+	public static final String MATERIAL_TESTS_BY_CODE = MATERIAL_TEST + CODE;
+	public static final String TEST_ID = "/{testId}";
+	public static final String STATUS = "/{status}";
+	public static final String MATERIAL_TEST_BY_TEST = MATERIAL_TESTS + "/test" + TEST_ID;
+	public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
+    /*
+   * material-test-trial
+   * 
    */
-  public static final String MATERIAL_TEST = BASE_API_PATH + "material-test";
-  public static final String MATERIAL_TESTS = BASE_API_PATH + "material-tests";
-  public static final String MATERIAL_TESTS_BY_CODE = MATERIAL_TEST + CODE;
-  public static final String TEST_ID = "/{testId}";
-  public static final String STATUS = "/{status}";
-  public static final String MATERIAL_TEST_BY_TEST = MATERIAL_TESTS + "/test" + TEST_ID;
-  public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
-
-  /*
-   * Finish Product APIs
-   */
-  public static final String FINISH_PRODUCT = BASE_API_PATH + "finish-product";
-  public static final String FINISH_PRODUCTS = BASE_API_PATH + "finish-products";
-  public static final String FINISH_PRODUCT_BY_ID = FINISH_PRODUCT + ID;
-  /*
-   * Equation Parameter
-   */
-  public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
-  public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
-  public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
-  public static final String EQUATION_ID = "/{equationId}";
-  public static final String GET_PARAMETERS_BY_EQUATION_ID =
-      EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
-
-  /*
-   * AdmixtureAcceptedValue Apis
-   */
-  public static final String ADMIXTURE_ACCEPTED_VALUE = BASE_API_PATH + "admixture-accepted-value";
-  public static final String ADMIXTURE_ACCEPTED_VALUES =
-      BASE_API_PATH + "admixture-accepted-values";
-  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
-  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_ID =
-      ADMIXTURE_ACCEPTED_VALUE + "/test" + "/{testId}";
-  /*
-   * AcceptedValue
-   */
-  public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
-  public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
-  public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
-  public static final String GET_ACCEPTED_VALUE_BY_TEST_ID =
-      ACCEPTED_VALUE + SLASH + "test" + SLASH + "{testId}";
+  public static final String MATERIAL_TEST_TRIAL = BASE_API_PATH + "material-test-trial";
+  public static final String MATERIAL_TEST_TRIALS = BASE_API_PATH + "material-test-trials";
+  public static final String MATERIAL_TEST_TRIAL_BY_CODE = MATERIAL_TEST_TRIAL + CODE;
+  public static final String MATERIAL_TEST_TRIAL_BY_MATERIAL_TEST_CODE =
+      MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
+  public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
+      MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
 
   private EndpointURI() {}
 

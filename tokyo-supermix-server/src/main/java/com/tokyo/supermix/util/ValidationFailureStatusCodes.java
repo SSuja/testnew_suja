@@ -1452,5 +1452,24 @@ public class ValidationFailureStatusCodes {
 	public void setAcceptedValueNotExist(String acceptedValueNotExist) {
 		this.acceptedValueNotExist = acceptedValueNotExist;
 	}
+ @Value("${validation.materialTestTrail.alreadyExist}")
+  private String materialTestTrailAlreadyExist;
+  @Value("${validation.materialTestTrail.notExists}")
+  private String materialTestTrailNotExist;
 
+  public String getMaterialTestTrailAlreadyExist() {
+    return materialTestTrailAlreadyExist;
+  }
+
+  public void setMaterialTestTrailAlreadyExist(String materialTestTrailAlreadyExist) {
+    this.materialTestTrailAlreadyExist = materialTestTrailAlreadyExist;
+  }
+
+  public String getMaterialTestTrailNotExist() {
+    return materialTestTrailNotExist;
+  }
+
+  public void setMaterialTestTrailNotExist(String materialTestTrailNotExist) {
+    this.materialTestTrailNotExist = materialTestTrailNotExist;
+  }
 }
