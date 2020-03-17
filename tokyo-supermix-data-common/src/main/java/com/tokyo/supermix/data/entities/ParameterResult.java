@@ -18,7 +18,7 @@ public class ParameterResult implements Serializable {
   private Long id;
   private Double value;
   @ManyToOne
-  @JoinColumn(name = "materialTestTrialId", nullable = false)
+  @JoinColumn(name = "materialTestTrialCode", nullable = false)
   private MaterialTestTrial materialTestTrial;
   @ManyToOne
   @JoinColumn(name = "testParameterId", nullable = false)

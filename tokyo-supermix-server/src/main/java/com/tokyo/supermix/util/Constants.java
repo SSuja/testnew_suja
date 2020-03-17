@@ -359,25 +359,41 @@ public class Constants {
   public static final String ADD_ACCEPTED_VALUE_SUCCESS = "AcceptedValue Added Successfully";
   public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "AcceptedValue Successfully updated";
 
-	/*
-	 * Material Test
-	 */
-	public static final String MATERIAL_TEST = "Material Test";
-	public static final String MATERIAL_TESTS = "Material Tests";
-	public static final String MATERIAL_TEST_ID = "Material Test Id";
-	public static final String ADD_MATERIAL_TEST_SUCCESS = "Material Test Added Successfully";
-	public static final String MATERIAL_TEST_DELETED = "Material Test Deleted Successfully";
-	public static final String MATERIAL_TEST_UPDATED = "Material Test Updated Successfully";
-	/*
-	 * material-test-trial
-	 */
-	public static final String MATERIAL_TEST_TRIAL = "materialTestTrial";
-	public static final String MATERIAL_TEST_TRIALS = "materialTestTrials";
-	public static final String MATERIAL_TEST_TRIAL_CODE = "materialTestTrialCode";
-	public static final String ADD_MATERIAL_TEST_TRIAL_SUCCESS = "Material Test Trial added successfully";
-	public static final String MATERIAL_TEST_TRIAL_DELETED = "Material Test Trial Deleted Succeessfully";
-	public static final String UPDATE_MATERIAL_TEST_TRIAL_SUCCESS = "Material Test Trial Update Successfully";
-	public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS = "Material Test Trial Average,Status Updated Successfully";
+  /*
+   * Material Test
+   */
+  public static final String MATERIAL_TEST = "Material Test";
+  public static final String MATERIAL_TESTS = "Material Tests";
+  public static final String MATERIAL_TEST_ID = "Material Test Id";
+  public static final String ADD_MATERIAL_TEST_SUCCESS = "Material Test Added Successfully";
+  public static final String MATERIAL_TEST_DELETED = "Material Test Deleted Successfully";
+  public static final String MATERIAL_TEST_UPDATED = "Material Test Updated Successfully";
+  /*
+   * material-test-trial
+   */
+  public static final String MATERIAL_TEST_TRIAL = "materialTestTrial";
+  public static final String MATERIAL_TEST_TRIALS = "materialTestTrials";
+  public static final String MATERIAL_TEST_TRIAL_CODE = "materialTestTrialCode";
+  public static final String ADD_MATERIAL_TEST_TRIAL_SUCCESS =
+      "Material Test Trial added successfully";
+  public static final String MATERIAL_TEST_TRIAL_DELETED =
+      "Material Test Trial Deleted Succeessfully";
+  public static final String UPDATE_MATERIAL_TEST_TRIAL_SUCCESS =
+      "Material Test Trial Update Successfully";
+  public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
+      "Material Test Trial Average,Status Updated Successfully";
+
+  // constants for validation key
+  public static final String PARAMETER_RESULT = "parameterResult";
+  public static final String PARAMETER_RESULTS = "parameterResults";
+  public static final String PARAMETER_RESULT_ID = "parameterResultId";
+
+  // Success Messages
+  public static final String ADD_PARAMETER_RESULT_SUCCESS = "parameterResult added Successfully";
+  public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Successfully";
+  public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
+      "parameterResult updated Successfully";
+  public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

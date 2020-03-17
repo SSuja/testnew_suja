@@ -1,5 +1,21 @@
 package com.tokyo.supermix.server.services;
 
-public interface ParameterResultService {
+import java.util.List;
+import com.tokyo.supermix.data.entities.MaterialTestTrial;
+import com.tokyo.supermix.data.entities.ParameterResult;
 
+public interface ParameterResultService {
+  public List<ParameterResult> getAllParameterResults();
+
+  public ParameterResult saveParameterResult(ParameterResult parameterResult);
+
+  public void deleteParameterResult(Long id);
+
+  public ParameterResult getParameterResultById(Long id);
+
+  public boolean isParameterResultExist(Long id);
+
+  public void setResult(MaterialTestTrial materialTestTrial);
+
+  public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
 }
