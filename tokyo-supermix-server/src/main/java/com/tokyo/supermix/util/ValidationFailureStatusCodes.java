@@ -996,7 +996,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.notExists}")
   private String projectNotExist;
 
-
   // for concreteTest
   @Value("${validation.concreteTest.notExists}")
   private String concreteTestNotExist;
@@ -1040,6 +1039,42 @@ public class ValidationFailureStatusCodes {
 
   public String getQuantityNotNull() {
     return quantityIsNull;
+  }
+
+  /*
+   * Material Test
+   */
+  @Value("${validation.materialTest.notExists}")
+  private String materialTestNotExist;
+
+  @Value("${validation.materialTest.alreadyExist}")
+  private String materialTestAlreadyExists;
+
+  @Value("${validation.status.notExixts}")
+  private String materialTestStatusNotExists;
+
+  public String getMaterialTestNotExist() {
+    return materialTestNotExist;
+  }
+
+  public void setMaterialTestNotExist(String materialTestNotExist) {
+    this.materialTestNotExist = materialTestNotExist;
+  }
+
+  public String getMaterialTestStatusNotExists() {
+    return materialTestStatusNotExists;
+  }
+
+  public void setMaterialTestStatusNotExists(String materialTestStatusNotExists) {
+    this.materialTestStatusNotExists = materialTestStatusNotExists;
+  }
+
+  public String getMaterialTestAlreadyExists() {
+    return materialTestAlreadyExists;
+  }
+
+  public void setMaterialTestAlreadyExists(String materialTestAlreadyExists) {
+    this.materialTestAlreadyExists = materialTestAlreadyExists;
   }
 
   public void setQuantityNotNull(String quantityNotNull) {
@@ -1339,6 +1374,131 @@ public class ValidationFailureStatusCodes {
 
   public void setEquationParameterNotExist(String equationParameterNotExist) {
     this.equationParameterNotExist = equationParameterNotExist;
+  }
+
+  // for plantEquipmentCalibration
+  // @Value("${validation.plantEquipmentCalibration.notExists}")
+  // private String plantEquipmentCalibrationNotExist;
+  // @Value("${validation.employeeId.null}")
+  // private String EmployeeIdIsNull;
+  // @Value("${validation.supplierId.null}")
+  // private String SupplierIdIsNull;
+  //
+  // public String getPlantEquipmentCalibrationNotExist() {
+  // return plantEquipmentCalibrationNotExist;
+  // }
+  //
+  // public void setPlantEquipmentCalibrationNotExist(String plantEquipmentCalibrationNotExist) {
+  // this.plantEquipmentCalibrationNotExist = plantEquipmentCalibrationNotExist;
+  // }
+  //
+  // public String getEmployeeIdIsNull() {
+  // return EmployeeIdIsNull;
+  // }
+  //
+  // public void setEmployeeIdIsNull(String employeeIdIsNull) {
+  // EmployeeIdIsNull = employeeIdIsNull;
+  // }
+  //
+  // public String getSupplierIdIsNull() {
+  // return SupplierIdIsNull;
+  // }
+  //
+  // public void setSupplierIdIsNull(String supplierIdIsNull) {
+  // SupplierIdIsNull = supplierIdIsNull;
+  // }
+
+  @Value("${validation.admixtureAcceptedValue.notExists}")
+  private String admixtureAcceptedValueNotExist;
+
+  public String getAdmixtureAcceptedValueNotExist() {
+    return admixtureAcceptedValueNotExist;
+  }
+
+  public void setAdmixtureAcceptedValueNotExist(String admixtureAcceptedValueNotExist) {
+    this.admixtureAcceptedValueNotExist = admixtureAcceptedValueNotExist;
+  }
+
+  // public String getPhoneNumberIsEmpty() {
+  // return phoneNumberIsEmpty;
+  // }
+  // //
+  // public String getSuppilerCategoryIdIsNull() {
+  // return suppilerCategoryIdIsNull;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+  // }
+  //
+  // public String getSuppilerCategoryIdIsEmpty() {
+  // return suppilerCategoryIdIsEmpty;
+  // }
+  //
+  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+  // }
+
+  // public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
+  // this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
+  // }
+
+  // for parameter
+  // @Value("${validation.parameter.notExists}")
+  // private String parameterNotExist;
+  // for AdmixtureAcceptedValue
+  @Value("${validation.testId.alreadyExist}")
+  private String testIdAlreadyExist;
+
+  public String getTestIdAlreadyExist() {
+    return testIdAlreadyExist;
+  }
+
+  public void setTestIdAlreadyExist(String testIdAlreadyExist) {
+    this.testIdAlreadyExist = testIdAlreadyExist;
+  }
+
+  // for acceptedValue
+  @Value("${validation.acceptedValue.notExists}")
+  private String acceptedValueNotExist;
+  @Value("${validation.acceptedValue.alreadyTestIdExists}")
+  private String acceptedValueTestIdAlreadyExist;
+
+  public String getAcceptedValueTestIdAlreadyExist() {
+    return acceptedValueTestIdAlreadyExist;
+  }
+
+  public void setAcceptedValueTestIdAlreadyExist(String acceptedValueTestIdAlreadyExist) {
+    this.acceptedValueTestIdAlreadyExist = acceptedValueTestIdAlreadyExist;
+  }
+
+  public String getAcceptedValueNotExist() {
+    return acceptedValueNotExist;
+  }
+
+  public void setAcceptedValueNotExist(String acceptedValueNotExist) {
+    this.acceptedValueNotExist = acceptedValueNotExist;
+  }
+
+  @Value("${validation.materialTestTrail.alreadyExist}")
+  private String materialTestTrailAlreadyExist;
+  @Value("${validation.materialTestTrail.notExists}")
+  private String materialTestTrailNotExist;
+
+  public String getMaterialTestTrailAlreadyExist() {
+    return materialTestTrailAlreadyExist;
+  }
+
+  public void setMaterialTestTrailAlreadyExist(String materialTestTrailAlreadyExist) {
+    this.materialTestTrailAlreadyExist = materialTestTrailAlreadyExist;
+  }
+
+  public String getMaterialTestTrailNotExist() {
+    return materialTestTrailNotExist;
+  }
+
+  public void setMaterialTestTrailNotExist(String materialTestTrailNotExist) {
+    this.materialTestTrailNotExist = materialTestTrailNotExist;
   }
 
   // for plantEquipmentCalibration

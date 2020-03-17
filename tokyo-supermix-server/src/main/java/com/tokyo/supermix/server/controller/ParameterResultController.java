@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
@@ -72,20 +71,6 @@ public class ParameterResultController {
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping(value = EndpointURI.PARAMETER_RESULT)
-  public ResponseEntity<Object> UpdateParameterResult(
-      @Valid @RequestBody ParameterResultRequestDto parameterResultRequestDto) {
-    if (parameterResultService.isParameterResultExist(parameterResultRequestDto.getId())) {
-      parameterResultService
-          .saveParameterResult(mapper.map(parameterResultRequestDto, ParameterResult.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PARAMETER_RESULT_SUCCESS),
-          HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
-        validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
   @DeleteMapping(value = EndpointURI.DELETE_PARAMETER_RESULT_BY_ID)
   public ResponseEntity<Object> deleteParameterResult(@PathVariable Long id) {
     if (parameterResultService.isParameterResultExist(id)) {
@@ -104,6 +89,8 @@ public class ParameterResultController {
       @PathVariable String materialTestTrialCode) {
     parameterResultService
         .setResult(materialTestTrialService.getMaterialTestTrialByCode(materialTestTrialCode));
-    return new ResponseEntity<Object>("sucessfullyupdated", HttpStatus.OK);
+    return new ResponseEntity<Object>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.RESULT_SUCCESSFULLY_UPDATED),
+        HttpStatus.OK);
   }
 }

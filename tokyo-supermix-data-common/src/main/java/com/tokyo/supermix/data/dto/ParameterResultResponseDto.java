@@ -3,8 +3,8 @@ package com.tokyo.supermix.data.dto;
 public class ParameterResultResponseDto {
   private Long id;
   private Double value;
-  private TestParameterResponseDto testParameterResponseDto;
-  private MaterialTestTrialResponseDto materialTestTrialResponseDto;
+  private TestParameterResponseDto testParameter;
+  private MaterialTestTrialResponseDto materialTestTrial;
 
   public Long getId() {
     return id;
@@ -22,20 +22,19 @@ public class ParameterResultResponseDto {
     this.value = value;
   }
 
-  public TestParameterResponseDto getTestParameterResponseDto() {
-    return testParameterResponseDto;
+  public TestParameterResponseDto getTestParameter() {
+    return testParameter;
   }
 
-  public void setTestParameterResponseDto(TestParameterResponseDto testParameterResponseDto) {
-    this.testParameterResponseDto = testParameterResponseDto;
+  public void setTestParameter(TestParameterResponseDto testParameter) {
+    this.testParameter = testParameter;
   }
 
-  public MaterialTestTrialResponseDto getMaterialTestTrialResponseDto() {
-    return materialTestTrialResponseDto;
+  public MaterialTestTrialResponseDto getMaterialTestTrial() {
+    return materialTestTrial;
   }
 
-  public void setMaterialTestTrialResponseDto(
-      MaterialTestTrialResponseDto materialTestTrialResponseDto) {
-    this.materialTestTrialResponseDto = materialTestTrialResponseDto;
+  public void setMaterialTestTrial(MaterialTestTrialResponseDto materialTestTrial) {
+    this.materialTestTrial = materialTestTrial;
   }
 }

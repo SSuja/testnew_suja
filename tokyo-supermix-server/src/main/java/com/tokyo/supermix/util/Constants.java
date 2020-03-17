@@ -170,7 +170,7 @@ public class Constants {
    * Test
    */
   public static final String TEST = "test";
-  public static final String TEST_ID = "id";
+  public static final String TEST_ID = "testId";
   public static final String ADD_TEST_SUCCESS = "Test added Successfully";
   public static final String UPDATE_TEST_SUCCESS = "Test updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test delete successfully";
@@ -214,6 +214,7 @@ public class Constants {
   public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "IncomingSample updated Successfully";
   public static final String UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS =
       "IncomingSample Status updated Successfully";
+  public static final String INCOMING_SAMPLE_STATUS = "status";
   /*
    * Project
    */
@@ -335,6 +336,52 @@ public class Constants {
   public static final String ADD_EQUATION_PARAMETER_SUCCESS =
       "Equation Parameter added Successfully";
   public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter deleted Successfully";
+  /*
+   * Admixture Accepted Value
+   */
+  public static final String ADMIXTURE_ACCEPTED_VALUE_ID = "admixtureAcceptedValueId";
+  public static final String ADMIXTURE_ACCEPTED_VALUE = "admixtureAcceptedValue";
+  public static final String ADMIXTURE_ACCEPTED_VALUES = "admixtureAcceptedValues";
+  public static final String ADMIXTURE_ACCEPTED_VALUE_DELETED =
+      "admixtureAcceptedValue Deleted Succeessfully";
+  public static final String ADD_ADMIXTURE_ACCEPTED_VALUE_SUCCESS =
+      "admixtureAcceptedValue added Successfully";
+  public static final String UPDATE_ADMIXTURE_ACCEPTED_VALUE_SUCCESS =
+      "admixtureAcceptedValue updated Successfully";
+  /*
+   * AcceptedValue
+   */
+  public static final String ACCEPTED_VALUE = "acceptedValue";
+  public static final String ACCEPTED_VALUES = "acceptedValues";
+  public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
+  public static final String ACCEPTED_VALUE_TEST_ID = "acceptedValueTestId";
+  public static final String ACCEPTED_VALUE_DELETED = "AcceptedValue Successfully Deleted";
+  public static final String ADD_ACCEPTED_VALUE_SUCCESS = "AcceptedValue Added Successfully";
+  public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "AcceptedValue Successfully updated";
+
+  /*
+   * Material Test
+   */
+  public static final String MATERIAL_TEST = "Material Test";
+  public static final String MATERIAL_TESTS = "Material Tests";
+  public static final String MATERIAL_TEST_ID = "Material Test Id";
+  public static final String ADD_MATERIAL_TEST_SUCCESS = "Material Test Added Successfully";
+  public static final String MATERIAL_TEST_DELETED = "Material Test Deleted Successfully";
+  public static final String MATERIAL_TEST_UPDATED = "Material Test Updated Successfully";
+  /*
+   * material-test-trial
+   */
+  public static final String MATERIAL_TEST_TRIAL = "materialTestTrial";
+  public static final String MATERIAL_TEST_TRIALS = "materialTestTrials";
+  public static final String MATERIAL_TEST_TRIAL_CODE = "materialTestTrialCode";
+  public static final String ADD_MATERIAL_TEST_TRIAL_SUCCESS =
+      "Material Test Trial added successfully";
+  public static final String MATERIAL_TEST_TRIAL_DELETED =
+      "Material Test Trial Deleted Succeessfully";
+  public static final String UPDATE_MATERIAL_TEST_TRIAL_SUCCESS =
+      "Material Test Trial Update Successfully";
+  public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
+      "Material Test Trial Average,Status Updated Successfully";
 
   // constants for validation key
   public static final String PARAMETER_RESULT = "parameterResult";
@@ -344,8 +391,7 @@ public class Constants {
   // Success Messages
   public static final String ADD_PARAMETER_RESULT_SUCCESS = "parameterResult added Successfully";
   public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Succeessfully";
-  public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
-      "parameterResult updated Successfully";
+  public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
