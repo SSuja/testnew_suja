@@ -2,7 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 public class ParameterResultRequestDto {
   private Long id;
-  private String materialTestTrialCode;
+  private MaterialTestTrialRequestDto materialTestTrial;
   private Double value;
   private Long testParameterId;
 
@@ -14,12 +14,12 @@ public class ParameterResultRequestDto {
     this.id = id;
   }
 
-  public String getMaterialTestTrialCode() {
-    return materialTestTrialCode;
+  public MaterialTestTrialRequestDto getMaterialTestTrial() {
+    return materialTestTrial;
   }
 
-  public void setMaterialTestTrialCode(String materialTestTrialCode) {
-    this.materialTestTrialCode = materialTestTrialCode;
+  public void setMaterialTestTrial(MaterialTestTrialRequestDto materialTestTrial) {
+    this.materialTestTrial = materialTestTrial;
   }
 
   public Double getValue() {

@@ -390,7 +390,9 @@ public class Constants {
 
   // Success Messages
   public static final String ADD_PARAMETER_RESULT_SUCCESS = "parameterResult added Successfully";
-  public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Succeessfully";
+  public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Successfully";
+  public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
+      "parameterResult updated Successfully";
   public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
 
   // encaptulate constructor to restrict modification from outside

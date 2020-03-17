@@ -90,7 +90,6 @@ public final class EndpointURI {
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
-
   /*
    * Test
    */
@@ -308,7 +307,6 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
   public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
-
   private EndpointURI() {}
 
 }

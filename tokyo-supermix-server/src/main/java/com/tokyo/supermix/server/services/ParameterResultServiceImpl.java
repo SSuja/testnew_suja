@@ -47,7 +47,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return parameterResultRepository.existsById(id);
   }
 
-  @Transactional
   public void setResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
@@ -79,6 +78,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return Double.valueOf(decimalFormat.format(value));
   }
 
+  @Transactional(readOnly = true)
   public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode) {
     return parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
   }
