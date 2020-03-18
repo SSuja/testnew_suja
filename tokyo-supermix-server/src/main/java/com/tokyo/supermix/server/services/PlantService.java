@@ -10,4 +10,5 @@ public interface PlantService {
   public Plant getPlantByCode(String code);
   public boolean isPlantExist(String code);
   public boolean isUpdatedPlantNameExist( String code,String plantName);
+  public void deletePlant(String code);
 }
