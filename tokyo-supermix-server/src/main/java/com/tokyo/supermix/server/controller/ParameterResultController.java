@@ -107,4 +107,19 @@ public class ParameterResultController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.RESULT_SUCCESSFULLY_UPDATED),
         HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE)
+  public ResponseEntity<Object> getParameterResultByMaterialTestTrialByCode(
+      @PathVariable String materialTestTrialCode) {
+    if (materialTestTrialService.isMaterialTestTrialExits(materialTestTrialCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL_CODE,
+          mapper.map(parameterResultService.findByMaterialTestTrialCode(materialTestTrialCode),
+              ParameterResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Result record exist for given Material Test Trial code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
+          validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
 }
