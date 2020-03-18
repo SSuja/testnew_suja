@@ -362,9 +362,9 @@ public class Constants {
   /*
    * Material Test
    */
-  public static final String MATERIAL_TEST = "Material Test";
-  public static final String MATERIAL_TESTS = "Material Tests";
-  public static final String MATERIAL_TEST_ID = "Material Test Id";
+  public static final String MATERIAL_TEST = "materialTest";
+  public static final String MATERIAL_TESTS = "materialTests";
+  public static final String MATERIAL_TEST_ID = "materialTestId";
   public static final String ADD_MATERIAL_TEST_SUCCESS = "Material Test Added Successfully";
   public static final String MATERIAL_TEST_DELETED = "Material Test Deleted Successfully";
   public static final String MATERIAL_TEST_UPDATED = "Material Test Updated Successfully";
