@@ -44,8 +44,32 @@ public class ParameterResultController {
   @PostMapping(value = EndpointURI.PARAMETER_RESULT)
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<ParameterResultRequestDto> parameterResultRequestDtoList) {
-    parameterResultRequestDtoList.forEach(parameterResultRequestDtoListObj -> parameterResultService
-        .saveParameterResult(mapper.map(parameterResultRequestDtoListObj, ParameterResult.class)));
+	    Object LOCK = new Object();
+	    try {
+	      Thread.sleep(3000);
+	      parameterResultRequestDtoList
+	          .forEach(parameterResultRequestDtoListObj -> parameterResultService.saveParameterResult(
+	              mapper.map(parameterResultRequestDtoListObj, ParameterResult.class)));
+
+	    } catch (InterruptedException e) {
+	      e.printStackTrace();
+	    }
+	    System.out.println("Thread '" + Thread.currentThread().getName() + "' 57 second");
+	    {
+	      synchronized (LOCK) {
+	        try {
+	          LOCK.wait(60000);
+	          parameterResultRequestDtoList
+	              .forEach(parameterResultRequestDtoListObj -> parameterResultService
+	                  .setResult(materialTestTrialService.getMaterialTestTrialByCode(
+	                      parameterResultRequestDtoListObj.getMaterialTestTrial().getCode())));
+
+	        } catch (InterruptedException e) {
+	          e.printStackTrace();
+	        }
+	        System.out.println("Object '" + LOCK + "' is woken after" + " waiting for 1 second");
+	      }
+	    }
     return new ResponseEntity<Object>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_RESULT_SUCCESS),
         HttpStatus.OK);
