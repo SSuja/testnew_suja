@@ -15,7 +15,13 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   private IncomingSampleRepository incomingSampleRepository;
 
   @Transactional
-  public void saveIncomingSample(IncomingSample incomingSample) {
+  public void createIncomingSample(IncomingSample incomingSample) {
+    incomingSample.setStatus(Status.NEW);
+    incomingSampleRepository.save(incomingSample);
+  }
+
+  @Transactional
+  public void updateIncomingSample(IncomingSample incomingSample) {
     incomingSampleRepository.save(incomingSample);
   }
 
