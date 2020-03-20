@@ -5,7 +5,6 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface IncomingSampleService {
-  public void saveIncomingSample(IncomingSample incomingSample);
   public void deleteIncomingSample(String code);
   public IncomingSample getIncomingSampleById(String code);
   public List<IncomingSample> getAllIncomingSamples();
@@ -13,4 +12,6 @@ public interface IncomingSampleService {
   public void updateStatusForIncomingSample(String code ,Status status);
   boolean isIncomingSampleStatusExist(Status status);
   public IncomingSample getIncomingSampleByStatus(Status status);
+  public void createIncomingSample(IncomingSample incomingSample);
+  public void updateIncomingSample(IncomingSample incomingSample);
 }

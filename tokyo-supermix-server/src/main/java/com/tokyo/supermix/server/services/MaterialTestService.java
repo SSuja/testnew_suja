@@ -6,22 +6,23 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 
 public interface MaterialTestService {
 
-	public void saveMaterialTest(MaterialTest materialTest);
+  public void saveMaterialTest(MaterialTest materialTest);
 
-	public boolean isMaterialTestExists(String code);
+  public boolean isMaterialTestExists(String code);
 
-	public MaterialTest getMaterialTestByCode(String code);
+  public MaterialTest getMaterialTestByCode(String code);
 
-	public List<MaterialTest> getAllMaterialTests();
+  public List<MaterialTest> getAllMaterialTests();
 
-	public void deleteMaterialTest(String code);
+  public void deleteMaterialTest(String code);
 
-	public boolean isMaterialTestStatusExists(String status);
+  public boolean isMaterialTestStatusExists(String status);
 
-	public boolean isMaterialTestByTestExists(Long testId);
+  public boolean isMaterialTestByTestExists(Long testId);
 
-	public List<MaterialTest> getMaterialTestByStatus(String status);
+  public List<MaterialTest> getMaterialTestByStatus(String status);
 
-	public List<MaterialTest> getMaterialTestByTest(Long testId);
+  public List<MaterialTest> getMaterialTestByTest(Long testId);
 
+  public void updateIncomingSampleStatusBySeheduler();
 }
