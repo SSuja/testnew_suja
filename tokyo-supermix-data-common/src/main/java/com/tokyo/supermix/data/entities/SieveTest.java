@@ -18,7 +18,7 @@ public class SieveTest implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private Date date;
-  private Double finessModule;
+  private Double finenessModulus;
   private String status;
   @ManyToOne
   @JoinColumn(name = "userId", nullable = false)
@@ -46,12 +46,12 @@ public class SieveTest implements Serializable {
     this.date = date;
   }
 
-  public Double getFinessModule() {
-    return finessModule;
+  public Double getFinenessModulus() {
+    return finenessModulus;
   }
 
-  public void setFinessModule(Double finessModule) {
-    this.finessModule = finessModule;
+  public void setFinenessModulus(Double finenessModulus) {
+    this.finenessModulus = finenessModulus;
   }
 
   public String getStatus() {

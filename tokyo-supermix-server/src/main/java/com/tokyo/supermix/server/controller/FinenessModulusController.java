@@ -1,5 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-public class FinessModulusController {
+public class FinenessModulusController {
 
 }

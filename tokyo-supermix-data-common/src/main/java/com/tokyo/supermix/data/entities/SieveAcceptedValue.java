@@ -16,8 +16,8 @@ public class SieveAcceptedValue implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private Long minimumValue;
-  private Long maximumValue;
+  private Long min;
+  private Long max;
   @OneToOne
   @JoinColumn(name = "sieveSizeId", nullable = false)
   private SieveSize sieveSize;
@@ -30,20 +30,20 @@ public class SieveAcceptedValue implements Serializable {
     this.id = id;
   }
 
-  public Long getMinimumValue() {
-    return minimumValue;
+  public Long getMin() {
+    return min;
   }
 
-  public void setMinimumValue(Long minimumValue) {
-    this.minimumValue = minimumValue;
+  public void setMin(Long min) {
+    this.min = min;
   }
 
-  public Long getMaximumValue() {
-    return maximumValue;
+  public Long getMax() {
+    return max;
   }
 
-  public void setMaximumValue(Long maximumValue) {
-    this.maximumValue = maximumValue;
+  public void setMax(Long max) {
+    this.max = max;
   }
 
   public SieveSize getSieveSize() {

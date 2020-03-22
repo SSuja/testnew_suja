@@ -10,14 +10,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "finess_modulus")
-public class FinesModulus implements Serializable {
+@Table(schema = "tokyo-supermix", name = "fineness_modulus")
+public class FinenessModulus implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private Double minimumValue;
-  private Double maximumValue;
+  private Double min;
+  private Double max;
   @OneToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = false)
   private MaterialSubCategory materialSubCategory;
@@ -30,20 +30,20 @@ public class FinesModulus implements Serializable {
     this.id = id;
   }
 
-  public Double getMinimumValue() {
-    return minimumValue;
+  public Double getMin() {
+    return min;
   }
 
-  public void setMinimumValue(Double minimumValue) {
-    this.minimumValue = minimumValue;
+  public void setMin(Double min) {
+    this.min = min;
   }
 
-  public Double getMaximumValue() {
-    return maximumValue;
+  public Double getMax() {
+    return max;
   }
 
-  public void setMaximumValue(Double maximumValue) {
-    this.maximumValue = maximumValue;
+  public void setMax(Double max) {
+    this.max = max;
   }
 
   public MaterialSubCategory getMaterialSubCategory() {
