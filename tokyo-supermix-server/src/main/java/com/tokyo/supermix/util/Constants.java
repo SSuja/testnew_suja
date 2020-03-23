@@ -1,6 +1,9 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
+	//for email notification
+  public static final String ADMIXURE = "Admixure";
+  
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
   public static final String PLANTS = "plants";
