@@ -265,8 +265,6 @@ public final class EndpointURI {
   public static final String PARAMETER_RESULTS = BASE_API_PATH + "parameter-results";
   public static final String GET_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
   public static final String DELETE_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
-  public static final String PARAMETER_RESULT_CALCULATION =
-      BASE_API_PATH + "/parameter-result" + "/calculation" + "/{materialTestTrialCode}";
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
 
@@ -308,6 +306,20 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
   public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
+  /*
+   * Sieve Size
+   */
+  public static final String SIEVE_SIZE = BASE_API_PATH + "sieve-size";
+  public static final String SIEVE_SIZES = BASE_API_PATH + "sieve-sizes";
+  public static final String SIEVE_SIZE_BY_ID = SIEVE_SIZE + ID;
+  public static final String SIEVE_SIZE_BY_MATERIAL_SUB_CATEGORY_ID =
+      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "/{materialSubCategoryId}";
+  /*
+   * Sieve Accepted Value
+   */
+  public static final String SIEVE_ACCEPTED_VALUE = BASE_API_PATH + "sieve-accepted-value";
+  public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
+  public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
 
   private EndpointURI() {}
 

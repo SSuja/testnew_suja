@@ -398,6 +398,24 @@ public class Constants {
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
 
+  /*
+   * Sieve Size
+   */
+  public static final String SIEVE_SIZES = "sieveSizes";
+  public static final String SIEVE_SIZE = "sieveSize";
+  public static final String ADD_SIEVE_SIZE_SUCCESS = "Sieve Size added Successfully";
+  public static final String SIEVE_SIZE_ID = "id";
+  public static final String UPDATE_SIEVE_SIZE_SUCCESS = "Sieve Size updated Successfully";
+  public static final String DELETE_SIEVE_SIZE_SUCCESS = "Sieve Size delete Successfully";
+  /*
+   * Sieve Accepted Value
+   */
+  public static final String SIEVE_ACCEPTED_VALUES = "sieveAcceptedValues";
+  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value added Successfully";
+  public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
+  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value updated Successfully";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value delete Successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
