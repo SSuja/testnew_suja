@@ -17,7 +17,6 @@ public class SieveTestTrial implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private Double retainedWeight;
   private Double percentageRetained;
   private Double cummalativeRetained;
   private Double passing;
@@ -34,14 +33,6 @@ public class SieveTestTrial implements Serializable {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Double getRetainedWeight() {
-    return retainedWeight;
-  }
-
-  public void setRetainedWeight(Double retainedWeight) {
-    this.retainedWeight = retainedWeight;
   }
 
   public Double getPercentageRetained() {

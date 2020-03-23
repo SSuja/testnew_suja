@@ -316,6 +316,12 @@ public final class EndpointURI {
   public static final String SIEVE_SIZE_BY_ID = SIEVE_SIZE + ID;
   public static final String SIEVE_SIZE_BY_MATERIAL_SUB_CATEGORY_ID =
       SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "/{materialSubCategoryId}";
+  /*
+   * Sieve Accepted Value
+   */
+  public static final String SIEVE_ACCEPTED_VALUE = BASE_API_PATH + "sieve-accepted-value";
+  public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
+  public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
 /*
      * SieveTest
      * 

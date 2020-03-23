@@ -3,6 +3,8 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +22,10 @@ public class SieveTest implements Serializable {
   private Long id;
   private Date date;
   private Double finenessModulus;
-  
+  private Double panWeight;
+  private Double totalWeight;
+  @Enumerated(EnumType.ORDINAL)
+  private Status status;
   @ManyToOne
   @JoinColumn(name = "userId", nullable = false)
   private User user;
@@ -55,6 +60,14 @@ public class SieveTest implements Serializable {
     this.finenessModulus = finenessModulus;
   }
 
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
+
   public User getUser() {
     return user;
   }
@@ -77,6 +90,22 @@ public class SieveTest implements Serializable {
 
   public void setIncomingSample(IncomingSample incomingSample) {
     this.incomingSample = incomingSample;
+  }
+
+  public Double getPanWeight() {
+    return panWeight;
+  }
+
+  public void setPanWeight(Double panWeight) {
+    this.panWeight = panWeight;
+  }
+
+  public Double getTotalWeight() {
+    return totalWeight;
+  }
+
+  public void setTotalWeight(Double totalWeight) {
+    this.totalWeight = totalWeight;
   }
 
   public static long getSerialversionuid() {
