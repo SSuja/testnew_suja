@@ -3,7 +3,8 @@ package com.tokyo.supermix.data.dto;
 public class SieveSizeResponseDto {
   private Long id;
   private Double size;
-  private MaterialSubCategoryResponseDto materialSubCategory;
+  private Long materialSubCategoryId;
+  private String materialSubCategoryName;
 
   public Long getId() {
     return id;
@@ -21,12 +22,20 @@ public class SieveSizeResponseDto {
     this.size = size;
   }
 
-  public MaterialSubCategoryResponseDto getMaterialSubCategory() {
-    return materialSubCategory;
+  public Long getMaterialSubCategoryId() {
+    return materialSubCategoryId;
   }
 
-  public void setMaterialSubCategory(MaterialSubCategoryResponseDto materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
+  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
+    this.materialSubCategoryId = materialSubCategoryId;
+  }
+
+  public String getMaterialSubCategoryName() {
+    return materialSubCategoryName;
+  }
+
+  public void setMaterialSubCategoryName(String materialSubCategoryName) {
+    this.materialSubCategoryName = materialSubCategoryName;
   }
 
 }
