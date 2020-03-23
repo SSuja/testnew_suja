@@ -13,12 +13,12 @@ public class SieveTestServiceImpl implements SieveTestService {
   @Autowired
   private SieveTestRepository sieveTestRepository;
   @Transactional
-  public SieveTest saveSieveTest(SieveTest sieveTest) {
-    return sieveTestRepository.save(sieveTest);
+  public void saveSieveTest(SieveTest sieveTest) {
+     sieveTestRepository.save(sieveTest);
   }
 
   @Transactional(readOnly = true)
-  public List<SieveTest> getAllSieveTest() {
+  public List<SieveTest> getAllSieveTests() {
     return sieveTestRepository.findAll();
   }
 
@@ -33,7 +33,7 @@ public class SieveTestServiceImpl implements SieveTestService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isSieveTestExit(Long id) {
+  public boolean isSieveTestExists(Long id) {
     return sieveTestRepository.existsById(id);
   }
 }

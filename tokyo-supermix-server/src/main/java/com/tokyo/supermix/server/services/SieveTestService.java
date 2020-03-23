@@ -4,13 +4,13 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.SieveTest;
 
 public interface SieveTestService {
-  public SieveTest saveSieveTest(SieveTest sieveTest);
+  public void saveSieveTest(SieveTest sieveTest);
 
-  public List<SieveTest> getAllSieveTest();
+  public List<SieveTest> getAllSieveTests();
 
   public SieveTest getSieveTestById(Long id);
 
   public void deleteSieveTest(Long id);
 
-  public boolean isSieveTestExit(Long id);
+  public boolean isSieveTestExists(Long id);
 }

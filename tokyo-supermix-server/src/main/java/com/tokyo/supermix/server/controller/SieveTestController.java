@@ -49,8 +49,8 @@ public class SieveTestController {
  }
  
  @GetMapping(value = EndpointURI.SIEVE_TESTS)
- public ResponseEntity<Object> getAllSieveTest() {
-   List<SieveTest> sieveTestTestList = sieveTestService.getAllSieveTest();
+ public ResponseEntity<Object> getAllSieveTests() {
+   List<SieveTest> sieveTestTestList = sieveTestService.getAllSieveTests();
    return new ResponseEntity<Object>(
        new ContentResponse<>(Constants.SIEVE_TESTS,
            mapper.map(sieveTestTestList, SieveTestResponseDto.class), RestApiResponseStatus.OK),
@@ -59,7 +59,7 @@ public class SieveTestController {
 //get SieveTest by id
 @GetMapping(value = EndpointURI.SIEVE_TEST_BY_ID)
 public ResponseEntity<Object> getSieveTestById(@PathVariable Long id) {
-  if (sieveTestService.isSieveTestExit(id)) {
+  if (sieveTestService.isSieveTestExists(id)) {
     logger.debug("Get SieveTest by id ");
     return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
         mapper.map(sieveTestService.getSieveTestById(id), SieveTestResponseDto.class),
@@ -73,7 +73,7 @@ public ResponseEntity<Object> getSieveTestById(@PathVariable Long id) {
 // get SieveTest Delete
 @DeleteMapping(value = EndpointURI.SIEVE_TEST_BY_ID)
 public ResponseEntity<Object> deleteSieveTest(@PathVariable Long id) {
-  if (sieveTestService.isSieveTestExit(id)) {
+  if (sieveTestService.isSieveTestExists(id)) {
    sieveTestService.deleteSieveTest(id);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.SIEVE_TEST_DELETED),
@@ -87,7 +87,7 @@ public ResponseEntity<Object> deleteSieveTest(@PathVariable Long id) {
 @PutMapping(value = EndpointURI.SIEVE_TEST)
 public ResponseEntity<Object> updateSieveTest(
     @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
-  if (sieveTestService.isSieveTestExit(sieveTestRequestDto.getId())) {
+  if (sieveTestService.isSieveTestExists(sieveTestRequestDto.getId())) {
     sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_TEST_SUCCESS),
