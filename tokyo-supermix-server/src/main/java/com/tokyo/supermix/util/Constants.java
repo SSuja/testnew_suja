@@ -394,6 +394,10 @@ public class Constants {
   public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
       "parameterResult updated Successfully";
   public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
+  /*
+   * sieve-test-trial
+   */
+  public static final String SIEVE_TEST_TRIAL_ADD = "Sieve Test Trial Added Succeessfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
