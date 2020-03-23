@@ -10,6 +10,8 @@ public class SieveTestResponseDto {
   private Long id;
   private Date date;
   private Double finenessModulus;
+  private Double panWeight;
+  private Double totalWeight;
   private Status status;
   private User userId;
   private Plant plantCode;
@@ -56,6 +58,17 @@ public class SieveTestResponseDto {
   public void setIncomingSampleCode(IncomingSample incomingSampleCode) {
     this.incomingSampleCode = incomingSampleCode;
   }
-  
+  public Double getPanWeight() {
+    return panWeight;
+  }
+  public void setPanWeight(Double panWeight) {
+    this.panWeight = panWeight;
+  }
+  public Double getTotalWeight() {
+    return totalWeight;
+  }
+  public void setTotalWeight(Double totalWeight) {
+    this.totalWeight = totalWeight;
+  }
   
 }

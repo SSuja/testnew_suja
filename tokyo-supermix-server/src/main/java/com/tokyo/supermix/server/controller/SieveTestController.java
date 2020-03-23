@@ -36,7 +36,7 @@ public class SieveTestController {
   private SieveTestService sieveTestService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-  private static final Logger logger = Logger.getLogger(ConcreteTestController.class);
+  private static final Logger logger = Logger.getLogger(SieveTestController.class);
 
 //post API for
  @PostMapping(value = EndpointURI.SIEVE_TEST)
@@ -44,7 +44,7 @@ public class SieveTestController {
      @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
    sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
    return new ResponseEntity<>(
-       new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_TEST_SUCCESS),
+       new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_TEST_SUCCESS),
        HttpStatus.OK);
  }
  
@@ -52,48 +52,48 @@ public class SieveTestController {
  public ResponseEntity<Object> getAllSieveTest() {
    List<SieveTest> sieveTestTestList = sieveTestService.getAllSieveTest();
    return new ResponseEntity<Object>(
-       new ContentResponse<>(Constants.CONCRETE_TESTS,
+       new ContentResponse<>(Constants.SIEVE_TESTS,
            mapper.map(sieveTestTestList, SieveTestResponseDto.class), RestApiResponseStatus.OK),
        HttpStatus.OK);
  }
-//get ConcreteTest by id
+//get SieveTest by id
 @GetMapping(value = EndpointURI.SIEVE_TEST_BY_ID)
 public ResponseEntity<Object> getSieveTestById(@PathVariable Long id) {
   if (sieveTestService.isSieveTestExit(id)) {
     logger.debug("Get SieveTest by id ");
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST,
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
         mapper.map(sieveTestService.getSieveTestById(id), SieveTestResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
   logger.debug("Invalid Id");
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
-      validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
+  return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
+      validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
 }
 
-// get ConcreteTest Delete
+// get SieveTest Delete
 @DeleteMapping(value = EndpointURI.SIEVE_TEST_BY_ID)
 public ResponseEntity<Object> deleteSieveTest(@PathVariable Long id) {
   if (sieveTestService.isSieveTestExit(id)) {
    sieveTestService.deleteSieveTest(id);
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.CONCRETE_TEST_DELETED),
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.SIEVE_TEST_DELETED),
         HttpStatus.OK);
   }
   logger.debug("invalid SieveTestId");
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
-      validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
+  return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
+      validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
 }
 
 @PutMapping(value = EndpointURI.SIEVE_TEST)
-public ResponseEntity<Object> updateConcreteTest(
+public ResponseEntity<Object> updateSieveTest(
     @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
   if (sieveTestService.isSieveTestExit(sieveTestRequestDto.getId())) {
     sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CONCRETE_TEST_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_TEST_SUCCESS),
         HttpStatus.OK);
   }
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
-      validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
+  return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
+      validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
 }
 }

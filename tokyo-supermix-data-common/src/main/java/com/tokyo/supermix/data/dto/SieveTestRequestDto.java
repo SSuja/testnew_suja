@@ -1,15 +1,25 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class SieveTestRequestDto {
   private Long id;
+  @NotNull(message = "{sieveTestRequestDto.date.null}")
   private Date date;
   private Double finenessModulus;
   private String status;
+  @NotNull(message = "{sieveTestRequestDto.userId.null}")
   private Long userId;
+  @NotNull(message = "{sieveTestRequestDto.plantCode.null}")
+  @NotEmpty(message = "{sieveTestRequestDto.plantCode.empty}")
   private String plantCode;
+  @NotNull(message = "{sieveTestRequestDto.incomingSampleCode.null}")
+  @NotEmpty(message = "{sieveTestRequestDto.incomingSampleCode.empty}")
   private String incomingSampleCode;
+  private Double panWeight;
+  private Double totalWeight;
 
   public Long getId() {
     return id;
@@ -65,5 +75,21 @@ public class SieveTestRequestDto {
 
   public void setIncomingSampleCode(String incomingSampleCode) {
     this.incomingSampleCode = incomingSampleCode;
+  }
+
+  public Double getPanWeight() {
+    return panWeight;
+  }
+
+  public void setPanWeight(Double panWeight) {
+    this.panWeight = panWeight;
+  }
+
+  public Double getTotalWeight() {
+    return totalWeight;
+  }
+
+  public void setTotalWeight(Double totalWeight) {
+    this.totalWeight = totalWeight;
   }
 }
