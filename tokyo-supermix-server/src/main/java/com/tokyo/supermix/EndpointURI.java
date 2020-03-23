@@ -299,6 +299,14 @@ public final class EndpointURI {
 			+ "/{materialTestCode}";
 	public static final String AVERAGE_BY_MATERIAL_TEST_CODE = MATERIAL_TEST_TRIAL + "/material-test" + "/average"
 			+ "/{materialTestCode}";
+	/*
+     * concreteTest
+     * 
+     */
+    public static final String SIEVE_TEST = BASE_API_PATH + "sieve-test";
+    public static final String SIEVE_TESTS = BASE_API_PATH + "sieve-tests";
+    public static final String SIEVE_TEST_BY_ID = SIEVE_TEST + ID;
+
 
 	private EndpointURI() {
 	}
