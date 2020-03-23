@@ -1,5 +1,9 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface SieveSizeRepository {
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tokyo.supermix.data.entities.SieveSize;
 
+public interface SieveSizeRepository extends JpaRepository<SieveSize, Long>{
+  List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
 }

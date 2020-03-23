@@ -1544,4 +1544,27 @@ public class ValidationFailureStatusCodes {
   public void setParameterResultNotExist(String parameterResultNotExist) {
     this.parameterResultNotExist = parameterResultNotExist;
   }
+
+  // Sieve Size
+  @Value("${validation.sieveSizeRequestDto.alreadyExist}")
+  private String sieveSizeAlreadyExist;
+  @Value("${validation.sieveSizeRequestDto.notExist}")
+  private String sieveSizeNotExist;
+
+  public String getSieveSizeAlreadyExist() {
+    return sieveSizeAlreadyExist;
+  }
+
+  public void setSieveSizeAlreadyExist(String sieveSizeAlreadyExist) {
+    this.sieveSizeAlreadyExist = sieveSizeAlreadyExist;
+  }
+
+  public String getSieveSizeNotExist() {
+    return sieveSizeNotExist;
+  }
+
+  public void setSieveSizeNotExist(String sieveSizeNotExist) {
+    this.sieveSizeNotExist = sieveSizeNotExist;
+  }
+
 }
