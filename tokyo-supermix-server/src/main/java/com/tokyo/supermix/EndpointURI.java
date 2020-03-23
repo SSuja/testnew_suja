@@ -265,8 +265,6 @@ public final class EndpointURI {
   public static final String PARAMETER_RESULTS = BASE_API_PATH + "parameter-results";
   public static final String GET_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
   public static final String DELETE_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
-  public static final String PARAMETER_RESULT_CALCULATION =
-      BASE_API_PATH + "/parameter-result" + "/calculation" + "/{materialTestTrialCode}";
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
 

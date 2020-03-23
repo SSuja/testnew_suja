@@ -22,85 +22,98 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.UserService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class UserController {
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private Mapper mapper;
-  @Autowired
-  private ValidationFailureStatusCodes validationFailureStatusCodes;
-  private static final Logger logger = Logger.getLogger(UserController.class);
+	@Autowired
+	private UserService userService;
+	@Autowired
+	private Mapper mapper;
+	@Autowired
+	private ValidationFailureStatusCodes validationFailureStatusCodes;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private MailConstants mailConstants;
+	private static final Logger logger = Logger.getLogger(UserController.class);
 
-  @PostMapping(value = EndpointURI.USER)
-  public ResponseEntity<Object> createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-    if (userService.isUserNameExist(userRequestDto.getUserName())) {
-      logger.debug("User already exists: createUser(), username: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
-          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
-    if (userService.isEmployeeExist(userRequestDto.getEmployeeId())) {
-      logger.debug("Employee already exists: createUser(), employee: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
-          validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
-    userService.saveUser(mapper.map(userRequestDto, User.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS), HttpStatus.OK);
-  }
+	@PostMapping(value = EndpointURI.USER)
+	public ResponseEntity<Object> createUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+		if (userService.isUserNameExist(userRequestDto.getUserName())) {
+			logger.debug("User already exists: createUser(), username: {}");
+			return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
+					validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+		}
+		if (userService.isEmployeeExist(userRequestDto.getEmployeeId())) {
+			logger.debug("Employee already exists: createUser(), employee: {}");
+			return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
+					validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+		}
+		User user = userService.saveUser(mapper.map(userRequestDto, User.class));
+		if (user != null) {
+			String message = "Your Account sucessfully created. Your Username is " + userRequestDto.getUserName()
+					+ ". Password is " + userRequestDto.getPassword();
+			emailService.sendMail(mailConstants.getMailNewUser(), "Notification : Congratulations!", message);
+			emailService.sendPreConfiguredMail(message);
+		}
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS),
+				HttpStatus.OK);
+	}
 
-  @GetMapping(value = EndpointURI.USERS)
-  public ResponseEntity<Object> getAllUsers() {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.USER,
-            mapper.map(userService.getAllUsers(), UserResponseDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
+	@GetMapping(value = EndpointURI.USERS)
+	public ResponseEntity<Object> getAllUsers() {
+		return new ResponseEntity<>(new ContentResponse<>(Constants.USER,
+				mapper.map(userService.getAllUsers(), UserResponseDto.class), RestApiResponseStatus.OK), null,
+				HttpStatus.OK);
+	}
 
-  @GetMapping(value = EndpointURI.USER_BY_ID)
-  public ResponseEntity<Object> getUserById(@PathVariable Long id) {
-    if (userService.isUserExist(id)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.USER,
-          mapper.map(userService.getUserById(id), UserResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
-    }
-    logger.debug("No User record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
-  }
+	@GetMapping(value = EndpointURI.USER_BY_ID)
+	public ResponseEntity<Object> getUserById(@PathVariable Long id) {
+		if (userService.isUserExist(id)) {
+			return new ResponseEntity<>(
+					new ContentResponse<>(Constants.USER,
+							mapper.map(userService.getUserById(id), UserResponseDto.class), RestApiResponseStatus.OK),
+					HttpStatus.OK);
+		}
+		logger.debug("No User record exist for given id");
+		return new ResponseEntity<>(
+				new ValidationFailureResponse(Constants.USER_ID, validationFailureStatusCodes.getUserNotExist()),
+				HttpStatus.BAD_REQUEST);
+	}
 
-  @DeleteMapping(EndpointURI.USER_BY_ID)
-  public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
-    if (userService.isUserExist(id)) {
-      userService.deleteUser(id);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_USER_SCCESS),
-          HttpStatus.OK);
-    }
-    logger.debug("No User record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
-  }
+	@DeleteMapping(EndpointURI.USER_BY_ID)
+	public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
+		if (userService.isUserExist(id)) {
+			userService.deleteUser(id);
+			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_USER_SCCESS),
+					HttpStatus.OK);
+		}
+		logger.debug("No User record exist for given id");
+		return new ResponseEntity<>(
+				new ValidationFailureResponse(Constants.USER_ID, validationFailureStatusCodes.getUserNotExist()),
+				HttpStatus.BAD_REQUEST);
+	}
 
-  @PutMapping(value = EndpointURI.USER)
-  public ResponseEntity<Object> updateUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-    if (userService.isUserExist(userRequestDto.getId())) {
-      if (userService.isUpdatedUserExist(userRequestDto.getId(), userRequestDto.getUserName())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
-            validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-      userService.saveUser(mapper.map(userRequestDto, User.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_USER_SUCCESS),
-          HttpStatus.OK);
-    }
-    logger.debug("No User record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
-  }
+	@PutMapping(value = EndpointURI.USER)
+	public ResponseEntity<Object> updateUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+		if (userService.isUserExist(userRequestDto.getId())) {
+			if (userService.isUpdatedUserExist(userRequestDto.getId(), userRequestDto.getUserName())) {
+				return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
+						validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+			}
+			userService.saveUser(mapper.map(userRequestDto, User.class));
+			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_USER_SUCCESS),
+					HttpStatus.OK);
+		}
+		logger.debug("No User record exist for given id");
+		return new ResponseEntity<>(
+				new ValidationFailureResponse(Constants.USER_ID, validationFailureStatusCodes.getUserNotExist()),
+				HttpStatus.BAD_REQUEST);
+	}
 }
