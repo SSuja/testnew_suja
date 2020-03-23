@@ -389,11 +389,14 @@ public class Constants {
   public static final String PARAMETER_RESULT_ID = "parameterResultId";
 
   // Success Messages
-  public static final String ADD_PARAMETER_RESULT_SUCCESS = "parameterResult added Successfully";
+  public static final String PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED =
+      "parameter value added and result updated Successfully";
   public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Successfully";
   public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
       "parameterResult updated Successfully";
   public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
+  public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
+      PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
 
   /*
    * Sieve Size
