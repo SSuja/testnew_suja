@@ -11,8 +11,7 @@ public class ConcreteStrengthTestRequestDto {
   private String mixDesignCode;
   @NotNull(message = "{concreteStrengthTestRequestDto.concreteAge.null}")
   private Long concreteAge;
-  @NotNull(message = "{concreteStrengthTestRequestDto.strength.null}")
-  private Double strength;
+  private Double strength = 0.0;
   private Double strengthGradeRatio;
   private Status status;
 
@@ -63,7 +62,4 @@ public class ConcreteStrengthTestRequestDto {
   public void setStatus(Status status) {
     this.status = status;
   }
-
-
-
 }

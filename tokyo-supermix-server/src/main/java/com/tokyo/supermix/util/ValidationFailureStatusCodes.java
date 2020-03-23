@@ -1226,6 +1226,17 @@ public class ValidationFailureStatusCodes {
   // for ConcreteStrengthTest
   @Value("${validation.concreteStrengthTest.notExists}")
   private String concreteStrengthTestNotExist;
+  @Value("${validation.concreteStrengthTestConcreteAge.notValid}")
+  private String concreteStrengthTestConcreteAgeNotValid;
+
+  public String getConcreteStrengthTestConcreteAgeNotValid() {
+    return concreteStrengthTestConcreteAgeNotValid;
+  }
+
+  public void setConcreteStrengthTestConcreteAgeNotValid(
+      String concreteStrengthTestConcreteAgeNotValid) {
+    this.concreteStrengthTestConcreteAgeNotValid = concreteStrengthTestConcreteAgeNotValid;
+  }
 
   public String getConcreteStrengthTestNotExist() {
     return concreteStrengthTestNotExist;
