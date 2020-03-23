@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
 
 @Service
@@ -23,7 +24,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   @Autowired
   private MaterialTestTrialRepository materialTestTrialRepository;
   @Autowired
-  private TestParameterService testParameterService;
+  private TestParameterRepository testParameterRepository;
 
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
@@ -56,13 +57,11 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     double result = 0;
     for (ParameterResult parameterResult : parameterResultList) {
       TestParameter testParameter =
-          testParameterService.getTestParameterById(parameterResult.getTestParameter().getId());
-      System.out.println(testParameter.getParameter().getAbbreviation());
+          testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
       engine.put(testParameter.getParameter().getAbbreviation(), parameterResult.getValue());
     }
     try {
       result = (double) engine.eval(equation);
-      System.out.println(result);
     } catch (ScriptException e) {
       e.printStackTrace();
     }
@@ -80,7 +79,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   }
 
   @Transactional
-  public void saveMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
+  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
     String formula = materialTestTrial.getMaterialTest().getTest().getEquation().getFormula();
