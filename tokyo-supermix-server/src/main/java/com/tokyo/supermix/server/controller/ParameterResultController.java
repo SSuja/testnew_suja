@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
@@ -44,35 +43,17 @@ public class ParameterResultController {
   @PostMapping(value = EndpointURI.PARAMETER_RESULT)
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<ParameterResultRequestDto> parameterResultRequestDtoList) {
-	    Object LOCK = new Object();
-	    try {
-	      Thread.sleep(3000);
-	      parameterResultRequestDtoList
-	          .forEach(parameterResultRequestDtoListObj -> parameterResultService.saveParameterResult(
-	              mapper.map(parameterResultRequestDtoListObj, ParameterResult.class)));
-
-	    } catch (InterruptedException e) {
-	      e.printStackTrace();
-	    }
-	    System.out.println("Thread '" + Thread.currentThread().getName() + "' 57 second");
-	    {
-	      synchronized (LOCK) {
-	        try {
-	          LOCK.wait(60000);
-	          parameterResultRequestDtoList
-	              .forEach(parameterResultRequestDtoListObj -> parameterResultService
-	                  .setResult(materialTestTrialService.getMaterialTestTrialByCode(
-	                      parameterResultRequestDtoListObj.getMaterialTestTrial().getCode())));
-
-	        } catch (InterruptedException e) {
-	          e.printStackTrace();
-	        }
-	        System.out.println("Object '" + LOCK + "' is woken after" + " waiting for 1 second");
-	      }
-	    }
+    for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
+      parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
+    }
+    for (ParameterResultRequestDto parameterResult1 : parameterResultRequestDtoList) {
+      parameterResultService.saveMaterialTestTrialResult(materialTestTrialService
+          .getMaterialTestTrialByCode(parameterResult1.getMaterialTestTrial().getCode()));
+    }
     return new ResponseEntity<Object>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_RESULT_SUCCESS),
         HttpStatus.OK);
+
   }
 
   @GetMapping(value = EndpointURI.PARAMETER_RESULTS)
@@ -108,29 +89,34 @@ public class ParameterResultController {
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping(value = EndpointURI.PARAMETER_RESULT)
-  public ResponseEntity<Object> UpdateParameterResult(
-      @Valid @RequestBody ParameterResultRequestDto parameterResultRequestDto) {
-    if (parameterResultService.isParameterResultExist(parameterResultRequestDto.getId())) {
-      parameterResultService
-          .saveParameterResult(mapper.map(parameterResultRequestDto, ParameterResult.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PARAMETER_RESULT_SUCCESS),
-          HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
-        validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
-  }
+  // @PutMapping(value = EndpointURI.PARAMETER_RESULT)
+  // public ResponseEntity<Object> UpdateParameterResult(
+  // @Valid @RequestBody ParameterResultRequestDto parameterResultRequestDto) {
+  // if (parameterResultService.isParameterResultExist(parameterResultRequestDto.getId())) {
+  // parameterResultService
+  // .saveParameterResult(mapper.map(parameterResultRequestDto, ParameterResult.class));
+  // return new ResponseEntity<>(
+  // new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PARAMETER_RESULT_SUCCESS),
+  // HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
+  // validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
+  // }
 
-  @GetMapping(value = EndpointURI.PARAMETER_RESULT_CALCULATION)
-  public ResponseEntity<Object> calculateResultForTestTrial(
-      @PathVariable String materialTestTrialCode) {
-    parameterResultService
-        .setResult(materialTestTrialService.getMaterialTestTrialByCode(materialTestTrialCode));
-    return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.RESULT_SUCCESSFULLY_UPDATED),
-        HttpStatus.OK);
-  }
+  // @GetMapping(value = EndpointURI.PARAMETER_RESULT_CALCULATION)
+  // public ResponseEntity<Object> calculateResultForTestTrial(
+  // @PathVariable String materialTestTrialCode) {
+  // parameterResultService.saveMaterialTestTrialResult(
+  // materialTestTrialService.getMaterialTestTrialByCode(materialTestTrialCode));
+  // return new ResponseEntity<Object>(
+  // new BasicResponse<>(RestApiResponseStatus.OK, Constants.RESULT_SUCCESSFULLY_UPDATED),
+  // HttpStatus.OK);
+  // }
+
+  // @Scheduled(cron = "0 0/20 * * * ?")
+  // public void scheduleTaskWithFixedRate() {
+  // materialTestService.updateIncomingSampleStatusBySeheduler();
+  // }
 
   @GetMapping(value = EndpointURI.PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE)
   public ResponseEntity<Object> getParameterResultByMaterialTestTrialByCode(
