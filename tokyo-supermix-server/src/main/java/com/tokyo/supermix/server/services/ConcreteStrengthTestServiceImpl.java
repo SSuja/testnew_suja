@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.ConcreteStrengthTest;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteStrengthTestRepository;
 import com.tokyo.supermix.util.Constants;
 
@@ -55,7 +56,15 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
         mixDesignService.getMixDesignByCode(concreteStrengthTest.getMixDesign().getCode());
     concreteStrengthTest.setStrengthGradeRatio(
         roundDoubleValue(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade()));
+    if (concreteStrengthTest.getStrength() == 0) {
+      concreteStrengthTest.setStatus(Status.PROCESS);
+    }
+    if (concreteStrengthTest.getStrengthGradeRatio() >= 1) {
+      concreteStrengthTest.setStatus(Status.PASS);
+    } else if (concreteStrengthTest.getStrengthGradeRatio() > 0
+        && concreteStrengthTest.getStrengthGradeRatio() < 1) {
+      concreteStrengthTest.setStatus(Status.FAIL);
+    }
     return concreteStrengthTest;
   }
-
 }

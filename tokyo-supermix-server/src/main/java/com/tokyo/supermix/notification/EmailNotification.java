@@ -106,7 +106,6 @@ public class EmailNotification {
   }
 
   @Scheduled(cron = "0 0 8 * * ?")
-  // @Scheduled(fixedRate = 20000)
   public void notifyPendingIncomingSample() {
     final LocalDateTime today = LocalDateTime.now();
     final LocalDateTime incomingDate = today.minusDays(3L);

@@ -365,9 +365,9 @@ public class Constants {
   /*
    * Material Test
    */
-  public static final String MATERIAL_TEST = "Material Test";
-  public static final String MATERIAL_TESTS = "Material Tests";
-  public static final String MATERIAL_TEST_ID = "Material Test Id";
+  public static final String MATERIAL_TEST = "materialTest";
+  public static final String MATERIAL_TESTS = "materialTests";
+  public static final String MATERIAL_TEST_ID = "materialTestId";
   public static final String ADD_MATERIAL_TEST_SUCCESS = "Material Test Added Successfully";
   public static final String MATERIAL_TEST_DELETED = "Material Test Deleted Successfully";
   public static final String MATERIAL_TEST_UPDATED = "Material Test Updated Successfully";
@@ -397,6 +397,24 @@ public class Constants {
   public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
       "parameterResult updated Successfully";
   public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
+
+  /*
+   * Sieve Size
+   */
+  public static final String SIEVE_SIZES = "sieveSizes";
+  public static final String SIEVE_SIZE = "sieveSize";
+  public static final String ADD_SIEVE_SIZE_SUCCESS = "Sieve Size added Successfully";
+  public static final String SIEVE_SIZE_ID = "id";
+  public static final String UPDATE_SIEVE_SIZE_SUCCESS = "Sieve Size updated Successfully";
+  public static final String DELETE_SIEVE_SIZE_SUCCESS = "Sieve Size delete Successfully";
+  /*
+   * Sieve Accepted Value
+   */
+  public static final String SIEVE_ACCEPTED_VALUES = "sieveAcceptedValues";
+  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value added Successfully";
+  public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
+  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value updated Successfully";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value delete Successfully";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

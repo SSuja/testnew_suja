@@ -1544,4 +1544,49 @@ public class ValidationFailureStatusCodes {
   public void setParameterResultNotExist(String parameterResultNotExist) {
     this.parameterResultNotExist = parameterResultNotExist;
   }
+
+  // Sieve Size
+  @Value("${validation.sieveSizeRequestDto.alreadyExist}")
+  private String sieveSizeAlreadyExist;
+  @Value("${validation.sieveSizeRequestDto.notExist}")
+  private String sieveSizeNotExist;
+
+  public String getSieveSizeAlreadyExist() {
+    return sieveSizeAlreadyExist;
+  }
+
+  public void setSieveSizeAlreadyExist(String sieveSizeAlreadyExist) {
+    this.sieveSizeAlreadyExist = sieveSizeAlreadyExist;
+  }
+
+  public String getSieveSizeNotExist() {
+    return sieveSizeNotExist;
+  }
+
+  public void setSieveSizeNotExist(String sieveSizeNotExist) {
+    this.sieveSizeNotExist = sieveSizeNotExist;
+  }
+
+  // Sieve Accepted Value
+  @Value("${validation.sieveAcceptedValueRequestDto.alreadyExist}")
+  private String sieveAcceptedValueAlreadyExist;
+  @Value("${validation.sieveAcceptedValueRequestDto.notExist}")
+  private String sieveAcceptedValueNotExist;
+
+  public String getSieveAcceptedValueAlreadyExist() {
+    return sieveAcceptedValueAlreadyExist;
+  }
+
+  public void setSieveAcceptedValueAlreadyExist(String sieveAcceptedValueAlreadyExist) {
+    this.sieveAcceptedValueAlreadyExist = sieveAcceptedValueAlreadyExist;
+  }
+
+  public String getSieveAcceptedValueNotExist() {
+    return sieveAcceptedValueNotExist;
+  }
+
+  public void setSieveAcceptedValueNotExist(String sieveAcceptedValueNotExist) {
+    this.sieveAcceptedValueNotExist = sieveAcceptedValueNotExist;
+  }
+
 }

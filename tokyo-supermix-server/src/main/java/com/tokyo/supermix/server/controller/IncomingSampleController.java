@@ -71,7 +71,7 @@ public class IncomingSampleController {
           HttpStatus.BAD_REQUEST);
     }
     incomingSampleService
-        .saveIncomingSample(mapper.map(incomingSampleRequestDto, IncomingSample.class));
+        .createIncomingSample(mapper.map(incomingSampleRequestDto, IncomingSample.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_INCOMING_SAMPLE_SUCCESS),
         HttpStatus.OK);
@@ -82,7 +82,7 @@ public class IncomingSampleController {
       @Valid @RequestBody IncomingSampleRequestDto incomingSampleRequestDto) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleRequestDto.getCode())) {
       incomingSampleService
-          .saveIncomingSample(mapper.map(incomingSampleRequestDto, IncomingSample.class));
+          .updateIncomingSample(mapper.map(incomingSampleRequestDto, IncomingSample.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_INCOMING_SAMPLE_SUCCESS),
           HttpStatus.OK);
