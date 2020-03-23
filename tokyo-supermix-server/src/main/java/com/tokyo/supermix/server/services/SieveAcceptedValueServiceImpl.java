@@ -14,8 +14,8 @@ public class SieveAcceptedValueServiceImpl implements SieveAcceptedValueService 
   private SieveAcceptedValueRepository sieveAcceptedValueRepository;
 
   @Transactional
-  public SieveAcceptedValue saveSieveAcceptedValue(SieveAcceptedValue sieveAcceptedValue) {
-    return sieveAcceptedValueRepository.save(sieveAcceptedValue);
+  public void saveSieveAcceptedValue(SieveAcceptedValue sieveAcceptedValue) {
+     sieveAcceptedValueRepository.save(sieveAcceptedValue);
   }
 
   @Transactional(readOnly = true)

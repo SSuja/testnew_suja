@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.SieveAcceptedValue;
 
 public interface SieveAcceptedValueService {
-  public SieveAcceptedValue saveSieveAcceptedValue(SieveAcceptedValue sieveAcceptedValue);
+  public void saveSieveAcceptedValue(SieveAcceptedValue sieveAcceptedValue);
 
   public List<SieveAcceptedValue> getAllSieveAcceptedValues();
 
