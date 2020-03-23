@@ -24,7 +24,12 @@ public class MailConstants {
 	private String[] mailAdmixureExpiry;
 	@Value("${mail.notify.alertMixDedisgnTest}")
 	private String[] mailalertMixDedisgnTest;
-	
+	@Value("${mail.notify.mailPendingIncomingSample}")
+	private String[] mailPendingIncomingSample;
+	@Value("${mail.notify.mailNewProject}")
+	private String[] mailNewProject;
+	@Value("${mail.notify.mailNewFinishProduct}")
+    private String[] mailNewFinishProduct;
 	
 	public String getAdmin() {
 		return admin;
@@ -50,6 +55,7 @@ public class MailConstants {
 	public void setMailIncomingSamplePerDay(String[] mailIncomingSamplePerDay) {
 		this.mailIncomingSamplePerDay = mailIncomingSamplePerDay;
 	}
+	
 	public String[] getMailAdmixureExpiry() {
 		return mailAdmixureExpiry;
 	}
@@ -62,5 +68,23 @@ public class MailConstants {
 	public void setMailalertMixDedisgnTest(String[] mailalertMixDedisgnTest) {
 		this.mailalertMixDedisgnTest = mailalertMixDedisgnTest;
 	}
+	public String[] getMailPendingIncomingSample() {
+		return mailPendingIncomingSample;
+	}
+	public void setMailPendingIncomingSample(String[] mailPendingIncomingSample) {
+		this.mailPendingIncomingSample = mailPendingIncomingSample;
+	}
+	public String[] getMailNewProject() {
+		return mailNewProject;
+	}
+	public void setMailNewProject(String[] mailNewProject) {
+		this.mailNewProject = mailNewProject;
+	}
+    public String[] getMailNewFinishProduct() {
+      return mailNewFinishProduct;
+    }
+    public void setMailNewFinishProduct(String[] mailNewFinishProduct) {
+      this.mailNewFinishProduct = mailNewFinishProduct;
+    }
 	
 }
