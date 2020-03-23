@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.Status;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "sieve_test")
@@ -19,7 +20,7 @@ public class SieveTest implements Serializable {
   private Long id;
   private Date date;
   private Double finenessModulus;
-  private String status;
+  
   @ManyToOne
   @JoinColumn(name = "userId", nullable = false)
   private User user;
@@ -54,14 +55,6 @@ public class SieveTest implements Serializable {
     this.finenessModulus = finenessModulus;
   }
 
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
   public User getUser() {
     return user;
   }
@@ -89,5 +82,7 @@ public class SieveTest implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
+  
 
 }
