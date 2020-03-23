@@ -21,22 +21,33 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductResponseDto;
 import com.tokyo.supermix.data.entities.FinishProduct;
+import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.FinishProductService;
+import com.tokyo.supermix.server.services.MixDesignService;
+import com.tokyo.supermix.server.services.ProjectService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class FinishProductController {
-
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private MailConstants mailConstants;
+	@Autowired
+	private ProjectService projectService;
+	@Autowired
+	private MixDesignService mixDesignService;
 	@Autowired
 	FinishProductService finishProductService;
-
 	@Autowired
 	ValidationFailureStatusCodes validationFailureStatusCodes;
 
@@ -56,6 +67,10 @@ public class FinishProductController {
 		}
 		FinishProduct finishProduct = mapper.map(finishProductDto, FinishProduct.class);
 		finishProductService.saveFinishProduct(finishProduct);
+		MixDesign mixDesign=mixDesignService.getMixDesignByCode(finishProductDto.getMixDesignCode());
+		String message = "We have got new Finish Product. The Project name is " + projectService.getProjectByCode(finishProductDto.getProjectCode()).getName()+
+				". mixDesign created on "+mixDesign.getDate()+". the mixdesign code is "+mixDesign.getCode() + ", Actual grade for this mixdesign is " + mixDesign.getActualGrade();
+	    emailService.sendMail(mailConstants.getMailNewFinishProduct(), "Notification : New Finish Product",message);
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_SUCCESS),
 				HttpStatus.OK);
 	}

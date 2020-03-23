@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
 
 @Service
@@ -21,15 +23,17 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   private ParameterResultRepository parameterResultRepository;
   @Autowired
   private MaterialTestTrialRepository materialTestTrialRepository;
+  @Autowired
+  private TestParameterRepository testParameterRepository;
+
+  @Transactional
+  public void saveParameterValue(ParameterResult parameterValue) {
+    parameterResultRepository.save(parameterValue);
+  }
 
   @Transactional(readOnly = true)
   public List<ParameterResult> getAllParameterResults() {
     return parameterResultRepository.findAll();
-  }
-
-  @Transactional
-  public ParameterResult saveParameterResult(ParameterResult parameterResult) {
-    return parameterResultRepository.save(parameterResult);
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -47,30 +51,26 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return parameterResultRepository.existsById(id);
   }
 
-  public void setResult(MaterialTestTrial materialTestTrial) {
-    List<ParameterResult> parameterResultList =
-        findByMaterialTestTrialCode(materialTestTrial.getCode());
-    String formula = materialTestTrial.getMaterialTest().getTest().getEquation().getFormula();
-    Double result = roundDoubleValue(calculateTestResult(formula, parameterResultList));
-    materialTestTrial.setResult(result);
-    materialTestTrialRepository.save(materialTestTrial);
-  }
-
-  private double calculateTestResult(String formula, List<ParameterResult> paramResult) {
+  private double calculateTestResult(String equation, List<ParameterResult> parameterResultList) {
     ScriptEngineManager mgr = new ScriptEngineManager();
     ScriptEngine engine = mgr.getEngineByName("JavaScript");
     double result = 0;
-    paramResult.forEach(paramObj -> {
-      engine.put(paramObj.getTestParameter().getParameter().getAbbreviation(), paramObj.getValue());
-    });
+    for (ParameterResult parameterResult : parameterResultList) {
+      TestParameter testParameter =
+          testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
+      engine.put(testParameter.getParameter().getAbbreviation(), parameterResult.getValue());
+    }
     try {
-      result = (double) engine.eval(formula);
-      System.out.println(result);
+      result = (double) engine.eval(equation);
     } catch (ScriptException e) {
       e.printStackTrace();
-      System.out.println("exception");
     }
     return result;
+  }
+
+  @Transactional(readOnly = true)
+  public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode) {
+    return parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
   }
 
   private Double roundDoubleValue(Double value) {
@@ -78,8 +78,13 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return Double.valueOf(decimalFormat.format(value));
   }
 
-  @Transactional(readOnly = true)
-  public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode) {
-    return parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
+  @Transactional
+  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
+    List<ParameterResult> parameterResultList =
+        findByMaterialTestTrialCode(materialTestTrial.getCode());
+    String formula = materialTestTrial.getMaterialTest().getTest().getEquation().getFormula();
+    Double result = roundDoubleValue(calculateTestResult(formula, parameterResultList));
+    materialTestTrial.setResult(result);
+    materialTestTrialRepository.save(materialTestTrial);
   }
 }
