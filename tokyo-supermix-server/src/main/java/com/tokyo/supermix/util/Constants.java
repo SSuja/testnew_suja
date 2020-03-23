@@ -399,6 +399,15 @@ public class Constants {
    */
   public static final String SIEVE_TEST_TRIAL_ADD = "Sieve Test Trial Added Succeessfully";
 
+  /*
+   * Sieve Size
+   */
+  public static final String SIEVE_SIZES = "sieveSizes";
+  public static final String ADD_SIEVE_SIZE_SUCCESS = "Sieve Size added Successfully";
+  public static final String SIEVE_SIZE_ID = "id";
+  public static final String UPDATE_SIEVE_SIZE_SUCCESS = "Sieve Size updated Successfully";
+  public static final String DELETE_SIEVE_SIZE_SUCCESS = "Sieve Size delete Successfully";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

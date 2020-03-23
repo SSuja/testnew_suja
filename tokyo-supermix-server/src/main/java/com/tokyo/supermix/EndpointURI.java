@@ -315,6 +315,15 @@ public final class EndpointURI {
    */
   public static final String SIEVE_TEST_TRIAL = BASE_API_PATH + "sieve-test-trial";
 
+  /*
+   * Sieve Size
+   */
+  public static final String SIEVE_SIZE = BASE_API_PATH + "sieve-size";
+  public static final String SIEVE_SIZES = BASE_API_PATH + "sieve-sizes";
+  public static final String SIEVE_SIZE_BY_ID = SIEVE_SIZE + ID;
+  public static final String SIEVE_SIZE_BY_MATERIAL_SUB_CATEGORY_ID =
+      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "/{materialSubCategoryId}";
+
   private EndpointURI() {}
 
 }
