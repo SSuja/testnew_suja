@@ -320,7 +320,13 @@ public final class EndpointURI {
   public static final String SIEVE_ACCEPTED_VALUE = BASE_API_PATH + "sieve-accepted-value";
   public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
   public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
-
+/*
+     * SieveTest
+     * 
+     */
+    public static final String SIEVE_TEST = BASE_API_PATH + "sieve-test";
+    public static final String SIEVE_TESTS = BASE_API_PATH + "sieve-tests";
+    public static final String SIEVE_TEST_BY_ID = SIEVE_TEST + ID;
   private EndpointURI() {}
 
 }

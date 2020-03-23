@@ -1589,4 +1589,17 @@ public class ValidationFailureStatusCodes {
     this.sieveAcceptedValueNotExist = sieveAcceptedValueNotExist;
   }
 
+  // for sieveTest
+  @Value("${validation.sieveTest.notExists}")
+  private String sieveTestNotExist;
+
+  public String getSieveTestNotExist() {
+    return sieveTestNotExist;
+  }
+
+  public void setSieveTestNotExist(String sieveTestNotExist) {
+    this.sieveTestNotExist = sieveTestNotExist;
+  }
+
+
 }

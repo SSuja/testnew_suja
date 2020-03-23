@@ -418,7 +418,15 @@ public class Constants {
   public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
   public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value updated Successfully";
   public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value delete Successfully";
-
+  /*
+   * sieveTest*
+   */
+  public static final String ADD_SIEVE_TEST_SUCCESS = "SieveTest added Successfully";
+  public static final String SIEVE_TEST_DELETED = "SieveTest Successfully Deleted";
+  public static final String UPDATE_SIEVE_TEST_SUCCESS = "SieveTest updated Successfully";
+  public static final String SIEVE_TEST_ID = "sieveTestId";
+  public static final String SIEVE_TEST = "sieveTest";
+  public static final String SIEVE_TESTS = "sieveTests";
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 
