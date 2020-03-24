@@ -30,6 +30,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     SieveTest sieveTest =
         sieveTestService.getSieveTestById(sieveTestTrials.get(0).getSieveTest().getId());
     sieveTest.setFinenessModulus(finenessModule(sieveTestTrials));
+    sieveTest.setTotalWeight(totalWeight(sieveTestTrials));
     sieveTestService.saveSieveTest(sieveTest);
   }
 
