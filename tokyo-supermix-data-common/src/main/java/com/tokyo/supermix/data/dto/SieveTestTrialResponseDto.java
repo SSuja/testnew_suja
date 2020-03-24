@@ -2,8 +2,8 @@ package com.tokyo.supermix.data.dto;
 
 public class SieveTestTrialResponseDto {
   private Long id;
-  private Long sieveSizeId;
-  private Long sieveTestId;
+  private SieveSizeResponseDto sieveSize;
+  private SieveTestResponseDto sieveTest;
   private Double percentageRetained;
   private Double cummalativeRetained;
   private Double passing;
@@ -16,20 +16,20 @@ public class SieveTestTrialResponseDto {
     this.id = id;
   }
 
-  public Long getSieveSizeId() {
-    return sieveSizeId;
+  public SieveSizeResponseDto getSieveSize() {
+    return sieveSize;
   }
 
-  public void setSieveSizeId(Long sieveSizeId) {
-    this.sieveSizeId = sieveSizeId;
+  public void setSieveSize(SieveSizeResponseDto sieveSize) {
+    this.sieveSize = sieveSize;
   }
 
-  public Long getSieveTestId() {
-    return sieveTestId;
+  public SieveTestResponseDto getSieveTest() {
+    return sieveTest;
   }
 
-  public void setSieveTestId(Long sieveTestId) {
-    this.sieveTestId = sieveTestId;
+  public void setSieveTest(SieveTestResponseDto sieveTest) {
+    this.sieveTest = sieveTest;
   }
 
   public Double getPercentageRetained() {

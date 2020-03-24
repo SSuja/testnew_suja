@@ -30,7 +30,9 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     SieveTest sieveTest =
         sieveTestService.getSieveTestById(sieveTestTrials.get(0).getSieveTest().getId());
     sieveTest.setFinenessModulus(finenessModule(sieveTestTrials));
+    sieveTest.setTotalWeight(totalWeight(sieveTestTrials));
     sieveTestService.saveSieveTest(sieveTest);
+
   }
 
   // find total weight of cummalative weight retained
@@ -48,6 +50,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     double finenessModule = totalCumWeigth / 100;
     return finenessModule;
   }
+
 
   // find percentage weight retained
   private Double findPercentageRetainedWeight(SieveTestTrial sieveTestTrial,
