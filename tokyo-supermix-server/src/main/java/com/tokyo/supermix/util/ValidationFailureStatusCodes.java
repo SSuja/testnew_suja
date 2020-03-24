@@ -1611,16 +1611,17 @@ public class ValidationFailureStatusCodes {
   public void setSieveTestNotExist(String sieveTestNotExist) {
     this.sieveTestNotExist = sieveTestNotExist;
   }
-//for sieveTest
- @Value("${validation.finenessModulus.notExists}")
- private String finenessModulusNotExist;
 
-public String getFinenessModulusNotExist() {
-	return finenessModulusNotExist;
-}
+  // for finenessModulus
+  @Value("${validation.finenessModulus.notExists}")
+  private String finenessModulusNotExist;
 
-public void setFinenessModulusNotExist(String finenessModulusNotExist) {
-	this.finenessModulusNotExist = finenessModulusNotExist;
-}
+  public String getFinenessModulusNotExist() {
+    return finenessModulusNotExist;
+  }
+
+  public void setFinenessModulusNotExist(String finenessModulusNotExist) {
+    this.finenessModulusNotExist = finenessModulusNotExist;
+  }
 
 }

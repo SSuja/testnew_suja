@@ -1,9 +1,9 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-	//for email notification
+  // for email notification
   public static final String ADMIXURE = "Admixure";
-  
+
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
   public static final String PLANTS = "plants";
@@ -415,10 +415,13 @@ public class Constants {
    * Sieve Accepted Value
    */
   public static final String SIEVE_ACCEPTED_VALUES = "sieveAcceptedValues";
-  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value added Successfully";
+  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS =
+      "Sieve Accepted Value added Successfully";
   public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
-  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value updated Successfully";
-  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS = "Sieve Accepted Value delete Successfully";
+  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS =
+      "Sieve Accepted Value updated Successfully";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS =
+      "Sieve Accepted Value delete Successfully";
   /*
    * sieveTest*
    */
@@ -431,12 +434,13 @@ public class Constants {
   /*
    * sieveTest*
    */
-  public static final String ADD_FINENESS_MODULUS_SUCCESS = "FinenessModulus added Successfully";
+  public static final String ADD_FINENESS_MODULUS_SUCCESS = "FinenessModulus Added Successfully";
   public static final String FINENESS_MODULUS_DELETED = "FinenessModulus Successfully Deleted";
-  public static final String UPDATE_FINENESS_MODULUS_SUCCESS = "FinenessModulus updated Successfully";
-  public static final String FINENESS_MODULUS_ID = "sieveTestId";
-  public static final String FINENESS_MODULUS = "FinenessModulus";
-  public static final String FINENESS_MODULUIES = "FinenessModuluies";
+  public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
+      "FinenessModulus Updated Successfully";
+  public static final String FINENESS_MODULUS_ID = "finenessModulusId";
+  public static final String FINENESS_MODULUS = "finenessModulus";
+
   // encaptulate constructor to restrict modification from outside
   private Constants() {
 

@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,7 +52,7 @@ public class FinenessModulusController {
   @GetMapping(value = EndpointURI.FINENESS_MODULUS)
   public ResponseEntity<Object> getAllFinenessModuluss() {
     List<FinenessModulus> finenessModulusTestList = finenessModulusService.getAllFinenessModulus();
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.FINENESS_MODULUIES,
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.FINENESS_MODULUS,
         mapper.map(finenessModulusTestList, FinenessModulusResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
