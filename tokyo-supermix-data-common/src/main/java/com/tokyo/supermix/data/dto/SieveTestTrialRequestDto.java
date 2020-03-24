@@ -3,16 +3,25 @@ package com.tokyo.supermix.data.dto;
 
 public class SieveTestTrialRequestDto {
 
-  private Long sieveSizeId;
+  private Long id;
+  private Double cummalativeRetained;
   private Long sieveTestId;
-  private Double retainedWeight;
+  private Long sieveSizeId;
 
-  public Long getSieveSizeId() {
-    return sieveSizeId;
+  public Long getId() {
+    return id;
   }
 
-  public void setSieveSizeId(Long sieveSizeId) {
-    this.sieveSizeId = sieveSizeId;
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Double getCummalativeRetained() {
+    return cummalativeRetained;
+  }
+
+  public void setCummalativeRetained(Double cummalativeRetained) {
+    this.cummalativeRetained = cummalativeRetained;
   }
 
   public Long getSieveTestId() {
@@ -23,13 +32,12 @@ public class SieveTestTrialRequestDto {
     this.sieveTestId = sieveTestId;
   }
 
-  public Double getRetainedWeight() {
-    return retainedWeight;
+  public Long getSieveSizeId() {
+    return sieveSizeId;
   }
 
-  public void setRetainedWeight(Double retainedWeight) {
-    this.retainedWeight = retainedWeight;
+  public void setSieveSizeId(Long sieveSizeId) {
+    this.sieveSizeId = sieveSizeId;
   }
-
 
 }

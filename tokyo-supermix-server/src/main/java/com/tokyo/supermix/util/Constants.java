@@ -1,6 +1,9 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
+  // for email notification
+  public static final String ADMIXURE = "Admixure";
+
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
   public static final String PLANTS = "plants";
@@ -301,6 +304,7 @@ public class Constants {
   public static final String CONCRETE_STRENGTH_TEST_ID = "concreteStrengthTestId";
   public static final String CONCRETE_STRENGTH_TEST = "concreteStrengthTest";
   public static final String CONCRETE_STRENGTH_TESTS = "concreteStrengthTests";
+  public static final String CONCRETE_STRENGTH_TESTS_CONCRETE_AGE = "concreteAge";
 
   // Success Messages
   public static final String CONCRETE_STRENGTH_TEST_DELETED =
@@ -383,30 +387,60 @@ public class Constants {
   public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
       "Material Test Trial Average,Status Updated Successfully";
 
+
   // constants for validation key
   public static final String PARAMETER_RESULT = "parameterResult";
   public static final String PARAMETER_RESULTS = "parameterResults";
   public static final String PARAMETER_RESULT_ID = "parameterResultId";
 
   // Success Messages
-  public static final String ADD_PARAMETER_RESULT_SUCCESS = "parameterResult added Successfully";
+  public static final String PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED =
+      "parameter value added and result updated Successfully";
   public static final String PARAMETER_RESULT_DELETED = "parameterResult Deleted Successfully";
   public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
       "parameterResult updated Successfully";
   public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
+  public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
+      PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
   /*
    * sieve-test-trial
    */
   public static final String SIEVE_TEST_TRIAL_ADD = "Sieve Test Trial Added Succeessfully";
+  public static final String ADD_SIEVE_TEST_TRIAL_SUCCEESS = "Sieve Test Trial Added Succeessfully";
+  public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";
+  public static final String SIEVE_TEST_TRIAL_ID = "id";
+  public static final String DELETE_SIEVE_TEST_TRIAL_SUCCESS =
+      "Sieve Test Trial delete Successfully";
 
   /*
    * Sieve Size
    */
   public static final String SIEVE_SIZES = "sieveSizes";
+  public static final String SIEVE_SIZE = "sieveSize";
   public static final String ADD_SIEVE_SIZE_SUCCESS = "Sieve Size added Successfully";
   public static final String SIEVE_SIZE_ID = "id";
   public static final String UPDATE_SIEVE_SIZE_SUCCESS = "Sieve Size updated Successfully";
   public static final String DELETE_SIEVE_SIZE_SUCCESS = "Sieve Size delete Successfully";
+  /*
+   * Sieve Accepted Value
+   */
+  public static final String SIEVE_ACCEPTED_VALUES = "sieveAcceptedValues";
+  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS =
+      "Sieve Accepted Value added Successfully";
+  public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
+  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS =
+      "Sieve Accepted Value updated Successfully";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS =
+      "Sieve Accepted Value delete Successfully";
+  /*
+   * sieveTest*
+   */
+  public static final String ADD_SIEVE_TEST_SUCCESS = "SieveTest added Successfully";
+  public static final String SIEVE_TEST_DELETED = "SieveTest Successfully Deleted";
+  public static final String UPDATE_SIEVE_TEST_SUCCESS = "SieveTest updated Successfully";
+  public static final String SIEVE_TEST_ID = "sieveTestId";
+  public static final String SIEVE_TEST = "sieveTest";
+  public static final String SIEVE_TESTS = "sieveTests";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {

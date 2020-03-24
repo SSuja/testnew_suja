@@ -1,5 +1,8 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface SieveTestRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tokyo.supermix.data.entities.SieveTest;
+
+public interface SieveTestRepository extends JpaRepository<SieveTest, Long> {
 
 }

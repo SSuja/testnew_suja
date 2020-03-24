@@ -44,11 +44,13 @@ public class ParameterResultController {
   @PostMapping(value = EndpointURI.PARAMETER_RESULT)
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<ParameterResultRequestDto> parameterResultRequestDtoList) {
-    parameterResultRequestDtoList.forEach(parameterResultRequestDtoListObj -> parameterResultService
-        .saveParameterResult(mapper.map(parameterResultRequestDtoListObj, ParameterResult.class)));
-    return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_RESULT_SUCCESS),
-        HttpStatus.OK);
+    for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
+      parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
+      parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
+          .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));
+    }
+    return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.PARAMETER_RESULTS)
@@ -89,23 +91,13 @@ public class ParameterResultController {
       @Valid @RequestBody ParameterResultRequestDto parameterResultRequestDto) {
     if (parameterResultService.isParameterResultExist(parameterResultRequestDto.getId())) {
       parameterResultService
-          .saveParameterResult(mapper.map(parameterResultRequestDto, ParameterResult.class));
+          .saveParameterValue(mapper.map(parameterResultRequestDto, ParameterResult.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PARAMETER_RESULT_SUCCESS),
           HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
-  @GetMapping(value = EndpointURI.PARAMETER_RESULT_CALCULATION)
-  public ResponseEntity<Object> calculateResultForTestTrial(
-      @PathVariable String materialTestTrialCode) {
-    parameterResultService
-        .setResult(materialTestTrialService.getMaterialTestTrialByCode(materialTestTrialCode));
-    return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.RESULT_SUCCESSFULLY_UPDATED),
-        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE)
