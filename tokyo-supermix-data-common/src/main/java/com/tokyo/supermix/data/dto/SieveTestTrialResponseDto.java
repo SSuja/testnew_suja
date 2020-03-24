@@ -4,7 +4,6 @@ public class SieveTestTrialResponseDto {
   private Long id;
   private Long sieveSizeId;
   private Long sieveTestId;
-  private Double retainedWeight;
   private Double percentageRetained;
   private Double cummalativeRetained;
   private Double passing;
@@ -31,14 +30,6 @@ public class SieveTestTrialResponseDto {
 
   public void setSieveTestId(Long sieveTestId) {
     this.sieveTestId = sieveTestId;
-  }
-
-  public Double getRetainedWeight() {
-    return retainedWeight;
-  }
-
-  public void setRetainedWeight(Double retainedWeight) {
-    this.retainedWeight = retainedWeight;
   }
 
   public Double getPercentageRetained() {

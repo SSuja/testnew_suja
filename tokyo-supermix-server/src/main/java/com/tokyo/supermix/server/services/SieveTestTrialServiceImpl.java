@@ -2,9 +2,10 @@ package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
 import com.tokyo.supermix.data.repositories.SieveTestTrialRepository;
 import com.tokyo.supermix.util.Constants;
@@ -57,6 +58,31 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.TWO_DECIMAL_FORMAT);
     return Double.valueOf(decimalFormat.format(value));
+  }
+
+  @Transactional(readOnly = true)
+  public List<SieveTestTrial> getAllSieveTestTrials() {
+    return sieveTestTrialRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public SieveTestTrial getSieveTestTrialById(Long id) {
+    return sieveTestTrialRepository.findById(id).get();
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteSieveTestTrial(Long id) {
+    sieveTestTrialRepository.deleteById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isSieveTestTrialExist(Long id) {
+    return sieveTestTrialRepository.existsById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public List<SieveTestTrial> findBySieveTestId(Long sieveTestId) {
+    return sieveTestTrialRepository.findBySieveTestId(sieveTestId);
   }
 
 }

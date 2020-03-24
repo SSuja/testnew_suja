@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 public interface ParameterResultService {
   public List<ParameterResult> getAllParameterResults();
 
-  public ParameterResult saveParameterResult(ParameterResult parameterResult);
+  public void saveParameterValue(ParameterResult parameterValue);
 
   public void deleteParameterResult(Long id);
 
@@ -15,7 +15,7 @@ public interface ParameterResultService {
 
   public boolean isParameterResultExist(Long id);
 
-  public void setResult(MaterialTestTrial materialTestTrial);
+  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial);
 
   public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
 }

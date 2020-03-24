@@ -3,12 +3,15 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.Status;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "sieve_test")
@@ -19,7 +22,10 @@ public class SieveTest implements Serializable {
   private Long id;
   private Date date;
   private Double finenessModulus;
-  private String status;
+  private Double panWeight;
+  private Double totalWeight;
+  @Enumerated(EnumType.ORDINAL)
+  private Status status;
   @ManyToOne
   @JoinColumn(name = "userId", nullable = false)
   private User user;
@@ -54,11 +60,11 @@ public class SieveTest implements Serializable {
     this.finenessModulus = finenessModulus;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
@@ -86,8 +92,26 @@ public class SieveTest implements Serializable {
     this.incomingSample = incomingSample;
   }
 
+  public Double getPanWeight() {
+    return panWeight;
+  }
+
+  public void setPanWeight(Double panWeight) {
+    this.panWeight = panWeight;
+  }
+
+  public Double getTotalWeight() {
+    return totalWeight;
+  }
+
+  public void setTotalWeight(Double totalWeight) {
+    this.totalWeight = totalWeight;
+  }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
+  
 
 }

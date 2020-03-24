@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.repositories;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,5 @@ public interface SieveTestTrialRepository extends JpaRepository<SieveTestTrial, 
       nativeQuery = true)
   public Double findTotal(Long sieveTestId);
 
-
+  List<SieveTestTrial> findBySieveTestId(Long sieveTestId);
 }
