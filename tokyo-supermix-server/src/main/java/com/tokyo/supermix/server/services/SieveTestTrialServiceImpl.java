@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
 import com.tokyo.supermix.data.repositories.SieveTestTrialRepository;
 import com.tokyo.supermix.util.Constants;
@@ -26,12 +27,26 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
       sieveTestTrial.setPassing(findPassing(sieveTestTrial, totalRetainedWight));
       sieveTestTrialRepository.save(sieveTestTrial);
     }
+    SieveTest sieveTest =
+        sieveTestService.getSieveTestById(sieveTestTrials.get(0).getSieveTest().getId());
+    sieveTest.setFinenessModulus(finenessModule(sieveTestTrials));
+    sieveTestService.saveSieveTest(sieveTest);
   }
 
   // find total weight of cummalative weight retained
   private Double totalWeight(List<SieveTestTrial> sieveTestTrials) {
     double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained();
     return total;
+  }
+
+  // find fineness Module
+  private Double finenessModule(List<SieveTestTrial> sieveTestTrials) {
+    double totalCumWeigth = 0;
+    for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
+      totalCumWeigth = totalCumWeigth + sieveTestTrial.getCummalativeRetained();
+    }
+    double finenessModule = totalCumWeigth / 100;
+    return finenessModule;
   }
 
   // find percentage weight retained
@@ -42,7 +57,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     return petained;
   }
 
-  // fing percentage weight passing
+  // find percentage weight passing
   private Double findPassing(SieveTestTrial sieveTestTrial, Double totalRetainedWight) {
     double passing =
         roundDoubleValue(100 - findPercentageRetainedWeight(sieveTestTrial, totalRetainedWight));
