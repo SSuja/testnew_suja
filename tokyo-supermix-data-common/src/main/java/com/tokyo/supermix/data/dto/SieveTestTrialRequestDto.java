@@ -2,10 +2,9 @@ package com.tokyo.supermix.data.dto;
 
 
 public class SieveTestTrialRequestDto {
-
   private Long sieveSizeId;
   private Long sieveTestId;
-  private Double retainedWeight;
+  private Double cummalativeRetained;
 
   public Long getSieveSizeId() {
     return sieveSizeId;
@@ -23,13 +22,11 @@ public class SieveTestTrialRequestDto {
     this.sieveTestId = sieveTestId;
   }
 
-  public Double getRetainedWeight() {
-    return retainedWeight;
+  public Double getCummalativeRetained() {
+    return cummalativeRetained;
   }
 
-  public void setRetainedWeight(Double retainedWeight) {
-    this.retainedWeight = retainedWeight;
+  public void setCummalativeRetained(Double cummalativeRetained) {
+    this.cummalativeRetained = cummalativeRetained;
   }
-
-
 }

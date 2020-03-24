@@ -398,6 +398,7 @@ public class Constants {
    * sieve-test-trial
    */
   public static final String SIEVE_TEST_TRIAL_ADD = "Sieve Test Trial Added Succeessfully";
+  public static final String TWO_DECIMAL_FORMAT = "#.##";
 
   /*
    * Sieve Size
