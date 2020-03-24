@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.Date;
 import com.tokyo.supermix.data.enums.Status;
 
 public class ConcreteStrengthTestResponseDto {
@@ -8,8 +9,17 @@ public class ConcreteStrengthTestResponseDto {
   private double mixDesignTargetGrade;
   private Long concreteAge;
   private Double strength;
+  private Date date;
   private Double strengthGradeRatio;
   private Status status;
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
   public Long getId() {
     return id;
