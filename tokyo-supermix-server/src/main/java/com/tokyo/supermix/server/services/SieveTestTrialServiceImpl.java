@@ -29,7 +29,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     }
     SieveTest sieveTest =
         sieveTestService.getSieveTestById(sieveTestTrials.get(0).getSieveTest().getId());
-    sieveTest.setFinenessModulus(finenessModule(sieveTestTrials));
+    sieveTest.setFinenessModulus(finenessModulus(sieveTestTrials));
     sieveTest.setTotalWeight(totalWeight(sieveTestTrials));
     sieveTestService.saveSieveTest(sieveTest);
   }
@@ -40,14 +40,14 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     return total;
   }
 
-  // find fineness Module
-  private Double finenessModule(List<SieveTestTrial> sieveTestTrials) {
-    double totalCumWeigth = 0;
+  // find fineness Modulus
+  private Double finenessModulus(List<SieveTestTrial> sieveTestTrials) {
+    double totalCumWeight = 0;
     for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
-      totalCumWeigth = totalCumWeigth + sieveTestTrial.getCummalativeRetained();
+      totalCumWeight = totalCumWeight + sieveTestTrial.getCummalativeRetained();
     }
-    double finenessModule = totalCumWeigth / 100;
-    return finenessModule;
+    double finenessModulus = totalCumWeight / 100;
+    return finenessModulus;
   }
 
   // find percentage weight retained
