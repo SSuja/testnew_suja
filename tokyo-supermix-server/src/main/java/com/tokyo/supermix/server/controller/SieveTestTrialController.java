@@ -42,7 +42,6 @@ public class SieveTestTrialController {
   @PostMapping(value = EndpointURI.SIEVE_TEST_TRIAL)
   public ResponseEntity<Object> createSieveTestTrial(
       @RequestBody List<SieveTestTrialRequestDto> sieveTestTrialRequestDtoList) {
-    logger.debug("Add Sieve_Test_Trial");
     sieveTestTrialService
         .saveSieveTestTrial(mapper.map(sieveTestTrialRequestDtoList, SieveTestTrial.class));
     return new ResponseEntity<>(

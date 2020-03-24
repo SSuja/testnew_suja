@@ -20,8 +20,6 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   @Transactional
   public void saveSieveTestTrial(List<SieveTestTrial> sieveTestTrials) {
     Double totalRetainedWight = totalWeight(sieveTestTrials);
-
-    System.out.println("total " + totalRetainedWight);
     for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
       sieveTestTrial
           .setPercentageRetained(findPercentageRetainedWeight(sieveTestTrial, totalRetainedWight));
@@ -41,14 +39,11 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
       double totalRetainedWight) {
     double petained =
         roundDoubleValue(sieveTestTrial.getCummalativeRetained() * 100 / totalRetainedWight);
-    System.out.println("petained" + petained);
     return petained;
   }
 
   // fing percentage weight passing
   private Double findPassing(SieveTestTrial sieveTestTrial, Double totalRetainedWight) {
-    System.out
-        .println("passing " + findPercentageRetainedWeight(sieveTestTrial, totalRetainedWight));
     double passing =
         roundDoubleValue(100 - findPercentageRetainedWeight(sieveTestTrial, totalRetainedWight));
     return passing;
