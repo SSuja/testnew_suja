@@ -1634,5 +1634,16 @@ public class ValidationFailureStatusCodes {
     this.sieveTestNotExist = sieveTestNotExist;
   }
 
+  // for finenessModulus
+  @Value("${validation.finenessModulus.notExists}")
+  private String finenessModulusNotExist;
+
+  public String getFinenessModulusNotExist() {
+    return finenessModulusNotExist;
+  }
+
+  public void setFinenessModulusNotExist(String finenessModulusNotExist) {
+    this.finenessModulusNotExist = finenessModulusNotExist;
+  }
 
 }

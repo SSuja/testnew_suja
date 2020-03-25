@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,12 +22,21 @@ public class ConcreteStrengthTest implements Serializable {
   private Long id;
   private Long concreteAge;
   private Double strength;
+  private Date date;
   private Double strengthGradeRatio;
   @Enumerated(EnumType.ORDINAL)
   private Status status;
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
   public Long getId() {
     return id;
@@ -79,5 +89,4 @@ public class ConcreteStrengthTest implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

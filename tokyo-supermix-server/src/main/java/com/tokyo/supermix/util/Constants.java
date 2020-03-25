@@ -443,6 +443,15 @@ public class Constants {
   public static final String SIEVE_TEST_ID = "sieveTestId";
   public static final String SIEVE_TEST = "sieveTest";
   public static final String SIEVE_TESTS = "sieveTests";
+  /*
+   * sieveTest*
+   */
+  public static final String ADD_FINENESS_MODULUS_SUCCESS = "FinenessModulus Added Successfully";
+  public static final String FINENESS_MODULUS_DELETED = "FinenessModulus Successfully Deleted";
+  public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
+      "FinenessModulus Updated Successfully";
+  public static final String FINENESS_MODULUS_ID = "finenessModulusId";
+  public static final String FINENESS_MODULUS = "finenessModulus";
 
   // encaptulate constructor to restrict modification from outside
   private Constants() {
