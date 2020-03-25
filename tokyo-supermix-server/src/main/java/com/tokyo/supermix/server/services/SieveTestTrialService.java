@@ -17,5 +17,5 @@ public interface SieveTestTrialService {
 
   public List<SieveTestTrial> findSieveTestTrialBySieveTestId(Long sieveTestId);
 
-  public void updateFinenessModulusStatus(SieveTest sieveTest);
+  public void updateSieveTestStatus(SieveTest sieveTest);
 }

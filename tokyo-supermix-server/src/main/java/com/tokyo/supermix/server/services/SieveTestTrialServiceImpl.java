@@ -27,22 +27,28 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   public void saveSieveTestTrial(List<SieveTestTrial> sieveTestTrials) {
     Double totalRetainedWight = totalWeight(sieveTestTrials);
     for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
+      sieveTestTrial.setPercentageRetained(findPercentageRetainedWeight(
+          sieveTestTrial.getCummalativeRetained(), totalRetainedWight));
       sieveTestTrial
-          .setPercentageRetained(findPercentageRetainedWeight(sieveTestTrial, totalRetainedWight));
-      sieveTestTrial.setPassing(findPassing(sieveTestTrial, totalRetainedWight));
+          .setPassing(findPassing(sieveTestTrial.getCummalativeRetained(), totalRetainedWight));
       sieveTestTrialRepository.save(sieveTestTrial);
     }
     SieveTest sieveTest =
         sieveTestRepository.findById(sieveTestTrials.get(0).getSieveTest().getId()).get();
+    updateTotalWeightAndFinenessModulus(sieveTest, sieveTestTrials);
+  }
+
+  // update total weight and fineness module in sieve test
+  private void updateTotalWeightAndFinenessModulus(SieveTest sieveTest,
+      List<SieveTestTrial> sieveTestTrials) {
     sieveTest.setFinenessModulus(finenessModulus(sieveTestTrials));
     sieveTest.setTotalWeight(totalWeight(sieveTestTrials));
     sieveTestRepository.save(sieveTest);
-
   }
 
   // find total weight of cummalative weight retained + pan weight
   private Double totalWeight(List<SieveTestTrial> sieveTestTrials) {
-    double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained()
+    Double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained()
         + sieveTestRepository.findById(sieveTestTrials.get(0).getSieveTest().getId()).get()
             .getPanWeight();
     return total;
@@ -50,27 +56,26 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
 
   // find fineness Modulus
   private Double finenessModulus(List<SieveTestTrial> sieveTestTrials) {
-    double totalPercentageRetained = 0;
+    Double totalPercentageRetained = 0.0;
     for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
       totalPercentageRetained = totalPercentageRetained + sieveTestTrial.getPercentageRetained();
     }
-    double finenessModulus = roundDoubleValue(totalPercentageRetained / 100);
+    Double finenessModulus = roundDoubleValue(totalPercentageRetained / 100);
     return finenessModulus;
   }
 
-
   // find percentage weight retained
-  private Double findPercentageRetainedWeight(SieveTestTrial sieveTestTrial,
-      double totalRetainedWight) {
-    double petained =
-        roundDoubleValue(sieveTestTrial.getCummalativeRetained() * 100 / totalRetainedWight);
-    return petained;
+  private Double findPercentageRetainedWeight(Double cummalativeRetained,
+      Double totalRetainedWight) {
+    Double percentageRetainedWeight =
+        roundDoubleValue(cummalativeRetained * 100 / totalRetainedWight);
+    return percentageRetainedWeight;
   }
 
   // find percentage weight passing
-  private Double findPassing(SieveTestTrial sieveTestTrial, Double totalRetainedWight) {
-    double passing =
-        roundDoubleValue(100 - findPercentageRetainedWeight(sieveTestTrial, totalRetainedWight));
+  private Double findPassing(Double cummalativeRetained, Double totalRetainedWight) {
+    Double passing = roundDoubleValue(
+        100 - findPercentageRetainedWeight(cummalativeRetained, totalRetainedWight));
     return passing;
   }
 
@@ -105,29 +110,25 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     return sieveTestTrialRepository.findBySieveTestId(sieveTestId);
   }
 
-  private void compareWithFinenessModulus(Double finenessModulus, Long sieveTestId) {
-    Long materialSubCategoryId = sieveTestRepository.findById(sieveTestId).get().getIncomingSample()
-        .getRawMaterial().getMaterialSubCategory().getId();
+  @Transactional
+  public void updateSieveTestStatus(SieveTest sieveTest) {
+    Long materialSubCategoryId = sieveTestRepository.findById(sieveTest.getId()).get()
+        .getIncomingSample().getRawMaterial().getMaterialSubCategory().getId();
     if (finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
-        .getMin() <= finenessModulus
+        .getMin() <= sieveTest.getFinenessModulus()
         && finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
-            .getMax() >= finenessModulus) {
-      updateStatus(finenessModulus, sieveTestId, Status.PASS);
+            .getMax() >= sieveTest.getFinenessModulus()) {
+      updateStatus(sieveTest.getId(), Status.PASS);
     } else {
-      updateStatus(finenessModulus, sieveTestId, Status.FAIL);
-
+      updateStatus(sieveTest.getId(), Status.FAIL);
     }
   }
 
-  private SieveTest updateStatus(Double finenessModulus, Long sieveTestId, Status status) {
+  private SieveTest updateStatus(Long sieveTestId, Status status) {
     SieveTest sieveTest = sieveTestRepository.findById(sieveTestId).get();
     sieveTest.setStatus(status);
     return sieveTestRepository.save(sieveTest);
   }
 
-  @Transactional
-  public void updateFinenessModulusStatus(SieveTest sieveTest) {
-    compareWithFinenessModulus(sieveTest.getFinenessModulus(), sieveTest.getId());
-  }
 
 }
