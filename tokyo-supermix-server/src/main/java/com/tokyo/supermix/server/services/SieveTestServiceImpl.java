@@ -24,17 +24,17 @@ public class SieveTestServiceImpl implements SieveTestService {
   }
 
   @Transactional(readOnly = true)
-  public SieveTest getSieveTestById(Long id) {
-    return sieveTestRepository.findById(id).get();
+  public SieveTest getSieveTestByCode(String code) {
+    return sieveTestRepository.findByCode(code);
   }
 
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteSieveTest(Long id) {
-    sieveTestRepository.deleteById(id);
+  public void deleteSieveTest(String code) {
+    sieveTestRepository.deleteById(code);;
   }
 
   @Transactional(readOnly = true)
-  public boolean isSieveTestExists(Long id) {
-    return sieveTestRepository.existsById(id);
+  public boolean isSieveTestExists(String code) {
+    return sieveTestRepository.existsByCode(code);
   }
 }

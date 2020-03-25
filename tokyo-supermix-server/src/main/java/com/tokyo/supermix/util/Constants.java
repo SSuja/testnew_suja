@@ -440,7 +440,7 @@ public class Constants {
   public static final String ADD_SIEVE_TEST_SUCCESS = "SieveTest added Successfully";
   public static final String SIEVE_TEST_DELETED = "SieveTest Successfully Deleted";
   public static final String UPDATE_SIEVE_TEST_SUCCESS = "SieveTest updated Successfully";
-  public static final String SIEVE_TEST_ID = "sieveTestId";
+  public static final String SIEVE_TEST_CODE = "sieveTestCode";
   public static final String SIEVE_TEST = "sieveTest";
   public static final String SIEVE_TESTS = "sieveTests";
   /*

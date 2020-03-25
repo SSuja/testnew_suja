@@ -337,7 +337,7 @@ public final class EndpointURI {
    */
   public static final String SIEVE_TEST = BASE_API_PATH + "sieve-test";
   public static final String SIEVE_TESTS = BASE_API_PATH + "sieve-tests";
-  public static final String SIEVE_TEST_BY_ID = SIEVE_TEST + ID;
+  public static final String SIEVE_TEST_BY_CODE = SIEVE_TEST + CODE;
   /*
    * FinenessModulus
    * 

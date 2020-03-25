@@ -5,7 +5,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class SieveTestRequestDto {
-  private Long id;
+  @NotNull(message = "{sieveTestRequestDto.code.null}")
+  @NotEmpty(message = "{sieveTestRequestDto.code.empty}")
+  private String code;
   @NotNull(message = "{sieveTestRequestDto.date.null}")
   private Date date;
   private Double finenessModulus;
@@ -21,12 +23,12 @@ public class SieveTestRequestDto {
   private Double panWeight;
   private Double totalWeight;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Date getDate() {

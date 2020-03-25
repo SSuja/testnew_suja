@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,10 @@ public class SieveSizeController {
 
   @PostMapping(value = EndpointURI.SIEVE_SIZE)
   public ResponseEntity<Object> createSieveSize(
-      @Valid @RequestBody SieveSizeRequestDto sieveSizeRequestDto) {
-    sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
+      @Valid @RequestBody List<SieveSizeRequestDto> sieveSizeRequestDtoList) {
+    for (SieveSizeRequestDto sieveSizeRequestDto : sieveSizeRequestDtoList) {
+      sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
+    }
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_SIZE_SUCCESS),
         HttpStatus.OK);
