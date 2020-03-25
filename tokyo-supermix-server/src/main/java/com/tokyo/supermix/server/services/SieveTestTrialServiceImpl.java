@@ -122,7 +122,6 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   public SieveTest updateStatus(Double finenessModulus, Long sieveTestId, Status status) {
     SieveTest sieveTest = sieveTestRepository.findById(sieveTestId).get();
     sieveTest.setStatus(status);
-    sieveTest.setFinenessModulus(finenessModulus);
     return sieveTestRepository.save(sieveTest);
   }
 
