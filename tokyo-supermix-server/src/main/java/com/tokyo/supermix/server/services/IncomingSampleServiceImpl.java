@@ -53,7 +53,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
-  public IncomingSample getIncomingSampleByStatus(Status status) {
+  public List<IncomingSample> getIncomingSampleByStatus(Status status) {
     return incomingSampleRepository.findIncomingSampleByStatus(status);
   }
 
