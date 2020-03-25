@@ -19,8 +19,6 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   @Autowired
   SieveTestTrialRepository sieveTestTrialRepository;
   @Autowired
-  SieveTestService sieveTestService;
-  @Autowired
   private FinenessModulusRepository finenessModulusRepository;
   @Autowired
   private SieveTestRepository sieveTestRepository;
@@ -35,26 +33,28 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
       sieveTestTrialRepository.save(sieveTestTrial);
     }
     SieveTest sieveTest =
-        sieveTestService.getSieveTestById(sieveTestTrials.get(0).getSieveTest().getId());
+        sieveTestRepository.findById(sieveTestTrials.get(0).getSieveTest().getId()).get();
     sieveTest.setFinenessModulus(finenessModulus(sieveTestTrials));
     sieveTest.setTotalWeight(totalWeight(sieveTestTrials));
-    sieveTestService.saveSieveTest(sieveTest);
+    sieveTestRepository.save(sieveTest);
 
   }
 
-  // find total weight of cummalative weight retained
+  // find total weight of cummalative weight retained + pan weight
   private Double totalWeight(List<SieveTestTrial> sieveTestTrials) {
-    double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained();
+    double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained()
+        + sieveTestRepository.findById(sieveTestTrials.get(0).getSieveTest().getId()).get()
+            .getPanWeight();
     return total;
   }
 
   // find fineness Modulus
   private Double finenessModulus(List<SieveTestTrial> sieveTestTrials) {
-    double totalCumWeight = 0;
+    double totalPercentageRetained = 0;
     for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
-      totalCumWeight = totalCumWeight + sieveTestTrial.getCummalativeRetained();
+      totalPercentageRetained = totalPercentageRetained + sieveTestTrial.getPercentageRetained();
     }
-    double finenessModulus = totalCumWeight / 100;
+    double finenessModulus = roundDoubleValue(totalPercentageRetained / 100);
     return finenessModulus;
   }
 
@@ -105,7 +105,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     return sieveTestTrialRepository.findBySieveTestId(sieveTestId);
   }
 
-  public void compareWithFinenessModulus(Double finenessModulus, Long sieveTestId) {
+  private void compareWithFinenessModulus(Double finenessModulus, Long sieveTestId) {
     Long materialSubCategoryId = sieveTestRepository.findById(sieveTestId).get().getIncomingSample()
         .getRawMaterial().getMaterialSubCategory().getId();
     if (finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
@@ -119,10 +119,9 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     }
   }
 
-  public SieveTest updateStatus(Double finenessModulus, Long sieveTestId, Status status) {
+  private SieveTest updateStatus(Double finenessModulus, Long sieveTestId, Status status) {
     SieveTest sieveTest = sieveTestRepository.findById(sieveTestId).get();
     sieveTest.setStatus(status);
-    sieveTest.setFinenessModulus(finenessModulus);
     return sieveTestRepository.save(sieveTest);
   }
 
