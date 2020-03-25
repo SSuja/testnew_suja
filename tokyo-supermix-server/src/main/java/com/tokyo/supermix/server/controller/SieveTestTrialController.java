@@ -44,8 +44,8 @@ public class SieveTestTrialController {
       @RequestBody List<SieveTestTrialRequestDto> sieveTestTrialRequestDtoList) {
     sieveTestTrialService
         .saveSieveTestTrial(mapper.map(sieveTestTrialRequestDtoList, SieveTestTrial.class));
-     sieveTestTrialService
-     .updateFinenessModulusStatus(sieveTestService.getSieveTestById(sieveTestTrialRequestDtoList.get(0).getSieveTestId()));
+    sieveTestTrialService.updateSieveTestStatus(sieveTestService
+        .getSieveTestByCode(sieveTestTrialRequestDtoList.get(0).getSieveTestCode()));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_TEST_TRIAL_SUCCEESS),
         HttpStatus.OK);
@@ -84,10 +84,10 @@ public class SieveTestTrialController {
   }
 
   @GetMapping(value = EndpointURI.SIEVE_TEST_TRIAL_BY_SIEVE_TEST_ID)
-  public ResponseEntity<Object> getSieveSizeBySieveTestId(@PathVariable Long sieveTestId) {
-    if (sieveTestService.isSieveTestExists(sieveTestId)) {
+  public ResponseEntity<Object> getSieveSizeBySieveTestId(@PathVariable String sieveTestCode) {
+    if (sieveTestService.isSieveTestExists(sieveTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST_ID,
-          mapper.map(sieveTestTrialService.findSieveTestTrialBySieveTestId(sieveTestId),
+          mapper.map(sieveTestTrialService.findSieveTestTrialBySieveTestCode(sieveTestCode),
               SieveTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {

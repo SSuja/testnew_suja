@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
 
 public interface SieveTestTrialRepository extends JpaRepository<SieveTestTrial, Long> {
-  List<SieveTestTrial> findBySieveTestId(Long sieveTestId);
+  List<SieveTestTrial> findBySieveTestCode(String sieveTestCode);
 }

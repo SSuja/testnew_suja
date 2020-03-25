@@ -21,7 +21,7 @@ public class SieveTestTrial implements Serializable {
   private Double cummalativeRetained;
   private Double passing;
   @OneToOne
-  @JoinColumn(name = "sieveTestId", nullable = false)
+  @JoinColumn(name = "sieveTestCode", nullable = false)
   private SieveTest sieveTest;
   @ManyToOne
   @JoinColumn(name = "sieveSizeId", nullable = false)

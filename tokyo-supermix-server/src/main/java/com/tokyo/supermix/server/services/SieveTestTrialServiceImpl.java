@@ -34,7 +34,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
       sieveTestTrialRepository.save(sieveTestTrial);
     }
     SieveTest sieveTest =
-        sieveTestRepository.findById(sieveTestTrials.get(0).getSieveTest().getId()).get();
+        sieveTestRepository.findByCode(sieveTestTrials.get(0).getSieveTest().getCode());
     updateTotalWeightAndFinenessModulus(sieveTest, sieveTestTrials);
   }
 
@@ -49,7 +49,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   // find total weight of cummalative weight retained + pan weight
   private Double totalWeight(List<SieveTestTrial> sieveTestTrials) {
     Double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained()
-        + sieveTestRepository.findById(sieveTestTrials.get(0).getSieveTest().getId()).get()
+        + sieveTestRepository.findByCode(sieveTestTrials.get(0).getSieveTest().getCode())
             .getPanWeight();
     return total;
   }
@@ -106,26 +106,26 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   }
 
   @Transactional(readOnly = true)
-  public List<SieveTestTrial> findSieveTestTrialBySieveTestId(Long sieveTestId) {
-    return sieveTestTrialRepository.findBySieveTestId(sieveTestId);
+  public List<SieveTestTrial> findSieveTestTrialBySieveTestCode(String sieveTestCode) {
+    return sieveTestTrialRepository.findBySieveTestCode(sieveTestCode);
   }
 
   @Transactional
   public void updateSieveTestStatus(SieveTest sieveTest) {
-    Long materialSubCategoryId = sieveTestRepository.findById(sieveTest.getId()).get()
+    Long materialSubCategoryId = sieveTestRepository.findByCode(sieveTest.getCode())
         .getIncomingSample().getRawMaterial().getMaterialSubCategory().getId();
     if (finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
         .getMin() <= sieveTest.getFinenessModulus()
         && finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
             .getMax() >= sieveTest.getFinenessModulus()) {
-      updateStatus(sieveTest.getId(), Status.PASS);
+      updateStatus(sieveTest.getCode(), Status.PASS);
     } else {
-      updateStatus(sieveTest.getId(), Status.FAIL);
+      updateStatus(sieveTest.getCode(), Status.FAIL);
     }
   }
 
-  private SieveTest updateStatus(Long sieveTestId, Status status) {
-    SieveTest sieveTest = sieveTestRepository.findById(sieveTestId).get();
+  private SieveTest updateStatus(String sieveTestCode, Status status) {
+    SieveTest sieveTest = sieveTestRepository.findByCode(sieveTestCode);
     sieveTest.setStatus(status);
     return sieveTestRepository.save(sieveTest);
   }

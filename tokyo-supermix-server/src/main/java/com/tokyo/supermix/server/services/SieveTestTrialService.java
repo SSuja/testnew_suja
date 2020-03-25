@@ -15,7 +15,7 @@ public interface SieveTestTrialService {
 
   public boolean isSieveTestTrialExist(Long id);
 
-  public List<SieveTestTrial> findSieveTestTrialBySieveTestId(Long sieveTestId);
+  public List<SieveTestTrial> findSieveTestTrialBySieveTestCode(String sieveTestCode);
 
   public void updateSieveTestStatus(SieveTest sieveTest);
 }
