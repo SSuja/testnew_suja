@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
 
 public interface SieveTestTrialService {
@@ -14,5 +15,7 @@ public interface SieveTestTrialService {
 
   public boolean isSieveTestTrialExist(Long id);
 
-  public List<SieveTestTrial> findBySieveTestId(Long sieveTestId);
+  public List<SieveTestTrial> findSieveTestTrialBySieveTestId(Long sieveTestId);
+
+  public void updateFinenessModulusStatus(SieveTest sieveTest);
 }

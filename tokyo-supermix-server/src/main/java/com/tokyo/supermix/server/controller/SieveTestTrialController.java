@@ -44,6 +44,8 @@ public class SieveTestTrialController {
       @RequestBody List<SieveTestTrialRequestDto> sieveTestTrialRequestDtoList) {
     sieveTestTrialService
         .saveSieveTestTrial(mapper.map(sieveTestTrialRequestDtoList, SieveTestTrial.class));
+     sieveTestTrialService
+     .updateFinenessModulusStatus(sieveTestService.getSieveTestById(sieveTestTrialRequestDtoList.get(0).getSieveTestId()));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_TEST_TRIAL_SUCCEESS),
         HttpStatus.OK);
@@ -85,7 +87,7 @@ public class SieveTestTrialController {
   public ResponseEntity<Object> getSieveSizeBySieveTestId(@PathVariable Long sieveTestId) {
     if (sieveTestService.isSieveTestExists(sieveTestId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST_ID,
-          mapper.map(sieveTestTrialService.findBySieveTestId(sieveTestId),
+          mapper.map(sieveTestTrialService.findSieveTestTrialBySieveTestId(sieveTestId),
               SieveTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
@@ -94,4 +96,5 @@ public class SieveTestTrialController {
           validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
+
 }

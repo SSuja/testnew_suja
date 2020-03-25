@@ -8,6 +8,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
+import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.repositories.FinenessModulusRepository;
+import com.tokyo.supermix.data.repositories.SieveTestRepository;
 import com.tokyo.supermix.data.repositories.SieveTestTrialRepository;
 import com.tokyo.supermix.util.Constants;
 
@@ -17,6 +20,10 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   SieveTestTrialRepository sieveTestTrialRepository;
   @Autowired
   SieveTestService sieveTestService;
+  @Autowired
+  private FinenessModulusRepository finenessModulusRepository;
+  @Autowired
+  private SieveTestRepository sieveTestRepository;
 
   @Transactional
   public void saveSieveTestTrial(List<SieveTestTrial> sieveTestTrials) {
@@ -94,8 +101,34 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   }
 
   @Transactional(readOnly = true)
-  public List<SieveTestTrial> findBySieveTestId(Long sieveTestId) {
+  public List<SieveTestTrial> findSieveTestTrialBySieveTestId(Long sieveTestId) {
     return sieveTestTrialRepository.findBySieveTestId(sieveTestId);
+  }
+
+  public void compareWithFinenessModulus(Double finenessModulus, Long sieveTestId) {
+    Long materialSubCategoryId = sieveTestRepository.findById(sieveTestId).get().getIncomingSample()
+        .getRawMaterial().getMaterialSubCategory().getId();
+    if (finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
+        .getMin() <= finenessModulus
+        && finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
+            .getMax() >= finenessModulus) {
+      updateStatus(finenessModulus, sieveTestId, Status.PASS);
+    } else {
+      updateStatus(finenessModulus, sieveTestId, Status.FAIL);
+
+    }
+  }
+
+  public SieveTest updateStatus(Double finenessModulus, Long sieveTestId, Status status) {
+    SieveTest sieveTest = sieveTestRepository.findById(sieveTestId).get();
+    sieveTest.setStatus(status);
+    sieveTest.setFinenessModulus(finenessModulus);
+    return sieveTestRepository.save(sieveTest);
+  }
+
+  @Transactional
+  public void updateFinenessModulusStatus(SieveTest sieveTest) {
+    compareWithFinenessModulus(sieveTest.getFinenessModulus(), sieveTest.getId());
   }
 
 }
