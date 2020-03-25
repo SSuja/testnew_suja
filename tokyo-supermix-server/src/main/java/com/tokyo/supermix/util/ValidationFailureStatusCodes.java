@@ -1603,6 +1603,16 @@ public class ValidationFailureStatusCodes {
   // for sieveTest
   @Value("${validation.sieveTest.notExists}")
   private String sieveTestNotExist;
+  @Value("${validation.sieveTest.alreadyExist}")
+  private String sieveTestAlreadyExist;
+
+  public String getSieveTestAlreadyExist() {
+    return sieveTestAlreadyExist;
+  }
+
+  public void setSieveTestAlreadyExist(String sieveTestAlreadyExist) {
+    this.sieveTestAlreadyExist = sieveTestAlreadyExist;
+  }
 
   public String getSieveTestNotExist() {
     return sieveTestNotExist;

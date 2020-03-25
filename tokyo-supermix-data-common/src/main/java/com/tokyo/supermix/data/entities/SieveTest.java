@@ -5,8 +5,6 @@ import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,8 +16,7 @@ import com.tokyo.supermix.data.enums.Status;
 public class SieveTest implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private String code;
   private Date date;
   private Double finenessModulus;
   private Double panWeight;
@@ -36,12 +33,12 @@ public class SieveTest implements Serializable {
   @JoinColumn(name = "incomingSampleCode", nullable = false)
   private IncomingSample incomingSample;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Date getDate() {
@@ -112,6 +109,6 @@ public class SieveTest implements Serializable {
     return serialVersionUID;
   }
 
-  
+
 
 }

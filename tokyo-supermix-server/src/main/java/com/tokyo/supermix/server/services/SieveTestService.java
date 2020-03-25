@@ -8,9 +8,9 @@ public interface SieveTestService {
 
   public List<SieveTest> getAllSieveTests();
 
-  public SieveTest getSieveTestById(Long id);
+  public SieveTest getSieveTestByCode(String code);
 
-  public void deleteSieveTest(Long id);
+  public void deleteSieveTest(String code);
 
-  public boolean isSieveTestExists(Long id);
+  public boolean isSieveTestExists(String code);
 }

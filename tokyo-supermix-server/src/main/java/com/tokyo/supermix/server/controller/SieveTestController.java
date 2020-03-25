@@ -38,62 +38,67 @@ public class SieveTestController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   private static final Logger logger = Logger.getLogger(SieveTestController.class);
 
-//post API for
- @PostMapping(value = EndpointURI.SIEVE_TEST)
- public ResponseEntity<Object> createSieveTest(
-     @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
-   sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
-   return new ResponseEntity<>(
-       new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_TEST_SUCCESS),
-       HttpStatus.OK);
- }
- 
- @GetMapping(value = EndpointURI.SIEVE_TESTS)
- public ResponseEntity<Object> getAllSieveTests() {
-   List<SieveTest> sieveTestTestList = sieveTestService.getAllSieveTests();
-   return new ResponseEntity<Object>(
-       new ContentResponse<>(Constants.SIEVE_TESTS,
-           mapper.map(sieveTestTestList, SieveTestResponseDto.class), RestApiResponseStatus.OK),
-       HttpStatus.OK);
- }
-//get SieveTest by id
-@GetMapping(value = EndpointURI.SIEVE_TEST_BY_ID)
-public ResponseEntity<Object> getSieveTestById(@PathVariable Long id) {
-  if (sieveTestService.isSieveTestExists(id)) {
-    logger.debug("Get SieveTest by id ");
-    return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
-        mapper.map(sieveTestService.getSieveTestById(id), SieveTestResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
-  }
-  logger.debug("Invalid Id");
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
-      validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
-}
-
-// get SieveTest Delete
-@DeleteMapping(value = EndpointURI.SIEVE_TEST_BY_ID)
-public ResponseEntity<Object> deleteSieveTest(@PathVariable Long id) {
-  if (sieveTestService.isSieveTestExists(id)) {
-   sieveTestService.deleteSieveTest(id);
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.SIEVE_TEST_DELETED),
-        HttpStatus.OK);
-  }
-  logger.debug("invalid SieveTestId");
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
-      validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
-}
-
-@PutMapping(value = EndpointURI.SIEVE_TEST)
-public ResponseEntity<Object> updateSieveTest(
-    @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
-  if (sieveTestService.isSieveTestExists(sieveTestRequestDto.getId())) {
+  // post API for
+  @PostMapping(value = EndpointURI.SIEVE_TEST)
+  public ResponseEntity<Object> createSieveTest(
+      @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
+    if (sieveTestService.isSieveTestExists(sieveTestRequestDto.getCode())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
+          validationFailureStatusCodes.getSieveTestAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_TEST_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_TEST_SUCCESS),
         HttpStatus.OK);
   }
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
-      validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
-}
+
+  @GetMapping(value = EndpointURI.SIEVE_TESTS)
+  public ResponseEntity<Object> getAllSieveTests() {
+    List<SieveTest> sieveTestTestList = sieveTestService.getAllSieveTests();
+    return new ResponseEntity<Object>(
+        new ContentResponse<>(Constants.SIEVE_TESTS,
+            mapper.map(sieveTestTestList, SieveTestResponseDto.class), RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
+
+  // get SieveTest by code
+  @GetMapping(value = EndpointURI.SIEVE_TEST_BY_CODE)
+  public ResponseEntity<Object> getSieveTestByCode(@PathVariable String code) {
+    if (sieveTestService.isSieveTestExists(code)) {
+      logger.debug("Get SieveTest by code ");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
+          mapper.map(sieveTestService.getSieveTestByCode(code), SieveTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid Code");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
+        validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  // get SieveTest Delete
+  @DeleteMapping(value = EndpointURI.SIEVE_TEST_BY_CODE)
+  public ResponseEntity<Object> deleteSieveTest(@PathVariable String code) {
+    if (sieveTestService.isSieveTestExists(code)) {
+      sieveTestService.deleteSieveTest(code);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.SIEVE_TEST_DELETED),
+          HttpStatus.OK);
+    }
+    logger.debug("invalid SieveTestCode");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
+        validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @PutMapping(value = EndpointURI.SIEVE_TEST)
+  public ResponseEntity<Object> updateSieveTest(
+      @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
+    if (sieveTestService.isSieveTestExists(sieveTestRequestDto.getCode())) {
+      sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_TEST_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
+        validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
