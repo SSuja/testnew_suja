@@ -435,7 +435,7 @@ public class Constants {
   public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS =
       "Sieve Accepted Value delete Successfully";
   /*
-   * sieveTest*
+   * sieveTest
    */
   public static final String ADD_SIEVE_TEST_SUCCESS = "SieveTest added Successfully";
   public static final String SIEVE_TEST_DELETED = "SieveTest Successfully Deleted";
@@ -444,7 +444,7 @@ public class Constants {
   public static final String SIEVE_TEST = "sieveTest";
   public static final String SIEVE_TESTS = "sieveTests";
   /*
-   * sieveTest*
+   * Fineness Modulus
    */
   public static final String ADD_FINENESS_MODULUS_SUCCESS = "FinenessModulus Added Successfully";
   public static final String FINENESS_MODULUS_DELETED = "FinenessModulus Successfully Deleted";

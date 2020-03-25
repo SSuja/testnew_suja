@@ -27,10 +27,10 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   public void saveSieveTestTrial(List<SieveTestTrial> sieveTestTrials) {
     Double totalRetainedWight = totalWeight(sieveTestTrials);
     for (SieveTestTrial sieveTestTrial : sieveTestTrials) {
-      sieveTestTrial.setPercentageRetained(findPercentageRetainedWeight(
-          sieveTestTrial.getCummalativeRetained(), totalRetainedWight));
+      sieveTestTrial.setPercentageRetained(
+          findPercentageRetainedWeight(sieveTestTrial.getCumulativeRetained(), totalRetainedWight));
       sieveTestTrial
-          .setPassing(findPassing(sieveTestTrial.getCummalativeRetained(), totalRetainedWight));
+          .setPassing(findPassing(sieveTestTrial.getCumulativeRetained(), totalRetainedWight));
       sieveTestTrialRepository.save(sieveTestTrial);
     }
     SieveTest sieveTest =
@@ -46,9 +46,9 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     sieveTestRepository.save(sieveTest);
   }
 
-  // find total weight of cummalative weight retained + pan weight
+  // find total weight of cumulative weight retained + pan weight
   private Double totalWeight(List<SieveTestTrial> sieveTestTrials) {
-    Double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCummalativeRetained()
+    Double total = sieveTestTrials.get(sieveTestTrials.size() - 1).getCumulativeRetained()
         + sieveTestRepository.findByCode(sieveTestTrials.get(0).getSieveTest().getCode())
             .getPanWeight();
     return total;
@@ -65,17 +65,17 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   }
 
   // find percentage weight retained
-  private Double findPercentageRetainedWeight(Double cummalativeRetained,
+  private Double findPercentageRetainedWeight(Double cumulativeRetained,
       Double totalRetainedWight) {
     Double percentageRetainedWeight =
-        roundDoubleValue(cummalativeRetained * 100 / totalRetainedWight);
+        roundDoubleValue(cumulativeRetained * 100 / totalRetainedWight);
     return percentageRetainedWeight;
   }
 
   // find percentage weight passing
-  private Double findPassing(Double cummalativeRetained, Double totalRetainedWight) {
+  private Double findPassing(Double cumulativeRetained, Double totalRetainedWight) {
     Double passing = roundDoubleValue(
-        100 - findPercentageRetainedWeight(cummalativeRetained, totalRetainedWight));
+        100 - findPercentageRetainedWeight(cumulativeRetained, totalRetainedWight));
     return passing;
   }
 
@@ -118,17 +118,11 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
         .getMin() <= sieveTest.getFinenessModulus()
         && finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
             .getMax() >= sieveTest.getFinenessModulus()) {
-      updateStatus(sieveTest.getCode(), Status.PASS);
+      sieveTest.setStatus(Status.PASS);
+      sieveTestRepository.save(sieveTest);
     } else {
-      updateStatus(sieveTest.getCode(), Status.FAIL);
+      sieveTest.setStatus(Status.FAIL);
+      sieveTestRepository.save(sieveTest);
     }
   }
-
-  private SieveTest updateStatus(String sieveTestCode, Status status) {
-    SieveTest sieveTest = sieveTestRepository.findByCode(sieveTestCode);
-    sieveTest.setStatus(status);
-    return sieveTestRepository.save(sieveTest);
-  }
-
-
 }

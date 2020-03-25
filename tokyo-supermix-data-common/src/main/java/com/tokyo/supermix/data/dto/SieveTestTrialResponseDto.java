@@ -5,7 +5,7 @@ public class SieveTestTrialResponseDto {
   private SieveSizeResponseDto sieveSize;
   private SieveTestResponseDto sieveTest;
   private Double percentageRetained;
-  private Double cummalativeRetained;
+  private Double cumulativeRetained;
   private Double passing;
 
   public Long getId() {
@@ -40,12 +40,12 @@ public class SieveTestTrialResponseDto {
     this.percentageRetained = percentageRetained;
   }
 
-  public Double getCummalativeRetained() {
-    return cummalativeRetained;
+  public Double getCumulativeRetained() {
+    return cumulativeRetained;
   }
 
-  public void setCummalativeRetained(Double cummalativeRetained) {
-    this.cummalativeRetained = cummalativeRetained;
+  public void setCumulativeRetained(Double cumulativeRetained) {
+    this.cumulativeRetained = cumulativeRetained;
   }
 
   public Double getPassing() {

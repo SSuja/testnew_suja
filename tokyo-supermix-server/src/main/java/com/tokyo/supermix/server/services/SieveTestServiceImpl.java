@@ -30,7 +30,7 @@ public class SieveTestServiceImpl implements SieveTestService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteSieveTest(String code) {
-    sieveTestRepository.deleteById(code);;
+    sieveTestRepository.deleteById(code);
   }
 
   @Transactional(readOnly = true)

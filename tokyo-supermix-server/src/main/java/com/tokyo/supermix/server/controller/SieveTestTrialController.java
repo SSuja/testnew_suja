@@ -86,13 +86,13 @@ public class SieveTestTrialController {
   @GetMapping(value = EndpointURI.SIEVE_TEST_TRIAL_BY_SIEVE_TEST_ID)
   public ResponseEntity<Object> getSieveSizeBySieveTestId(@PathVariable String sieveTestCode) {
     if (sieveTestService.isSieveTestExists(sieveTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST_ID,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST_CODE,
           mapper.map(sieveTestTrialService.findSieveTestTrialBySieveTestCode(sieveTestCode),
               SieveTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       logger.debug("No Sieve Test Trial record exist for given Sieve Test id");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_ID,
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
           validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
