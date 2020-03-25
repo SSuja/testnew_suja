@@ -18,10 +18,10 @@ public class SieveTestTrial implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private Double percentageRetained;
-  private Double cummalativeRetained;
+  private Double cumulativeRetained;
   private Double passing;
   @OneToOne
-  @JoinColumn(name = "sieveTestId", nullable = false)
+  @JoinColumn(name = "sieveTestCode", nullable = false)
   private SieveTest sieveTest;
   @ManyToOne
   @JoinColumn(name = "sieveSizeId", nullable = false)
@@ -43,12 +43,12 @@ public class SieveTestTrial implements Serializable {
     this.percentageRetained = percentageRetained;
   }
 
-  public Double getCummalativeRetained() {
-    return cummalativeRetained;
+  public Double getCumulativeRetained() {
+    return cumulativeRetained;
   }
 
-  public void setCummalativeRetained(Double cummalativeRetained) {
-    this.cummalativeRetained = cummalativeRetained;
+  public void setCumulativeRetained(Double cumulativeRetained) {
+    this.cumulativeRetained = cumulativeRetained;
   }
 
   public Double getPassing() {

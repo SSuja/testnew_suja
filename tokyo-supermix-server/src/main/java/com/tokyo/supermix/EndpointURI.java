@@ -306,6 +306,17 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
   public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
+
+  /*
+   * sieve-test-trial
+   * 
+   */
+  public static final String SIEVE_TEST_TRIAL = BASE_API_PATH + "sieve-test-trial";
+  public static final String SIEVE_TEST_TRIALS = BASE_API_PATH + "sieve-test-trials";
+  public static final String SIEVE_TEST_TRIAL_BY_ID = SIEVE_TEST_TRIAL + ID;
+  public static final String SIEVE_TEST_TRIAL_BY_SIEVE_TEST_ID =
+      SIEVE_TEST_TRIAL + SLASH + "sieve-test" + SLASH + "/{sieveTestId}";
+
   /*
    * Sieve Size
    */

@@ -1600,6 +1600,28 @@ public class ValidationFailureStatusCodes {
     this.sieveAcceptedValueNotExist = sieveAcceptedValueNotExist;
   }
 
+  // Sieve Test Trial
+  @Value("${validation.sieveTestTrialRequestDto.alreadyExist}")
+  private String sieveTestTrialAlreadyExist;
+  @Value("${validation.sieveTestTrialRequestDto.notExist}")
+  private String sieveTestTrialNotExist;
+
+  public String getSieveTestTrialAlreadyExist() {
+    return sieveTestTrialAlreadyExist;
+  }
+
+  public void setSieveTestTrialAlreadyExist(String sieveTestTrialAlreadyExist) {
+    this.sieveTestTrialAlreadyExist = sieveTestTrialAlreadyExist;
+  }
+
+  public String getSieveTestTrialNotExist() {
+    return sieveTestTrialNotExist;
+  }
+
+  public void setSieveTestTrialNotExist(String sieveTestTrialNotExist) {
+    this.sieveTestTrialNotExist = sieveTestTrialNotExist;
+  }
+
   // for sieveTest
   @Value("${validation.sieveTest.notExists}")
   private String sieveTestNotExist;

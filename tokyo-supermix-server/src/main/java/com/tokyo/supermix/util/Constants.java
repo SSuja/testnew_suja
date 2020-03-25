@@ -387,6 +387,7 @@ public class Constants {
   public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
       "Material Test Trial Average,Status Updated Successfully";
 
+
   // constants for validation key
   public static final String PARAMETER_RESULT = "parameterResult";
   public static final String PARAMETER_RESULTS = "parameterResults";
@@ -401,6 +402,17 @@ public class Constants {
   public static final String RESULT_SUCCESSFULLY_UPDATED = "Result Successfully updated";
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
+  /*
+   * sieve-test-trial
+   */
+  public static final String SIEVE_TEST_TRIAL_ADD = "Sieve Test Trial Added Succeessfully";
+  public static final String TWO_DECIMAL_FORMAT = "#.##";
+  public static final String ADD_SIEVE_TEST_TRIAL_SUCCEESS = "Sieve Test Trial Added Succeessfully";
+  public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";
+  public static final String SIEVE_TEST_TRIAL_ID = "id";
+  public static final String DELETE_SIEVE_TEST_TRIAL_SUCCESS =
+      "Sieve Test Trial delete Successfully";
+
 
   /*
    * Sieve Size
@@ -423,7 +435,7 @@ public class Constants {
   public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS =
       "Sieve Accepted Value delete Successfully";
   /*
-   * sieveTest*
+   * sieveTest
    */
   public static final String ADD_SIEVE_TEST_SUCCESS = "SieveTest added Successfully";
   public static final String SIEVE_TEST_DELETED = "SieveTest Successfully Deleted";
@@ -432,7 +444,7 @@ public class Constants {
   public static final String SIEVE_TEST = "sieveTest";
   public static final String SIEVE_TESTS = "sieveTests";
   /*
-   * sieveTest*
+   * Fineness Modulus
    */
   public static final String ADD_FINENESS_MODULUS_SUCCESS = "FinenessModulus Added Successfully";
   public static final String FINENESS_MODULUS_DELETED = "FinenessModulus Successfully Deleted";
