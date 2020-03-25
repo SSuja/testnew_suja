@@ -14,4 +14,5 @@ public interface MaterialSubCategoryService {
 	  public boolean isMaterialSubCategoryExist(Long id);
 	  public boolean isMaterialSubCategoryNameExist(String name);
 	  public boolean isUpdatedMaterialSubCategoryNameExist(Long id,String name);
+	  public boolean isMaterialCategoryIdExist(Long materialCategoryId);
 }

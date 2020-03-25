@@ -84,6 +84,8 @@ public final class EndpointURI {
       MATERIAL_SUB_CATEGORY + "/category" + MATERIAL_CATEGORY_ID;
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_ID = MATERIAL_SUB_CATEGORY + ID;
   public static final String DELETE_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORY + ID;
+  public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
+      MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
   /*
    * Equipment APIs
    */
