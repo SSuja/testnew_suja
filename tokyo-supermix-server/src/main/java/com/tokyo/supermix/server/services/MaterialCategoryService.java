@@ -17,4 +17,6 @@ public interface MaterialCategoryService {
   public void deleteMaterialCategory(Long id);
 
   public boolean isUpdatedNameExist(Long id, String name);
+
+  public MaterialCategory getMaterialCategoryByName(String name);
 }
