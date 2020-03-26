@@ -83,8 +83,8 @@ public class SieveTestTrialController {
         validationFailureStatusCodes.getSieveTestTrialNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.SIEVE_TEST_TRIAL_BY_SIEVE_TEST_ID)
-  public ResponseEntity<Object> getSieveSizeBySieveTestId(@PathVariable String sieveTestCode) {
+  @GetMapping(value = EndpointURI.SIEVE_TEST_TRIAL_BY_SIEVE_TEST_CODE)
+  public ResponseEntity<Object> getSieveSizeBySieveTestCode(@PathVariable String sieveTestCode) {
     if (sieveTestService.isSieveTestExists(sieveTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST_CODE,
           mapper.map(sieveTestTrialService.findSieveTestTrialBySieveTestCode(sieveTestCode),
