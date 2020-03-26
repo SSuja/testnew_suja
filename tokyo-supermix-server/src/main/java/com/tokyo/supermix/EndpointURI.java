@@ -317,7 +317,7 @@ public final class EndpointURI {
   public static final String SIEVE_TEST_TRIALS = BASE_API_PATH + "sieve-test-trials";
   public static final String SIEVE_TEST_TRIAL_BY_ID = SIEVE_TEST_TRIAL + ID;
   public static final String SIEVE_TEST_TRIAL_BY_SIEVE_TEST_CODE =
-      SIEVE_TEST_TRIAL + SLASH + "sieve-test" + SLASH + "/{sieveTestCode}";
+      SIEVE_TEST_TRIAL + SLASH + "sieve-test" + SLASH + "{sieveTestCode}";
 
   /*
    * Sieve Size
@@ -326,7 +326,7 @@ public final class EndpointURI {
   public static final String SIEVE_SIZES = BASE_API_PATH + "sieve-sizes";
   public static final String SIEVE_SIZE_BY_ID = SIEVE_SIZE + ID;
   public static final String SIEVE_SIZE_BY_MATERIAL_SUB_CATEGORY_ID =
-      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "/{materialSubCategoryId}";
+      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
   /*
    * Sieve Accepted Value
    */
