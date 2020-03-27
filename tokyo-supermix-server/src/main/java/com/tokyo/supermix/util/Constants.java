@@ -32,7 +32,7 @@ public class Constants {
   public static final String SUPPLIER_CATEGORY_NAME = "category";
   public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category Added Successfully";
   public static final String DELETE_SUPPLIER_CATEGORY_SCCESS =
-      "Supplier Category successfully Deleted";
+      "Supplier Category Successfully Deleted";
   public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
       "Supplier Category Updated Successfully";
   /*
@@ -51,7 +51,7 @@ public class Constants {
   public static final String EMPLOYEE_ID = "employeeId";
   public static final String EMPLOYEES = "employees";
   public static final String EMPLOYEE = "employee";
-  public static final String EMPLOYEE_DELETED = "Employee Succeessfully Deleted";
+  public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
   public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
   public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
   /*
@@ -227,7 +227,7 @@ public class Constants {
   public static final String PROCESS_SAMPLE_LOAD = "processSampleLoad";
   public static final String PROCESS_SAMPLE_LOADS = "processSampleLoads";
   public static final String PROCESS_SAMPLE_LOAD_DELETED =
-      "Process Sample Load Succeessfully Deleted";
+      "Process Sample Load Successfully Deleted";
   public static final String ADD_PROCESS_SAMPLE_LOAD_SUCCESS =
       "Process Sample Load Added Successfully";
   public static final String UPDATE_PROCESS_SAMPLE_LOAD_SUCCESS =
@@ -279,7 +279,7 @@ public class Constants {
   public static final String CONCRETE_STRENGTH_TESTS = "concreteStrengthTests";
   public static final String CONCRETE_STRENGTH_TESTS_CONCRETE_AGE = "concreteAge";
   public static final String CONCRETE_STRENGTH_TEST_DELETED =
-      "Concrete Strength Test Succeessfully Deleted";
+      "Concrete Strength Test Successfully Deleted";
   public static final String ADD_CONCRETE_STRENGTH_TEST_SUCCESS =
       "Concrete Strength Test Added Successfully";
   public static final String UPDATE_CONCRETE_STRENGTH_TEST_SUCCESS =
