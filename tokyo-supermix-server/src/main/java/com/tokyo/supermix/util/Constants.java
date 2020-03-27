@@ -137,11 +137,11 @@ public class Constants {
   public static final String MATERIAL_SUB_CATEGORY = "materialSubCategory";
   public static final String MATERIAL_SUB_CATEGORY_NAME = "name";
   public static final String ADD_MATERIAL_SUB_CATEGORY_SUCCESS =
-      "Material Sub Category Added Successfully";
+      "Material Subcategory Added Successfully";
   public static final String UPDATE_MATERIAL_SUB_CATEGORY_SUCCESS =
-      "Material Sub Category Updated Successfully";
+      "Material Subcategory Updated Successfully";
   public static final String DELETE_MATERIAL_SUB_CATEGORY_SUCCESS =
-      "Material Sub Category Successfully Deleted";
+      "Material Subcategory Successfully Deleted";
   /*
    * Constants for Material Category validation key & Success messages
    */
@@ -300,9 +300,10 @@ public class Constants {
    */
   public static final String FINISH_PRODUCT = "finishProduct";
   public static final String FINISH_PRODUCTS = "finishProducts";
-  public static final String ADD_FINISH_PRODUCT_SUCCESS = "Finish Product Added Successfully";
-  public static final String FINISH_PRODUCT_DELETED = "Finish Product Successfully Deleted";
-  public static final String FINISH_PRODUCT_UPDATED_SUCCESS = "Finish Product Updated Successfully";
+  public static final String ADD_FINISH_PRODUCT_SUCCESS = "Finished Product Added Successfully";
+  public static final String FINISH_PRODUCT_DELETED = "Finished Product Successfully Deleted";
+  public static final String FINISH_PRODUCT_UPDATED_SUCCESS =
+      "Finished Product Updated Successfully";
   /*
    * Constants for Equation Parameter validation key & Success messages
    */
@@ -364,7 +365,7 @@ public class Constants {
   public static final String PARAMETER_RESULTS = "parameterResults";
   public static final String PARAMETER_RESULT_ID = "parameterResultId";
   public static final String PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED =
-      "Parameter Value Added & Result Updated Successfully";
+      "Parameter Values Added & Result Updated Successfully";
   public static final String PARAMETER_RESULT_DELETED = "Parameter Result Successfully Deleted";
   public static final String UPDATE_PARAMETER_RESULT_SUCCESS =
       "Parameter Result Updated Successfully";
@@ -416,6 +417,7 @@ public class Constants {
   public static final String FINENESS_MODULUS_DELETED = "Fineness Modulus Successfully Deleted";
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */
