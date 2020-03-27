@@ -50,10 +50,9 @@ public class ConcreteStrengthTestController {
   @PostMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST)
   public ResponseEntity<Object> saveConcreteStrengthTest(
       @Valid @RequestBody ConcreteStrengthTestRequestDto concreteStrengthTestRequestDto) {
-    Long age = (long) 7;
-    if (concreteStrengthTestRequestDto.getConcreteAge() == age
-        || concreteStrengthTestRequestDto.getConcreteAge() == age + 7
-        || concreteStrengthTestRequestDto.getConcreteAge() == age + 21) {
+    Long concreteAge = concreteStrengthTestRequestDto.getConcreteAge();
+    if (concreteAge == 1 || concreteAge == 3 || concreteAge == 7 || concreteAge == 14
+        || concreteAge == 21 || concreteAge == 28) {
       ConcreteStrengthTest concreteStrengthTest =
           mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class);
       concreteStrengthTestService.saveConcreteStrengthTest(concreteStrengthTest);
@@ -100,10 +99,9 @@ public class ConcreteStrengthTestController {
       @Valid @RequestBody ConcreteStrengthTestRequestDto concreteStrengthTestRequestDto) {
     if (concreteStrengthTestService
         .isConcreteStrengthTestExist(concreteStrengthTestRequestDto.getId())) {
-      Long age = (long) 7;
-      if (concreteStrengthTestRequestDto.getConcreteAge() == age
-          || concreteStrengthTestRequestDto.getConcreteAge() == age + 7
-          || concreteStrengthTestRequestDto.getConcreteAge() == age + 21) {
+      Long concreteAge = concreteStrengthTestRequestDto.getConcreteAge();
+      if (concreteAge == 1 || concreteAge == 3 || concreteAge == 7 || concreteAge == 14
+          || concreteAge == 21 || concreteAge == 28) {
         concreteStrengthTestService.saveConcreteStrengthTest(
             mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class));
         return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
