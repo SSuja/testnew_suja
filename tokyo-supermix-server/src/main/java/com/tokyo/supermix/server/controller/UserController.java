@@ -59,8 +59,7 @@ public class UserController {
 		if (user != null) {
 			String message = "Your Account sucessfully created. Your Username is " + userRequestDto.getUserName()
 					+ ". Password is " + userRequestDto.getPassword();
-			emailService.sendMail(mailConstants.getMailNewUser(), "Notification : Congratulations!", message);
-			emailService.sendPreConfiguredMail(message);
+			emailService.sendMail(mailConstants.getMailNewUser(), Constants.SUBJECT_NEW_USER, message);
 		}
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS),
 				HttpStatus.OK);

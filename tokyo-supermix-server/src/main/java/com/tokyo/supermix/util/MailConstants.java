@@ -30,6 +30,8 @@ public class MailConstants {
 	private String[] mailNewProject;
 	@Value("${mail.notify.mailNewFinishProduct}")
     private String[] mailNewFinishProduct;
+	@Value("${mail.notify.mailCongreteStrengthTestStatus}")
+    private String[] mailCongreteStrengthTestStatus;
 	
 	public String getAdmin() {
 		return admin;
@@ -86,5 +88,12 @@ public class MailConstants {
     public void setMailNewFinishProduct(String[] mailNewFinishProduct) {
       this.mailNewFinishProduct = mailNewFinishProduct;
     }
+    public String[] getMailCongreteStrengthTestStatus() {
+      return mailCongreteStrengthTestStatus;
+    }
+    public void setMailCongreteStrengthTestStatus(String[] mailCongreteStrengthTestStatus) {
+      this.mailCongreteStrengthTestStatus = mailCongreteStrengthTestStatus;
+    }
+   
 	
 }
