@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.ConcreteTest;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteTestRepository;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.util.Constants;
@@ -47,7 +48,19 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
         binderquantity.doubleValue(), quantity.doubleValue()));
     concreteTest.setSlumpGradeRatio(
         calculateSlumpGradeRatio(concreteTest.getMixDesign().getCode(), concreteTest.getSlump()));
+    concreteTest.setStatus(
+        calculateConcreteStatus(concreteTest.getMixDesign().getCode(), concreteTest.getSlump()));
     return concreteTest;
+  }
+
+  // To find calculateConcreteStatus
+  private Status calculateConcreteStatus(String mixDesignCode, Double slump) {
+    Double targetSlump = mixDesignService.getMixDesignByCode(mixDesignCode).getTargetSlump();
+    if (targetSlump - 25 <= slump && slump <= targetSlump + 25) {
+      return Status.PASS;
+    } else {
+      return Status.FAIL;
+    }
   }
 
   // To find WaterCementRatio

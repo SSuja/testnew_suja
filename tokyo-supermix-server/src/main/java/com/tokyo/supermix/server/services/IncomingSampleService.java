@@ -11,7 +11,7 @@ public interface IncomingSampleService {
   boolean isIncomingSampleExist(String code);
   public void updateStatusForIncomingSample(String code ,Status status);
   boolean isIncomingSampleStatusExist(Status status);
-  public IncomingSample getIncomingSampleByStatus(Status status);
   public void createIncomingSample(IncomingSample incomingSample);
   public void updateIncomingSample(IncomingSample incomingSample);
+  public List<IncomingSample> getIncomingSampleByStatus(Status status);
 }

@@ -49,4 +49,9 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public MaterialCategory getMaterialCategoryByName(String name) {
+    return materialCategoryRepository.findByName(name);
+  }
 }

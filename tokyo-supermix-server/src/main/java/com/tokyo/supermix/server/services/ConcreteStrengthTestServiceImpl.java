@@ -10,6 +10,7 @@ import com.tokyo.supermix.data.entities.ConcreteStrengthTest;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteStrengthTestRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
@@ -22,7 +23,7 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
   @Autowired
   private ConcreteStrengthTestRepository concreteStrengthTestRepository;
   @Autowired
-  private MixDesignService mixDesignService;
+  private MixDesignRepository mixDesignRepository;
 
   @Transactional
   public void saveConcreteStrengthTest(ConcreteStrengthTest concreteStrengthTest) {
@@ -57,7 +58,7 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
   private ConcreteStrengthTest calculateConcreteStrengthRatio(
       ConcreteStrengthTest concreteStrengthTest) {
     MixDesign mixDesign =
-        mixDesignService.getMixDesignByCode(concreteStrengthTest.getMixDesign().getCode());
+        mixDesignRepository.findById(concreteStrengthTest.getMixDesign().getCode()).get();
     concreteStrengthTest.setStrengthGradeRatio(
         roundDoubleValue(concreteStrengthTest.getStrength() / mixDesign.getTargetGrade()));
     if (concreteStrengthTest.getStrength() == 0) {

@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.Status;
@@ -11,10 +12,18 @@ public class ConcreteStrengthTestRequestDto {
   private String mixDesignCode;
   @NotNull(message = "{concreteStrengthTestRequestDto.concreteAge.null}")
   private Long concreteAge;
-  @NotNull(message = "{concreteStrengthTestRequestDto.strength.null}")
-  private Double strength;
+  private Date date;
+  private Double strength = 0.0;
   private Double strengthGradeRatio;
   private Status status;
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
   public Long getId() {
     return id;
@@ -63,7 +72,4 @@ public class ConcreteStrengthTestRequestDto {
   public void setStatus(Status status) {
     this.status = status;
   }
-
-
-
 }

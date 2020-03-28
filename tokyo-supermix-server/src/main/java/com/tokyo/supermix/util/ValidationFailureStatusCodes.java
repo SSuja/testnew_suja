@@ -1226,6 +1226,17 @@ public class ValidationFailureStatusCodes {
   // for ConcreteStrengthTest
   @Value("${validation.concreteStrengthTest.notExists}")
   private String concreteStrengthTestNotExist;
+  @Value("${validation.concreteStrengthTestConcreteAge.notValid}")
+  private String concreteStrengthTestConcreteAgeNotValid;
+
+  public String getConcreteStrengthTestConcreteAgeNotValid() {
+    return concreteStrengthTestConcreteAgeNotValid;
+  }
+
+  public void setConcreteStrengthTestConcreteAgeNotValid(
+      String concreteStrengthTestConcreteAgeNotValid) {
+    this.concreteStrengthTestConcreteAgeNotValid = concreteStrengthTestConcreteAgeNotValid;
+  }
 
   public String getConcreteStrengthTestNotExist() {
     return concreteStrengthTestNotExist;
@@ -1587,6 +1598,62 @@ public class ValidationFailureStatusCodes {
 
   public void setSieveAcceptedValueNotExist(String sieveAcceptedValueNotExist) {
     this.sieveAcceptedValueNotExist = sieveAcceptedValueNotExist;
+  }
+
+  // Sieve Test Trial
+  @Value("${validation.sieveTestTrialRequestDto.alreadyExist}")
+  private String sieveTestTrialAlreadyExist;
+  @Value("${validation.sieveTestTrialRequestDto.notExist}")
+  private String sieveTestTrialNotExist;
+
+  public String getSieveTestTrialAlreadyExist() {
+    return sieveTestTrialAlreadyExist;
+  }
+
+  public void setSieveTestTrialAlreadyExist(String sieveTestTrialAlreadyExist) {
+    this.sieveTestTrialAlreadyExist = sieveTestTrialAlreadyExist;
+  }
+
+  public String getSieveTestTrialNotExist() {
+    return sieveTestTrialNotExist;
+  }
+
+  public void setSieveTestTrialNotExist(String sieveTestTrialNotExist) {
+    this.sieveTestTrialNotExist = sieveTestTrialNotExist;
+  }
+
+  // for sieveTest
+  @Value("${validation.sieveTest.notExists}")
+  private String sieveTestNotExist;
+  @Value("${validation.sieveTest.alreadyExist}")
+  private String sieveTestAlreadyExist;
+
+  public String getSieveTestAlreadyExist() {
+    return sieveTestAlreadyExist;
+  }
+
+  public void setSieveTestAlreadyExist(String sieveTestAlreadyExist) {
+    this.sieveTestAlreadyExist = sieveTestAlreadyExist;
+  }
+
+  public String getSieveTestNotExist() {
+    return sieveTestNotExist;
+  }
+
+  public void setSieveTestNotExist(String sieveTestNotExist) {
+    this.sieveTestNotExist = sieveTestNotExist;
+  }
+
+  // for finenessModulus
+  @Value("${validation.finenessModulus.notExists}")
+  private String finenessModulusNotExist;
+
+  public String getFinenessModulusNotExist() {
+    return finenessModulusNotExist;
+  }
+
+  public void setFinenessModulusNotExist(String finenessModulusNotExist) {
+    this.finenessModulusNotExist = finenessModulusNotExist;
   }
 
 }

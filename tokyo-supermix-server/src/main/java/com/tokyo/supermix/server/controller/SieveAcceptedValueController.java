@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,14 +40,17 @@ public class SieveAcceptedValueController {
 
   @PostMapping(value = EndpointURI.SIEVE_ACCEPTED_VALUE)
   public ResponseEntity<Object> createSieveAcceptedValue(
-      @Valid @RequestBody SieveAcceptedValueRequestDto sieveAcceptedValueRequestDto) {
-    if (sieveAcceptedValueService.isSieveSizeExist(sieveAcceptedValueRequestDto.getSieveSizeId())) {
-      logger.debug("Sieve Size already exists: createSieveAcceptedValue(), sieveSize: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
-          validationFailureStatusCodes.getSieveSizeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      @Valid @RequestBody List<SieveAcceptedValueRequestDto> sieveAcceptedValueRequestDtoList) {
+    for (SieveAcceptedValueRequestDto sieveAcceptedValueRequestDto : sieveAcceptedValueRequestDtoList) {
+      if (sieveAcceptedValueService
+          .isSieveSizeExist(sieveAcceptedValueRequestDto.getSieveSizeId())) {
+        logger.debug("Sieve Size already exists: createSieveAcceptedValue(), sieveSize: {}");
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
+            validationFailureStatusCodes.getSieveSizeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      sieveAcceptedValueService.saveSieveAcceptedValue(
+          mapper.map(sieveAcceptedValueRequestDto, SieveAcceptedValue.class));
     }
-    sieveAcceptedValueService
-        .saveSieveAcceptedValue(mapper.map(sieveAcceptedValueRequestDto, SieveAcceptedValue.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_ACCEPTED_VALUE_SUCCESS),
         HttpStatus.OK);
