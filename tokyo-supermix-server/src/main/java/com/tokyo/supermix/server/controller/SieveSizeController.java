@@ -51,8 +51,8 @@ public class SieveSizeController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
             validationFailureStatusCodes.getSieveSizeAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
     }
+    sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDtoList, SieveSize.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_SIZE_SUCCESS),
         HttpStatus.OK);
@@ -77,19 +77,19 @@ public class SieveSizeController {
         validationFailureStatusCodes.getSieveSizeNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping(value = EndpointURI.SIEVE_SIZE)
-  public ResponseEntity<Object> updateSieveSize(
-      @Valid @RequestBody SieveSizeRequestDto sieveSizeRequestDto) {
-    if (sieveSizeService.isSieveSizeExist(sieveSizeRequestDto.getId())) {
-      sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_SIZE_SUCCESS),
-          HttpStatus.OK);
-    }
-    logger.debug("No Sieve Size record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE_ID,
-        validationFailureStatusCodes.getSieveSizeNotExist()), HttpStatus.BAD_REQUEST);
-  }
+  // @PutMapping(value = EndpointURI.SIEVE_SIZE)
+  // public ResponseEntity<Object> updateSieveSize(
+  // @Valid @RequestBody SieveSizeRequestDto sieveSizeRequestDto) {
+  // if (sieveSizeService.isSieveSizeExist(sieveSizeRequestDto.getId())) {
+  // sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
+  // return new ResponseEntity<>(
+  // new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_SIZE_SUCCESS),
+  // HttpStatus.OK);
+  // }
+  // logger.debug("No Sieve Size record exist for given id");
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE_ID,
+  // validationFailureStatusCodes.getSieveSizeNotExist()), HttpStatus.BAD_REQUEST);
+  // }
 
   @DeleteMapping(EndpointURI.SIEVE_SIZE_BY_ID)
   public ResponseEntity<Object> deleteSieveSize(@PathVariable Long id) {

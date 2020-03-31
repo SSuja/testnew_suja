@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.SieveSize;
 
 public interface SieveSizeService {
-  public SieveSize saveSieveSize(SieveSize sieveSize);
+  public List<SieveSize> saveSieveSize(List<SieveSize> sieveSize);
 
   public List<SieveSize> getAllSieveSizes();
 

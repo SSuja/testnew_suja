@@ -14,8 +14,8 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   private SieveSizeRepository sieveSizeRepository;
 
   @Transactional
-  public SieveSize saveSieveSize(SieveSize sieveSize) {
-    return sieveSizeRepository.save(sieveSize);
+  public List<SieveSize> saveSieveSize(List<SieveSize> sieveSize) {
+    return sieveSizeRepository.saveAll(sieveSize);
   }
 
   @Transactional(readOnly = true)
