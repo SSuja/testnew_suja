@@ -24,12 +24,18 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.ConcreteTestService;
+import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class ConcreteTestController {
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private MailConstants mailConstants;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -42,7 +48,15 @@ public class ConcreteTestController {
   @PostMapping(value = EndpointURI.CONCRETE_TEST)
   public ResponseEntity<Object> createConcreteTest(
       @Valid @RequestBody ConcreteTestRequestDto concreteTestRequestDto) {
-    concreteTestService.saveConcreteTest(mapper.map(concreteTestRequestDto, ConcreteTest.class));
+    ConcreteTest concreteTest = concreteTestService
+        .saveConcreteTest(mapper.map(concreteTestRequestDto, ConcreteTest.class));
+    if (concreteTest != null) {
+      String message = "<p>We have got new concrteTest . The Test is "
+          + concreteTest.getStatus() + " </p><ul><li> Slump : " + concreteTest.getSlump()
+          + "</li><li> Mixdesign code : " + concreteTest.getMixDesign().getCode() + "</li></ul>";
+      emailService.sendMailWithFormat(mailConstants.getMailNewConcreteTest(),
+          Constants.SUBJECT_NEW_CONGRETE_TEST, message);
+    }
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_TEST_SUCCESS),
         HttpStatus.OK);

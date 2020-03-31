@@ -59,7 +59,7 @@ public class ProjectController {
     }
     projectService.saveProject(mapper.map(projectRequestDto, Project.class));
     String message = "We have got new project . The project name is " + projectRequestDto.getName();
-    emailService.sendMail(mailConstants.getMailNewProject(), "Notification : New Project",message);
+    emailService.sendMail(mailConstants.getMailNewProject(), Constants.SUBJECT_NEW_PROJECT,message);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PROJECT_SUCCESS),
         HttpStatus.OK);
