@@ -118,7 +118,8 @@ public class MaterialTestController {
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @Scheduled(cron = "0 0/20 * * * ?")
+//  @Scheduled(cron = "0 0/20 * * * ?")
+  @Scheduled(fixedRate = 2000)
   public void scheduleTaskWithFixedRate() {
     materialTestService.updateIncomingSampleStatusBySeheduler();
   }

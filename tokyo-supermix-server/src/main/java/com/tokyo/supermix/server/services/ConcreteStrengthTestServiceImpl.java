@@ -70,7 +70,7 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
           + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()+
           "<ul><li> Age : "+concreteStrengthTest.getConcreteAge()+" days </li>"
           +"<li> Strength : "+concreteStrengthTest.getStrength()+"</li></ul>";
-        emailService.sendMailWithDecorate(mailConstants.getMailCongreteStrengthTestStatus(),
+        emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
           Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
     } else if (concreteStrengthTest.getStrengthGradeRatio() > 0
         && concreteStrengthTest.getStrengthGradeRatio() < 1) {
@@ -79,7 +79,7 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
       + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()+
       "<ul><li> Age : "+concreteStrengthTest.getConcreteAge()+"days </li>"
       +"<li> Strength : "+concreteStrengthTest.getStrength()+"</li></ul>";
-    emailService.sendMailWithDecorate(mailConstants.getMailCongreteStrengthTestStatus(),
+    emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
         Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
     }
     return concreteStrengthTest;

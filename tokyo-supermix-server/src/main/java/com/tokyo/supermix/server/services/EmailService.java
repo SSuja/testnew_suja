@@ -1,8 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -47,7 +44,7 @@ public class EmailService {
 	    }
 	    return mailAddressesString;
 	}
-	public void sendMailWithDecorate(String[] to, String subject, String body) {
+	public void sendMailWithFormat(String[] to, String subject, String body) {
 		MimeMessagePreparator preparator = new MimeMessagePreparator() 
 	    {
 	        public void prepare(MimeMessage mimeMessage) throws Exception 

@@ -12,7 +12,9 @@ public class Constants {
   public static final String SUBJECT_NEW_PROJECT="Notification : New Project";
   public static final String SUBJECT_NEW_FINISH_PRODUCT="Notification : New Finish Product";
   public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST="Notifiation : Congrete Strength Test";
-  public static final String SUBJECT_NEW_CONGRETE_TEST="";
+  public static final String SUBJECT_NEW_CONGRETE_TEST="Notification : New Concrete Test";
+  public static final String SUBJECT_INCOMING_SAMPLE_RESULT = "Notification : Information for Incoming Sample Test Status";
+  public static final String SUBJECT_NEW_MATERIAL_TEST="Notification : New Material Test";
   
 //for plants
   public static final String PLANT_NAME = "PlantName";

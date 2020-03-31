@@ -32,6 +32,12 @@ public class MailConstants {
     private String[] mailNewFinishProduct;
 	@Value("${mail.notify.mailCongreteStrengthTestStatus}")
     private String[] mailCongreteStrengthTestStatus;
+	@Value("${mail.notify.mailNewConcreteTest}")
+	private String[] mailNewConcreteTest;
+	@Value("${mail.notify.mailUpdateIncomingSampleStatus}")
+    private String[] mailUpdateIncomingSampleStatus;
+	@Value("${mail.notify.mailUpdateMaterialTestStatus}")
+    private String[] mailUpdateMaterialTestStatus;
 	
 	public String getAdmin() {
 		return admin;
@@ -94,6 +100,23 @@ public class MailConstants {
     public void setMailCongreteStrengthTestStatus(String[] mailCongreteStrengthTestStatus) {
       this.mailCongreteStrengthTestStatus = mailCongreteStrengthTestStatus;
     }
-   
-	
+    public String[] getMailNewConcreteTest() {
+      return mailNewConcreteTest;
+    }
+    public void setMailNewConcreteTest(String[] mailNewConcreteTest) {
+      this.mailNewConcreteTest = mailNewConcreteTest;
+    }
+    public String[] getMailUpdateIncomingSampleStatus() {
+      return mailUpdateIncomingSampleStatus;
+    }
+    public void setMailUpdateIncomingSampleStatus(String[] mailUpdateIncomingSampleStatus) {
+      this.mailUpdateIncomingSampleStatus = mailUpdateIncomingSampleStatus;
+    }
+    public String[] getMailUpdateMaterialTestStatus() {
+      return mailUpdateMaterialTestStatus;
+    }
+    public void setMailUpdateMaterialTestStatus(String[] mailUpdateMaterialTestStatus) {
+      this.mailUpdateMaterialTestStatus = mailUpdateMaterialTestStatus;
+    }
+   	
 }
