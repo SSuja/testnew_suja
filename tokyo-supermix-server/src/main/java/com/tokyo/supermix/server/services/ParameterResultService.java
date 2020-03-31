@@ -18,6 +18,4 @@ public interface ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial);
 
   public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
-
-  public void updateMaterialTestTrial(MaterialTestTrial materialTestTrial);
 }
