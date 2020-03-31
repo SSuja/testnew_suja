@@ -109,6 +109,11 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
   }
 
+  private Double roundDoubleValue(Double value) {
+    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+    return Double.valueOf(decimalFormat.format(value));
+  }
+
   private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;
     int trialTotal = 0;
@@ -124,7 +129,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   @Transactional
   public MaterialTest updateAverage(Double average, String code, Status status) {
     MaterialTest materialTest = materialTestRepository.findByCode(code);
-    materialTest.setAverage(average);
+    materialTest.setAverage(roundDoubleValue(average));
     materialTest.setStatus(status);
     return materialTestRepository.save(materialTest);
   }

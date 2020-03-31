@@ -1053,6 +1053,17 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.status.notExixts}")
   private String materialTestStatusNotExists;
 
+  @Value("${validation.status.valid}")
+  private String materialTestStatusValid;
+
+  public String getMaterialTestStatusValid() {
+    return materialTestStatusValid;
+  }
+
+  public void setMaterialTestStatusValid(String materialTestStatusValid) {
+    this.materialTestStatusValid = materialTestStatusValid;
+  }
+
   public String getMaterialTestNotExist() {
     return materialTestNotExist;
   }
