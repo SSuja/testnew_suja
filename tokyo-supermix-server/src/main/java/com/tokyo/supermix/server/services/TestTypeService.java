@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.entities.TestType;
 
 public interface TestTypeService {
@@ -16,5 +17,9 @@ public interface TestTypeService {
   public void deleteTestType(Long id);
 
   public void saveTestType(TestType testType);
+
+  public boolean isMaterialSubCategoryIdExist(Long materialSubCategoryId);
+
+  public List<TestType> getTestTypesByMaterialSubCategoryId(Long materialSubCategoryId);
 
 }

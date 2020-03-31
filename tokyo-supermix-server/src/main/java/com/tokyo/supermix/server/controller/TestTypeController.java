@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.TestTypeDto;
+import com.tokyo.supermix.data.dto.TestTypeRequestDto;
+import com.tokyo.supermix.data.dto.TestTypeResponseDto;
 import com.tokyo.supermix.data.entities.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -42,23 +42,21 @@ public class TestTypeController {
   // get all TestTypes
   @GetMapping(value = EndpointURI.TEST_TYPES)
   public ResponseEntity<Object> getAllTestTypes() {
-    List<TestTypeDto> testTypeDtoList =
-        mapper.map(testTypeService.getAllTestTypes(), TestTypeDto.class);
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.TEST_TYPES, testTypeDtoList, RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPES,
+        mapper.map(testTypeService.getAllTestTypes(), TestTypeResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   // Add TestType
   @PostMapping(value = EndpointURI.TEST_TYPE)
-  public ResponseEntity<Object> saveTestType(@Valid @RequestBody TestTypeDto testTypeDto) {
-    if (testTypeService.isTestTypeExist(testTypeDto.getType())) {
+  public ResponseEntity<Object> saveTestType(
+      @Valid @RequestBody TestTypeRequestDto testTypeRequestDto) {
+    if (testTypeService.isTestTypeExist(testTypeRequestDto.getType())) {
       logger.debug("Test type already exists: saveTestType(), testType: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE,
           validationFailureStatusCodes.getTestTypealreadyExists()), HttpStatus.BAD_REQUEST);
     }
-    TestType testType = mapper.map(testTypeDto, TestType.class);
-    testTypeService.saveTestType(testType);
+    testTypeService.saveTestType(mapper.map(testTypeRequestDto, TestType.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_TYPE_SUCCESS),
         HttpStatus.OK);
@@ -68,9 +66,9 @@ public class TestTypeController {
   @GetMapping(value = EndpointURI.GET_TEST_TYPE_BY_ID)
   public ResponseEntity<Object> getTestTypeById(@PathVariable Long id) {
     if (testTypeService.isTestTypeIdExist(id)) {
-      TestType testType = testTypeService.getTestTypeById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPE,
-          mapper.map(testType, TestTypeDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+          mapper.map(testTypeService.getTestTypeById(id), TestTypeResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE_ID,
         validationFailureStatusCodes.getTestTypeNotExist()), HttpStatus.BAD_REQUEST);
@@ -91,13 +89,14 @@ public class TestTypeController {
 
   // Update TestType
   @PutMapping(value = EndpointURI.TEST_TYPE)
-  public ResponseEntity<Object> updateTestType(@Valid @RequestBody TestTypeDto testTypeDto) {
-    if (testTypeService.isTestTypeIdExist(testTypeDto.getId())) {
-      if (testTypeService.isTestTypeExist(testTypeDto.getType())) {
+  public ResponseEntity<Object> updateTestType(
+      @Valid @RequestBody TestTypeRequestDto testTypeRequestDto) {
+    if (testTypeService.isTestTypeIdExist(testTypeRequestDto.getId())) {
+      if (testTypeService.isTestTypeExist(testTypeRequestDto.getType())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE,
             validationFailureStatusCodes.getTestTypealreadyExists()), HttpStatus.BAD_REQUEST);
       }
-      testTypeService.saveTestType(mapper.map(testTypeDto, TestType.class));
+      testTypeService.saveTestType(mapper.map(testTypeRequestDto, TestType.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_TYPE_SUCCESS),
           HttpStatus.OK);
@@ -106,5 +105,17 @@ public class TestTypeController {
         validationFailureStatusCodes.getTestTypeNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  // Get TestType By Material sub category Id
+  @GetMapping(value = EndpointURI.GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID)
+  public ResponseEntity<Object> getAllTestTypesByMaterialSubCategoryId(@PathVariable Long materialSubCategoryId) {
+    if (testTypeService.isMaterialSubCategoryIdExist(materialSubCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPES,
+          mapper.map(testTypeService.getTestTypesByMaterialSubCategoryId(materialSubCategoryId),
+              TestTypeResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
+        validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
 }
