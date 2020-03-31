@@ -78,13 +78,25 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return Double.valueOf(decimalFormat.format(value));
   }
 
-  @Transactional
-  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
+  public void updateMaterialTestTrial(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
     String formula = materialTestTrial.getMaterialTest().getTest().getEquation().getFormula();
     Double result = roundDoubleValue(calculateTestResult(formula, parameterResultList));
     materialTestTrial.setResult(result);
     materialTestTrialRepository.save(materialTestTrial);
+  }
+
+  @Transactional
+  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
+    if (materialTestTrial.getMaterialTest().getTest().getEquation() == null) {
+      List<ParameterResult> parameterResultList =
+          findByMaterialTestTrialCode(materialTestTrial.getCode());
+      for (ParameterResult parameterResult : parameterResultList) {
+        materialTestTrial.setResult(parameterResult.getValue());
+      }
+    } else {
+      updateMaterialTestTrial(materialTestTrial);
+    }
   }
 }
