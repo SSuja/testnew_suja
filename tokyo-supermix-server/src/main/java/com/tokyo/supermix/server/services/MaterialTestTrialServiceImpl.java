@@ -1,14 +1,18 @@
 package com.tokyo.supermix.server.services;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.tokyo.supermix.data.entities.AdmixtureAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.AdmixtureAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.util.Constants;
@@ -26,6 +30,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private MaterialTestRepository materialTestRepository;
+  @Autowired
+  private AdmixtureAcceptedValueRepository admixtureAcceptedValueRepository;
 
   @Transactional
   public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -76,10 +82,26 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
             + "</li><li> Date : " + materialTest.getDate() + "</li></ul>");
   }
 
+
   private void compareWithAverage(Double average, String materialTestCode) {
-    Long testId = materialTestRepository.findByCode(materialTestCode).getTest().getId();
-    if (acceptedValueRepository.findByTestId(testId).getMinValue() <= average
-        && acceptedValueRepository.findByTestId(testId).getMaxValue() >= average) {
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    Long testId = materialTest.getTest().getId();
+    if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
+        .getMaterialCategory().getName().equalsIgnoreCase(Constants.ADMIXTURE)) {
+      AdmixtureAcceptedValue admixtureAcceptedValue =
+          admixtureAcceptedValueRepository.findByTestIdAndRawMaterialId(testId,
+              materialTest.getIncomingSample().getRawMaterial().getId());
+      calculateStatus(average, admixtureAcceptedValue.getMinValue(),
+          admixtureAcceptedValue.getMaxValue(), materialTestCode);
+    } else {
+      calculateStatus(average, acceptedValueRepository.findByTestId(testId).getMinValue(),
+          acceptedValueRepository.findByTestId(testId).getMaxValue(), materialTestCode);
+    }
+  }
+
+  private void calculateStatus(Double average, Double minValue, Double maxValue,
+      String materialTestCode) {
+    if (minValue <= average && average <= maxValue) {
       updateAverage(average, materialTestCode, Status.PASS);
     } else {
       updateAverage(average, materialTestCode, Status.FAIL);
@@ -96,7 +118,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
       totalResult = totalResult + materialTestTrial.getResult();
       trialTotal = listMaterialTestTrial.size();
     }
-    return (totalResult / trialTotal);
+    return roundDoubleValue(totalResult / trialTotal);
   }
 
   @Transactional
@@ -105,5 +127,11 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     materialTest.setAverage(average);
     materialTest.setStatus(status);
     return materialTestRepository.save(materialTest);
+  }
+
+  // To Change Four Digit Value
+  private Double roundDoubleValue(Double value) {
+    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+    return Double.valueOf(decimalFormat.format(value));
   }
 }

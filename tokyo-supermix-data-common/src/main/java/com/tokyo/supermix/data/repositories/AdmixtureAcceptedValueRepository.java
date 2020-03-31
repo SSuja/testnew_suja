@@ -8,4 +8,7 @@ public interface AdmixtureAcceptedValueRepository
   boolean existsByTestId(Long testId);
 
   AdmixtureAcceptedValue findByTestId(Long testId);
+
+  AdmixtureAcceptedValue findByTestIdAndRawMaterialId(Long testId, Long materialId);
+
 }
