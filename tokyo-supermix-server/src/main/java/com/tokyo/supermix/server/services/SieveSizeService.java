@@ -22,4 +22,6 @@ public interface SieveSizeService {
 
   public SieveSize updateSieveSize(SieveSize sieveSize);
 
+  public boolean isMaterialSubCategoryIdNull(Long materialSubCategoryId);
+
 }

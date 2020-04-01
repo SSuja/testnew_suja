@@ -61,4 +61,12 @@ public class SieveSizeServiceImpl implements SieveSizeService {
     return sieveSizeRepository.save(sieveSize);
   }
 
+  @Transactional(readOnly = true)
+  public boolean isMaterialSubCategoryIdNull(Long materialSubCategoryId) {
+    if (materialSubCategoryId == null) {
+      return true;
+    }
+    return false;
+  }
+
 }
