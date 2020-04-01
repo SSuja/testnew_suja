@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import com.tokyo.supermix.data.enums.Status;
 
 public class ConcreteTestRequestDto {
   private Long id;
@@ -16,7 +15,6 @@ public class ConcreteTestRequestDto {
   private String temperature;
   @NotNull(message = "{concreteTestRequestDto.waterContent.null}")
   private Double waterContent;
-  private Status status;
 
   public Long getId() {
     return id;
@@ -56,13 +54,5 @@ public class ConcreteTestRequestDto {
 
   public void setWaterContent(Double waterContent) {
     this.waterContent = waterContent;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
   }
 }

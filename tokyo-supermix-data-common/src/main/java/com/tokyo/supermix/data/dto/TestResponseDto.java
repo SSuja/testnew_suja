@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 public class TestResponseDto {
   private Long id;
   private String name;
-  private TestTypeDto testType;
+  private TestTypeResponseDto testType;
   private EquationDto equation;
 
   public Long getId() {
@@ -22,11 +22,11 @@ public class TestResponseDto {
     this.name = name;
   }
 
-  public TestTypeDto getTestType() {
+  public TestTypeResponseDto getTestType() {
     return testType;
   }
 
-  public void setTestType(TestTypeDto testType) {
+  public void setTestType(TestTypeResponseDto testType) {
     this.testType = testType;
   }
 

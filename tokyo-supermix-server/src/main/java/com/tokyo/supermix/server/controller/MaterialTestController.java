@@ -22,6 +22,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestResponseDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -90,11 +91,17 @@ public class MaterialTestController {
   @DeleteMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
   public ResponseEntity<Object> deleteMaterialTest(@PathVariable String code) {
     if (materialTestService.isMaterialTestExists(code)) {
-      materialTestService.deleteMaterialTest(code);
-      logger.debug("Material Test deleted");
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_DELETED),
-          HttpStatus.OK);
+      MaterialTest materialTest = materialTestService.getMaterialTestByCode(code);
+      if ((materialTest.getStatus()).equals(Status.NEW)) {
+        materialTestService.deleteMaterialTest(code);
+        logger.debug("Material Test deleted");
+        return new ResponseEntity<>(
+            new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_DELETED),
+            HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_STATUS,
+            validationFailureStatusCodes.getMaterialTestStatusValid()), HttpStatus.BAD_REQUEST);
+      }
     }
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
@@ -118,7 +125,8 @@ public class MaterialTestController {
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @Scheduled(cron = "0 0/20 * * * ?")
+  // @Scheduled(cron = "0 0/20 * * * ?")
+  @Scheduled(fixedRate = 2000)
   public void scheduleTaskWithFixedRate() {
     materialTestService.updateIncomingSampleStatusBySeheduler();
   }

@@ -12,9 +12,14 @@ import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteStrengthTestRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 
 @Service
 public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestService {
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private MailConstants mailConstants;
   @Autowired
   private ConcreteStrengthTestRepository concreteStrengthTestRepository;
   @Autowired
@@ -61,9 +66,21 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
     }
     if (concreteStrengthTest.getStrengthGradeRatio() >= 1) {
       concreteStrengthTest.setStatus(Status.PASS);
+      String messsage = "Congrete Strength Test is " + concreteStrengthTest.getStatus()
+          + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()+
+          "<ul><li> Age : "+concreteStrengthTest.getConcreteAge()+" days </li>"
+          +"<li> Strength : "+concreteStrengthTest.getStrength()+"</li></ul>";
+        emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
+          Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
     } else if (concreteStrengthTest.getStrengthGradeRatio() > 0
         && concreteStrengthTest.getStrengthGradeRatio() < 1) {
       concreteStrengthTest.setStatus(Status.FAIL);
+      String messsage = "Congrete Strength Test is " + concreteStrengthTest.getStatus()
+      + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()+
+      "<ul><li> Age : "+concreteStrengthTest.getConcreteAge()+"days </li>"
+      +"<li> Strength : "+concreteStrengthTest.getStrength()+"</li></ul>";
+    emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
+        Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
     }
     return concreteStrengthTest;
   }

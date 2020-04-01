@@ -1,25 +1,37 @@
 package com.tokyo.supermix.server.services;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.tokyo.supermix.data.entities.AdmixtureAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.AdmixtureAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
+import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 
 @Service
 public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private MailConstants mailConstants;
 	@Autowired
 	private MaterialTestTrialRepository materialTestTrialRepository;
 	@Autowired
 	private AcceptedValueRepository acceptedValueRepository;
 	@Autowired
 	private MaterialTestRepository materialTestRepository;
+	@Autowired
+	private AdmixtureAcceptedValueRepository admixtureAcceptedValueRepository;
 
 	@Transactional
 	public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -59,18 +71,44 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 	@Transactional
 	public void getAverageAndStatus(String materialTestCode) {
 		compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
-
+		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+		emailService.sendMailWithFormat(mailConstants.getMailUpdateMaterialTestStatus(),
+				Constants.SUBJECT_NEW_MATERIAL_TEST,
+				"<p>The Incoming Sample Code is <b>" + materialTest.getIncomingSample().getCode()
+						+ ".</b> for Material test. The test is <b>" + materialTest.getStatus()
+						+ "</b>.</p> <p>Test Details : </p><ul>" + "<li>Test Name : " + materialTest.getTest().getName()
+						+ "</li><li> Average : " + materialTest.getAverage() + "</li><li>Material : "
+						+ materialTest.getIncomingSample().getRawMaterial().getName() + "</li><li> Date : "
+						+ materialTest.getDate() + "</li></ul>");
 	}
 
 	private void compareWithAverage(Double average, String materialTestCode) {
-		Long testId = materialTestRepository.findByCode(materialTestCode).getTest().getId();
-		if (acceptedValueRepository.findByTestId(testId).getMinValue() <= average
-				&& acceptedValueRepository.findByTestId(testId).getMaxValue() >= average) {
+		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+		Long testId = materialTest.getTest().getId();
+		if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
+				.equalsIgnoreCase(Constants.ADMIXTURE)) {
+			AdmixtureAcceptedValue admixtureAcceptedValue = admixtureAcceptedValueRepository
+					.findByTestIdAndRawMaterialId(testId, materialTest.getIncomingSample().getRawMaterial().getId());
+			calculateStatus(average, admixtureAcceptedValue.getMinValue(), admixtureAcceptedValue.getMaxValue(),
+					materialTestCode);
+		} else {
+			calculateStatus(average, acceptedValueRepository.findByTestId(testId).getMinValue(),
+					acceptedValueRepository.findByTestId(testId).getMaxValue(), materialTestCode);
+		}
+	}
+
+	private void calculateStatus(Double average, Double minValue, Double maxValue, String materialTestCode) {
+		if (minValue <= average && average <= maxValue) {
 			updateAverage(average, materialTestCode, Status.PASS);
 		} else {
 			updateAverage(average, materialTestCode, Status.FAIL);
-
 		}
+
+	}
+
+	private Double roundDoubleValue(Double value) {
+		DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+		return Double.valueOf(decimalFormat.format(value));
 	}
 
 	private Double calculateAverage(String materialTestCode) {
@@ -82,13 +120,13 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 			totalResult = totalResult + materialTestTrial.getResult();
 			trialTotal = listMaterialTestTrial.size();
 		}
-		return (totalResult / trialTotal);
+		return roundDoubleValue(totalResult / trialTotal);
 	}
 
 	@Transactional
 	public MaterialTest updateAverage(Double average, String code, Status status) {
 		MaterialTest materialTest = materialTestRepository.findByCode(code);
-		materialTest.setAverage(average);
+		materialTest.setAverage(roundDoubleValue(average));
 		materialTest.setStatus(status);
 		return materialTestRepository.save(materialTest);
 	}

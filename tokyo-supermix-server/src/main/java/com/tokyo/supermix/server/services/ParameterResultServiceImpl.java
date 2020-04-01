@@ -82,9 +82,16 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
-    String formula = materialTestTrial.getMaterialTest().getTest().getEquation().getFormula();
-    Double result = roundDoubleValue(calculateTestResult(formula, parameterResultList));
-    materialTestTrial.setResult(result);
-    materialTestTrialRepository.save(materialTestTrial);
+    if (materialTestTrial.getMaterialTest().getTest().getEquation() == null) {
+      for (ParameterResult parameterResult : parameterResultList) {
+        materialTestTrial.setResult(parameterResult.getValue());
+      }
+    } else {
+      Double result = roundDoubleValue(calculateTestResult(
+          materialTestTrial.getMaterialTest().getTest().getEquation().getFormula(),
+          parameterResultList));
+      materialTestTrial.setResult(result);
+      materialTestTrialRepository.save(materialTestTrial);
+    }
   }
 }

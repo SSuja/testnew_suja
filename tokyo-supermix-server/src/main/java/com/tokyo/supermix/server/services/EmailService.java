@@ -1,14 +1,8 @@
 package com.tokyo.supermix.server.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import org.apache.tomcat.util.json.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -43,18 +37,23 @@ public class EmailService {
 		mailMessage.setText(message);
 		mailSender.send(mailMessage);
 	}
-	public void sendMailWithDecorate(String[] to, String subject, String body) {
+	private String convertStringArraytoString(String[] mailAddresses) {
+	    String mailAddressesString = "";
+	    for(String s:mailAddresses) {
+	      mailAddressesString= mailAddressesString+s+",";
+	    }
+	    return mailAddressesString;
+	}
+	public void sendMailWithFormat(String[] to, String subject, String body) {
 		MimeMessagePreparator preparator = new MimeMessagePreparator() 
 	    {
 	        public void prepare(MimeMessage mimeMessage) throws Exception 
-	        {
-//	        	List<Address> addresses = new ArrayList<Address>();
-//	        	to.forEach(mailAddress->internetAddresses.add(new InternetAddress(mailAddress)));
-	            mimeMessage.setRecipient(Message.RecipientType.TO,new InternetAddress(to[0]) );
+	        {  
+	            mimeMessage.setRecipients(Message.RecipientType.TO,convertStringArraytoString(to) );
 	            mimeMessage.setFrom(new InternetAddress("admin@gmail.com"));
 	            mimeMessage.setSubject(subject);
 	            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-	            helper.setText("<html><body><p>"+body+"</p><ul><li>1</><li>2</><li>3</></ul</body></html>", true);
+	            helper.setText("<html><body>"+body+"</body></html>", true);
 	        }
 	    };
 	    try {

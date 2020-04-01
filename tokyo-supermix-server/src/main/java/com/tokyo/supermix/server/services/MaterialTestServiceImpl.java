@@ -11,17 +11,24 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
+import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 
 @Service
 public class MaterialTestServiceImpl implements MaterialTestService {
-
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private MailConstants mailConstants;
   @Autowired
   private MaterialTestRepository materialTestRepository;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
+
   @Transactional
   public void saveMaterialTest(MaterialTest materialTest) {
-    IncomingSample incomingSample=incomingSampleRepository.findIncomingSampleByCode(materialTest.getIncomingSample().getCode());
+    IncomingSample incomingSample = incomingSampleRepository
+        .findIncomingSampleByCode(materialTest.getIncomingSample().getCode());
     incomingSample.setStatus(Status.PROCESS);
     incomingSampleRepository.save(incomingSample);
     materialTest.setStatus(Status.NEW);
@@ -69,8 +76,11 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   public void updateIncomingSampleStatusByIncomingSampleCode(String incomingSampleCode) {
+    String message = "";
     List<MaterialTest> listMaterialTest =
         materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    IncomingSample incomingSample =
+        incomingSampleRepository.findIncomingSampleByCode(incomingSampleCode);
     Status status = Status.NEW;
     for (MaterialTest materialTest : listMaterialTest) {
       if (materialTest.getStatus() == Status.FAIL) {
@@ -81,13 +91,22 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         break;
       } else {
         status = Status.PASS;
+        message = message + "<li> " + materialTest.getTest().getName() + " : "
+            + materialTest.getStatus() + "</li>";
       }
     }
-    IncomingSample incomingSample =
-        incomingSampleRepository.findIncomingSampleByCode(incomingSampleCode);
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
+    if (status == Status.PASS || status == Status.FAIL) {
+      emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+          Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+          "<p>The Incoming Sample is " + status + " The Sample Code is <b>" + incomingSampleCode
+              + "</b>. This Sample arrived on " + incomingSample.getDate()
+              + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName()
+              + "</b>.</p><ul>" + message + "</ul>");
+    }
   }
+
   public void updateIncomingSampleStatusBySeheduler() {
     List<IncomingSample> incomingSamplelist = incomingSampleRepository.findByStatus(Status.PROCESS);
     for (IncomingSample incomingSample : incomingSamplelist) {

@@ -84,6 +84,8 @@ public final class EndpointURI {
       MATERIAL_SUB_CATEGORY + "/category" + MATERIAL_CATEGORY_ID;
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_ID = MATERIAL_SUB_CATEGORY + ID;
   public static final String DELETE_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORY + ID;
+  public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
+      MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
   /*
    * Equipment APIs
    */
@@ -166,6 +168,7 @@ public final class EndpointURI {
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
   public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
+  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
 
   /*
    * IncomingSample Apis
@@ -306,6 +309,17 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
   public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
+
+  /*
+   * sieve-test-trial
+   * 
+   */
+  public static final String SIEVE_TEST_TRIAL = BASE_API_PATH + "sieve-test-trial";
+  public static final String SIEVE_TEST_TRIALS = BASE_API_PATH + "sieve-test-trials";
+  public static final String SIEVE_TEST_TRIAL_BY_ID = SIEVE_TEST_TRIAL + ID;
+  public static final String SIEVE_TEST_TRIAL_BY_SIEVE_TEST_CODE =
+      SIEVE_TEST_TRIAL + SLASH + "sieve-test" + SLASH + "{sieveTestCode}";
+
   /*
    * Sieve Size
    */
@@ -313,7 +327,7 @@ public final class EndpointURI {
   public static final String SIEVE_SIZES = BASE_API_PATH + "sieve-sizes";
   public static final String SIEVE_SIZE_BY_ID = SIEVE_SIZE + ID;
   public static final String SIEVE_SIZE_BY_MATERIAL_SUB_CATEGORY_ID =
-      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "/{materialSubCategoryId}";
+      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
   /*
    * Sieve Accepted Value
    */
