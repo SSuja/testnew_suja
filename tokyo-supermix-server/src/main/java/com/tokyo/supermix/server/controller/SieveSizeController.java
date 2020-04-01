@@ -45,8 +45,14 @@ public class SieveSizeController {
   public ResponseEntity<Object> createSieveSize(
       @Valid @RequestBody List<SieveSizeRequestDto> sieveSizeRequestDtoList) {
     for (SieveSizeRequestDto sieveSizeRequestDto : sieveSizeRequestDtoList) {
-      if (sieveSizeService.isDuplicateEntryExist(
-          sieveSizeRequestDto.getMaterialSubCategoryId(), sieveSizeRequestDto.getSize())) {
+      if (sieveSizeRequestDto.getMaterialSubCategoryId() == null) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
+                validationFailureStatusCodes.getMaterialSubCategoryNameIsNull()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (sieveSizeService.isDuplicateEntryExist(sieveSizeRequestDto.getMaterialSubCategoryId(),
+          sieveSizeRequestDto.getSize())) {
         logger.debug("Sieve Size already exists: createSieveSize(), size: {}");
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
             validationFailureStatusCodes.getSieveSizeAlreadyExist()), HttpStatus.BAD_REQUEST);
