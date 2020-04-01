@@ -43,17 +43,22 @@ public class SieveSizeServiceImpl implements SieveSizeService {
     return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId);
   }
 
-  public boolean isSieveSizeExist(Long materialSubCategoryId, Double size) {
-     if ((!findByMaterialSubCategoryId(materialSubCategoryId).get(0).getSize().equals(size))
-     && (isSizeExist(size))) {
-     return true;
-     }
-     return false;
+  @Transactional(readOnly = true)
+  public boolean isSizeAndMaterialSubCategoryIdExist(Double size, Long materialSubCategoryId) {
+    return sieveSizeRepository.existsBySizeAndMaterialSubCategoryId(size, materialSubCategoryId);
   }
 
-  @Transactional(readOnly = true)
-  public boolean isSizeExist(Double size) {
-    return sieveSizeRepository.existsBySize(size);
+  public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size) {
+    if ((!findByMaterialSubCategoryId(materialSubCategoryId).equals(size))
+        && (isSizeAndMaterialSubCategoryIdExist(size, materialSubCategoryId))) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional
+  public SieveSize updateSieveSize(SieveSize sieveSize) {
+    return sieveSizeRepository.save(sieveSize);
   }
 
 }

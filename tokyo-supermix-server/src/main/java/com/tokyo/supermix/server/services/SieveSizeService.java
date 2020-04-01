@@ -16,7 +16,10 @@ public interface SieveSizeService {
 
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
-  public boolean isSieveSizeExist(Long materialSubCategoryId, Double size);
+  public boolean isSizeAndMaterialSubCategoryIdExist(Double size, Long materialSubCategoryId);
 
-  public boolean isSizeExist(Double size);
+  public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size);
+
+  public SieveSize updateSieveSize(SieveSize sieveSize);
+
 }

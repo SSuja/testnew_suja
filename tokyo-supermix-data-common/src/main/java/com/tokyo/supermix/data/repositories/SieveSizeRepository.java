@@ -7,5 +7,5 @@ import com.tokyo.supermix.data.entities.SieveSize;
 public interface SieveSizeRepository extends JpaRepository<SieveSize, Long> {
   List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
-  boolean existsBySize(Double size);
+  boolean existsBySizeAndMaterialSubCategoryId(Double size, Long materialSubCategoryId);
 }
