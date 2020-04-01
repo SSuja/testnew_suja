@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.SieveSize;
 
 public interface SieveSizeService {
-  public SieveSize saveSieveSize(SieveSize sieveSize);
+  public List<SieveSize> saveSieveSize(List<SieveSize> sieveSize);
 
   public List<SieveSize> getAllSieveSizes();
 
@@ -15,4 +15,13 @@ public interface SieveSizeService {
   public void deleteSieveSize(Long id);
 
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
+
+  public boolean isSizeAndMaterialSubCategoryIdExist(Double size, Long materialSubCategoryId);
+
+  public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size);
+
+  public SieveSize updateSieveSize(SieveSize sieveSize);
+
+  public boolean isMaterialSubCategoryIdNull(Long materialSubCategoryId);
+
 }

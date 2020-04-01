@@ -14,8 +14,8 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   private SieveSizeRepository sieveSizeRepository;
 
   @Transactional
-  public SieveSize saveSieveSize(SieveSize sieveSize) {
-    return sieveSizeRepository.save(sieveSize);
+  public List<SieveSize> saveSieveSize(List<SieveSize> sieveSize) {
+    return sieveSizeRepository.saveAll(sieveSize);
   }
 
   @Transactional(readOnly = true)
@@ -41,6 +41,32 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   @Transactional(readOnly = true)
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
     return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isSizeAndMaterialSubCategoryIdExist(Double size, Long materialSubCategoryId) {
+    return sieveSizeRepository.existsBySizeAndMaterialSubCategoryId(size, materialSubCategoryId);
+  }
+
+  public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size) {
+    if ((!findByMaterialSubCategoryId(materialSubCategoryId).equals(size))
+        && (isSizeAndMaterialSubCategoryIdExist(size, materialSubCategoryId))) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional
+  public SieveSize updateSieveSize(SieveSize sieveSize) {
+    return sieveSizeRepository.save(sieveSize);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialSubCategoryIdNull(Long materialSubCategoryId) {
+    if (materialSubCategoryId == null) {
+      return true;
+    }
+    return false;
   }
 
 }

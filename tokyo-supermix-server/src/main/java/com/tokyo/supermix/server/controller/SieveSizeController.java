@@ -45,8 +45,21 @@ public class SieveSizeController {
   public ResponseEntity<Object> createSieveSize(
       @Valid @RequestBody List<SieveSizeRequestDto> sieveSizeRequestDtoList) {
     for (SieveSizeRequestDto sieveSizeRequestDto : sieveSizeRequestDtoList) {
-      sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
+      if (sieveSizeService
+          .isMaterialSubCategoryIdNull(sieveSizeRequestDto.getMaterialSubCategoryId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
+                validationFailureStatusCodes.getMaterialSubCategoryNameIsNull()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (sieveSizeService.isDuplicateEntryExist(sieveSizeRequestDto.getMaterialSubCategoryId(),
+          sieveSizeRequestDto.getSize())) {
+        logger.debug("Sieve Size already exists: createSieveSize(), size: {}");
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
+            validationFailureStatusCodes.getSieveSizeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
     }
+    sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDtoList, SieveSize.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_SIZE_SUCCESS),
         HttpStatus.OK);
@@ -75,7 +88,20 @@ public class SieveSizeController {
   public ResponseEntity<Object> updateSieveSize(
       @Valid @RequestBody SieveSizeRequestDto sieveSizeRequestDto) {
     if (sieveSizeService.isSieveSizeExist(sieveSizeRequestDto.getId())) {
-      sieveSizeService.saveSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
+      if (sieveSizeService
+          .isMaterialSubCategoryIdNull(sieveSizeRequestDto.getMaterialSubCategoryId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
+                validationFailureStatusCodes.getMaterialSubCategoryNameIsNull()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (sieveSizeService.isDuplicateEntryExist(sieveSizeRequestDto.getMaterialSubCategoryId(),
+          sieveSizeRequestDto.getSize())) {
+        logger.debug("Sieve Size already exists: createSieveSize(), size: {}");
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
+            validationFailureStatusCodes.getSieveSizeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      sieveSizeService.updateSieveSize(mapper.map(sieveSizeRequestDto, SieveSize.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SIEVE_SIZE_SUCCESS),
           HttpStatus.OK);
