@@ -45,8 +45,8 @@ public class TestController {
 
   @PostMapping(value = EndpointURI.TEST)
   public ResponseEntity<Object> createTest(@Valid @RequestBody TestRequestDto testRequestDto) {
-    if (testService.isTestNameExist(testRequestDto.getName())) {
-      logger.debug("Test already exists: createTst(), testName: {}");
+    if (testService.isDuplicateEntryExist(testRequestDto.getName(),
+        testRequestDto.getTestTypeId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
           validationFailureStatusCodes.getTestAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -79,7 +79,9 @@ public class TestController {
   @PutMapping(value = EndpointURI.TEST)
   public ResponseEntity<Object> updateTest(@Valid @RequestBody TestRequestDto testRequestDto) {
     if (testService.isTestExist(testRequestDto.getId())) {
-      if (testService.isUpdatedTestExist(testRequestDto.getId(), testRequestDto.getName())) {
+      if (testService.isDuplicateEntryExist(testRequestDto.getName(),
+          testRequestDto.getTestTypeId())) {
+        logger.debug("Test already exists: createTst(), testName: {}");
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
             validationFailureStatusCodes.getTestAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
