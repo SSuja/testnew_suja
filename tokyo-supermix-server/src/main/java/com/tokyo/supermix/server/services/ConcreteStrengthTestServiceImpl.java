@@ -30,6 +30,16 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
     concreteStrengthTestRepository.save(calculateConcreteStrengthRatio(concreteStrengthTest));
   }
 
+  @Transactional(readOnly = true)
+  public boolean checkConcreteAge(Long concreteAge) {
+    if (!(concreteAge == 1 || concreteAge == 3 || concreteAge == 5 || concreteAge == 7
+        || concreteAge == 14 || concreteAge == 21 || concreteAge == 28 || concreteAge == 56
+        || concreteAge == 128)) {
+      return true;
+    }
+    return false;
+  }
+
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
     return Double.valueOf(decimalFormat.format(value));
@@ -73,19 +83,19 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
         || (ratio >= 1 && concreteAge == 128)) {
       concreteStrengthTest.setStatus(Status.PASS);
       String messsage = "Congrete Strength Test is " + concreteStrengthTest.getStatus()
-          + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()+
-          "<ul><li> Age : "+concreteStrengthTest.getConcreteAge()+" days </li>"
-          +"<li> Strength : "+concreteStrengthTest.getStrength()+"</li></ul>";
-        emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
+          + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()
+          + "<ul><li> Age : " + concreteStrengthTest.getConcreteAge() + " days </li>"
+          + "<li> Strength : " + concreteStrengthTest.getStrength() + "</li></ul>";
+      emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
           Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
-    } else{
+    } else {
       concreteStrengthTest.setStatus(Status.FAIL);
       String messsage = "Congrete Strength Test is " + concreteStrengthTest.getStatus()
-      + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()+
-      "<ul><li> Age : "+concreteStrengthTest.getConcreteAge()+"days </li>"
-      +"<li> Strength : "+concreteStrengthTest.getStrength()+"</li></ul>";
-    emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
-        Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
+          + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()
+          + "<ul><li> Age : " + concreteStrengthTest.getConcreteAge() + "days </li>"
+          + "<li> Strength : " + concreteStrengthTest.getStrength() + "</li></ul>";
+      emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
+          Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
     }
     return concreteStrengthTest;
   }

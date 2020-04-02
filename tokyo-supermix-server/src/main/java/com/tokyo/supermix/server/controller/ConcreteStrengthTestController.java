@@ -50,20 +50,19 @@ public class ConcreteStrengthTestController {
   @PostMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST)
   public ResponseEntity<Object> saveConcreteStrengthTest(
       @Valid @RequestBody ConcreteStrengthTestRequestDto concreteStrengthTestRequestDto) {
-    Long concreteAge = concreteStrengthTestRequestDto.getConcreteAge();
-    if (concreteAge == 1 || concreteAge == 3 || concreteAge == 5 || concreteAge == 7
-        || concreteAge == 14 || concreteAge == 21 || concreteAge == 28 || concreteAge == 56
-        || concreteAge == 128) {
-      ConcreteStrengthTest concreteStrengthTest =
-          mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class);
-      concreteStrengthTestService.saveConcreteStrengthTest(concreteStrengthTest);
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.ADD_CONCRETE_STRENGTH_TEST_SUCCESS), HttpStatus.OK);
+    if (concreteStrengthTestService
+        .checkConcreteAge(concreteStrengthTestRequestDto.getConcreteAge())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.CONCRETE_STRENGTH_TESTS_CONCRETE_AGE,
+              validationFailureStatusCodes.getConcreteStrengthTestConcreteAgeNotValid()),
+          HttpStatus.BAD_REQUEST);
     }
+    ConcreteStrengthTest concreteStrengthTest =
+        mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class);
+    concreteStrengthTestService.saveConcreteStrengthTest(concreteStrengthTest);
     return new ResponseEntity<>(
-        new ValidationFailureResponse(Constants.CONCRETE_STRENGTH_TESTS_CONCRETE_AGE,
-            validationFailureStatusCodes.getConcreteStrengthTestConcreteAgeNotValid()),
-        HttpStatus.BAD_REQUEST);
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_STRENGTH_TEST_SUCCESS),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST_BY_ID)
@@ -100,20 +99,17 @@ public class ConcreteStrengthTestController {
       @Valid @RequestBody ConcreteStrengthTestRequestDto concreteStrengthTestRequestDto) {
     if (concreteStrengthTestService
         .isConcreteStrengthTestExist(concreteStrengthTestRequestDto.getId())) {
-      Long concreteAge = concreteStrengthTestRequestDto.getConcreteAge();
-      if (concreteAge == 1 || concreteAge == 3 || concreteAge == 5 || concreteAge == 7
-          || concreteAge == 14 || concreteAge == 21 || concreteAge == 28 || concreteAge == 56
-          || concreteAge == 128) {
-        concreteStrengthTestService.saveConcreteStrengthTest(
-            mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class));
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.UPDATE_CONCRETE_STRENGTH_TEST_SUCCESS), HttpStatus.OK);
-      } else {
+      if (concreteStrengthTestService
+          .checkConcreteAge(concreteStrengthTestRequestDto.getConcreteAge())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.CONCRETE_STRENGTH_TESTS_CONCRETE_AGE,
                 validationFailureStatusCodes.getConcreteStrengthTestConcreteAgeNotValid()),
             HttpStatus.BAD_REQUEST);
       }
+      concreteStrengthTestService.saveConcreteStrengthTest(
+          mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class));
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_CONCRETE_STRENGTH_TEST_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.CONCRETE_STRENGTH_TEST_ID,
