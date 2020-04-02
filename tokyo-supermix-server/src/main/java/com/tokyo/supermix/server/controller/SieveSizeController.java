@@ -140,4 +140,23 @@ public class SieveSizeController {
           HttpStatus.BAD_REQUEST);
     }
   }
+
+  @GetMapping(value = EndpointURI.SIEVE_SIZE_ACCEPTED_VALUE_BY_MATERIAL_SUB_CATEGORY_ID)
+  public ResponseEntity<Object> getAcceptedValueSieveSizeByMaterialSubCategoryId(
+      @PathVariable Long materialSubCategoryId) {
+    if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY_ID,
+              mapper.map(sieveSizeService.findAcceptedValueSieveSizeByMaterialSubCategoryId(
+                  materialSubCategoryId), SieveSizeResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    } else {
+      logger.debug("No Sieve Size record exist for given Material Sub Category id");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
+              validationFailureStatusCodes.getMaterialSubCategoryNotExist()),
+          HttpStatus.BAD_REQUEST);
+    }
+  }
 }
