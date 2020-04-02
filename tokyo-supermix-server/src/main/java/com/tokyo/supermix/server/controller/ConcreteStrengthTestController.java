@@ -51,8 +51,9 @@ public class ConcreteStrengthTestController {
   public ResponseEntity<Object> saveConcreteStrengthTest(
       @Valid @RequestBody ConcreteStrengthTestRequestDto concreteStrengthTestRequestDto) {
     Long concreteAge = concreteStrengthTestRequestDto.getConcreteAge();
-    if (concreteAge == 1 || concreteAge == 3 || concreteAge == 7 || concreteAge == 14
-        || concreteAge == 21 || concreteAge == 28) {
+    if (concreteAge == 1 || concreteAge == 3 || concreteAge == 5 || concreteAge == 7
+        || concreteAge == 14 || concreteAge == 21 || concreteAge == 28 || concreteAge == 56
+        || concreteAge == 128) {
       ConcreteStrengthTest concreteStrengthTest =
           mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class);
       concreteStrengthTestService.saveConcreteStrengthTest(concreteStrengthTest);
@@ -100,8 +101,9 @@ public class ConcreteStrengthTestController {
     if (concreteStrengthTestService
         .isConcreteStrengthTestExist(concreteStrengthTestRequestDto.getId())) {
       Long concreteAge = concreteStrengthTestRequestDto.getConcreteAge();
-      if (concreteAge == 1 || concreteAge == 3 || concreteAge == 7 || concreteAge == 14
-          || concreteAge == 21 || concreteAge == 28) {
+      if (concreteAge == 1 || concreteAge == 3 || concreteAge == 5 || concreteAge == 7
+          || concreteAge == 14 || concreteAge == 21 || concreteAge == 28 || concreteAge == 56
+          || concreteAge == 128) {
         concreteStrengthTestService.saveConcreteStrengthTest(
             mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class));
         return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

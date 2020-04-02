@@ -59,10 +59,15 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
     if (concreteStrengthTest.getStrength() == 0) {
       concreteStrengthTest.setStatus(Status.PROCESS);
     }
-    if (concreteStrengthTest.getStrengthGradeRatio() >= 1) {
+    Long concreteAge = concreteStrengthTest.getConcreteAge();
+    Double ratio = concreteStrengthTest.getStrengthGradeRatio();
+    if ((ratio >= 0.16 && concreteAge == 1) || (ratio >= 0.40 && concreteAge == 3)
+        || (ratio >= 0.50 && concreteAge == 5) || (ratio >= 0.65 && concreteAge == 7)
+        || (ratio >= 0.90 && concreteAge == 14) || (ratio >= 0.94 && concreteAge == 21)
+        || (ratio >= 0.99 && concreteAge == 28) || (ratio >= 1 && concreteAge == 56)
+        || (ratio >= 1 && concreteAge == 128)) {
       concreteStrengthTest.setStatus(Status.PASS);
-    } else if (concreteStrengthTest.getStrengthGradeRatio() > 0
-        && concreteStrengthTest.getStrengthGradeRatio() < 1) {
+    } else {
       concreteStrengthTest.setStatus(Status.FAIL);
     }
     return concreteStrengthTest;
