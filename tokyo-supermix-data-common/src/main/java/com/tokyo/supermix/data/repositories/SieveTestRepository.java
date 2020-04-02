@@ -7,4 +7,6 @@ public interface SieveTestRepository extends JpaRepository<SieveTest, String> {
   SieveTest findByCode(String code);
 
   boolean existsByCode(String code);
+
+  SieveTest findByIncomingSampleCode(String incomingSampleCode);
 }
