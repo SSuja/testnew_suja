@@ -15,7 +15,7 @@ public interface SieveSizeService {
   public void deleteSieveSize(Long id);
 
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
-
+  
   public boolean isSizeAndMaterialSubCategoryIdExist(Double size, Long materialSubCategoryId);
 
   public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size);
@@ -23,5 +23,6 @@ public interface SieveSizeService {
   public SieveSize updateSieveSize(SieveSize sieveSize);
 
   public boolean isMaterialSubCategoryIdNull(Long materialSubCategoryId);
-
+  
+  public List<SieveSize> findAcceptedValueSieveSizeByMaterialSubCategoryId(Long materialSubCategoryId);
 }

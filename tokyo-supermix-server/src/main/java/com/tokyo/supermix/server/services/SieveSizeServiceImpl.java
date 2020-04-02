@@ -43,18 +43,15 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   }
 
   @Transactional(readOnly = true)
-  public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
+  public List<SieveSize> findAcceptedValueSieveSizeByMaterialSubCategoryId(Long materialSubCategoryId) {
     List<Double> sieveSizeList = new ArrayList<>();
     List<Double> sieveAcceptedValueSizeList = new ArrayList<>();
     for (SieveSize sieveSize : sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId)) {
-      System.out.println("sieve size" + sieveSize.getSize());
       sieveSizeList.add(sieveSize.getSize());
-
       for (SieveAcceptedValue sieveAcceptedValue : sieveAcceptedValueService.getAllSieveAcceptedValues()) {
         if (materialSubCategoryId == sieveAcceptedValue.getSieveSize().getMaterialSubCategory()
-            .getId() && (sieveAcceptedValue.getSieveSize().getSize() != sieveSize.getSize()))
+            .getId())
           sieveAcceptedValueSizeList.add(sieveAcceptedValue.getSieveSize().getSize());
-        System.out.println("sieveAcceptedValue size" + sieveAcceptedValue.getSieveSize().getSize());
       }
     }
     List<Double> newSieveAcceptedValueSizeList = new ArrayList<>(sieveSizeList);
@@ -92,5 +89,12 @@ public class SieveSizeServiceImpl implements SieveSizeService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
+    return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId);  
+  }
+
+  
 
 }
