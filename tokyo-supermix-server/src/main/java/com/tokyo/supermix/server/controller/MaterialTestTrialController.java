@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestTrialRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResponseDto;
@@ -42,8 +40,9 @@ public class MaterialTestTrialController {
   // get all MaterialTestTrial
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIALS)
   public ResponseEntity<Object> getAllMaterialTestTrial() {
-       return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
-        mapper.map(materialTestTrialService.getAllMaterialTestTrial(), MaterialTestTrialResponseDto.class),
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+        mapper.map(materialTestTrialService.getAllMaterialTestTrial(),
+            MaterialTestTrialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
@@ -93,7 +92,7 @@ public class MaterialTestTrialController {
         validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // get  MaterialTestTrial By MaterialTest
+  // get MaterialTestTrial By MaterialTest
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getAllMaterialTestTrialByMaterialTestCode(
       @PathVariable String materialTestCode) {

@@ -168,6 +168,7 @@ public final class EndpointURI {
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
   public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
+  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
 
   /*
    * IncomingSample Apis

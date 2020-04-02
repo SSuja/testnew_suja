@@ -43,4 +43,14 @@ public class TestTypeServiceImpl implements TestTypeService {
   public boolean isTestTypeIdExist(Long id) {
     return testTypeRepository.existsById(id);
   }
+
+  @Override
+  public boolean isMaterialSubCategoryIdExist(Long materialSubCategoryId) {
+    return testTypeRepository.existsByMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Override
+  public List<TestType> getTestTypesByMaterialSubCategoryId(Long materialSubCategoryId) {
+    return testTypeRepository.findByMaterialSubCategoryId(materialSubCategoryId);
+     }
 }
