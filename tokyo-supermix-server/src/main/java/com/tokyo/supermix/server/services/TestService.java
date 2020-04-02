@@ -15,9 +15,15 @@ public interface TestService {
 
   public Test getTestById(Long id);
 
-  public boolean isUpdatedTestExist(Long id, String name);
+  boolean existsByNameAndTestTypeId(String name, Long testTypeId);
+
+  public boolean isDuplicateEntryExist(String name, Long testTypeId);
+
+  public boolean isUpdatedTestExist(Long testTypeId, String name);
 
   public void deleteTest(Long id);
 
   public List<Test> getTestByTestType(TestType testType);
+
+  public List<Test> findByTestTypeId(Long testTypeId);
 }

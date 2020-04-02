@@ -56,4 +56,21 @@ public class TestServiceImpl implements TestService {
     return testRepository.findByTestType(testType);
   }
 
+  @Transactional(readOnly = true)
+  public List<Test> findByTestTypeId(Long testTypeId) {
+    return testRepository.findByTestTypeId(testTypeId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsByNameAndTestTypeId(String name, Long testTypeId) {
+    return testRepository.existsByNameAndTestTypeId(name, testTypeId);
+  }
+
+  public boolean isDuplicateEntryExist(String name, Long testTypeId) {
+    if ((!findByTestTypeId(testTypeId).equals(name))
+        && (existsByNameAndTestTypeId(name, testTypeId))) {
+      return true;
+    }
+    return false;
+  }
 }
