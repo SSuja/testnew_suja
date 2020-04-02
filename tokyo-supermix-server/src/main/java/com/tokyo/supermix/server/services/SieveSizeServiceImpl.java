@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,8 @@ public class SieveSizeServiceImpl implements SieveSizeService {
 
   @Transactional(readOnly = true)
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
-    return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId);
+    return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId,
+        Sort.by(Sort.Direction.DESC, "size"));
   }
 
   @Transactional(readOnly = true)
