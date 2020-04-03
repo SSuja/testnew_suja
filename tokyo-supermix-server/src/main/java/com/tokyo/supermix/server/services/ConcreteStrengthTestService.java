@@ -14,4 +14,5 @@ public interface ConcreteStrengthTestService {
 
   public void deleteConcreteStrengthTest(Long id);
 
+  public boolean checkConcreteAge(Long concreteAge);
 }
