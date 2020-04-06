@@ -434,8 +434,20 @@ public class Constants {
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
   /*
+   * Finish Product Sample
+   */
+  public static final String FINISH_PRODUCT_CODE = "finishProductCode";
+  public static final String FINISH_PRODUCT_SAMPLE_ID = "finishProductSampleId";
+  public static final String FINISH_PRODUCT_SAMPLE = "finishProductSample";
+  public static final String FINISH_PRODUCT_SAMPLES = "finishProductSamples";
+  public static final String ADD_FINISH_PRODUCT_SAMPLE_SUCCESS =
+      "Finished Product Sample Added Successfully";
+  public static final String FINISH_PRODUCT_SAMPLE_DELETED = "Finished Product Sample Successfully Deleted";
+  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS = "Finished Product Sample Updated Successfully";
+  /*
    * Constants for Concrete Mixer validation key & Success messages
    */
+  public static final String CONCRETE_MIXER_ID = "ConcreteMixerId";
   public static final String CONCRETE_MIXER_NAME = "ConcreteMixerName";
   public static final String ADD_CONCRETE_MIXER_SUCCESS = "Concrete Mixer Added Successfully";
   public static final String CONCRETE_MIXER_DELETED = "Concrete Mixer Successfully Deleted";
@@ -454,6 +466,19 @@ public class Constants {
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_DELETED = "Finish Product Sample Issue Successfully Deleted";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_ID = "finishProductSampleIssueId";
   public static final String UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS = "Finish Product Sample Issue Updated Successfully";
+
+  /*
+   * Constants for Cube Test Finding validation key & Success messages
+   */
+  public static final String CUBE_TEST_FINDING_ID = "cubeTestFindingId";
+  public static final String CUBE_TEST_FINDING = "cubeTestFinding";
+  public static final String CUBE_TEST_FINDINGS = "cubeTestFindings";
+  public static final String CUBE_TEST_FINDING_AGE = "age";
+  public static final String CUBE_TEST_FINDING_DELETED = "Cube Test Finding Successfully Deleted";
+  public static final String ADD_CUBE_TEST_FINDING_SUCCESS =
+      "Cube Test Finding Successfully Added Successfully";
+  public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS =
+      "Cube Test Finding Successfully Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside

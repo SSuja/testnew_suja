@@ -1667,6 +1667,37 @@ public class ValidationFailureStatusCodes {
     this.finenessModulusNotExist = finenessModulusNotExist;
   }
 
+  // for finishProductSample
+  @Value("${validation.finishProductSample.notExists}")
+  private String finishProductSampleNotExist;
+  @Value("${validation.finishProductSample.alreadyExist}")
+  private String finishProductSampleAlreadyExist;
+  @Value("${finishProductSampleRequestDto.finishProductCode.null}")
+  private String finishProductSampleCodeIsNull;
+
+  public String getFinishProductSampleNotExist() {
+    return finishProductSampleNotExist;
+  }
+
+  public void setFinishProductSampleNotExist(String finishProductSampleNotExist) {
+    this.finishProductSampleNotExist = finishProductSampleNotExist;
+  }
+
+  public String getFinishProductSampleAlreadyExist() {
+    return finishProductSampleAlreadyExist;
+  }
+
+  public void setFinishProductSampleAlreadyExist(String finishProductSampleAlreadyExist) {
+    this.finishProductSampleAlreadyExist = finishProductSampleAlreadyExist;
+  }
+
+  public String getFinishProductSampleCodeIsNull() {
+    return finishProductSampleCodeIsNull;
+  }
+
+  public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
+    this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
+  }
   /*
    * Concrete Mixer
    */
@@ -1696,6 +1727,27 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.finishProductSampleIssue.notExists}")
   private String finishProductSampleIssueNotExists;
 
+  // for cubeTestFinding
+  @Value("${validation.cubeTestFinding.notExists}")
+  private String cubeTestFindingNotExist;
+  @Value("${validation.cubeTestFinding.ageValid}")
+  private String cubeTestFindingAgeValid;
+
+  public String getCubeTestFindingNotExist() {
+    return cubeTestFindingNotExist;
+  }
+
+  public void setCubeTestFindingNotExist(String cubeTestFindingNotExist) {
+    this.cubeTestFindingNotExist = cubeTestFindingNotExist;
+  }
+
+  public String getCubeTestFindingAgeValid() {
+    return cubeTestFindingAgeValid;
+  }
+
+  public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
+    this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
+  }
   @Value("${validation.finishProductSampleIssue.alreadyExist}")
   private String finishProductSampleIssueAlreadyExist;
 
@@ -1714,7 +1766,4 @@ public String getFinishProductSampleIssueAlreadyExist() {
 public void setFinishProductSampleIssueAlreadyExist(String finishProductSampleIssueAlreadyExist) {
 	this.finishProductSampleIssueAlreadyExist = finishProductSampleIssueAlreadyExist;
 }
-
-
-  
 }
