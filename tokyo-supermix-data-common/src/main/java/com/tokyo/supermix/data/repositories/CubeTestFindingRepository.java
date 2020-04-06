@@ -1,5 +1,11 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface CubeTestFindingRepository {
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tokyo.supermix.data.entities.CubeTestFinding;
 
+public interface CubeTestFindingRepository extends JpaRepository<CubeTestFinding, Long> {
+  List<CubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId);
+
+  List<CubeTestFinding> findByConcreteTestElementId(Long concreteTestElementId);
 }

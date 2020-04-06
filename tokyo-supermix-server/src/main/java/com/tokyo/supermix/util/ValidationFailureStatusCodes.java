@@ -1667,4 +1667,25 @@ public class ValidationFailureStatusCodes {
     this.finenessModulusNotExist = finenessModulusNotExist;
   }
 
+  // for cubeTestFinding
+  @Value("${validation.cubeTestFinding.notExists}")
+  private String cubeTestFindingNotExist;
+  @Value("${validation.cubeTestFinding.ageValid}")
+  private String cubeTestFindingAgeValid;
+
+  public String getCubeTestFindingNotExist() {
+    return cubeTestFindingNotExist;
+  }
+
+  public void setCubeTestFindingNotExist(String cubeTestFindingNotExist) {
+    this.cubeTestFindingNotExist = cubeTestFindingNotExist;
+  }
+
+  public String getCubeTestFindingAgeValid() {
+    return cubeTestFindingAgeValid;
+  }
+
+  public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
+    this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
+  }
 }
