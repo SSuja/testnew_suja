@@ -10,6 +10,6 @@ public interface PourService {
   public void deletePour(Long id);
   public Pour getPourById(Long id);
   public boolean isPourExit(Long id);
-  public boolean isPourNameExistPerProject(String name,String projectCode);
+  public boolean isPourNameExistBYProject(String name,String projectCode);
   public boolean isUpdatedPourExists(Long id, String name,String projectCode);
 }

@@ -40,14 +40,14 @@ public class PourServiceImpl implements PourService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isPourNameExistPerProject(String name, String projectCode) {
+  public boolean isPourNameExistBYProject(String name, String projectCode) {
     return pourRepository.existsByNameAndProjectCode(name, projectCode);
   }
 
   @Transactional(readOnly = true)
   public boolean isUpdatedPourExists(Long id, String name, String projectCode) {
     if (!getPourById(id).getName().equalsIgnoreCase(name)
-        && isPourNameExistPerProject(name, projectCode)) {
+        && isPourNameExistBYProject(name, projectCode)) {
       return true;
     }
     return false;

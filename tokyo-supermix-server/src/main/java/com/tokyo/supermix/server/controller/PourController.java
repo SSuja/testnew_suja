@@ -42,7 +42,7 @@ public class PourController {
 
   @PostMapping(value = EndpointURI.POUR)
   public ResponseEntity<Object> createPour(@Valid @RequestBody PourDtoRequest pourDtoRequest) {
-    if (pourService.isPourNameExistPerProject(pourDtoRequest.getName(),
+    if (pourService.isPourNameExistBYProject(pourDtoRequest.getName(),
         pourDtoRequest.getProjectCode())) {
       return new ResponseEntity<Object>(new ValidationFailureResponse(Constants.POUR,
           validationFailureStatusCodes.getPourAlreadyExist()), HttpStatus.BAD_REQUEST);
