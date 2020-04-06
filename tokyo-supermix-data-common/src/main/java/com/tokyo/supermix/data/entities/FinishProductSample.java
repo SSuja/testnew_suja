@@ -17,15 +17,13 @@ public class FinishProductSample implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String workOrderNo;
+  private Long finishProductCode;
   @ManyToOne
   @JoinColumn(name = "concreteMixerId", nullable = false)
   private ConcreteMixer concreteMixer;
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
-  @ManyToOne
-  @JoinColumn(name = "finishProductId", nullable = false)
-  private FinishProduct finishProduct;
 
   public Long getId() {
     return id;
@@ -59,12 +57,12 @@ public class FinishProductSample implements Serializable {
     this.mixDesign = mixDesign;
   }
 
-  public FinishProduct getFinishProduct() {
-    return finishProduct;
+  public Long getFinishProductCode() {
+    return finishProductCode;
   }
 
-  public void setFinishProduct(FinishProduct finishProduct) {
-    this.finishProduct = finishProduct;
+  public void setFinishProductCode(Long finishProductCode) {
+    this.finishProductCode = finishProductCode;
   }
 
   public static long getSerialversionuid() {
