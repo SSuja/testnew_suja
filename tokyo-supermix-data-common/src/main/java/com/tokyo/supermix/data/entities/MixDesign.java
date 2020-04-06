@@ -32,20 +32,20 @@ public class MixDesign implements Serializable {
     this.code = code;
   }
 
-  public Double getActualGrade() {
-    return actualGrade;
-  }
-
-  public void setActualGrade(Double actualGrade) {
-    this.actualGrade = actualGrade;
-  }
-
   public Double getTargetGrade() {
     return targetGrade;
   }
 
   public void setTargetGrade(Double targetGrade) {
     this.targetGrade = targetGrade;
+  }
+
+  public Double getActualGrade() {
+    return actualGrade;
+  }
+
+  public void setActualGrade(Double actualGrade) {
+    this.actualGrade = actualGrade;
   }
 
   public Date getDate() {
