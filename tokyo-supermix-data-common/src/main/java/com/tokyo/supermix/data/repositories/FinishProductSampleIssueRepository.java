@@ -1,5 +1,10 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface FinishProductSampleIssueRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+
+public interface FinishProductSampleIssueRepository
+    extends JpaRepository<FinishProductSampleIssue, Long> {
 
 }

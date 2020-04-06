@@ -360,6 +360,15 @@ public final class EndpointURI {
   public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
+  
+  
+  /*
+   * finish product sample issue apis
+   * 
+   */
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE = BASE_API_PATH + "finish-product-sample-issue";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUES = BASE_API_PATH + "finish-product-sample-issues";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + ID;
 
   private EndpointURI() {}
 
