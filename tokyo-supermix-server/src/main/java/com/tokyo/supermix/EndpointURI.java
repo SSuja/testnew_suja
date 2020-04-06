@@ -168,7 +168,8 @@ public final class EndpointURI {
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
   public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
-  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
+  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID =
+      TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
 
   /*
    * IncomingSample Apis
@@ -351,6 +352,14 @@ public final class EndpointURI {
   public static final String FINENESS_MODULUS_BY_ID = FINENESS_MODULUS + ID;
   public static final String FINENESS_MODULUS_BY_MATERIALSUBCATEGORY =
       FINENESS_MODULUS + "/materialSubCategory" + "/{materialSubCategoryId}";
+  /*
+   * Concrete Mixer apis
+   */
+  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
+  public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
+  public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
+  public static final String CONCRETE_MIXER_BY_PLANT_CODE =
+      CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
 
   private EndpointURI() {}
 
