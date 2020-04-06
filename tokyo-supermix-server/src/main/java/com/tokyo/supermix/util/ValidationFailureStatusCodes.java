@@ -1698,4 +1698,29 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
     this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
   }
+  /*
+   * Concrete Mixer
+   */
+  @Value("${validation.concreteMixer.notExists}")
+  private String concreteMixerNotExist;
+
+  @Value("${validation.concreteMixer.alreadyExist}")
+  private String concreteMixerAlreadyExist;
+
+  public String getConcreteMixerNotExist() {
+    return concreteMixerNotExist;
+  }
+
+  public void setConcreteMixerNotExist(String concreteMixerNotExist) {
+    this.concreteMixerNotExist = concreteMixerNotExist;
+  }
+
+  public String getConcreteMixerAlreadyExist() {
+    return concreteMixerAlreadyExist;
+  }
+
+  public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
+    this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
+  }
+
 }
