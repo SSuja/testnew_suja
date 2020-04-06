@@ -430,7 +430,17 @@ public class Constants {
   public static final String FINENESS_MODULUS_DELETED = "Fineness Modulus Successfully Deleted";
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
-
+  /*
+   * Constants for Concrete Test Element validation key & Success messages
+   */
+  public static final String CONCRETE_TEST_ELEMENT = "concreteTestElement";
+  public static final String CONCRETE_TEST_ELEMENTS = "concreteTestElements";
+  public static final String CONCRETE_TEST_ELEMENT_NAME="concreteTestElementName";
+  public static final String CONCRETE_TEST_ELEMENT_ABBREVIATION="concreteTestElementAbbreviation";
+  public static final String ADD_CONCRETE_TEST_ELEMENT_SUCCESS = "Concrete Test Element Added Successfully";
+  public static final String CONCRETE_TEST_ELEMENT_DELETED = "Concrete Test Element Successfully Deleted";
+  public static final String UPDATE_CONCRETE_TEST_ELEMENT_SUCCESS = "Concrete Test Element Updated Successfully";
+  
   /*
    * Encapsulate constructor to restrict modification from outside
    */

@@ -351,6 +351,13 @@ public final class EndpointURI {
   public static final String FINENESS_MODULUS_BY_ID = FINENESS_MODULUS + ID;
   public static final String FINENESS_MODULUS_BY_MATERIALSUBCATEGORY =
       FINENESS_MODULUS + "/materialSubCategory" + "/{materialSubCategoryId}";
+  /*
+   * concreteTestElement
+   * 
+   */
+  public static final String CONCRETE_TEST_ELEMENT = BASE_API_PATH + "concrete-test-element";
+  public static final String CONCRETE_TEST_ELEMENTS = BASE_API_PATH + "concrete-test-elements";
+  public static final String CONCRETE_TEST_ELEMENT_BY_ID = CONCRETE_TEST_ELEMENT + ID;
 
   private EndpointURI() {}
 
