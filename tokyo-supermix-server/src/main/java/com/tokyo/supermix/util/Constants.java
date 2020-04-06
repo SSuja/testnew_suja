@@ -434,8 +434,20 @@ public class Constants {
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
   /*
+   * Finish Product Sample
+   */
+  public static final String FINISH_PRODUCT_CODE = "finishProductCode";
+  public static final String FINISH_PRODUCT_SAMPLE_ID = "finishProductSampleId";
+  public static final String FINISH_PRODUCT_SAMPLE = "finishProductSample";
+  public static final String FINISH_PRODUCT_SAMPLES = "finishProductSamples";
+  public static final String ADD_FINISH_PRODUCT_SAMPLE_SUCCESS =
+      "Finished Product Sample Added Successfully";
+  public static final String FINISH_PRODUCT_SAMPLE_DELETED = "Finished Product Sample Successfully Deleted";
+  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS = "Finished Product Sample Updated Successfully";
+  /*
    * Constants for Concrete Mixer validation key & Success messages
    */
+  public static final String CONCRETE_MIXER_ID = "ConcreteMixerId";
   public static final String CONCRETE_MIXER_NAME = "ConcreteMixerName";
   public static final String ADD_CONCRETE_MIXER_SUCCESS = "Concrete Mixer Added Successfully";
   public static final String CONCRETE_MIXER_DELETED = "Concrete Mixer Successfully Deleted";
