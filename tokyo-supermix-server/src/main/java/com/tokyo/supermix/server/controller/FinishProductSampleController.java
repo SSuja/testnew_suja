@@ -125,7 +125,7 @@ public class FinishProductSampleController {
           mapper.map(finishProductSampleService.getFinishProductSampleByConcreteMixerId(concreteMixerId), FinishProductSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_CODE,
-        validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_MIXER_ID,
+        validationFailureStatusCodes.getConcreteMixerNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
