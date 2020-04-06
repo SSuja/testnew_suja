@@ -42,6 +42,11 @@ public class PourController {
 
   @PostMapping(value = EndpointURI.POUR)
   public ResponseEntity<Object> createPour(@Valid @RequestBody PourDtoRequest pourDtoRequest) {
+    if (pourService.isPourNameExistPerProject(pourDtoRequest.getName(),
+        pourDtoRequest.getProjectCode())) {
+      return new ResponseEntity<Object>(new ValidationFailureResponse(Constants.POUR,
+          validationFailureStatusCodes.getPourAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     pourService.savePour(mapper.map(pourDtoRequest, Pour.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_POUR_SUCCESS), HttpStatus.OK);
@@ -84,6 +89,11 @@ public class PourController {
   @PutMapping(value = EndpointURI.POUR)
   public ResponseEntity<Object> updatePour(@Valid @RequestBody PourDtoRequest pourDtoRequest) {
     if (pourService.isPourExit(pourDtoRequest.getId())) {
+      if (pourService.isUpdatedPourExists(pourDtoRequest.getId(), pourDtoRequest.getName(),
+          pourDtoRequest.getProjectCode())) {
+        return new ResponseEntity<Object>(new ValidationFailureResponse(Constants.POUR,
+            validationFailureStatusCodes.getPourAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
       pourService.savePour(mapper.map(pourDtoRequest, Pour.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_POUR_SUCCESS),
