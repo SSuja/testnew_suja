@@ -353,6 +353,14 @@ public final class EndpointURI {
   public static final String FINENESS_MODULUS_BY_MATERIALSUBCATEGORY =
       FINENESS_MODULUS + "/materialSubCategory" + "/{materialSubCategoryId}";
   /*
+   * Concrete Mixer apis
+   */
+  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
+  public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
+  public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
+  public static final String CONCRETE_MIXER_BY_PLANT_CODE =
+      CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
+  /*
    * Cube Test Finding
    */
   public static final String CUBE_TEST_FINDING = BASE_API_PATH + "cube-test-finding";

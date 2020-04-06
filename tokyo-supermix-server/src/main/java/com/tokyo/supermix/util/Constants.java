@@ -434,6 +434,16 @@ public class Constants {
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
   /*
+   * Constants for Concrete Mixer validation key & Success messages
+   */
+  public static final String CONCRETE_MIXER_NAME = "ConcreteMixerName";
+  public static final String ADD_CONCRETE_MIXER_SUCCESS = "Concrete Mixer Added Successfully";
+  public static final String CONCRETE_MIXER_DELETED = "Concrete Mixer Successfully Deleted";
+  public static final String UPDATE_CONCRETE_MIXER_SUCCESS = "Concrete Mixer updated Successfully";
+  public static final String CONCRETE_MIXER = "concreteMixer";
+  public static final String CONCRETE_MIXERS = "concreteMixers";
+
+  /*
    * Constants for Cube Test Finding validation key & Success messages
    */
   public static final String CUBE_TEST_FINDING_ID = "cubeTestFindingId";

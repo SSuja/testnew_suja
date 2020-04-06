@@ -8,4 +8,8 @@ public interface CubeTestFindingRepository extends JpaRepository<CubeTestFinding
   List<CubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId);
 
   List<CubeTestFinding> findByConcreteTestElementId(Long concreteTestElementId);
+
+  boolean existsByFinishProductSampleId(Long finishProductSampleId);
+
+  boolean existsByConcreteTestElementId(Long concreteTestElementId);
 }

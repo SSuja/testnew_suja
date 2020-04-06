@@ -24,7 +24,6 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.CubeTestFindingService;
-import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -33,14 +32,11 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class CubeTestFindingController {
   @Autowired
   private Mapper mapper;
+
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private CubeTestFindingService cubeTestFindingService;
-   @Autowired
-   private FinishProductSampleService finishProductSampleService;
-
-
   private static final Logger logger = Logger.getLogger(CubeTestFindingController.class);
 
   @PostMapping(value = EndpointURI.CUBE_TEST_FINDING)
@@ -110,30 +106,32 @@ public class CubeTestFindingController {
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_FINISH_PRODUCT_SAMPLE_ID)
   public ResponseEntity<Object> getCubeTestFindingByFinishProductSampleId(
       @PathVariable Long finishProductSampleId) {
-    if (cubeTestFindingService.isCubeTestFindingExist(finishProductSampleId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL_CODE,
+    if (cubeTestFindingService.existsByFinishProductSampleId(finishProductSampleId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
           mapper.map(cubeTestFindingService.findByFinishProductSampleId(finishProductSampleId),
               CubeTestFindingResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No  record exist for given Material Test Trial code");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
-          validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
+      logger.debug("No  record exist for given finish product id");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
+              validationFailureStatusCodes.getFinishProductSampleNotExist()),
+          HttpStatus.BAD_REQUEST);
     }
   }
 
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_CONCRETE_TEST_ELEMENT_ID)
   public ResponseEntity<Object> getCubeTestFindingByConcreteTestElementId(
       @PathVariable Long concreteTestElementId) {
-    if (cubeTestFindingService.isCubeTestFindingExist(concreteTestElementId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL_CODE,
+    if (cubeTestFindingService.existsByConcreteTestElementId(concreteTestElementId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_ELEMENT_ID,
           mapper.map(cubeTestFindingService.findByConcreteTestElementId(concreteTestElementId),
               CubeTestFindingResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No  record exist for given Material Test Trial code");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
-          validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
+      logger.debug("No  record exist for given concrete test element");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
+          validationFailureStatusCodes.getConcreteTestElementExist()), HttpStatus.BAD_REQUEST);
     }
   }
 }
