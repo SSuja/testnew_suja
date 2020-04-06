@@ -370,6 +370,16 @@ public final class EndpointURI {
   public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
+  /*
+   * Cube Test Finding
+   */
+  public static final String CUBE_TEST_FINDING = BASE_API_PATH + "cube-test-finding";
+  public static final String CUBE_TEST_FINDINGS = BASE_API_PATH + "cube-test-findings";
+  public static final String CUBE_TEST_FINDING_BY_ID = CUBE_TEST_FINDING + ID;
+  public static final String CUBE_TEST_FINDING_BY_FINISH_PRODUCT_SAMPLE_ID =
+      CUBE_TEST_FINDING + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}";
+  public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ELEMENT_ID =
+      CUBE_TEST_FINDING + SLASH + "concrete-test-element" + SLASH + "{concreteTestElementId}";
 
   private EndpointURI() {}
 

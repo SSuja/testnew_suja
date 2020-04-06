@@ -456,6 +456,19 @@ public class Constants {
   public static final String CONCRETE_MIXERS = "concreteMixers";
 
   /*
+   * Constants for Cube Test Finding validation key & Success messages
+   */
+  public static final String CUBE_TEST_FINDING_ID = "cubeTestFindingId";
+  public static final String CUBE_TEST_FINDING = "cubeTestFinding";
+  public static final String CUBE_TEST_FINDINGS = "cubeTestFindings";
+  public static final String CUBE_TEST_FINDING_AGE = "age";
+  public static final String CUBE_TEST_FINDING_DELETED = "Cube Test Finding Successfully Deleted";
+  public static final String ADD_CUBE_TEST_FINDING_SUCCESS =
+      "Cube Test Finding Successfully Added Successfully";
+  public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS =
+      "Cube Test Finding Successfully Updated Successfully";
+
+  /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}
