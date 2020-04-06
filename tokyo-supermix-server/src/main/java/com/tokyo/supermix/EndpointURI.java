@@ -168,7 +168,8 @@ public final class EndpointURI {
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
   public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
-  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
+  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID =
+      TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
 
   /*
    * IncomingSample Apis
@@ -351,6 +352,16 @@ public final class EndpointURI {
   public static final String FINENESS_MODULUS_BY_ID = FINENESS_MODULUS + ID;
   public static final String FINENESS_MODULUS_BY_MATERIALSUBCATEGORY =
       FINENESS_MODULUS + "/materialSubCategory" + "/{materialSubCategoryId}";
+  /*
+   * FinishProductSample
+   */
+  public static final String FINISH_PRODUCT_SAMPLE = BASE_API_PATH + "finish-product-sample";
+  public static final String FINISH_PRODUCT_SAMPLES = BASE_API_PATH + "finish-product-samples";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_ID = FINISH_PRODUCT_SAMPLE + ID;
+  public static final String FINISH_PRODUCT_SAMPLE_BY_MIX_DESIGN_CODE =
+      FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
+      FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
 
   private EndpointURI() {}
 

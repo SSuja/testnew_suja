@@ -1,22 +1,25 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-  //for email notification
+  // for email notification
   public static final String ADMIXTURE = "Admixture";
   public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : equipment calibration";
-  public static final String SUBJECT_ADMIXTURE_EXPIRY="Notification : expiry date for Admixture";
-  public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY="Notification : Information for Samples";
-  public static final String SUBJECT_MIX_DESIGN="Notification : About Mixdesign ";
-  public static final String SUBJECT_PENDING_SAMPLES="Notification : Pending Incoming Sample";
-  public static final String SUBJECT_NEW_USER="Notification : Congratulations!";
-  public static final String SUBJECT_NEW_PROJECT="Notification : New Project";
-  public static final String SUBJECT_NEW_FINISH_PRODUCT="Notification : New Finish Product";
-  public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST="Notifiation : Congrete Strength Test";
-  public static final String SUBJECT_NEW_CONGRETE_TEST="Notification : New Concrete Test";
-  public static final String SUBJECT_INCOMING_SAMPLE_RESULT = "Notification : Information for Incoming Sample Test Status";
-  public static final String SUBJECT_NEW_MATERIAL_TEST="Notification : New Material Test";
-  
-//for plants
+  public static final String SUBJECT_ADMIXTURE_EXPIRY = "Notification : expiry date for Admixture";
+  public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY =
+      "Notification : Information for Samples";
+  public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
+  public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
+  public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
+  public static final String SUBJECT_NEW_PROJECT = "Notification : New Project";
+  public static final String SUBJECT_NEW_FINISH_PRODUCT = "Notification : New Finish Product";
+  public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST =
+      "Notifiation : Congrete Strength Test";
+  public static final String SUBJECT_NEW_CONGRETE_TEST = "Notification : New Concrete Test";
+  public static final String SUBJECT_INCOMING_SAMPLE_RESULT =
+      "Notification : Information for Incoming Sample Test Status";
+  public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
+
+  // for plants
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
   public static final String PLANTS = "plants";
@@ -430,7 +433,17 @@ public class Constants {
   public static final String FINENESS_MODULUS_DELETED = "Fineness Modulus Successfully Deleted";
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
-
+  /*
+   * Finish Product Sample
+   */
+  public static final String FINISH_PRODUCT_CODE = "finishProductCode";
+  public static final String FINISH_PRODUCT_SAMPLE_ID = "finishProductSampleId";
+  public static final String FINISH_PRODUCT_SAMPLE = "finishProductSample";
+  public static final String FINISH_PRODUCT_SAMPLES = "finishProductSamples";
+  public static final String ADD_FINISH_PRODUCT_SAMPLE_SUCCESS =
+      "Finished Product Sample Added Successfully";
+  public static final String FINISH_PRODUCT_SAMPLE_DELETED = "Finished Product Sample Successfully Deleted";
+  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS = "Finished Product Sample Updated Successfully";
   /*
    * Encapsulate constructor to restrict modification from outside
    */
