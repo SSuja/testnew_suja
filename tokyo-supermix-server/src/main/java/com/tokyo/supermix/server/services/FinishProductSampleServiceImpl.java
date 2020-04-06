@@ -70,11 +70,4 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   public List<FinishProductSample> getFinishProductSampleByConcreteMixerId(Long id) {
     return finishProductSampleRepository.findByConcreteMixerId(id);
   }
-
-  public boolean isFinishProductSampleCodeNull(Long code) {
-    if (code == null) {
-      return true;
-    }
-    return false;
-  }
 }

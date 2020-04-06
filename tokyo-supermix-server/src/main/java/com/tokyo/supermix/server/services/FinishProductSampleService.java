@@ -26,7 +26,4 @@ public interface FinishProductSampleService {
   boolean isConcreteMixerExist(Long id);
 
   public List<FinishProductSample> getFinishProductSampleByConcreteMixerId(Long id);
-
-  public boolean isFinishProductSampleCodeNull(Long code);
-
 }

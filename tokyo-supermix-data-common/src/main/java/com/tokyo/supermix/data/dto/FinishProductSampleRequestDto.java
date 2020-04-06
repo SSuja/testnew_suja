@@ -1,10 +1,17 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class FinishProductSampleRequestDto {
   private Long id;
   private String workOrderNo;
+  @NotNull(message = "{finishProductSampleRequestDto.finishProductCode.null}")
   private Long finishProductCode;
+  @NotNull(message = "{finishProductSampleRequestDto.concreteMixerId.null}")
   private Long concreteMixerId;
+  @NotNull(message = "{finishProductSampleRequestDto.mixDesignCode.null}")
+  @NotEmpty(message = "{finishProductSampleRequestDto.mixDesignCode.empty}")
   private String mixDesignCode;
 
   public Long getId() {

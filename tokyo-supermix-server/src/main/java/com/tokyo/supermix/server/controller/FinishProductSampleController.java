@@ -39,14 +39,8 @@ public class FinishProductSampleController {
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
   public ResponseEntity<Object> createFinishProductSample(
-       @RequestBody FinishProductSampleRequestDto finishProductSampleRequestDto) {
-    if (finishProductSampleService.isFinishProductSampleCodeNull(finishProductSampleRequestDto.getFinishProductCode())) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.FINISH_PRODUCT_CODE,
-              validationFailureStatusCodes.getFinishProductSampleCodeIsNull()),
-          HttpStatus.BAD_REQUEST);
-    }
-    if (finishProductSampleService.isFinishProductCodeExist(finishProductSampleRequestDto.getFinishProductCode())) {
+      @Valid @RequestBody FinishProductSampleRequestDto finishProductSampleRequestDto) {
+       if (finishProductSampleService.isFinishProductCodeExist(finishProductSampleRequestDto.getFinishProductCode())) {
       logger.debug("finish product sample code is already exists: createFinishProductSample(), isFinishProductCodeExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_CODE, validationFailureStatusCodes.getFinishProductSampleAlreadyExist()),
           HttpStatus.BAD_REQUEST);
