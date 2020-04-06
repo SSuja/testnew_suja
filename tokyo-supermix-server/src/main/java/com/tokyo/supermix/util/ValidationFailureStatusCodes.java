@@ -1688,4 +1688,81 @@ public class ValidationFailureStatusCodes {
     this.concreteTestElementNotExist = concreteTestElementNotExist;
   }
 
+  // for finishProductSample
+  @Value("${validation.finishProductSample.notExists}")
+  private String finishProductSampleNotExist;
+  @Value("${validation.finishProductSample.alreadyExist}")
+  private String finishProductSampleAlreadyExist;
+  @Value("${finishProductSampleRequestDto.finishProductCode.null}")
+  private String finishProductSampleCodeIsNull;
+
+  public String getFinishProductSampleNotExist() {
+    return finishProductSampleNotExist;
+  }
+
+  public void setFinishProductSampleNotExist(String finishProductSampleNotExist) {
+    this.finishProductSampleNotExist = finishProductSampleNotExist;
+  }
+
+  public String getFinishProductSampleAlreadyExist() {
+    return finishProductSampleAlreadyExist;
+  }
+
+  public void setFinishProductSampleAlreadyExist(String finishProductSampleAlreadyExist) {
+    this.finishProductSampleAlreadyExist = finishProductSampleAlreadyExist;
+  }
+
+  public String getFinishProductSampleCodeIsNull() {
+    return finishProductSampleCodeIsNull;
+  }
+
+  public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
+    this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
+  }
+  /*
+   * Concrete Mixer
+   */
+  @Value("${validation.concreteMixer.notExists}")
+  private String concreteMixerNotExist;
+
+  @Value("${validation.concreteMixer.alreadyExist}")
+  private String concreteMixerAlreadyExist;
+
+  public String getConcreteMixerNotExist() {
+    return concreteMixerNotExist;
+  }
+
+  public void setConcreteMixerNotExist(String concreteMixerNotExist) {
+    this.concreteMixerNotExist = concreteMixerNotExist;
+  }
+
+  public String getConcreteMixerAlreadyExist() {
+    return concreteMixerAlreadyExist;
+  }
+
+  public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
+    this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
+  }
+
+  // for cubeTestFinding
+  @Value("${validation.cubeTestFinding.notExists}")
+  private String cubeTestFindingNotExist;
+  @Value("${validation.cubeTestFinding.ageValid}")
+  private String cubeTestFindingAgeValid;
+
+  public String getCubeTestFindingNotExist() {
+    return cubeTestFindingNotExist;
+  }
+
+  public void setCubeTestFindingNotExist(String cubeTestFindingNotExist) {
+    this.cubeTestFindingNotExist = cubeTestFindingNotExist;
+  }
+
+  public String getCubeTestFindingAgeValid() {
+    return cubeTestFindingAgeValid;
+  }
+
+  public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
+    this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
+  }
 }

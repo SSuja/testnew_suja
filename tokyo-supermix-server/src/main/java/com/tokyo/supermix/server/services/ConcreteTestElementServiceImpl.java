@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -15,8 +14,8 @@ public class ConcreteTestElementServiceImpl implements ConcreteTestElementServic
   private ConcreteTestElementRepository ConcreteTestElementRepository;
 
   @Transactional
-  public ConcreteTestElement saveConcreteTestElement(ConcreteTestElement ConcreteTestElement) {
-    return ConcreteTestElementRepository.save(ConcreteTestElement);
+  public void saveConcreteTestElement(ConcreteTestElement ConcreteTestElement) {
+    ConcreteTestElementRepository.save(ConcreteTestElement);
   }
 
   @Transactional(readOnly = true)
@@ -44,11 +43,12 @@ public class ConcreteTestElementServiceImpl implements ConcreteTestElementServic
     return ConcreteTestElementRepository.existsByName(name);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public boolean isConcreteTestElementAbbreviationExists(String abbreviation) {
     return ConcreteTestElementRepository.existsByAbbreviation(abbreviation);
   }
 
+  @Transactional(readOnly = true)
   public boolean isUpdateConcreteTestElementNameExists(Long id, String name) {
     if ((!getConcreteTestElementById(id).getName().equalsIgnoreCase(name))
         && (isConcreteTestElementNameExists(name))) {
@@ -57,6 +57,7 @@ public class ConcreteTestElementServiceImpl implements ConcreteTestElementServic
     return false;
   }
 
+  @Transactional(readOnly = true)
   public boolean isUpdateConcreteTestElementAbbreviationExists(Long id, String abbreviation) {
     if ((!getConcreteTestElementById(id).getAbbreviation().equalsIgnoreCase(abbreviation))
         && (isConcreteTestElementNameExists(abbreviation))) {

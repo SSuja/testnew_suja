@@ -89,51 +89,82 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public void updateIncomingSampleStatusByIncomingSampleCode(String incomingSampleCode) {
     IncomingSample incomingSample =
         incomingSampleRepository.findIncomingSampleByCode(incomingSampleCode);
-    SieveTest sieveTest = sieveTestRepository.findByIncomingSampleCode(incomingSampleCode);
-    if (sieveTest.getStatus() == Status.FAIL) {
-      incomingSample.setStatus(Status.FAIL);
-      incomingSampleRepository.save(incomingSample);
-    } else {
-      String bodyMessage = "";
-      Integer count = 0;
-      Integer passCount = 0;
-      Status status = Status.NEW;
-      List<MaterialTest> materialTestList =
-          materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
-      List<Test> testList =
-          testRepository.findByTestType(testTypeRepository.findTestTypeByMaterialSubCategoryId(
-              incomingSample.getRawMaterial().getMaterialSubCategory().getId()));
-      for (Test test : testList) {
-        for (MaterialTest materialTest : materialTestList) {
-          if (test.getName().equalsIgnoreCase(materialTest.getTest().getName())) {
-            bodyMessage = bodyMessage + "<li>" + materialTest.getTest().getName() + " : "
-                + materialTest.getStatus() + "</li>";
-            count = count + 1;
-
-            if (materialTest.getStatus() == Status.PASS) {
-              passCount = passCount + 1;
-            }
-            break;
+    String bodyMessage = "";
+    Integer count = 0;
+    Integer passCount = 0;
+    Status status = Status.NEW;
+    List<MaterialTest> materialTestList =
+        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    List<Test> testList =
+        testRepository.findByTestType(testTypeRepository.findTestTypeByMaterialSubCategoryId(
+            incomingSample.getRawMaterial().getMaterialSubCategory().getId()));
+    for (Test test : testList) {
+      for (MaterialTest materialTest : materialTestList) {
+        if (test.getName().equalsIgnoreCase(materialTest.getTest().getName())) {
+          bodyMessage = bodyMessage + "<li>" + materialTest.getTest().getName() + " : "
+              + materialTest.getStatus() + "</li>";
+          count = count + 1;
+          if (materialTest.getStatus() == Status.PASS) {
+            passCount = passCount + 1;
           }
+          break;
         }
       }
-      if (count == testList.size() && sieveTest.getStatus() == Status.PASS) {
-        if (passCount == count) {
-          status = Status.PASS;
+    }
+    for (MaterialTest materialTest : materialTestList) {
+      if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
+          .getMaterialCategory().getName().equalsIgnoreCase("Aggregates")) {
+        if (sieveTestRepository.findByIncomingSampleCode(incomingSampleCode)
+            .getStatus() == Status.FAIL) {
+          incomingSample.setStatus(Status.FAIL);
+          incomingSampleRepository.save(incomingSample);
+          if (status == Status.PASS || status == Status.FAIL) {
+            emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+                Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+                "<p>The Incoming Sample is " + status + " The Sample Code is <b>"
+                    + incomingSampleCode + "</b>. This Sample arrived on "
+                    + incomingSample.getDate() + ". The Sample Material is <b>"
+                    + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage
+                    + "</ul>");
+          }
+          break;
+        } else if (sieveTestRepository.findByIncomingSampleCode(incomingSampleCode)
+            .getStatus() == Status.PASS) {
+          calculateTest(count, passCount, testList.size(), incomingSample);
         } else {
-          status = Status.FAIL;
+          status = Status.PROCESS;
+          incomingSample.setStatus(status);
+          incomingSampleRepository.save(incomingSample);
+          if (status == Status.PASS || status == Status.FAIL) {
+            emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+                Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+                "<p>The Incoming Sample is " + status + " The Sample Code is <b>"
+                    + incomingSampleCode + "</b>. This Sample arrived on "
+                    + incomingSample.getDate() + ". The Sample Material is <b>"
+                    + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage
+                    + "</ul>");
+          }
         }
+      } else {
+        calculateTest(count, passCount, testList.size(), incomingSample);
+      }
+
+    }
+
+  }
+
+  private void calculateTest(Integer count, Integer passCount, Integer siz,
+      IncomingSample incomingSample) {
+    Status status = Status.NEW;
+    if (count == siz) {
+      if (passCount == count) {
+        status = Status.PASS;
+
+      } else {
+        status = Status.FAIL;
       }
       incomingSample.setStatus(status);
       incomingSampleRepository.save(incomingSample);
-      if (status == Status.PASS || status == Status.FAIL) {
-        emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
-            Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
-            "<p>The Incoming Sample is " + status + " The Sample Code is <b>" + incomingSampleCode
-                + "</b>. This Sample arrived on " + incomingSample.getDate()
-                + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName()
-                + "</b>.</p><ul>" + bodyMessage + "</ul>");
-      }
     }
   }
 

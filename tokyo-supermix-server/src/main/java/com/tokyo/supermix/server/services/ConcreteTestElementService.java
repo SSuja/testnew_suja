@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.ConcreteTestElement;
 
 public interface ConcreteTestElementService {
-  public ConcreteTestElement saveConcreteTestElement(ConcreteTestElement ConcreteTestElement);
+  public void saveConcreteTestElement(ConcreteTestElement ConcreteTestElement);
 
   public List<ConcreteTestElement> getAllConcreteTestElement();
 

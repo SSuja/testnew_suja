@@ -18,7 +18,6 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestElementRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestElementResponseDto;
 import com.tokyo.supermix.data.entities.ConcreteTestElement;
-import com.tokyo.supermix.data.enums.CalibrationType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -87,7 +86,7 @@ public class ConcreteTestElementController {
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("invalid");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
         validationFailureStatusCodes.getConcreteTestElementNotExist()), HttpStatus.BAD_REQUEST);
   }
 
@@ -101,7 +100,7 @@ public class ConcreteTestElementController {
           HttpStatus.OK);
     }
     logger.debug("invalid ConcreteTestElement");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
         validationFailureStatusCodes.getConcreteTestElementNotExist()), HttpStatus.BAD_REQUEST);
   }
 
@@ -111,13 +110,15 @@ public class ConcreteTestElementController {
       @Valid @RequestBody ConcreteTestElementRequestDto ConcreteTestElementRequestDto) {
     if (concreteTestElementService
         .isConcreteTestElementExists(ConcreteTestElementRequestDto.getId())) {
-      if (concreteTestElementService.isUpdateConcreteTestElementNameExists(ConcreteTestElementRequestDto.getId(),ConcreteTestElementRequestDto.getName())) {
+      if (concreteTestElementService.isUpdateConcreteTestElementNameExists(
+          ConcreteTestElementRequestDto.getId(), ConcreteTestElementRequestDto.getName())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_NAME,
                 validationFailureStatusCodes.getConcreteTestElementAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      if (concreteTestElementService.isUpdateConcreteTestElementAbbreviationExists(ConcreteTestElementRequestDto.getId(),ConcreteTestElementRequestDto.getAbbreviation())) {
+      if (concreteTestElementService.isUpdateConcreteTestElementAbbreviationExists(
+          ConcreteTestElementRequestDto.getId(), ConcreteTestElementRequestDto.getAbbreviation())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ABBREVIATION,
                 validationFailureStatusCodes.getConcreteTestElementAlreadyExist()),
@@ -128,7 +129,7 @@ public class ConcreteTestElementController {
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_CONCRETE_TEST_ELEMENT_SUCCESS), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
         validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

@@ -168,7 +168,8 @@ public final class EndpointURI {
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
   public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
-  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
+  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID =
+      TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
 
   /*
    * IncomingSample Apis
@@ -358,6 +359,34 @@ public final class EndpointURI {
   public static final String CONCRETE_TEST_ELEMENT = BASE_API_PATH + "concrete-test-element";
   public static final String CONCRETE_TEST_ELEMENTS = BASE_API_PATH + "concrete-test-elements";
   public static final String CONCRETE_TEST_ELEMENT_BY_ID = CONCRETE_TEST_ELEMENT + ID;
+  /*
+   * FinishProductSample
+   */
+  public static final String FINISH_PRODUCT_SAMPLE = BASE_API_PATH + "finish-product-sample";
+  public static final String FINISH_PRODUCT_SAMPLES = BASE_API_PATH + "finish-product-samples";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_ID = FINISH_PRODUCT_SAMPLE + ID;
+  public static final String FINISH_PRODUCT_SAMPLE_BY_MIX_DESIGN_CODE =
+      FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
+      FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
+  /*
+   * Concrete Mixer apis
+   */
+  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
+  public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
+  public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
+  public static final String CONCRETE_MIXER_BY_PLANT_CODE =
+      CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
+  /*
+   * Cube Test Finding
+   */
+  public static final String CUBE_TEST_FINDING = BASE_API_PATH + "cube-test-finding";
+  public static final String CUBE_TEST_FINDINGS = BASE_API_PATH + "cube-test-findings";
+  public static final String CUBE_TEST_FINDING_BY_ID = CUBE_TEST_FINDING + ID;
+  public static final String CUBE_TEST_FINDING_BY_FINISH_PRODUCT_SAMPLE_ID =
+      CUBE_TEST_FINDING + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}";
+  public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ELEMENT_ID =
+      CUBE_TEST_FINDING + SLASH + "concrete-test-element" + SLASH + "{concreteTestElementId}";
 
   private EndpointURI() {}
 
