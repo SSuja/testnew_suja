@@ -1667,6 +1667,37 @@ public class ValidationFailureStatusCodes {
     this.finenessModulusNotExist = finenessModulusNotExist;
   }
 
+  // for finishProductSample
+  @Value("${validation.finishProductSample.notExists}")
+  private String finishProductSampleNotExist;
+  @Value("${validation.finishProductSample.alreadyExist}")
+  private String finishProductSampleAlreadyExist;
+  @Value("${finishProductSampleRequestDto.finishProductCode.null}")
+  private String finishProductSampleCodeIsNull;
+
+  public String getFinishProductSampleNotExist() {
+    return finishProductSampleNotExist;
+  }
+
+  public void setFinishProductSampleNotExist(String finishProductSampleNotExist) {
+    this.finishProductSampleNotExist = finishProductSampleNotExist;
+  }
+
+  public String getFinishProductSampleAlreadyExist() {
+    return finishProductSampleAlreadyExist;
+  }
+
+  public void setFinishProductSampleAlreadyExist(String finishProductSampleAlreadyExist) {
+    this.finishProductSampleAlreadyExist = finishProductSampleAlreadyExist;
+  }
+
+  public String getFinishProductSampleCodeIsNull() {
+    return finishProductSampleCodeIsNull;
+  }
+
+  public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
+    this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
+  }
   /*
    * Concrete Mixer
    */
