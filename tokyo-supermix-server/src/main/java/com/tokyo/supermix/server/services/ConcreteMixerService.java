@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.ConcreteMixer;
 
 public interface ConcreteMixerService {
-  public void saveConcreteMixer(ConcreteMixer concreteMixer);
+  public void saveConcreteMixer(List<ConcreteMixer> concreteMixer);
 
   public List<ConcreteMixer> getAllConcreteMixers();
 
@@ -19,4 +19,6 @@ public interface ConcreteMixerService {
   public boolean isUpdatedConcreteMixerNameExist(Long id, String name);
 
   public List<ConcreteMixer> findByPlantCode(String plantCode);
+
+  public void updateConcreteMixer(ConcreteMixer concreteMixer);
 }

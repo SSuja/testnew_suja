@@ -14,8 +14,8 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
   private ConcreteMixerRepository concreteMixerRepository;
 
   @Transactional
-  public void saveConcreteMixer(ConcreteMixer concreteMixer) {
-    concreteMixerRepository.save(concreteMixer);
+  public void saveConcreteMixer(List<ConcreteMixer> concreteMixer) {
+    concreteMixerRepository.saveAll(concreteMixer);
   }
 
   @Transactional(readOnly = true)
@@ -54,6 +54,11 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
   @Transactional(readOnly = true)
   public List<ConcreteMixer> findByPlantCode(String plantCode) {
     return concreteMixerRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional
+  public void updateConcreteMixer(ConcreteMixer concreteMixer) {
+    concreteMixerRepository.save(concreteMixer);
   }
 
 }
