@@ -67,10 +67,9 @@ public class ConcreteTestElementController {
   // get all ConcreteTestElement
   @GetMapping(value = EndpointURI.CONCRETE_TEST_ELEMENTS)
   public ResponseEntity<Object> getAllConcreteTestElements() {
-    List<ConcreteTestElement> ConcreteTestElementList =
-        concreteTestElementService.getAllConcreteTestElement();
     return new ResponseEntity<Object>(new ContentResponse<>(Constants.CONCRETE_TEST_ELEMENTS,
-        mapper.map(ConcreteTestElementList, ConcreteTestElementResponseDto.class),
+        mapper.map(concreteTestElementService.getAllConcreteTestElements(),
+            ConcreteTestElementResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
@@ -79,10 +78,9 @@ public class ConcreteTestElementController {
   public ResponseEntity<Object> getConcreteTestElementById(@PathVariable Long id) {
     if (concreteTestElementService.isConcreteTestElementExists(id)) {
       logger.debug("Get ConcreteTestElement by id ");
-      ConcreteTestElement ConcreteTestElement =
-          concreteTestElementService.getConcreteTestElementById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_ELEMENT,
-          mapper.map(ConcreteTestElement, ConcreteTestElementResponseDto.class),
+          mapper.map(concreteTestElementService.getConcreteTestElementById(id),
+              ConcreteTestElementResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("invalid");

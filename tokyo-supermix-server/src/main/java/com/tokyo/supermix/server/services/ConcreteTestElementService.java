@@ -6,7 +6,7 @@ import com.tokyo.supermix.data.entities.ConcreteTestElement;
 public interface ConcreteTestElementService {
   public void saveConcreteTestElement(ConcreteTestElement ConcreteTestElement);
 
-  public List<ConcreteTestElement> getAllConcreteTestElement();
+  public List<ConcreteTestElement> getAllConcreteTestElements();
 
   public ConcreteTestElement getConcreteTestElementById(Long id);
 

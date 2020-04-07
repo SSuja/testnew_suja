@@ -19,7 +19,7 @@ public class ConcreteTestElementServiceImpl implements ConcreteTestElementServic
   }
 
   @Transactional(readOnly = true)
-  public List<ConcreteTestElement> getAllConcreteTestElement() {
+  public List<ConcreteTestElement> getAllConcreteTestElements() {
     return ConcreteTestElementRepository.findAll();
   }
 
