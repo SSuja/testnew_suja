@@ -4,7 +4,7 @@ public class FinishProductSampleResponseDto {
   private Long id;
   private String workOrderNo;
   private Long finishProductCode;
-  private Long concreteMixerId;
+  private ConcreteMixerResponseDto concreteMixer;
   private MixDesignResponseDto mixDesign;
 
   public Long getId() {
@@ -31,12 +31,12 @@ public class FinishProductSampleResponseDto {
     this.finishProductCode = finishProductCode;
   }
 
-  public Long getConcreteMixerId() {
-    return concreteMixerId;
+  public ConcreteMixerResponseDto getConcreteMixer() {
+    return concreteMixer;
   }
 
-  public void setConcreteMixerId(Long concreteMixerId) {
-    this.concreteMixerId = concreteMixerId;
+  public void setConcreteMixer(ConcreteMixerResponseDto concreteMixer) {
+    this.concreteMixer = concreteMixer;
   }
 
   public MixDesignResponseDto getMixDesign() {
