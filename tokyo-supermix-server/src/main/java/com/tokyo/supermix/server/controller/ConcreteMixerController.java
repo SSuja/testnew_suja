@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,14 +50,17 @@ public class ConcreteMixerController {
   // create concrete mixer api
   @PostMapping(value = EndpointURI.CONCRETE_MIXER)
   public ResponseEntity<Object> createConcreteMixer(
-      @Valid @RequestBody ConcreteMixerRequestDto concreteMixerDto) {
-    if (concreteMixerService.isConcreteMixerExist(concreteMixerDto.getName())) {
-      logger.debug("Already Exists");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_MIXER,
-          validationFailureStatusCodes.getConcreteMixerAlreadyExist()), HttpStatus.BAD_REQUEST);
+      @Valid @RequestBody List<ConcreteMixerRequestDto> concreteMixerDtoList) {
+    for (ConcreteMixerRequestDto concreteMixerDto : concreteMixerDtoList) {
+      if (concreteMixerService.isConcreteMixerExist(concreteMixerDto.getName())) {
+        logger.debug("Already Exists");
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.CONCRETE_MIXER,
+                validationFailureStatusCodes.getConcreteMixerAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
     }
-    ConcreteMixer concreteMixer = mapper.map(concreteMixerDto, ConcreteMixer.class);
-    concreteMixerService.saveConcreteMixer(concreteMixer);
+    concreteMixerService.saveConcreteMixer(mapper.map(concreteMixerDtoList, ConcreteMixer.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_MIXER_SUCCESS),
         HttpStatus.OK);
@@ -110,7 +114,7 @@ public class ConcreteMixerController {
                 validationFailureStatusCodes.getConcreteMixerAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      concreteMixerService.saveConcreteMixer(mapper.map(concreteMixerDto, ConcreteMixer.class));
+      concreteMixerService.updateConcreteMixer(mapper.map(concreteMixerDto, ConcreteMixer.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CONCRETE_MIXER_SUCCESS),
           HttpStatus.OK);
