@@ -1743,6 +1743,10 @@ public class ValidationFailureStatusCodes {
   public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
     this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
   }
+  
+  // For finishProductSampleIssue
+  @Value("${validation.finishProductSampleIssue.notExists}")
+  private String finishProductSampleIssueNotExists;
 
   // for cubeTestFinding
   @Value("${validation.cubeTestFinding.notExists}")
@@ -1765,4 +1769,22 @@ public class ValidationFailureStatusCodes {
   public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
     this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
   }
+  @Value("${validation.finishProductSampleIssue.alreadyExist}")
+  private String finishProductSampleIssueAlreadyExist;
+
+public String getFinishProductSampleIssueNotExists() {
+	return finishProductSampleIssueNotExists;
+}
+
+public void setFinishProductSampleIssueNotExists(String finishProductSampleIssueNotExists) {
+	this.finishProductSampleIssueNotExists = finishProductSampleIssueNotExists;
+}
+
+public String getFinishProductSampleIssueAlreadyExist() {
+	return finishProductSampleIssueAlreadyExist;
+}
+
+public void setFinishProductSampleIssueAlreadyExist(String finishProductSampleIssueAlreadyExist) {
+	this.finishProductSampleIssueAlreadyExist = finishProductSampleIssueAlreadyExist;
+}
 }

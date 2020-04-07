@@ -388,6 +388,14 @@ public final class EndpointURI {
   public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ELEMENT_ID =
       CUBE_TEST_FINDING + SLASH + "concrete-test-element" + SLASH + "{concreteTestElementId}";
 
+      /*
+   * finish product sample issue apis
+   * 
+   */
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE = BASE_API_PATH + "finish-product-sample-issue";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUES = BASE_API_PATH + "finish-product-sample-issues";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + ID;
+
   private EndpointURI() {}
 
 }
