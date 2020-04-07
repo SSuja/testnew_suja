@@ -130,8 +130,10 @@ public class CubeTestFindingController {
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       logger.debug("No  record exist for given concrete test element");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
-          validationFailureStatusCodes.getConcreteTestElementExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
+              validationFailureStatusCodes.getConcreteTestElementNotExist()),
+          HttpStatus.BAD_REQUEST);
     }
   }
 }

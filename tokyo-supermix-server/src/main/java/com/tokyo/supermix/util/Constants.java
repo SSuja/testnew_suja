@@ -434,6 +434,20 @@ public class Constants {
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
   /*
+   * Constants for Concrete Test Element validation key & Success messages
+   */
+  public static final String CONCRETE_TEST_ELEMENT = "concreteTestElement";
+  public static final String CONCRETE_TEST_ELEMENTS = "concreteTestElements";
+  public static final String CONCRETE_TEST_ELEMENT_NAME = "concreteTestElementName";
+  public static final String CONCRETE_TEST_ELEMENT_ID = "concreteTestElementId";
+  public static final String CONCRETE_TEST_ELEMENT_ABBREVIATION = "concreteTestElementAbbreviation";
+  public static final String ADD_CONCRETE_TEST_ELEMENT_SUCCESS =
+      "Concrete Test Element Added Successfully";
+  public static final String CONCRETE_TEST_ELEMENT_DELETED =
+      "Concrete Test Element Successfully Deleted";
+  public static final String UPDATE_CONCRETE_TEST_ELEMENT_SUCCESS =
+      "Concrete Test Element Updated Successfully";
+  /*
    * Finish Product Sample
    */
   public static final String FINISH_PRODUCT_CODE = "finishProductCode";
@@ -442,8 +456,10 @@ public class Constants {
   public static final String FINISH_PRODUCT_SAMPLES = "finishProductSamples";
   public static final String ADD_FINISH_PRODUCT_SAMPLE_SUCCESS =
       "Finished Product Sample Added Successfully";
-  public static final String FINISH_PRODUCT_SAMPLE_DELETED = "Finished Product Sample Successfully Deleted";
-  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS = "Finished Product Sample Updated Successfully";
+  public static final String FINISH_PRODUCT_SAMPLE_DELETED =
+      "Finished Product Sample Successfully Deleted";
+  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS =
+      "Finished Product Sample Updated Successfully";
   /*
    * Constants for Concrete Mixer validation key & Success messages
    */

@@ -1667,6 +1667,27 @@ public class ValidationFailureStatusCodes {
     this.finenessModulusNotExist = finenessModulusNotExist;
   }
 
+  @Value("${validation.concreteTestElement.alreadyExist}")
+  private String concreteTestElementAlreadyExist;
+  @Value("${validation.concreteTestElement.notExists}")
+  private String concreteTestElementNotExist;
+
+  public String getConcreteTestElementAlreadyExist() {
+    return concreteTestElementAlreadyExist;
+  }
+
+  public void setConcreteTestElementAlreadyExist(String concreteTestElementAlreadyExist) {
+    this.concreteTestElementAlreadyExist = concreteTestElementAlreadyExist;
+  }
+
+  public String getConcreteTestElementNotExist() {
+    return concreteTestElementNotExist;
+  }
+
+  public void setConcreteTestElementNotExist(String concreteTestElementNotExist) {
+    this.concreteTestElementNotExist = concreteTestElementNotExist;
+  }
+
   // for finishProductSample
   @Value("${validation.finishProductSample.notExists}")
   private String finishProductSampleNotExist;
