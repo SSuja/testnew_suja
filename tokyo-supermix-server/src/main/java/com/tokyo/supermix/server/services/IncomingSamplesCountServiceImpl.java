@@ -11,8 +11,8 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
   IncomingSampleRepository incomingSampleRepository;
 
   @Transactional(readOnly = true)
-  public Long calculateMaterialSubCategoryCount(String materialSubcategoryname) {
-    return incomingSampleRepository.calculateMaterialSubCategoryCount(materialSubcategoryname);
+  public Long calculateMaterialSubCategoryCount(String materialSubCategoryName) {
+    return incomingSampleRepository.calculateMaterialSubCategoryCount(materialSubCategoryName);
   }
 
   @Transactional(readOnly = true)

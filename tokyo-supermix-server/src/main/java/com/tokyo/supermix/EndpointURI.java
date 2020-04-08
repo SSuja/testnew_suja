@@ -399,7 +399,7 @@ public final class EndpointURI {
    * incoming samples count APIs
    */
   public static final String INCOMING_SAMPLES_COUNT = BASE_API_PATH + "incoming-samples-count";
-  public static final String MATERIAL_SUB_CATEGORY_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH + "{material-sub-category-count}" +SLASH +"{materialsubcategoryname}";
   public static final String MATERIAL_CATEGORY_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH + "material-category-count" +SLASH +"{materialCategoryName}";
+  public static final String MATERIAL_SUB_CATEGORY_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH + "material-sub-category-count" +SLASH +"{materialSubCategoryName}";
   private EndpointURI() {}
 }
