@@ -18,4 +18,10 @@ public class IncomingSamplesCountController {
   public Long getIncomingSampleBySubCategory(@PathVariable String materialSubCategoryName) {
     return incomingSamplesCountService.calculateMaterialSubCategoryCount(materialSubCategoryName);
   }
+
+  @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_TOTAL_COUNT)
+  public Long getDateAndRawMaterialName(@PathVariable String materialCategoryName) {
+    return incomingSamplesCountService
+        .countByTotalMaterialCategoryIncomingSample(materialCategoryName);
+  }
 }
