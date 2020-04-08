@@ -15,4 +15,9 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
     return incomingSampleRepository.calculateMaterialSubCategoryCount(materialSubcategoryname);
   }
 
+  @Transactional(readOnly = true)
+  public Long countByTotalMaterialCategoryIncomingSample(String materialCategoryName) {
+    return incomingSampleRepository
+        .countByTotalMaterialCategoryIncomingSample(materialCategoryName);
+  }
 }
