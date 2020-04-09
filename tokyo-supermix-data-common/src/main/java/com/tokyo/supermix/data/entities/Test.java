@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,12 +15,6 @@ public class Test implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  @ManyToOne
-  @JoinColumn(name = "testTypeId", nullable = false)
-  private TestType testType;
-  @ManyToOne
-  @JoinColumn(name = "equationId", nullable = true)
-  private Equation equation;
 
   public Long getId() {
     return id;
@@ -40,24 +32,7 @@ public class Test implements Serializable {
     this.name = name;
   }
 
-  public TestType getTestType() {
-    return testType;
-  }
-
-  public void setTestType(TestType testType) {
-    this.testType = testType;
-  }
-
-  public Equation getEquation() {
-    return equation;
-  }
-
-  public void setEquation(Equation equation) {
-    this.equation = equation;
-  }
-
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

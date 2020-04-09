@@ -44,13 +44,20 @@ public class TestTypeServiceImpl implements TestTypeService {
     return testTypeRepository.existsById(id);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public boolean isMaterialSubCategoryIdExist(Long materialSubCategoryId) {
     return testTypeRepository.existsByMaterialSubCategoryId(materialSubCategoryId);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<TestType> getTestTypesByMaterialSubCategoryId(Long materialSubCategoryId) {
     return testTypeRepository.findByMaterialSubCategoryId(materialSubCategoryId);
-     }
+  }
+
+  public boolean isUpdatedTestTypeExist(Long id, String type) {
+    if ((!getTestTypeById(id).getType().equalsIgnoreCase(type)) && (isTestTypeExist(type))) {
+      return true;
+    }
+    return false;
+  }
 }

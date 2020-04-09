@@ -39,20 +39,20 @@ public class AdmixtureAcceptedValueServiceImpl implements AdmixtureAcceptedValue
   }
 
   @Transactional(readOnly = true)
-  public boolean isAdmixtureAcceptedValueExistsByTestId(Long id) {
-    return admixtureAcceptedValueRepository.existsByTestId(id);
+  public boolean isAdmixtureAcceptedValueExistsByTestConfigureId(Long id) {
+    return admixtureAcceptedValueRepository.existsByTestConfigureId(id);
   }
 
-  public boolean isUpdatedTestIdExist(Long id, Long testId) {
-    if ((!getAdmixtureAcceptedValueById(id).getTest().getId().equals(testId))
-        && (admixtureAcceptedValueRepository.existsByTestId(testId))) {
+  public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId) {
+    if ((!getAdmixtureAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (admixtureAcceptedValueRepository.existsByTestConfigureId(testConfigureId))) {
       return true;
     }
     return false;
   }
 
   @Transactional
-  public AdmixtureAcceptedValue getAdmixtureAcceptedValueByTestId(Long testId) {
-    return admixtureAcceptedValueRepository.findByTestId(testId);
+  public AdmixtureAcceptedValue getAdmixtureAcceptedValueByTestConfigureId(Long testConfigureId) {
+    return admixtureAcceptedValueRepository.findByTestConfigureId(testConfigureId);
   }
 }

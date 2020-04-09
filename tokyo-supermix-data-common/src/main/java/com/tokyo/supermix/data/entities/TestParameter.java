@@ -17,8 +17,8 @@ public class TestParameter implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @ManyToOne
-  @JoinColumn(name = "testId", nullable = false)
-  private Test test;
+  @JoinColumn(name = "testConfigureId", nullable = false)
+  private TestConfigure testConfigure;
   @ManyToOne
   @JoinColumn(name = "parameterId", nullable = false)
   private Parameter parameter;
@@ -34,12 +34,12 @@ public class TestParameter implements Serializable {
     this.id = id;
   }
 
-  public Test getTest() {
-    return test;
+  public TestConfigure getTestConfigure() {
+    return testConfigure;
   }
 
-  public void setTest(Test test) {
-    this.test = test;
+  public void setTestConfigure(TestConfigure testConfigure) {
+    this.testConfigure = testConfigure;
   }
 
   public Parameter getParameter() {

@@ -4,7 +4,7 @@ public class AdmixtureAcceptedValueRequestDto {
   private Long id;
   private Double minValue;
   private Double maxValue;
-  private Long testId;
+  private Long testConfigureId;
   private Long parameterId;
   private Long unitId;
   private Long rawMaterialId;
@@ -33,12 +33,12 @@ public class AdmixtureAcceptedValueRequestDto {
     this.maxValue = maxValue;
   }
 
-  public Long getTestId() {
-    return testId;
+  public Long getTestConfigureId() {
+    return testConfigureId;
   }
 
-  public void setTestId(Long testId) {
-    this.testId = testId;
+  public void setTestConfigureId(Long testConfigureId) {
+    this.testConfigureId = testConfigureId;
   }
 
   public Long getParameterId() {

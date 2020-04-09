@@ -126,7 +126,7 @@ public class MaterialTestController {
   }
 
   // @Scheduled(cron = "0 0/20 * * * ?")
-  @Scheduled(fixedRate = 2000)
+  @Scheduled(fixedRate = 20000)
   public void scheduleTaskWithFixedRate() {
     materialTestService.updateIncomingSampleStatusBySeheduler();
   }

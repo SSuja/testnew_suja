@@ -5,7 +5,7 @@ import com.tokyo.supermix.data.entities.Unit;
 
 public class TestParameterResponseDto {
   private Long id;
-  private TestResponseDto test;
+  private TestConfigureResponseDto testConfigure;
   private Parameter parameter;
 
   public Parameter getParameter() {
@@ -34,14 +34,12 @@ public class TestParameterResponseDto {
     this.id = id;
   }
 
-  public TestResponseDto getTest() {
-    return test;
+  public TestConfigureResponseDto getTestConfigure() {
+    return testConfigure;
   }
 
-  public void setTest(TestResponseDto test) {
-    this.test = test;
+  public void setTestConfigure(TestConfigureResponseDto testConfigure) {
+    this.testConfigure = testConfigure;
   }
-
-
 
 }

@@ -92,7 +92,8 @@ public class TestTypeController {
   public ResponseEntity<Object> updateTestType(
       @Valid @RequestBody TestTypeRequestDto testTypeRequestDto) {
     if (testTypeService.isTestTypeIdExist(testTypeRequestDto.getId())) {
-      if (testTypeService.isTestTypeExist(testTypeRequestDto.getType())) {
+      if (testTypeService.isUpdatedTestTypeExist(testTypeRequestDto.getId(),
+          testTypeRequestDto.getType())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE,
             validationFailureStatusCodes.getTestTypealreadyExists()), HttpStatus.BAD_REQUEST);
       }
@@ -107,7 +108,8 @@ public class TestTypeController {
 
   // Get TestType By Material sub category Id
   @GetMapping(value = EndpointURI.GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID)
-  public ResponseEntity<Object> getAllTestTypesByMaterialSubCategoryId(@PathVariable Long materialSubCategoryId) {
+  public ResponseEntity<Object> getAllTestTypesByMaterialSubCategoryId(
+      @PathVariable Long materialSubCategoryId) {
     if (testTypeService.isMaterialSubCategoryIdExist(materialSubCategoryId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPES,
           mapper.map(testTypeService.getTestTypesByMaterialSubCategoryId(materialSubCategoryId),

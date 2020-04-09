@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
-import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.data.repositories.ProcessSampleLoadRepository;
@@ -33,8 +32,6 @@ public class EmailNotification {
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MixDesignRepository mixDesignRepository;
-  @Autowired
-  private MaterialTestRepository materialTestRepository;
 
   @Scheduled(cron = "0 0 8 * * ?")
   public void alertForEquipmentCalibration() {

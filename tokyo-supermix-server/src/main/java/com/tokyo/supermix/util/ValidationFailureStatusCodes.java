@@ -642,29 +642,29 @@ public class ValidationFailureStatusCodes {
   /*
    * Test
    */
-  @Value("${validation.test.notExists}")
-  private String testNotExist;
-  @Value("${validation.test.alreadyExist}")
-  private String testAlreadyExist;
-  @Value("${testRequestDto.name.null")
+  @Value("${validation.testConfigure.notExists}")
+  private String testConfigureNotExist;
+  @Value("${validation.testConfigure.alreadyExist}")
+  private String testConfigureAlreadyExist;
+  @Value("${testConfigureRequestDto.name.null")
   private String testNameIsNull;
-  @Value("${testRequestDto.name.empty")
+  @Value("${testConfigureRequestDto.name.empty")
   private String testNameIsEmpty;
 
-  public String getTestNotExist() {
-    return testNotExist;
+  public String getTestConfigureNotExist() {
+    return testConfigureNotExist;
   }
 
-  public void setTestNotExist(String testNotExist) {
-    this.testNotExist = testNotExist;
+  public void setTestConfigureNotExist(String testConfigureNotExist) {
+    this.testConfigureNotExist = testConfigureNotExist;
   }
 
-  public String getTestAlreadyExist() {
-    return testAlreadyExist;
+  public String getTestConfigureAlreadyExist() {
+    return testConfigureAlreadyExist;
   }
 
-  public void setTestAlreadyExist(String testAlreadyExist) {
-    this.testAlreadyExist = testAlreadyExist;
+  public void setTestConfigureAlreadyExist(String testConfigureAlreadyExist) {
+    this.testConfigureAlreadyExist = testConfigureAlreadyExist;
   }
 
   public String getTestNameIsNull() {
@@ -1665,6 +1665,153 @@ public class ValidationFailureStatusCodes {
 
   public void setFinenessModulusNotExist(String finenessModulusNotExist) {
     this.finenessModulusNotExist = finenessModulusNotExist;
+  }
+
+  @Value("${validation.concreteTestElement.alreadyExist}")
+  private String concreteTestElementAlreadyExist;
+  @Value("${validation.concreteTestElement.notExists}")
+  private String concreteTestElementNotExist;
+
+  public String getConcreteTestElementAlreadyExist() {
+    return concreteTestElementAlreadyExist;
+  }
+
+  public void setConcreteTestElementAlreadyExist(String concreteTestElementAlreadyExist) {
+    this.concreteTestElementAlreadyExist = concreteTestElementAlreadyExist;
+  }
+
+  public String getConcreteTestElementNotExist() {
+    return concreteTestElementNotExist;
+  }
+
+  public void setConcreteTestElementNotExist(String concreteTestElementNotExist) {
+    this.concreteTestElementNotExist = concreteTestElementNotExist;
+  }
+
+  // for finishProductSample
+  @Value("${validation.finishProductSample.notExists}")
+  private String finishProductSampleNotExist;
+  @Value("${validation.finishProductSample.alreadyExist}")
+  private String finishProductSampleAlreadyExist;
+  @Value("${finishProductSampleRequestDto.finishProductCode.null}")
+  private String finishProductSampleCodeIsNull;
+
+  public String getFinishProductSampleNotExist() {
+    return finishProductSampleNotExist;
+  }
+
+  public void setFinishProductSampleNotExist(String finishProductSampleNotExist) {
+    this.finishProductSampleNotExist = finishProductSampleNotExist;
+  }
+
+  public String getFinishProductSampleAlreadyExist() {
+    return finishProductSampleAlreadyExist;
+  }
+
+  public void setFinishProductSampleAlreadyExist(String finishProductSampleAlreadyExist) {
+    this.finishProductSampleAlreadyExist = finishProductSampleAlreadyExist;
+  }
+
+  public String getFinishProductSampleCodeIsNull() {
+    return finishProductSampleCodeIsNull;
+  }
+
+  public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
+    this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
+  }
+
+  /*
+   * Concrete Mixer
+   */
+  @Value("${validation.concreteMixer.notExists}")
+  private String concreteMixerNotExist;
+
+  @Value("${validation.concreteMixer.alreadyExist}")
+  private String concreteMixerAlreadyExist;
+
+  public String getConcreteMixerNotExist() {
+    return concreteMixerNotExist;
+  }
+
+  public void setConcreteMixerNotExist(String concreteMixerNotExist) {
+    this.concreteMixerNotExist = concreteMixerNotExist;
+  }
+
+  public String getConcreteMixerAlreadyExist() {
+    return concreteMixerAlreadyExist;
+  }
+
+  public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
+    this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
+  }
+
+  // For finishProductSampleIssue
+  @Value("${validation.finishProductSampleIssue.notExists}")
+  private String finishProductSampleIssueNotExists;
+
+  // for cubeTestFinding
+  @Value("${validation.cubeTestFinding.notExists}")
+  private String cubeTestFindingNotExist;
+  @Value("${validation.cubeTestFinding.ageValid}")
+  private String cubeTestFindingAgeValid;
+
+  public String getCubeTestFindingNotExist() {
+    return cubeTestFindingNotExist;
+  }
+
+  public void setCubeTestFindingNotExist(String cubeTestFindingNotExist) {
+    this.cubeTestFindingNotExist = cubeTestFindingNotExist;
+  }
+
+  public String getCubeTestFindingAgeValid() {
+    return cubeTestFindingAgeValid;
+  }
+
+  public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
+    this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
+  }
+
+  @Value("${validation.finishProductSampleIssue.alreadyExist}")
+  private String finishProductSampleIssueAlreadyExist;
+
+  public String getFinishProductSampleIssueNotExists() {
+    return finishProductSampleIssueNotExists;
+  }
+
+  public void setFinishProductSampleIssueNotExists(String finishProductSampleIssueNotExists) {
+    this.finishProductSampleIssueNotExists = finishProductSampleIssueNotExists;
+  }
+
+  public String getFinishProductSampleIssueAlreadyExist() {
+    return finishProductSampleIssueAlreadyExist;
+  }
+
+  public void setFinishProductSampleIssueAlreadyExist(String finishProductSampleIssueAlreadyExist) {
+    this.finishProductSampleIssueAlreadyExist = finishProductSampleIssueAlreadyExist;
+  }
+
+  /*
+   * Test
+   */
+  @Value("${validation.test.notExists}")
+  private String testNotExist;
+  @Value("${validation.test.alreadyExist}")
+  private String testAlreadyExist;
+
+  public String getTestNotExist() {
+    return testNotExist;
+  }
+
+  public void setTestNotExist(String testNotExist) {
+    this.testNotExist = testNotExist;
+  }
+
+  public String getTestAlreadyExist() {
+    return testAlreadyExist;
+  }
+
+  public void setTestAlreadyExist(String testAlreadyExist) {
+    this.testAlreadyExist = testAlreadyExist;
   }
 
 }
