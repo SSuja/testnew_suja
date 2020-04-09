@@ -20,11 +20,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isTestNameExist(String name) {
-    return testConfigureRepository.existsByName(name);
-  }
-
-  @Transactional(readOnly = true)
   public boolean isTestConfigureExist(Long id) {
     return testConfigureRepository.existsById(id);
   }
@@ -37,13 +32,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   @Transactional(readOnly = true)
   public TestConfigure getTestConfigureById(Long id) {
     return testConfigureRepository.findById(id).get();
-  }
-
-  public boolean isUpdatedTestConfigureExist(Long id, String name) {
-    if ((!getTestConfigureById(id).getName().equalsIgnoreCase(name)) && (isTestNameExist(name))) {
-      return true;
-    }
-    return false;
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -62,13 +50,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public boolean existsByNameAndTestTypeId(String name, Long testTypeId) {
-    return testConfigureRepository.existsByNameAndTestTypeId(name, testTypeId);
+  public boolean existsByTestIdAndTestTypeId(Long testId, Long testTypeId) {
+    return testConfigureRepository.existsByTestIdAndTestTypeId(testId, testTypeId);
   }
 
-  public boolean isDuplicateEntryExist(String name, Long testTypeId) {
-    if ((!findByTestTypeId(testTypeId).equals(name))
-        && (existsByNameAndTestTypeId(name, testTypeId))) {
+  public boolean isDuplicateEntryExist(Long testId, Long testTypeId) {
+    if ((!findByTestTypeId(testTypeId).equals(testId))
+        && (existsByTestIdAndTestTypeId(testId, testTypeId))) {
       return true;
     }
     return false;

@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.dto;
 
 public class TestConfigureResponseDto {
   private Long id;
-  private String name;
   private TestTypeResponseDto testType;
   private EquationDto equation;
   private Long testId;
@@ -14,14 +13,6 @@ public class TestConfigureResponseDto {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public TestTypeResponseDto getTestType() {

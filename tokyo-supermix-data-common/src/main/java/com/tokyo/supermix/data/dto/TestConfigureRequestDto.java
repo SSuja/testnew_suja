@@ -1,13 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class TestConfigureRequestDto {
   private Long id;
-  @NotNull(message = "{testConfigureRequestDto.name.null}")
-  @NotEmpty(message = "{testConfigureRequestDto.name.empty}")
-  private String name;
   private Long testTypeId;
   private Long equationId;
   private Long testId;
@@ -18,14 +12,6 @@ public class TestConfigureRequestDto {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public Long getTestTypeId() {

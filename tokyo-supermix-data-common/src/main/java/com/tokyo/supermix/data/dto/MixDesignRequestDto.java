@@ -10,8 +10,6 @@ public class MixDesignRequestDto {
   private String code;
   @NotNull(message = "{mixDesignRequestDto.targetGrade.null}")
   private Double targetGrade;
-  
-  private Double actualGrade;
   @NotNull(message = "{mixDesignRequestDto.date.null}")
   private Date date;
   @NotNull(message = "{mixDesignRequestDto.targetSlump.null}")
@@ -34,14 +32,6 @@ public class MixDesignRequestDto {
 
   public void setTargetGrade(Double targetGrade) {
     this.targetGrade = targetGrade;
-  }
-
-  public Double getActualGrade() {
-    return actualGrade;
-  }
-
-  public void setActualGrade(Double actualGrade) {
-    this.actualGrade = actualGrade;
   }
 
   public Date getDate() {

@@ -5,7 +5,6 @@ import java.sql.Date;
 public class MixDesignResponseDto {
 
   private String code;
-  private Double actualGrade;
   private Double targetGrade;
   private Date date;
   private Double targetSlump;
@@ -20,14 +19,6 @@ public class MixDesignResponseDto {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public Double getActualGrade() {
-    return actualGrade;
-  }
-
-  public void setActualGrade(Double actualGrade) {
-    this.actualGrade = actualGrade;
   }
 
   public Double getTargetGrade() {
