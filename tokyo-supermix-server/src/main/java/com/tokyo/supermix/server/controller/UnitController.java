@@ -68,7 +68,7 @@ public class UnitController {
 				HttpStatus.OK);
 	}
 
-	// delete designation api
+	// delete unit api
 	@DeleteMapping(value = EndpointURI.DELETE_UNIT_BY_ID)
 	public ResponseEntity<Object> deleteUnit(@PathVariable Long id) {
 		if (unitService.isUnitExist(id)) {
