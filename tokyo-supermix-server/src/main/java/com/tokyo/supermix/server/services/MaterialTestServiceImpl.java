@@ -99,8 +99,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
             incomingSample.getRawMaterial().getMaterialSubCategory().getId()));
     for (TestConfigure testConfigure : testConfigureList) {
       for (MaterialTest materialTest : materialTestList) {
-        if (testConfigure.getName().equalsIgnoreCase(materialTest.getTestConfigure().getName())) {
-          bodyMessage = bodyMessage + "<li>" + materialTest.getTestConfigure().getName() + " : "
+        if (testConfigure.getTest().getName().equalsIgnoreCase(materialTest.getTestConfigure().getName())) {
+          bodyMessage = bodyMessage + "<li>" + materialTest.getTestConfigure().getTest().getName() + " : "
               + materialTest.getStatus() + "</li>";
           count = count + 1;
           if (materialTest.getStatus() == Status.PASS) {
