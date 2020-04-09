@@ -69,7 +69,7 @@ public class FinishProductController {
 		finishProductService.saveFinishProduct(finishProduct);
 		MixDesign mixDesign=mixDesignService.getMixDesignByCode(finishProductDto.getMixDesignCode());
 		String message = "We have got new Finish Product. The Project name is " + projectService.getProjectByCode(finishProductDto.getProjectCode()).getName()+
-				". mixDesign created on "+mixDesign.getDate()+". the mixdesign code is "+mixDesign.getCode() + ", Actual grade for this mixdesign is " + mixDesign.getActualGrade();
+				". mixDesign created on "+mixDesign.getDate()+". the mixdesign code is "+mixDesign.getCode();
 	    emailService.sendMail(mailConstants.getMailNewFinishProduct(), Constants.SUBJECT_NEW_FINISH_PRODUCT,message);
 		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_SUCCESS),
 				HttpStatus.OK);

@@ -38,6 +38,8 @@ public class MailConstants {
     private String[] mailUpdateIncomingSampleStatus;
 	@Value("${mail.notify.mailUpdateMaterialTestStatus}")
     private String[] mailUpdateMaterialTestStatus;
+	@Value("${mail.notify.mailNewSeiveTest}")
+    private String[] mailNewSeiveTest;
 	
 	public String getAdmin() {
 		return admin;
@@ -117,6 +119,12 @@ public class MailConstants {
     }
     public void setMailUpdateMaterialTestStatus(String[] mailUpdateMaterialTestStatus) {
       this.mailUpdateMaterialTestStatus = mailUpdateMaterialTestStatus;
+    }
+    public String[] getMailNewSeiveTest() {
+      return mailNewSeiveTest;
+    }
+    public void setMailNewSeiveTest(String[] mailNewSeiveTest) {
+      this.mailNewSeiveTest = mailNewSeiveTest;
     }
    	
 }

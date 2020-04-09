@@ -10,6 +10,7 @@ public class TestConfigureRequestDto {
   private String name;
   private Long testTypeId;
   private Long equationId;
+  private Long testId;
 
   public Long getId() {
     return id;
@@ -41,6 +42,14 @@ public class TestConfigureRequestDto {
 
   public void setEquationId(Long equationId) {
     this.equationId = equationId;
+  }
+
+  public Long getTestId() {
+    return testId;
+  }
+
+  public void setTestId(Long testId) {
+    this.testId = testId;
   }
 
 }

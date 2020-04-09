@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
 import com.tokyo.supermix.data.enums.Status;
@@ -13,9 +14,14 @@ import com.tokyo.supermix.data.repositories.FinenessModulusRepository;
 import com.tokyo.supermix.data.repositories.SieveTestRepository;
 import com.tokyo.supermix.data.repositories.SieveTestTrialRepository;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 
 @Service
 public class SieveTestTrialServiceImpl implements SieveTestTrialService {
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private MailConstants mailConstants;
   @Autowired
   SieveTestTrialRepository sieveTestTrialRepository;
   @Autowired
@@ -120,9 +126,20 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
             .getMax() >= sieveTest.getFinenessModulus()) {
       sieveTest.setStatus(Status.PASS);
       sieveTestRepository.save(sieveTest);
+      notifyMail(sieveTest);
     } else {
       sieveTest.setStatus(Status.FAIL);
       sieveTestRepository.save(sieveTest);
+      notifyMail(sieveTest);
     }
+  }
+  private void notifyMail(SieveTest sieveTest) {
+    IncomingSample  incomingSample =sieveTest.getIncomingSample();
+    emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+        Constants.SUBJECT_NEW_SEIVE_TEST,
+        "<p>The Seive Test is <b>" + sieveTest.getStatus() + "</b> for the Sample Code is <b>" + incomingSample.getCode()
+            + "</b>. This Sample arrived on " + incomingSample.getDate()
+            + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName()
+            + "</b>.");
   }
 }
