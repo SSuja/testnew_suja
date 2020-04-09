@@ -23,14 +23,24 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findByRawMaterialIdAndDate(Long RawMaterialId, Date date);
 
   List<IncomingSample> findByStatus(Status status);
-  
-  @Query(value = "SELECT COUNT(code)\r\n" + "FROM incoming_sample\r\n"
-      + "inner join  raw_material on incoming_sample.raw_material_id = raw_material.id\r\n"
-      + "inner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id\r\n"
-      + "inner join material_category on material_sub_category.material_category_id = material_category.id\r\n"
-      + "where incoming_sample.date=current_date() and\r\n" + "material_category.name=?1",
+
+  @Query(
+      value = "SELECT COUNT(code) FROM incoming_sample inner join  raw_material on incoming_sample.raw_material_id = raw_material.idinner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.idwhere incoming_sample.date=current_date() and material_category.name=?1",
       nativeQuery = true)
   Long countByTotalMaterialCategoryIncomingSample(String materialCategoryName);
-  @Query(value = "SELECT COUNT(code) FROM incoming_sample inner join raw_material on incoming_sample.raw_material_id = raw_material.id inner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.id where incoming_sample.date = current_date() and material_sub_category.name=?1", nativeQuery = true)
+
+  @Query(
+      value = "SELECT COUNT(code) FROM incoming_sample inner join raw_material on incoming_sample.raw_material_id = raw_material.id inner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.id where incoming_sample.date = current_date() and material_sub_category.name=?1",
+      nativeQuery = true)
   Long calculateMaterialSubCategoryCount(String materialSubCategoryName);
+
+  @Query(
+      value = "SELECT COUNT(code) FROM incoming_sample inner join  raw_material on incoming_sample.raw_material_id = raw_material.id inner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.id where incoming_sample.date =current_date() and material_sub_category.name=?1 and incoming_sample.status= ?2",
+      nativeQuery = true)
+  Long getMaterialSubCategoryStatusCount(String materialSubCategoryName, int status);
+
+  @Query(
+      value = "SELECT COUNT(code) FROM incoming_sample inner join  raw_material on incoming_sample.raw_material_id = raw_material.id inner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.id where incoming_sample.date =current_date() and material_category.name=?1 and incoming_sample.status= ?2",
+      nativeQuery = true)
+  Long getMaterialCategoryStatusCount(String materialCategoryName, int status);
 }
