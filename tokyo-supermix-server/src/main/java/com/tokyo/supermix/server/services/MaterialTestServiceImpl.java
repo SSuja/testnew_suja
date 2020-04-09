@@ -8,13 +8,12 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
-import com.tokyo.supermix.data.entities.SieveTest;
-import com.tokyo.supermix.data.entities.Test;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.SieveTestRepository;
-import com.tokyo.supermix.data.repositories.TestRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestTypeRepository;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
@@ -32,7 +31,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   @Autowired
   private SieveTestRepository sieveTestRepository;
   @Autowired
-  private TestRepository testRepository;
+  private TestConfigureRepository testRepository;
   @Autowired
   private TestTypeRepository testTypeRepository;
 
@@ -95,13 +94,13 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     Status status = Status.NEW;
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
-    List<Test> testList =
+    List<TestConfigure> testList =
         testRepository.findByTestType(testTypeRepository.findTestTypeByMaterialSubCategoryId(
             incomingSample.getRawMaterial().getMaterialSubCategory().getId()));
-    for (Test test : testList) {
+    for (TestConfigure test : testList) {
       for (MaterialTest materialTest : materialTestList) {
-        if (test.getName().equalsIgnoreCase(materialTest.getTest().getName())) {
-          bodyMessage = bodyMessage + "<li>" + materialTest.getTest().getName() + " : "
+        if (test.getName().equalsIgnoreCase(materialTest.getTestConfigure().getName())) {
+          bodyMessage = bodyMessage + "<li>" + materialTest.getTestConfigure().getName() + " : "
               + materialTest.getStatus() + "</li>";
           count = count + 1;
           if (materialTest.getStatus() == Status.PASS) {

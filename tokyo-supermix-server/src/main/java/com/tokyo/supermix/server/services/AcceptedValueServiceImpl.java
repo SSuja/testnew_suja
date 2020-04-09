@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.AcceptedValue;
-import com.tokyo.supermix.data.entities.Test;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 
 @Service
@@ -41,7 +41,7 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   }
 
   @Transactional(readOnly = true)
-  public List<AcceptedValue> getAcceptedValueByTest(Test test) {
+  public List<AcceptedValue> getAcceptedValueByTest(TestConfigure test) {
     return acceptedValueRepository.findByTest(test);
   }
 
@@ -51,7 +51,7 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   }
 
   public boolean isUpdatedAcceptedValueTestIdExist(Long id, Long testId) {
-    if ((!getAcceptedValueById(id).getTest().getId().equals(testId))
+    if ((!getAcceptedValueById(id).getTestConfigure().getId().equals(testId))
         && (isAcceptedValueByTestId(testId))) {
       return true;
     }
