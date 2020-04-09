@@ -20,4 +20,9 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
     return incomingSampleRepository
         .countByTotalMaterialCategoryIncomingSample(materialCategoryName);
   }
+
+  @Transactional(readOnly = true)
+  public Long getMaterialSubCategoryStatusCount(String materialSubCategoryName, int status) {
+    return incomingSampleRepository.getMaterialSubCategoryStatusCount(materialSubCategoryName, status);
+  }
 }
