@@ -1789,4 +1789,29 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductSampleIssueAlreadyExist(String finishProductSampleIssueAlreadyExist) {
     this.finishProductSampleIssueAlreadyExist = finishProductSampleIssueAlreadyExist;
   }
+
+  /*
+   * Test
+   */
+  @Value("${validation.test.notExists}")
+  private String testNotExist;
+  @Value("${validation.test.alreadyExist}")
+  private String testAlreadyExist;
+
+  public String getTestNotExist() {
+    return testNotExist;
+  }
+
+  public void setTestNotExist(String testNotExist) {
+    this.testNotExist = testNotExist;
+  }
+
+  public String getTestAlreadyExist() {
+    return testAlreadyExist;
+  }
+
+  public void setTestAlreadyExist(String testAlreadyExist) {
+    this.testAlreadyExist = testAlreadyExist;
+  }
+
 }

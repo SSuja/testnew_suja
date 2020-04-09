@@ -298,7 +298,8 @@ public final class EndpointURI {
   public static final String MATERIAL_TESTS_BY_CODE = MATERIAL_TEST + CODE;
   public static final String TEST_CONFIGURE_ID = "/{testConfigureId}";
   public static final String STATUS = "/{status}";
-  public static final String MATERIAL_TEST_BY_TEST_CONFIGURE= MATERIAL_TESTS + "/test-configure" + TEST_CONFIGURE_ID;
+  public static final String MATERIAL_TEST_BY_TEST_CONFIGURE =
+      MATERIAL_TESTS + "/test-configure" + TEST_CONFIGURE_ID;
   public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
   /*
    * material-test-trial
@@ -345,6 +346,15 @@ public final class EndpointURI {
   public static final String SIEVE_TEST = BASE_API_PATH + "sieve-test";
   public static final String SIEVE_TESTS = BASE_API_PATH + "sieve-tests";
   public static final String SIEVE_TEST_BY_CODE = SIEVE_TEST + CODE;
+  /*
+   * Test
+   */
+  public static final String TEST = BASE_API_PATH + "test";
+  public static final String TESTS = BASE_API_PATH + "tests";
+  public static final String GET_TEST_BY_ID = TEST + ID;
+  public static final String DELETE_TEST = TEST + ID;
+  public static final String GET_TEST_BY_TEST_TYPE_ID =
+      TEST + SLASH + "test-type" + SLASH + "{testTypeId}";
   /*
    * FinenessModulus
    * 
