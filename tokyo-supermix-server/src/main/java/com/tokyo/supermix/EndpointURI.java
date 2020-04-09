@@ -418,6 +418,8 @@ public final class EndpointURI {
       + "material-sub-category-count" + SLASH + "{materialSubCategoryName}";
   public static final String MATERIAL_SUB_CATEGORY_STATUS_TOTAL_COUNT = INCOMING_SAMPLES_COUNT
       + SLASH + "material-sub-category-status-count" + SLASH + "{materialSubCategoryName}";
+  public static final String MATERIAL_CATEGORY_STATUS_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH
+      + "material-category-status-count" + SLASH + "{materialCategoryName}";
 
   private EndpointURI() {}
 }

@@ -40,4 +40,19 @@ public class IncomingSamplesCountController {
         incomingSamplesCountService.getMaterialSubCategoryStatusCount(materialSubCategoryName, 3));
     return statusResponseDto;
   }
+
+  @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_STATUS_TOTAL_COUNT)
+  public StatusCountResponseDto getIncomingSampleStatusByMaterialCategory(
+      @PathVariable String materialCategoryName) {
+    StatusCountResponseDto statusResponseDto = new StatusCountResponseDto();
+    statusResponseDto.setPassCount(
+        incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 0));
+    statusResponseDto.setProcessCount(
+        incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 1));
+    statusResponseDto.setFailCount(
+        incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 2));
+    statusResponseDto.setNewCount(
+        incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 3));
+    return statusResponseDto;
+  }
 }
