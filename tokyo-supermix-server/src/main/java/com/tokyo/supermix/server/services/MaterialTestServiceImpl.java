@@ -71,8 +71,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTest(Long testId) {
-    return materialTestRepository.findByTest(testId);
+  public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId) {
+    return materialTestRepository.findByTestConfigure(testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -81,8 +81,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isMaterialTestByTestExists(Long testId) {
-    return materialTestRepository.existsByTest(testId);
+  public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
+    return materialTestRepository.existsByTestConfigure(testConfigureId);
   }
 
   public void updateIncomingSampleStatusByIncomingSampleCode(String incomingSampleCode) {
@@ -94,12 +94,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     Status status = Status.NEW;
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
-    List<TestConfigure> testList =
+    List<TestConfigure> testConfigureList =
         testRepository.findByTestType(testTypeRepository.findTestTypeByMaterialSubCategoryId(
             incomingSample.getRawMaterial().getMaterialSubCategory().getId()));
-    for (TestConfigure test : testList) {
+    for (TestConfigure testConfigure : testConfigureList) {
       for (MaterialTest materialTest : materialTestList) {
-        if (test.getName().equalsIgnoreCase(materialTest.getTestConfigure().getName())) {
+        if (testConfigure.getName().equalsIgnoreCase(materialTest.getTestConfigure().getName())) {
           bodyMessage = bodyMessage + "<li>" + materialTest.getTestConfigure().getName() + " : "
               + materialTest.getStatus() + "</li>";
           count = count + 1;
@@ -129,7 +129,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           break;
         } else if (sieveTestRepository.findByIncomingSampleCode(incomingSampleCode)
             .getStatus() == Status.PASS) {
-          calculateTest(count, passCount, testList.size(), incomingSample);
+          calculateTest(count, passCount, testConfigureList.size(), incomingSample);
         } else {
           status = Status.PROCESS;
           incomingSample.setStatus(status);
@@ -145,7 +145,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           }
         }
       } else {
-        calculateTest(count, passCount, testList.size(), incomingSample);
+        calculateTest(count, passCount, testConfigureList.size(), incomingSample);
       }
 
     }

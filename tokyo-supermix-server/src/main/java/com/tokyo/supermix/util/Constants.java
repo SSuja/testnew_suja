@@ -171,11 +171,11 @@ public class Constants {
   /*
    * Constants for Test validation key & Success messages
    */
-  public static final String TEST = "test";
-  public static final String TEST_ID = "testId";
-  public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
-  public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
-  public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
+  public static final String TEST_CONFIGURE = "testConfigure";
+  public static final String TEST_CONFIGURE_ID = "testConfigureId";
+  public static final String ADD_TEST_CONFIGURE_SUCCESS = "Test Configure Added Successfully";
+  public static final String UPDATE_TEST_CONFIGURE_SUCCESS = "Test Configure Updated Successfully";
+  public static final String DELETE_TEST_CONFIGURE_SCCESS = "Test Configure Successfully Deleted";
   /*
    * Constants for Material State validation key & Success messages
    */
@@ -346,7 +346,7 @@ public class Constants {
   public static final String ACCEPTED_VALUE = "acceptedValue";
   public static final String ACCEPTED_VALUES = "acceptedValues";
   public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
-  public static final String ACCEPTED_VALUE_TEST_ID = "acceptedValueTestId";
+  public static final String ACCEPTED_VALUE_TEST_CONFIGURE_ID = "acceptedValueTestConfigureId";
   public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";
   public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
   public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated Successfully";

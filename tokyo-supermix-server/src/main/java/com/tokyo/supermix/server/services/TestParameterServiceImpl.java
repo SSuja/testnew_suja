@@ -39,17 +39,17 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   @Transactional(readOnly = true)
-  public List<TestParameter> getTestParameterByTestId(Long testid) {
-    return testParameterRepository.findByTestId(testid);
+  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId) {
+    return testParameterRepository.findByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
-  public boolean isTestIdExist(Long id) {
-    return testParameterRepository.existsByTestId(id);
+  public boolean isTestConfigureIdExist(Long id) {
+    return testParameterRepository.existsByTestConfigureId(id);
   }
 
-  public boolean isDuplicateRowExists(Long parameterId, Long testId, Long unitId) {
-    if (testParameterRepository.isDuplicateRow(parameterId, testId, unitId) != null) {
+  public boolean isDuplicateRowExists(Long parameterId, Long testConfigureId, Long unitId) {
+    if (testParameterRepository.isDuplicateRow(parameterId, testConfigureId, unitId) != null) {
       return true;
     }
     return false;

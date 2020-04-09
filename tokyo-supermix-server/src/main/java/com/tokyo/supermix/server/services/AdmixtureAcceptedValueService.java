@@ -16,9 +16,9 @@ public interface AdmixtureAcceptedValueService {
 
   public void deleteAdmixtureAcceptedValue(Long id);
 
-  public boolean isUpdatedTestIdExist(Long id, Long testId);
+  public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId);
 
-  public boolean isAdmixtureAcceptedValueExistsByTestId(Long id);
+  public boolean isAdmixtureAcceptedValueExistsByTestConfigureId(Long id);
 
-  public AdmixtureAcceptedValue getAdmixtureAcceptedValueByTestId(Long testId);
+  public AdmixtureAcceptedValue getAdmixtureAcceptedValueByTestConfigureId(Long testConfigureId);
 }

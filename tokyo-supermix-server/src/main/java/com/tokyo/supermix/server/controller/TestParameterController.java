@@ -42,7 +42,7 @@ public class TestParameterController {
       @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
     for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
       if ((testParameterService.isDuplicateRowExists(testParameterRequestDto.getParameterId(),
-          testParameterRequestDto.getTestId(), testParameterRequestDto.getUnitId()))) {
+          testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getUnitId()))) {
         logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,
@@ -88,16 +88,16 @@ public class TestParameterController {
         validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_TEST_PARAMETER_BY_TEST_ID)
+  @GetMapping(value = EndpointURI.GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long testId) {
-    if (testParameterService.isTestIdExist(testId)) {
+    if (testParameterService.isTestConfigureIdExist(testId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
-          mapper.map(testParameterService.getTestParameterByTestId(testId),
+          mapper.map(testParameterService.getTestParameterByTestConfigureId(testId),
               TestParameterResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PutMapping(value = EndpointURI.TEST_PARAMETER)
@@ -105,7 +105,7 @@ public class TestParameterController {
       @RequestBody TestParameterRequestDto testParameterRequestDto) {
     if (testParameterService.isTestParameterExist(testParameterRequestDto.getId())) {
       if ((testParameterService.isDuplicateRowExists(testParameterRequestDto.getParameterId(),
-          testParameterRequestDto.getTestId(), testParameterRequestDto.getUnitId()))) {
+          testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getUnitId()))) {
         logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,

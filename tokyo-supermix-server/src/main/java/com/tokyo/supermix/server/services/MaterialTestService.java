@@ -18,11 +18,11 @@ public interface MaterialTestService {
 
   public boolean isMaterialTestStatusExists(String status);
 
-  public boolean isMaterialTestByTestExists(Long testId);
+  public boolean isMaterialTestByTestConfigureExists(Long testConfigureId);
 
   public List<MaterialTest> getMaterialTestByStatus(String status);
 
-  public List<MaterialTest> getMaterialTestByTest(Long testId);
+  public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId);
 
   public void updateIncomingSampleStatusBySeheduler();
 }

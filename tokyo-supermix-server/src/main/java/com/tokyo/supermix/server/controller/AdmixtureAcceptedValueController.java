@@ -52,9 +52,9 @@ public class AdmixtureAcceptedValueController {
   @PostMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUE)
   public ResponseEntity<Object> createAdmixtureAcceptedValue(
       @Valid @RequestBody AdmixtureAcceptedValueRequestDto admixtureAcceptedValueRequestDto) {
-    if (admixtureAcceptedValueService
-        .isAdmixtureAcceptedValueExistsByTestId(admixtureAcceptedValueRequestDto.getTestId())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
+    if (admixtureAcceptedValueService.isAdmixtureAcceptedValueExistsByTestConfigureId(
+        admixtureAcceptedValueRequestDto.getTestConfigureId())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getTestIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     admixtureAcceptedValueService.saveAdmixtureAcceptedValue(
@@ -69,9 +69,10 @@ public class AdmixtureAcceptedValueController {
       @Valid @RequestBody AdmixtureAcceptedValueRequestDto admixtureAcceptedValueRequestDto) {
     if (admixtureAcceptedValueService
         .isAdmixtureAcceptedValueExist(admixtureAcceptedValueRequestDto.getId())) {
-      if (admixtureAcceptedValueService.isUpdatedTestIdExist(
-          admixtureAcceptedValueRequestDto.getId(), admixtureAcceptedValueRequestDto.getTestId())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
+      if (admixtureAcceptedValueService.isUpdatedTestConfigureIdExist(
+          admixtureAcceptedValueRequestDto.getId(),
+          admixtureAcceptedValueRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
             validationFailureStatusCodes.getTestIdAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       admixtureAcceptedValueService.saveAdmixtureAcceptedValue(
@@ -120,12 +121,13 @@ public class AdmixtureAcceptedValueController {
         HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUE_BY_TEST_ID)
+  @GetMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getAdmixtureAcceptedValueByTestId(@PathVariable Long testId) {
-    if (admixtureAcceptedValueService.isAdmixtureAcceptedValueExistsByTestId(testId)) {
+    if (admixtureAcceptedValueService.isAdmixtureAcceptedValueExistsByTestConfigureId(testId)) {
       return new ResponseEntity<Object>(
-          new ContentResponse<>(Constants.TEST,
-              mapper.map(admixtureAcceptedValueService.getAdmixtureAcceptedValueByTestId(testId),
+          new ContentResponse<>(Constants.TEST_CONFIGURE,
+              mapper.map(
+                  admixtureAcceptedValueService.getAdmixtureAcceptedValueByTestConfigureId(testId),
                   AdmixtureAcceptedValueResponseDto.class),
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
@@ -133,7 +135,7 @@ public class AdmixtureAcceptedValueController {
     }
     logger.debug("invalid");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.ADMIXTURE_ACCEPTED_VALUE,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
 
   }
 }

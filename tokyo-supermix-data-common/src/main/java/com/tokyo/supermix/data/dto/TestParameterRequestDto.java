@@ -2,7 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 public class TestParameterRequestDto {
   private Long id;
-  private Long testId;
+  private Long testConfigureId;
   private Long parameterId;
   private Long unitId;
 
@@ -14,12 +14,12 @@ public class TestParameterRequestDto {
     this.id = id;
   }
 
-  public Long getTestId() {
-    return testId;
+  public Long getTestConfigureId() {
+    return testConfigureId;
   }
 
-  public void setTestId(Long testId) {
-    this.testId = testId;
+  public void setTestConfigureId(Long testConfigureId) {
+    this.testConfigureId = testConfigureId;
   }
 
   public Long getParameterId() {
