@@ -25,7 +25,7 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findByStatus(Status status);
 
   @Query(
-      value = "SELECT COUNT(code) FROM incoming_sample inner join  raw_material on incoming_sample.raw_material_id = raw_material.idinner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.idwhere incoming_sample.date=current_date() and material_category.name=?1",
+      value = "SELECT COUNT(code) FROM incoming_sample inner join raw_material on incoming_sample.raw_material_id = raw_material.id inner join material_sub_category on raw_material.material_sub_category_id = material_sub_category.id inner join material_category on material_sub_category.material_category_id = material_category.id where incoming_sample.date = current_date() and material_category.name=?1",
       nativeQuery = true)
   Long countByTotalMaterialCategoryIncomingSample(String materialCategoryName);
 
