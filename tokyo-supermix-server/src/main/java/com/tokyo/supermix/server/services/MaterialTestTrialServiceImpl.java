@@ -77,7 +77,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
         "<p>The Incoming Sample Code is <b>" + materialTest.getIncomingSample().getCode()
             + ".</b> for Material test. The test is <b>" + materialTest.getStatus()
             + "</b>.</p> <p>Test Details : </p><ul>" + "<li>Test Name : "
-            + materialTest.getTestConfigure().getName() + "</li><li> Average : "
+            + materialTest.getTestConfigure().getTest().getName() + "</li><li> Average : "
             + materialTest.getAverage() + "</li><li>Material : "
             + materialTest.getIncomingSample().getRawMaterial().getName() + "</li><li> Date : "
             + materialTest.getDate() + "</li></ul>");
