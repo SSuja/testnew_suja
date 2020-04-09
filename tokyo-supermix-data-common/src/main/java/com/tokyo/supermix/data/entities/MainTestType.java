@@ -6,8 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "main_test")
-public class MainTest implements Serializable {
+@Table(schema = "tokyo-supermix", name = "main_test_type")
+public class MainTestType implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;

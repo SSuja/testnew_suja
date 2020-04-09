@@ -1,5 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-public class MainTestServiceImpl {
+public class MainTestTypeServiceImpl {
 
 }
