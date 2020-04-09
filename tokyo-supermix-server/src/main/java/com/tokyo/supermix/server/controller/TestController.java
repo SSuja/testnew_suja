@@ -67,7 +67,7 @@ public class TestController {
 	}
 
 	// delete test api
-	@DeleteMapping(value = EndpointURI.TEST_ID)
+	@DeleteMapping(value = EndpointURI.GET_TEST_BY_ID)
 	public ResponseEntity<Object> deleteTest(@PathVariable Long id) {
 		if (testService.isTestExist(id)) {
 			testService.deleteTest(id);
@@ -81,7 +81,7 @@ public class TestController {
 	}
 
 	// get test by id api
-	@GetMapping(value = EndpointURI.TEST_ID)
+	@GetMapping(value = EndpointURI.GET_TEST_BY_ID)
 	public ResponseEntity<Object> getTestById(@PathVariable Long id) {
 		if (testService.isTestExist(id)) {
 			logger.debug("Id found");
@@ -95,7 +95,7 @@ public class TestController {
 	}
 
 	// update test api
-	@PutMapping(value = EndpointURI.UNIT)
+	@PutMapping(value = EndpointURI.TEST)
 	public ResponseEntity<Object> updateTest(@Valid @RequestBody TestDto testDto) {
 		if (testService.isTestExist(testDto.getName())) {
 			if (testService.isUpdatedTestExist(testDto.getId(), testDto.getName())) {
