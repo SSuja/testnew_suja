@@ -6,6 +6,7 @@ public class TestConfigureResponseDto {
   private EquationDto equation;
   private Long testId;
   private String testName;
+  private boolean coreTest;
 
   public Long getId() {
     return id;
@@ -45,6 +46,14 @@ public class TestConfigureResponseDto {
 
   public void setTestName(String testName) {
     this.testName = testName;
+  }
+
+  public boolean isCoreTest() {
+    return coreTest;
+  }
+
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
   }
 
 }

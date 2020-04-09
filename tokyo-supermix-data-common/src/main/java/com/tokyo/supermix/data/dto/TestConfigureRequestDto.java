@@ -5,6 +5,7 @@ public class TestConfigureRequestDto {
   private Long testTypeId;
   private Long equationId;
   private Long testId;
+  private boolean coreTest;
 
   public Long getId() {
     return id;
@@ -36,6 +37,14 @@ public class TestConfigureRequestDto {
 
   public void setTestId(Long testId) {
     this.testId = testId;
+  }
+
+  public boolean isCoreTest() {
+    return coreTest;
+  }
+
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
   }
 
 }
