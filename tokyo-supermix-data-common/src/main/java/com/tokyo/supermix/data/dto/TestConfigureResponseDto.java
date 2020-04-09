@@ -1,6 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
-public class TestResponseDto {
+public class TestConfigureResponseDto {
   private Long id;
   private String name;
   private TestTypeResponseDto testType;

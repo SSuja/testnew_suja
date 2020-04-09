@@ -16,9 +16,9 @@ public interface MaterialTestRepository extends JpaRepository<MaterialTest, Stri
 
   List<MaterialTest> findByStatus(String status);
 
-  boolean existsByTest(Long testId);
+  boolean existsByTestConfigure(Long testConfigureId);
 
-  List<MaterialTest> findByTest(Long testId);
+  List<MaterialTest> findByTestConfigure(Long testConfigureId);
 
   List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 }

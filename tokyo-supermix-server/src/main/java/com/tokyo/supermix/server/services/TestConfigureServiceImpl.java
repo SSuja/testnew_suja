@@ -12,58 +12,58 @@ import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 @Service
 public class TestConfigureServiceImpl implements TestConfigureService {
   @Autowired
-  private TestConfigureRepository testRepository;
+  private TestConfigureRepository testConfigureRepository;
 
   @Transactional
-  public TestConfigure saveTest(TestConfigure test) {
-    return testRepository.save(test);
+  public TestConfigure saveTestConfigure(TestConfigure testConfigure) {
+    return testConfigureRepository.save(testConfigure);
   }
 
   @Transactional(readOnly = true)
   public boolean isTestNameExist(String name) {
-    return testRepository.existsByName(name);
+    return testConfigureRepository.existsByName(name);
   }
 
   @Transactional(readOnly = true)
-  public boolean isTestExist(Long id) {
-    return testRepository.existsById(id);
+  public boolean isTestConfigureExist(Long id) {
+    return testConfigureRepository.existsById(id);
   }
 
   @Transactional(readOnly = true)
-  public List<TestConfigure> getAllTests() {
-    return testRepository.findAll();
+  public List<TestConfigure> getAllTestConfigures() {
+    return testConfigureRepository.findAll();
   }
 
   @Transactional(readOnly = true)
-  public TestConfigure getTestById(Long id) {
-    return testRepository.findById(id).get();
+  public TestConfigure getTestConfigureById(Long id) {
+    return testConfigureRepository.findById(id).get();
   }
 
-  public boolean isUpdatedTestExist(Long id, String name) {
-    if ((!getTestById(id).getName().equalsIgnoreCase(name)) && (isTestNameExist(name))) {
+  public boolean isUpdatedTestConfigureExist(Long id, String name) {
+    if ((!getTestConfigureById(id).getName().equalsIgnoreCase(name)) && (isTestNameExist(name))) {
       return true;
     }
     return false;
   }
 
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteTest(Long id) {
-    testRepository.deleteById(id);
+  public void deleteTestConfigure(Long id) {
+    testConfigureRepository.deleteById(id);
   }
 
   @Transactional(readOnly = true)
-  public List<TestConfigure> getTestByTestType(TestType testType) {
-    return testRepository.findByTestType(testType);
+  public List<TestConfigure> getTestConfigureByTestType(TestType testType) {
+    return testConfigureRepository.findByTestType(testType);
   }
 
   @Transactional(readOnly = true)
   public List<TestConfigure> findByTestTypeId(Long testTypeId) {
-    return testRepository.findByTestTypeId(testTypeId);
+    return testConfigureRepository.findByTestTypeId(testTypeId);
   }
 
   @Transactional(readOnly = true)
   public boolean existsByNameAndTestTypeId(String name, Long testTypeId) {
-    return testRepository.existsByNameAndTestTypeId(name, testTypeId);
+    return testConfigureRepository.existsByNameAndTestTypeId(name, testTypeId);
   }
 
   public boolean isDuplicateEntryExist(String name, Long testTypeId) {
@@ -73,4 +73,5 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     }
     return false;
   }
+
 }

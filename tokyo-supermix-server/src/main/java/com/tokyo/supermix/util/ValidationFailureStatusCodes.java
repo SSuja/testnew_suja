@@ -642,29 +642,29 @@ public class ValidationFailureStatusCodes {
   /*
    * Test
    */
-  @Value("${validation.test.notExists}")
-  private String testNotExist;
-  @Value("${validation.test.alreadyExist}")
-  private String testAlreadyExist;
-  @Value("${testRequestDto.name.null")
+  @Value("${validation.testConfigure.notExists}")
+  private String testConfigureNotExist;
+  @Value("${validation.testConfigure.alreadyExist}")
+  private String testConfigureAlreadyExist;
+  @Value("${testConfigureRequestDto.name.null")
   private String testNameIsNull;
-  @Value("${testRequestDto.name.empty")
+  @Value("${testConfigureRequestDto.name.empty")
   private String testNameIsEmpty;
 
-  public String getTestNotExist() {
-    return testNotExist;
+  public String getTestConfigureNotExist() {
+    return testConfigureNotExist;
   }
 
-  public void setTestNotExist(String testNotExist) {
-    this.testNotExist = testNotExist;
+  public void setTestConfigureNotExist(String testConfigureNotExist) {
+    this.testConfigureNotExist = testConfigureNotExist;
   }
 
-  public String getTestAlreadyExist() {
-    return testAlreadyExist;
+  public String getTestConfigureAlreadyExist() {
+    return testConfigureAlreadyExist;
   }
 
-  public void setTestAlreadyExist(String testAlreadyExist) {
-    this.testAlreadyExist = testAlreadyExist;
+  public void setTestConfigureAlreadyExist(String testConfigureAlreadyExist) {
+    this.testConfigureAlreadyExist = testConfigureAlreadyExist;
   }
 
   public String getTestNameIsNull() {
@@ -1719,6 +1719,7 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
     this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
   }
+
   /*
    * Concrete Mixer
    */
@@ -1743,7 +1744,7 @@ public class ValidationFailureStatusCodes {
   public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
     this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
   }
-  
+
   // For finishProductSampleIssue
   @Value("${validation.finishProductSampleIssue.notExists}")
   private String finishProductSampleIssueNotExists;
@@ -1769,22 +1770,48 @@ public class ValidationFailureStatusCodes {
   public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
     this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
   }
+
   @Value("${validation.finishProductSampleIssue.alreadyExist}")
   private String finishProductSampleIssueAlreadyExist;
 
-public String getFinishProductSampleIssueNotExists() {
-	return finishProductSampleIssueNotExists;
-}
+  public String getFinishProductSampleIssueNotExists() {
+    return finishProductSampleIssueNotExists;
+  }
 
-public void setFinishProductSampleIssueNotExists(String finishProductSampleIssueNotExists) {
-	this.finishProductSampleIssueNotExists = finishProductSampleIssueNotExists;
-}
+  public void setFinishProductSampleIssueNotExists(String finishProductSampleIssueNotExists) {
+    this.finishProductSampleIssueNotExists = finishProductSampleIssueNotExists;
+  }
 
-public String getFinishProductSampleIssueAlreadyExist() {
-	return finishProductSampleIssueAlreadyExist;
-}
+  public String getFinishProductSampleIssueAlreadyExist() {
+    return finishProductSampleIssueAlreadyExist;
+  }
 
-public void setFinishProductSampleIssueAlreadyExist(String finishProductSampleIssueAlreadyExist) {
-	this.finishProductSampleIssueAlreadyExist = finishProductSampleIssueAlreadyExist;
-}
+  public void setFinishProductSampleIssueAlreadyExist(String finishProductSampleIssueAlreadyExist) {
+    this.finishProductSampleIssueAlreadyExist = finishProductSampleIssueAlreadyExist;
+  }
+
+  /*
+   * Test
+   */
+  @Value("${validation.test.notExists}")
+  private String testNotExist;
+  @Value("${validation.test.alreadyExist}")
+  private String testAlreadyExist;
+
+  public String getTestNotExist() {
+    return testNotExist;
+  }
+
+  public void setTestNotExist(String testNotExist) {
+    this.testNotExist = testNotExist;
+  }
+
+  public String getTestAlreadyExist() {
+    return testAlreadyExist;
+  }
+
+  public void setTestAlreadyExist(String testAlreadyExist) {
+    this.testAlreadyExist = testAlreadyExist;
+  }
+
 }

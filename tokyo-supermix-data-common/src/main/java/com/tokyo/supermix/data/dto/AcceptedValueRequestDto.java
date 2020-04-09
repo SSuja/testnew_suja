@@ -8,8 +8,8 @@ public class AcceptedValueRequestDto {
   private Double minValue;
   @NotNull(message = "{acceptedValueRequestDto.maxValue.null}")
   private Double maxValue;
-  @NotNull(message = "{acceptedValueRequestDto.testId.null}")
-  private Long testId;
+  @NotNull(message = "{acceptedValueRequestDto.testConfigureId.null}")
+  private Long testConfigureId;
   @NotNull(message = "{acceptedValueRequestDto.parameterId.null}")
   private Long parameterId;
   @NotNull(message = "{acceptedValueRequestDto.unitId.null}")
@@ -39,12 +39,12 @@ public class AcceptedValueRequestDto {
     this.maxValue = maxValue;
   }
 
-  public Long getTestId() {
-    return testId;
+  public Long getTestConfigureId() {
+    return testConfigureId;
   }
 
-  public void setTestId(Long testId) {
-    this.testId = testId;
+  public void setTestConfigureId(Long testConfigureId) {
+    this.testConfigureId = testConfigureId;
   }
 
   public Long getParameterId() {
