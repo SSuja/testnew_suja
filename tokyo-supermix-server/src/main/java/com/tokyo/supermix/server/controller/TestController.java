@@ -1,7 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -61,9 +59,8 @@ public class TestController {
 	// get all tests api
 	@GetMapping(value = EndpointURI.TESTS)
 	public ResponseEntity<Object> getAllTests() {
-		List<TestDto> testDtoList = mapper.map(testService.getAllTests(), TestDto.class);
-		return new ResponseEntity<>(new ContentResponse<>(Constants.TEST, testDtoList, RestApiResponseStatus.OK), null,
-				HttpStatus.OK);
+		return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
+				mapper.map(testService.getAllTests(), TestDto.class), RestApiResponseStatus.OK), null, HttpStatus.OK);
 	}
 
 	// delete test api
