@@ -48,15 +48,16 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameterRepository.existsByTestConfigureId(id);
   }
 
-  public boolean isDuplicateRowExists(Long parameterId, Long testConfigureId, Long unitId) {
-    if (testParameterRepository.isDuplicateRow(parameterId, testConfigureId, unitId) != null) {
-      return true;
-    }
-    return false;
-  }
-
   @Transactional
   public TestParameter updateTestParameter(TestParameter testParameter) {
     return testParameterRepository.save(testParameter);
+  }
+
+  public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId) {
+    if (testParameterRepository.existsByTestConfigureIdAndParameterIdAndUnitId(testConfigureId,
+        parameterId, unitId)) {
+      return true;
+    }
+    return false;
   }
 }
