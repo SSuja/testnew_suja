@@ -23,9 +23,6 @@ public class Test implements Serializable {
   @ManyToOne
   @JoinColumn(name = "equationId", nullable = true)
   private Equation equation;
-  @ManyToOne
-  @JoinColumn(name = "mainTestCode", nullable = false)
-  private MainTest mainTest;
 
   public Long getId() {
     return id;
@@ -57,14 +54,6 @@ public class Test implements Serializable {
 
   public void setEquation(Equation equation) {
     this.equation = equation;
-  }
-
-  public MainTest getMainTest() {
-    return mainTest;
-  }
-
-  public void setMainTest(MainTest mainTest) {
-    this.mainTest = mainTest;
   }
 
   public static long getSerialversionuid() {
