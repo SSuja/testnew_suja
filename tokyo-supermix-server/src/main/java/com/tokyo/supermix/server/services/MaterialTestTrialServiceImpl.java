@@ -76,7 +76,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 				Constants.SUBJECT_NEW_MATERIAL_TEST,
 				"<p>The Incoming Sample Code is <b>" + materialTest.getIncomingSample().getCode()
 						+ ".</b> for Material test. The test is <b>" + materialTest.getStatus()
-						+ "</b>.</p> <p>Test Details : </p><ul>" + "<li>Test Name : " + materialTest.getTest().getName()
+						+ "</b>.</p> <p>Test Details : </p><ul>" + "<li>Test Name : " + materialTest.getTestConfigure().getName()
 						+ "</li><li> Average : " + materialTest.getAverage() + "</li><li>Material : "
 						+ materialTest.getIncomingSample().getRawMaterial().getName() + "</li><li> Date : "
 						+ materialTest.getDate() + "</li></ul>");
@@ -84,7 +84,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
 	private void compareWithAverage(Double average, String materialTestCode) {
 		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-		Long testId = materialTest.getTest().getId();
+		Long testId = materialTest.getTestConfigure().getId();
 		if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
 				.equalsIgnoreCase(Constants.ADMIXTURE)) {
 			AdmixtureAcceptedValue admixtureAcceptedValue = admixtureAcceptedValueRepository

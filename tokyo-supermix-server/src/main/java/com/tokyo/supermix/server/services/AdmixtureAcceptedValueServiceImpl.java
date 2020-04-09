@@ -44,7 +44,7 @@ public class AdmixtureAcceptedValueServiceImpl implements AdmixtureAcceptedValue
   }
 
   public boolean isUpdatedTestIdExist(Long id, Long testId) {
-    if ((!getAdmixtureAcceptedValueById(id).getTest().getId().equals(testId))
+    if ((!getAdmixtureAcceptedValueById(id).getTestConfigure().getId().equals(testId))
         && (admixtureAcceptedValueRepository.existsByTestId(testId))) {
       return true;
     }

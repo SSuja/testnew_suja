@@ -23,7 +23,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.AcceptedValueService;
-import com.tokyo.supermix.server.services.TestService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -33,7 +33,7 @@ public class AcceptedValueController {
   @Autowired
   private AcceptedValueService acceptedValueService;
   @Autowired
-  private TestService testService;
+  private TestConfigureService testService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired

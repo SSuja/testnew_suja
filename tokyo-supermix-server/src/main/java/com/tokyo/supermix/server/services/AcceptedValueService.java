@@ -2,7 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.entities.AcceptedValue;
-import com.tokyo.supermix.data.entities.Test;
+import com.tokyo.supermix.data.entities.TestConfigure;
 
 public interface AcceptedValueService {
 
@@ -16,7 +16,7 @@ public interface AcceptedValueService {
 
   public void deleteAcceptedValue(Long id);
 
-  public List<AcceptedValue> getAcceptedValueByTest(Test test);
+  public List<AcceptedValue> getAcceptedValueByTest(TestConfigure test);
 
   boolean isAcceptedValueByTestId(Long testId);
 
