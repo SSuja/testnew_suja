@@ -89,10 +89,10 @@ public class TestParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID)
-  public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long testId) {
-    if (testParameterService.isTestConfigureIdExist(testId)) {
+  public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long testConfigureId) {
+    if (testParameterService.isTestConfigureIdExist(testConfigureId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
-          mapper.map(testParameterService.getTestParameterByTestConfigureId(testId),
+          mapper.map(testParameterService.getTestParameterByTestConfigureId(testConfigureId),
               TestParameterResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
