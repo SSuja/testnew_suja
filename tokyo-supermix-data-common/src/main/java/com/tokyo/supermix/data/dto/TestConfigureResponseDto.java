@@ -5,6 +5,8 @@ public class TestConfigureResponseDto {
   private String name;
   private TestTypeResponseDto testType;
   private EquationDto equation;
+  private Long testId;
+  private String testName;
 
   public Long getId() {
     return id;
@@ -36,6 +38,22 @@ public class TestConfigureResponseDto {
 
   public void setEquation(EquationDto equation) {
     this.equation = equation;
+  }
+
+  public Long getTestId() {
+    return testId;
+  }
+
+  public void setTestId(Long testId) {
+    this.testId = testId;
+  }
+
+  public String getTestName() {
+    return testName;
+  }
+
+  public void setTestName(String testName) {
+    this.testName = testName;
   }
 
 }
