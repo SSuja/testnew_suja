@@ -3,10 +3,10 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class TestRequestDto {
+public class TestConfigureRequestDto {
   private Long id;
-  @NotNull(message = "{testRequestDto.name.null}")
-  @NotEmpty(message = "{testRequestDto.name.empty}")
+  @NotNull(message = "{testConfigureRequestDto.name.null}")
+  @NotEmpty(message = "{testConfigureRequestDto.name.empty}")
   private String name;
   private Long testTypeId;
   private Long equationId;

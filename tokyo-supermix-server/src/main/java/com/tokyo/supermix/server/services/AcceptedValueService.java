@@ -16,10 +16,10 @@ public interface AcceptedValueService {
 
   public void deleteAcceptedValue(Long id);
 
-  public List<AcceptedValue> getAcceptedValueByTest(TestConfigure test);
+  public List<AcceptedValue> getAcceptedValueByTestConfigure(TestConfigure testConfigure);
 
-  boolean isAcceptedValueByTestId(Long testId);
+  boolean isAcceptedValueByTestConfigureId(Long testConfigureId);
 
-  public boolean isUpdatedAcceptedValueTestIdExist(Long id, Long testId);
+  public boolean isUpdatedAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId);
 
 }

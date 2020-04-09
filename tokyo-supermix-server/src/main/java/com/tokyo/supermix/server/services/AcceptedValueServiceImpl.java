@@ -41,18 +41,18 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   }
 
   @Transactional(readOnly = true)
-  public List<AcceptedValue> getAcceptedValueByTest(TestConfigure test) {
-    return acceptedValueRepository.findByTest(test);
+  public List<AcceptedValue> getAcceptedValueByTestConfigure(TestConfigure testConfigure) {
+    return acceptedValueRepository.findByTestConfigure(testConfigure);
   }
 
   @Transactional(readOnly = true)
-  public boolean isAcceptedValueByTestId(Long testId) {
-    return acceptedValueRepository.existsAcceptedValueByTestId(testId);
+  public boolean isAcceptedValueByTestConfigureId(Long testConfigureId) {
+    return acceptedValueRepository.existsAcceptedValueByTestConfigureId(testConfigureId);
   }
 
-  public boolean isUpdatedAcceptedValueTestIdExist(Long id, Long testId) {
-    if ((!getAcceptedValueById(id).getTestConfigure().getId().equals(testId))
-        && (isAcceptedValueByTestId(testId))) {
+  public boolean isUpdatedAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId) {
+    if ((!getAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (isAcceptedValueByTestConfigureId(testConfigureId))) {
       return true;
     }
     return false;

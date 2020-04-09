@@ -6,9 +6,9 @@ import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 
 public interface AcceptedValueRepository extends JpaRepository<AcceptedValue, Long> {
-  List<AcceptedValue> findByTest(TestConfigure test);
+  List<AcceptedValue> findByTestConfigure(TestConfigure testConfigure);
 
-  public boolean existsAcceptedValueByTestId(Long testId);
+  public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId);
   
-  AcceptedValue findByTestId(Long testId);
+  AcceptedValue findByTestConfigureId(Long testConfigureId);
 }

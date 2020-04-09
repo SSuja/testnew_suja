@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.TestRequestDto;
-import com.tokyo.supermix.data.dto.TestResponseDto;
+import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
+import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -32,7 +32,7 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @CrossOrigin
 public class TestConfigureController {
   @Autowired
-  private TestConfigureService testService;
+  private TestConfigureService testConfigureService;
   @Autowired
   private TestTypeService testTypeService;
   @Autowired
@@ -43,77 +43,81 @@ public class TestConfigureController {
 
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
-  @PostMapping(value = EndpointURI.TEST)
-  public ResponseEntity<Object> createTest(@Valid @RequestBody TestRequestDto testRequestDto) {
-    if (testService.isDuplicateEntryExist(testRequestDto.getName(),
+  @PostMapping(value = EndpointURI.TEST_CONFIGURE)
+  public ResponseEntity<Object> createTestConfigure(
+      @Valid @RequestBody TestConfigureRequestDto testRequestDto) {
+    if (testConfigureService.isDuplicateEntryExist(testRequestDto.getName(),
         testRequestDto.getTestTypeId())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
-          validationFailureStatusCodes.getTestAlreadyExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+          validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    testService.saveTest(mapper.map(testRequestDto, TestConfigure.class));
+    testConfigureService.saveTestConfigure(mapper.map(testRequestDto, TestConfigure.class));
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_SUCCESS), HttpStatus.OK);
-  }
-
-  @GetMapping(value = EndpointURI.TESTS)
-  public ResponseEntity<Object> getAllTests() {
-    List<TestResponseDto> testResponseDtoList =
-        mapper.map(testService.getAllTests(), TestResponseDto.class);
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.TEST, testResponseDtoList, RestApiResponseStatus.OK), null,
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_TEST_BY_ID)
-  public ResponseEntity<Object> getTestById(@PathVariable Long id) {
-    if (testService.isTestExist(id)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
-          mapper.map(testService.getTestById(id), TestResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
-    }
-    logger.debug("No Test record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+  @GetMapping(value = EndpointURI.TEST_CONFIGURES)
+  public ResponseEntity<Object> getAllTests() {
+    List<TestConfigureResponseDto> testResponseDtoList =
+        mapper.map(testConfigureService.getAllTestConfigures(), TestConfigureResponseDto.class);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE, testResponseDtoList,
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  @PutMapping(value = EndpointURI.TEST)
-  public ResponseEntity<Object> updateTest(@Valid @RequestBody TestRequestDto testRequestDto) {
-    if (testService.isTestExist(testRequestDto.getId())) {
-      if (testService.isDuplicateEntryExist(testRequestDto.getName(),
+  @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_ID)
+  public ResponseEntity<Object> getTestById(@PathVariable Long id) {
+    if (testConfigureService.isTestConfigureExist(id)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+          mapper.map(testConfigureService.getTestConfigureById(id), TestConfigureResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("No Test record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @PutMapping(value = EndpointURI.TEST_CONFIGURE)
+  public ResponseEntity<Object> updateTest(
+      @Valid @RequestBody TestConfigureRequestDto testRequestDto) {
+    if (testConfigureService.isTestConfigureExist(testRequestDto.getId())) {
+      if (testConfigureService.isDuplicateEntryExist(testRequestDto.getName(),
           testRequestDto.getTestTypeId())) {
         logger.debug("Test already exists: createTst(), testName: {}");
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
-            validationFailureStatusCodes.getTestAlreadyExist()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
       }
-      testService.saveTest(mapper.map(testRequestDto, TestConfigure.class));
+      testConfigureService.saveTestConfigure(mapper.map(testRequestDto, TestConfigure.class));
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_SUCCESS),
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
           HttpStatus.OK);
     }
     logger.debug("No Test record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(EndpointURI.DELETE_TEST)
+  @DeleteMapping(EndpointURI.DELETE_TEST_CONFIGURE)
   public ResponseEntity<Object> deleteTest(@PathVariable Long id) {
-    if (testService.isTestExist(id)) {
-      testService.deleteTest(id);
+    if (testConfigureService.isTestConfigureExist(id)) {
+      testConfigureService.deleteTestConfigure(id);
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_SCCESS),
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_CONFIGURE_SCCESS),
           HttpStatus.OK);
     }
     logger.debug("No Test record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
-        validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_TEST_BY_TEST_TYPE_ID)
+  @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_TEST_TYPE_ID)
   public ResponseEntity<Object> getTestByTestTypeId(@PathVariable Long testTypeId) {
     if (testTypeService.isTestTypeIdExist(testTypeId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPE,
-          mapper.map(testService.getTestByTestType(testTypeService.getTestTypeById(testTypeId)),
-              TestResponseDto.class),
+          mapper.map(testConfigureService.getTestConfigureByTestType(
+              testTypeService.getTestTypeById(testTypeId)), TestConfigureResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       logger.debug("No Test record exist for given Test type id");

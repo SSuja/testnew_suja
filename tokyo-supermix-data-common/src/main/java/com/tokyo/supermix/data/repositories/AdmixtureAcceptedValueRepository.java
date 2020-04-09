@@ -5,10 +5,11 @@ import com.tokyo.supermix.data.entities.AdmixtureAcceptedValue;
 
 public interface AdmixtureAcceptedValueRepository
     extends JpaRepository<AdmixtureAcceptedValue, Long> {
-  boolean existsByTestId(Long testId);
+  boolean existsByTestConfigureId(Long testConfigureId);
 
-  AdmixtureAcceptedValue findByTestId(Long testId);
+  AdmixtureAcceptedValue findByTestConfigureId(Long testConfigureId);
 
-  AdmixtureAcceptedValue findByTestIdAndRawMaterialId(Long testId, Long materialId);
+  AdmixtureAcceptedValue findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
+      Long materialId);
 
 }

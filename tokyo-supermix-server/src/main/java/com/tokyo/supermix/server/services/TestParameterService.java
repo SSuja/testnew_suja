@@ -16,9 +16,9 @@ public interface TestParameterService {
 
   public void deleteTestParameter(Long id);
 
-  public List<TestParameter> getTestParameterByTestId(Long test);
+  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId);
 
-  public boolean isTestIdExist(Long id);
+  public boolean isTestConfigureIdExist(Long id);
 
-  public boolean isDuplicateRowExists(Long parameterId, Long testId, Long unitId);
+  public boolean isDuplicateRowExists(Long parameterId, Long testConfigureId, Long unitId);
 }

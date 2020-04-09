@@ -5,25 +5,25 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestType;
 
 public interface TestConfigureService {
-  public TestConfigure saveTest(TestConfigure test);
+  public TestConfigure saveTestConfigure(TestConfigure test);
 
   public boolean isTestNameExist(String name);
 
-  public boolean isTestExist(Long id);
+  public boolean isTestConfigureExist(Long id);
 
-  public List<TestConfigure> getAllTests();
+  public List<TestConfigure> getAllTestConfigures();
 
-  public TestConfigure getTestById(Long id);
+  public TestConfigure getTestConfigureById(Long id);
 
   boolean existsByNameAndTestTypeId(String name, Long testTypeId);
 
   public boolean isDuplicateEntryExist(String name, Long testTypeId);
 
-  public boolean isUpdatedTestExist(Long testTypeId, String name);
+  public boolean isUpdatedTestConfigureExist(Long testTypeId, String name);
 
-  public void deleteTest(Long id);
+  public void deleteTestConfigure(Long id);
 
-  public List<TestConfigure> getTestByTestType(TestType testType);
+  public List<TestConfigure> getTestConfigureByTestType(TestType testType);
 
   public List<TestConfigure> findByTestTypeId(Long testTypeId);
 }

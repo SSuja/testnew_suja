@@ -43,9 +43,9 @@ public class AcceptedValueController {
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
   public ResponseEntity<Object> createAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
-    if (acceptedValueService.isAcceptedValueByTestId(acceptedValueRequestDto.getTestId())) {
+    if (acceptedValueService.isAcceptedValueByTestConfigureId(acceptedValueRequestDto.getTestConfigureId())) {
       return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.TEST_ID,
+          new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
               validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
@@ -94,10 +94,10 @@ public class AcceptedValueController {
   public ResponseEntity<Object> updateAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
     if (acceptedValueService.isAcceptedValueExist(acceptedValueRequestDto.getId())) {
-      if (acceptedValueService.isUpdatedAcceptedValueTestIdExist(acceptedValueRequestDto.getId(),
-          acceptedValueRequestDto.getTestId())) {
+      if (acceptedValueService.isUpdatedAcceptedValueTestConfigureIdExist(acceptedValueRequestDto.getId(),
+          acceptedValueRequestDto.getTestConfigureId())) {
         return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.TEST_ID,
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
                 validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
@@ -112,16 +112,16 @@ public class AcceptedValueController {
         validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_BY_TEST_ID)
+  @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getAcceptedValueByTestId(@PathVariable Long testId) {
-    if (testService.isTestExist(testId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
-          mapper.map(acceptedValueService.getAcceptedValueByTest(testService.getTestById(testId)),
+    if (testService.isTestConfigureExist(testId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+          mapper.map(acceptedValueService.getAcceptedValueByTestConfigure(testService.getTestConfigureById(testId)),
               AcceptedValueResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       logger.debug("No AcceptedValue record exist for given Test type id");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_ID,
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
