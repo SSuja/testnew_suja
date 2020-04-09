@@ -46,7 +46,7 @@ public class TestConfigureController {
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   public ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testRequestDto) {
-    if (testConfigureService.isDuplicateEntryExist(testRequestDto.getName(),
+    if (testConfigureService.isDuplicateEntryExist(testRequestDto.getTestId(),
         testRequestDto.getTestTypeId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
@@ -81,7 +81,7 @@ public class TestConfigureController {
   public ResponseEntity<Object> updateTest(
       @Valid @RequestBody TestConfigureRequestDto testRequestDto) {
     if (testConfigureService.isTestConfigureExist(testRequestDto.getId())) {
-      if (testConfigureService.isDuplicateEntryExist(testRequestDto.getName(),
+      if (testConfigureService.isDuplicateEntryExist(testRequestDto.getTestId(),
           testRequestDto.getTestTypeId())) {
         logger.debug("Test already exists: createTst(), testName: {}");
         return new ResponseEntity<>(

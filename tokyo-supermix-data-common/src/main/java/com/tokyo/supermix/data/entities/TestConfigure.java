@@ -12,72 +12,63 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_configure")
 public class TestConfigure implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private boolean coreTest;
-	private String name;
-	@ManyToOne
-	@JoinColumn(name = "testTypeId", nullable = false)
-	private TestType testType;
-	@ManyToOne
-	@JoinColumn(name = "equationId", nullable = true)
-	private Equation equation;
-	@ManyToOne
-	@JoinColumn(name = "testId", nullable = false)
-	private Test test;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private boolean coreTest;
+  @ManyToOne
+  @JoinColumn(name = "testTypeId", nullable = false)
+  private TestType testType;
+  @ManyToOne
+  @JoinColumn(name = "equationId", nullable = true)
+  private Equation equation;
+  @ManyToOne
+  @JoinColumn(name = "testId", nullable = false)
+  private Test test;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public TestType getTestType() {
+    return testType;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setTestType(TestType testType) {
+    this.testType = testType;
+  }
 
-	public TestType getTestType() {
-		return testType;
-	}
+  public Equation getEquation() {
+    return equation;
+  }
 
-	public void setTestType(TestType testType) {
-		this.testType = testType;
-	}
+  public void setEquation(Equation equation) {
+    this.equation = equation;
+  }
 
-	public Equation getEquation() {
-		return equation;
-	}
+  public boolean isCoreTest() {
+    return coreTest;
+  }
 
-	public void setEquation(Equation equation) {
-		this.equation = equation;
-	}
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
+  }
 
-	public boolean isCoreTest() {
-		return coreTest;
-	}
+  public Test getTest() {
+    return test;
+  }
 
-	public void setCoreTest(boolean coreTest) {
-		this.coreTest = coreTest;
-	}
+  public void setTest(Test test) {
+    this.test = test;
+  }
 
-	public Test getTest() {
-		return test;
-	}
-
-	public void setTest(Test test) {
-		this.test = test;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
 }

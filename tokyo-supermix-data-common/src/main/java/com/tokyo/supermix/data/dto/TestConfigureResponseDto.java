@@ -2,11 +2,11 @@ package com.tokyo.supermix.data.dto;
 
 public class TestConfigureResponseDto {
   private Long id;
-  private String name;
   private TestTypeResponseDto testType;
   private EquationDto equation;
   private Long testId;
   private String testName;
+  private boolean coreTest;
 
   public Long getId() {
     return id;
@@ -14,14 +14,6 @@ public class TestConfigureResponseDto {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public TestTypeResponseDto getTestType() {
@@ -54,6 +46,14 @@ public class TestConfigureResponseDto {
 
   public void setTestName(String testName) {
     this.testName = testName;
+  }
+
+  public boolean isCoreTest() {
+    return coreTest;
+  }
+
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
   }
 
 }

@@ -6,11 +6,9 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestType;
 
 public interface TestConfigureRepository extends JpaRepository<TestConfigure, Long> {
-  boolean existsByName(String name);
-
   List<TestConfigure> findByTestType(TestType testType);
 
-  boolean existsByNameAndTestTypeId(String name, Long testTypeId);
+  boolean existsByTestIdAndTestTypeId(Long testId, Long testTypeId);
 
   List<TestConfigure> findByTestTypeId(Long testTypeId);
 }

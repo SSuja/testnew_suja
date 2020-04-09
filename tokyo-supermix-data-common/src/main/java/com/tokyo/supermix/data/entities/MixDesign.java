@@ -14,7 +14,6 @@ public class MixDesign implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
-  private Double actualGrade;
   private Double targetGrade;
   private Date date;
   private Double targetSlump;
@@ -38,14 +37,6 @@ public class MixDesign implements Serializable {
 
   public void setTargetGrade(Double targetGrade) {
     this.targetGrade = targetGrade;
-  }
-
-  public Double getActualGrade() {
-    return actualGrade;
-  }
-
-  public void setActualGrade(Double actualGrade) {
-    this.actualGrade = actualGrade;
   }
 
   public Date getDate() {
