@@ -43,7 +43,8 @@ public class AcceptedValueController {
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
   public ResponseEntity<Object> createAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
-    if (acceptedValueService.isAcceptedValueByTestConfigureId(acceptedValueRequestDto.getTestConfigureId())) {
+    if (acceptedValueService
+        .isAcceptedValueByTestConfigureId(acceptedValueRequestDto.getTestConfigureId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
               validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
@@ -94,8 +95,8 @@ public class AcceptedValueController {
   public ResponseEntity<Object> updateAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
     if (acceptedValueService.isAcceptedValueExist(acceptedValueRequestDto.getId())) {
-      if (acceptedValueService.isUpdatedAcceptedValueTestConfigureIdExist(acceptedValueRequestDto.getId(),
-          acceptedValueRequestDto.getTestConfigureId())) {
+      if (acceptedValueService.isUpdatedAcceptedValueTestConfigureIdExist(
+          acceptedValueRequestDto.getId(), acceptedValueRequestDto.getTestConfigureId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
                 validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
@@ -113,10 +114,12 @@ public class AcceptedValueController {
   }
 
   @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID)
-  public ResponseEntity<Object> getAcceptedValueByTestId(@PathVariable Long testId) {
-    if (testService.isTestConfigureExist(testId)) {
+  public ResponseEntity<Object> getAcceptedValueByTestId(@PathVariable Long testConfigureId) {
+    if (testService.isTestConfigureExist(testConfigureId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
-          mapper.map(acceptedValueService.getAcceptedValueByTestConfigure(testService.getTestConfigureById(testId)),
+          mapper.map(
+              acceptedValueService.getAcceptedValueByTestConfigure(
+                  testService.getTestConfigureById(testConfigureId)),
               AcceptedValueResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {

@@ -20,5 +20,5 @@ public interface TestParameterService {
 
   public boolean isTestConfigureIdExist(Long id);
 
-  public boolean isDuplicateRowExists(Long parameterId, Long testConfigureId, Long unitId);
+  public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId);
 }

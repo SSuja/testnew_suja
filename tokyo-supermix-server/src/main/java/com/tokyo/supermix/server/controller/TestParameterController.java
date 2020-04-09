@@ -41,8 +41,8 @@ public class TestParameterController {
   public ResponseEntity<Object> createTestParameter(
       @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
     for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
-      if ((testParameterService.isDuplicateRowExists(testParameterRequestDto.getParameterId(),
-          testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getUnitId()))) {
+      if ((testParameterService.isDuplicateEntryExist(testParameterRequestDto.getTestConfigureId(),
+          testParameterRequestDto.getParameterId(), testParameterRequestDto.getUnitId()))) {
         logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,
@@ -104,8 +104,8 @@ public class TestParameterController {
   public ResponseEntity<Object> updateTestParameter(
       @RequestBody TestParameterRequestDto testParameterRequestDto) {
     if (testParameterService.isTestParameterExist(testParameterRequestDto.getId())) {
-      if ((testParameterService.isDuplicateRowExists(testParameterRequestDto.getParameterId(),
-          testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getUnitId()))) {
+      if ((testParameterService.isDuplicateEntryExist(testParameterRequestDto.getTestConfigureId(),
+          testParameterRequestDto.getParameterId(), testParameterRequestDto.getUnitId()))) {
         logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,
