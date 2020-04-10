@@ -1,13 +1,18 @@
 package com.tokyo.supermix.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.StatusCountResponseDto;
+import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
+import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.IncomingSamplesCountService;
+import com.tokyo.supermix.util.Constants;
 
 @RestController
 @CrossOrigin
@@ -54,5 +59,11 @@ public class IncomingSamplesCountController {
     statusResponseDto.setNewCount(
         incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 3));
     return statusResponseDto;
+  }
+  
+ @GetMapping(value = EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY)
+    public ResponseEntity<Object> getincomingSampleCountByMaterialSubCategory(@PathVariable String materialSubCategoryName){
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,incomingSamplesCountService.getmaterialSampleCountByMaterialSubCategory(materialSubCategoryName)
+            ,RestApiResponseStatus.OK),HttpStatus.OK);
   }
 }

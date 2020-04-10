@@ -11,6 +11,7 @@ public interface MaterialSubCategoryRepository extends JpaRepository<MaterialSub
   boolean existsByName(String name);
 
   List<MaterialSubCategory> findByMaterialCategory(MaterialCategory materialCategory);
-
+  
+  public MaterialSubCategory findByName(String name);
   boolean existsByMaterialCategoryId(Long materialCategoryId);
 }
