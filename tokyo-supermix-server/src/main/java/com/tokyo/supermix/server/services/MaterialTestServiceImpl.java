@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
+import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
@@ -90,10 +91,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     Integer passCount = 0;
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
-
     List<TestConfigure> testConfigureList = testConfigureRepository
         .findByTestTypeAndCoreTest(testTypeRepository.findTestTypeByMaterialSubCategoryId(
             incomingSample.getRawMaterial().getMaterialSubCategory().getId()), true);
+    SieveTest seiveTest= sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode());
     for (TestConfigure testConfigure : testConfigureList) {
       for (MaterialTest materialTest : materialTestList) {
         if (testConfigure.getTest().getName()
@@ -111,11 +112,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
     if (incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
         .equalsIgnoreCase("Aggregates")) {
-      if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
-          .getStatus() == Status.PASS) {
+      if (seiveTest.getStatus() == Status.PASS) {
+        bodyMessage="Seive Test : " + seiveTest.getStatus() + "</li>";
         calculateTest(count, passCount, testConfigureList.size(), incomingSample,bodyMessage);
       }else if(sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
           .getStatus() == Status.FAIL) {
+        bodyMessage="Seive Test : " + seiveTest.getStatus() + "</li>";
         updateStatusSample(Status.FAIL, incomingSample,bodyMessage);
       }
     } else {
@@ -139,7 +141,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     incomingSampleRepository.save(incomingSample);
     emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
         Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
-        "<p>The Incoming Sample is " + status + " The Sample Code is <b>"
+        "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
             + incomingSample.getCode() + "</b>. This Sample arrived on "
             + incomingSample.getDate() + ". The Sample Material is <b>"
             + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage
