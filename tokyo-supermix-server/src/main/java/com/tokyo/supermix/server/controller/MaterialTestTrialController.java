@@ -22,6 +22,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -31,6 +32,8 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class MaterialTestTrialController {
   @Autowired
   private MaterialTestTrialService materialTestTrialService;
+  @Autowired
+  private MaterialTestService materialTestService;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -127,6 +130,8 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
     materialTestTrialService.getAverageAndStatus(materialTestCode);
+    materialTestService.updateIncomingSampleStatusByIncomingSampleCode(
+        materialTestService.getMaterialTestByCode(materialTestCode).getIncomingSample());
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
   }
