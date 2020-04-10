@@ -64,4 +64,9 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
   public boolean isMaterialCategoryIdExist(Long materialCategoryId) {
     return materialSubCategoryRepository.existsByMaterialCategoryId(materialCategoryId);
   }
+
+  @Transactional(readOnly = true)
+  public MaterialSubCategory getMaterialSubCategoryByName(String name) {
+    return materialSubCategoryRepository.findByName(name);
+  }
 }
