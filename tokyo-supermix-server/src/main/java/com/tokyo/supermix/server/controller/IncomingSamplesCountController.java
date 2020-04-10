@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.StatusCountResponseDto;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -78,7 +77,8 @@ public class IncomingSamplesCountController {
     if (materialSubCategoryService.isMaterialSubCategoryNameExist(materialSubCategoryName)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
           incomingSamplesCountService.getmaterialSampleCountByMaterialSubCategory(
-              materialSubCategoryService.getMaterialSubCategoryByName(materialSubCategoryName)),
+              materialSubCategoryService.getMaterialSubCategoryByName(materialSubCategoryName)
+                  .getId()),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
@@ -91,7 +91,7 @@ public class IncomingSamplesCountController {
     if (materialCategoryService.isNameExist(materialCategoryName)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
           incomingSamplesCountService.getmaterialSampleCountByMaterialCategory(
-              materialCategoryService.getMaterialCategoryByName(materialCategoryName)),
+              materialCategoryService.getMaterialCategoryByName(materialCategoryName).getId()),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(

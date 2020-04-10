@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.CountMaterialDto;
-import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.enums.Status;
@@ -48,39 +47,31 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
   }
 
   @Transactional(readOnly = true)
-  public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(
-      MaterialCategory materialCategory) {
+  public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(Long materialCategoryId) {
     final LocalDateTime today = LocalDateTime.now();
     java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
     List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
     List<MaterialSubCategory> materialSubCategories =
-        materialSubCategoryRepository.findByMaterialCategoryId(materialCategory.getId());
+        materialSubCategoryRepository.findByMaterialCategoryId(materialCategoryId);
     for (MaterialSubCategory materialSubCategory : materialSubCategories) {
       List<RawMaterial> rawMaterials =
           rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
-      for (RawMaterial material : rawMaterials) {
-        countMaterialDtoList.add(setFieldsCountMaterialDto(material, sqlDate));
+      for (RawMaterial rawMaterial : rawMaterials) {
+        Status status = null;
+        countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));
       }
     }
     return countMaterialDtoList;
   }
 
-  private CountMaterialDto setFieldsCountMaterialDto(RawMaterial material, Date date) {
-    CountMaterialDto countMaterialDto = new CountMaterialDto();
-    countMaterialDto.setMaterialName(material.getName());
-    countMaterialDto.setTotal(
-        incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(), date).size());
-    return countMaterialDto;
-  }
-
   @Transactional(readOnly = true)
   public List<CountMaterialDto> getmaterialSampleCountByMaterialSubCategory(
-      MaterialSubCategory materialSubCategory) {
+      Long materialSubCategoryId) {
     final LocalDateTime today = LocalDateTime.now();
     java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
     List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
     List<RawMaterial> rawMaterialList =
-        rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
+        rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
     for (RawMaterial rawMaterial : rawMaterialList) {
       Status status = null;
       countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));
@@ -104,5 +95,4 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
         .findByStatusAndRawMaterialIdAndDate(Status.PROCESS, rawMaterial.getId(), date).size());
     return countMaterialDto;
   }
-
 }
