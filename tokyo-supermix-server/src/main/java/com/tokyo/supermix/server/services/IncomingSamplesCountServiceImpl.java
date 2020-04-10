@@ -59,14 +59,16 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
       List<RawMaterial> rawMaterials =
           rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
       for (RawMaterial material : rawMaterials) {
-        CountMaterialDto countMaterialDto = new CountMaterialDto();
-        countMaterialDto.setMaterialName(material.getName());
-        countMaterialDto.setCount(
-            incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(),sqlDate).size());
-        countMaterialDtoList.add(countMaterialDto);
+        countMaterialDtoList.add(setFieldsCountMaterialDto(material,sqlDate));
       }
     }
     return countMaterialDtoList;
   }
-
+  private CountMaterialDto setFieldsCountMaterialDto(RawMaterial material,Date date){
+    CountMaterialDto countMaterialDto = new CountMaterialDto();
+    countMaterialDto.setMaterialName(material.getName());
+    countMaterialDto.setCount(
+        incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(),date).size());
+    return countMaterialDto;
+  }
 }
