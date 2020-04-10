@@ -45,20 +45,21 @@ public class TestConfigureController {
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   public ResponseEntity<Object> createTestConfigure(
-      @Valid @RequestBody TestConfigureRequestDto testRequestDto) {
-    if (testConfigureService.isDuplicateEntryExist(testRequestDto.getTestId(),
-        testRequestDto.getTestTypeId())) {
+      @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
+    if (testConfigureService.isDuplicateEntryExist(testConfigureRequestDto.getTestId(),
+        testConfigureRequestDto.getTestTypeId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    testConfigureService.saveTestConfigure(mapper.map(testRequestDto, TestConfigure.class));
+    testConfigureService
+        .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
         HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.TEST_CONFIGURES)
-  public ResponseEntity<Object> getAllTests() {
+  public ResponseEntity<Object> getAllTestConfigures() {
     List<TestConfigureResponseDto> testResponseDtoList =
         mapper.map(testConfigureService.getAllTestConfigures(), TestConfigureResponseDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE, testResponseDtoList,
@@ -79,22 +80,23 @@ public class TestConfigureController {
 
   @PutMapping(value = EndpointURI.TEST_CONFIGURE)
   public ResponseEntity<Object> updateTest(
-      @Valid @RequestBody TestConfigureRequestDto testRequestDto) {
-    if (testConfigureService.isTestConfigureExist(testRequestDto.getId())) {
-      if (testConfigureService.isDuplicateEntryExist(testRequestDto.getTestId(),
-          testRequestDto.getTestTypeId())) {
+      @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
+    if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
+      if (testConfigureService.isDuplicateEntryExist(testConfigureRequestDto.getTestId(),
+          testConfigureRequestDto.getTestTypeId())) {
         logger.debug("Test already exists: createTst(), testName: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_CONFIGURE,
                 validationFailureStatusCodes.getTestConfigureAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      testConfigureService.saveTestConfigure(mapper.map(testRequestDto, TestConfigure.class));
+      testConfigureService
+          .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Test record exist for given id");
+    logger.debug("No Test Configure record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -124,5 +126,26 @@ public class TestConfigureController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE_ID,
           validationFailureStatusCodes.getTestTypeNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_CORE_TEST)
+  public ResponseEntity<Object> getTestByCoreTest(@PathVariable boolean coreTest) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+        mapper.map(testConfigureService.findByCoreTest(coreTest), TestConfigureResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @PutMapping(value = EndpointURI.TEST_CONFIGURE_BY_ID_AND_CORE_TEST)
+  public ResponseEntity<Object> updateCoreTestTestConfigure(
+      @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
+    if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
+      testConfigureService.updateCoreTestForTestConfigure(testConfigureRequestDto.getId(),
+          testConfigureRequestDto.isCoreTest());
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

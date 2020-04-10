@@ -49,17 +49,22 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     return testConfigureRepository.findByTestTypeId(testTypeId);
   }
 
-  @Transactional(readOnly = true)
-  public boolean existsByTestIdAndTestTypeId(Long testId, Long testTypeId) {
-    return testConfigureRepository.existsByTestIdAndTestTypeId(testId, testTypeId);
-  }
-
   public boolean isDuplicateEntryExist(Long testId, Long testTypeId) {
-    if ((!findByTestTypeId(testTypeId).equals(testId))
-        && (existsByTestIdAndTestTypeId(testId, testTypeId))) {
+    if (testConfigureRepository.existsByTestIdAndTestTypeId(testId, testTypeId)) {
       return true;
     }
     return false;
   }
 
+  @Transactional
+  public void updateCoreTestForTestConfigure(Long id, boolean coreTest) {
+    TestConfigure testConfigure = testConfigureRepository.findById(id).get();
+    testConfigure.setCoreTest(coreTest);
+    testConfigureRepository.save(testConfigure);
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestConfigure> findByCoreTest(boolean coreTest) {
+    return testConfigureRepository.findByCoreTest(coreTest);
+  }
 }
