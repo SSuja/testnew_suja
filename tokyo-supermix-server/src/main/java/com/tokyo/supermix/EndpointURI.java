@@ -102,6 +102,10 @@ public final class EndpointURI {
   public static final String DELETE_TEST_CONFIGURE = TEST_CONFIGURE + ID;
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE_ID =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testTypeId}";
+  public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =
+	      TEST_CONFIGURE + SLASH + "core-test" + SLASH + "{coreTest}";
+  public static final String TEST_CONFIGURE_BY_ID_AND_CORE_TEST =
+	      TEST_CONFIGURE + SLASH + "core-test";
   /*
    * Material State
    */
