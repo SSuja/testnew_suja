@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.SieveTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestTypeRepository;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
 @Service
@@ -112,30 +113,37 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         .equalsIgnoreCase("Aggregates")) {
       if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
           .getStatus() == Status.PASS) {
-        calculateTest(count, passCount, testConfigureList.size(), incomingSample);
+        calculateTest(count, passCount, testConfigureList.size(), incomingSample,bodyMessage);
       }else if(sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
           .getStatus() == Status.FAIL) {
-        updateStatusSample(Status.FAIL, incomingSample);
+        updateStatusSample(Status.FAIL, incomingSample,bodyMessage);
       }
     } else {
-      calculateTest(count, passCount, testConfigureList.size(), incomingSample);
+      calculateTest(count, passCount, testConfigureList.size(), incomingSample,bodyMessage);
     }
   }
 
   private void calculateTest(Integer count, Integer passCount, Integer testSize,
-      IncomingSample incomingSample) {
+      IncomingSample incomingSample,String bodyMessage) {
     if (count == testSize) {
       if (passCount == count) {
-        updateStatusSample(Status.PASS, incomingSample);
+        updateStatusSample(Status.PASS, incomingSample,bodyMessage);
       } else {
-        updateStatusSample(Status.FAIL, incomingSample);
+        updateStatusSample(Status.FAIL, incomingSample,bodyMessage);
       }
     }
   }
 
-  private void updateStatusSample(Status status, IncomingSample incomingSample) {
+  private void updateStatusSample(Status status, IncomingSample incomingSample,String bodyMessage ) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
+    emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+        Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+        "<p>The Incoming Sample is " + status + " The Sample Code is <b>"
+            + incomingSample.getCode() + "</b>. This Sample arrived on "
+            + incomingSample.getDate() + ". The Sample Material is <b>"
+            + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage
+            + "</ul>");
   }
 
   public void updateIncomingSampleStatusBySeheduler() {
