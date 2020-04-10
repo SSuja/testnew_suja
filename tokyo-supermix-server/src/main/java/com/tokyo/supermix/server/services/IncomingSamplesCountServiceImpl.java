@@ -11,74 +11,98 @@ import com.tokyo.supermix.data.dto.CountMaterialDto;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 
 @Service
 public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountService {
-	@Autowired
-	IncomingSampleRepository incomingSampleRepository;
-	@Autowired
-	private RawMaterialRepository rawMaterialRepository;
-	@Autowired
-	private MaterialSubCategoryRepository materialSubCategoryRepository;
+  @Autowired
+  IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private MaterialSubCategoryRepository materialSubCategoryRepository;
 
-	@Transactional(readOnly = true)
-	public Long calculateMaterialSubCategoryCount(String materialSubCategoryName) {
-		return incomingSampleRepository.calculateMaterialSubCategoryCount(materialSubCategoryName);
-	}
+  @Transactional(readOnly = true)
+  public Long calculateMaterialSubCategoryCount(String materialSubCategoryName) {
+    return incomingSampleRepository.calculateMaterialSubCategoryCount(materialSubCategoryName);
+  }
 
-	@Transactional(readOnly = true)
-	public Long countByTotalMaterialCategoryIncomingSample(String materialCategoryName) {
-		return incomingSampleRepository.countByTotalMaterialCategoryIncomingSample(materialCategoryName);
-	}
+  @Transactional(readOnly = true)
+  public Long countByTotalMaterialCategoryIncomingSample(String materialCategoryName) {
+    return incomingSampleRepository
+        .countByTotalMaterialCategoryIncomingSample(materialCategoryName);
+  }
 
-	@Transactional(readOnly = true)
-	public Long getMaterialSubCategoryStatusCount(String materialSubCategoryName, int status) {
-		return incomingSampleRepository.getMaterialSubCategoryStatusCount(materialSubCategoryName, status);
-	}
+  @Transactional(readOnly = true)
+  public Long getMaterialSubCategoryStatusCount(String materialSubCategoryName, int status) {
+    return incomingSampleRepository.getMaterialSubCategoryStatusCount(materialSubCategoryName,
+        status);
+  }
 
-	@Transactional(readOnly = true)
-	public Long getMaterialCategoryStatusCount(String materialCategoryName, int status) {
-		return incomingSampleRepository.getMaterialCategoryStatusCount(materialCategoryName, status);
-	}
+  @Transactional(readOnly = true)
+  public Long getMaterialCategoryStatusCount(String materialCategoryName, int status) {
+    return incomingSampleRepository.getMaterialCategoryStatusCount(materialCategoryName, status);
+  }
 
-	@Transactional(readOnly = true)
-	public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(MaterialCategory materialCategory) {
-		final LocalDateTime today = LocalDateTime.now();
-		java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
-		List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
-		List<MaterialSubCategory> materialSubCategories = materialSubCategoryRepository
-				.findByMaterialCategoryId(materialCategory.getId());
-		for (MaterialSubCategory materialSubCategory : materialSubCategories) {
-			List<RawMaterial> rawMaterials = rawMaterialRepository
-					.findByMaterialSubCategoryId(materialSubCategory.getId());
-			for (RawMaterial material : rawMaterials) {
-				countMaterialDtoList.add(setFieldsCountMaterialDto(material, sqlDate));
-			}
-		}
-		return countMaterialDtoList;
-	}
+  @Transactional(readOnly = true)
+  public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(
+      MaterialCategory materialCategory) {
+    final LocalDateTime today = LocalDateTime.now();
+    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
+    List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
+    List<MaterialSubCategory> materialSubCategories =
+        materialSubCategoryRepository.findByMaterialCategoryId(materialCategory.getId());
+    for (MaterialSubCategory materialSubCategory : materialSubCategories) {
+      List<RawMaterial> rawMaterials =
+          rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
+      for (RawMaterial material : rawMaterials) {
+        countMaterialDtoList.add(setFieldsCountMaterialDto(material, sqlDate));
+      }
+    }
+    return countMaterialDtoList;
+  }
 
-	private CountMaterialDto setFieldsCountMaterialDto(RawMaterial material, Date date) {
-		CountMaterialDto countMaterialDto = new CountMaterialDto();
-		countMaterialDto.setMaterialName(material.getName());
-		countMaterialDto.setCount(incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(), date).size());
-		return countMaterialDto;
-	}
+  private CountMaterialDto setFieldsCountMaterialDto(RawMaterial material, Date date) {
+    CountMaterialDto countMaterialDto = new CountMaterialDto();
+    countMaterialDto.setMaterialName(material.getName());
+    countMaterialDto.setTotal(
+        incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(), date).size());
+    return countMaterialDto;
+  }
 
-	@Transactional(readOnly = true)
-	public List<CountMaterialDto> getmaterialSampleCountByMaterialSubCategory(String materialSubCategoryName) {
-		final LocalDateTime today = LocalDateTime.now();
-		java.sql.Date date = java.sql.Date.valueOf(today.toLocalDate());
-		List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
-		List<RawMaterial> rawMaterials = rawMaterialRepository
-				.findByMaterialSubCategoryId(materialSubCategoryRepository.findByName(materialSubCategoryName).getId());
-		for (RawMaterial material : rawMaterials) {
-			countMaterialDtoList.add(setFieldsCountMaterialDto(material, date));
-		}
-		return countMaterialDtoList;
-	}
+  @Transactional(readOnly = true)
+  public List<CountMaterialDto> getmaterialSampleCountByMaterialSubCategory(
+      MaterialSubCategory materialSubCategory) {
+    final LocalDateTime today = LocalDateTime.now();
+    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
+    List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
+    List<RawMaterial> rawMaterialList =
+        rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
+    for (RawMaterial rawMaterial : rawMaterialList) {
+      Status status = null;
+      countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));
+    }
+    return countMaterialDtoList;
+  }
+
+  private CountMaterialDto setFieldsStatusCountMaterialDto(RawMaterial rawMaterial, Date date,
+      Status status) {
+    CountMaterialDto countMaterialDto = new CountMaterialDto();
+    countMaterialDto.setMaterialName(rawMaterial.getName());
+    countMaterialDto.setTotal(
+        incomingSampleRepository.findByRawMaterialIdAndDate(rawMaterial.getId(), date).size());
+    countMaterialDto.setNewCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.NEW, rawMaterial.getId(), date).size());
+    countMaterialDto.setPassCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.PASS, rawMaterial.getId(), date).size());
+    countMaterialDto.setFailCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.FAIL, rawMaterial.getId(), date).size());
+    countMaterialDto.setProcessCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.PROCESS, rawMaterial.getId(), date).size());
+    return countMaterialDto;
+  }
 
 }
