@@ -85,17 +85,17 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
   private void compareWithAverage(Double average, String materialTestCode) {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    Long testId = materialTest.getTestConfigure().getId();
+    Long testConfigureId = materialTest.getTestConfigure().getId();
     if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
         .getMaterialCategory().getName().equalsIgnoreCase(Constants.ADMIXTURE)) {
       AdmixtureAcceptedValue admixtureAcceptedValue =
-          admixtureAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(testId,
+          admixtureAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(testConfigureId,
               materialTest.getIncomingSample().getRawMaterial().getId());
       calculateStatus(average, admixtureAcceptedValue.getMinValue(),
           admixtureAcceptedValue.getMaxValue(), materialTestCode);
     } else {
-      calculateStatus(average, acceptedValueRepository.findByTestConfigureId(testId).getMinValue(),
-          acceptedValueRepository.findByTestConfigureId(testId).getMaxValue(), materialTestCode);
+      calculateStatus(average, acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
+          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(), materialTestCode);
     }
   }
 

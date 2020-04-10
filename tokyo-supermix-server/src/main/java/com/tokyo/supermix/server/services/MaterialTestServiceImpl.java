@@ -31,7 +31,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   @Autowired
   private SieveTestRepository sieveTestRepository;
   @Autowired
-  private TestConfigureRepository testRepository;
+  private TestConfigureRepository testConfigureRepository;
   @Autowired
   private TestTypeRepository testTypeRepository;
 
@@ -94,8 +94,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     Status status = Status.NEW;
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
-    List<TestConfigure> testConfigureList =
-        testRepository.findByTestType(testTypeRepository.findTestTypeByMaterialSubCategoryId(
+    List<TestConfigure> testConfigureList = testConfigureRepository
+        .findByTestType(testTypeRepository.findTestTypeByMaterialSubCategoryId(
             incomingSample.getRawMaterial().getMaterialSubCategory().getId()));
     for (TestConfigure testConfigure : testConfigureList) {
       for (MaterialTest materialTest : materialTestList) {
