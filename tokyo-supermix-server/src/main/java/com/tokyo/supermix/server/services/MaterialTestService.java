@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
+import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 
 public interface MaterialTestService {
@@ -25,4 +25,6 @@ public interface MaterialTestService {
   public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId);
 
   public void updateIncomingSampleStatusBySeheduler();
+
+  public void updateIncomingSampleStatusByIncomingSampleCode(IncomingSample incomingSample);
 }
