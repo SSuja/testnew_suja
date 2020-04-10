@@ -113,11 +113,11 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
         .equalsIgnoreCase("Aggregates")) {
       if (seiveTest.getStatus() == Status.PASS) {
-        bodyMessage="Seive Test : " + seiveTest.getStatus() + "</li>";
+        bodyMessage = bodyMessage+"Seive Test : " + seiveTest.getStatus() + "</li>";
         calculateTest(count, passCount, testConfigureList.size(), incomingSample,bodyMessage);
       }else if(sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
           .getStatus() == Status.FAIL) {
-        bodyMessage="Seive Test : " + seiveTest.getStatus() + "</li>";
+        bodyMessage = bodyMessage+"Seive Test : " + seiveTest.getStatus() + "</li>";
         updateStatusSample(Status.FAIL, incomingSample,bodyMessage);
       }
     } else {
