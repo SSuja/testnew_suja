@@ -9,8 +9,7 @@ import com.tokyo.supermix.data.entities.MaterialSubCategory;
 
 public interface MaterialSubCategoryRepository extends JpaRepository<MaterialSubCategory, Long> {
   boolean existsByName(String name);
-
   List<MaterialSubCategory> findByMaterialCategory(MaterialCategory materialCategory);
-
   boolean existsByMaterialCategoryId(Long materialCategoryId);
+  List<MaterialSubCategory> findByMaterialCategoryId(Long materialCategoryId);
 }

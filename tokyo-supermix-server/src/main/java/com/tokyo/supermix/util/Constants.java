@@ -17,6 +17,8 @@ public class Constants {
   public static final String SUBJECT_NEW_MATERIAL_TEST="Notification : New Material Test";
   public static final String SUBJECT_NEW_SEIVE_TEST="Notification : New Seive Test";
   
+//for sample counts
+  public static final String SAMPLE_COUNTS = "sampleCounts";
 //for plants
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
