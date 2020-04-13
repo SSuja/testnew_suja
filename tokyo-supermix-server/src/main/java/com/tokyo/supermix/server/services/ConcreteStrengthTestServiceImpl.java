@@ -88,7 +88,7 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
           + "<li> Strength : " + concreteStrengthTest.getStrength() + "</li></ul>";
       emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
           Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
-    } else {
+    } else if (ratio > 0) {
       concreteStrengthTest.setStatus(Status.FAIL);
       String messsage = "Congrete Strength Test is " + concreteStrengthTest.getStatus()
           + " for the mixdesign code is " + concreteStrengthTest.getMixDesign().getCode()
