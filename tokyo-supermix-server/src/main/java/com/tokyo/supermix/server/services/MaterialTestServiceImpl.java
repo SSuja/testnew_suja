@@ -151,4 +151,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
             + incomingSample.getDate() + "</b>. The Sample Material is <b>"
             + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
   }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode) {
+    return materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+  }
 }

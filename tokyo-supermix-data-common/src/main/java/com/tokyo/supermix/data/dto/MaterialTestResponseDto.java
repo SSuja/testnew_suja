@@ -11,8 +11,7 @@ public class MaterialTestResponseDto {
   private String status;
   private String testLevel;
   private String incomingSampleCode;
-  private Long testConfigureId;
-  private String testName;
+  private TestConfigureResponseDto testConfigure;
   private Long materialStateId;
   private String materialState;
 
@@ -72,20 +71,12 @@ public class MaterialTestResponseDto {
     this.incomingSampleCode = incomingSampleCode;
   }
 
-  public Long getTestConfigureId() {
-    return testConfigureId;
+  public TestConfigureResponseDto getTestConfigure() {
+    return testConfigure;
   }
 
-  public void setTestConfigureId(Long testConfigureId) {
-    this.testConfigureId = testConfigureId;
-  }
-
-  public String getTestName() {
-    return testName;
-  }
-
-  public void setTestName(String testName) {
-    this.testName = testName;
+  public void setTestConfigure(TestConfigureResponseDto testConfigure) {
+    this.testConfigure = testConfigure;
   }
 
   public Long getMaterialStateId() {

@@ -24,6 +24,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -34,10 +35,10 @@ public class MaterialTestController {
 
   @Autowired
   MaterialTestService materialTestService;
-
+  @Autowired
+  private IncomingSampleService incomingSampleService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   Mapper mapper;
 
@@ -119,5 +120,20 @@ public class MaterialTestController {
     logger.debug("Id not found");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE)
+  public ResponseEntity<Object> getMaterialTestByIncomingSampleCode(
+      @PathVariable String incomingSampleCode) {
+    if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE_CODE,
+          mapper.map(materialTestService.findByIncomingSampleCode(incomingSampleCode),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Material Test record exist for given Incoming Sample Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+          validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }
