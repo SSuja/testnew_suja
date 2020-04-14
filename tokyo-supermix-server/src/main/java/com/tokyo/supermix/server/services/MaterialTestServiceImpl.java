@@ -37,10 +37,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional
   public void saveMaterialTest(MaterialTest materialTest) {
-    IncomingSample incomingSample = incomingSampleRepository
-        .findIncomingSampleByCode(materialTest.getIncomingSample().getCode());
-    incomingSample.setStatus(Status.PROCESS);
-    incomingSampleRepository.save(incomingSample);
     materialTest.setStatus(Status.NEW);
     materialTestRepository.save(materialTest);
   }
@@ -85,7 +81,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.existsByTestConfigure(testConfigureId);
   }
 
-  public void updateIncomingSampleStatusByIncomingSampleCode(IncomingSample incomingSample) {
+  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
     String bodyMessage = "";
     Integer count = 0;
     Integer passCount = 0;
@@ -112,13 +108,18 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
     if (incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
         .equalsIgnoreCase("Aggregates")) {
-      if (seiveTest.getStatus() == Status.PASS) {
-        bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
-        calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
-      } else if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
-          .getStatus() == Status.FAIL) {
-        bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
-        updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
+      if (seiveTest != null) {
+        if (seiveTest.getStatus() == Status.PASS) {
+          bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
+          calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
+        } else if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
+            .getStatus() == Status.FAIL) {
+          bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
+          updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
+        }
+      } else {
+        incomingSample.setStatus(Status.PROCESS);
+        incomingSampleRepository.save(incomingSample);
       }
     } else {
       calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
@@ -133,6 +134,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       } else {
         updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
       }
+    } else {
+      incomingSample.setStatus(Status.PROCESS);
+      incomingSampleRepository.save(incomingSample);
     }
   }
 
@@ -143,17 +147,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
         Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
         "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
-            + incomingSample.getCode() + "</b>. This Sample arrived on <b>" + incomingSample.getDate()
-            + "</b>. The Sample Material is <b>" + incomingSample.getRawMaterial().getName()
-            + "</b>.</p><ul>" + bodyMessage + "</ul>");
-  }
-
-  public void updateIncomingSampleStatusBySeheduler() {
-    List<IncomingSample> incomingSamplelist = incomingSampleRepository.findByStatus(Status.PROCESS);
-    for (IncomingSample incomingSample : incomingSamplelist) {
-      {
-        updateIncomingSampleStatusByIncomingSampleCode(incomingSample);
-      }
-    }
+            + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
+            + incomingSample.getDate() + "</b>. The Sample Material is <b>"
+            + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
   }
 }

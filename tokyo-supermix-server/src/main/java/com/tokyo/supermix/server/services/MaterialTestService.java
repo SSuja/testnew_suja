@@ -24,7 +24,5 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId);
 
-  public void updateIncomingSampleStatusBySeheduler();
-
-  public void updateIncomingSampleStatusByIncomingSampleCode(IncomingSample incomingSample);
+  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample);
 }
