@@ -25,8 +25,9 @@ public class Supplier implements Serializable {
   private String phoneNumber;
   private String email;
   @ManyToOne
-  @JoinColumn(name = "supplierCategoryId", nullable = false)
-  private SupplierCategory supplierCategory;
+  @JoinColumn(name = "suppilerCategoryId", nullable = false)
+  private SupplierCategory suppilerCategory;
+
 
   public Long getId() {
     return id;
@@ -76,12 +77,12 @@ public class Supplier implements Serializable {
     this.email = email;
   }
 
-  public SupplierCategory getSupplierCategory() {
-    return supplierCategory;
+  public SupplierCategory getSuppilerCategory() {
+    return suppilerCategory;
   }
 
-  public void setSupplierCategory(SupplierCategory supplierCategory) {
-    this.supplierCategory = supplierCategory;
+  public void setSuppilerCategory(SupplierCategory suppilerCategory) {
+    this.suppilerCategory = suppilerCategory;
   }
 
   public static long getSerialversionuid() {

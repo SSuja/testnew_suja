@@ -14,6 +14,6 @@ public interface SupplierService {
   public boolean isPhoneNumberExist(String phoneNumber);
   public boolean isUpdatedEmailExist(Long id, String email);
   public boolean isUpdatedPhoneNumberExist(Long id, String phoneNumber);
-  public List<Supplier> findBySupplierCategoryId(Long supplierCategoryId);
+  public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId);
 
 }

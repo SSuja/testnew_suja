@@ -117,10 +117,10 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
   public ResponseEntity<Object> getSupplierBySupplierCategoryId(
-      @PathVariable Long supplierCategoryId) {
-    if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryId)) {
+      @PathVariable Long suppilerCategoryId) {
+    if (supplierCategoryService.isSupplierCategoryExist(suppilerCategoryId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
-          mapper.map(supplierService.findBySupplierCategoryId(supplierCategoryId),
+          mapper.map(supplierService.findBySupplierCategoryId(suppilerCategoryId),
               SupplierResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {

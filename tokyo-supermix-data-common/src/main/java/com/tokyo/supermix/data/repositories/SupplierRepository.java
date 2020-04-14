@@ -9,5 +9,5 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
   boolean existsByPhoneNumber(String phoneNumber);
 
-  List<Supplier> findBySupplierCategoryId(Long supplierCategoryId);
+  List<Supplier> findBySuppilerCategoryId(Long suppilerCategoryId);
 }

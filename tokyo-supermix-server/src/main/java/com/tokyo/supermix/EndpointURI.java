@@ -45,7 +45,7 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
   public static final String DELETE_SUPPLIER = SUPPLIER + ID;
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
-      SUPPLIER + SLASH + "supplier-category" + SLASH + "{supplierCategoryId}";
+      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   /*
    * Employee apis
    */
