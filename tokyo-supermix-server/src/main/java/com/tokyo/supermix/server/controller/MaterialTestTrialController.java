@@ -130,7 +130,7 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
     materialTestTrialService.getAverageAndStatus(materialTestCode);
-    materialTestService.updateIncomingSampleStatusByIncomingSampleCode(
+    materialTestService.updateIncomingSampleStatusByIncomingSample(
         materialTestService.getMaterialTestByCode(materialTestCode).getIncomingSample());
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);

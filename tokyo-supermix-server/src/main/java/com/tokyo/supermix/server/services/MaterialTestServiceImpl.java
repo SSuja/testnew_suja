@@ -83,7 +83,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.existsByTestConfigure(testConfigureId);
   }
 
-  public void updateIncomingSampleStatusByIncomingSampleCode(IncomingSample incomingSample) {
+  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
     String bodyMessage = "";
     Integer count = 0;
     Integer passCount = 0;
@@ -109,16 +109,18 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     }
 
     if (incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
-        .equalsIgnoreCase("Aggregates")) {
-      if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
-          .getStatus() == Status.PASS) {
-        calculateTest(count, passCount, testConfigureList.size(), incomingSample);
-      }else if(sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
+        .equalsIgnoreCase("Aggregates") && seiveTest!=null) {
+      if (seiveTest.getStatus() == Status.PASS ) {
+        bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
+        calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
+      } else if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
           .getStatus() == Status.FAIL) {
         updateStatusSample(Status.FAIL, incomingSample);
       }
     } else {
       calculateTest(count, passCount, testConfigureList.size(), incomingSample);
+     }else {
+      calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
     }
   }
 
@@ -142,7 +144,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     List<IncomingSample> incomingSamplelist = incomingSampleRepository.findByStatus(Status.PROCESS);
     for (IncomingSample incomingSample : incomingSamplelist) {
       {
-        updateIncomingSampleStatusByIncomingSampleCode(incomingSample);
+        updateIncomingSampleStatusByIncomingSample(incomingSample);
       }
     }
   }

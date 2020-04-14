@@ -28,6 +28,8 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   private FinenessModulusRepository finenessModulusRepository;
   @Autowired
   private SieveTestRepository sieveTestRepository;
+  @Autowired
+  private MaterialTestService materialTestService;
 
   @Transactional
   public void saveSieveTestTrial(List<SieveTestTrial> sieveTestTrials) {
@@ -141,5 +143,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
             + "</b>. This Sample arrived on " + incomingSample.getDate()
             + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName()
             + "</b>.");
+    materialTestService.updateIncomingSampleStatusByIncomingSample(incomingSample);
+        
   }
 }

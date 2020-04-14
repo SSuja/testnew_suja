@@ -26,5 +26,5 @@ public interface MaterialTestService {
 
   public void updateIncomingSampleStatusBySeheduler();
 
-  public void updateIncomingSampleStatusByIncomingSampleCode(IncomingSample incomingSample);
+  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample);
 }
