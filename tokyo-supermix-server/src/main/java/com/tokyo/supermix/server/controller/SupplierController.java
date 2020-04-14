@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -32,6 +33,8 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class SupplierController {
   @Autowired
   private SupplierService supplierService;
+  @Autowired
+  private SupplierCategoryService supplierCategoryService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -110,5 +113,20 @@ public class SupplierController {
     logger.debug("No Supplier record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
+  public ResponseEntity<Object> getSupplierBySupplierCategoryId(
+      @PathVariable Long supplierCategoryId) {
+    if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+          mapper.map(supplierService.findBySupplierCategoryId(supplierCategoryId),
+              SupplierResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Supplier record exist for given Supplier Category id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+          validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

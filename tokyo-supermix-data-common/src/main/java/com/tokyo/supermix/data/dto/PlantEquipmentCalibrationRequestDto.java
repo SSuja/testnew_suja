@@ -103,4 +103,13 @@ public class PlantEquipmentCalibrationRequestDto {
   public void setStatus(String status) {
     this.status = status;
   }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
 }
