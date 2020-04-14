@@ -52,15 +52,16 @@ public class ConcreteMixerController {
   public ResponseEntity<Object> createConcreteMixer(
       @Valid @RequestBody List<ConcreteMixerRequestDto> concreteMixerDtoList) {
     for (ConcreteMixerRequestDto concreteMixerDto : concreteMixerDtoList) {
-      if (concreteMixerService.isConcreteMixerExist(concreteMixerDto.getName())) {
+      if (concreteMixerService.isDuplicateEntryExist(concreteMixerDto.getName(),
+          concreteMixerDto.getPlantCode())) {
         logger.debug("Already Exists");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.CONCRETE_MIXER,
                 validationFailureStatusCodes.getConcreteMixerAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
+      concreteMixerService.saveConcreteMixer(mapper.map(concreteMixerDto, ConcreteMixer.class));
     }
-    concreteMixerService.saveConcreteMixer(mapper.map(concreteMixerDtoList, ConcreteMixer.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_MIXER_SUCCESS),
         HttpStatus.OK);
@@ -107,14 +108,15 @@ public class ConcreteMixerController {
   public ResponseEntity<Object> updateConcreteMixer(
       @Valid @RequestBody ConcreteMixerRequestDto concreteMixerDto) {
     if (concreteMixerService.isConcreteMixerExist(concreteMixerDto.getId())) {
-      if (concreteMixerService.isUpdatedConcreteMixerNameExist(concreteMixerDto.getId(),
-          concreteMixerDto.getName())) {
+      if (concreteMixerService.isDuplicateEntryExist(concreteMixerDto.getName(),
+          concreteMixerDto.getPlantCode())) {
+        logger.debug("Already Exists");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.CONCRETE_MIXER,
                 validationFailureStatusCodes.getConcreteMixerAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      concreteMixerService.updateConcreteMixer(mapper.map(concreteMixerDto, ConcreteMixer.class));
+      concreteMixerService.saveConcreteMixer(mapper.map(concreteMixerDto, ConcreteMixer.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CONCRETE_MIXER_SUCCESS),
           HttpStatus.OK);

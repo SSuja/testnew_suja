@@ -14,8 +14,8 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
   private ConcreteMixerRepository concreteMixerRepository;
 
   @Transactional
-  public void saveConcreteMixer(List<ConcreteMixer> concreteMixer) {
-    concreteMixerRepository.saveAll(concreteMixer);
+  public void saveConcreteMixer(ConcreteMixer concreteMixer) {
+    concreteMixerRepository.save(concreteMixer);
   }
 
   @Transactional(readOnly = true)
@@ -34,21 +34,8 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isConcreteMixerExist(String name) {
-    return concreteMixerRepository.existsByName(name);
-  }
-
-  @Transactional(readOnly = true)
   public ConcreteMixer getConcreteMixerById(Long id) {
     return concreteMixerRepository.findById(id).get();
-  }
-
-  public boolean isUpdatedConcreteMixerNameExist(Long id, String name) {
-    if ((!getConcreteMixerById(id).getName().equalsIgnoreCase(name))
-        && (isConcreteMixerExist(name))) {
-      return true;
-    }
-    return false;
   }
 
   @Transactional(readOnly = true)
@@ -56,9 +43,11 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
     return concreteMixerRepository.findByPlantCode(plantCode);
   }
 
-  @Transactional
-  public void updateConcreteMixer(ConcreteMixer concreteMixer) {
-    concreteMixerRepository.save(concreteMixer);
+  @Transactional(readOnly = true)
+  public boolean isDuplicateEntryExist(String name, String plantCode) {
+    if (concreteMixerRepository.existsByNameAndPlantCode(name, plantCode)) {
+      return true;
+    }
+    return false;
   }
-
 }
