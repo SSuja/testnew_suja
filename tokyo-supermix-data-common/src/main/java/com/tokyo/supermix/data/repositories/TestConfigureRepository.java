@@ -13,4 +13,6 @@ public interface TestConfigureRepository extends JpaRepository<TestConfigure, Lo
   List<TestConfigure> findByTestTypeId(Long testTypeId);
 
   List<TestConfigure> findByTestTypeAndCoreTest(TestType testType, boolean coreTest);
+
+  List<TestConfigure> findByCoreTest(boolean coreTest);
 }

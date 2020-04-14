@@ -1,14 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestResponseDto;
@@ -123,11 +119,5 @@ public class MaterialTestController {
     logger.debug("Id not found");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
-   //@Scheduled(cron = "0 0/20 * * * ?")
-  //@Scheduled(fixedRate = 20000)
-  public void scheduleTaskWithFixedRate() {
-    materialTestService.updateIncomingSampleStatusBySeheduler();
   }
 }

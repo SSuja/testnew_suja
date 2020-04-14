@@ -13,8 +13,6 @@ public interface TestConfigureService {
 
   public TestConfigure getTestConfigureById(Long id);
 
-  boolean existsByTestIdAndTestTypeId(Long testId, Long testTypeId);
-
   public boolean isDuplicateEntryExist(Long testId, Long testTypeId);
 
   public void deleteTestConfigure(Long id);
@@ -22,4 +20,8 @@ public interface TestConfigureService {
   public List<TestConfigure> getTestConfigureByTestType(TestType testType);
 
   public List<TestConfigure> findByTestTypeId(Long testTypeId);
+
+  public void updateCoreTestForTestConfigure(Long id, boolean coreTest);
+
+  public List<TestConfigure> findByCoreTest(boolean coreTest);
 }
