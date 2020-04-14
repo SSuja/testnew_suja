@@ -44,6 +44,8 @@ public final class EndpointURI {
   public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
   public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
   public static final String DELETE_SUPPLIER = SUPPLIER + ID;
+  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
+      SUPPLIER + SLASH + "supplier-category" + SLASH + "{supplierCategoryId}";
   /*
    * Employee apis
    */
@@ -103,9 +105,9 @@ public final class EndpointURI {
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE_ID =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testTypeId}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =
-	      TEST_CONFIGURE + SLASH + "core-test" + SLASH + "{coreTest}";
+      TEST_CONFIGURE + SLASH + "core-test" + SLASH + "{coreTest}";
   public static final String TEST_CONFIGURE_BY_ID_AND_CORE_TEST =
-	      TEST_CONFIGURE + SLASH + "core-test";
+      TEST_CONFIGURE + SLASH + "core-test";
   /*
    * Material State
    */
@@ -423,14 +425,15 @@ public final class EndpointURI {
       + SLASH + "material-sub-category-status-count" + SLASH + "{materialSubCategoryName}";
   public static final String MATERIAL_CATEGORY_STATUS_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH
       + "material-category-status-count" + SLASH + "{materialCategoryName}";
-public static final String INCOMING_SAMPLES_COUNT_BY_MATERIAL =
+  public static final String INCOMING_SAMPLES_COUNT_BY_MATERIAL =
       BASE_API_PATH + "incoming-samples-count-by-material";
-  public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY=
-      INCOMING_SAMPLES_COUNT_BY_MATERIAL  + SLASH + "{materialCategoryName}";
-  
-  public static final String SUB_CATEGORY ="materialSubCategory";
-      public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY =
-		  INCOMING_SAMPLES_COUNT_BY_MATERIAL  + SLASH + SUB_CATEGORY+ SLASH + "{materialSubCategoryName}";
+  public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY =
+      INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + "{materialCategoryName}";
+
+  public static final String SUB_CATEGORY = "materialSubCategory";
+  public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY =
+      INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + SUB_CATEGORY + SLASH
+          + "{materialSubCategoryName}";
 
   private EndpointURI() {}
 }

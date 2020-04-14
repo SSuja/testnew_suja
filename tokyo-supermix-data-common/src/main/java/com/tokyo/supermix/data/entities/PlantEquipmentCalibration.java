@@ -40,6 +40,9 @@ public class PlantEquipmentCalibration implements Serializable {
   @ManyToOne
   @JoinColumn(name = "employeeId", nullable = true)
   private Employee employee;
+  @ManyToOne
+  @JoinColumn(name = "supplierCategoryId", nullable = false)
+  private SupplierCategory supplierCategory;
 
   public Employee getEmployee() {
     return employee;
@@ -119,6 +122,14 @@ public class PlantEquipmentCalibration implements Serializable {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public SupplierCategory getSupplierCategory() {
+    return supplierCategory;
+  }
+
+  public void setSupplierCategory(SupplierCategory supplierCategory) {
+    this.supplierCategory = supplierCategory;
   }
 
   public static long getSerialversionuid() {

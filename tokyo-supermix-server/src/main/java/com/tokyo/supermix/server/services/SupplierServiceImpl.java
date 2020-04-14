@@ -69,4 +69,9 @@ public class SupplierServiceImpl implements SupplierService {
     return false;
   }
 
+  @Transactional(readOnly = true)
+  public List<Supplier> findBySupplierCategoryId(Long supplierCategoryId) {
+    return supplierRepository.findBySupplierCategoryId(supplierCategoryId);
+  }
+
 }

@@ -23,6 +23,7 @@ public class PlantEquipmentCalibrationRequestDto {
   @NotEmpty(message = "{plantEquipmentCalibrationRequestDto.status.empty}")
   private String status;
   private Long employeeId;
+  private Long supplierCategoryId;
 
   public Long getEmployeeId() {
     return employeeId;
@@ -103,4 +104,21 @@ public class PlantEquipmentCalibrationRequestDto {
   public void setStatus(String status) {
     this.status = status;
   }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
+  public Long getSupplierCategoryId() {
+    return supplierCategoryId;
+  }
+
+  public void setSupplierCategoryId(Long supplierCategoryId) {
+    this.supplierCategoryId = supplierCategoryId;
+  }
+
 }

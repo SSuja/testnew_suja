@@ -16,7 +16,7 @@ public class SupplierRequestDto {
   @NotNull(message = "{supplierRequestDto.email.null}")
   @NotEmpty(message = "{supplierRequestDto.email.empty}")
   private String email;
-  private Long suppilerCategoryId;
+  private Long supplierCategoryId;
 
   public Long getId() {
     return id;
@@ -66,12 +66,12 @@ public class SupplierRequestDto {
     this.email = email;
   }
 
-  public Long getSuppilerCategoryId() {
-    return suppilerCategoryId;
+  public Long getSupplierCategoryId() {
+    return supplierCategoryId;
   }
 
-  public void setSuppilerCategoryId(Long suppilerCategoryId) {
-    this.suppilerCategoryId = suppilerCategoryId;
+  public void setSupplierCategoryId(Long supplierCategoryId) {
+    this.supplierCategoryId = supplierCategoryId;
   }
 
 }
