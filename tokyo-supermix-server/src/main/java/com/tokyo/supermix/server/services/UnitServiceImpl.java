@@ -21,7 +21,7 @@ public class UnitServiceImpl implements UnitService {
 
 	@Transactional(readOnly = true)
 	public List<Unit> getAllUnits() {
-		return unitRepository.findAll();
+		return unitRepository.findAllByOrderByIdDesc();
 	}
 
 	@Transactional(propagation = Propagation.NEVER)

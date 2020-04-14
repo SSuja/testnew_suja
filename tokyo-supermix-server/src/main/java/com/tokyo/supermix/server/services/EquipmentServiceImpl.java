@@ -25,7 +25,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
   @Transactional(readOnly = true)
   public List<Equipment> getAllEquipments() {
-    return equipmentRepository.findAll();
+    return equipmentRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)

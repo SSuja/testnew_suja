@@ -12,4 +12,6 @@ public interface TestTypeRepository extends JpaRepository<TestType, Long> {
   List<TestType> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
   TestType findTestTypeByMaterialSubCategoryId(Long materialSubCategoryId);
+  List<TestType> findAllByOrderByIdDesc();
+
 }

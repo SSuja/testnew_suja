@@ -22,7 +22,7 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration() {
-    return plantEquipmentCalibrationRepository.findAll();
+    return plantEquipmentCalibrationRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)

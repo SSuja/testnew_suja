@@ -17,7 +17,7 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 
   @Transactional(readOnly = true)
   public List<MaterialSubCategory> getMaterialSubCategories() {
-    return materialSubCategoryRepository.findAll();
+    return materialSubCategoryRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)

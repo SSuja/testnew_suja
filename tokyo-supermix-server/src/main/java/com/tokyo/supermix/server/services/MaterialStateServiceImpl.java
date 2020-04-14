@@ -31,7 +31,7 @@ public class MaterialStateServiceImpl implements MaterialStateService {
 
   @Transactional(readOnly = true)
   public List<MaterialState> getAllMaterialStates() {
-    return materialStateRepository.findAll();
+    return materialStateRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)

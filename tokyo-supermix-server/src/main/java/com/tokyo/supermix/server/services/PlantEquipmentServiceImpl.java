@@ -22,7 +22,7 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipments() {
 
-    return PlantEquipmentRepository.findAll();
+    return PlantEquipmentRepository.findAllByOrderBySerialNoDesc();
   }
 
   @Transactional(propagation = Propagation.NEVER)

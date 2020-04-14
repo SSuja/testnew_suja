@@ -30,7 +30,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public List<RawMaterial> getAllRawMaterials() {
-    return rawMaterialRepository.findAll();
+    return rawMaterialRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)

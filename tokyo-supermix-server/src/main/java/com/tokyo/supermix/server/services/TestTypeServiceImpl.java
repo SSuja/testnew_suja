@@ -16,7 +16,7 @@ public class TestTypeServiceImpl implements TestTypeService {
 
   @Transactional(readOnly = true)
   public List<TestType> getAllTestTypes() {
-    return testTypeRepository.findAll();
+    return testTypeRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)

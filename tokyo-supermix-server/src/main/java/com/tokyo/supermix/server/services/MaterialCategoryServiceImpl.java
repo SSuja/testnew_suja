@@ -25,7 +25,7 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
 
   @Transactional(readOnly = true)
   public List<MaterialCategory> getAllMainCategories() {
-    return materialCategoryRepository.findAll();
+    return materialCategoryRepository.findAllByOrderByIdDesc();
   }
 
   @Transactional(readOnly = true)
