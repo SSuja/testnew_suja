@@ -307,6 +307,8 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_BY_TEST_CONFIGURE =
       MATERIAL_TESTS + "/test-configure" + TEST_CONFIGURE_ID;
   public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
+  public static final String MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE =
+      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
   /*
    * material-test-trial
    * 
