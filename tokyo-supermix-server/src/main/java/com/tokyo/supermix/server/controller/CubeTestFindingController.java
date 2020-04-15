@@ -120,12 +120,12 @@ public class CubeTestFindingController {
     }
   }
 
-  @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_CONCRETE_TEST_ELEMENT_ID)
-  public ResponseEntity<Object> getCubeTestFindingByConcreteTestElementId(
-      @PathVariable Long concreteTestElementId) {
-    if (cubeTestFindingService.existsByConcreteTestElementId(concreteTestElementId)) {
+  @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_CONCRETE_TEST_ID)
+  public ResponseEntity<Object> getCubeTestFindingByConcreteTestId(
+      @PathVariable Long concreteTestId) {
+    if (cubeTestFindingService.existsByConcreteTestId(concreteTestId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_ELEMENT_ID,
-          mapper.map(cubeTestFindingService.findByConcreteTestElementId(concreteTestElementId),
+          mapper.map(cubeTestFindingService.findByConcreteTestId(concreteTestId),
               CubeTestFindingResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {

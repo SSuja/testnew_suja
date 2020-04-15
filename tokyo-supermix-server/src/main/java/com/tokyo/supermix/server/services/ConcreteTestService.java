@@ -1,14 +1,14 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.ConcreteTest;
+import com.tokyo.supermix.data.entities.ConcreteTestOld;
 
 public interface ConcreteTestService {
-  public ConcreteTest saveConcreteTest(ConcreteTest concreteTest);
+  public ConcreteTestOld saveConcreteTest(ConcreteTestOld concreteTest);
 
-  public List<ConcreteTest> getAllConcreteTest();
+  public List<ConcreteTestOld> getAllConcreteTest();
 
-  public ConcreteTest getConcreteTestById(Long id);
+  public ConcreteTestOld getConcreteTestById(Long id);
 
   public void deleteConcreteTest(Long id);
 

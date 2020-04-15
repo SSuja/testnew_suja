@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.ConcreteTest;
+import com.tokyo.supermix.data.entities.ConcreteTestOld;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteTestRepository;
@@ -23,11 +23,11 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
   private MixDesignProportionRepository mixDesignProportionRepository;
 
   @Transactional
-  public ConcreteTest saveConcreteTest(ConcreteTest concreteTest) {
+  public ConcreteTestOld saveConcreteTest(ConcreteTestOld concreteTest) {
     return concreteTestRepository.save(calculateRatio(concreteTest));
   }
 
-  public ConcreteTest calculateRatio(ConcreteTest concreteTest) {
+  public ConcreteTestOld calculateRatio(ConcreteTestOld concreteTest) {
     List<MixDesignProportion> mixDesignProportionList =
         mixDesignProportionRepository.findByMixDesignCode(concreteTest.getMixDesign().getCode());
     Long quantity = null;
@@ -87,12 +87,12 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<ConcreteTest> getAllConcreteTest() {
+  public List<ConcreteTestOld> getAllConcreteTest() {
     return concreteTestRepository.findAll();
   }
 
   @Transactional(readOnly = true)
-  public ConcreteTest getConcreteTestById(Long id) {
+  public ConcreteTestOld getConcreteTestById(Long id) {
     return concreteTestRepository.findById(id).get();
   }
 

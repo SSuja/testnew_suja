@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,12 +20,13 @@ public class CubeTestFinding implements Serializable {
   private Long cubeNo;
   private Long age;
   private Double value;
+  private Date date;
   @ManyToOne
   @JoinColumn(name = "finishProductSampleId", nullable = false)
   private FinishProductSample finishProductSample;
   @ManyToOne
-  @JoinColumn(name = "concreteTestElementId", nullable = false)
-  private ConcreteTestElement concreteTestElement;
+  @JoinColumn(name = "concreteTestId", nullable = false)
+  private ConcreteTest concreteTest;
 
   public Long getId() {
     return id;
@@ -58,6 +60,14 @@ public class CubeTestFinding implements Serializable {
     this.value = value;
   }
 
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
   public FinishProductSample getFinishProductSample() {
     return finishProductSample;
   }
@@ -66,12 +76,12 @@ public class CubeTestFinding implements Serializable {
     this.finishProductSample = finishProductSample;
   }
 
-  public ConcreteTestElement getConcreteTestElement() {
-    return concreteTestElement;
+  public ConcreteTest getConcreteTest() {
+    return concreteTest;
   }
 
-  public void setConcreteTestElement(ConcreteTestElement concreteTestElement) {
-    this.concreteTestElement = concreteTestElement;
+  public void setConcreteTest(ConcreteTest concreteTest) {
+    this.concreteTest = concreteTest;
   }
 
   public static long getSerialversionuid() {

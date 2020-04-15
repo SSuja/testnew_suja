@@ -18,9 +18,9 @@ public interface CubeTestFindingService {
 
   public List<CubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId);
 
-  public List<CubeTestFinding> findByConcreteTestElementId(Long concreteTestElementId);
+  public List<CubeTestFinding> findByConcreteTestId(Long concreteTestId);
 
   public boolean existsByFinishProductSampleId(Long finishProductSampleId);
 
-  public boolean existsByConcreteTestElementId(Long concreteTestElementId);
+  public boolean existsByConcreteTestId(Long concreteTestId);
 }

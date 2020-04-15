@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class ConcreteTestRequestDto {
+public class ConcreteTestOldRequestDto {
   private Long id;
   @NotNull(message = "{concreteTestRequestDto.mixDesignCode.null}")
   @NotEmpty(message = "{concreteTestRequestDto.mixDesignCode.empty}")

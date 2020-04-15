@@ -7,10 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "finish_product_sample_issues")
+@Table(schema = "tokyo-supermix", name = "finish_product_sample_issue")
 public class FinishProductSampleIssue implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
@@ -23,6 +24,9 @@ public class FinishProductSampleIssue implements Serializable {
   @ManyToOne
   @JoinColumn(name = "projectCode", nullable = false)
   private Project project;
+  @OneToOne
+  @JoinColumn(name = "pourId", nullable = false)
+  private Pour pour;
 
   public Long getId() {
     return id;
@@ -54,6 +58,14 @@ public class FinishProductSampleIssue implements Serializable {
 
   public void setProject(Project project) {
     this.project = project;
+  }
+
+  public Pour getPour() {
+    return pour;
+  }
+
+  public void setPour(Pour pour) {
+    this.pour = pour;
   }
 
   public static long getSerialversionuid() {
