@@ -997,7 +997,17 @@ public class ValidationFailureStatusCodes {
   private String projectNotExist;
 
   // for concreteTest
-  @Value("${validation.concreteTest.notExists}")
+  @Value("${validation.concreteTest.alreadyExists}")
+  private String concreteTestAlreadyExists;
+  public String getConcreteTestAlreadyExists() {
+	return concreteTestAlreadyExists;
+}
+
+public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
+	this.concreteTestAlreadyExists = concreteTestAlreadyExists;
+}
+
+@Value("${validation.concreteTest.notExists}")
   private String concreteTestNotExist;
 
   public String getConcreteTestNotExist() {

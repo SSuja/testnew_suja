@@ -251,9 +251,9 @@ public final class EndpointURI {
    * concreteTest
    * 
    */
-  public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
-  public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
-  public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
+  public static final String CONCRETE_TEST_OLD = BASE_API_PATH + "concrete-test-old";
+  public static final String CONCRETE_TESTS_OLD = BASE_API_PATH + "concrete-tests-old";
+  public static final String CONCRETE_TEST_BY_ID_OLD = CONCRETE_TEST_OLD + ID;
 
   /*
    * Finish Product APIs
@@ -433,6 +433,14 @@ public final class EndpointURI {
       + "material-sub-category" + SLASH + "{materialSubCategoryName}";
   public static final String MATERIAL_CATEGORY_STATUS_COUNT =
       INCOMING_SAMPLES_COUNT + SLASH + "material-category" + SLASH + "{materialCategoryName}";
+  
+  /*
+   * concreteTest
+   * 
+   */
+  public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
+  public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
+  public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
 
   private EndpointURI() {}
 }
