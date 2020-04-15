@@ -21,7 +21,7 @@ public class ConcreteTestResult implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private Double slump;
-  private String temperature;
+  private Double temperature;
   private Double waterContent;
   private Double slumpGradeRatio;
   private Double waterCementRatio;
@@ -55,11 +55,11 @@ public class ConcreteTestResult implements Serializable {
     this.slump = slump;
   }
 
-  public String getTemperature() {
+  public Double getTemperature() {
     return temperature;
   }
 
-  public void setTemperature(String temperature) {
+  public void setTemperature(Double temperature) {
     this.temperature = temperature;
   }
 

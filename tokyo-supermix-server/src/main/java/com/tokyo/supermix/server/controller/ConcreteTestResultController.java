@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-public class ConcreteTestController {
+public class ConcreteTestResultController {
 
 }
