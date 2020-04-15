@@ -24,22 +24,11 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
-
-  @Transactional(readOnly = true)
-  public Long countByTotalMaterialCategoryIncomingSample(String materialCategoryName) {
-    return incomingSampleRepository
-        .countByTotalMaterialCategoryIncomingSample(materialCategoryName);
-  }
-
-  @Transactional(readOnly = true)
-  public Long getMaterialCategoryStatusCount(String materialCategoryName, int status) {
-    return incomingSampleRepository.getMaterialCategoryStatusCount(materialCategoryName, status);
-  }
+  private LocalDateTime today = LocalDateTime.now();
+  java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
 
   @Transactional(readOnly = true)
   public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(Long materialCategoryId) {
-    final LocalDateTime today = LocalDateTime.now();
-    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
     List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
     List<MaterialSubCategory> materialSubCategories =
         materialSubCategoryRepository.findByMaterialCategoryId(materialCategoryId);
@@ -57,8 +46,6 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
   @Transactional(readOnly = true)
   public List<CountMaterialDto> getmaterialSampleCountByMaterialSubCategory(
       Long materialSubCategoryId) {
-    final LocalDateTime today = LocalDateTime.now();
-    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
     List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
     List<RawMaterial> rawMaterialList =
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
@@ -88,8 +75,6 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
 
   @Transactional(readOnly = true)
   public List<StatusCountResponseDto> getCountByMaterialSubCategory(Long materialSubCategoryId) {
-    final LocalDateTime today = LocalDateTime.now();
-    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
     List<StatusCountResponseDto> statusCountResponseDtoList =
         new ArrayList<StatusCountResponseDto>();
     List<RawMaterial> rawMaterialList =
@@ -119,6 +104,20 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
             materialSubCategoryId, sqlDate, Status.PROCESS).size());
     return statusCountResponseDto;
 
+  }
+
+  @Override
+  public List<StatusCountResponseDto> getCountByMaterialCategory(Long materialCategoryId) {
+    List<StatusCountResponseDto> statusCountResponseDtoList =
+        new ArrayList<StatusCountResponseDto>();
+    List<MaterialSubCategory> materialSubCategories =
+        materialSubCategoryRepository.findByMaterialCategoryId(materialCategoryId);
+    List<RawMaterial> rawMaterialList =
+        rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategories.get(0).getId());
+    Status status = null;
+    statusCountResponseDtoList.add(setFieldsStatusMaterialSubCategory(
+        rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status));
+    return statusCountResponseDtoList;
   }
 
 }

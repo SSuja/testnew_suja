@@ -29,27 +29,6 @@ public class IncomingSamplesCountController {
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
 
-  @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_TOTAL_COUNT)
-  public Long getIncomingSampleByMaterialCategory(@PathVariable String materialCategoryName) {
-    return incomingSamplesCountService
-        .countByTotalMaterialCategoryIncomingSample(materialCategoryName);
-  }
-
-  // @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_STATUS_TOTAL_COUNT)
-  // public StatusCountResponseDto getIncomingSampleStatusByMaterialCategory(
-  // @PathVariable String materialCategoryName) {
-  // StatusCountResponseDto statusResponseDto = new StatusCountResponseDto();
-  // statusResponseDto.setPassCount(
-  // incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 0));
-  // statusResponseDto.setProcessCount(
-  // incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 1));
-  // statusResponseDto.setFailCount(
-  // incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 2));
-  // statusResponseDto.setNewCount(
-  // incomingSamplesCountService.getMaterialCategoryStatusCount(materialCategoryName, 3));
-  // return statusResponseDto;
-  // }
-
   @GetMapping(value = EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getincomingSampleCountByMaterialSubCategory(
       @PathVariable String materialSubCategoryName) {
@@ -90,5 +69,20 @@ public class IncomingSamplesCountController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT)
+  public ResponseEntity<Object> getCountByMaterialCategory(
+      @PathVariable String materialCategoryName) {
+    if (materialCategoryService.isNameExist(materialCategoryName)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
+          incomingSamplesCountService.getCountByMaterialCategory(
+              materialCategoryService.getMaterialCategoryByName(materialCategoryName).getId()),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_NAME,
+            validationFailureStatusCodes.getMaterialCategoryAlreadyExist()),
+        HttpStatus.BAD_REQUEST);
   }
 }
