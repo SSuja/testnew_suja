@@ -1,40 +1,50 @@
 package com.tokyo.supermix.data.dto;
 
 public class StatusCountResponseDto {
-  private Long passCount;
-  private Long newCount;
-  private Long processCount;
-  private Long failCount;
+  private int total;
+  private int passCount;
+  private int newCount;
+  private int processCount;
+  private int failCount;
 
-  public Long getPassCount() {
+  public int getTotal() {
+    return total;
+  }
+
+  public void setTotal(int total) {
+    this.total = total;
+  }
+
+  public int getPassCount() {
     return passCount;
   }
 
-  public void setPassCount(Long passCount) {
+  public void setPassCount(int passCount) {
     this.passCount = passCount;
   }
 
-  public Long getNewCount() {
+  public int getNewCount() {
     return newCount;
   }
 
-  public void setNewCount(Long newCount) {
+  public void setNewCount(int newCount) {
     this.newCount = newCount;
   }
 
-  public Long getProcessCount() {
+  public int getProcessCount() {
     return processCount;
   }
 
-  public void setProcessCount(Long processCount) {
+  public void setProcessCount(int processCount) {
     this.processCount = processCount;
   }
 
-  public Long getFailCount() {
+  public int getFailCount() {
     return failCount;
   }
 
-  public void setFailCount(Long failCount) {
+  public void setFailCount(int failCount) {
     this.failCount = failCount;
   }
+
 }
