@@ -94,32 +94,31 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
         new ArrayList<StatusCountResponseDto>();
     List<RawMaterial> rawMaterialList =
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
-    StatusCountResponseDto statusCountResponseDto = new StatusCountResponseDto();
-    statusCountResponseDto
-        .setTotal(incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDate(
-            rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate).size());
-    statusCountResponseDto
-        .setNewCount(incomingSampleRepository
-            .findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
-                rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, Status.NEW)
-            .size());
-    statusCountResponseDto
-        .setPassCount(incomingSampleRepository
-            .findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
-                rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, Status.PASS)
-            .size());
-    statusCountResponseDto
-        .setFailCount(incomingSampleRepository
-            .findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
-                rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, Status.FAIL)
-            .size());
-    statusCountResponseDto.setProcessCount(incomingSampleRepository
-        .findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
-            rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, Status.PROCESS)
-        .size());
-    statusCountResponseDtoList.add(statusCountResponseDto);
-
+    Status status = null;
+    statusCountResponseDtoList.add(setFieldsStatusMaterialSubCategory(
+        rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status));
     return statusCountResponseDtoList;
+  }
+
+  private StatusCountResponseDto setFieldsStatusMaterialSubCategory(Long materialSubCategoryId,
+      Date sqlDate, Status status) {
+    StatusCountResponseDto statusCountResponseDto = new StatusCountResponseDto();
+    statusCountResponseDto.setTotal(incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndDate(materialSubCategoryId, sqlDate).size());
+    statusCountResponseDto.setNewCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.NEW).size());
+    statusCountResponseDto.setPassCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.PASS).size());
+    statusCountResponseDto.setFailCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.FAIL).size());
+    statusCountResponseDto.setProcessCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.PROCESS).size());
+    return statusCountResponseDto;
+
   }
 
 }
