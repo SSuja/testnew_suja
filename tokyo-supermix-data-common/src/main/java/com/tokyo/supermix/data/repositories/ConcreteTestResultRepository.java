@@ -1,5 +1,5 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface ConcreteTestRepository {
+public interface ConcreteTestResultRepository {
 
 }

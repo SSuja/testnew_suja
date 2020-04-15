@@ -54,8 +54,8 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
   }
 
   @Transactional(readOnly = true)
-  public List<CubeTestFinding> findByConcreteTestElementId(Long concreteTestElementId) {
-    return cubeTestFindingRepository.findByConcreteTestElementId(concreteTestElementId);
+  public List<CubeTestFinding> findByConcreteTestId(Long concreteTestId) {
+    return cubeTestFindingRepository.findByConcreteTestId(concreteTestId);
   }
 
   @Transactional(readOnly = true)
@@ -64,7 +64,7 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
   }
 
   @Transactional(readOnly = true)
-  public boolean existsByConcreteTestElementId(Long concreteTestElementId) {
-    return cubeTestFindingRepository.existsByConcreteTestElementId(concreteTestElementId);
+  public boolean existsByConcreteTestId(Long concreteTestId) {
+    return cubeTestFindingRepository.existsByConcreteTestId(concreteTestId);
   }
 }

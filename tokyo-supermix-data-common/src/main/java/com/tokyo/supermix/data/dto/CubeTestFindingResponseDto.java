@@ -6,7 +6,7 @@ public class CubeTestFindingResponseDto {
   private Long age;
   private Double value;
   private Long finishProductSampleId;
-  private Long concreteTestElementId;
+  private Long concreteTestId;
 
   public Long getId() {
     return id;
@@ -48,11 +48,12 @@ public class CubeTestFindingResponseDto {
     this.finishProductSampleId = finishProductSampleId;
   }
 
-  public Long getConcreteTestElementId() {
-    return concreteTestElementId;
+  public Long getConcreteTestId() {
+    return concreteTestId;
   }
 
-  public void setConcreteTestElementId(Long concreteTestElementId) {
-    this.concreteTestElementId = concreteTestElementId;
+  public void setConcreteTestId(Long concreteTestId) {
+    this.concreteTestId = concreteTestId;
   }
+
 }

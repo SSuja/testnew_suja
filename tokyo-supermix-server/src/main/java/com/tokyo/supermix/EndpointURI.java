@@ -403,8 +403,8 @@ public final class EndpointURI {
   public static final String CUBE_TEST_FINDING_BY_ID = CUBE_TEST_FINDING + ID;
   public static final String CUBE_TEST_FINDING_BY_FINISH_PRODUCT_SAMPLE_ID =
       CUBE_TEST_FINDING + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}";
-  public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ELEMENT_ID =
-      CUBE_TEST_FINDING + SLASH + "concrete-test-element" + SLASH + "{concreteTestElementId}";
+  public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ID =
+      CUBE_TEST_FINDING + SLASH + "concrete-test" + SLASH + "{concreteTestId}";
 
   /*
    * finish product sample issue apis

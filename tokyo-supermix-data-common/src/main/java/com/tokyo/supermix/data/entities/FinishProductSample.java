@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ public class FinishProductSample implements Serializable {
   private Long id;
   private String workOrderNo;
   private Long finishProductCode;
+  private Date date;
   @ManyToOne
   @JoinColumn(name = "concreteMixerId", nullable = false)
   private ConcreteMixer concreteMixer;
@@ -63,6 +65,14 @@ public class FinishProductSample implements Serializable {
 
   public void setFinishProductCode(Long finishProductCode) {
     this.finishProductCode = finishProductCode;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public static long getSerialversionuid() {
