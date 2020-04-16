@@ -251,9 +251,9 @@ public final class EndpointURI {
    * concreteTest
    * 
    */
-  public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
-  public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
-  public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
+  public static final String CONCRETE_TEST_OLD = BASE_API_PATH + "concrete-test-old";
+  public static final String CONCRETE_TESTS_OLD = BASE_API_PATH + "concrete-tests-old";
+  public static final String CONCRETE_TEST_BY_ID_OLD = CONCRETE_TEST_OLD + ID;
 
   /*
    * Finish Product APIs
@@ -419,14 +419,6 @@ public final class EndpointURI {
    * incoming samples count APIs
    */
   public static final String INCOMING_SAMPLES_COUNT = BASE_API_PATH + "incoming-samples-count";
-  public static final String MATERIAL_CATEGORY_TOTAL_COUNT =
-      INCOMING_SAMPLES_COUNT + SLASH + "material-category-count" + SLASH + "{materialCategoryName}";
-  public static final String MATERIAL_SUB_CATEGORY_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH
-      + "material-sub-category-count" + SLASH + "{materialSubCategoryName}";
-  public static final String MATERIAL_SUB_CATEGORY_STATUS_TOTAL_COUNT = INCOMING_SAMPLES_COUNT
-      + SLASH + "material-sub-category-status-count" + SLASH + "{materialSubCategoryName}";
-  public static final String MATERIAL_CATEGORY_STATUS_TOTAL_COUNT = INCOMING_SAMPLES_COUNT + SLASH
-      + "material-category-status-count" + SLASH + "{materialCategoryName}";
   public static final String INCOMING_SAMPLES_COUNT_BY_MATERIAL =
       BASE_API_PATH + "incoming-samples-count-by-material";
   public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY =
@@ -436,6 +428,19 @@ public final class EndpointURI {
   public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + SUB_CATEGORY + SLASH
           + "{materialSubCategoryName}";
+
+  public static final String MATERIAL_SUB_CATEGORY_STATUS_COUNT = INCOMING_SAMPLES_COUNT + SLASH
+      + "material-sub-category" + SLASH + "{materialSubCategoryName}";
+  public static final String MATERIAL_CATEGORY_STATUS_COUNT =
+      INCOMING_SAMPLES_COUNT + SLASH + "material-category" + SLASH + "{materialCategoryName}";
+  
+  /*
+   * concreteTest
+   * 
+   */
+  public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
+  public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
+  public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
 
   private EndpointURI() {}
 }

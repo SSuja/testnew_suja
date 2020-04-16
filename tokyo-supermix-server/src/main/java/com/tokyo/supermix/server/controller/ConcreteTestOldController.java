@@ -45,7 +45,7 @@ public class ConcreteTestOldController {
   private static final Logger logger = Logger.getLogger(ConcreteTestOldController.class);
 
   // post API for
-  @PostMapping(value = EndpointURI.CONCRETE_TEST)
+  @PostMapping(value = EndpointURI.CONCRETE_TEST_OLD)
   public ResponseEntity<Object> createConcreteTest(
       @Valid @RequestBody ConcreteTestOldRequestDto concreteTestRequestDto) {
     ConcreteTestOld concreteTest = concreteTestService
@@ -62,7 +62,7 @@ public class ConcreteTestOldController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.CONCRETE_TESTS)
+  @GetMapping(value = EndpointURI.CONCRETE_TESTS_OLD)
   public ResponseEntity<Object> getAllConcreteTest() {
     List<ConcreteTestOld> concreteTestList = concreteTestService.getAllConcreteTest();
     return new ResponseEntity<Object>(
@@ -72,7 +72,7 @@ public class ConcreteTestOldController {
   }
 
   // get ConcreteTest by id
-  @GetMapping(value = EndpointURI.CONCRETE_TEST_BY_ID)
+  @GetMapping(value = EndpointURI.CONCRETE_TEST_BY_ID_OLD)
   public ResponseEntity<Object> getConcreteTestById(@PathVariable Long id) {
     if (concreteTestService.isConcreteTestExit(id)) {
       logger.debug("Get ConcreteTest by id ");
@@ -86,7 +86,7 @@ public class ConcreteTestOldController {
   }
 
   // get ConcreteTest Delete
-  @DeleteMapping(value = EndpointURI.CONCRETE_TEST_BY_ID)
+  @DeleteMapping(value = EndpointURI.CONCRETE_TEST_BY_ID_OLD)
   public ResponseEntity<Object> deleteConcreteTest(@PathVariable Long id) {
     if (concreteTestService.isConcreteTestExit(id)) {
       concreteTestService.deleteConcreteTest(id);
@@ -99,7 +99,7 @@ public class ConcreteTestOldController {
         validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping(value = EndpointURI.CONCRETE_TEST)
+  @PutMapping(value = EndpointURI.CONCRETE_TEST_OLD)
   public ResponseEntity<Object> updateConcreteTest(
       @Valid @RequestBody ConcreteTestOldRequestDto concreteTestRequestDto) {
     if (concreteTestService.isConcreteTestExit(concreteTestRequestDto.getId())) {

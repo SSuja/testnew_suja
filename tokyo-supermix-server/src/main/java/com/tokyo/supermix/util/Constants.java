@@ -303,6 +303,7 @@ public class Constants {
    * Constants for Concrete Test validation key & Success messages
    */
   public static final String CONCRETE_TEST = "concreteTest";
+  public static final String CONCRETE_TEST_NAME = "Name";
   public static final String CONCRETE_TESTS = "concreteTests";
   public static final String RAW_MATERIAL_CEMENT = "cement";
   public static final String RAW_MATERIAL_FLYASH = "flyAsh";
