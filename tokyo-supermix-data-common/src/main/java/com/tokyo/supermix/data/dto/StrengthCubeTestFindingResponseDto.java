@@ -1,6 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
-public class CubeTestFindingResponseDto {
+public class StrengthCubeTestFindingResponseDto {
   private Long id;
   private Long cubeNo;
   private Long age;

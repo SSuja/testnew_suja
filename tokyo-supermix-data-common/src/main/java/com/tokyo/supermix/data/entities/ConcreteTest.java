@@ -2,13 +2,12 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.tokyo.supermix.data.enums.ConcreteType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "concrete_test")
@@ -18,8 +17,9 @@ public class ConcreteTest implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  @Enumerated(EnumType.ORDINAL)
-  private ConcreteType type;
+  @ManyToOne
+  @JoinColumn(name = "concreteTestTypeId", nullable = false)
+  private ConcreteTestType concreteTestType;
 
   public Long getId() {
     return id;
@@ -37,12 +37,12 @@ public class ConcreteTest implements Serializable {
     this.name = name;
   }
 
-  public ConcreteType getType() {
-    return type;
+  public ConcreteTestType getConcreteTestType() {
+    return concreteTestType;
   }
 
-  public void setType(ConcreteType type) {
-    this.type = type;
+  public void setConcreteTestType(ConcreteTestType concreteTestType) {
+    this.concreteTestType = concreteTestType;
   }
 
   public static long getSerialversionuid() {

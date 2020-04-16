@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "cube_test_finding")
-public class CubeTestFinding implements Serializable {
+@Table(schema = "tokyo-supermix", name = "strength_cube_test_finding")
+public class StrengthCubeTestFinding implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +24,6 @@ public class CubeTestFinding implements Serializable {
   @ManyToOne
   @JoinColumn(name = "finishProductSampleId", nullable = false)
   private FinishProductSample finishProductSample;
-  @ManyToOne
-  @JoinColumn(name = "concreteTestId", nullable = false)
-  private ConcreteTest concreteTest;
 
   public Long getId() {
     return id;
@@ -74,14 +71,6 @@ public class CubeTestFinding implements Serializable {
 
   public void setFinishProductSample(FinishProductSample finishProductSample) {
     this.finishProductSample = finishProductSample;
-  }
-
-  public ConcreteTest getConcreteTest() {
-    return concreteTest;
-  }
-
-  public void setConcreteTest(ConcreteTest concreteTest) {
-    this.concreteTest = concreteTest;
   }
 
   public static long getSerialversionuid() {

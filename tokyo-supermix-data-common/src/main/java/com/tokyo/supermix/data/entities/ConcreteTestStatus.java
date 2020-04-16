@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,25 +9,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.ConcreteStatus;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "concrete_test_result")
-public class ConcreteTestResult implements Serializable {
+@Table(schema = "tokyo-supermix", name = "concrete_test_status")
+public class ConcreteTestStatus implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private Long age;
-  private Double result;
-  private Double waterContent;
-  private Date date;
   @Enumerated(EnumType.ORDINAL)
-  private Status status;
-  @ManyToOne
-  @JoinColumn(name = "concreteTestId", nullable = false)
-  private ConcreteTest concreteTest;
+  private ConcreteStatus status;
+  @OneToOne
+  @JoinColumn(name = "concreteTestTypeId", nullable = false)
+  private ConcreteTestType concreteTestType;
   @ManyToOne
   @JoinColumn(name = "finishProductSampleId", nullable = false)
   private FinishProductSample finishProductSample;
@@ -41,52 +37,20 @@ public class ConcreteTestResult implements Serializable {
     this.id = id;
   }
 
-  public Long getAge() {
-    return age;
-  }
-
-  public void setAge(Long age) {
-    this.age = age;
-  }
-
-  public Double getResult() {
-    return result;
-  }
-
-  public void setResult(Double result) {
-    this.result = result;
-  }
-
-  public Double getWaterContent() {
-    return waterContent;
-  }
-
-  public void setWaterContent(Double waterContent) {
-    this.waterContent = waterContent;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
-  public Status getStatus() {
+  public ConcreteStatus getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(ConcreteStatus status) {
     this.status = status;
   }
 
-  public ConcreteTest getConcreteTest() {
-    return concreteTest;
+  public ConcreteTestType getConcreteTestType() {
+    return concreteTestType;
   }
 
-  public void setConcreteTest(ConcreteTest concreteTest) {
-    this.concreteTest = concreteTest;
+  public void setConcreteTestType(ConcreteTestType concreteTestType) {
+    this.concreteTestType = concreteTestType;
   }
 
   public FinishProductSample getFinishProductSample() {

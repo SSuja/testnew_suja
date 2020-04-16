@@ -5,22 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.CubeTestFinding;
-import com.tokyo.supermix.data.repositories.CubeTestFindingRepository;
+import com.tokyo.supermix.data.entities.StrengthCubeTestFinding;
+import com.tokyo.supermix.data.repositories.StrengthCubeTestFindingRepository;
 
 @Service
-public class CubeTestFindingServiceImpl implements CubeTestFindingService {
+public class StrengthCubeTestFindingServiceImpl implements StrengthCubeTestFindingService {
 
   @Autowired
-  private CubeTestFindingRepository cubeTestFindingRepository;
+  private StrengthCubeTestFindingRepository cubeTestFindingRepository;
 
   @Transactional
-  public void saveCubeTestFinding(CubeTestFinding cubeTestFinding) {
+  public void saveCubeTestFinding(StrengthCubeTestFinding cubeTestFinding) {
     cubeTestFindingRepository.save(cubeTestFinding);
   }
 
   @Transactional(readOnly = true)
-  public List<CubeTestFinding> getAllCubeTestFindings() {
+  public List<StrengthCubeTestFinding> getAllCubeTestFindings() {
     return cubeTestFindingRepository.findAll();
   }
 
@@ -30,7 +30,7 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
   }
 
   @Transactional(readOnly = true)
-  public CubeTestFinding getCubeTestFindingById(Long id) {
+  public StrengthCubeTestFinding getCubeTestFindingById(Long id) {
     return cubeTestFindingRepository.findById(id).get();
   }
 
@@ -49,12 +49,12 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
   }
 
   @Transactional(readOnly = true)
-  public List<CubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId) {
+  public List<StrengthCubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId) {
     return cubeTestFindingRepository.findByFinishProductSampleId(finishProductSampleId);
   }
 
   @Transactional(readOnly = true)
-  public List<CubeTestFinding> findByConcreteTestId(Long concreteTestId) {
+  public List<StrengthCubeTestFinding> findByConcreteTestId(Long concreteTestId) {
     return cubeTestFindingRepository.findByConcreteTestId(concreteTestId);
   }
 

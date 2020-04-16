@@ -2,7 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotNull;
 
-public class CubeTestFindingRequestDto {
+public class StrengthCubeTestFindingRequestDto {
   private Long id;
   @NotNull(message = "{cubeTestFindingRequestDto.cubeNo.null}")
   private Long cubeNo;
