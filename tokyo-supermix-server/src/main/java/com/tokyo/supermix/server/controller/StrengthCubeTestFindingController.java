@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +35,18 @@ public class StrengthCubeTestFindingController {
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
-  private StrengthCubeTestFindingService cubeTestFindingService;
+  private StrengthCubeTestFindingService strengthCubeTestFindingService;
   private static final Logger logger = Logger.getLogger(StrengthCubeTestFindingController.class);
 
   @PostMapping(value = EndpointURI.CUBE_TEST_FINDING)
   public ResponseEntity<Object> saveCubeTestFinding(
       @Valid @RequestBody StrengthCubeTestFindingRequestDto cubeTestFindingRequestDto) {
-    if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
+    if (strengthCubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
           validationFailureStatusCodes.getCubeTestFindingAgeValid()), HttpStatus.BAD_REQUEST);
     }
-    cubeTestFindingService
-        .saveCubeTestFinding(mapper.map(cubeTestFindingRequestDto, StrengthCubeTestFinding.class));
+    strengthCubeTestFindingService.saveStrengthCubeTestFindingCubeTestFinding(
+        mapper.map(cubeTestFindingRequestDto, StrengthCubeTestFinding.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CUBE_TEST_FINDING_SUCCESS),
         HttpStatus.OK);
@@ -55,19 +54,24 @@ public class StrengthCubeTestFindingController {
 
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDINGS)
   public ResponseEntity<Object> getAllCubeTestFindings() {
-    List<StrengthCubeTestFindingResponseDto> cubeTestFindingResponseDtoList = mapper
-        .map(cubeTestFindingService.getAllCubeTestFindings(), StrengthCubeTestFindingResponseDto.class);
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CUBE_TEST_FINDINGS,
-        cubeTestFindingResponseDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.CUBE_TEST_FINDINGS,
+            mapper.map(strengthCubeTestFindingService.getAllStrengthCubeTestFindings(),
+                StrengthCubeTestFindingResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_ID)
   public ResponseEntity<Object> getCubeTestFindingById(@PathVariable Long id) {
-    if (cubeTestFindingService.isCubeTestFindingExist(id)) {
+    if (strengthCubeTestFindingService.isStrengthCubeTestFindingExist(id)) {
       logger.debug("Get cubeTestFinding By Id");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUBE_TEST_FINDING, mapper
-          .map(cubeTestFindingService.getCubeTestFindingById(id), StrengthCubeTestFindingResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.CUBE_TEST_FINDING,
+              mapper.map(strengthCubeTestFindingService.getStrengthCubeTestFindingById(id),
+                  StrengthCubeTestFindingResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_ID,
         validationFailureStatusCodes.getCubeTestFindingNotExist()), HttpStatus.BAD_REQUEST);
@@ -75,8 +79,8 @@ public class StrengthCubeTestFindingController {
 
   @DeleteMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_ID)
   public ResponseEntity<Object> deleteCubeTestFinding(@PathVariable Long id) {
-    if (cubeTestFindingService.isCubeTestFindingExist(id)) {
-      cubeTestFindingService.deleteCubeTestFinding(id);
+    if (strengthCubeTestFindingService.isStrengthCubeTestFindingExist(id)) {
+      strengthCubeTestFindingService.deleteStrengthCubeTestFinding(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.CUBE_TEST_FINDING_DELETED),
           HttpStatus.OK);
@@ -88,13 +92,14 @@ public class StrengthCubeTestFindingController {
   @PutMapping(value = EndpointURI.CUBE_TEST_FINDING)
   public ResponseEntity<Object> updateCubeTestFinding(
       @Valid @RequestBody StrengthCubeTestFindingRequestDto cubeTestFindingRequestDto) {
-    if (cubeTestFindingService.isCubeTestFindingExist(cubeTestFindingRequestDto.getId())) {
-      if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
+    if (strengthCubeTestFindingService
+        .isStrengthCubeTestFindingExist(cubeTestFindingRequestDto.getId())) {
+      if (strengthCubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
             validationFailureStatusCodes.getCubeTestFindingAgeValid()), HttpStatus.BAD_REQUEST);
       }
-      cubeTestFindingService
-          .saveCubeTestFinding(mapper.map(cubeTestFindingRequestDto, StrengthCubeTestFinding.class));
+      strengthCubeTestFindingService.saveStrengthCubeTestFindingCubeTestFinding(
+          mapper.map(cubeTestFindingRequestDto, StrengthCubeTestFinding.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CUBE_TEST_FINDING_SUCCESS),
           HttpStatus.OK);
@@ -106,33 +111,19 @@ public class StrengthCubeTestFindingController {
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_FINISH_PRODUCT_SAMPLE_ID)
   public ResponseEntity<Object> getCubeTestFindingByFinishProductSampleId(
       @PathVariable Long finishProductSampleId) {
-    if (cubeTestFindingService.existsByFinishProductSampleId(finishProductSampleId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
-          mapper.map(cubeTestFindingService.findByFinishProductSampleId(finishProductSampleId),
-              StrengthCubeTestFindingResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+    if (strengthCubeTestFindingService.existsByFinishProductSampleId(finishProductSampleId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
+              mapper.map(
+                  strengthCubeTestFindingService.findByFinishProductSampleId(finishProductSampleId),
+                  StrengthCubeTestFindingResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
     } else {
       logger.debug("No  record exist for given finish product id");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
               validationFailureStatusCodes.getFinishProductSampleNotExist()),
-          HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_CONCRETE_TEST_ID)
-  public ResponseEntity<Object> getCubeTestFindingByConcreteTestId(
-      @PathVariable Long concreteTestId) {
-    if (cubeTestFindingService.existsByConcreteTestId(concreteTestId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_ELEMENT_ID,
-          mapper.map(cubeTestFindingService.findByConcreteTestId(concreteTestId),
-              StrengthCubeTestFindingResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    } else {
-      logger.debug("No  record exist for given concrete test element");
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.CONCRETE_TEST_ELEMENT_ID,
-              validationFailureStatusCodes.getConcreteTestElementNotExist()),
           HttpStatus.BAD_REQUEST);
     }
   }

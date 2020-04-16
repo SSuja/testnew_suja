@@ -10,34 +10,8 @@ import com.tokyo.supermix.data.repositories.StrengthCubeTestFindingRepository;
 
 @Service
 public class StrengthCubeTestFindingServiceImpl implements StrengthCubeTestFindingService {
-
   @Autowired
-  private StrengthCubeTestFindingRepository cubeTestFindingRepository;
-
-  @Transactional
-  public void saveCubeTestFinding(StrengthCubeTestFinding cubeTestFinding) {
-    cubeTestFindingRepository.save(cubeTestFinding);
-  }
-
-  @Transactional(readOnly = true)
-  public List<StrengthCubeTestFinding> getAllCubeTestFindings() {
-    return cubeTestFindingRepository.findAll();
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isCubeTestFindingExist(Long id) {
-    return cubeTestFindingRepository.existsById(id);
-  }
-
-  @Transactional(readOnly = true)
-  public StrengthCubeTestFinding getCubeTestFindingById(Long id) {
-    return cubeTestFindingRepository.findById(id).get();
-  }
-
-  @Transactional(propagation = Propagation.NEVER)
-  public void deleteCubeTestFinding(Long id) {
-    cubeTestFindingRepository.deleteById(id);
-  }
+  private StrengthCubeTestFindingRepository strengthCubeTestFindingRepository;
 
   @Transactional(readOnly = true)
   public boolean checkAge(Long age) {
@@ -50,21 +24,37 @@ public class StrengthCubeTestFindingServiceImpl implements StrengthCubeTestFindi
 
   @Transactional(readOnly = true)
   public List<StrengthCubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId) {
-    return cubeTestFindingRepository.findByFinishProductSampleId(finishProductSampleId);
+    return strengthCubeTestFindingRepository.findByFinishProductSampleId(finishProductSampleId);
   }
 
   @Transactional(readOnly = true)
-  public List<StrengthCubeTestFinding> findByConcreteTestId(Long concreteTestId) {
-    return cubeTestFindingRepository.findByConcreteTestId(concreteTestId);
+  public List<StrengthCubeTestFinding> getAllStrengthCubeTestFindings() {
+    return strengthCubeTestFindingRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isStrengthCubeTestFindingExist(Long id) {
+    return strengthCubeTestFindingRepository.existsById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public StrengthCubeTestFinding getStrengthCubeTestFindingById(Long id) {
+    return strengthCubeTestFindingRepository.findById(id).get();
+  }
+
+  @Transactional
+  public void saveStrengthCubeTestFindingCubeTestFinding(
+      StrengthCubeTestFinding strengthCubeTestFinding) {
+    strengthCubeTestFindingRepository.save(strengthCubeTestFinding);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteStrengthCubeTestFinding(Long id) {
+    strengthCubeTestFindingRepository.deleteById(id);
   }
 
   @Transactional(readOnly = true)
   public boolean existsByFinishProductSampleId(Long finishProductSampleId) {
-    return cubeTestFindingRepository.existsByFinishProductSampleId(finishProductSampleId);
-  }
-
-  @Transactional(readOnly = true)
-  public boolean existsByConcreteTestId(Long concreteTestId) {
-    return cubeTestFindingRepository.existsByConcreteTestId(concreteTestId);
+    return strengthCubeTestFindingRepository.existsByFinishProductSampleId(finishProductSampleId);
   }
 }
