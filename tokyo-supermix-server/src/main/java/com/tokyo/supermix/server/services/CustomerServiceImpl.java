@@ -52,4 +52,16 @@ public class CustomerServiceImpl implements CustomerService {
 
   }
 
+  @Transactional(readOnly = true)
+  public boolean isNameExist(String name) {
+    return customerRepository.existsByName(name);
+  }
+
+  public boolean isUpdatedCustomerNameExist(Long id, String name) {
+    if ((!getCustomerById(id).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
+      return true;
+    }
+    return false;
+  }
+
 }
