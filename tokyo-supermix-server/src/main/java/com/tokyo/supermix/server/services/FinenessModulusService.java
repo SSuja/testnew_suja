@@ -18,4 +18,5 @@ public interface FinenessModulusService {
 
   public boolean isMaterialSubCategoryIdExists(Long materialSubCategoryId);
 
+  public boolean isUpdatedMaterialSubCategoryExist(Long id, Long materialSubCategoryId);
 }

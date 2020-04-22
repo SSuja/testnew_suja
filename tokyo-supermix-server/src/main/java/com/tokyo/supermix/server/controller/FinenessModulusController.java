@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +37,19 @@ public class FinenessModulusController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   private static final Logger logger = Logger.getLogger(FinenessModulusController.class);
 
-  // post API for
+  // Create Fineness Modulus API
   @PostMapping(value = EndpointURI.FINENESS_MODULUS)
   public ResponseEntity<Object> createFinenessModulus(
       @Valid @RequestBody FinenessModulusRequestDto finenessModulusRequestDto) {
+    if (finenessModulusService
+        .isMaterialSubCategoryIdExists(finenessModulusRequestDto.getMaterialSubCategoryId())) {
+      logger.debug(
+          "Material Sub Category already exists: createFinenessModulus(), materialSubCategory: {}");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
+              validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
+          HttpStatus.BAD_REQUEST);
+    }
     finenessModulusService
         .saveFinenessModulus(mapper.map(finenessModulusRequestDto, FinenessModulus.class));
     return new ResponseEntity<>(
@@ -49,15 +57,15 @@ public class FinenessModulusController {
         HttpStatus.OK);
   }
 
+  // Get all Fineness Modulus API
   @GetMapping(value = EndpointURI.FINENESS_MODULUS)
   public ResponseEntity<Object> getAllFinenessModuluss() {
-    List<FinenessModulus> finenessModulusTestList = finenessModulusService.getAllFinenessModulus();
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.FINENESS_MODULUS,
-        mapper.map(finenessModulusTestList, FinenessModulusResponseDto.class),
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.FINENESS_MODULUS, mapper
+        .map(finenessModulusService.getAllFinenessModulus(), FinenessModulusResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  // get FinenessModulus by id
+  // Get Fineness Modulus by Id API
   @GetMapping(value = EndpointURI.FINENESS_MODULUS_BY_ID)
   public ResponseEntity<Object> getFinenessModulusById(@PathVariable Long id) {
     if (finenessModulusService.isFinenessModulusExists(id)) {
@@ -71,7 +79,7 @@ public class FinenessModulusController {
         validationFailureStatusCodes.getFinenessModulusNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // get FinenessModulus Delete
+  // Delete Fineness Modulus API
   @DeleteMapping(value = EndpointURI.FINENESS_MODULUS_BY_ID)
   public ResponseEntity<Object> deleteFinenessModulus(@PathVariable Long id) {
     if (finenessModulusService.isFinenessModulusExists(id)) {
@@ -85,12 +93,21 @@ public class FinenessModulusController {
         validationFailureStatusCodes.getFinenessModulusNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  // Update Fineness Modulus API
   @PutMapping(value = EndpointURI.FINENESS_MODULUS)
   public ResponseEntity<Object> updateFinenessModulus(
-      @Valid @RequestBody FinenessModulusRequestDto FinenessModulusRequestDto) {
-    if (finenessModulusService.isFinenessModulusExists(FinenessModulusRequestDto.getId())) {
+      @Valid @RequestBody FinenessModulusRequestDto finenessModulusRequestDto) {
+    if (finenessModulusService.isFinenessModulusExists(finenessModulusRequestDto.getId())) {
+      if (finenessModulusService.isUpdatedMaterialSubCategoryExist(
+          finenessModulusRequestDto.getId(),
+          finenessModulusRequestDto.getMaterialSubCategoryId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
+                validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       finenessModulusService
-          .saveFinenessModulus(mapper.map(FinenessModulusRequestDto, FinenessModulus.class));
+          .saveFinenessModulus(mapper.map(finenessModulusRequestDto, FinenessModulus.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_FINENESS_MODULUS_SUCCESS),
           HttpStatus.OK);
@@ -99,6 +116,7 @@ public class FinenessModulusController {
         validationFailureStatusCodes.getFinenessModulusNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  // Get Fineness Modulus by Material SubCategory API
   @GetMapping(value = EndpointURI.FINENESS_MODULUS_BY_MATERIALSUBCATEGORY)
   public ResponseEntity<Object> getFinenessModulusByMaterialSubCategory(
       @PathVariable Long materialSubCategoryId) {
