@@ -17,4 +17,6 @@ public interface ConcreteMixerService {
   public List<ConcreteMixer> findByPlantCode(String plantCode);
 
   public boolean isDuplicateEntryExist(String name, String plantCode);
+
+  public boolean isNameNull(String name);
 }
