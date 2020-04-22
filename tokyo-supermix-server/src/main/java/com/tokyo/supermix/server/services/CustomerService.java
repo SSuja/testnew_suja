@@ -16,5 +16,9 @@ public interface CustomerService {
 
   public boolean isUpdatedCustomerEmailExist(Long id, String email);
 
+  public boolean isUpdatedCustomerNameExist(Long id, String name);
+
   public void deleteCustomer(Long id);
+
+  public boolean isNameExist(String name);
 }

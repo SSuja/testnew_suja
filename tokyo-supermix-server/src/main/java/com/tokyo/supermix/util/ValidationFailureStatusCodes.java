@@ -999,15 +999,16 @@ public class ValidationFailureStatusCodes {
   // for concreteTest
   @Value("${validation.concreteTest.alreadyExists}")
   private String concreteTestAlreadyExists;
+
   public String getConcreteTestAlreadyExists() {
-	return concreteTestAlreadyExists;
-}
+    return concreteTestAlreadyExists;
+  }
 
-public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
-	this.concreteTestAlreadyExists = concreteTestAlreadyExists;
-}
+  public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
+    this.concreteTestAlreadyExists = concreteTestAlreadyExists;
+  }
 
-@Value("${validation.concreteTest.notExists}")
+  @Value("${validation.concreteTest.notExists}")
   private String concreteTestNotExist;
 
   public String getConcreteTestNotExist() {
@@ -1738,6 +1739,10 @@ public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
 
   @Value("${validation.concreteMixer.alreadyExist}")
   private String concreteMixerAlreadyExist;
+  @Value("${concreteMixerRequestDto.name.null}")
+  private String concreteMixerNameIsNull;
+  @Value("${concreteMixerRequestDto.name.empty}")
+  private String concreteMixerNameIsEmpty;
 
   public String getConcreteMixerNotExist() {
     return concreteMixerNotExist;
@@ -1753,6 +1758,22 @@ public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
 
   public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
     this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
+  }
+
+  public String getConcreteMixerNameIsNull() {
+    return concreteMixerNameIsNull;
+  }
+
+  public void setConcreteMixerNameIsNull(String concreteMixerNameIsNull) {
+    this.concreteMixerNameIsNull = concreteMixerNameIsNull;
+  }
+
+  public String getConcreteMixerNameIsEmpty() {
+    return concreteMixerNameIsEmpty;
+  }
+
+  public void setConcreteMixerNameIsEmpty(String concreteMixerNameIsEmpty) {
+    this.concreteMixerNameIsEmpty = concreteMixerNameIsEmpty;
   }
 
   // For finishProductSampleIssue

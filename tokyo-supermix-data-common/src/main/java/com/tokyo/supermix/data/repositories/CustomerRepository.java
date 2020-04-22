@@ -5,4 +5,6 @@ import com.tokyo.supermix.data.entities.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
   boolean existsByEmail(String mail);
+
+  boolean existsByName(String name);
 }

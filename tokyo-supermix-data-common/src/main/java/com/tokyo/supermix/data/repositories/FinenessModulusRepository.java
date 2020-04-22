@@ -8,5 +8,4 @@ public interface FinenessModulusRepository extends JpaRepository<FinenessModulus
   List<FinenessModulus> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
   boolean existsByMaterialSubCategoryId(Long materialSubCategoryId);
-
 }

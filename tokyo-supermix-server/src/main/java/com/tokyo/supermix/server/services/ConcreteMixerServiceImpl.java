@@ -50,4 +50,12 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isNameNull(String name) {
+    if (name == null) {
+      return true;
+    }
+    return false;
+  }
 }

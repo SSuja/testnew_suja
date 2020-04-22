@@ -47,4 +47,13 @@ public class FinenessModulusServiceImpl implements FinenessModulusService {
   public boolean isMaterialSubCategoryIdExists(Long materialSubCategoryId) {
     return finenessModulusRepository.existsByMaterialSubCategoryId(materialSubCategoryId);
   }
+
+  public boolean isUpdatedMaterialSubCategoryExist(Long id, Long materialSubCategoryId) {
+    if ((!getFinenessModulusById(id).getMaterialSubCategory().equals(materialSubCategoryId))
+        && (isMaterialSubCategoryIdExists(materialSubCategoryId))) {
+      return true;
+    }
+    return false;
+  }
+
 }
