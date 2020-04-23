@@ -276,27 +276,31 @@ public class ValidationFailureStatusCodes {
   // for customer
   @Value("${validation.customer.alreadyExist}")
   private String customerAlreadyExist;
-
+  @Value("${validation.email.alreadyExist}")
+  private String emailAlreadyExist;
   @Value("${customerDto.name.null")
   private String customerNameIsNull;
-
   @Value("${customerDto.name.empty")
   private String customerNameIsEmpty;
-
   @Value("${customerDto.phoneNumber.null}")
   private String customerPhoneNumberIsnull;
-
   @Value("${customerDto.email.null}")
   private String customerEmailIsnull;
-
   @Value("${validation.customer.notExists}")
   private String customerNotExist;
-
   @Value("${customerDto.email.empty}")
   private String customerEmailIsEmpty;
 
   public String getCustomerEmailIsEmpty() {
     return customerEmailIsEmpty;
+  }
+
+  public String getEmailAlreadyExist() {
+    return emailAlreadyExist;
+  }
+
+  public void setEmailAlreadyExist(String emailAlreadyExist) {
+    this.emailAlreadyExist = emailAlreadyExist;
   }
 
   public void setCustomerEmailIsEmpty(String customerEmailIsEmpty) {
