@@ -55,7 +55,7 @@ public class CustomerController {
     if (customerService.isEmailExist(customerDto.getEmail())) {
       logger.debug("email is already exists:saveCustomer(), isEmailAlreadyExist:{}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-          validationFailureStatusCodes.getCustomerAlreadyExist()), HttpStatus.BAD_REQUEST);
+          validationFailureStatusCodes.getEmailAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     if (customerService.isNameExist(customerDto.getName())) {
       logger.debug("Name is already exists:saveCustomer(), isNameAlreadyExist:{}");
@@ -102,7 +102,7 @@ public class CustomerController {
       if (customerService.isUpdatedCustomerEmailExist(customerDto.getId(),
           customerDto.getEmail())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-            validationFailureStatusCodes.getCustomerAlreadyExist()), HttpStatus.BAD_REQUEST);
+            validationFailureStatusCodes.getEmailAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       if (customerService.isUpdatedCustomerNameExist(customerDto.getId(),
           customerDto.getName())) {

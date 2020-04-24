@@ -53,8 +53,10 @@ public class ConcreteMixerController {
       @Valid @RequestBody List<ConcreteMixerRequestDto> concreteMixerDtoList) {
     for (ConcreteMixerRequestDto concreteMixerDto : concreteMixerDtoList) {
       if (concreteMixerService.isNameNull(concreteMixerDto.getName())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_MIXER,
-            validationFailureStatusCodes.getConcreteMixerNameIsNull()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.CONCRETE_MIXER,
+                validationFailureStatusCodes.getConcreteMixerNameIsEmpty()),
+            HttpStatus.BAD_REQUEST);
       }
       if (concreteMixerService.isDuplicateEntryExist(concreteMixerDto.getName(),
           concreteMixerDto.getPlantCode())) {
