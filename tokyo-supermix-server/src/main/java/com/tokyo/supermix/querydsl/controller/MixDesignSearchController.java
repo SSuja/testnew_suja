@@ -3,8 +3,6 @@ package com.tokyo.supermix.querydsl.controller;
 import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,9 +34,7 @@ public class MixDesignSearchController {
       @RequestParam(name = "waterBinderRatio", required = false) Double waterBinderRatio,
       @RequestParam(name = "plantCode", required = false) String plantCode) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual, plantCode,
-        booleanBuilder);
-    return mixDesignRepository.findAll(booleanBuilder.getValue(),
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+    return mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual,
+        plantCode, booleanBuilder, page, size);
   }
 }

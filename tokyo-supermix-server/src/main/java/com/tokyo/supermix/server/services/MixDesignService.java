@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.MixDesign;
 
@@ -15,6 +16,6 @@ public interface MixDesignService {
 
   public boolean isCodeExist(String code);
 
-  public BooleanBuilder searchTargetSlump(Double targetSlumpMin, Double targetSlumpMax,
-      Double targetSlumpEqual, String plantCode, BooleanBuilder booleanBuilder);
+  public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
+      Double targetSlumpEqual, String plantCode, BooleanBuilder booleanBuilder, int page, int size);
 }

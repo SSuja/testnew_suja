@@ -2,6 +2,9 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,18 +44,19 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Override
-  public BooleanBuilder searchTargetSlump(Double targetSlumpMin, Double targetSlumpMax,
-      Double targetSlumpEqual, String plantCode, BooleanBuilder booleanBuilder) {
+  public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
+      Double targetSlumpEqual, String plantCode, BooleanBuilder booleanBuilder, int page,
+      int size) {
     if (plantCode != null && !plantCode.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.plant.code.eq(plantCode));
     }
     if (targetSlumpMin != null && targetSlumpMin != 0 && targetSlumpMax == null
         && targetSlumpEqual == null) {
-      booleanBuilder.and(QMixDesign.mixDesign.targetSlump.goe(targetSlumpMin));
+      booleanBuilder.and(QMixDesign.mixDesign.targetSlump.gt(targetSlumpMin));
     }
     if (targetSlumpMax != null && targetSlumpMax != 0 && targetSlumpMin == null
         && targetSlumpEqual == null) {
-      booleanBuilder.and(QMixDesign.mixDesign.targetSlump.loe(targetSlumpMax));
+      booleanBuilder.and(QMixDesign.mixDesign.targetSlump.lt(targetSlumpMax));
     }
     if (targetSlumpMin != null && targetSlumpMin != 0 && targetSlumpMax != null
         && targetSlumpMax != null && targetSlumpEqual == null) {
@@ -62,6 +66,7 @@ public class MixDesignServiceImpl implements MixDesignService {
         && targetSlumpMin == null) {
       booleanBuilder.and(QMixDesign.mixDesign.targetSlump.eq(targetSlumpEqual));
     }
-    return booleanBuilder;
+    return mixDesignRepository.findAll(booleanBuilder.getValue(),
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   }
 }
