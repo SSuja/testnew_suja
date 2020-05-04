@@ -165,12 +165,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   @SuppressWarnings("unused")
   @Transactional(readOnly = true)
   public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
-      Double average, Double averageMin, Double averageMax, BooleanBuilder booleanBuilder, int page,
-      int size) {
+      Double average, String testName, Double averageMin, Double averageMax,
+      BooleanBuilder booleanBuilder, int page, int size) {
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.incomingSample.code.eq(incomingSampleCode));
     }
-    if (status != null && !status.equals(status)) {
+    if (status.equals(status)) {
       booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
     }
     if (averageMin != null && averageMin != 0 && averageMax == null && average == null) {
@@ -185,6 +185,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     }
     if (average != null && average != 0 && averageMax == null && averageMin == null) {
       booleanBuilder.and(QMaterialTest.materialTest.average.eq(average));
+    }
+    if (testName != null && !testName.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.eq(testName));
     }
     return materialTestRepository.findAll(booleanBuilder,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));

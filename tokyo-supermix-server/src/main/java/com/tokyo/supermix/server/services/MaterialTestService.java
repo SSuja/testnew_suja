@@ -32,5 +32,6 @@ public interface MaterialTestService {
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
   public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
-      Double average,Double averageMin,Double averageMax, BooleanBuilder booleanBuilder, int page, int size);
+      Double average, String testName, Double averageMin, Double averageMax,
+      BooleanBuilder booleanBuilder, int page, int size);
 }

@@ -144,6 +144,7 @@ public class MaterialTestController {
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "500") int size,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
+      @RequestParam(name = "testName", required = false) String testName,
       @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "averageMax", required = false) Double averageMax,
       @RequestParam(name = "averageMin", required = false) Double averageMin,
@@ -151,8 +152,8 @@ public class MaterialTestController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.MATERIAL_TESTS,
-            materialTestService.searchMaterialTest(incomingSampleCode, status, average, averageMax,
-                averageMin, booleanBuilder, page, size),
+            materialTestService.searchMaterialTest(incomingSampleCode, status, average, testName,
+                averageMax, averageMin, booleanBuilder, page, size),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
