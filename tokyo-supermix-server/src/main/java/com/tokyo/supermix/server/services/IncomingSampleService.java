@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 
 public interface IncomingSampleService {
   public void deleteIncomingSample(String code);
@@ -14,4 +16,5 @@ public interface IncomingSampleService {
   public void createIncomingSample(IncomingSample incomingSample);
   public void updateIncomingSample(IncomingSample incomingSample);
   public List<IncomingSample> getIncomingSampleByStatus(Status status);
+  public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
 }

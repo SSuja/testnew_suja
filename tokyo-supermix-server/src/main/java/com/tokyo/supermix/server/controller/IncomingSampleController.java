@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
 import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
@@ -27,6 +30,8 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import org.springframework.data.domain.Page;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -126,4 +131,13 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_STATUS,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+	// search api
+	@GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
+	public Page<IncomingSample> getIncomingSampleSimplified(
+			@QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "500") int size) {
+		return incomingSampleService.searchIncomingSample(predicate, page, size);
+	}
 }
