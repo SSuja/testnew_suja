@@ -2,11 +2,16 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
+import com.tokyo.supermix.data.entities.QMaterialTest;
 import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
@@ -155,5 +160,33 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   @Transactional(readOnly = true)
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode) {
     return materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+  }
+
+  @SuppressWarnings("unused")
+  @Transactional(readOnly = true)
+  public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
+      Double average, Double averageMin, Double averageMax, BooleanBuilder booleanBuilder, int page,
+      int size) {
+    if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.code.eq(incomingSampleCode));
+    }
+    if (status != null && !status.equals(status)) {
+      booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
+    }
+    if (averageMin != null && averageMin != 0 && averageMax == null && average == null) {
+      booleanBuilder.and(QMaterialTest.materialTest.average.gt(averageMin));
+    }
+    if (averageMax != null && averageMax != 0 && averageMin == null && average == null) {
+      booleanBuilder.and(QMaterialTest.materialTest.average.lt(averageMax));
+    }
+    if (averageMin != null && averageMin != 0 && averageMax != null && averageMax != null
+        && average == null) {
+      booleanBuilder.and(QMaterialTest.materialTest.average.between(averageMin, averageMax));
+    }
+    if (average != null && average != 0 && averageMax == null && averageMin == null) {
+      booleanBuilder.and(QMaterialTest.materialTest.average.eq(average));
+    }
+    return materialTestRepository.findAll(booleanBuilder,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   }
 }

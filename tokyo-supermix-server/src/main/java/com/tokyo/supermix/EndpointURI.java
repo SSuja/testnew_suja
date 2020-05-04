@@ -309,6 +309,7 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
   public static final String MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
+  public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   /*
    * material-test-trial
    * 
@@ -433,7 +434,7 @@ public final class EndpointURI {
       + "material-sub-category" + SLASH + "{materialSubCategoryName}";
   public static final String MATERIAL_CATEGORY_STATUS_COUNT =
       INCOMING_SAMPLES_COUNT + SLASH + "material-category" + SLASH + "{materialCategoryName}";
-  
+
   /*
    * concreteTest
    * 

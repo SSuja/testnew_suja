@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestResponseDto;
@@ -136,4 +138,23 @@ public class MaterialTestController {
           validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
+
+  @GetMapping(value = EndpointURI.SEARCH_MATERIAL_TEST)
+  public ResponseEntity<Object> searchMaterialTest(
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "500") int size,
+      @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
+      @RequestParam(name = "status", required = false) Status status,
+      @RequestParam(name = "averageMax", required = false) Double averageMax,
+      @RequestParam(name = "averageMin", required = false) Double averageMin,
+      @RequestParam(name = "average", required = false) Double average) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.MATERIAL_TESTS,
+            materialTestService.searchMaterialTest(incomingSampleCode, status, average, averageMax,
+                averageMin, booleanBuilder, page, size),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+
 }
