@@ -17,5 +17,9 @@ public interface MixDesignService {
   public boolean isCodeExist(String code);
 
   public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
-      Double targetSlumpEqual, String plantCode, BooleanBuilder booleanBuilder, int page, int size);
+      Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
+      Double targetGradeEqual, Double targetWaterCementRetioMin, Double targetWaterCementRetioMax,
+      Double targetWaterCementRetioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
+      Double waterBinderRatioEqual, String plantCode, BooleanBuilder booleanBuilder, int page,
+      int size);
 }
