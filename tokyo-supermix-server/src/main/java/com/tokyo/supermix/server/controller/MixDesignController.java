@@ -116,8 +116,6 @@ public class MixDesignController {
       @RequestParam(name = "waterBinderRatioEqual", required = false) Double waterBinderRatioEqual,
       @RequestParam(name = "waterBinderRatioMin", required = false) Double waterBinderRatioMin,
       @RequestParam(name = "waterBinderRatioMax", required = false) Double waterBinderRatioMax,
-      @RequestParam(name = "waterCementRatio", required = false) Double waterCementRatio,
-      @RequestParam(name = "waterBinderRatio", required = false) Double waterBinderRatio,
       @RequestParam(name = "plantName", required = false) String plantName) {
     return mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual,
         targetGradeMin, targetGradeMax, targetGradeEqual, waterCementRatioMin, waterCementRatioMax,
