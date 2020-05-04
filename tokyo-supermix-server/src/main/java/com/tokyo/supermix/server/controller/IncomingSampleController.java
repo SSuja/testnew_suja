@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
@@ -30,8 +30,6 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.data.domain.Page;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -131,13 +129,16 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_STATUS,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
-	// search api
-	@GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
-	public Page<IncomingSample> getIncomingSampleSimplified(
-			@QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
-			@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "500") int size) {
-		return incomingSampleService.searchIncomingSample(predicate, page, size);
-	}
+
+  // search api
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
+  public ResponseEntity<Object> getIncomingSampleSearch(
+      @QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "500") int size) {
+
+    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE,
+        incomingSampleService.searchIncomingSample(predicate, page, size),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }

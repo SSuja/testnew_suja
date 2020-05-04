@@ -67,7 +67,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
 		return incomingSampleRepository.existsByStatus(status);
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size) {
 		return incomingSampleRepository.findAll(predicate,
 				PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
