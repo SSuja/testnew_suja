@@ -187,6 +187,7 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
   public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
       INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
+  public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
   /*
    * Project APIs
    */
@@ -201,7 +202,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN = BASE_API_PATH + "mix-design";
   public static final String MIX_DESIGNS = BASE_API_PATH + "mix-designs";
   public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
-  public static final String MIX_DESIGN_SEARCH=MIX_DESIGN +"/search-mixdesign";
+  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + "/search-mixdesign";
   /*
    * ProcessSampleLoad Apis
    */
@@ -356,6 +357,7 @@ public final class EndpointURI {
   public static final String SIEVE_TEST = BASE_API_PATH + "sieve-test";
   public static final String SIEVE_TESTS = BASE_API_PATH + "sieve-tests";
   public static final String SIEVE_TEST_BY_CODE = SIEVE_TEST + CODE;
+  public static final String SEARCH_SIEVE_TEST = SIEVE_TEST + SEARCH;
   /*
    * Test
    */
