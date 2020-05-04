@@ -136,8 +136,7 @@ public class IncomingSampleController {
       @QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "500") int size) {
-
-    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE,
+    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
         incomingSampleService.searchIncomingSample(predicate, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
