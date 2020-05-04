@@ -162,7 +162,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
   }
 
-  @SuppressWarnings("unused")
   @Transactional(readOnly = true)
   public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
       Double average, String testName, Double averageMin, Double averageMax,
@@ -170,15 +169,16 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.incomingSample.code.eq(incomingSampleCode));
     }
-    if (status.equals(status)) {
+    if (status != null) {
       booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
-    }
-    if (averageMin != null && averageMin != 0 && averageMax == null && average == null) {
-      booleanBuilder.and(QMaterialTest.materialTest.average.gt(averageMin));
     }
     if (averageMax != null && averageMax != 0 && averageMin == null && average == null) {
       booleanBuilder.and(QMaterialTest.materialTest.average.lt(averageMax));
     }
+    if (averageMin != null && averageMin != 0 && averageMax == null && average == null) {
+      booleanBuilder.and(QMaterialTest.materialTest.average.gt(averageMin));
+    }
+
     if (averageMin != null && averageMin != 0 && averageMax != null && averageMax != null
         && average == null) {
       booleanBuilder.and(QMaterialTest.materialTest.average.between(averageMin, averageMax));

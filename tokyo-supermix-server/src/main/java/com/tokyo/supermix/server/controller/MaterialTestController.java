@@ -153,7 +153,7 @@ public class MaterialTestController {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.MATERIAL_TESTS,
             materialTestService.searchMaterialTest(incomingSampleCode, status, average, testName,
-                averageMax, averageMin, booleanBuilder, page, size),
+                averageMin, averageMax, booleanBuilder, page, size),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
