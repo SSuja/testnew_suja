@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.SieveTestRequestDto;
 import com.tokyo.supermix.data.dto.SieveTestResponseDto;
 import com.tokyo.supermix.data.entities.SieveTest;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -100,5 +103,22 @@ public class SieveTestController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
         validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_SIEVE_TEST)
+  public ResponseEntity<Object> searchSieveTest(
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "500") int size,
+      @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
+      @RequestParam(name = "plantCode", required = false) String plantCode,
+      @RequestParam(name = "status", required = false) Status status,
+      @RequestParam(name = "finenessModulusMax", required = false) Double finenessModulusMax,
+      @RequestParam(name = "finenessModulusMin", required = false) Double finenessModulusMin,
+      @RequestParam(name = "finenessModulus", required = false) Double finenessModulus) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TESTS,
+        sieveTestService.searchSieveTest(incomingSampleCode, status, finenessModulus,
+            finenessModulusMin, finenessModulusMax, plantCode, booleanBuilder, page, size),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
