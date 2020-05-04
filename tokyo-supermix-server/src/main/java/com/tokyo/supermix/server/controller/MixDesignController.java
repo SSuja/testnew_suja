@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
 import com.tokyo.supermix.data.dto.MixDesignResponseDto;
@@ -99,7 +98,7 @@ public class MixDesignController {
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGN_SEARCH)
-  public Page<MixDesign> getMixDesignInbetweenOperation(
+  public Page<MixDesign> getMixDesignsBySearch(
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "500") int size,
       @RequestParam(name = "code", required = false) String code,
@@ -120,11 +119,10 @@ public class MixDesignController {
       @RequestParam(name = "waterCementRatio", required = false) Double waterCementRatio,
       @RequestParam(name = "waterBinderRatio", required = false) Double waterBinderRatio,
       @RequestParam(name = "plantName", required = false) String plantName) {
-    BooleanBuilder booleanBuilder = new BooleanBuilder();
     return mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual,
         targetGradeMin, targetGradeMax, targetGradeEqual, waterCementRatioMin, waterCementRatioMax,
         waterCementRatioEqual, waterBinderRatioMin, waterBinderRatioMax, waterBinderRatioEqual,
-        plantName, booleanBuilder, page, size);
+        plantName, page, size);
   }
 
 }

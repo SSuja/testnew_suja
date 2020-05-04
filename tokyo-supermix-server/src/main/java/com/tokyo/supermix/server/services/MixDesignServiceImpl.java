@@ -43,13 +43,14 @@ public class MixDesignServiceImpl implements MixDesignService {
     return mixDesignRepository.existsByCode(code);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
       Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
-      Double targetGradeEqual, Double waterCementRetioMin, Double waterCementRetioMax,
-      Double waterCementRetioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
-      Double waterBinderRatioEqual, String plantName, BooleanBuilder booleanBuilder, int page,
+      Double targetGradeEqual, Double waterCementRatioMin, Double waterCementRatioMax,
+      Double waterCementRatioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
+      Double waterBinderRatioEqual, String plantName,int page,
       int size) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.plant.name.eq(plantName));
     }
@@ -85,22 +86,22 @@ public class MixDesignServiceImpl implements MixDesignService {
         && targetGradeMin == null) {
       booleanBuilder.and(QMixDesign.mixDesign.targetGrade.eq(targetGradeEqual));
     }
-    if (waterCementRetioMin != null && waterCementRetioMin != 0 && waterCementRetioMax == null
-        && waterCementRetioEqual == null) {
-      booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.gt(waterCementRetioMin));
+    if (waterCementRatioMin != null && waterCementRatioMin != 0 && waterCementRatioMax == null
+        && waterCementRatioEqual == null) {
+      booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.gt(waterCementRatioMin));
     }
-    if (waterCementRetioMax != null && waterCementRetioMax != 0 && waterCementRetioMin == null
-        && waterCementRetioEqual == null) {
-      booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.lt(waterCementRetioMax));
+    if (waterCementRatioMax != null && waterCementRatioMax != 0 && waterCementRatioMin == null
+        && waterCementRatioEqual == null) {
+      booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.lt(waterCementRatioMax));
     }
-    if (waterCementRetioMin != null && waterCementRetioMin != 0 && waterCementRetioMax != null
-        && waterCementRetioMax != null && waterCementRetioEqual == null) {
+    if (waterCementRatioMin != null && waterCementRatioMin != 0 && waterCementRatioMax != null
+        && waterCementRatioMax != null && waterCementRatioEqual == null) {
       booleanBuilder.and(
-          QMixDesign.mixDesign.waterCementRatio.between(waterCementRetioMin, waterCementRetioMax));
+          QMixDesign.mixDesign.waterCementRatio.between(waterCementRatioMin, waterCementRatioMax));
     }
-    if (waterCementRetioEqual != null && waterCementRetioEqual != 0 && waterCementRetioMax == null
-        && waterCementRetioMin == null) {
-      booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.eq(waterCementRetioEqual));
+    if (waterCementRatioEqual != null && waterCementRatioEqual != 0 && waterCementRatioMax == null
+        && waterCementRatioMin == null) {
+      booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.eq(waterCementRatioEqual));
     }
     if (waterBinderRatioMin != null && waterBinderRatioMin != 0 && waterBinderRatioMax == null
         && waterBinderRatioEqual == null) {
