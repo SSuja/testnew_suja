@@ -116,7 +116,7 @@ public class SieveTestController {
       @RequestParam(name = "finenessModulusMin", required = false) Double finenessModulusMin,
       @RequestParam(name = "finenessModulus", required = false) Double finenessModulus) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TESTS,
         sieveTestService.searchSieveTest(incomingSampleCode, status, finenessModulus,
             finenessModulusMin, finenessModulusMax, plantCode, booleanBuilder, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
