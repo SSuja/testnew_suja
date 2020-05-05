@@ -2,9 +2,13 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinenessModulus;
 import com.tokyo.supermix.data.repositories.FinenessModulusRepository;
 
@@ -54,6 +58,12 @@ public class FinenessModulusServiceImpl implements FinenessModulusService {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<FinenessModulus> searchFinenessModulus(Predicate predicate, int size, int page) {
+    return finenessModulusRepository.findAll(predicate,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 
 }

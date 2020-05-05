@@ -134,8 +134,7 @@ public class IncomingSampleController {
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
   public ResponseEntity<Object> getIncomingSampleSearch(
       @QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
-      @RequestParam(name = "page", defaultValue = "0") int page,
-      @RequestParam(name = "size", defaultValue = "500") int size) {
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
         incomingSampleService.searchIncomingSample(predicate, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);

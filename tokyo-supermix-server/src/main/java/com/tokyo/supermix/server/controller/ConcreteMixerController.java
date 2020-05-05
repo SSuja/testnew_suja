@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteMixerRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteMixerResponseDto;
@@ -144,4 +146,12 @@ public class ConcreteMixerController {
     }
   }
 
+  @GetMapping(value = EndpointURI.CONCRETE_MIXER_SEARCH)
+  public ResponseEntity<Object> getConcreteMixerSearch(
+      @QuerydslPredicate(root = ConcreteMixer.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_MIXERS,
+        concreteMixerService.searchConcreteMixer(predicate, page, size), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 }

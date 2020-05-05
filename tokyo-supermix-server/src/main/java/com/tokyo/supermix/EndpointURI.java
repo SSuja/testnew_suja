@@ -71,6 +71,7 @@ public final class EndpointURI {
   public static final String POURS = BASE_API_PATH + "pours";
   public static final String GET_POUR_BY_ID = POUR + ID;
   public static final String DELETE_POUR = POUR + ID;
+  public static final String POUR_SEARCH=POUR +SEARCH;
   /*
    * Unit apis
    */
@@ -112,6 +113,7 @@ public final class EndpointURI {
       TEST_CONFIGURE + SLASH + "core-test" + SLASH + "{coreTest}";
   public static final String TEST_CONFIGURE_BY_ID_AND_CORE_TEST =
       TEST_CONFIGURE + SLASH + "core-test";
+  public static final String TEST_CONFIGURE_SEARCH = TEST_CONFIGURE + SEARCH;
   /*
    * Material State
    */
@@ -173,6 +175,7 @@ public final class EndpointURI {
   public static final String PARAMETERS = BASE_API_PATH + "parameters";
   public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
   public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
+  public static final String PARAMETER_SEARCH=PARAMETER +SEARCH;
 
   /*
    * TestType
@@ -242,6 +245,7 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE = BASE_API_PATH + "process-sample";
   public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
+  public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
 
   /*
    * Mix design proportion apis
@@ -301,6 +305,7 @@ public final class EndpointURI {
   public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
   public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
+  public static final String SEARCH_ADMIXTURE_ACCEPTED_VALUE = ADMIXTURE_ACCEPTED_VALUE + SEARCH;
   /*
    * AcceptedValue
    */
@@ -309,6 +314,7 @@ public final class EndpointURI {
   public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
   /*
    * Material Tests
    */
@@ -355,12 +361,14 @@ public final class EndpointURI {
       SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
   public static final String SIEVE_SIZE_ACCEPTED_VALUE_BY_MATERIAL_SUB_CATEGORY_ID =
       SIEVE_SIZE + SLASH + "sieve-accepted-value" + SLASH + "{materialSubCategoryId}";
+  public static final String SIEVE_SIZE_SEARCH = SIEVE_SIZE + SEARCH;
   /*
    * Sieve Accepted Value
    */
   public static final String SIEVE_ACCEPTED_VALUE = BASE_API_PATH + "sieve-accepted-value";
   public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
   public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
+  public static final String SIEVE_ACCEPTED_VALUE_SEARCH = SIEVE_ACCEPTED_VALUE + SEARCH;
   /*
    * SieveTest
    * 
@@ -385,6 +393,7 @@ public final class EndpointURI {
   public static final String FINENESS_MODULUS_BY_ID = FINENESS_MODULUS + ID;
   public static final String FINENESS_MODULUS_BY_MATERIALSUBCATEGORY =
       FINENESS_MODULUS + "/materialSubCategory" + "/{materialSubCategoryId}";
+  public static final String SEARCH_FINENESS_MODULUS = FINENESS_MODULUS + SEARCH;
   /*
    * concreteTestElement
    * 
@@ -402,6 +411,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
       FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
+  public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
   /*
    * Concrete Mixer apis
    */
@@ -410,6 +420,7 @@ public final class EndpointURI {
   public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
   /*
    * Cube Test Finding
    */
