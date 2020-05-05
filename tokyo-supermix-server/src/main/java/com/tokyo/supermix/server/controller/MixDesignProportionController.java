@@ -132,7 +132,7 @@ public class MixDesignProportionController {
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
       @RequestParam(name = "targetGrade", required = false) Double targetGrade,
       @RequestParam(name = "targetSlump", required = false) Double targetSlump) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION,
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTIONS,
         mixDesignProportionService.searchMixDesignProportion(rawMaterialName1, rawMaterialName2,
             rawMaterialName3, rawMaterialName4, rawMaterialName5, page, size, mixDesignCode,
             targetGrade, targetSlump),
