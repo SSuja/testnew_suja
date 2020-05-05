@@ -125,6 +125,7 @@ public final class EndpointURI {
   public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
+  public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
 
   /*
    * EquipmentPlantCalibration apis
@@ -145,7 +146,7 @@ public final class EndpointURI {
   public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
   public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
   public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
-
+  public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
   /*
    * Customer apis
    */
