@@ -137,7 +137,8 @@ public final class EndpointURI {
   public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID =
       EQUIPMENT_PLANT_CALIBRATION + ID;
   public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
-
+  public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
+      EQUIPMENT_PLANT_CALIBRATION + SEARCH;
   /*
    * PlantEquipment
    * 
