@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.CustomerDto;
 import com.tokyo.supermix.data.entities.Customer;
@@ -104,8 +107,7 @@ public class CustomerController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmailAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      if (customerService.isUpdatedCustomerNameExist(customerDto.getId(),
-          customerDto.getName())) {
+      if (customerService.isUpdatedCustomerNameExist(customerDto.getId(), customerDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
             validationFailureStatusCodes.getCustomerAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
@@ -118,4 +120,13 @@ public class CustomerController {
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  @GetMapping(value = EndpointURI.CUSTOMER_SEARCH)
+  public ResponseEntity<Object> getCustomerSearch(
+      @QuerydslPredicate(root = Customer.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.CUSTOMERS,
+            customerService.searchCustomer(predicate, page, size), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 }
