@@ -103,7 +103,7 @@ public class ProcessSampleController {
         validationFailureStatusCodes.getProcessSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping("/search")
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_SEARCH)
   public ResponseEntity<Object> getProcessSampleSearch(
       @QuerydslPredicate(root = ProcessSample.class) Predicate predicate,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
