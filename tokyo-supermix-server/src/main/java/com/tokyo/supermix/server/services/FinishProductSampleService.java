@@ -2,6 +2,8 @@ package com.tokyo.supermix.server.services;
 
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 
 public interface FinishProductSampleService {
@@ -26,4 +28,7 @@ public interface FinishProductSampleService {
   boolean isConcreteMixerExist(Long id);
 
   public List<FinishProductSample> getFinishProductSampleByConcreteMixerId(Long id);
+
+  public Page<FinishProductSample> searchFinishProductSample(Predicate predicate, int page,
+      int size);
 }

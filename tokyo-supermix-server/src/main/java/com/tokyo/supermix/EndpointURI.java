@@ -243,6 +243,7 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE = BASE_API_PATH + "process-sample";
   public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
+  public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
 
   /*
    * Mix design proportion apis
@@ -408,6 +409,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
       FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
+  public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
   /*
    * Concrete Mixer apis
    */
