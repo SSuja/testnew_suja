@@ -399,6 +399,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
       FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
+  public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
   /*
    * Concrete Mixer apis
    */
