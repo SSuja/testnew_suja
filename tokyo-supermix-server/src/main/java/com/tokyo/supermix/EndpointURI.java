@@ -92,6 +92,7 @@ public final class EndpointURI {
   public static final String DELETE_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORY + ID;
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
       MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
+  public static final String MATERIAL_SUB_CATEGORY_SEARCH = MATERIAL_SUB_CATEGORY + SEARCH;
   /*
    * Equipment APIs
    */
@@ -236,6 +237,7 @@ public final class EndpointURI {
   public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
   public static final String GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID =
       TEST_PARAMETER + "/test-configure" + "/{testConfigureId}";
+  public static final String SEARCH_TEST_PARAMETER = TEST_PARAMETER + SEARCH;
 
   /*
    * ProcessSample APIs

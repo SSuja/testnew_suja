@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.TestParameter;
 
 public interface TestParameterService {
@@ -21,4 +23,6 @@ public interface TestParameterService {
   public boolean isTestConfigureIdExist(Long id);
 
   public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId);
+
+  public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page);
 }
