@@ -359,6 +359,7 @@ public final class EndpointURI {
   public static final String SIEVE_ACCEPTED_VALUE = BASE_API_PATH + "sieve-accepted-value";
   public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
   public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
+  public static final String SIEVE_ACCEPTED_VALUE_SEARCH = SIEVE_ACCEPTED_VALUE + SEARCH;
   /*
    * SieveTest
    * 
@@ -408,6 +409,7 @@ public final class EndpointURI {
   public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
   /*
    * Cube Test Finding
    */
