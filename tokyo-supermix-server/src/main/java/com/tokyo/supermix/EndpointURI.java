@@ -20,6 +20,7 @@ public final class EndpointURI {
   public static final String GET_PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String DELETE_PLANT_BY_CODE = PLANT + CODE;
+  public static final String SEARCH_PLANT = PLANT + SEARCH;
 
   /*
    * Designation API
@@ -46,6 +47,7 @@ public final class EndpointURI {
   public static final String DELETE_SUPPLIER = SUPPLIER + ID;
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
+  public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
   /*
    * Employee apis
    */
@@ -54,6 +56,7 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   /*
    * Material Category APIs
    */
@@ -144,7 +147,6 @@ public final class EndpointURI {
   public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
   public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
   public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
-
   /*
    * Customer apis
    */
@@ -152,6 +154,7 @@ public final class EndpointURI {
   public static final String CUSTOMERS = BASE_API_PATH + "customers";
   public static final String DELETE_CUSTOMER = CUSTOMER + ID;
   public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
+  public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
 
   /*
    * Equation APIs

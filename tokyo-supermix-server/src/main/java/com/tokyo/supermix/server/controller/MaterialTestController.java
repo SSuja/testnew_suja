@@ -141,8 +141,8 @@ public class MaterialTestController {
 
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_TEST)
   public ResponseEntity<Object> searchMaterialTest(
-      @RequestParam(name = "page", defaultValue = "0") int page,
-      @RequestParam(name = "size", defaultValue = "500") int size,
+      @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
       @RequestParam(name = "testName", required = false) String testName,
       @RequestParam(name = "status", required = false) Status status,
