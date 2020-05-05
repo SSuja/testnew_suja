@@ -20,6 +20,7 @@ public final class EndpointURI {
   public static final String GET_PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String DELETE_PLANT_BY_CODE = PLANT + CODE;
+  public static final String SEARCH_PLANT = PLANT + SEARCH;
 
   /*
    * Designation API
@@ -55,6 +56,7 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   /*
    * Material Category APIs
    */
