@@ -180,6 +180,7 @@ public final class EndpointURI {
   public static final String TEST_TYPES = BASE_API_PATH + "test-types";
   public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID =
       TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
+  public static final String SEARCH_TEST_TYPE = TEST_TYPE + SEARCH;
 
   /*
    * IncomingSample Apis
