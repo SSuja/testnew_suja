@@ -3,10 +3,13 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.SieveAcceptedValue;
 import com.tokyo.supermix.data.entities.SieveSize;
 import com.tokyo.supermix.data.repositories.SieveSizeRepository;
@@ -44,12 +47,15 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   }
 
   @Transactional(readOnly = true)
-  public List<SieveSize> findAcceptedValueSieveSizeByMaterialSubCategoryId(Long materialSubCategoryId) {
+  public List<SieveSize> findAcceptedValueSieveSizeByMaterialSubCategoryId(
+      Long materialSubCategoryId) {
     List<Double> sieveSizeList = new ArrayList<>();
     List<Double> sieveAcceptedValueSizeList = new ArrayList<>();
-    for (SieveSize sieveSize : sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId)) {
+    for (SieveSize sieveSize : sieveSizeRepository
+        .findByMaterialSubCategoryId(materialSubCategoryId)) {
       sieveSizeList.add(sieveSize.getSize());
-      for (SieveAcceptedValue sieveAcceptedValue : sieveAcceptedValueService.getAllSieveAcceptedValues()) {
+      for (SieveAcceptedValue sieveAcceptedValue : sieveAcceptedValueService
+          .getAllSieveAcceptedValues()) {
         if (materialSubCategoryId == sieveAcceptedValue.getSieveSize().getMaterialSubCategory()
             .getId())
           sieveAcceptedValueSizeList.add(sieveAcceptedValue.getSieveSize().getSize());
@@ -64,6 +70,7 @@ public class SieveSizeServiceImpl implements SieveSizeService {
     }
     return sieveSize;
   }
+
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
     return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId,
         Sort.by(Sort.Direction.DESC, "size"));
@@ -93,5 +100,11 @@ public class SieveSizeServiceImpl implements SieveSizeService {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public Page<SieveSize> searchSieveSize(Predicate predicate, int page, int size) {
+    return sieveSizeRepository.findAll(predicate,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 }
