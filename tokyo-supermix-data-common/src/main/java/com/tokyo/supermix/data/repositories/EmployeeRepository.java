@@ -8,6 +8,5 @@ import com.tokyo.supermix.data.entities.Employee;
 @Repository
 public interface EmployeeRepository
     extends JpaRepository<Employee, Long>, QuerydslPredicateExecutor<Employee> {
-  /* Check Existing email */
   boolean existsByEmail(String mail);
 }

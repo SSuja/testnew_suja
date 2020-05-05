@@ -206,6 +206,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN = BASE_API_PATH + "mix-design";
   public static final String MIX_DESIGNS = BASE_API_PATH + "mix-designs";
   public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
+  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
   /*
    * ProcessSampleLoad Apis
    */
@@ -245,6 +246,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE =
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
+  public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
   /*
    * ConcreteStrengthTest APIs

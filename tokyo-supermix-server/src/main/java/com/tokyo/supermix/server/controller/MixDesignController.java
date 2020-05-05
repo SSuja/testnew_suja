@@ -1,8 +1,10 @@
 package com.tokyo.supermix.server.controller;
 
+import java.sql.Date;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
@@ -94,4 +97,30 @@ public class MixDesignController {
 
   }
 
+  @GetMapping(value = EndpointURI.MIX_DESIGN_SEARCH)
+  public ResponseEntity<Object> getMixDesignsBySearch(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "targetGrade", required = false) Double targetGrade,
+      @RequestParam(name = "date", required = false) Date date,
+      @RequestParam(name = "targetSlumpEqual", required = false) Double targetSlumpEqual,
+      @RequestParam(name = "targetSlumpMin", required = false) Double targetSlumpMin,
+      @RequestParam(name = "targetSlumpMax", required = false) Double targetSlumpMax,
+      @RequestParam(name = "targetGradeEqual", required = false) Double targetGradeEqual,
+      @RequestParam(name = "targetGradeMin", required = false) Double targetGradeMin,
+      @RequestParam(name = "targetGradeMax", required = false) Double targetGradeMax,
+      @RequestParam(name = "waterCementRatioEqual", required = false) Double waterCementRatioEqual,
+      @RequestParam(name = "waterCementRatioMin", required = false) Double waterCementRatioMin,
+      @RequestParam(name = "waterCementRatioMax", required = false) Double waterCementRatioMax,
+      @RequestParam(name = "waterBinderRatioEqual", required = false) Double waterBinderRatioEqual,
+      @RequestParam(name = "waterBinderRatioMin", required = false) Double waterBinderRatioMin,
+      @RequestParam(name = "waterBinderRatioMax", required = false) Double waterBinderRatioMax,
+      @RequestParam(name = "plantName", required = false) String plantName) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+        mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual,
+            targetGradeMin, targetGradeMax, targetGradeEqual, waterCementRatioMin,
+            waterCementRatioMax, waterCementRatioEqual, waterBinderRatioMin, waterBinderRatioMax,
+            waterBinderRatioEqual, plantName, page, size),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }
