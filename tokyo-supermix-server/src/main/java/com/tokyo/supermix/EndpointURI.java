@@ -111,6 +111,7 @@ public final class EndpointURI {
       TEST_CONFIGURE + SLASH + "core-test" + SLASH + "{coreTest}";
   public static final String TEST_CONFIGURE_BY_ID_AND_CORE_TEST =
       TEST_CONFIGURE + SLASH + "core-test";
+  public static final String TEST_CONFIGURE_SEARCH = TEST_CONFIGURE + SEARCH;
   /*
    * Material State
    */
@@ -352,6 +353,7 @@ public final class EndpointURI {
       SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
   public static final String SIEVE_SIZE_ACCEPTED_VALUE_BY_MATERIAL_SUB_CATEGORY_ID =
       SIEVE_SIZE + SLASH + "sieve-accepted-value" + SLASH + "{materialSubCategoryId}";
+  public static final String SIEVE_SIZE_SEARCH = SIEVE_SIZE + SEARCH;
   /*
    * Sieve Accepted Value
    */

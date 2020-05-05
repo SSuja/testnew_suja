@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.SieveSize;
 
 public interface SieveSizeService {
@@ -15,7 +17,7 @@ public interface SieveSizeService {
   public void deleteSieveSize(Long id);
 
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
-  
+
   public boolean isSizeAndMaterialSubCategoryIdExist(Double size, Long materialSubCategoryId);
 
   public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size);
@@ -23,6 +25,9 @@ public interface SieveSizeService {
   public SieveSize updateSieveSize(SieveSize sieveSize);
 
   public boolean isMaterialSubCategoryIdNull(Long materialSubCategoryId);
-  
-  public List<SieveSize> findAcceptedValueSieveSizeByMaterialSubCategoryId(Long materialSubCategoryId);
+
+  public List<SieveSize> findAcceptedValueSieveSizeByMaterialSubCategoryId(
+      Long materialSubCategoryId);
+
+  public Page<SieveSize> searchSieveSize(Predicate predicate, int page, int size);
 }

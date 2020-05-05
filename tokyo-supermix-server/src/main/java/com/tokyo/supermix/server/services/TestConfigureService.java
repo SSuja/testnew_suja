@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestType;
 
@@ -24,4 +26,6 @@ public interface TestConfigureService {
   public void updateCoreTestForTestConfigure(Long id, boolean coreTest);
 
   public List<TestConfigure> findByCoreTest(boolean coreTest);
+
+  public Page<TestConfigure> searchTestConfigure(Predicate predicate, int page, int size);
 }
