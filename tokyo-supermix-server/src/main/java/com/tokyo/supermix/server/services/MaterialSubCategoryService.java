@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 
@@ -26,4 +27,7 @@ public interface MaterialSubCategoryService {
   public boolean isMaterialCategoryIdExist(Long materialCategoryId);
 
   public MaterialSubCategory getMaterialSubCategoryByName(String name);
+
+  public Page<MaterialSubCategory> searchMaterialSubCategory(Predicate predicate, int size,
+      int page);
 }

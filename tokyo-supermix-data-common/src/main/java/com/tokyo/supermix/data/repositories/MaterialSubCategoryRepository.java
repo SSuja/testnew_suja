@@ -1,20 +1,20 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 
-public interface MaterialSubCategoryRepository extends JpaRepository<MaterialSubCategory, Long> {
-	boolean existsByName(String name);
+public interface MaterialSubCategoryRepository extends JpaRepository<MaterialSubCategory, Long>,
+    QuerydslPredicateExecutor<MaterialSubCategory> {
+  boolean existsByName(String name);
 
-	List<MaterialSubCategory> findByMaterialCategory(MaterialCategory materialCategory);
+  List<MaterialSubCategory> findByMaterialCategory(MaterialCategory materialCategory);
 
-	public MaterialSubCategory findByName(String name);
+  public MaterialSubCategory findByName(String name);
 
-	boolean existsByMaterialCategoryId(Long materialCategoryId);
+  boolean existsByMaterialCategoryId(Long materialCategoryId);
 
-	List<MaterialSubCategory> findByMaterialCategoryId(Long materialCategoryId);
+  List<MaterialSubCategory> findByMaterialCategoryId(Long materialCategoryId);
 }
