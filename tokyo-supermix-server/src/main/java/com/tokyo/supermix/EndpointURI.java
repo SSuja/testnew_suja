@@ -55,6 +55,7 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   /*
    * Material Category APIs
    */
