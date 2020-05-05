@@ -3,9 +3,12 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Pour;
 import com.tokyo.supermix.data.repositories.PourRepository;
 
@@ -51,5 +54,11 @@ public class PourServiceImpl implements PourService {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public Page<Pour> searchPour(Predicate predicate, int page, int size) {
+    return pourRepository.findAll(predicate,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 }
