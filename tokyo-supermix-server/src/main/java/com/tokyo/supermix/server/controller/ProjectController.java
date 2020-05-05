@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ProjectRequestDto;
 import com.tokyo.supermix.data.dto.ProjectResponseDto;
@@ -32,10 +35,10 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @CrossOrigin(origins = "*")
 @RestController
 public class ProjectController {
-	@Autowired
-	private EmailService emailService;
-	@Autowired
-	private MailConstants mailConstants;
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private MailConstants mailConstants;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -59,7 +62,8 @@ public class ProjectController {
     }
     projectService.saveProject(mapper.map(projectRequestDto, Project.class));
     String message = "We have got new project . The project name is " + projectRequestDto.getName();
-    emailService.sendMail(mailConstants.getMailNewProject(), Constants.SUBJECT_NEW_PROJECT,message);
+    emailService.sendMail(mailConstants.getMailNewProject(), Constants.SUBJECT_NEW_PROJECT,
+        message);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PROJECT_SUCCESS),
         HttpStatus.OK);
@@ -113,6 +117,16 @@ public class ProjectController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_CODE,
         validationFailureStatusCodes.getProjectNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_PROJECT)
+  public ResponseEntity<Object> getProjectSearch(
+      @QuerydslPredicate(root = Project.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.PROJECTS,
+            projectService.searchProject(predicate, size, page), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
 }
