@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.AcceptedValueRequestDto;
 import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
@@ -127,5 +130,14 @@ public class AcceptedValueController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_ACCEPTED_VALUE)
+  public ResponseEntity<Object> getAcceptedValueSearch(
+      @QuerydslPredicate(root = AcceptedValue.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
+        acceptedValueService.searchAcceptedValue(predicate, size, page), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }

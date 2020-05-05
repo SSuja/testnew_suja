@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinenessModulus;
 
 public interface FinenessModulusService {
@@ -19,4 +21,6 @@ public interface FinenessModulusService {
   public boolean isMaterialSubCategoryIdExists(Long materialSubCategoryId);
 
   public boolean isUpdatedMaterialSubCategoryExist(Long id, Long materialSubCategoryId);
+
+  public Page<FinenessModulus> searchFinenessModulus(Predicate predicate, int size, int page);
 }

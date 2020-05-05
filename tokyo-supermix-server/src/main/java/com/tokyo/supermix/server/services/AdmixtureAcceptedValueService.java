@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.AdmixtureAcceptedValue;
 
 public interface AdmixtureAcceptedValueService {
@@ -21,4 +22,7 @@ public interface AdmixtureAcceptedValueService {
   public boolean isAdmixtureAcceptedValueExistsByTestConfigureId(Long id);
 
   public AdmixtureAcceptedValue getAdmixtureAcceptedValueByTestConfigureId(Long testConfigureId);
+
+  public Page<AdmixtureAcceptedValue> searchAdmixtureAcceptedValue(Predicate predicate, int size,
+      int page);
 }

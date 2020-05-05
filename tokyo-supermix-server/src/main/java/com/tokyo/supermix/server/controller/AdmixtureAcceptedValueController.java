@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.AdmixtureAcceptedValueRequestDto;
 import com.tokyo.supermix.data.dto.AdmixtureAcceptedValueResponseDto;
@@ -134,5 +137,14 @@ public class AdmixtureAcceptedValueController {
     logger.debug("invalid");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.ADMIXTURE_ACCEPTED_VALUE,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_ADMIXTURE_ACCEPTED_VALUE)
+  public ResponseEntity<Object> getAdmixtureAcceptedValueSearch(
+      @QuerydslPredicate(root = AdmixtureAcceptedValue.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.ADMIXTURE_ACCEPTED_VALUES,
+        admixtureAcceptedValueService.searchAdmixtureAcceptedValue(predicate, size, page),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
