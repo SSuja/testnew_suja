@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.ConcreteMixer;
 
 public interface ConcreteMixerService {
@@ -19,4 +21,6 @@ public interface ConcreteMixerService {
   public boolean isDuplicateEntryExist(String name, String plantCode);
 
   public boolean isNameNull(String name);
+
+  public Page<ConcreteMixer> searchConcreteMixer(Predicate predicate, int page, int size);
 }
