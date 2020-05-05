@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Project;
 
 public interface ProjectService {
@@ -17,5 +19,7 @@ public interface ProjectService {
   public Project getProjectByCode(String code);
 
   public boolean isUpdatedProjectExist(String code, String name);
+
+  public Page<Project> searchProject(Predicate predicate, int size, int page);
 
 }
