@@ -239,6 +239,7 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE = BASE_API_PATH + "process-sample";
   public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
+  public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
 
   /*
    * Mix design proportion apis
