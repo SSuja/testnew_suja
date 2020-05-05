@@ -54,8 +54,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     return false;
   }
 
-  @Override
-  public Page<Employee> searchEmployee(Predicate predicate, int page, int size) {
+  @Transactional(readOnly = true)
+  public Page<Employee> searchEmployee(Predicate predicate, int size, int page) {
     return employeeRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }

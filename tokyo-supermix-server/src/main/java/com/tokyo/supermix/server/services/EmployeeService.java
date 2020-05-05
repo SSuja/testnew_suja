@@ -20,5 +20,5 @@ public interface EmployeeService {
 
   public List<Employee> getAllEmployees();
 
-  public Page<Employee> searchEmployee(Predicate predicate, int page, int size);
+  public Page<Employee> searchEmployee(Predicate predicate, int size, int page);
 }
