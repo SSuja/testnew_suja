@@ -98,9 +98,8 @@ public class MixDesignController {
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGN_SEARCH)
-  public Page<MixDesign> getMixDesignsBySearch(
-      @RequestParam(name = "page", defaultValue = "0") int page,
-      @RequestParam(name = "size", defaultValue = "500") int size,
+  public ResponseEntity<Object> getMixDesignsBySearch(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "targetGrade", required = false) Double targetGrade,
       @RequestParam(name = "date", required = false) Date date,
@@ -117,10 +116,11 @@ public class MixDesignController {
       @RequestParam(name = "waterBinderRatioMin", required = false) Double waterBinderRatioMin,
       @RequestParam(name = "waterBinderRatioMax", required = false) Double waterBinderRatioMax,
       @RequestParam(name = "plantName", required = false) String plantName) {
-    return mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual,
-        targetGradeMin, targetGradeMax, targetGradeEqual, waterCementRatioMin, waterCementRatioMax,
-        waterCementRatioEqual, waterBinderRatioMin, waterBinderRatioMax, waterBinderRatioEqual,
-        plantName, page, size);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+        mixDesignService.searchMixDesign(targetSlumpMin, targetSlumpMax, targetSlumpEqual,
+            targetGradeMin, targetGradeMax, targetGradeEqual, waterCementRatioMin,
+            waterCementRatioMax, waterCementRatioEqual, waterBinderRatioMin, waterBinderRatioMax,
+            waterBinderRatioEqual, plantName, page, size),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
 }
