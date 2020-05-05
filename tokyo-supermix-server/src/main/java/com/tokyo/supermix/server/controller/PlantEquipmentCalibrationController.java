@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationRequestDto;
 import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationResponseDto;
@@ -45,25 +48,19 @@ public class PlantEquipmentCalibrationController {
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.EMPLOYEE_ID,
-                validationFailureStatusCodes
-                    .getEmployeeIdIsNull()),
-            HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+            validationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
       }
-      
-    }else if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.SUPPLIER,
-              validationFailureStatusCodes
-              .getSupplierIdIsNull()),
-          HttpStatus.BAD_REQUEST);
+
+    } else if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
+          validationFailureStatusCodes.getSupplierIdIsNull()), HttpStatus.BAD_REQUEST);
     }
-      plantEquipmentCalibrationService.savePlantEquipmentCalibration(
-          mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
-    
+    plantEquipmentCalibrationService.savePlantEquipmentCalibration(
+        mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
+
   }
 
   // get all PlantEquipmentCalibration
@@ -115,24 +112,26 @@ public class PlantEquipmentCalibrationController {
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.EMPLOYEE_ID,
-                validationFailureStatusCodes
-                    .getEmployeeIdIsNull()),
-            HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+            validationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
       }
-      
-    }else if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.SUPPLIER,
-              validationFailureStatusCodes
-              .getSupplierIdIsNull()),
-          HttpStatus.BAD_REQUEST);
+
+    } else if (plantEquipmentCalibrationRequestDto.getSupplierId() == null) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
+          validationFailureStatusCodes.getSupplierIdIsNull()), HttpStatus.BAD_REQUEST);
     }
-      plantEquipmentCalibrationService.savePlantEquipmentCalibration(
-          mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
-    
+    plantEquipmentCalibrationService.savePlantEquipmentCalibration(
+        mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_SEARCH)
+  public ResponseEntity<Object> getPlantEquipmentCalibrationSearch(
+      @QuerydslPredicate(root = PlantEquipmentCalibration.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
+        plantEquipmentCalibrationService.searchPlantEquipmentCalibration(predicate, page, size),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

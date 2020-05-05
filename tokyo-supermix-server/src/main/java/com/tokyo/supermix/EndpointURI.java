@@ -125,6 +125,7 @@ public final class EndpointURI {
   public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
+  public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
 
   /*
    * EquipmentPlantCalibration apis
@@ -136,7 +137,8 @@ public final class EndpointURI {
   public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID =
       EQUIPMENT_PLANT_CALIBRATION + ID;
   public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
-
+  public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
+      EQUIPMENT_PLANT_CALIBRATION + SEARCH;
   /*
    * PlantEquipment
    * 
@@ -145,7 +147,7 @@ public final class EndpointURI {
   public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
   public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
   public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
-
+  public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
   /*
    * Customer apis
    */
@@ -199,6 +201,7 @@ public final class EndpointURI {
   public static final String PROJECT = BASE_API_PATH + "project";
   public static final String PROJECT_BY_ID = PROJECT + CODE;
   public static final String PROJECTS = BASE_API_PATH + "projects";
+  public static final String SEARCH_PROJECT = PROJECT + SEARCH;
 
   /*
    * Mix design apis
