@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 
@@ -21,5 +23,7 @@ public interface AcceptedValueService {
   boolean isAcceptedValueByTestConfigureId(Long testConfigureId);
 
   public boolean isUpdatedAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId);
+
+  public Page<AcceptedValue> searchAcceptedValue(Predicate predicate, int size, int page);
 
 }

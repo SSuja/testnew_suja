@@ -292,6 +292,7 @@ public final class EndpointURI {
   public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
   public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
+  public static final String SEARCH_ADMIXTURE_ACCEPTED_VALUE = ADMIXTURE_ACCEPTED_VALUE + SEARCH;
   /*
    * AcceptedValue
    */
@@ -300,6 +301,7 @@ public final class EndpointURI {
   public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
   /*
    * Material Tests
    */
