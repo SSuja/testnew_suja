@@ -1,4 +1,5 @@
 package com.tokyo.supermix.security;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,116 +11,102 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tokyo.supermix.data.entities.Role;
 import com.tokyo.supermix.data.entities.User;
 
+public class UserPrincipal implements UserDetails {
+  private static final long serialVersionUID = -394792056682796726L;
+  private Long id;
+  private String username;
+  private Role role;
+  @JsonIgnore
+  private String email;
+  @JsonIgnore
+  private String password;
+  private Collection<? extends GrantedAuthority> authorities;
 
-public class UserPrincipal implements UserDetails{
-	private static final long serialVersionUID = -394792056682796726L;
+  public UserPrincipal(Long id, String username, Role role, String email, String password,
+      Collection<? extends GrantedAuthority> authorities) {
+    this.id = id;
+    this.username = username;
+    this.role = role;
+    this.email = email;
+    this.password = password;
+    this.authorities = authorities;
+  }
 
-	private Long id;
+  public static UserPrincipal create(User user) {
+    List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
+    authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
+    return new UserPrincipal(user.getId(), user.getUserName(), user.getRole(), user.getEmail(),
+        user.getPassword(), authorities);
+  }
 
-    private String username;
-    
-    private Role role;
+  public Long getId() {
+    return id;
+  }
 
-    @JsonIgnore
-    private String email;
+  public String getEmail() {
+    return email;
+  }
 
-    @JsonIgnore
-    private String password;
-
-    private Collection<? extends GrantedAuthority> authorities;
-    
-
-public UserPrincipal(Long id, String username,Role role, String email, String password,
-			Collection<? extends GrantedAuthority> authorities) {
-		this.id = id;
-		this.username = username;
-		this.role = role;
-		this.email = email;
-		this.password = password;
-		this.authorities = authorities;
-	}
-
-
-    public static UserPrincipal create(User user) {
-    	List<SimpleGrantedAuthority>authorities  = new ArrayList<SimpleGrantedAuthority>();
-    	authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
-    	
-        return new UserPrincipal(
-             user.getId(),
-             user.getUserName(),
-             user.getRole(),
-             user.getEmail(),
-             user.getPassword(),
-             authorities
-        );
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-     
-    public Role getRole() {
-		return role;
-	}
+  public Role getRole() {
+    return role;
+  }
 
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
 
-	@Override
-    public String getUsername() {
-        return username;
-    }
+  @Override
+  public String getUsername() {
+    return username;
+  }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
-    
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
-    }
-   
+  @Override
+  public String getPassword() {
+    return password;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return authorities;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserPrincipal that = (UserPrincipal) o;
-        return Objects.equals(id, that.id);
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
 
-    @Override
-    public int hashCode() {
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 
-        return Objects.hash(id);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    UserPrincipal that = (UserPrincipal) o;
+    return Objects.equals(id, that.id);
+  }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(id);
+  }
 
 }

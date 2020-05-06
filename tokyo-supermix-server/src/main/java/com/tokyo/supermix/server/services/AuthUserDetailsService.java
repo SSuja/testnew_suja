@@ -12,7 +12,7 @@ import com.tokyo.supermix.data.repositories.UserRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class AuthUserDetailsService implements UserDetailsService{
 	@Autowired
 	UserRepository userRepository;
 

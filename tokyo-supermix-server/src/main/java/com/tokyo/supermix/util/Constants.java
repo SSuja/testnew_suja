@@ -17,6 +17,12 @@ public class Constants {
   public static final String SUBJECT_NEW_MATERIAL_TEST="Notification : New Material Test";
   public static final String SUBJECT_NEW_SEIVE_TEST="Notification : New Seive Test";
   
+  //Authentication
+  public static final String PASSWORD="passWord";
+  public static final String EMAIL_OR_USERNAME="emailOrUserName";
+  public static final String CREDENCIALS="credentials";
+  public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
+  
 //for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
 //for plants
@@ -508,10 +514,6 @@ public class Constants {
   public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
   
-  //Authentication
-  public static final String PASSWORD="passWord";
-  public static final String EMAIL_OR_USERNAME="emailOrUserName";
-  public static final String CREDENCIALS="credentials";
 
   /*
    * Encapsulate constructor to restrict modification from outside

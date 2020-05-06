@@ -21,5 +21,6 @@ public interface UserService {
   public boolean isUpdatedUserExist(Long id, String userName);
   
   public boolean existsByEmail(String email);
-		  
+  
+  void changeUserPassword(User user, String password);
 }

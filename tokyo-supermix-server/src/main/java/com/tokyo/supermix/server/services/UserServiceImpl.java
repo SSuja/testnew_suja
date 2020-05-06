@@ -15,11 +15,8 @@ import com.tokyo.supermix.data.repositories.UserRepository;
 public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
-  
   @Autowired
 	PasswordEncoder passwordEncoder;
-
- 
   @Transactional
   public User saveUser(User user) {
 	  if (user != null) {
@@ -49,8 +46,6 @@ public class UserServiceImpl implements UserService {
 	  return userRepository.findAll();
 	}
 
-	
-  
   @Transactional(propagation = Propagation.NEVER)
   public void deleteUser(Long id) {
     userRepository.deleteById(id);
@@ -60,7 +55,7 @@ public class UserServiceImpl implements UserService {
   public User getUserById(Long id) {
     return userRepository.findById(id).get();
   }
-
+  @Transactional(readOnly = true)
   public boolean isUpdatedUserExist(Long id, String userName) {
     if ((!getUserById(id).getUserName().equalsIgnoreCase(userName))
         && (isUserNameExist(userName))) {
@@ -68,10 +63,13 @@ public class UserServiceImpl implements UserService {
     }
     return false;
   }
-
   @Transactional(readOnly = true)
-public boolean existsByEmail(String email) {
-	return userRepository.existsByEmail(email);
-}
-
+  public boolean existsByEmail(String email) {
+  	return userRepository.existsByEmail(email);
+  }
+  @Override
+  public void changeUserPassword(User user, String newPassword) {
+      user.setPassword(passwordEncoder.encode(newPassword));
+      userRepository.save(user);
+  }
 }

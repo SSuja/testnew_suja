@@ -25,7 +25,7 @@ public class User implements Serializable {
   private Role role;
    private String email;
   @OneToOne
-  @JoinColumn(name = "employeeId", nullable = false)
+  @JoinColumn(name = "employeeId")
   private Employee employee;
   
 

@@ -16,57 +16,45 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.tokyo.supermix.security.JwtAuthenticationEntryPoint;
 import com.tokyo.supermix.security.JwtAuthenticationFilter;
-import com.tokyo.supermix.server.services.UserDetailsServiceImpl;
+import com.tokyo.supermix.server.services.AuthUserDetailsService;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Autowired
-	UserDetailsServiceImpl userDetailsServiceImpl;
-
-	@Autowired
-	private JwtAuthenticationEntryPoint unauthorizedHandler;
-
-	@Bean
-	public JwtAuthenticationFilter jwtAuthenticationFilter() {
-		return new JwtAuthenticationFilter();
-	}
-	
-	@Override
-	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
-	}
-
-	@Bean(BeanIds.AUTHENTICATION_MANAGER)
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html",
-						"/**/*.css", "/**/*.js")
-				.permitAll().antMatchers("/auth/**").permitAll()
-//		.antMatchers(HttpMethod.GET,"//**").authenticated();
-		// "/api/user/checkEmailAvailability").permitAll()
-		// .antMatchers(HttpMethod.GET, "/api/polls/**",
-		// "/api/users/**").permitAll()
-		.anyRequest().authenticated();
-
-		// Add our custom JWT security filter
-		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-		http.headers().cacheControl();
-	}
+  @Autowired
+  AuthUserDetailsService authUserDetailsService;
+  @Autowired
+  private JwtAuthenticationEntryPoint unauthorizedHandler;
+  @Bean
+  public JwtAuthenticationFilter jwtAuthenticationFilter() {
+    return new JwtAuthenticationFilter();
+  }
+  @Override
+  public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
+      throws Exception {
+    authenticationManagerBuilder.userDetailsService(authUserDetailsService)
+        .passwordEncoder(passwordEncoder());
+  }
+  @Bean(BeanIds.AUTHENTICATION_MANAGER)
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.cors().and().csrf().disable().exceptionHandling()
+        .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+        .antMatchers("/api/v1/auth/**").permitAll()
+        .anyRequest().authenticated();
+    // Add our custom JWT security filter
+    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+    http.headers().cacheControl();
+  }
 }

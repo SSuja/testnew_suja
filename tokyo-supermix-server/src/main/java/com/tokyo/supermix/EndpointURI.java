@@ -432,7 +432,15 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
 	public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
 	public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
-
+	
+	/*
+     * Authentication
+     * 
+     */
+	public static final String AUTH = BASE_API_PATH + "auth/";
+	public static final String SIGNIN =AUTH + "sign-in";
+	public static final String SIGNUP =AUTH + "sign-up";
+	public static final String CHANGE_PASSWORD =AUTH + "change-password";
 	private EndpointURI() {
 	}
 }

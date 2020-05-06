@@ -1848,5 +1848,30 @@ public class ValidationFailureStatusCodes {
   public void setTestAlreadyExist(String testAlreadyExist) {
     this.testAlreadyExist = testAlreadyExist;
   }
-
+  //Authentication
+  @Value("${auth.password.invalid}")
+  private String password;
+  @Value("${auth.emailOrUserName.invalid}")
+  private String emailOrUserName;
+  @Value("${auth.credentials.invalid}")
+  private String credentials;
+  
+  public String getPassword() {
+    return password;
+  }
+  public void setPassword(String password) {
+    this.password = password;
+  }
+  public String getEmailOrUserName() {
+    return emailOrUserName;
+  }
+  public void setEmailOrUserName(String emailOrUserName) {
+    this.emailOrUserName = emailOrUserName;
+  }
+  public String getCredentials() {
+    return credentials;
+  }
+  public void setCredentials(String credentials) {
+    this.credentials = credentials;
+  }
 }
