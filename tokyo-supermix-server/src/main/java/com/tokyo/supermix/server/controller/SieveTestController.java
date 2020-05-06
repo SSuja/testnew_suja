@@ -106,9 +106,8 @@ public class SieveTestController {
   }
 
   @GetMapping(value = EndpointURI.SEARCH_SIEVE_TEST)
-  public ResponseEntity<Object> searchSieveTest(
-      @RequestParam(name = "page", defaultValue = "0") int page,
-      @RequestParam(name = "size", defaultValue = "500") int size,
+  public ResponseEntity<Object> searchSieveTest(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
       @RequestParam(name = "plantCode", required = false) String plantCode,
       @RequestParam(name = "status", required = false) Status status,

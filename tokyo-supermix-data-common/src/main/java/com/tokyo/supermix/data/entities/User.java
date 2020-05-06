@@ -13,7 +13,7 @@ import javax.validation.constraints.Email;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
-public class User implements Serializable {
+public class User extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

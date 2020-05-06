@@ -1,4 +1,5 @@
 package com.tokyo.supermix.server.controller;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,26 +61,27 @@ public class AuthController {
   public ResponseEntity<?> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
     if (userService.isUserNameExist(userRequestDto.getUserName())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_NAME,
-              validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
-  }
+          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     if (userService.existsByEmail(userRequestDto.getEmail())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-              validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
-  }
+          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     userService.saveUser(mapper.map(userRequestDto, User.class));
-    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS), HttpStatus.OK);
   }
-  
+
   @PutMapping(value = EndpointURI.CHANGE_PASSWORD)
   public ResponseEntity<?> changePassword(@Valid @RequestBody PasswordDto passwordDto) {
     User user = userService.getUserById(passwordDto.getUserId());
-    if(!authService.checkIsValidOldPassword(user,passwordDto.getCurrentPassword())){
+    if (!authService.checkIsValidOldPassword(user, passwordDto.getCurrentPassword())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PASSWORD,
-          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+          validationFailureStatusCodes.getIsMatchPassword()), HttpStatus.BAD_REQUEST);
     }
-    userService.changeUserPassword(user,passwordDto.getNewPassword());
-    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PASSWORD_SUCCESS),
+    userService.changeUserPassword(user, passwordDto.getNewPassword());
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PASSWORD_SUCCESS),
         HttpStatus.OK);
   }
 }

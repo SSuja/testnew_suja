@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.controller;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
@@ -120,5 +123,14 @@ public class TestParameterController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
         validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_TEST_PARAMETER)
+  public ResponseEntity<Object> getTestParameterSearch(
+      @QuerydslPredicate(root = TestParameter.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
+        testParameterService.searchTestParameter(predicate, size, page), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }
