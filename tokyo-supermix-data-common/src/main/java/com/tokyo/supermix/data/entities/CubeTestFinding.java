@@ -24,9 +24,6 @@ public class CubeTestFinding implements Serializable {
   @ManyToOne
   @JoinColumn(name = "finishProductSampleId", nullable = false)
   private FinishProductSample finishProductSample;
-  @ManyToOne
-  @JoinColumn(name = "concreteTestId", nullable = false)
-  private ConcreteTest concreteTest;
 
   public Long getId() {
     return id;
@@ -74,14 +71,6 @@ public class CubeTestFinding implements Serializable {
 
   public void setFinishProductSample(FinishProductSample finishProductSample) {
     this.finishProductSample = finishProductSample;
-  }
-
-  public ConcreteTest getConcreteTest() {
-    return concreteTest;
-  }
-
-  public void setConcreteTest(ConcreteTest concreteTest) {
-    this.concreteTest = concreteTest;
   }
 
   public static long getSerialversionuid() {
