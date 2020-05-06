@@ -22,7 +22,7 @@ public class Constants {
   public static final String EMAIL_OR_USERNAME="emailOrUserName";
   public static final String CREDENCIALS="credentials";
   public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
-  public static final String GENERATE_PASSWORD_SUCCESS = "Random Token Generate and mailed Successfully";
+  public static final String GENERATE_PASSWORD_SUCCESS = "Random Password token Generate and mailed Successfully";
   public static final String MESSAGE_OF_FORGOT_PASSWORD="This the token for Reset your Password ";
   
 //for sample counts

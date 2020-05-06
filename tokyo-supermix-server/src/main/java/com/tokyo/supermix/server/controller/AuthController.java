@@ -17,6 +17,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.JwtAuthenticationDtoResponse;
 import com.tokyo.supermix.data.dto.LoginRequestDto;
 import com.tokyo.supermix.data.dto.PasswordDto;
+import com.tokyo.supermix.data.dto.ResetPasswordDto;
 import com.tokyo.supermix.data.dto.UserRequestDto;
 import com.tokyo.supermix.data.entities.User;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -93,29 +94,29 @@ public class AuthController {
   @PutMapping(value = EndpointURI.FORGOT_PASSWORD)
   public ResponseEntity<?> forgotPassword(@RequestParam("userEmail") String userEmail) { 
     if (userService.existsByEmail(userEmail)) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
-    final User user = userService.findUserByEmail(userEmail);
-    if (user != null) {
+      final User user = userService.findUserByEmail(userEmail);
+      if (user != null) {
         final String token = UUID.randomUUID().toString();
         authService.createForgotPasswordToken(token,user);
         emailService.sendMail(userEmail,Constants.SUBJECT_FORGOT_PASSWORD,Constants.MESSAGE_OF_FORGOT_PASSWORD + token);
         return new ResponseEntity<>(
             new BasicResponse<>(RestApiResponseStatus.OK, Constants.GENERATE_PASSWORD_SUCCESS),
             HttpStatus.OK);
+      }
     }
-    return null;
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+        validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
   }
   
   @PutMapping(value = EndpointURI.RESET_PASSWORD)
-  public ResponseEntity<?> resetPassword(@RequestParam("token") String token , @RequestBody PasswordDto passwordDto ) { 
-    if(authService.validatePasswordResetToken(token)!= null) {
-      return new ResponseEntity<>(new ValidationFailureResponse(token,
+  public ResponseEntity<?> resetPassword(@RequestParam("token") String token , @RequestBody ResetPasswordDto passwordDto ){
+    String result =authService.validatePasswordResetToken(token);
+    if(result != null) {
+      return new ResponseEntity<>(new ValidationFailureResponse(result,
           validationFailureStatusCodes.getIsPasswordTokenFailed()), HttpStatus.BAD_REQUEST);
 }
     User user = authService.getUserByPasswordResetToken(token);
-    userService.changeUserPassword(user, passwordDto.getNewPassword());
+    userService.changeUserPassword(user, passwordDto.getPassword());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PASSWORD_SUCCESS),
         HttpStatus.OK);
