@@ -1,11 +1,13 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.mindrot.jbcrypt.BCrypt;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.tokyo.supermix.data.entities.User;
 import com.tokyo.supermix.data.repositories.UserRepository;
 
@@ -13,15 +15,18 @@ import com.tokyo.supermix.data.repositories.UserRepository;
 public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
+  
+  @Autowired
+	PasswordEncoder passwordEncoder;
 
-  private String hashPassword(String plainTextPassword) {
-    return BCrypt.hashpw(plainTextPassword, BCrypt.gensalt());
-  }
-
+ 
   @Transactional
   public User saveUser(User user) {
-    user.setPassword(hashPassword(user.getPassword()));
-    return userRepository.save(user);
+	  if (user != null) {
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+			return userRepository.save(user);
+		}
+		return null;
   }
 
   @Transactional(readOnly = true)
@@ -41,9 +46,11 @@ public class UserServiceImpl implements UserService {
 
   @Transactional(readOnly = true)
   public List<User> getAllUsers() {
-    return userRepository.findAll();
-  }
+	  return userRepository.findAll();
+	}
 
+	
+  
   @Transactional(propagation = Propagation.NEVER)
   public void deleteUser(Long id) {
     userRepository.deleteById(id);
@@ -61,5 +68,10 @@ public class UserServiceImpl implements UserService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+public boolean existsByEmail(String email) {
+	return userRepository.existsByEmail(email);
+}
 
 }

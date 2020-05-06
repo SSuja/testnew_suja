@@ -19,4 +19,7 @@ public interface UserService {
   public User getUserById(Long id);
 
   public boolean isUpdatedUserExist(Long id, String userName);
+  
+  public boolean existsByEmail(String email);
+		  
 }

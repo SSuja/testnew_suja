@@ -507,6 +507,11 @@ public class Constants {
   public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
   public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
+  
+  //Authentication
+  public static final String PASSWORD="passWord";
+  public static final String EMAIL_OR_USERNAME="emailOrUserName";
+  public static final String CREDENCIALS="credentials";
 
   /*
    * Encapsulate constructor to restrict modification from outside

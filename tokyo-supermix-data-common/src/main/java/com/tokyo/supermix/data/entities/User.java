@@ -6,8 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
@@ -18,10 +20,23 @@ public class User implements Serializable {
   private Long id;
   private String userName;
   private String password;
-  private String email;
+  @ManyToOne
+  @JoinColumn(name = "role_id",nullable = false)
+  private Role role;
+   private String email;
   @OneToOne
   @JoinColumn(name = "employeeId", nullable = false)
   private Employee employee;
+  
+
+
+public Role getRole() {
+	return role;
+}
+
+public void setRole(Role role) {
+	this.role = role;
+}
 
   public Long getId() {
     return id;
