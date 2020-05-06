@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,7 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.tokyo.supermix.data.dto.LoginRequestDto;
 import com.tokyo.supermix.data.entities.User;
+import com.tokyo.supermix.data.entities.VerificationToken;
+import com.tokyo.supermix.data.repositories.VerificationTokenRepository;
 import com.tokyo.supermix.security.JwtTokenProvider;
+
 @Service
 public class AuthServiceImpl implements AuthService {
   @Autowired
@@ -20,7 +24,9 @@ public class AuthServiceImpl implements AuthService {
   AuthenticationManager authenticationManager;
   @Autowired
   PasswordEncoder passwordEncoder;
-  
+  @Autowired
+  VerificationTokenRepository verificationTokenRepository;
+
   @Override
   public String generateUserToken(LoginRequestDto loginRequestDto) {
     UserDetails userDetails =
@@ -34,8 +40,34 @@ public class AuthServiceImpl implements AuthService {
     }
     return null;
   }
+
   @Override
   public boolean checkIsValidOldPassword(User user, String currentPassword) {
-     return passwordEncoder.matches(currentPassword, user.getPassword());
+    return passwordEncoder.matches(currentPassword, user.getPassword());
+  }
+
+  @Override
+  public void createForgotPasswordToken(String token, User user) {
+    VerificationToken verificationToken = new VerificationToken(token, user);
+    verificationTokenRepository.save(verificationToken);
+  }
+
+  @Override
+  public String validatePasswordResetToken(String token) {
+    final VerificationToken passToken = verificationTokenRepository.findByToken(token);
+    return !isTokenFound(passToken) ? "tokenString" : isTokenExpired(passToken) ? "expiryDate" : null;
+  }
+
+  private boolean isTokenFound(VerificationToken passToken) {
+    return passToken != null;
+  }
+
+  private boolean isTokenExpired(VerificationToken passToken) {
+    final Calendar cal = Calendar.getInstance();
+    return passToken.getExpiryDate().before(cal.getTime());
+  }
+  @Override
+  public User getUserByPasswordResetToken(String token) {
+    return verificationTokenRepository.findByToken(token).getUser();
   }
 }

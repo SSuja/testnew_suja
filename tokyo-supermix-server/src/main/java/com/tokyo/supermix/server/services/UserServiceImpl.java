@@ -16,14 +16,16 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
   @Autowired
-	PasswordEncoder passwordEncoder;
+  PasswordEncoder passwordEncoder;
+
   @Transactional
   public User saveUser(User user) {
-	  if (user != null) {
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			return userRepository.save(user);
-		}
-		return null;
+   return saveUserPassword(user, user.getPassword());
+  }
+
+  private User saveUserPassword(User user, String password) {
+    user.setPassword(passwordEncoder.encode(password));
+    return userRepository.save(user);
   }
 
   @Transactional(readOnly = true)
@@ -43,8 +45,8 @@ public class UserServiceImpl implements UserService {
 
   @Transactional(readOnly = true)
   public List<User> getAllUsers() {
-	  return userRepository.findAll();
-	}
+    return userRepository.findAll();
+  }
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteUser(Long id) {
@@ -55,6 +57,7 @@ public class UserServiceImpl implements UserService {
   public User getUserById(Long id) {
     return userRepository.findById(id).get();
   }
+
   @Transactional(readOnly = true)
   public boolean isUpdatedUserExist(Long id, String userName) {
     if ((!getUserById(id).getUserName().equalsIgnoreCase(userName))
@@ -63,13 +66,19 @@ public class UserServiceImpl implements UserService {
     }
     return false;
   }
+
   @Transactional(readOnly = true)
   public boolean existsByEmail(String email) {
-  	return userRepository.existsByEmail(email);
+    return userRepository.existsByEmail(email);
   }
+
   @Override
   public void changeUserPassword(User user, String newPassword) {
-      user.setPassword(passwordEncoder.encode(newPassword));
-      userRepository.save(user);
+   saveUserPassword(user,newPassword);
+  }
+
+  @Override
+  public User findUserByEmail(String userEmail) {
+    return userRepository.findByEmail(userEmail);
   }
 }

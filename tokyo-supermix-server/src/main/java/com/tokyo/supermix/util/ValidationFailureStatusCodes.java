@@ -1857,6 +1857,8 @@ public class ValidationFailureStatusCodes {
   private String credentials;
   @Value("${auth.password.match}")
   private String isMatchPassword;
+  @Value("${auth.passwordToken.invalid}")
+  private String isPasswordTokenFailed;
   
   public String getPassword() {
     return password;
@@ -1882,6 +1884,14 @@ public class ValidationFailureStatusCodes {
 
   public void setIsMatchPassword(String isMatchPassword) {
     this.isMatchPassword = isMatchPassword;
+  }
+
+  public String getIsPasswordTokenFailed() {
+    return isPasswordTokenFailed;
+  }
+
+  public void setIsPasswordTokenFailed(String isPasswordTokenFailed) {
+    this.isPasswordTokenFailed = isPasswordTokenFailed;
   }
   
 }

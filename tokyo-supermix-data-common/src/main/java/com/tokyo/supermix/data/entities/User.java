@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
@@ -21,22 +20,20 @@ public class User extends DateAudit implements Serializable {
   private String userName;
   private String password;
   @ManyToOne
-  @JoinColumn(name = "role_id",nullable = false)
+  @JoinColumn(name = "role_id", nullable = false)
   private Role role;
-   private String email;
+  private String email;
   @OneToOne
   @JoinColumn(name = "employeeId")
   private Employee employee;
-  
 
+  public Role getRole() {
+    return role;
+  }
 
-public Role getRole() {
-	return role;
-}
-
-public void setRole(Role role) {
-	this.role = role;
-}
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
   public Long getId() {
     return id;

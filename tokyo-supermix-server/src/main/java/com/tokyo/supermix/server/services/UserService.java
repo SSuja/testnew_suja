@@ -23,4 +23,6 @@ public interface UserService {
   public boolean existsByEmail(String email);
   
   void changeUserPassword(User user, String password);
+
+  User findUserByEmail(String userEmail);
 }

@@ -477,5 +477,7 @@ public final class EndpointURI {
 	public static final String SIGNIN =AUTH + "sign-in";
 	public static final String SIGNUP =AUTH + "sign-up";
 	public static final String CHANGE_PASSWORD =AUTH + "change-password";
+	public static final String FORGOT_PASSWORD =AUTH + "forgot-password";
+	public static final String RESET_PASSWORD =AUTH + "reset-password";
   private EndpointURI() {}
 }

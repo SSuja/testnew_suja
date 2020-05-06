@@ -16,12 +16,14 @@ public class Constants {
   public static final String SUBJECT_INCOMING_SAMPLE_RESULT = "Notification : Information for Incoming Sample Test Status";
   public static final String SUBJECT_NEW_MATERIAL_TEST="Notification : New Material Test";
   public static final String SUBJECT_NEW_SEIVE_TEST="Notification : New Seive Test";
-  
+  public static final String SUBJECT_FORGOT_PASSWORD="Forgot Password";
   //Authentication
   public static final String PASSWORD="passWord";
   public static final String EMAIL_OR_USERNAME="emailOrUserName";
   public static final String CREDENCIALS="credentials";
   public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
+  public static final String GENERATE_PASSWORD_SUCCESS = "Random Token Generate and mailed Successfully";
+  public static final String MESSAGE_OF_FORGOT_PASSWORD="This the token for Reset your Password ";
   
 //for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
