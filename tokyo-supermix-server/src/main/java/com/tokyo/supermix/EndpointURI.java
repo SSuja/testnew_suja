@@ -441,6 +441,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES =
       BASE_API_PATH + "finish-product-sample-issues";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + ID;
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH =
+      FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH;
   /*
    * incoming samples count APIs
    */
