@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,11 +102,9 @@ public class EmployeeController {
   @GetMapping(value = EndpointURI.EMPLOYEES)
   public ResponseEntity<Object> getAllEmployees() {
     logger.debug("get all employee");
-    List<Employee> employeeList = employeeService.getAllEmployees();
-    List<EmployeeResponseDto> employeeDtoList = mapper.map(employeeList, EmployeeResponseDto.class);
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.EMPLOYEES, employeeDtoList, RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+        mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
