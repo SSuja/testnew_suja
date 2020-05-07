@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +38,7 @@ public class EquationParameterController {
 
   @PostMapping(value = EndpointURI.EQUATION_PARAMETER)
   public ResponseEntity<Object> createEquationParameter(
-      @Valid @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
+      @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
     for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
       if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
           equationParameterRequestDto.getParameterId())) {
