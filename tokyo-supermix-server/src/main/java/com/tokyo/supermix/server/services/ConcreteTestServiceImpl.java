@@ -84,7 +84,7 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<ConcreteTest> getAllConcreteTest() {
+	public List<ConcreteTest> getAllConcreteTests() {
 		return concreteTestRepository.findAll();
 	}
 
@@ -99,7 +99,7 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
 	}
 
 	@Transactional(readOnly = true)
-	public boolean isConcreteTestExit(Long id) {
+	public boolean isConcreteTestExists(Long id) {
 		return concreteTestRepository.existsById(id);
 	}
 }
