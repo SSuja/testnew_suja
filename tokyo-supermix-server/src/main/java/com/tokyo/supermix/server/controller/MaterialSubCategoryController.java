@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,21 +46,23 @@ public class MaterialSubCategoryController {
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
   public ResponseEntity<Object> getMaterialSubCategory() {
-    List<MaterialSubCategory> materialSubCategories =
-        materialSubCategoryService.getMaterialSubCategories();
-    return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
-        mapper.map(materialSubCategories, MaterialSubCategoryResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
+            mapper.map(materialSubCategoryService.getMaterialSubCategories(),
+                MaterialSubCategoryResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_SUB_CATEGORY_BY_ID)
   public ResponseEntity<Object> getMaterialSubCategoryById(@PathVariable Long id) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(id)) {
-      MaterialSubCategory materialSubCategory =
-          materialSubCategoryService.getMaterialSubCategoryById(id);
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
-          mapper.map(materialSubCategory, MaterialSubCategoryResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+              mapper.map(materialSubCategoryService.getMaterialSubCategoryById(id),
+                  MaterialSubCategoryResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
     }
     logger.debug("MaterialSubCategory does not exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,

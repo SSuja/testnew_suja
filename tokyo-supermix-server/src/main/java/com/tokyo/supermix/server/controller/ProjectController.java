@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +70,9 @@ public class ProjectController {
 
   @GetMapping(value = EndpointURI.PROJECTS)
   public ResponseEntity<Object> getProjects() {
-    List<Project> projectList = projectService.getAllProjects();
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-        mapper.map(projectList, ProjectResponseDto.class), RestApiResponseStatus.OK),
-        HttpStatus.OK);
+        mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @DeleteMapping(value = EndpointURI.PROJECT_BY_ID)

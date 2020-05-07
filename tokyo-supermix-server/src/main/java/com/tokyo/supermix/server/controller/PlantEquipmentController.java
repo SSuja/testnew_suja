@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +62,9 @@ public class PlantEquipmentController {
   // Get All EquipmentPlants
   @GetMapping(value = EndpointURI.PLANTEQUIPMENTS)
   public ResponseEntity<Object> getAllPlantEquipments() {
-    List<PlantEquipmentResponseDto> plantEquipmentResponseDtoList =
-        mapper.map(plantEquipmentService.getAllPlantEquipments(), PlantEquipmentResponseDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-        plantEquipmentResponseDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(plantEquipmentService.getAllPlantEquipments(), PlantEquipmentResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   // Delete EquipmentPlant
@@ -88,16 +86,13 @@ public class PlantEquipmentController {
   public ResponseEntity<Object> getPlantEquipmentByserialNo(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
       logger.debug("Get PlantEquipment by PlantEquipment Serial number");
-      PlantEquipmentResponseDto PlantequipmentResponseDto =
-          mapper.map(plantEquipmentService.getPlantEquipmentBySerialNo(serialNo),
-              PlantEquipmentResponseDto.class);
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENT_SERIALNO,
-          mapper.map(PlantequipmentResponseDto, PlantEquipmentResponseDto.class),
+          mapper.map(plantEquipmentService.getPlantEquipmentBySerialNo(serialNo),
+              PlantEquipmentResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTEQUIPMENT_SERIALNO,
         validationFailureStatusCodes.getPlantEquipmentNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   // Update EquipmentPlant
@@ -105,8 +100,8 @@ public class PlantEquipmentController {
   public ResponseEntity<Object> updatePlantEquipment(
       @Valid @RequestBody PlantEquipmentRequestDto plantequipmentRequestDto) {
     if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {
-      PlantEquipment plantequipment = mapper.map(plantequipmentRequestDto, PlantEquipment.class);
-      plantEquipmentService.savePlantEquipment(plantequipment);
+      plantEquipmentService
+          .savePlantEquipment(mapper.map(plantequipmentRequestDto, PlantEquipment.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANTEQUIPMENT_SUCCESS),
           HttpStatus.OK);

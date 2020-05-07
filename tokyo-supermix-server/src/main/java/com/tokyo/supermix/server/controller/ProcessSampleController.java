@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +57,9 @@ public class ProcessSampleController {
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLES)
   public ResponseEntity<Object> getProcessSamples() {
-    List<ProcessSampleResponseDto> processSampleResponseDtoList =
-        mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
-        processSampleResponseDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
