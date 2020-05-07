@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 public class ConcreteTestRequestDto {
 	private Long id;
-	@NotNull(message = "{concreteTestRequestDto.mixDesignCode.null}")
-	@NotEmpty(message = "{concreteTestRequestDto.mixDesignCode.empty}")
-	private String mixDesignCode;
+	@NotNull(message = "{concreteTestRequestDto.finishProductSampleId.null}")
+	@NotEmpty(message = "{concreteTestRequestDto.finishProductSampleId.empty}")
+	private Long finishProductSampleId;
 	@NotNull(message = "{concreteTestRequestDto.slump.null}")
 	private Double slump;
 	@NotNull(message = "{concreteTestRequestDto.temperature.null}")
@@ -24,12 +24,12 @@ public class ConcreteTestRequestDto {
 		this.id = id;
 	}
 
-	public String getMixDesignCode() {
-		return mixDesignCode;
+	public Long getFinishProductSampleId() {
+		return finishProductSampleId;
 	}
 
-	public void setMixDesignCode(String mixDesignCode) {
-		this.mixDesignCode = mixDesignCode;
+	public void setFinishProductSampleId(Long finishProductSampleId) {
+		this.finishProductSampleId = finishProductSampleId;
 	}
 
 	public Double getSlump() {
