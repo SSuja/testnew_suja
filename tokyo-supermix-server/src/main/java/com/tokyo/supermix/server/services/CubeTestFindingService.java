@@ -20,4 +20,6 @@ public interface CubeTestFindingService {
 
   public boolean existsByFinishProductSampleId(Long finishProductSampleId);
 
+  public void updateCubeTestFinding(CubeTestFinding cubeTestFinding);
+
 }

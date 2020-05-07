@@ -4,79 +4,67 @@ import java.util.Date;
 import com.tokyo.supermix.data.enums.Status;
 
 public class ConcreteStrengthTestResponseDto {
-  private Long id;
-  private String mixDesignCode;
-  private double mixDesignTargetGrade;
-  private Long concreteAge;
-  private Double strength;
-  private Date date;
-  private Double strengthGradeRatio;
-  private Status status;
+	private Long id;
+	private Long concreteAge;
+	private Double strength;
+	private Date date;
+	private Double strengthGradeRatio;
+	private Status status;
+	private FinishProductSampleResponseDto finishProductSampleResponseDto;
 
-  public Date getDate() {
-    return date;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setDate(Date date) {
-    this.date = date;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Long getConcreteAge() {
+		return concreteAge;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setConcreteAge(Long concreteAge) {
+		this.concreteAge = concreteAge;
+	}
 
-  public String getMixDesignCode() {
-    return mixDesignCode;
-  }
+	public Double getStrength() {
+		return strength;
+	}
 
-  public void setMixDesignCode(String mixDesignCode) {
-    this.mixDesignCode = mixDesignCode;
-  }
+	public void setStrength(Double strength) {
+		this.strength = strength;
+	}
 
-  public double getMixDesignTargetGrade() {
-    return mixDesignTargetGrade;
-  }
+	public Date getDate() {
+		return date;
+	}
 
-  public void setMixDesignTargetGrade(double mixDesignTargetGrade) {
-    this.mixDesignTargetGrade = mixDesignTargetGrade;
-  }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-  public Long getConcreteAge() {
-    return concreteAge;
-  }
+	public Double getStrengthGradeRatio() {
+		return strengthGradeRatio;
+	}
 
-  public void setConcreteAge(Long concreteAge) {
-    this.concreteAge = concreteAge;
-  }
+	public void setStrengthGradeRatio(Double strengthGradeRatio) {
+		this.strengthGradeRatio = strengthGradeRatio;
+	}
 
-  public Double getStrength() {
-    return strength;
-  }
+	public Status getStatus() {
+		return status;
+	}
 
-  public void setStrength(Double strength) {
-    this.strength = strength;
-  }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-  public Double getStrengthGradeRatio() {
-    return strengthGradeRatio;
-  }
+	public FinishProductSampleResponseDto getFinishProductSampleResponseDto() {
+		return finishProductSampleResponseDto;
+	}
 
-  public void setStrengthGradeRatio(Double strengthGradeRatio) {
-    this.strengthGradeRatio = strengthGradeRatio;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-
-
+	public void setFinishProductSampleResponseDto(FinishProductSampleResponseDto finishProductSampleResponseDto) {
+		this.finishProductSampleResponseDto = finishProductSampleResponseDto;
+	}
 }
