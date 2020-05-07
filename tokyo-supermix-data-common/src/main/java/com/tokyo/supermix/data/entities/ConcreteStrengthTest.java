@@ -16,77 +16,77 @@ import com.tokyo.supermix.data.enums.Status;
 @Entity
 @Table(schema = "tokyo-supermix", name = "concrete_strength_test")
 public class ConcreteStrengthTest implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  private Long concreteAge;
-  private Double strength;
-  private Date date;
-  private Double strengthGradeRatio;
-  @Enumerated(EnumType.ORDINAL)
-  private Status status;
-  @ManyToOne
-  @JoinColumn(name = "mixDesignCode", nullable = false)
-  private MixDesign mixDesign;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private Long concreteAge;
+	private Double strength;
+	private Date date;
+	private Double strengthGradeRatio;
+	@Enumerated(EnumType.ORDINAL)
+	private Status status;
+	@ManyToOne
+	@JoinColumn(name = "finishProductSampleId", nullable = false)
+	private FinishProductSample finishProductSample;
 
-  public Date getDate() {
-    return date;
-  }
+	public Date getDate() {
+		return date;
+	}
 
-  public void setDate(Date date) {
-    this.date = date;
-  }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public Long getConcreteAge() {
-    return concreteAge;
-  }
+	public Long getConcreteAge() {
+		return concreteAge;
+	}
 
-  public void setConcreteAge(Long concreteAge) {
-    this.concreteAge = concreteAge;
-  }
+	public void setConcreteAge(Long concreteAge) {
+		this.concreteAge = concreteAge;
+	}
 
-  public Double getStrength() {
-    return strength;
-  }
+	public Double getStrength() {
+		return strength;
+	}
 
-  public void setStrength(Double strength) {
-    this.strength = strength;
-  }
+	public void setStrength(Double strength) {
+		this.strength = strength;
+	}
 
-  public Double getStrengthGradeRatio() {
-    return strengthGradeRatio;
-  }
+	public Double getStrengthGradeRatio() {
+		return strengthGradeRatio;
+	}
 
-  public void setStrengthGradeRatio(Double strengthGradeRatio) {
-    this.strengthGradeRatio = strengthGradeRatio;
-  }
+	public void setStrengthGradeRatio(Double strengthGradeRatio) {
+		this.strengthGradeRatio = strengthGradeRatio;
+	}
 
-  public Status getStatus() {
-    return status;
-  }
+	public Status getStatus() {
+		return status;
+	}
 
-  public void setStatus(Status status) {
-    this.status = status;
-  }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-  public MixDesign getMixDesign() {
-    return mixDesign;
-  }
+	public FinishProductSample getFinishProductSample() {
+		return finishProductSample;
+	}
 
-  public void setMixDesign(MixDesign mixDesign) {
-    this.mixDesign = mixDesign;
-  }
+	public void setFinishProductSample(FinishProductSample finishProductSample) {
+		this.finishProductSample = finishProductSample;
+	}
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

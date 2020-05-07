@@ -5,11 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tokyo.supermix.data.entities.CubeTestFinding;
 
 public interface CubeTestFindingRepository extends JpaRepository<CubeTestFinding, Long> {
-  List<CubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId);
+	List<CubeTestFinding> findByFinishProductSampleId(Long finishProductSampleId);
 
-  List<CubeTestFinding> findByConcreteTestId(Long concreteTestId);
-
-  boolean existsByFinishProductSampleId(Long finishProductSampleId);
-
-  boolean existsByConcreteTestId(Long concreteTestId);
+	boolean existsByFinishProductSampleId(Long finishProductSampleId);
 }

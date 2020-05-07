@@ -2,7 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.Status;
 
-public class ConcreteTestOldResponseDto {
+public class ConcreteTestResponseDto {
   private Long id;
   private String mixDesignCode;
   private Double slump;
