@@ -1,37 +1,17 @@
-package com.tokyo.supermix.data.entities;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.Status;
 
-@Entity
-@Table(schema = "tokyo-supermix", name = "concrete_test")
-public class ConcreteTest implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+public class ConcreteTestResponseDto {
 	private Long id;
+	private FinishProductSampleResponseDto finishProductSample;
 	private Double slump;
 	private String temperature;
 	private Double waterContent;
 	private Double slumpGradeRatio;
 	private Double waterCementRatio;
 	private Double waterBinderRatio;
-	@Enumerated(EnumType.ORDINAL)
 	private Status status;
-	@OneToOne
-	@JoinColumn(name = "finishProductSampleId", nullable = false)
-	private FinishProductSample finishProductSample;
 
 	public Long getId() {
 		return id;
@@ -39,6 +19,14 @@ public class ConcreteTest implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public FinishProductSampleResponseDto getFinishProductSample() {
+		return finishProductSample;
+	}
+
+	public void setFinishProductSample(FinishProductSampleResponseDto finishProductSample) {
+		this.finishProductSample = finishProductSample;
 	}
 
 	public Double getSlump() {
@@ -95,17 +83,5 @@ public class ConcreteTest implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public FinishProductSample getFinishProductSample() {
-		return finishProductSample;
-	}
-
-	public void setFinishProductSample(FinishProductSample finishProductSample) {
-		this.finishProductSample = finishProductSample;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 }
