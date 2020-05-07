@@ -1815,5 +1815,42 @@ public class ValidationFailureStatusCodes {
   public void setIsPasswordTokenFailed(String isPasswordTokenFailed) {
     this.isPasswordTokenFailed = isPasswordTokenFailed;
   }
+  /*
+   * Role
+   */
+  @Value("${validation.role.notExists}")
+  private String roleNotExists;
 
+  @Value("${validation.role.alreadyExists}")
+  private String roleAlreadyExists;
+
+  @Value("${validation.roleName.alreadyExists}")
+  private String roleNameAlreadyExists;
+
+public String getRoleNotExists() {
+	return roleNotExists;
+}
+
+public void setRoleNotExists(String roleNotExists) {
+	this.roleNotExists = roleNotExists;
+}
+
+public String getRoleAlreadyExists() {
+	return roleAlreadyExists;
+}
+
+public void setRoleAlreadyExists(String roleAlreadyExists) {
+	this.roleAlreadyExists = roleAlreadyExists;
+}
+
+public String getRoleNameAlreadyExists() {
+	return roleNameAlreadyExists;
+}
+
+public void setRoleNameAlreadyExists(String roleNameAlreadyExists) {
+	this.roleNameAlreadyExists = roleNameAlreadyExists;
+}
+  
+  
+  
 }

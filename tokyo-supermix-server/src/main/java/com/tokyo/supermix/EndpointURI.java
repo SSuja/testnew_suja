@@ -446,6 +446,14 @@ public final class EndpointURI {
 	public static final String CHANGE_PASSWORD =AUTH + "change-password";
 	public static final String FORGOT_PASSWORD =AUTH + "forgot-password";
 	public static final String RESET_PASSWORD =AUTH + "reset-password";
-	private EndpointURI() {
-	}
+	
+	/*
+	   * Role apis
+	   */
+	  public static final String ROLE = BASE_API_PATH + "role";
+	  public static final String ROLES = BASE_API_PATH + "roles";
+	  public static final String GET_ROLE_BY_ID = ROLE + ID;
+	  public static final String DELETE_ROLE_BY_ID = ROLE + ID;
+
+  private EndpointURI() {}
 }

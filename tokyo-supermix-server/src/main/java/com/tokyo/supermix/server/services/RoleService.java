@@ -1,12 +1,20 @@
 package com.tokyo.supermix.server.services;
+
 import java.util.List;
 import com.tokyo.supermix.data.entities.Role;
-public interface RoleService {
-	  	  void saveRole(Role role);
-		List<Role> viewAllRole();
-		Long deleteRole(Long id);
-		Role findRoleById(Long id);
-		Boolean existsByRole(String roleName);
-	
 
+public interface RoleService {
+  public void saveRole(Role role);
+
+  public boolean isRoleExists(Long id);
+
+  public List<Role> getAllRoles();
+
+  public void deleteRole(Long id);
+
+  public Role findRoleById(Long id);
+
+  public boolean existsByRoleName(String roleName);
+
+  public boolean isUpdatedRoleExists(Long id, String roleName);
 }

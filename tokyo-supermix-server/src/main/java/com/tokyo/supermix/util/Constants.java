@@ -453,6 +453,13 @@ public class Constants {
   public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
   
+  public static final String ROLE = "role";
+  public static final String ROLES = "roles";
+  public static final String ROLE_ID = "roleId";
+  public static final String ADD_ROLE_SUCCESS = "Role Added Successfully";
+  public static final String ROLE_DELETED = "Role Successfully Deleted";
+  public static final String ROLE_UPDATED_SUCCESS = "Role Updated Successfully";
+  
 
 	/*
 	 * Encapsulate constructor to restrict modification from outside
