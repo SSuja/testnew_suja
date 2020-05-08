@@ -44,7 +44,7 @@ public class EquationParameterServiceImpl implements EquationParameterService {
   }
 
   public boolean isDuplicateRowExists(Long equationId, Long parameterId) {
-    if (equationParameterRepository.isDuplicateRow(equationId, parameterId) != null) {
+    if (equationParameterRepository.existsByEquationIdAndParameterId(equationId, parameterId)) {
       return true;
     }
     return false;

@@ -1,75 +1,72 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.Date;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.Status;
 
 public class ConcreteStrengthTestRequestDto {
-  private Long id;
-  @NotNull(message = "{concreteStrengthTestRequestDto.mixDesignCode.null}")
-  @NotEmpty(message = "{concreteStrengthTestRequestDto.mixDesignCode.empty}")
-  private String mixDesignCode;
-  @NotNull(message = "{concreteStrengthTestRequestDto.concreteAge.null}")
-  private Long concreteAge;
-  private Date date;
-  private Double strength = 0.0;
-  private Double strengthGradeRatio;
-  private Status status;
+	private Long id;
+	private Long finishProductSampleId;
+	@NotNull(message = "{concreteStrengthTestRequestDto.concreteAge.null}")
+	private Long concreteAge;
+	private Date date;
+	private Double strength = 0.0;
+	private Double strengthGradeRatio;
+	private Status status;
 
-  public Date getDate() {
-    return date;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setDate(Date date) {
-    this.date = date;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Long getFinishProductSampleId() {
+		return finishProductSampleId;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setFinishProductSampleId(Long finishProductSampleId) {
+		this.finishProductSampleId = finishProductSampleId;
+	}
 
-  public String getMixDesignCode() {
-    return mixDesignCode;
-  }
+	public Long getConcreteAge() {
+		return concreteAge;
+	}
 
-  public void setMixDesignCode(String mixDesignCode) {
-    this.mixDesignCode = mixDesignCode;
-  }
+	public void setConcreteAge(Long concreteAge) {
+		this.concreteAge = concreteAge;
+	}
 
-  public Long getConcreteAge() {
-    return concreteAge;
-  }
+	public Date getDate() {
+		return date;
+	}
 
-  public void setConcreteAge(Long concreteAge) {
-    this.concreteAge = concreteAge;
-  }
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
-  public Double getStrength() {
-    return strength;
-  }
+	public Double getStrength() {
+		return strength;
+	}
 
-  public void setStrength(Double strength) {
-    this.strength = strength;
-  }
+	public void setStrength(Double strength) {
+		this.strength = strength;
+	}
 
-  public Double getStrengthGradeRatio() {
-    return strengthGradeRatio;
-  }
+	public Double getStrengthGradeRatio() {
+		return strengthGradeRatio;
+	}
 
-  public void setStrengthGradeRatio(Double strengthGradeRatio) {
-    this.strengthGradeRatio = strengthGradeRatio;
-  }
+	public void setStrengthGradeRatio(Double strengthGradeRatio) {
+		this.strengthGradeRatio = strengthGradeRatio;
+	}
 
-  public Status getStatus() {
-    return status;
-  }
+	public Status getStatus() {
+		return status;
+	}
 
-  public void setStatus(Status status) {
-    this.status = status;
-  }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 }

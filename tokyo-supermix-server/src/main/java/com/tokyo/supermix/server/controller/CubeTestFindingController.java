@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.ConcreteStrengthTestService;
 import com.tokyo.supermix.server.services.CubeTestFindingService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -31,7 +33,8 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class CubeTestFindingController {
   @Autowired
   private Mapper mapper;
-
+  @Autowired
+  ConcreteStrengthTestService concreteStrengthTestService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -40,13 +43,15 @@ public class CubeTestFindingController {
 
   @PostMapping(value = EndpointURI.CUBE_TEST_FINDING)
   public ResponseEntity<Object> saveCubeTestFinding(
-      @Valid @RequestBody CubeTestFindingRequestDto cubeTestFindingRequestDto) {
-    if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
-          validationFailureStatusCodes.getCubeTestFindingAgeValid()), HttpStatus.BAD_REQUEST);
+      @Valid @RequestBody List<CubeTestFindingRequestDto> cubeTestFindingRequestDtoList) {
+    for (CubeTestFindingRequestDto cubeTestFindingRequestDto : cubeTestFindingRequestDtoList) {
+      if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
+            validationFailureStatusCodes.getCubeTestFindingAgeValid()), HttpStatus.BAD_REQUEST);
+      }
+      cubeTestFindingService
+          .saveCubeTestFinding(mapper.map(cubeTestFindingRequestDto, CubeTestFinding.class));
     }
-    cubeTestFindingService
-        .saveCubeTestFinding(mapper.map(cubeTestFindingRequestDto, CubeTestFinding.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CUBE_TEST_FINDING_SUCCESS),
         HttpStatus.OK);
@@ -85,17 +90,23 @@ public class CubeTestFindingController {
 
   @PutMapping(value = EndpointURI.CUBE_TEST_FINDING)
   public ResponseEntity<Object> updateCubeTestFinding(
-      @Valid @RequestBody CubeTestFindingRequestDto cubeTestFindingRequestDto) {
-    if (cubeTestFindingService.isCubeTestFindingExist(cubeTestFindingRequestDto.getId())) {
-      if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
-            validationFailureStatusCodes.getCubeTestFindingAgeValid()), HttpStatus.BAD_REQUEST);
+      @Valid @RequestBody List<CubeTestFindingRequestDto> cubeTestFindingRequestDtoList) {
+    for (CubeTestFindingRequestDto cubeTestFindingRequestDto : cubeTestFindingRequestDtoList) {
+      if (cubeTestFindingService.isCubeTestFindingExist(cubeTestFindingRequestDto.getId())) {
+        if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
+                  validationFailureStatusCodes.getCubeTestFindingAgeValid()),
+              HttpStatus.BAD_REQUEST);
+        }
+        cubeTestFindingService
+            .updateCubeTestFinding(mapper.map(cubeTestFindingRequestDto, CubeTestFinding.class));
+
       }
-      cubeTestFindingService
-          .saveCubeTestFinding(mapper.map(cubeTestFindingRequestDto, CubeTestFinding.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CUBE_TEST_FINDING_SUCCESS),
           HttpStatus.OK);
+
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_ID,
         validationFailureStatusCodes.getCubeTestFindingNotExist()), HttpStatus.BAD_REQUEST);
