@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +47,7 @@ public class MaterialStateController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_STATE,
           validationFailureStatusCodes.getMaterialStateAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    MaterialState materialState = mapper.map(materialStateDto, MaterialState.class);
-    materialStateService.saveMaterialState(materialState);
+    materialStateService.saveMaterialState(mapper.map(materialStateDto, MaterialState.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MATERIAL_STATE_SUCCESS),
         HttpStatus.OK);
@@ -57,20 +55,17 @@ public class MaterialStateController {
 
   @GetMapping(value = EndpointURI.MATERIAL_STATES)
   public ResponseEntity<Object> getAllMaterialStates() {
-    List<MaterialStateDto> materialStateDtoList =
-        mapper.map(materialStateService.getAllMaterialStates(), MaterialStateDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_STATE,
-        materialStateDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(materialStateService.getAllMaterialStates(), MaterialStateDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_STATE_BY_ID)
   public ResponseEntity<Object> getMaterialStateById(@PathVariable Long id) {
     if (materialStateService.isMaterialStateExist(id)) {
-      MaterialState materialState = materialStateService.getMaterialStateById(id);
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.MATERIAL_STATE,
-              mapper.map(materialState, MaterialStateDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_STATE,
+          mapper.map(materialStateService.getMaterialStateById(id), MaterialStateDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No Material State record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_STATE_ID,
@@ -88,8 +83,7 @@ public class MaterialStateController {
                 validationFailureStatusCodes.getMaterialStateAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      MaterialState materialState = mapper.map(materialStateDto, MaterialState.class);
-      materialStateService.saveMaterialState(materialState);
+      materialStateService.saveMaterialState(mapper.map(materialStateDto, MaterialState.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_MATERIAL_STATE_SUCCESS),
           HttpStatus.OK);

@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,11 +65,12 @@ public class PlantEquipmentCalibrationController {
   // get all PlantEquipmentCalibration
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS)
   public ResponseEntity<Object> getAllPlantEquipmentCalibrations() {
-    List<PlantEquipmentCalibration> PlantEquipmentCalibrationList =
-        plantEquipmentCalibrationService.getAllPlantEquipmentCalibration();
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-        mapper.map(PlantEquipmentCalibrationList, PlantEquipmentCalibrationResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+    return new ResponseEntity<Object>(
+        new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
+            mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibration(),
+                PlantEquipmentCalibrationResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 
   // get PlantEquipmentCalibration by id
@@ -78,11 +78,12 @@ public class PlantEquipmentCalibrationController {
   public ResponseEntity<Object> getPlantEquipmentCalibrationById(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
       logger.debug("Get PlantEquipmentCalibration by id ");
-      PlantEquipmentCalibration plantEquipmentCalibration =
-          plantEquipmentCalibrationService.getPlantEquipmentCalibrationById(id);
-      return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATION,
-          mapper.map(plantEquipmentCalibration, PlantEquipmentCalibrationResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATION,
+              mapper.map(plantEquipmentCalibrationService.getPlantEquipmentCalibrationById(id),
+                  PlantEquipmentCalibrationResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
     }
     logger.debug("invalid");
     return new ResponseEntity<>(

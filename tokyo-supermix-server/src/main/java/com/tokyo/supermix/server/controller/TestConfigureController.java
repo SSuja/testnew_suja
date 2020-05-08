@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,9 +62,8 @@ public class TestConfigureController {
 
   @GetMapping(value = EndpointURI.TEST_CONFIGURES)
   public ResponseEntity<Object> getAllTestConfigures() {
-    List<TestConfigureResponseDto> testResponseDtoList =
-        mapper.map(testConfigureService.getAllTestConfigures(), TestConfigureResponseDto.class);
-    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE, testResponseDtoList,
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+        mapper.map(testConfigureService.getAllTestConfigures(), TestConfigureResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

@@ -59,10 +59,9 @@ public class CubeTestFindingController {
 
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDINGS)
   public ResponseEntity<Object> getAllCubeTestFindings() {
-    List<CubeTestFindingResponseDto> cubeTestFindingResponseDtoList = mapper
-        .map(cubeTestFindingService.getAllCubeTestFindings(), CubeTestFindingResponseDto.class);
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CUBE_TEST_FINDINGS,
-        cubeTestFindingResponseDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUBE_TEST_FINDINGS, mapper
+        .map(cubeTestFindingService.getAllCubeTestFindings(), CubeTestFindingResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.CUBE_TEST_FINDING_BY_ID)

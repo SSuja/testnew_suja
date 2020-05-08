@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,10 +54,8 @@ public class EquationController {
   @GetMapping(value = EndpointURI.EQUATIONS)
   public ResponseEntity<Object> getAllEquations() {
     logger.debug("get all equations");
-    List<EquationDto> equuationDtoList =
-        mapper.map(equationService.getAllEquations(), EquationDto.class);
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.EQUATIONS, equuationDtoList, RestApiResponseStatus.OK),
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATIONS,
+        mapper.map(equationService.getAllEquations(), EquationDto.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
 

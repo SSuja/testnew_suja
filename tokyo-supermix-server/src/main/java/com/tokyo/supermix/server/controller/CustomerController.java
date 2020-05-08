@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +44,9 @@ public class CustomerController {
   // get all customers
   @GetMapping(value = EndpointURI.CUSTOMERS)
   public ResponseEntity<Object> getAllCustomers() {
-    List<CustomerDto> customerDtoList =
-        mapper.map(customerService.getAllCustomers(), CustomerDto.class);
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.CUSTOMERS, customerDtoList, RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(customerService.getAllCustomers(), CustomerDto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   // Add Customer
@@ -65,8 +62,7 @@ public class CustomerController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
           validationFailureStatusCodes.getCustomerAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    Customer customer = mapper.map(customerDto, Customer.class);
-    customerService.saveCustomer(customer);
+    customerService.saveCustomer(mapper.map(customerDto, Customer.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CUSTOMER_SUCCESS),
         HttpStatus.OK);
@@ -77,9 +73,9 @@ public class CustomerController {
   public ResponseEntity<Object> getCustomerById(@PathVariable Long id) {
     if (customerService.isCustomerExist(id)) {
       logger.debug("Get Customer By Id");
-      Customer customer = customerService.getCustomerById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMER,
-          mapper.map(customer, CustomerDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+          mapper.map(customerService.getCustomerById(id), CustomerDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER_ID,
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);

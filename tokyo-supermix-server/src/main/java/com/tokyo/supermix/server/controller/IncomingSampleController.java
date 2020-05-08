@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,19 +43,17 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
   public ResponseEntity<Object> getIncomingSamples() {
-    List<IncomingSample> incomingSampleList = incomingSampleService.getAllIncomingSamples();
     return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-        mapper.map(incomingSampleList, IncomingSampleResponseDto.class), RestApiResponseStatus.OK),
-        HttpStatus.OK);
+        mapper.map(incomingSampleService.getAllIncomingSamples(), IncomingSampleResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE)
   public ResponseEntity<Object> getIncomingSampleByCode(@PathVariable String code) {
     if (incomingSampleService.isIncomingSampleExist(code)) {
-      IncomingSample incomingSample = incomingSampleService.getIncomingSampleById(code);
-      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE,
-          mapper.map(incomingSample, IncomingSampleResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE, mapper
+          .map(incomingSampleService.getIncomingSampleById(code), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);

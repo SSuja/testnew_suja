@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -53,8 +51,7 @@ public class RawMaterialController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
           validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    RawMaterial rawMaterial = mapper.map(rawMaterialRequestDto, RawMaterial.class);
-    rawMaterialService.saveRawMaterial(rawMaterial);
+    rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_RAW_MATERIAL_SUCCESS),
         HttpStatus.OK);
@@ -62,20 +59,17 @@ public class RawMaterialController {
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
   public ResponseEntity<Object> getAllRawMaterials() {
-    List<RawMaterialResponseDto> rawMaterialResponseDtoList =
-        mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
-        rawMaterialResponseDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIAL_BY_ID)
   public ResponseEntity<Object> getRawMaterialById(@PathVariable Long id) {
     if (rawMaterialService.isRawMaterialExist(id)) {
-      RawMaterial rawMaterial = rawMaterialService.getRawMaterialById(id);
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.RAW_MATERIAL,
-              mapper.map(rawMaterial, RawMaterialResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(rawMaterialService.getRawMaterialById(id), RawMaterialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No Raw Material record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_ID,
@@ -91,8 +85,7 @@ public class RawMaterialController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
             validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      RawMaterial rawMaterial = mapper.map(rawMaterialRequestDto, RawMaterial.class);
-      rawMaterialService.saveRawMaterial(rawMaterial);
+      rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_RAW_MATERIAL_SUCCESS),
           HttpStatus.OK);

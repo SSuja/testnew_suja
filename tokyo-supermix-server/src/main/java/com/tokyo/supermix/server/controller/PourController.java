@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,10 +69,9 @@ public class PourController {
   @GetMapping(value = EndpointURI.POURS)
   public ResponseEntity<Object> getAllPour() {
     logger.debug("gat all pour");
-    List<Pour> pourList = pourService.getAllPour();
-    List<PourDtoResponse> pourDtoList = mapper.map(pourList, PourDtoResponse.class);
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.POUR, pourDtoList, RestApiResponseStatus.OK),
+        new ContentResponse<>(Constants.POUR,
+            mapper.map(pourService.getAllPour(), PourDtoResponse.class), RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
 
