@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,11 +56,9 @@ public class SieveTestController {
 
   @GetMapping(value = EndpointURI.SIEVE_TESTS)
   public ResponseEntity<Object> getAllSieveTests() {
-    List<SieveTest> sieveTestTestList = sieveTestService.getAllSieveTests();
-    return new ResponseEntity<Object>(
-        new ContentResponse<>(Constants.SIEVE_TESTS,
-            mapper.map(sieveTestTestList, SieveTestResponseDto.class), RestApiResponseStatus.OK),
-        HttpStatus.OK);
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.SIEVE_TESTS,
+        mapper.map(sieveTestService.getAllSieveTests(), SieveTestResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   // get SieveTest by code

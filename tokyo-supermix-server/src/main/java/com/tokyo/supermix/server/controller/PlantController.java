@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,19 +54,17 @@ public class PlantController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    Plant plant = mapper.map(plantDto, Plant.class);
-    plantService.savePlant(plant);
+    plantService.savePlant(mapper.map(plantDto, Plant.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.PLANTS)
   public ResponseEntity<Object> getAllPlants() {
-    List<Plant> plantList = plantService.getAllPlants();
-    List<PlantDto> plantDtoList = mapper.map(plantList, PlantDto.class);
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.PLANTS, plantDtoList, RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+        new ContentResponse<>(Constants.PLANTS,
+            mapper.map(plantService.getAllPlants(), PlantDto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   // get plant by id
@@ -75,9 +72,9 @@ public class PlantController {
   public ResponseEntity<Object> getPlantByCode(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       logger.debug("Get plant by plantCode ");
-      PlantDto plantDto = mapper.map(plantService.getPlantByCode(code), PlantDto.class);
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
-          mapper.map(plantDto, PlantDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+          mapper.map(plantService.getPlantByCode(code), PlantDto.class), RestApiResponseStatus.OK),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -90,8 +87,7 @@ public class PlantController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
             validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      Plant plant = mapper.map(plantDto, Plant.class);
-      plantService.savePlant(plant);
+      plantService.savePlant(mapper.map(plantDto, Plant.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_SUCCESS),
           HttpStatus.OK);

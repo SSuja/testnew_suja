@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +46,9 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.SUPPLIERS)
   public ResponseEntity<Object> getSuppliers() {
-    List<Supplier> supplierList = supplierService.getSuppliers();
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.SUPPLIER,
-            mapper.map(supplierList, SupplierResponseDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+        mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @PostMapping(value = EndpointURI.SUPPLIER)
@@ -108,10 +105,9 @@ public class SupplierController {
   @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_ID)
   public ResponseEntity<Object> getSupplierById(@PathVariable Long id) {
     if (supplierService.isSupplierExist(id)) {
-      Supplier supplier = supplierService.getSupplierById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
-          mapper.map(supplier, SupplierResponseDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          mapper.map(supplierService.getSupplierById(id), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No Supplier record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,

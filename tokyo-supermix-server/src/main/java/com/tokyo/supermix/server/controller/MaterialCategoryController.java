@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +58,9 @@ public class MaterialCategoryController {
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORIES)
   public ResponseEntity<Object> getAllMaterialCategory() {
     logger.debug("get all material categories");
-    List<MaterialCategoryDto> materialCategoryDtoList =
-        mapper.map(materialCategoryService.getAllMainCategories(), MaterialCategoryDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORIES,
-        materialCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(materialCategoryService.getAllMainCategories(), MaterialCategoryDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   // Get Material_Category By Id

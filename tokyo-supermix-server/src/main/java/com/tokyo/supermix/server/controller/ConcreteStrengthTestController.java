@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +39,12 @@ public class ConcreteStrengthTestController {
 
   @GetMapping(value = EndpointURI.CONCRETE_STRENGTH_TESTS)
   public ResponseEntity<Object> getAllConcreteStrengthTests() {
-    List<ConcreteStrengthTestResponseDto> ConcreteStrengthTestResponseDtoList =
-        mapper.map(concreteStrengthTestService.getAllConcreteStrengthTests(),
-            ConcreteStrengthTestResponseDto.class);
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH_TESTS,
-        ConcreteStrengthTestResponseDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.CONCRETE_STRENGTH_TESTS,
+            mapper.map(concreteStrengthTestService.getAllConcreteStrengthTests(),
+                ConcreteStrengthTestResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   @PostMapping(value = EndpointURI.CONCRETE_STRENGTH_TEST)
@@ -57,9 +57,8 @@ public class ConcreteStrengthTestController {
               validationFailureStatusCodes.getConcreteStrengthTestConcreteAgeNotValid()),
           HttpStatus.BAD_REQUEST);
     }
-    ConcreteStrengthTest concreteStrengthTest =
-        mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class);
-    concreteStrengthTestService.saveConcreteStrengthTest(concreteStrengthTest);
+    concreteStrengthTestService.saveConcreteStrengthTest(
+        mapper.map(concreteStrengthTestRequestDto, ConcreteStrengthTest.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_STRENGTH_TEST_SUCCESS),
         HttpStatus.OK);

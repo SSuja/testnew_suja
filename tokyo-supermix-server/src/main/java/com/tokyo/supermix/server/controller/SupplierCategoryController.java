@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +51,8 @@ public class SupplierCategoryController {
               validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
-    SupplierCategory supplierCategory = mapper.map(supplierCategoryDto, SupplierCategory.class);
-    supplierCategoryService.createSupplierCategory(supplierCategory);
+    supplierCategoryService
+        .createSupplierCategory(mapper.map(supplierCategoryDto, SupplierCategory.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SUPPLIER_CATEGORY_SUCCESS),
         HttpStatus.OK);
@@ -75,12 +74,9 @@ public class SupplierCategoryController {
 
   @GetMapping(value = EndpointURI.SUPPLIER_CATEGORIES)
   public ResponseEntity<Object> getAllSupplierCategories() {
-    List<SupplierCategory> supplierCategoryList =
-        supplierCategoryService.getAllSupplierCategories();
-    List<SupplierCategoryDto> supplierCategoryDtoList =
-        mapper.map(supplierCategoryList, SupplierCategoryDto.class);
     return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
-        supplierCategoryDtoList, RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(supplierCategoryService.getAllSupplierCategories(), SupplierCategoryDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @PutMapping(value = EndpointURI.SUPPLIER_CATEGORY)
@@ -94,8 +90,8 @@ public class SupplierCategoryController {
                 validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      SupplierCategory supplierCategory = mapper.map(supplierCategoryDto, SupplierCategory.class);
-      supplierCategoryService.updateSupplierCategory(supplierCategory);
+      supplierCategoryService
+          .updateSupplierCategory(mapper.map(supplierCategoryDto, SupplierCategory.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SUPPLIER_CATEGORY_SUCCESS),
           HttpStatus.OK);
@@ -108,11 +104,10 @@ public class SupplierCategoryController {
   @GetMapping(value = EndpointURI.SUPPLIER_CATEGORY_BY_ID)
   public ResponseEntity<Object> getSupplierCategoryById(@PathVariable Long id) {
     if (supplierCategoryService.isSupplierCategoryExist(id)) {
-      SupplierCategory supplierCategory = supplierCategoryService.getSupplierCategoryById(id);
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
-              mapper.map(supplierCategory, SupplierCategoryDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(
+          Constants.SUPPLIER_CATEGORY, mapper
+              .map(supplierCategoryService.getSupplierCategoryById(id), SupplierCategoryDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No Supplier Category record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,

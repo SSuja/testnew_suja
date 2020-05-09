@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +41,9 @@ public class ParameterController {
 
   @GetMapping(value = EndpointURI.PARAMETERS)
   public ResponseEntity<Object> getAllParameters() {
-    List<Parameter> parameterList = parameterService.getAllParameters();
     return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
-        mapper.map(parameterList, ParameterDto.class), RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+        mapper.map(parameterService.getAllParameters(), ParameterDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @PostMapping(value = EndpointURI.PARAMETER)
@@ -85,9 +83,9 @@ public class ParameterController {
   public ResponseEntity<Object> getParameterByID(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
       logger.debug("Get Parameter by id ");
-      Parameter parameter = parameterService.getParameterById(id);
       return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER,
-          mapper.map(parameter, ParameterDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
+          mapper.map(parameterService.getParameterById(id), ParameterDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
