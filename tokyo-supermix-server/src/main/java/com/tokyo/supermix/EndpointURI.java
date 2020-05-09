@@ -454,6 +454,5 @@ public final class EndpointURI {
 	public static final String MATERIAL_CATEGORY_STATUS_COUNT = INCOMING_SAMPLES_COUNT + SLASH + "material-category"
 			+ SLASH + "{materialCategoryName}";
 
-	private EndpointURI() {
-	}
+  private EndpointURI() {}
 }
