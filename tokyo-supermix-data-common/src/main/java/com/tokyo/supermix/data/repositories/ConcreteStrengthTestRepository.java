@@ -1,8 +1,10 @@
 package com.tokyo.supermix.data.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.ConcreteStrengthTest;
 
-public interface ConcreteStrengthTestRepository extends JpaRepository<ConcreteStrengthTest, Long> {
-  ConcreteStrengthTest findByFinishProductSampleId(Long finishProductSampleId);
+public interface ConcreteStrengthTestRepository
+		extends JpaRepository<ConcreteStrengthTest, Long>, QuerydslPredicateExecutor<ConcreteStrengthTest> {
+	ConcreteStrengthTest findByFinishProductSampleId(Long finishProductSampleId);
 }

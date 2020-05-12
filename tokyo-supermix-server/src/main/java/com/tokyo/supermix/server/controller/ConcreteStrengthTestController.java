@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteStrengthTestRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteStrengthTestResponseDto;
 import com.tokyo.supermix.data.entities.ConcreteStrengthTest;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -114,5 +117,28 @@ public class ConcreteStrengthTestController {
         new ValidationFailureResponse(Constants.CONCRETE_STRENGTH_TEST_ID,
             validationFailureStatusCodes.getConcreteStrengthTestNotExist()),
         HttpStatus.BAD_REQUEST);
+  }
+
+
+
+  @GetMapping(value = EndpointURI.SEARCH_CONCRETE_STRENGTH_TEST)
+  public ResponseEntity<Object> searchConcreteStrengthTest(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "finishProductSampleId", required = false) Long finishProductSampleId,
+      @RequestParam(name = "status", required = false) Status status,
+      @RequestParam(name = "strengh", required = false) Double strengh,
+      @RequestParam(name = "strenghMin", required = false) Double strenghMin,
+      @RequestParam(name = "strenghMax", required = false) Double strenghMax,
+      @RequestParam(name = "strenghGradeRatio", required = false) Double strenghGradeRatio,
+      @RequestParam(name = "strenghGradeRatioMin", required = false) Double strenghGradeRatioMin,
+      @RequestParam(name = "strenghGradeRatioMax", required = false) Double strenghGradeRatioMax) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.CONCRETE_STRENGTH_TESTS,
+            concreteStrengthTestService.searchConcreteStrengthTest(finishProductSampleId, status,
+                strengh, strenghMin, strenghMax, strenghGradeRatio, strenghGradeRatioMin,
+                strenghGradeRatioMax, booleanBuilder, page, size),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }
