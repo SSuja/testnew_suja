@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -20,9 +21,11 @@ public class User implements Serializable {
   private String password;
   private String email;
   @OneToOne
-  @JoinColumn(name = "employeeId", nullable = false)
+  @JoinColumn(name = "employeeId")
   private Employee employee;
-
+  @ManyToOne
+  @JoinColumn(name = "role_id", nullable = false)
+  private Role role;
   public Long getId() {
     return id;
   }
@@ -61,6 +64,14 @@ public class User implements Serializable {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
   }
 
   public static long getSerialversionuid() {

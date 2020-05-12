@@ -12,7 +12,8 @@ public class UserRequestDto {
   @NotEmpty(message = "{userRequestDto.password.empty}")
   private String password;
   private Long employeeId;
-
+  private String email;
+  
   public Long getId() {
     return id;
   }
@@ -43,6 +44,14 @@ public class UserRequestDto {
 
   public void setEmployeeId(Long employeeId) {
     this.employeeId = employeeId;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
 }
