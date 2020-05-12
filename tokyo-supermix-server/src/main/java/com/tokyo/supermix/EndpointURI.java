@@ -413,6 +413,7 @@ public final class EndpointURI {
       CUBE_TEST_FINDING + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}";
   public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ID =
       CUBE_TEST_FINDING + SLASH + "concrete-test" + SLASH + "{concreteTestId}";
+  public static final String SEARCH_CUBE_TEST_FINDING = CUBE_TEST_FINDING + SEARCH;
 
   /*
    * finish product sample issue apis
