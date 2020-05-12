@@ -9,16 +9,13 @@ public final class AuthEndpointURI {
    * private constructor to avoid instantiating this class.
    */
   private static final String SLASH = "/";
-  private static final String CODE = "/{code}";
   private static final String ID = "/{id}";
-  private static final String SEARCH = "/search";
-  private static final String SERIALNO = "/{serialNo}";
 
   /*
    * Authentication
    * 
    */
-  public static final String AUTH = BASE_API_PATH + "auth/";
+  public static final String AUTH = BASE_API_PATH + "auth"+SLASH;
   public static final String SIGNIN = AUTH + "sign-in";
   public static final String SIGNUP = AUTH + "sign-up";
   public static final String CHANGE_PASSWORD = AUTH + "change-password";

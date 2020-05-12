@@ -48,11 +48,6 @@ public class UserController {
 			return new ResponseEntity<>(new ValidationFailureResponse(AuthConstants.USER_NAME,
 					authValidationFailureCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
 		}
-		if (userService.isEmployeeExist(userRequestDto.getEmployeeId())) {
-			logger.debug("Employee already exists: createUser(), employee: {}");
-			return new ResponseEntity<>(new ValidationFailureResponse(AuthConstants.EMPLOYEE,
-					authValidationFailureCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
-		}
 		User user = userService.saveUser(mapper.map(userRequestDto, User.class));
 		if (user != null) {
 			String message = "Your Account sucessfully created. Your Username is " + userRequestDto.getUserName()

@@ -2,7 +2,8 @@ package com.tokyo.supermix.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.context.annotation.ComponentScan;
+@ComponentScan("com.tokyo.supermix.data")
 @SpringBootApplication
 public class TokyoSupermixAuthenticationApplication {
 

@@ -10,10 +10,10 @@ import com.tokyo.supermix.auth.config.UserPrincipal;
 import com.tokyo.supermix.data.entities.User;
 import com.tokyo.supermix.data.repositories.UserRepository;
 
-@Service
+@Service("authUserDetailsService")
 public class AuthUserDetailsService implements UserDetailsService{
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	@Transactional
 	@Override
