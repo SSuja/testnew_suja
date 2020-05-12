@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.CubeTestFinding;
 
 public interface CubeTestFindingService {
@@ -22,4 +24,5 @@ public interface CubeTestFindingService {
 
   public void updateCubeTestFinding(CubeTestFinding cubeTestFinding);
 
+  public Page<CubeTestFinding> searchCubeTestFinding(Predicate predicate, int size, int page);
 }
