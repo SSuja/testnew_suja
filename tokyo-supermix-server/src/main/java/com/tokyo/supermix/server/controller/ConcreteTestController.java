@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResponseDto;
 import com.tokyo.supermix.data.entities.ConcreteTest;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -54,9 +56,9 @@ public class ConcreteTestController {
     ConcreteTest concreteTest = concreteTestService
         .saveConcreteTest(mapper.map(concreteTestRequestDto, ConcreteTest.class));
     if (concreteTest != null) {
-      String message = "<p>We have got new concrteTest . The Test is "
-          + concreteTest.getStatus() + " </p><ul><li> Slump : " + concreteTest.getSlump()
-          + "</li><li> Mixdesign code : " + concreteTest.getFinishProductSample().getMixDesign().getCode() + "</li></ul>";
+      String message = "<p>We have got new concrteTest . The Test is " + concreteTest.getStatus()
+          + " </p><ul><li> Slump : " + concreteTest.getSlump() + "</li><li> Mixdesign code : "
+          + concreteTest.getFinishProductSample().getMixDesign().getCode() + "</li></ul>";
       emailService.sendMailWithFormat(mailConstants.getMailNewConcreteTest(),
           Constants.SUBJECT_NEW_CONGRETE_TEST, message);
     }
@@ -113,6 +115,25 @@ public class ConcreteTestController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
         validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_CONCRETE_TEST)
+  public ResponseEntity<Object> searchConcreteTest(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "finishProductSampleId", required = false) Long finishProductSampleId,
+      @RequestParam(name = "status", required = false) Status status,
+      @RequestParam(name = "slump", required = false) Double slump,
+      @RequestParam(name = "slumpMin", required = false) Double slumpMin,
+      @RequestParam(name = "slumpMax", required = false) Double slumpMax,
+      @RequestParam(name = "slumpGradeRatio", required = false) Double slumpGradeRatio,
+      @RequestParam(name = "slumpGradeRatioMin", required = false) Double slumpGradeRatioMin,
+      @RequestParam(name = "slumpGradeRatioMax", required = false) Double slumpGradeRatioMax) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TESTS,
+        concreteTestService.searchConcreteTest(finishProductSampleId, status, slump, slumpMin,
+            slumpMax, slumpGradeRatio, slumpGradeRatioMin, slumpGradeRatioMax, booleanBuilder, page,
+            size),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
 

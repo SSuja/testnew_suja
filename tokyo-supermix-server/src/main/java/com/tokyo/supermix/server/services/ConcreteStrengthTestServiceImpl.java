@@ -2,10 +2,15 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.ConcreteStrengthTest;
+import com.tokyo.supermix.data.entities.QConcreteStrengthTest;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteStrengthTestRepository;
 import com.tokyo.supermix.util.Constants;
@@ -87,5 +92,56 @@ public class ConcreteStrengthTestServiceImpl implements ConcreteStrengthTestServ
   @Transactional(readOnly = true)
   public boolean isConcreteStrengthTestExist(Long id) {
     return concreteStrengthTestRepository.existsById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public Page<ConcreteStrengthTest> searchConcreteStrengthTest(Long finishProductSampleId,
+      Status status, Double strengh, Double strenghMin, Double strenghMax, Double strenghGradeRatio,
+      Double strenghGradeRatioMin, Double strenghGradeRatioMax, BooleanBuilder booleanBuilder,
+      int page, int size) {
+    if (finishProductSampleId != null) {
+      booleanBuilder.and(QConcreteStrengthTest.concreteStrengthTest.id.eq(finishProductSampleId));
+    }
+    if (status != null) {
+      booleanBuilder.and(QConcreteStrengthTest.concreteStrengthTest.status.eq(status));
+    }
+    if (strenghMax != null && strenghMax != 0 && strenghMin == null && strengh == null) {
+      booleanBuilder.and(QConcreteStrengthTest.concreteStrengthTest.strength.lt(strenghMax));
+    }
+    if (strenghMin != null && strenghMin != 0 && strenghMax == null && strengh == null) {
+      booleanBuilder.and(QConcreteStrengthTest.concreteStrengthTest.strength.gt(strenghMin));
+    }
+
+    if (strenghMin != null && strenghMin != 0 && strenghMax != null && strenghMax != null
+        && strengh == null) {
+      booleanBuilder
+          .and(QConcreteStrengthTest.concreteStrengthTest.strength.between(strenghMin, strenghMax));
+    }
+    if (strengh != null && strengh != 0 && strenghMax == null && strenghMin == null) {
+      booleanBuilder.and(QConcreteStrengthTest.concreteStrengthTest.strength.eq(strengh));
+    }
+    if (strenghGradeRatioMax != null && strenghGradeRatioMax != 0 && strenghGradeRatioMin == null
+        && strenghGradeRatio == null) {
+      booleanBuilder.and(
+          QConcreteStrengthTest.concreteStrengthTest.strengthGradeRatio.lt(strenghGradeRatioMax));
+    }
+    if (strenghGradeRatioMin != null && strenghGradeRatioMin != 0 && strenghGradeRatioMax == null
+        && strenghGradeRatio == null) {
+      booleanBuilder.and(
+          QConcreteStrengthTest.concreteStrengthTest.strengthGradeRatio.gt(strenghGradeRatioMin));
+    }
+
+    if (strenghGradeRatioMin != null && strenghGradeRatioMin != 0 && strenghGradeRatioMax != null
+        && strenghGradeRatioMax != null && strenghGradeRatio == null) {
+      booleanBuilder.and(QConcreteStrengthTest.concreteStrengthTest.strengthGradeRatio
+          .between(strenghGradeRatioMin, strenghGradeRatioMax));
+    }
+    if (strenghGradeRatio != null && strenghGradeRatio != 0 && strenghGradeRatioMax == null
+        && strenghGradeRatioMin == null) {
+      booleanBuilder
+          .and(QConcreteStrengthTest.concreteStrengthTest.strengthGradeRatio.eq(strenghGradeRatio));
+    }
+    return concreteStrengthTestRepository.findAll(booleanBuilder,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 }

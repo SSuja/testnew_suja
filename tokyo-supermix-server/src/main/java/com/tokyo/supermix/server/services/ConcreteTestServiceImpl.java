@@ -3,11 +3,16 @@ package com.tokyo.supermix.server.services;
 import java.text.DecimalFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.ConcreteTest;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
+import com.tokyo.supermix.data.entities.QConcreteTest;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteTestRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
@@ -107,5 +112,51 @@ public class ConcreteTestServiceImpl implements ConcreteTestService {
   @Transactional(readOnly = true)
   public boolean isConcreteTestExists(Long id) {
     return concreteTestRepository.existsById(id);
+  }
+
+  public Page<ConcreteTest> searchConcreteTest(Long finishProductSampleId, Status status,
+      Double slump, Double slumpMin, Double slumpMax, Double slumpGradeRatio,
+      Double slumpGradeRatioMin, Double slumpGradeRatioMax, BooleanBuilder booleanBuilder, int page,
+      int size) {
+    if (finishProductSampleId != null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.id.eq(finishProductSampleId));
+    }
+    if (status != null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.status.eq(status));
+    }
+    if (slumpMax != null && slumpMax != 0 && slumpMin == null && slump == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slump.lt(slumpMax));
+    }
+    if (slumpMin != null && slumpMin != 0 && slumpMax == null && slump == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slump.gt(slumpMin));
+    }
+
+    if (slumpMin != null && slumpMin != 0 && slumpMax != null && slumpMax != null
+        && slump == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slump.between(slumpMin, slumpMax));
+    }
+    if (slump != null && slump != 0 && slumpMax == null && slumpMin == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slump.eq(slump));
+    }
+    if (slumpGradeRatioMax != null && slumpGradeRatioMax != 0 && slumpGradeRatioMin == null
+        && slumpGradeRatio == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slumpGradeRatio.lt(slumpGradeRatioMax));
+    }
+    if (slumpGradeRatioMin != null && slumpGradeRatioMin != 0 && slumpGradeRatioMax == null
+        && slumpGradeRatio == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slumpGradeRatio.gt(slumpGradeRatioMin));
+    }
+
+    if (slumpGradeRatioMin != null && slumpGradeRatioMin != 0 && slumpGradeRatioMax != null
+        && slumpGradeRatioMax != null && slumpGradeRatio == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slumpGradeRatio.between(slumpGradeRatioMin,
+          slumpGradeRatioMax));
+    }
+    if (slumpGradeRatio != null && slumpGradeRatio != 0 && slumpGradeRatioMax == null
+        && slumpGradeRatioMin == null) {
+      booleanBuilder.and(QConcreteTest.concreteTest.slumpGradeRatio.eq(slumpGradeRatio));
+    }
+    return concreteTestRepository.findAll(booleanBuilder,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 }
