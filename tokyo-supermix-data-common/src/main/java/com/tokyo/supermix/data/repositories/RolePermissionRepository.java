@@ -1,5 +1,8 @@
 package com.tokyo.supermix.data.repositories;
 
-public interface RolePermissionRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.tokyo.supermix.data.entities.RolePermission;
+
+public interface RolePermissionRepository extends JpaRepository<RolePermission, Long>{
 
 }

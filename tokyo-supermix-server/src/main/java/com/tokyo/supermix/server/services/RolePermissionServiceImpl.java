@@ -1,5 +1,8 @@
 package com.tokyo.supermix.server.services;
 
-public class RolePermissionServiceImpl {
+import org.springframework.stereotype.Service;
+
+@Service
+public class RolePermissionServiceImpl implements RolePermissionService {
 
 }
