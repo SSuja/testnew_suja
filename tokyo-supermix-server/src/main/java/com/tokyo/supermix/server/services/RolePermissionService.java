@@ -11,4 +11,6 @@ public interface RolePermissionService {
   public boolean isDuplicateEntryExist(Long roleId, Long permissionId);
 
   public boolean isRolePermissionExist(Long id);
+
+  public void deleteRolePermission(Long id);
 }

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,6 +61,19 @@ public class RolePermissionController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.ROLE_PERMISSION_UPDATED_SUCCESS),
           HttpStatus.OK);
     }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE_PERMISSION,
+        validationFailureStatusCodes.getRolePermissionNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @DeleteMapping(EndpointURI.ROLE_PERMISSION_BY_ID)
+  public ResponseEntity<Object> deleteRolePermissionById(@PathVariable Long id) {
+    if (rolePermissionService.isRolePermissionExist(id)) {
+      rolePermissionService.deleteRolePermission(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.ROLE_PERMISSION_DELETED),
+          HttpStatus.OK);
+    }
+    logger.debug("No role permission record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE_PERMISSION,
         validationFailureStatusCodes.getRolePermissionNotExist()), HttpStatus.BAD_REQUEST);
   }

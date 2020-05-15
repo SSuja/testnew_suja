@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.RolePermission;
 import com.tokyo.supermix.data.repositories.RolePermissionRepository;
@@ -33,5 +34,10 @@ public class RolePermissionServiceImpl implements RolePermissionService {
   @Transactional(readOnly = true)
   public boolean isRolePermissionExist(Long id) {
     return rolePermissionRepository.existsById(id);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteRolePermission(Long id) {
+    rolePermissionRepository.deleteById(id);
   }
 }
