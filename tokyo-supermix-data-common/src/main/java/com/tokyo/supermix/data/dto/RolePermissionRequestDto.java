@@ -4,6 +4,7 @@ public class RolePermissionRequestDto {
   private Long id;
   private Long roleId;
   private Long permissionId;
+  private boolean status;
 
   public Long getId() {
     return id;
@@ -29,4 +30,11 @@ public class RolePermissionRequestDto {
     this.permissionId = permissionId;
   }
 
+  public boolean isStatus() {
+    return status;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
+  }
 }

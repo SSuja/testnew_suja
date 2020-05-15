@@ -22,6 +22,7 @@ public class RolePermission implements Serializable {
   @ManyToOne
   @JoinColumn(name = "permission_id", nullable = false)
   private Permission permission;
+  private boolean status;
 
   public Long getId() {
     return id;
@@ -49,5 +50,13 @@ public class RolePermission implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isStatus() {
+    return status;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
   }
 }
