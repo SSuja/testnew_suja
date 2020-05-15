@@ -16,4 +16,18 @@ public class RolePermissionServiceImpl implements RolePermissionService {
   public List<RolePermission> getAllRolePermissions() {
     return rolePermissionRepository.findAll();
   }
+
+  @Override
+  public List<RolePermission> saveRolePermission(List<RolePermission> rolePermission) {
+    return rolePermissionRepository.saveAll(rolePermission);
+  }
+
+  @Override
+  public boolean isDuplicateRowExists(Long roleId, Long permissionId) {
+    if (rolePermissionRepository.existsByroleIdAndPermissionId(roleId, permissionId)) {
+      return true;
+    }
+    return false;
+  }
+
 }

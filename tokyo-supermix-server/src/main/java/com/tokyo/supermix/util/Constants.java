@@ -506,6 +506,8 @@ public class Constants {
    * Constants for Role-Permission validation key & Success messages
    */
   public static final String ROLE_PERMISSIONS = "role-permissions";
+  public static final String ROLE_PERMISSION = "role-permission";
+  public static final String ADD_ROLE_PERMISSION_SUCCESS = "Role Permission Added Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside
