@@ -1,5 +1,8 @@
 package com.tokyo.supermix.server.services;
 
-public interface RolePermissionService {
+import java.util.List;
+import com.tokyo.supermix.data.entities.RolePermission;
 
+public interface RolePermissionService {
+  public List<RolePermission> getAllRolePermissions();
 }
