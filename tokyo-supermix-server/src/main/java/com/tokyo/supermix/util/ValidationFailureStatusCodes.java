@@ -1891,8 +1891,19 @@ public class ValidationFailureStatusCodes {
     this.roleNameAlreadyExists = roleNameAlreadyExists;
   }
 
+  @Value("${validation.rolePermission.notExists}")
+  private String rolePermissionNotExist;
+
   @Value("${validation.rolePermission.alreadyExist}")
   private String rolePermissionAlreadyExist;
+
+  public String getRolePermissionNotExist() {
+    return rolePermissionNotExist;
+  }
+
+  public void setRolePermissionNotExist(String rolePermissionNotExist) {
+    this.rolePermissionNotExist = rolePermissionNotExist;
+  }
 
   public String getRolePermissionAlreadyExist() {
     return rolePermissionAlreadyExist;
@@ -1901,5 +1912,6 @@ public class ValidationFailureStatusCodes {
   public void setRolePermissionAlreadyExist(String rolePermissionAlreadyExist) {
     this.rolePermissionAlreadyExist = rolePermissionAlreadyExist;
   }
+
 
 }

@@ -24,10 +24,19 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
   @Override
   public boolean isDuplicateRowExists(Long roleId, Long permissionId) {
-    if (rolePermissionRepository.existsByroleIdAndPermissionId(roleId, permissionId)) {
+    if (rolePermissionRepository.existsByRoleIdAndPermissionId(roleId, permissionId)) {
       return true;
     }
     return false;
   }
 
+  @Transactional
+  public RolePermission updateRolePermission(RolePermission rolePermission) {
+    return rolePermissionRepository.save(rolePermission);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRolePermissionExist(Long id) {
+    return rolePermissionRepository.existsById(id);
+  }
 }

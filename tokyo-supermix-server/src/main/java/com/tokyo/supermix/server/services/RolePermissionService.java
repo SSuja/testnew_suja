@@ -9,4 +9,8 @@ public interface RolePermissionService {
   public List<RolePermission> saveRolePermission(List<RolePermission> rolePermission);
 
   public boolean isDuplicateRowExists(Long roleId, Long permissionId);
+
+  public RolePermission updateRolePermission(RolePermission rolePermission);
+
+  public boolean isRolePermissionExist(Long id);
 }

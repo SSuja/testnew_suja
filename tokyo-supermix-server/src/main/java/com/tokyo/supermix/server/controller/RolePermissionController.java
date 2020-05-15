@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
@@ -41,6 +43,27 @@ public class RolePermissionController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
+  @PutMapping(value = EndpointURI.ROLE_PERMISSION)
+  public ResponseEntity<Object> updateRolePermission(
+      @Valid @RequestBody RolePermissionRequestDto rolePermissionRequestDto) {
+    if (rolePermissionService.isRolePermissionExist(rolePermissionRequestDto.getId())) {
+      if (rolePermissionService.isDuplicateRowExists(rolePermissionRequestDto.getRoleId(),
+          rolePermissionRequestDto.getPermissionId())) {
+        logger.debug("row is already exists");
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.ROLE_PERMISSION,
+                validationFailureStatusCodes.getRolePermissionAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+      rolePermissionService
+          .updateRolePermission(mapper.map(rolePermissionRequestDto, RolePermission.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.ROLE_PERMISSION_UPDATED_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE_PERMISSION,
+        validationFailureStatusCodes.getRolePermissionNotExist()), HttpStatus.BAD_REQUEST);
+  }
   @PostMapping(value = EndpointURI.ROLE_PERMISSION)
   public ResponseEntity<Object> createRolePermission(
       @RequestBody List<RolePermissionRequestDto> rolePermissionRequestDtoList) {
@@ -54,10 +77,9 @@ public class RolePermissionController {
             HttpStatus.BAD_REQUEST);
       }
     }
-    rolePermissionService
-        .saveRolePermission(mapper.map(rolePermissionRequestDtoList, RolePermission.class));
+    rolePermissionService.saveRolePermission(mapper.map(rolePermissionRequestDtoList, RolePermission.class));
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_ROLE_PERMISSION_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_PARAMETER_SUCCESS),
         HttpStatus.OK);
   }
 }
