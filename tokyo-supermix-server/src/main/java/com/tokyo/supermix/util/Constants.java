@@ -507,6 +507,7 @@ public class Constants {
    */
   public static final String ROLE_PERMISSIONS = "role-permissions";
   public static final String ROLE_PERMISSION = "role-permission";
+  public static final String ADD_ROLE_PERMISSION_SUCCESS = "Role Permission Added Successfully";
   public static final String ROLE_PERMISSION_UPDATED_SUCCESS =
       "RolePermission Updated Successfully";
   public static final String ROLE_PERMISSION_DELETED =

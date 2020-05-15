@@ -6,9 +6,11 @@ import com.tokyo.supermix.data.entities.RolePermission;
 public interface RolePermissionService {
   public List<RolePermission> getAllRolePermissions();
 
-  public RolePermission updateRolePermission(RolePermission rolePermission);
+  public List<RolePermission> saveRolePermission(List<RolePermission> rolePermission);
 
-  public boolean isDuplicateEntryExist(Long roleId, Long permissionId);
+  public boolean isDuplicateRowExists(Long roleId, Long permissionId);
+
+  public RolePermission updateRolePermission(RolePermission rolePermission);
 
   public boolean isRolePermissionExist(Long id);
 
