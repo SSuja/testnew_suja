@@ -16,4 +16,22 @@ public class RolePermissionServiceImpl implements RolePermissionService {
   public List<RolePermission> getAllRolePermissions() {
     return rolePermissionRepository.findAll();
   }
+
+  @Transactional
+  public RolePermission updateRolePermission(RolePermission rolePermission) {
+    return rolePermissionRepository.save(rolePermission);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isDuplicateEntryExist(Long roleId, Long permissionId) {
+    if (rolePermissionRepository.existsByRoleIdAndPermissionId(roleId, permissionId)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRolePermissionExist(Long id) {
+    return rolePermissionRepository.existsById(id);
+  }
 }
