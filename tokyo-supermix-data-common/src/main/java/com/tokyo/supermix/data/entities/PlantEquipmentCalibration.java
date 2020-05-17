@@ -40,6 +40,7 @@ public class PlantEquipmentCalibration implements Serializable {
   @ManyToOne
   @JoinColumn(name = "employeeId", nullable = true)
   private Employee employee;
+  private String accuracy;
 
   public Employee getEmployee() {
     return employee;
@@ -125,4 +126,11 @@ public class PlantEquipmentCalibration implements Serializable {
     return serialVersionUID;
   }
 
+  public String getAccuracy() {
+    return accuracy;
+  }
+
+  public void setAccuracy(String accuracy) {
+    this.accuracy = accuracy;
+  }
 }

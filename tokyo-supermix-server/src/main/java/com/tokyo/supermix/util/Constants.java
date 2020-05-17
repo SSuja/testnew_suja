@@ -432,7 +432,7 @@ public class Constants {
 	public static final String CUBE_TEST_FINDING_AGE = "age";
 	public static final String CUBE_TEST_FINDING_DELETED = "Cube Test Finding Successfully Deleted";
 	public static final String ADD_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Successfully Added Successfully";
-	public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Successfully Updated Successfully";
+	public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Updated Successfully";
 	/*
 	 * Constants for Test validation key & Success messages
 	 */
@@ -441,7 +441,26 @@ public class Constants {
 	public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
 	public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
 	public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
-
+	/*
+	 * Constants for Quality Parameter validation key & Success messages
+	 */
+	public static final String QUALITY_PARAMETER = "qualityParameter";
+	public static final String QUALITY_PARAMETERS = "qualityParameters";
+	public static final String QUALITY_PARAMETER_ID = "qualityParameterId";
+	public static final String ADD_QUALITY_PARAMETER_SUCCESS = "Quality Parameter Added Successfully";
+	public static final String DELETED_QUALITY_PARAMETER = "Quality Parameter Successfully Deleted";
+	public static final String UPDATE_QUALITY_PARAMETER_SUCCESS = "Quality Parameter Updated Successfully";
+	
+	/*
+	 * Constants for Material Quality Parameter validation key & Success messages
+	 */
+	public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
+	public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
+	public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
+	public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS = "Material Quality Parameter Added Successfully";
+	public static final String DELETED_MATERIAL_QUALITY_PARAMETER = "Material Quality Parameter Successfully Deleted";
+	public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS = "Material Quality Parameter Updated Successfully";
+	
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */

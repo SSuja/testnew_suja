@@ -23,6 +23,7 @@ public class PlantEquipmentCalibrationRequestDto {
   @NotEmpty(message = "{plantEquipmentCalibrationRequestDto.status.empty}")
   private String status;
   private Long employeeId;
+  private String accuracy;
 
   public Long getEmployeeId() {
     return employeeId;
@@ -104,4 +105,11 @@ public class PlantEquipmentCalibrationRequestDto {
     this.status = status;
   }
 
+  public String getAccuracy() {
+    return accuracy;
+  }
+
+  public void setAccuracy(String accuracy) {
+    this.accuracy = accuracy;
+  }
 }

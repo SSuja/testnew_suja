@@ -11,6 +11,7 @@ public class PlantDto {
   private String name;
   private String address;
   private String phoneNumber;
+  private String description;
 
   public String getCode() {
     return code;
@@ -42,6 +43,14 @@ public class PlantDto {
 
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 }

@@ -1,13 +1,9 @@
 package com.tokyo.supermix.data.dto;
 
-import com.tokyo.supermix.data.enums.Nature;
-
-public class RawMaterialResponseDto {
+public class QualityParameterResponseDto {
   private Long id;
   private String name;
-  private Nature nature;
   private MaterialSubCategoryResponseDto materialSubCategory;
-  private String description;
 
   public Long getId() {
     return id;
@@ -25,14 +21,6 @@ public class RawMaterialResponseDto {
     this.name = name;
   }
 
-  public Nature getNature() {
-    return nature;
-  }
-
-  public void setNature(Nature nature) {
-    this.nature = nature;
-  }
-
   public MaterialSubCategoryResponseDto getMaterialSubCategory() {
     return materialSubCategory;
   }
@@ -41,11 +29,4 @@ public class RawMaterialResponseDto {
     this.materialSubCategory = materialSubCategory;
   }
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
 }
