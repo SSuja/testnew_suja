@@ -453,6 +453,25 @@ public final class EndpointURI {
   public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
   public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
   public static final String SEARCH_CONCRETE_TEST = CONCRETE_TEST + SEARCH;
+  /*
+   * qualityParameter
+   */
+  public static final String QUALITY_PARAMETER = BASE_API_PATH + "quality-parameter";
+  public static final String QUALITY_PARAMETER_BY_ID = QUALITY_PARAMETER + ID;
+  public static final String QUALITY_PARAMETERS = BASE_API_PATH + "quality-parameters";
+  public static final String MATERIAL_SUB_CATEGORY_ID = "/{materialSubCategoryId}";
+  public static final String GET_QUALITY_PARAMETERS_BY_MATERIAL_SUB_CATEGORY_ID =
+      QUALITY_PARAMETER + "/qualityparameter" + MATERIAL_SUB_CATEGORY_ID;
+
+  /*
+   * qualityParameterMaterial
+   */
+  public static final String MATERIAL_QUALITY_PARAMETER =
+      BASE_API_PATH + "material-quality-parameter";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
+  public static final String MATERIAL_QUALITY_PARAMETERS =
+      BASE_API_PATH + "material-quality-parameters";
+
 
   private EndpointURI() {}
 }

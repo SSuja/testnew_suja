@@ -987,7 +987,7 @@ public class ValidationFailureStatusCodes {
 	// for concreteTest
 	@Value("${validation.concreteTest.alreadyExists}")
 	private String concreteTestAlreadyExists;
-	
+
 	@Value("${validation.concreteTest.notExists}")
 	private String concreteTestNotExist;
 
@@ -998,6 +998,7 @@ public class ValidationFailureStatusCodes {
 	public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
 		this.concreteTestAlreadyExists = concreteTestAlreadyExists;
 	}
+
 	public String getConcreteTestNotExist() {
 		return concreteTestNotExist;
 	}
@@ -1394,6 +1395,7 @@ public class ValidationFailureStatusCodes {
 	public void setEquationParameterNotExist(String equationParameterNotExist) {
 		this.equationParameterNotExist = equationParameterNotExist;
 	}
+
 	@Value("${validation.admixtureAcceptedValue.notExists}")
 	private String admixtureAcceptedValueNotExist;
 
@@ -1770,4 +1772,45 @@ public class ValidationFailureStatusCodes {
 		this.testAlreadyExist = testAlreadyExist;
 	}
 
+	@Value("${validation.qualityParameter.notExists}")
+	private String qualityParameterNotExist;
+	@Value("${validation.qualityParameter.alreadyExist}")
+	private String qualityParameterAlreadyExist;
+
+	public String getQualityParameterNotExist() {
+		return qualityParameterNotExist;
+	}
+
+	public void setQualityParameterNotExist(String qualityParameterNotExist) {
+		this.qualityParameterNotExist = qualityParameterNotExist;
+	}
+
+	public String getQualityParameterAlreadyExist() {
+		return qualityParameterAlreadyExist;
+	}
+
+	public void setQualityParameterAlreadyExist(String qualityParameterAlreadyExist) {
+		this.qualityParameterAlreadyExist = qualityParameterAlreadyExist;
+	}
+	@Value("${validation.materialQualityParameter.notExists}")
+	private String materialQualityParameterNotExist;
+	@Value("${validation.materialQualityParameter.alreadyExist}")
+	private String materialQualityParameterAlreadyExist;
+
+	public String getMaterialQualityParameterNotExist() {
+		return materialQualityParameterNotExist;
+	}
+
+	public void setMaterialQualityParameterNotExist(String materialQualityParameterNotExist) {
+		this.materialQualityParameterNotExist = materialQualityParameterNotExist;
+	}
+
+	public String getMaterialQualityParameterAlreadyExist() {
+		return materialQualityParameterAlreadyExist;
+	}
+
+	public void setMaterialQualityParameterAlreadyExist(String materialQualityParameterAlreadyExist) {
+		this.materialQualityParameterAlreadyExist = materialQualityParameterAlreadyExist;
+	}
+	
 }
