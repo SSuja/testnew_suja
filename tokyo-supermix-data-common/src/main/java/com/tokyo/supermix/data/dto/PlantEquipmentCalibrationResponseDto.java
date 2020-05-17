@@ -18,7 +18,7 @@ public class PlantEquipmentCalibrationResponseDto {
   private String supplierName;
   private String plantEquipmentEquipmentName;
   private Employee employee;
-
+  private String accuracy;
   public Employee getEmployee() {
     return employee;
   }
@@ -123,5 +123,11 @@ public class PlantEquipmentCalibrationResponseDto {
     this.userUsername = userUsername;
   }
 
+  public String getAccuracy() {
+    return accuracy;
+  }
 
+  public void setAccuracy(String accuracy) {
+    this.accuracy = accuracy;
+  }
 }
