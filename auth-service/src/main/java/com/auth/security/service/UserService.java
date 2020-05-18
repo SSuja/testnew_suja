@@ -1,7 +1,7 @@
-package com.tokyo.supermix.server.services;
+package com.auth.security.service;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.User;
+import com.tokyo.supermix.data.entities.auth.User;
 
 public interface UserService {
   User saveUser(User user);
@@ -19,4 +19,10 @@ public interface UserService {
   public User getUserById(Long id);
 
   public boolean isUpdatedUserExist(Long id, String userName);
+  
+  public boolean existsByEmail(String email);
+  
+  void changeUserPassword(User user, String password);
+
+  User findUserByEmail(String userEmail);
 }

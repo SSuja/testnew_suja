@@ -1,28 +1,28 @@
-package com.tokyo.supermix.data.entities;
+package com.tokyo.supermix.data.entities.auth;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
-public class User implements Serializable {
-  private static final long serialVersionUID = 1L;
+public class User extends DateAudit {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String userName;
   private String password;
   private String email;
-  @OneToOne
-  @JoinColumn(name = "employeeId", nullable = false)
-  private Employee employee;
-
+//  @OneToOne
+//  @JoinColumn(name = "employeeId")
+//  private Employee employee;
+  @ManyToOne
+  @JoinColumn(name = "role_id", nullable = false)
+  private Role role;
   public Long getId() {
     return id;
   }
@@ -47,13 +47,13 @@ public class User implements Serializable {
     this.password = password;
   }
 
-  public Employee getEmployee() {
-    return employee;
-  }
-
-  public void setEmployee(Employee employee) {
-    this.employee = employee;
-  }
+//  public Employee getEmployee() {
+//    return employee;
+//  }
+//
+//  public void setEmployee(Employee employee) {
+//    this.employee = employee;
+//  }
 
   public String getEmail() {
     return email;
@@ -63,8 +63,12 @@ public class User implements Serializable {
     this.email = email;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
   }
 
 }
