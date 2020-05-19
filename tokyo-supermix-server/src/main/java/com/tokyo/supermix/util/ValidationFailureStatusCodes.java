@@ -1792,6 +1792,7 @@ public class ValidationFailureStatusCodes {
 	public void setQualityParameterAlreadyExist(String qualityParameterAlreadyExist) {
 		this.qualityParameterAlreadyExist = qualityParameterAlreadyExist;
 	}
+
 	@Value("${validation.materialQualityParameter.notExists}")
 	private String materialQualityParameterNotExist;
 	@Value("${validation.materialQualityParameter.alreadyExist}")
@@ -1812,5 +1813,42 @@ public class ValidationFailureStatusCodes {
 	public void setMaterialQualityParameterAlreadyExist(String materialQualityParameterAlreadyExist) {
 		this.materialQualityParameterAlreadyExist = materialQualityParameterAlreadyExist;
 	}
-	
+	/*
+	 * 
+	 */
+
+	@Value("${validation.concreteTestType.notExists}")
+	private String concreteTestTypeNotExist;
+	@Value("${validation.concreteTestType.alreadyExist}")
+	private String concreteTestTypeAlreadyExist;
+
+	public String getConcreteTestTypeNotExist() {
+		return concreteTestTypeNotExist;
+	}
+
+	public void setConcreteTestTypeNotExist(String concreteTestTypeNotExist) {
+		this.concreteTestTypeNotExist = concreteTestTypeNotExist;
+	}
+
+	public String getConcreteTestTypeAlreadyExist() {
+		return concreteTestTypeAlreadyExist;
+	}
+
+	public void setConcreteTestTypeAlreadyExist(String concreteTestTypeAlreadyExist) {
+		this.concreteTestTypeAlreadyExist = concreteTestTypeAlreadyExist;
+	}
+
+	/*
+	 * 
+	 */
+	@Value("${validation.concreteTestResult.notExists}")
+	private String concreteTestResultNotExist;
+
+	public String getConcreteTestResultNotExist() {
+		return concreteTestResultNotExist;
+	}
+
+	public void setConcreteTestResultNotExist(String concreteTestResultNotExist) {
+		this.concreteTestResultNotExist = concreteTestResultNotExist;
+	}
 }

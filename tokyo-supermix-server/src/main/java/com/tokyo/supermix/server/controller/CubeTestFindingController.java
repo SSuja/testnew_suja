@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.CubeTestFindingRequestDto;
@@ -26,7 +29,6 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.ConcreteStrengthTestService;
 import com.tokyo.supermix.server.services.CubeTestFindingService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -36,8 +38,6 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class CubeTestFindingController {
   @Autowired
   private Mapper mapper;
-  @Autowired
-  ConcreteStrengthTestService concreteStrengthTestService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
