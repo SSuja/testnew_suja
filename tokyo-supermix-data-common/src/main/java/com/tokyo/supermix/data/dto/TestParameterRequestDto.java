@@ -1,10 +1,19 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.EntryLevel;
+
 public class TestParameterRequestDto {
   private Long id;
   private Long testConfigureId;
   private Long parameterId;
   private Long unitId;
+  @NotNull(message = "{testParameterDto.abbreviation.null}")
+  @NotEmpty(message = "{testParameterDto.abbreviation.empty}")
+  private String abbreviation;
+  private EntryLevel entryLevel;
+  private Double value;
 
   public Long getId() {
     return id;
@@ -36,5 +45,29 @@ public class TestParameterRequestDto {
 
   public void setUnitId(Long unitId) {
     this.unitId = unitId;
+  }
+
+  public String getAbbreviation() {
+    return abbreviation;
+  }
+
+  public void setAbbreviation(String abbreviation) {
+    this.abbreviation = abbreviation;
+  }
+
+  public EntryLevel getEntryLevel() {
+    return entryLevel;
+  }
+
+  public void setEntryLevel(EntryLevel entryLevel) {
+    this.entryLevel = entryLevel;
+  }
+
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
   }
 }

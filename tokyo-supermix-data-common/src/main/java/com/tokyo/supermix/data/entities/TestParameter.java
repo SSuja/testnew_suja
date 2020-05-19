@@ -2,12 +2,15 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.EntryLevel;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_parameter")
@@ -25,6 +28,10 @@ public class TestParameter implements Serializable {
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
+  private String abbreviation;
+  @Enumerated(EnumType.ORDINAL)
+  private EntryLevel entryLevel;
+  private Double value;
 
   public Long getId() {
     return id;
@@ -62,4 +69,27 @@ public class TestParameter implements Serializable {
     return serialVersionUID;
   }
 
+  public String getAbbreviation() {
+    return abbreviation;
+  }
+
+  public void setAbbreviation(String abbreviation) {
+    this.abbreviation = abbreviation;
+  }
+
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
+  }
+
+  public EntryLevel getEntryLevel() {
+    return entryLevel;
+  }
+
+  public void setEntryLevel(EntryLevel entryLevel) {
+    this.entryLevel = entryLevel;
+  }
 }
