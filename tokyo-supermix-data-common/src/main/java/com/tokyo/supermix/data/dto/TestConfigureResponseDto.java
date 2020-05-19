@@ -7,6 +7,9 @@ public class TestConfigureResponseDto {
   private Long testId;
   private String testName;
   private boolean coreTest;
+  private String description;
+  private String testProcedure;
+  private String prefix;
 
   public Long getId() {
     return id;
@@ -54,6 +57,30 @@ public class TestConfigureResponseDto {
 
   public void setCoreTest(boolean coreTest) {
     this.coreTest = coreTest;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getTestProcedure() {
+    return testProcedure;
+  }
+
+  public void setTestProcedure(String testProcedure) {
+    this.testProcedure = testProcedure;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 
 }
