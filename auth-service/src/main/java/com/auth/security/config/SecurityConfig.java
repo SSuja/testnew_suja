@@ -3,6 +3,7 @@ package com.auth.security.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -45,11 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable().exceptionHandling()
         .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()  
+        .authorizeRequests()
         .antMatchers("/api/v1/auth/**").permitAll()
-        .antMatchers("/api/v1/roles").permitAll()
+        .antMatchers("/api/v1/users").permitAll()
+        .antMatchers(HttpMethod.GET,"/supermix-service/api/v1/units").hasAuthority("read_unit")
         .anyRequest().authenticated();
-    // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     http.headers().cacheControl();
   }

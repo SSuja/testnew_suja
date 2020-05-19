@@ -9,18 +9,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.auth.security.AuthEndpointURI;
+import com.auth.security.mapper.Mapper;
 import com.auth.security.service.UserService;
 import com.auth.security.util.AuthConstants;
 import com.auth.security.util.AuthValidationFailureCodes;
 import com.tokyo.supermix.data.dto.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRequestDto;
 import com.tokyo.supermix.data.entities.auth.User;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -31,7 +30,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	@Autowired(required = false)
+	@Autowired
 	private Mapper mapper;
 	@Autowired
 	private AuthValidationFailureCodes authValidationFailureCodes;

@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.entities.auth.User;
 
 public class UserPrincipal implements UserDetails {
   private static final long serialVersionUID = -394792056682796726L;
@@ -31,9 +32,12 @@ public class UserPrincipal implements UserDetails {
     this.authorities = authorities;
   }
 
-  public static UserPrincipal create(com.tokyo.supermix.data.entities.auth.User user) {
+  public static UserPrincipal create(User user) {
     List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
     authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
+    user.getRole().getPermissions().forEach(permission->{
+    	authorities.add(new SimpleGrantedAuthority(permission.getName()));
+    });
     return new UserPrincipal(user.getId(), user.getUserName(), user.getRole(), user.getEmail(),
         user.getPassword(), authorities);
   }
