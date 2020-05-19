@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tokyo.supermix.data.entities.ConcreteTestResult;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
@@ -52,8 +53,10 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 	}
 
 	public ConcreteTestResult calculateRatio(ConcreteTestResult concreteTestResult) {
+		FinishProductSample finishProductSample = finishProductSampleRepository
+				.findById(concreteTestResult.getFinishProductSample().getId()).get();
 		List<MixDesignProportion> mixDesignProportionList = mixDesignProportionRepository
-				.findByMixDesignCode(concreteTestResult.getFinishProductSample().getMixDesign().getCode());
+				.findByMixDesignCode(finishProductSample.getMixDesign().getCode());
 		Long quantity = null;
 		Long binderquantity = 0L;
 		for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
