@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResponseDto;
@@ -39,7 +42,6 @@ public class ConcreteTestController {
 	private ValidationFailureStatusCodes validationFailureStatusCodes;
 	private static final Logger logger = Logger.getLogger(ConcreteTestController.class);
 
-	// post API for ConcreteTest
 	@PostMapping(value = EndpointURI.CONCRETE_TEST)
 	public ResponseEntity<Object> createConcreteTest(
 			@Valid @RequestBody ConcreteTestRequestDto ConcreteTestRequestDto) {
@@ -59,7 +61,6 @@ public class ConcreteTestController {
 				RestApiResponseStatus.OK), HttpStatus.OK);
 	}
 
-	// get ConcreteTest by id
 	@GetMapping(value = EndpointURI.CONCRETE_TEST_BY_ID)
 	public ResponseEntity<Object> getConcreteTestById(@PathVariable Long id) {
 		if (concreteTestService.isConcreteTestExists(id)) {
@@ -73,7 +74,6 @@ public class ConcreteTestController {
 				validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
 	}
 
-	// get ConcreteTest Delete
 	@DeleteMapping(value = EndpointURI.CONCRETE_TEST_BY_ID)
 	public ResponseEntity<Object> deleteConcreteTest(@PathVariable Long id) {
 		if (concreteTestService.isConcreteTestExists(id)) {
@@ -97,5 +97,15 @@ public class ConcreteTestController {
 		}
 		return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST,
 				validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping(value = EndpointURI.SEARCH_CONCRETE_TEST)
+	public ResponseEntity<Object> getConcreteTestSearch(
+			@QuerydslPredicate(root = ConcreteTest.class) Predicate predicate, @RequestParam(name = "page") int page,
+			@RequestParam(name = "size") int size) {
+		return new ResponseEntity<>(
+				new ContentResponse<>(Constants.CONCRETE_TESTS,
+						concreteTestService.searchConcreteTest(predicate, size, page), RestApiResponseStatus.OK),
+				null, HttpStatus.OK);
 	}
 }

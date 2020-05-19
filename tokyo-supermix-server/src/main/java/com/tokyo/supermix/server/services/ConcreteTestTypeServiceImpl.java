@@ -3,10 +3,14 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.ConcreteTestType;
 import com.tokyo.supermix.data.repositories.ConcreteTestTypeRespository;
 
@@ -43,5 +47,11 @@ public class ConcreteTestTypeServiceImpl implements ConcreteTestTypeService {
 	@Transactional(readOnly = true)
 	public boolean isTypeExists(String type) {
 		return concreteTestTypeRepository.existsByType(type);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<ConcreteTestType> searchConcreteTestType(Predicate predicate, int size, int page) {
+		return concreteTestTypeRepository.findAll(predicate,
+				PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
 	}
 }

@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestTypeDto;
 import com.tokyo.supermix.data.entities.ConcreteTestType;
@@ -82,7 +85,7 @@ public class ConcreteTestTypeController {
 	}
 
 	@PutMapping(value = EndpointURI.CONCRETE_TEST_TYPE)
-	public ResponseEntity<Object> updateConcreteTest(@Valid @RequestBody ConcreteTestTypeDto concreteTestTypeDto) {
+	public ResponseEntity<Object> updateConcreteTestType(@Valid @RequestBody ConcreteTestTypeDto concreteTestTypeDto) {
 		if (concreteTestTypeService.isConcreteTestTypeExists(concreteTestTypeDto.getId())) {
 			concreteTestTypeService.saveConcreteTestType(mapper.map(concreteTestTypeDto, ConcreteTestType.class));
 			return new ResponseEntity<>(
@@ -91,5 +94,14 @@ public class ConcreteTestTypeController {
 		}
 		return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_TYPE,
 				validationFailureStatusCodes.getConcreteTestTypeNotExist()), HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping(value = EndpointURI.SEARCH_CONCRETE_TEST_TYPE)
+	public ResponseEntity<Object> getConcreteTestTypeSearch(
+			@QuerydslPredicate(root = ConcreteTestType.class) Predicate predicate,
+			@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+		return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_TYPES,
+				concreteTestTypeService.searchConcreteTestType(predicate, size, page), RestApiResponseStatus.OK), null,
+				HttpStatus.OK);
 	}
 }

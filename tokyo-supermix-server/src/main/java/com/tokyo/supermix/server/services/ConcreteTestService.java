@@ -2,6 +2,9 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.ConcreteTest;
 
 public interface ConcreteTestService {
@@ -17,4 +20,5 @@ public interface ConcreteTestService {
 
 	public boolean isNameExists(String name);
 
+	public Page<ConcreteTest> searchConcreteTest(Predicate predicate, int size, int page);
 }
