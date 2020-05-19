@@ -58,7 +58,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     for (ParameterResult parameterResult : parameterResultList) {
       TestParameter testParameter =
           testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
-      engine.put(testParameter.getParameter().getAbbreviation(), parameterResult.getValue());
+      engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
     }
     try {
       result = (double) engine.eval(equation);
