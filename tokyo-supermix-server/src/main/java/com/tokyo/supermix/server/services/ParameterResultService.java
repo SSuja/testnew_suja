@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.ParameterResultRequestDto;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 
@@ -18,4 +19,6 @@ public interface ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial);
 
   public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
+
+  public void isTestParameterValueInConfigureLevel(ParameterResultRequestDto parameterResult);
 }
