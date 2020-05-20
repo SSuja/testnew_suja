@@ -23,8 +23,11 @@ public class TestParameter implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "parameterId", nullable = false)
+  @JoinColumn(name = "parameterId", nullable = true)
   private Parameter parameter;
+  @ManyToOne
+  @JoinColumn(name = "qualityParameterId", nullable = true)
+  private QualityParameter qualityParameter;
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
@@ -91,5 +94,13 @@ public class TestParameter implements Serializable {
 
   public void setEntryLevel(EntryLevel entryLevel) {
     this.entryLevel = entryLevel;
+  }
+
+  public QualityParameter getQualityParameter() {
+    return qualityParameter;
+  }
+
+  public void setQualityParameter(QualityParameter qualityParameter) {
+    this.qualityParameter = qualityParameter;
   }
 }

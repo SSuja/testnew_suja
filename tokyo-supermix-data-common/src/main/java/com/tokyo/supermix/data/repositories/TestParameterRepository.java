@@ -14,6 +14,11 @@ public interface TestParameterRepository
 
   boolean existsByTestConfigureId(Long testConfigureId);
 
-  boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(Long testConfigureId, Long parameterId,
-      Long unitId, String abbreviation,EntryLevel entryLevel);
+  boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
+      Long testConfigureId, Long parameterId, Long unitId, String abbreviation,
+      EntryLevel entryLevel);
+
+  boolean existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
+      Long testConfigureId, Long parameterId, Long unitId, String abbreviation,
+      EntryLevel entryLevel);
 }

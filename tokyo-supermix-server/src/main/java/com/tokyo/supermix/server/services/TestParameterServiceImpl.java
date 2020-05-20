@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,18 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId) {
-    return testParameterRepository.findByTestConfigureId(testConfigureId);
+    List<TestParameter> testParameterLists =
+        testParameterRepository.findByTestConfigureId(testConfigureId);
+    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+    for (TestParameter testParameter : testParameterLists) {
+      if ((testParameter.getQualityParameter() != null && testParameter.getValue() == null)
+          && testParameter.getEntryLevel().equals(EntryLevel.TEST)
+          || (testParameter.getParameter() != null && testParameter.getValue() == null
+              && testParameter.getEntryLevel().equals(EntryLevel.TEST))) {
+        testParameters.add(testParameter);
+      }
+    }
+    return testParameters;
   }
 
   @Transactional(readOnly = true)
@@ -58,8 +70,8 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameterRepository.save(testParameter);
   }
 
-  public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId,
-      String abbreviation, EntryLevel entryLevel) {
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId,
+      Long unitId, String abbreviation, EntryLevel entryLevel) {
     if (testParameterRepository
         .existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(testConfigureId,
             parameterId, unitId, abbreviation, entryLevel)) {
@@ -72,5 +84,16 @@ public class TestParameterServiceImpl implements TestParameterService {
   public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page) {
     return testParameterRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+  }
+
+  @Override
+  public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
+      Long qualityParameterId, Long unitId, String abbreviation, EntryLevel entryLevel) {
+    if (testParameterRepository
+        .existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
+            testConfigureId, qualityParameterId, unitId, abbreviation, entryLevel)) {
+      return true;
+    }
+    return false;
   }
 }

@@ -23,8 +23,11 @@ public interface TestParameterService {
 
   public boolean isTestConfigureIdExist(Long id);
 
-  public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId,
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId, Long unitId,
       String abbreviation, EntryLevel entryLevel);
+
+  public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
+      Long qualityParameterId, Long unitId, String abbreviation, EntryLevel entryLevel);
 
   public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page);
 }
