@@ -45,6 +45,7 @@ public class ParameterResultController {
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<ParameterResultRequestDto> parameterResultRequestDtoList) {
     for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
+      parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
       parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
       parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
           .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));

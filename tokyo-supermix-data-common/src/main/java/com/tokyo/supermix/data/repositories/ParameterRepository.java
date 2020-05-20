@@ -7,7 +7,4 @@ import com.tokyo.supermix.data.entities.Parameter;
 public interface ParameterRepository
     extends JpaRepository<Parameter, Long>, QuerydslPredicateExecutor<Parameter> {
   boolean existsByName(String name);
-
-  boolean existsByAbbreviation(String abbreviation);
-
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.EntryLevel;
 
 public interface TestParameterService {
   public List<TestParameter> saveTestParameter(List<TestParameter> testParameter);
@@ -22,7 +23,8 @@ public interface TestParameterService {
 
   public boolean isTestConfigureIdExist(Long id);
 
-  public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId);
+  public boolean isDuplicateEntryExist(Long testConfigureId, Long parameterId, Long unitId,
+      String abbreviation, EntryLevel entryLevel);
 
   public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page);
 }

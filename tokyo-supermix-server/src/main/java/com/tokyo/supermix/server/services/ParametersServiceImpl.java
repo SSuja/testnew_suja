@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -53,21 +52,6 @@ public class ParametersServiceImpl implements ParameterService {
   @Transactional(readOnly = true)
   public boolean isNameExist(String name) {
     return parameterRepository.existsByName(name);
-  }
-
-
-  @Transactional(readOnly = true)
-  public boolean isAbbreviationExist(String abbreviation) {
-    return parameterRepository.existsByAbbreviation(abbreviation);
-  }
-
-  @Override
-  public boolean isUpdatedAbbreviationExist(Long id, String abbreviation) {
-    if ((!getParameterById(id).getAbbreviation().equalsIgnoreCase(abbreviation))
-        && (isAbbreviationExist(abbreviation))) {
-      return true;
-    }
-    return false;
   }
 
   @Transactional(readOnly = true)
