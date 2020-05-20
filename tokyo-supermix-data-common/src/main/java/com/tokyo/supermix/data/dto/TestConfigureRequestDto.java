@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class TestConfigureRequestDto {
   private Long id;
@@ -10,11 +11,10 @@ public class TestConfigureRequestDto {
   private Long testId;
   private boolean coreTest;
   private String description;
-  @NotNull(message = "{testConfigureRequestDto.testProcedure.null}")
-  @NotEmpty(message = "{testConfigureRequestDto.testProcedure.empty}")
   private String testProcedure;
   @NotNull(message = "{testConfigureRequestDto.prefix.null}")
   @NotEmpty(message = "{testConfigureRequestDto.prefix.empty}")
+  @Pattern(regexp = "^[a-zA-Z\\s]+$*", message = "{testConfigureRequestDto.prefix.specialcharacter}")
   private String prefix;
 
   public Long getId() {
