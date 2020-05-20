@@ -3,7 +3,6 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 import com.tokyo.supermix.data.entities.Employee;
 
-
 public class PlantEquipmentCalibrationResponseDto {
   private Long id;
   private Date calibratedDate;
@@ -19,6 +18,16 @@ public class PlantEquipmentCalibrationResponseDto {
   private String plantEquipmentEquipmentName;
   private Employee employee;
   private String accuracy;
+  private Long noOfDays;
+
+  public Long getNoOfDays() {
+    return noOfDays;
+  }
+
+  public void setNoOfDays(Long noOfDays) {
+    this.noOfDays = noOfDays;
+  }
+
   public Employee getEmployee() {
     return employee;
   }
