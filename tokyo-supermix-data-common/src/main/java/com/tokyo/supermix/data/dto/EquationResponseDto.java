@@ -1,13 +1,9 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-public class EquationDto {
+public class EquationResponseDto {
   private Long id;
-  @NotNull(message = "{equationDto.formula.null}")
-  @NotEmpty(message = "{equationDto.formula.empty}")
   private String formula;
+  private TestConfigureResponseDto testConfigure;
 
   public Long getId() {
     return id;
@@ -23,5 +19,13 @@ public class EquationDto {
 
   public void setFormula(String formula) {
     this.formula = formula;
+  }
+
+  public TestConfigureResponseDto getTestConfigure() {
+    return testConfigure;
+  }
+
+  public void setTestConfigure(TestConfigureResponseDto testConfigure) {
+    this.testConfigure = testConfigure;
   }
 }

@@ -24,9 +24,6 @@ public class TestConfigure implements Serializable {
   @JoinColumn(name = "testTypeId", nullable = false)
   private TestType testType;
   @ManyToOne
-  @JoinColumn(name = "equationId", nullable = true)
-  private Equation equation;
-  @ManyToOne
   @JoinColumn(name = "testId", nullable = false)
   private Test test;
 
@@ -44,14 +41,6 @@ public class TestConfigure implements Serializable {
 
   public void setTestType(TestType testType) {
     this.testType = testType;
-  }
-
-  public Equation getEquation() {
-    return equation;
-  }
-
-  public void setEquation(Equation equation) {
-    this.equation = equation;
   }
 
   public boolean isCoreTest() {
