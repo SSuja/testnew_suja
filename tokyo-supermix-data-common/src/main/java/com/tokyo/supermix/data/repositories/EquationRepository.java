@@ -5,4 +5,6 @@ import com.tokyo.supermix.data.entities.Equation;
 
 public interface EquationRepository extends JpaRepository<Equation, Long> {
   boolean existsByTestConfigureId(Long testConfigureId);
+
+  Equation findByTestConfigureId(Long testConfigureId);
 }

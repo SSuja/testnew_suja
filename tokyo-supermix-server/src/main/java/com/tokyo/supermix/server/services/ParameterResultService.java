@@ -16,7 +16,7 @@ public interface ParameterResultService {
 
   public boolean isParameterResultExist(Long id);
 
-//  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial);
+  public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial);
 
   public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
 

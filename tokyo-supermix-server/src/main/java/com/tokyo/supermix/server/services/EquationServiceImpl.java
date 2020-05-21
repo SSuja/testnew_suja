@@ -50,4 +50,9 @@ public class EquationServiceImpl implements EquationService {
   public boolean configurationIdExist(Long testConfigureId) {
     return equationRepository.existsByTestConfigureId(testConfigureId);
   }
+
+  @Override
+  public Equation findByConfigureId(Long testConfigureId) {
+    return equationRepository.findByTestConfigureId(testConfigureId);
+  }
 }
