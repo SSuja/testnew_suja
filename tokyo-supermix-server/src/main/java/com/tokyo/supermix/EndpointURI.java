@@ -222,16 +222,16 @@ public final class EndpointURI {
 	public static final String USERS = BASE_API_PATH + "users";
 	public static final String USER_BY_ID = USER + ID;
 
-	/*
-	 * Test Parameter APIs
-	 * 
-	 */
-	public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
-	public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
-	public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
-	public static final String GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID = TEST_PARAMETER + "/test-configure"
-			+ "/{testConfigureId}";
-	public static final String SEARCH_TEST_PARAMETER = TEST_PARAMETER + SEARCH;
+  /*
+   * Test Parameter APIs
+   * 
+   */
+  public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
+  public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
+  public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
+  public static final String GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID = TEST_PARAMETER
+      + "/test-configure" + "/{testConfigureId}" + "/incoming-sample" + "/{incomingSampleCode}";
+  public static final String SEARCH_TEST_PARAMETER = TEST_PARAMETER + SEARCH;
 
 	/*
 	 * ProcessSample APIs

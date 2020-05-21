@@ -8,10 +8,6 @@ public class ParameterDto {
   @NotNull(message = "{parameterDto.name.null}")
   @NotEmpty(message = "{parameterDto.name.empty}")
   private String name;
-  @NotNull(message = "{parameterDto.abbreviation.null}")
-  @NotEmpty(message = "{parameterDto.abbreviation.empty}")
-  private String abbreviation;
-
 
   public Long getId() {
     return id;
@@ -28,14 +24,4 @@ public class ParameterDto {
   public void setName(String name) {
     this.name = name;
   }
-
-  public String getAbbreviation() {
-    return abbreviation;
-  }
-
-  public void setAbbreviation(String abbreviation) {
-    this.abbreviation = abbreviation;
-  }
-
-
 }

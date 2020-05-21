@@ -41,6 +41,15 @@ public class PlantEquipmentCalibration implements Serializable {
   @JoinColumn(name = "employeeId", nullable = true)
   private Employee employee;
   private String accuracy;
+  private Long noOfDays;
+
+  public Long getNoOfDays() {
+    return noOfDays;
+  }
+
+  public void setNoOfDays(Long noOfDays) {
+    this.noOfDays = noOfDays;
+  }
 
   public Employee getEmployee() {
     return employee;

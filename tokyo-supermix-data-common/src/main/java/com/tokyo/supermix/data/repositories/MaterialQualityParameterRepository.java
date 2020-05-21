@@ -9,4 +9,7 @@ public interface MaterialQualityParameterRepository
     extends JpaRepository<MaterialQualityParameter, Long> {
   boolean existsByQualityParameterIdAndRawMaterialIdAndValueAndUnitId(Long qualityParameterId,
       Long rawMaterialId, Double value, Long unitId);
+
+  MaterialQualityParameter findByQualityParameterIdAndRawMaterialId(Long qualityParameterId,
+      Long rawMaterialId);
 }

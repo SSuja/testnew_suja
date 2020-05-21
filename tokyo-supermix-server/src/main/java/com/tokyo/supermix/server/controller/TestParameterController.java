@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -42,16 +43,30 @@ public class TestParameterController {
 
   @PostMapping(value = EndpointURI.TEST_PARAMETER)
   public ResponseEntity<Object> createTestParameter(
-      @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
+    @Valid  @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
     for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
-      if ((testParameterService.isDuplicateEntryExist(testParameterRequestDto.getTestConfigureId(),
-          testParameterRequestDto.getParameterId(), testParameterRequestDto.getUnitId()))) {
-        logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
+      if(testParameterRequestDto.getParameterId()!=null && testParameterRequestDto.getQualityParameterId()==null) {
+      if ((testParameterService.isDuplicateTestParameterEntryExist(testParameterRequestDto.getTestConfigureId(),
+          testParameterRequestDto.getParameterId(), testParameterRequestDto.getUnitId(),
+          testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+        logger.debug("row is already exists: createTestParameter(), isDuplicateTestParameterEntryExist: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,
                 validationFailureStatusCodes.getTestParameterAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
+      }
+      if(testParameterRequestDto.getQualityParameterId()!=null && testParameterRequestDto.getParameterId()==null) {
+        if ((testParameterService.isDuplicateQualityTestParameterEntryExist(testParameterRequestDto.getTestConfigureId(),
+            testParameterRequestDto.getQualityParameterId(), testParameterRequestDto.getUnitId(),
+            testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+          logger.debug("row is already exists: createTestParameter(), isDuplicateQualityTestParameterEntryExist: {}");
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_PARAMETER,
+                  validationFailureStatusCodes.getTestParameterAlreadyExist()),
+              HttpStatus.BAD_REQUEST);
+        }
+        }
     }
     testParameterService
         .saveTestParameter(mapper.map(testParameterRequestDtoList, TestParameter.class));
@@ -92,10 +107,10 @@ public class TestParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID)
-  public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long testConfigureId) {
+  public ResponseEntity<Object> getAllParameterByTestId(@PathVariable Long testConfigureId, @PathVariable String incomingSampleCode) {
     if (testParameterService.isTestConfigureIdExist(testConfigureId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
-          mapper.map(testParameterService.getTestParameterByTestConfigureId(testConfigureId),
+          mapper.map(testParameterService.getTestParameterByTestConfigureId(testConfigureId, incomingSampleCode),
               TestParameterResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
@@ -107,14 +122,28 @@ public class TestParameterController {
   public ResponseEntity<Object> updateTestParameter(
       @RequestBody TestParameterRequestDto testParameterRequestDto) {
     if (testParameterService.isTestParameterExist(testParameterRequestDto.getId())) {
-      if ((testParameterService.isDuplicateEntryExist(testParameterRequestDto.getTestConfigureId(),
-          testParameterRequestDto.getParameterId(), testParameterRequestDto.getUnitId()))) {
-        logger.debug("row is already exists: createTestParameter(), isUpdatedRowExists: {}");
+      if(testParameterRequestDto.getParameterId()!=null && testParameterRequestDto.getQualityParameterId()==null) {
+      if ((testParameterService.isDuplicateTestParameterEntryExist(testParameterRequestDto.getTestConfigureId(),
+          testParameterRequestDto.getParameterId(), testParameterRequestDto.getUnitId(),
+          testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+        logger.debug("row is already exists: updateTestParameter(), isUpdatedRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_PARAMETER,
                 validationFailureStatusCodes.getTestParameterAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
+      }
+      if(testParameterRequestDto.getQualityParameterId()!=null && testParameterRequestDto.getParameterId()==null) {
+      if ((testParameterService.isDuplicateQualityTestParameterEntryExist(testParameterRequestDto.getTestConfigureId(),
+          testParameterRequestDto.getQualityParameterId(), testParameterRequestDto.getUnitId(),
+          testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+        logger.debug("row is already exists: createTestParameter(), isDuplicateQualityTestParameterEntryExist: {}");
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_PARAMETER,
+                validationFailureStatusCodes.getTestParameterAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+      }      
       testParameterService
           .updateTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
       return new ResponseEntity<>(

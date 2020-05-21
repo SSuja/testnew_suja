@@ -18,11 +18,7 @@ public interface ParameterService {
 
   public boolean isNameExist(String name);
 
-  public boolean isAbbreviationExist(String abbreviation);
-
   public boolean isUpdatedNameExist(Long id, String name);
-
-  public boolean isUpdatedAbbreviationExist(Long id, String abbreviation);
 
   public Page<Parameter> searchParameter(Predicate predicate, int page, int size);
 

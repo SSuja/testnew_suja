@@ -54,12 +54,6 @@ public class ParameterController {
           validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
 
-    if (parameterService.isAbbreviationExist(parameterDto.getAbbreviation())) {
-      logger.debug("parameter already exists: createparameter(), parameterAbbreviation: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_ABBREVIATION,
-          validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
-
-    }
     parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
     return new ResponseEntity<Object>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_SUCCESS),
@@ -97,12 +91,6 @@ public class ParameterController {
     if (parameterService.isParameterExist(parameterDto.getId())) {
       if (parameterService.isUpdatedNameExist(parameterDto.getId(), parameterDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
-            validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-
-      if (parameterService.isUpdatedAbbreviationExist(parameterDto.getId(),
-          parameterDto.getAbbreviation())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_ABBREVIATION,
             validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
