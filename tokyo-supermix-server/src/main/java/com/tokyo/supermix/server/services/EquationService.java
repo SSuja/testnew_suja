@@ -4,8 +4,6 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.Equation;
 
 public interface EquationService {
-  public boolean isDuplicateEntryExist(String formula, Long configurationId);
-
   public void saveEquation(Equation equation);
 
   public List<Equation> getAllEquations();
@@ -16,7 +14,7 @@ public interface EquationService {
 
   public void deleteEquation(Long id);
 
-  public boolean isUpdatedFormulaExist(Long id, String formula);
+  public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId);
 
   public boolean configurationIdExist(Long testConfigureId);
 }
