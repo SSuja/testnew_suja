@@ -12,12 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class TestParameterServiceImpl implements TestParameterService {
   @Autowired
   private TestParameterRepository testParameterRepository;
+  @Autowired
+  private IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  private MaterialQualityParameterRepository materialQualityParameterRepository;
 
   @Transactional
   public List<TestParameter> saveTestParameter(List<TestParameter> testParameter) {
@@ -45,20 +51,41 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   @Transactional(readOnly = true)
-  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId) {
+  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId,
+      String incomingSampleCode) {
+    Long rawMaterialId =
+        incomingSampleRepository.findById(incomingSampleCode).get().getRawMaterial().getId();
     List<TestParameter> testParameterLists =
         testParameterRepository.findByTestConfigureId(testConfigureId);
     List<TestParameter> testParameters = new ArrayList<TestParameter>();
     for (TestParameter testParameter : testParameterLists) {
-      if ((testParameter.getQualityParameter() != null && testParameter.getValue() == null)
-          && testParameter.getEntryLevel().equals(EntryLevel.TEST)
-          || (testParameter.getParameter() != null && testParameter.getValue() == null
+      if (testParameter.getQualityParameter() == null) {
+        System.out.println("quality parameter" + testParameter.getQualityParameter());
+        System.out.println("rawMaterialId" + rawMaterialId);
+        if (testParameter.getParameter() != null && testParameter.getValue() == null
+            && testParameter.getEntryLevel().equals(EntryLevel.TEST)) {
+          testParameters.add(testParameter);
+        }
+      }
+      if (testParameter.getParameter() == null) {
+        if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
+            testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
+          if ((testParameter.getQualityParameter() != null && testParameter.getValue() == null
+              && materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
+                  testParameter.getQualityParameter().getId(), rawMaterialId).getValue() == null
               && testParameter.getEntryLevel().equals(EntryLevel.TEST))) {
-        testParameters.add(testParameter);
+            testParameters.add(testParameter);
+          }
+        } else if ((materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
+            testParameter.getQualityParameter().getId(), rawMaterialId) == null
+            && testParameter.getQualityParameter() != null && testParameter.getValue() == null)) {
+          testParameters.add(testParameter);
+        }
       }
     }
     return testParameters;
   }
+
 
   @Transactional(readOnly = true)
   public boolean isTestConfigureIdExist(Long id) {
@@ -86,7 +113,6 @@ public class TestParameterServiceImpl implements TestParameterService {
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 
-  @Override
   public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
       Long qualityParameterId, Long unitId, String abbreviation, EntryLevel entryLevel) {
     if (testParameterRepository

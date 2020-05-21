@@ -19,7 +19,7 @@ public interface TestParameterService {
 
   public void deleteTestParameter(Long id);
 
-  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId);
+  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId, String incomingSampleCode);
 
   public boolean isTestConfigureIdExist(Long id);
 
