@@ -40,11 +40,9 @@ public class EquationController {
   // Add Equation
   @PostMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationRequestDto equationDto) {
-    if (equationService.isDuplicateEntryExist(equationDto.getFormula(),
-        equationDto.getTestConfigureId())
-        || equationService.configurationIdExist(equationDto.getTestConfigureId())) {
+    if (equationService.configurationIdExist(equationDto.getTestConfigureId())) {
       logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     equationService.saveEquation(mapper.map(equationDto, Equation.class));
@@ -58,8 +56,8 @@ public class EquationController {
   public ResponseEntity<Object> getAllEquations() {
     logger.debug("get all equations");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATIONS,
-        mapper.map(equationService.getAllEquations(), Equation.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+        mapper.map(equationService.getAllEquations(), Equation.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   // Get Equation By Id
@@ -93,8 +91,9 @@ public class EquationController {
   @PutMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> updateEquation(@Valid @RequestBody EquationRequestDto equationDto) {
     if (equationService.isEquationExist(equationDto.getId())) {
-      if (equationService.isUpdatedFormulaExist(equationDto.getId(), equationDto.getFormula())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+      if (equationService.isUpdatedTestConfigureIdExist(equationDto.getId(),
+          equationDto.getTestConfigureId())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
             validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       equationService.saveEquation(mapper.map(equationDto, Equation.class));
