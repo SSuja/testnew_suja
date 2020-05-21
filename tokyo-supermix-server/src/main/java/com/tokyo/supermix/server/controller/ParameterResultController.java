@@ -47,8 +47,8 @@ public class ParameterResultController {
     for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
       parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
       parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
-      parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
-          .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));
+//      parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
+//          .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));
     }
     return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED), HttpStatus.OK);

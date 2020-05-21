@@ -472,6 +472,5 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
 
-
   private EndpointURI() {}
 }
