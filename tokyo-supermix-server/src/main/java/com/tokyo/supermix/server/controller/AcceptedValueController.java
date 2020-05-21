@@ -27,6 +27,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.AcceptedValueService;
 import com.tokyo.supermix.server.services.TestConfigureService;
+import com.tokyo.supermix.server.services.TestService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -36,7 +37,9 @@ public class AcceptedValueController {
   @Autowired
   private AcceptedValueService acceptedValueService;
   @Autowired
-  private TestConfigureService testService;
+  private TestConfigureService testConfigureService;
+  @Autowired
+  private TestService testService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -118,11 +121,11 @@ public class AcceptedValueController {
 
   @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getAcceptedValueByTestId(@PathVariable Long testConfigureId) {
-    if (testService.isTestConfigureExist(testConfigureId)) {
+    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
           mapper.map(
               acceptedValueService.getAcceptedValueByTestConfigure(
-                  testService.getTestConfigureById(testConfigureId)),
+                  testConfigureService.getTestConfigureById(testConfigureId)),
               AcceptedValueResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
@@ -139,5 +142,18 @@ public class AcceptedValueController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
         acceptedValueService.searchAcceptedValue(predicate, size, page), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_ACCEPTED_VALUE_BY_TEST_NAME)
+  public ResponseEntity<Object> getAcceptedValueByTestName(@PathVariable String testName) {
+    if (testService.isTestExist(testName)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
+          mapper.map(acceptedValueService.findByTestName(testName), AcceptedValueResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Accepted Value record exist for given Test");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
+          validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

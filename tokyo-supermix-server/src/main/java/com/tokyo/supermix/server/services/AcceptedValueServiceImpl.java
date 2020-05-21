@@ -68,4 +68,9 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 
+  @Transactional(readOnly = true)
+  public List<AcceptedValue> findByTestName(String testName) {
+    return acceptedValueRepository.findByTestConfigureTestName(testName);
+  }
+
 }

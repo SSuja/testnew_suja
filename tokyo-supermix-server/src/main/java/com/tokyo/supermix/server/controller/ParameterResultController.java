@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.ParameterResultService;
 import com.tokyo.supermix.util.Constants;
@@ -37,6 +38,8 @@ public class ParameterResultController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private MaterialTestTrialService materialTestTrialService;
+  @Autowired
+  private IncomingSampleService incomingSampleService;
   @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(ParameterResultController.class);
@@ -113,6 +116,21 @@ public class ParameterResultController {
       logger.debug("No Parameter Result record exist for given Material Test Trial code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
           validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETER_RESULT_BY_INCOMING_SAMPLE_CODE)
+  public ResponseEntity<Object> getParameterResultByIncomingSampleCodeAndTest(
+      @PathVariable String incomingSampleCode, @PathVariable String testName) {
+    if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE_CODE,
+          mapper.map(parameterResultService.findByIncomingSampleCodeAndTestName(incomingSampleCode,
+              testName), ParameterResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Result record exist for given Incoming Sample");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+          validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
 }

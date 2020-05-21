@@ -13,4 +13,6 @@ public interface AcceptedValueRepository
   public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId);
 
   AcceptedValue findByTestConfigureId(Long testConfigureId);
+
+  public List<AcceptedValue> findByTestConfigureTestName(String testName);
 }

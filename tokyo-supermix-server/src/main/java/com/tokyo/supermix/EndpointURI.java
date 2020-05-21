@@ -283,6 +283,9 @@ public final class EndpointURI {
   public static final String DELETE_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
+  public static final String PARAMETER_RESULT_BY_INCOMING_SAMPLE_CODE =
+      PARAMETER_RESULT + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}" + SLASH
+          + "test-name" + SLASH + "{testName}";
 
   /*
    * AdmixtureAcceptedValue Apis
@@ -303,6 +306,8 @@ public final class EndpointURI {
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
+  public static final String SEARCH_ACCEPTED_VALUE_BY_TEST_NAME =
+      ACCEPTED_VALUE + SLASH + "test-name" + SLASH + "{testName}";
   /*
    * Material Tests
    */

@@ -21,4 +21,7 @@ public interface ParameterResultService {
   public List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
 
   public void isTestParameterValueInConfigureLevel(ParameterResultRequestDto parameterResult);
+
+  public List<ParameterResult> findByIncomingSampleCodeAndTestName(String incomingSampleCode,
+      String testName);
 }

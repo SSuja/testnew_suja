@@ -26,4 +26,6 @@ public interface AcceptedValueService {
 
   public Page<AcceptedValue> searchAcceptedValue(Predicate predicate, int size, int page);
 
+  public List<AcceptedValue> findByTestName(String testName);
+
 }
