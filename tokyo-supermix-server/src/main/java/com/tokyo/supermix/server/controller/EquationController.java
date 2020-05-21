@@ -40,8 +40,10 @@ public class EquationController {
   // Add Equation
   @PostMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationRequestDto equationDto) {
-    if (equationService.isFormulaExist(equationDto.getFormula())) {
-      logger.debug("formula is already exists: createEquation(), isNameExist: {}");
+    if (equationService.isDuplicateEntryExist(equationDto.getFormula(),
+        equationDto.getTestConfigureId())
+        || equationService.configurationIdExist(equationDto.getTestConfigureId())) {
+      logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
           validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -56,8 +58,8 @@ public class EquationController {
   public ResponseEntity<Object> getAllEquations() {
     logger.debug("get all equations");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATIONS,
-        mapper.map(equationService.getAllEquations(), EquationResponseDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+        mapper.map(equationService.getAllEquations(), Equation.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   // Get Equation By Id

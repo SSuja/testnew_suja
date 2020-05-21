@@ -40,4 +40,12 @@ public class Equation implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
+  public TestConfigure getTestConfigure() {
+    return testConfigure;
+  }
+
+  public void setTestConfigure(TestConfigure testConfigure) {
+    this.testConfigure = testConfigure;
+  }
 }

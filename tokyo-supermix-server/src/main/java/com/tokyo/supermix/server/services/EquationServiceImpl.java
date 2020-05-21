@@ -14,8 +14,8 @@ public class EquationServiceImpl implements EquationService {
   private EquationRepository equationRepository;
 
   @Transactional(readOnly = true)
-  public boolean isFormulaExist(String formula) {
-    return equationRepository.existsByFormula(formula);
+  public boolean isDuplicateEntryExist(String formula, Long testConfigurationId) {
+    return equationRepository.existsByFormulaAndTestConfigureId(formula,testConfigurationId );
   }
 
   @Transactional
@@ -44,10 +44,15 @@ public class EquationServiceImpl implements EquationService {
   }
 
   public boolean isUpdatedFormulaExist(Long id, String formula) {
-    if ((!getEquationById(id).getFormula().equalsIgnoreCase(formula))
-        && (isFormulaExist(formula))) {
-      return true;
-    }
+//    if ((!getEquationById(id).getFormula().equalsIgnoreCase(formula))
+//        && (isFormulaExist(formula))) {
+//      return true;
+//    }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean configurationIdExist(Long testConfigureId) {
+    return equationRepository.existsByTestConfigureId(testConfigureId);
   }
 }

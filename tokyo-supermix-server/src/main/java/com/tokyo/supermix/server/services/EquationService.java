@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.Equation;
 
 public interface EquationService {
-  public boolean isFormulaExist(String formula);
+  public boolean isDuplicateEntryExist(String formula, Long configurationId);
 
   public void saveEquation(Equation equation);
 
@@ -17,4 +17,6 @@ public interface EquationService {
   public void deleteEquation(Long id);
 
   public boolean isUpdatedFormulaExist(Long id, String formula);
+
+  public boolean configurationIdExist(Long testConfigureId);
 }
