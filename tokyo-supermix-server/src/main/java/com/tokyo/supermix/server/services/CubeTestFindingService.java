@@ -22,7 +22,5 @@ public interface CubeTestFindingService {
 
   public boolean existsByFinishProductSampleId(Long finishProductSampleId);
 
-  public void updateCubeTestFinding(CubeTestFinding cubeTestFinding);
-
   public Page<CubeTestFinding> searchCubeTestFinding(Predicate predicate, int size, int page);
 }

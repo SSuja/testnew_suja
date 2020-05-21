@@ -8,4 +8,6 @@ import com.tokyo.supermix.data.entities.ConcreteTestResult;
 public interface ConcreteTestResultRepository
 		extends JpaRepository<ConcreteTestResult, Long>, QuerydslPredicateExecutor<ConcreteTestResult> {
 	ConcreteTestResult findByFinishProductSampleId(Long finishProductSampleId);
+
+	ConcreteTestResult findByConcreteTestId(Long concreteTestId);
 }

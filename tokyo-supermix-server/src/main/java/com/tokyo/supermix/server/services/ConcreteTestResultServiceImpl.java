@@ -12,15 +12,23 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.entities.ConcreteTest;
 import com.tokyo.supermix.data.entities.ConcreteTestResult;
+import com.tokyo.supermix.data.entities.ConcreteTestStatus;
+import com.tokyo.supermix.data.entities.CubeTestFinding;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.entities.QConcreteTestResult;
+import com.tokyo.supermix.data.enums.ConcreteStatus;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.repositories.ConcreteTestRepository;
 import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
+import com.tokyo.supermix.data.repositories.ConcreteTestStatusRepository;
+import com.tokyo.supermix.data.repositories.CubeTestFindingRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.MailConstants;
 
 @Service
 public class ConcreteTestResultServiceImpl implements ConcreteTestResultService {
@@ -31,10 +39,20 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 	private MixDesignProportionRepository mixDesignProportionRepository;
 	@Autowired
 	private FinishProductSampleRepository finishProductSampleRepository;
+	@Autowired
+	private CubeTestFindingRepository cubeTestFindingRepository;
+	@Autowired
+	private ConcreteTestStatusRepository concreteTestStatusRepository;
+	@Autowired
+	private ConcreteTestRepository concreteTestRepository;
+	@Autowired
+	private EmailService emailService;
+	@Autowired
+	private MailConstants mailConstants;
 
 	@Transactional
-	public ConcreteTestResult saveConcreteTestResult(ConcreteTestResult concreteTestResult) {
-		return concreteTestResultRepository.save(calculateRatio(concreteTestResult));
+	public void saveConcreteTestResult(ConcreteTestResult concreteTestResult) {
+		concreteTestResultRepository.save(concreteTestResult);
 	}
 
 	@Transactional(readOnly = true)
@@ -57,7 +75,47 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 		return concreteTestResultRepository.existsById(id);
 	}
 
-	public ConcreteTestResult calculateRatio(ConcreteTestResult concreteTestResult) {
+	public void setConcreteTestSlumpStatus(Long concreteTestTypeId, Status status) {
+		ConcreteTestStatus concreteTestStatus = concreteTestStatusRepository
+				.findByConcreteTestTypeId(concreteTestTypeId);
+		if (status.equals(null)) {
+			concreteTestStatus.setConcreteStatus(ConcreteStatus.PROGRESS);
+		} else {
+			concreteTestStatus.setConcreteStatus(ConcreteStatus.COMPLETED);
+		}
+	}
+
+	public void setConcreteTestStrengthStatus(Long concreteTestTypeId, Status status, Long concreteAge) {
+		ConcreteTestStatus concreteTestStatus = concreteTestStatusRepository
+				.findByConcreteTestTypeId(concreteTestTypeId);
+		if ((concreteAge == 28 || concreteAge == 7) && (status.equals(Status.PASS) || status.equals(Status.FAIL))) {
+			concreteTestStatus.setConcreteStatus(ConcreteStatus.COMPLETED);
+		} else {
+			concreteTestStatus.setConcreteStatus(ConcreteStatus.PROGRESS);
+		}
+	}
+
+	@Transactional
+	public void saveConcreteSlumpTestWaterCementRatioResult(ConcreteTestResult concreteTestResult) {
+		FinishProductSample finishProductSample = finishProductSampleRepository
+				.findById(concreteTestResult.getFinishProductSample().getId()).get();
+		List<MixDesignProportion> mixDesignProportionList = mixDesignProportionRepository
+				.findByMixDesignCode(finishProductSample.getMixDesign().getCode());
+		Long quantity = null;
+		for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
+			if (mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase(Constants.RAW_MATERIAL_CEMENT)) {
+				quantity = mixDesignProportion.getQuantity();
+				concreteTestResult.setResult(
+						calculateWaterCementRatio(concreteTestResult.getWaterContent(), quantity.doubleValue()));
+			}
+		}
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.WATER_CEMENT_RATIO);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		concreteTestResultRepository.save(concreteTestResult);
+	}
+
+	@Transactional
+	public void saveConcreteTestWaterBinderRatioResult(ConcreteTestResult concreteTestResult) {
 		FinishProductSample finishProductSample = finishProductSampleRepository
 				.findById(concreteTestResult.getFinishProductSample().getId()).get();
 		List<MixDesignProportion> mixDesignProportionList = mixDesignProportionRepository
@@ -65,32 +123,66 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 		Long quantity = null;
 		Long binderquantity = 0L;
 		for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
+
 			if (mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase(Constants.RAW_MATERIAL_CEMENT)) {
 				quantity = mixDesignProportion.getQuantity();
-				concreteTestResult.setWaterCementRatio(
-						calculateWaterCementRatio(concreteTestResult.getWaterContent(), quantity.doubleValue()));
 			}
 			if (mixDesignProportion.getRawMaterial().getName().equalsIgnoreCase(Constants.RAW_MATERIAL_FLYASH)) {
 				binderquantity = mixDesignProportion.getQuantity();
 			}
 		}
-		concreteTestResult.setWaterBinderRatio(calculateWaterBinderRatio(concreteTestResult.getWaterContent(),
+		concreteTestResult.setResult(calculateWaterBinderRatio(concreteTestResult.getWaterContent(),
 				binderquantity.doubleValue(), quantity.doubleValue()));
-		concreteTestResult.setSlumpGradeRatio(calculateSlumpGradeRatio(
-				concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getSlump()));
-		concreteTestResult.setStatus(calculateConcreteStatus(concreteTestResult.getFinishProductSample().getId(),
-				concreteTestResult.getSlump()));
-		return concreteTestResult;
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.WATER_BINDER_RATIO);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		concreteTestResultRepository.save(concreteTestResult);
 	}
 
-	private Status calculateConcreteStatus(Long finishProductSampleId, Double slump) {
-		Double targetSlump = finishProductSampleRepository.findById(finishProductSampleId).get().getMixDesign()
-				.getTargetSlump();
-		if (targetSlump - 25 <= slump && slump <= targetSlump + 25) {
-			return Status.PASS;
-		} else {
-			return Status.FAIL;
-		}
+	@Transactional
+	public void saveConcreteSlumpTestSlumpResult(ConcreteTestResult concreteTestResult) {
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.SLUMP_TEST);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		concreteTestResultRepository.save(concreteTestResult);
+	}
+
+	@Transactional
+	public void saveConcreteMoistureResult(ConcreteTestResult concreteTestResult) {
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.MOISTURE);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		concreteTestResultRepository.save(concreteTestResult);
+	}
+
+	@Transactional
+	public void saveConcreteSlumpTestSlumpGradeRatioResult(ConcreteTestResult concreteTestResult) {
+		concreteTestResult.setResult(calculateSlumpGradeRatio(concreteTestResult.getFinishProductSample().getId(),
+				concreteTestResult.getResult()));
+		concreteTestResult.setStatus(calculateConcreteStatus(concreteTestResult.getFinishProductSample().getId(),
+				concreteTestResult.getResult()));
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.SLUMP_GRADE_RATIO);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		setConcreteTestSlumpStatus(concreteTest.getConcreteTestType().getId(), concreteTestResult.getStatus());
+		concreteTestResultRepository.save(concreteTestResult);
+	}
+
+	@Transactional
+	public void saveConcreteStrengthTestAverageStrengthResult(ConcreteTestResult concreteTestResult) {
+		concreteTestResult.setResult(roundDoubleValue(calculateAverageCubStrength(
+				concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_TEST);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		concreteTestResultRepository.save(concreteTestResult);
+	}
+
+	@Transactional
+	public void saveConcreteStrengthTestStrengthGradeRatioResult(ConcreteTestResult concreteTestResult) {
+		concreteTestResult.setResult(roundDoubleValue(calculateCubStrengthRatio(
+				concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
+		calculateConcreteStrengthStatus(concreteTestResult);
+		ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_GRADE_RATIO);
+		concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+		setConcreteTestStrengthStatus(concreteTest.getConcreteTestType().getId(), concreteTestResult.getStatus(),
+				concreteTestResult.getAge());
+		concreteTestResultRepository.save(concreteTestResult);
 	}
 
 	private Double calculateWaterCementRatio(Double waterContent, Double cementQuantity) {
@@ -112,12 +204,73 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 		return Double.valueOf(decimalFormat.format(value));
 	}
 
+	private void calculateConcreteStrengthStatus(ConcreteTestResult concreteTestResult) {
+		FinishProductSample finishProductSample = finishProductSampleRepository
+				.findById(concreteTestResult.getFinishProductSample().getId()).get();
+		Double ratio = concreteTestResult.getResult();
+		Long concreteAge = concreteTestResult.getAge();
+		if ((ratio >= 0.16 && concreteAge == 1) || (ratio >= 0.40 && concreteAge == 3)
+				|| (ratio >= 0.50 && concreteAge == 5) || (ratio >= 0.65 && concreteAge == 7)
+				|| (ratio >= 0.90 && concreteAge == 14) || (ratio >= 0.94 && concreteAge == 21)
+				|| (ratio >= 0.99 && concreteAge == 28) || (ratio >= 1 && concreteAge == 56)
+				|| (ratio >= 1 && concreteAge == 128)) {
+			concreteTestResult.setStatus(Status.PASS);
+			String messsage = "Congrete Strength Test is " + concreteTestResult.getStatus()
+					+ " for the mixdesign code is " + finishProductSample.getMixDesign().getCode() + "<ul><li> Age : "
+					+ concreteTestResult.getAge() + " days </li>" + "<li> Strength : " + concreteTestResult.getResult()
+					+ "</li></ul>";
+			emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
+					Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
+		} else if (ratio > 0) {
+			concreteTestResult.setStatus(Status.FAIL);
+			String messsage = "Congrete Strength Test is " + concreteTestResult.getStatus()
+					+ " for the mixdesign code is " + finishProductSample.getMixDesign().getCode() + "<ul><li> Age : "
+					+ concreteTestResult.getAge() + "days </li>" + "<li> Strength : " + concreteTestResult.getResult()
+					+ "</li></ul>";
+			emailService.sendMailWithFormat(mailConstants.getMailCongreteStrengthTestStatus(),
+					Constants.SUBJECT_NEW_CONGRETE_STRENGTH_TEST, messsage);
+		}
+	}
+
+	public Double calculateAverageCubStrength(Long finishProductSampleId, Long concretAge) {
+		List<CubeTestFinding> CubeTestFindingList = cubeTestFindingRepository
+				.findByFinishProductSampleId(finishProductSampleId);
+		double sum = 0;
+		double count = 0;
+		for (CubeTestFinding cubeTestFinding : CubeTestFindingList) {
+
+			if (cubeTestFinding.getAge() == concretAge) {
+				sum = sum + cubeTestFinding.getValue();
+				count++;
+			}
+		}
+		return (sum / count);
+	}
+
+	public Double getTargetGradre(Long finishProductSampleId) {
+		FinishProductSample finishProductSample = finishProductSampleRepository.findById(finishProductSampleId).get();
+		return finishProductSample.getMixDesign().getTargetGrade();
+
+	}
+
+	private Status calculateConcreteStatus(Long finishProductSampleId, Double slump) {
+		Double targetSlump = finishProductSampleRepository.findById(finishProductSampleId).get().getMixDesign()
+				.getTargetSlump();
+		if (targetSlump - 25 <= slump && slump <= targetSlump + 25) {
+			return Status.PASS;
+		} else {
+			return Status.FAIL;
+		}
+	}
+
+	public Double calculateCubStrengthRatio(Long finishProductSampleId, Long age) {
+		return calculateAverageCubStrength(finishProductSampleId, age) / getTargetGradre(finishProductSampleId);
+	}
+
 	@Transactional(readOnly = true)
 	public Page<ConcreteTestResult> searchConcreteTestResult(Long finishProductSampleId, Long ConcreteTestId,
-			Status status, Double result, Double resultMin, Double resultMax, Double strenghGradeRatio,
-			Double strenghGradeRatioMin, Double strenghGradeRatioMax, Double slump, Double slumpMin, Double slumpMax,
-			Double slumpGradeRatio, Double slumpGradeRatioMin, Double slumpGradeRatioMax, BooleanBuilder booleanBuilder,
-			int page, int size) {
+			Status status, Double result, Double resultMin, Double resultMax, BooleanBuilder booleanBuilder, int page,
+			int size) {
 		if (finishProductSampleId != null) {
 			booleanBuilder.and(QConcreteTestResult.concreteTestResult.id.eq(finishProductSampleId));
 		}
@@ -140,59 +293,12 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 		if (result != null && result != 0 && resultMax == null && resultMin == null) {
 			booleanBuilder.and(QConcreteTestResult.concreteTestResult.result.eq(result));
 		}
-		if (strenghGradeRatioMax != null && strenghGradeRatioMax != 0 && strenghGradeRatioMin == null
-				&& strenghGradeRatio == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.strengthGradeRatio.lt(strenghGradeRatioMax));
-		}
-		if (strenghGradeRatioMin != null && strenghGradeRatioMin != 0 && strenghGradeRatioMax == null
-				&& strenghGradeRatio == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.strengthGradeRatio.gt(strenghGradeRatioMin));
-		}
-
-		if (strenghGradeRatioMin != null && strenghGradeRatioMin != 0 && strenghGradeRatioMax != null
-				&& strenghGradeRatioMax != null && strenghGradeRatio == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.strengthGradeRatio.between(strenghGradeRatioMin,
-					strenghGradeRatioMax));
-		}
-		if (strenghGradeRatio != null && strenghGradeRatio != 0 && strenghGradeRatioMax == null
-				&& strenghGradeRatioMin == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.strengthGradeRatio.eq(strenghGradeRatio));
-		}
-
-		if (slumpMax != null && slumpMax != 0 && slumpMin == null && slump == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slump.lt(slumpMax));
-		}
-		if (slumpMin != null && slumpMin != 0 && slumpMax == null && slump == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slump.gt(slumpMin));
-		}
-
-		if (slumpMin != null && slumpMin != 0 && slumpMax != null && slumpMax != null && slump == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slump.between(slumpMin, slumpMax));
-		}
-		if (slump != null && slump != 0 && slumpMax == null && slumpMin == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slump.eq(slump));
-		}
-
-		if (slumpGradeRatioMax != null && slumpGradeRatioMax != 0 && slumpGradeRatioMin == null
-				&& slumpGradeRatio == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slumpGradeRatio.lt(slumpGradeRatioMax));
-		}
-		if (slumpGradeRatioMin != null && slumpGradeRatioMin != 0 && slumpGradeRatioMax == null
-				&& slumpGradeRatio == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slumpGradeRatio.gt(slumpGradeRatioMin));
-		}
-
-		if (slumpGradeRatioMin != null && slumpGradeRatioMin != 0 && slumpGradeRatioMax != null
-				&& slumpGradeRatioMax != null && slumpGradeRatio == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slumpGradeRatio.between(slumpGradeRatioMin,
-					slumpGradeRatioMax));
-		}
-		if (slumpGradeRatio != null && slumpGradeRatio != 0 && slumpGradeRatioMax == null
-				&& slumpGradeRatioMin == null) {
-			booleanBuilder.and(QConcreteTestResult.concreteTestResult.slumpGradeRatio.eq(slumpGradeRatio));
-		}
-
 		return concreteTestResultRepository.findAll(booleanBuilder,
 				PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+	}
+
+	@Transactional(readOnly = true)
+	public ConcreteTestResult findByConcreteTestId(Long concreteTestId) {
+		return concreteTestResultRepository.findByConcreteTestId(concreteTestId);
 	}
 }

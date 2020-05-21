@@ -9,7 +9,7 @@ import com.tokyo.supermix.data.entities.ConcreteTestResult;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface ConcreteTestResultService {
-	public ConcreteTestResult saveConcreteTestResult(ConcreteTestResult concreteTestResult);
+	public void saveConcreteTestResult(ConcreteTestResult concreteTestResult);
 
 	public List<ConcreteTestResult> getAllConcreteTestResults();
 
@@ -19,9 +19,24 @@ public interface ConcreteTestResultService {
 
 	public boolean isConcreteTestResultExists(Long id);
 
+	public void saveConcreteSlumpTestSlumpResult(ConcreteTestResult concreteTestResult);
+
+	public void saveConcreteSlumpTestWaterCementRatioResult(ConcreteTestResult concreteTestResult);
+
+	public void saveConcreteTestWaterBinderRatioResult(ConcreteTestResult concreteTestResult);
+
+	public void saveConcreteSlumpTestSlumpGradeRatioResult(ConcreteTestResult concreteTestResult);
+
+	public void saveConcreteMoistureResult(ConcreteTestResult concreteTestResult);
+
+	public void saveConcreteStrengthTestAverageStrengthResult(ConcreteTestResult concreteTestResult);
+
+	public void saveConcreteStrengthTestStrengthGradeRatioResult(ConcreteTestResult concreteTestResult);
+
+	public ConcreteTestResult findByConcreteTestId(Long concreteTestId);
+
 	public Page<ConcreteTestResult> searchConcreteTestResult(Long finishProductSampleId, Long ConcreteTestId,
-			Status status, Double result, Double resultMin, Double resultMax, Double strenghGradeRatio,
-			Double strenghGradeRatioMin, Double strenghGradeRatioMax, Double slump, Double slumpMin, Double slumpMax,
-			Double slumpGradeRatio, Double slumpGradeRatioMin, Double slumpGradeRatioMax, BooleanBuilder booleanBuilder,
-			int page, int size);
+			Status status, Double result, Double resultMin, Double resultMax, BooleanBuilder booleanBuilder, int page,
+			int size);
+
 }

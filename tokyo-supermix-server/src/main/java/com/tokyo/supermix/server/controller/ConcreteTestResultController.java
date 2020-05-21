@@ -20,6 +20,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestResponseDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResultRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResultResponseDto;
+import com.tokyo.supermix.data.entities.ConcreteTest;
 import com.tokyo.supermix.data.entities.ConcreteTestResult;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -28,6 +29,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.ConcreteTestResultService;
+import com.tokyo.supermix.server.services.ConcreteTestService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -39,13 +41,36 @@ public class ConcreteTestResultController {
 	private ConcreteTestResultService concreteTestResultService;
 	@Autowired
 	private ValidationFailureStatusCodes validationFailureStatusCodes;
+	@Autowired
+	private ConcreteTestService concreteTestService;
 	private static final Logger logger = Logger.getLogger(ConcreteTestResultController.class);
 
 	@PostMapping(value = EndpointURI.CONCRETE_TEST_RESULT)
 	public ResponseEntity<Object> createConcreteTestResult(
 			@Valid @RequestBody ConcreteTestResultRequestDto concreteTestResultRequestDto) {
-		concreteTestResultService
-				.saveConcreteTestResult(mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+		ConcreteTest concreteTest = concreteTestService
+				.getConcreteTestById(concreteTestResultRequestDto.getConcreteTestId());
+		if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.SLUMP)) {
+			concreteTestResultService.saveConcreteSlumpTestSlumpResult(
+					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			concreteTestResultService.saveConcreteSlumpTestWaterCementRatioResult(
+					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			concreteTestResultService.saveConcreteTestWaterBinderRatioResult(
+					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			concreteTestResultService.saveConcreteSlumpTestSlumpGradeRatioResult(
+					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+		} else if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.STRENGTH)) {
+			concreteTestResultService.saveConcreteStrengthTestAverageStrengthResult(
+					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			concreteTestResultService.saveConcreteStrengthTestStrengthGradeRatioResult(
+					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+		} else if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.MOISTURE)) {
+			concreteTestResultService
+					.saveConcreteTestResult(mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+		} else {
+			concreteTestResultService
+					.saveConcreteTestResult(mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+		}
 		return new ResponseEntity<>(
 				new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CONCRETE_TEST_RESULT_SUCCESS),
 				HttpStatus.OK);
@@ -86,8 +111,29 @@ public class ConcreteTestResultController {
 	public ResponseEntity<Object> updateConcreteTestResult(
 			@Valid @RequestBody ConcreteTestResultRequestDto concreteTestResultRequestDto) {
 		if (concreteTestResultService.isConcreteTestResultExists(concreteTestResultRequestDto.getId())) {
-			concreteTestResultService
-					.saveConcreteTestResult(mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			ConcreteTest concreteTest = concreteTestService
+					.getConcreteTestById(concreteTestResultRequestDto.getConcreteTestId());
+			if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.SLUMP)) {
+				concreteTestResultService.saveConcreteSlumpTestSlumpResult(
+						mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+				concreteTestResultService.saveConcreteSlumpTestWaterCementRatioResult(
+						mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+				concreteTestResultService.saveConcreteTestWaterBinderRatioResult(
+						mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+				concreteTestResultService.saveConcreteSlumpTestSlumpGradeRatioResult(
+						mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			} else if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.STRENGTH)) {
+				concreteTestResultService.saveConcreteStrengthTestAverageStrengthResult(
+						mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+				concreteTestResultService.saveConcreteStrengthTestStrengthGradeRatioResult(
+						mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			} else if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.MOISTURE)) {
+				concreteTestResultService
+						.saveConcreteTestResult(mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			} else {
+				concreteTestResultService
+						.saveConcreteTestResult(mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
+			}
 			return new ResponseEntity<>(
 					new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CONCRETE_TEST_RESULT_SUCCESS),
 					HttpStatus.OK);
@@ -104,24 +150,24 @@ public class ConcreteTestResultController {
 			@RequestParam(name = "status", required = false) Status status,
 			@RequestParam(name = "result", required = false) Double result,
 			@RequestParam(name = "resultMin", required = false) Double resultMin,
-			@RequestParam(name = "resultMax", required = false) Double resultMax,
-			@RequestParam(name = "strenghGradeRatio", required = false) Double strenghGradeRatio,
-			@RequestParam(name = "strenghGradeRatioMin", required = false) Double strenghGradeRatioMin,
-			@RequestParam(name = "strenghGradeRatioMax", required = false) Double strenghGradeRatioMax,
-			@RequestParam(name = "slump", required = false) Double slump,
-			@RequestParam(name = "slumpMin", required = false) Double slumpMin,
-			@RequestParam(name = "slumpMax", required = false) Double slumpMax,
-			@RequestParam(name = "slumpGradeRatio", required = false) Double slumpGradeRatio,
-			@RequestParam(name = "slumpGradeRatioMin", required = false) Double slumpGradeRatioMin,
-			@RequestParam(name = "slumpGradeRatioMax", required = false) Double slumpGradeRatioMax) {
+			@RequestParam(name = "resultMax", required = false) Double resultMax) {
 		BooleanBuilder booleanBuilder = new BooleanBuilder();
-		return new ResponseEntity<>(
-				new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS,
-						concreteTestResultService.searchConcreteTestResult(finishProductSampleId, ConcreteTestId,
-								status, result, resultMin, resultMax, strenghGradeRatioMax, strenghGradeRatioMin,
-								strenghGradeRatioMax, slump, slumpMin, slumpMax, slumpGradeRatio, slumpGradeRatioMin,
-								slumpGradeRatioMax, booleanBuilder, page, size),
-						RestApiResponseStatus.OK),
-				null, HttpStatus.OK);
+		return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS,
+				concreteTestResultService.searchConcreteTestResult(finishProductSampleId, ConcreteTestId, status,
+						result, resultMin, resultMax, booleanBuilder, page, size),
+				RestApiResponseStatus.OK), null, HttpStatus.OK);
+	}
+
+	@GetMapping(value = EndpointURI.CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_ID)
+	public ResponseEntity<Object> getConcreteTestResultByConcreteTestId(@PathVariable Long concreteTestId) {
+		if (concreteTestService.isConcreteTestExists(concreteTestId)) {
+			return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULT,
+					mapper.map(concreteTestResultService.findByConcreteTestId(concreteTestId),
+							ConcreteTestResultResponseDto.class),
+					RestApiResponseStatus.OK), HttpStatus.OK);
+		}
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_RESULT,
+				validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
 	}
 }

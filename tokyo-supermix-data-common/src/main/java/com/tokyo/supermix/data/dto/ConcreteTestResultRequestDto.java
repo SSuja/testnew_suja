@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class ConcreteTestResultRequestDto {
 	private Long id;
-	private Double slump;
+	private Double result;
 	private String temperature;
 	private Double waterContent;
 	private Date date;
@@ -20,12 +20,12 @@ public class ConcreteTestResultRequestDto {
 		this.id = id;
 	}
 
-	public Double getSlump() {
-		return slump;
+	public Double getResult() {
+		return result;
 	}
 
-	public void setSlump(Double slump) {
-		this.slump = slump;
+	public void setResult(Double result) {
+		this.result = result;
 	}
 
 	public String getTemperature() {

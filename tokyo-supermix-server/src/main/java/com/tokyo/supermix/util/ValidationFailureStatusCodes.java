@@ -1851,4 +1851,29 @@ public class ValidationFailureStatusCodes {
 	public void setConcreteTestResultNotExist(String concreteTestResultNotExist) {
 		this.concreteTestResultNotExist = concreteTestResultNotExist;
 	}
+
+	/*
+	 * 
+	 */
+	@Value("${validation.concreteTestStatus.notExists}")
+	private String concreteTestStatusNotExist;
+
+	@Value("${validation.concreteTestStatus.alreadyExist}")
+	private String concreteTestStatusAlreadyExist;
+
+	public String getConcreteTestStatusNotExist() {
+		return concreteTestStatusNotExist;
+	}
+
+	public void setConcreteTestStatusNotExist(String concreteTestStatusNotExist) {
+		this.concreteTestStatusNotExist = concreteTestStatusNotExist;
+	}
+
+	public String getConcreteTestStatusAlreadyExist() {
+		return concreteTestStatusAlreadyExist;
+	}
+
+	public void setConcreteTestStatusAlreadyExist(String concreteTestStatusAlreadyExist) {
+		this.concreteTestStatusAlreadyExist = concreteTestStatusAlreadyExist;
+	}
 }

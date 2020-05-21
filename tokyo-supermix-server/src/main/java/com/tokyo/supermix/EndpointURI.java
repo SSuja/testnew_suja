@@ -470,6 +470,16 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_RESULTS = BASE_API_PATH + "concrete-test-results";
 	public static final String CONCRETE_TEST_RESULT_BY_ID = CONCRETE_TEST_RESULT + ID;
 	public static final String SEARCH_CONCRETE_TEST_RESULT = CONCRETE_TEST_RESULT + SEARCH;
+	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_ID = CONCRETE_TEST_RESULT + SLASH + "concrete-test"
+			+ SLASH + "{concreteTestId}";
+	/*
+	 * concreteTestStatus
+	 * 
+	 */
+	public static final String CONCRETE_TEST_STATUS = BASE_API_PATH + "concrete-test-status";
+	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "test-parameter-statuses";
+	public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
+	public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
 
 	private EndpointURI() {
 	}
