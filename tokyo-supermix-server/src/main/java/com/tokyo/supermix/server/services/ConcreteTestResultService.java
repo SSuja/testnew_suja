@@ -15,6 +15,8 @@ public interface ConcreteTestResultService {
 
 	public ConcreteTestResult getConcreteTestResultById(Long id);
 
+	public List<ConcreteTestResult> findByConcreteTestTypeId(Long concreteTestTypeId);
+
 	public void deleteConcreteTestResult(Long id);
 
 	public boolean isConcreteTestResultExists(Long id);
@@ -38,5 +40,4 @@ public interface ConcreteTestResultService {
 	public Page<ConcreteTestResult> searchConcreteTestResult(Long finishProductSampleId, Long ConcreteTestId,
 			Status status, Double result, Double resultMin, Double resultMax, BooleanBuilder booleanBuilder, int page,
 			int size);
-
 }

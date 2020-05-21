@@ -30,6 +30,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.ConcreteTestResultService;
 import com.tokyo.supermix.server.services.ConcreteTestService;
+import com.tokyo.supermix.server.services.ConcreteTestTypeService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -43,6 +44,9 @@ public class ConcreteTestResultController {
 	private ValidationFailureStatusCodes validationFailureStatusCodes;
 	@Autowired
 	private ConcreteTestService concreteTestService;
+	@Autowired
+	private ConcreteTestTypeService concreteTestTypeService;
+
 	private static final Logger logger = Logger.getLogger(ConcreteTestResultController.class);
 
 	@PostMapping(value = EndpointURI.CONCRETE_TEST_RESULT)
@@ -169,5 +173,18 @@ public class ConcreteTestResultController {
 		logger.debug("Invalid Id");
 		return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_RESULT,
 				validationFailureStatusCodes.getConcreteTestNotExist()), HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping(value = EndpointURI.CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID)
+	public ResponseEntity<Object> getConcreteTestResultByConcreteTestTypeId(@PathVariable Long concreteTestTypeId) {
+		if (concreteTestTypeService.isConcreteTestTypeExists(concreteTestTypeId)) {
+			return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS,
+					mapper.map(concreteTestResultService.findByConcreteTestTypeId(concreteTestTypeId),
+							ConcreteTestResultResponseDto.class),
+					RestApiResponseStatus.OK), HttpStatus.OK);
+		}
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_TYPE,
+				validationFailureStatusCodes.getConcreteTestTypeNotExist()), HttpStatus.BAD_REQUEST);
 	}
 }

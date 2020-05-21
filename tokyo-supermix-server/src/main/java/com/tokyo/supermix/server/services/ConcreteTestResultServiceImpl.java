@@ -32,7 +32,6 @@ import com.tokyo.supermix.util.MailConstants;
 
 @Service
 public class ConcreteTestResultServiceImpl implements ConcreteTestResultService {
-
 	@Autowired
 	private ConcreteTestResultRepository concreteTestResultRepository;
 	@Autowired
@@ -300,5 +299,11 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 	@Transactional(readOnly = true)
 	public ConcreteTestResult findByConcreteTestId(Long concreteTestId) {
 		return concreteTestResultRepository.findByConcreteTestId(concreteTestId);
+	}
+
+	@Transactional(readOnly = true)
+	public List<ConcreteTestResult> findByConcreteTestTypeId(Long concreteTestTypeId) {
+		return concreteTestResultRepository.findByConcreteTestConcreteTestTypeId(concreteTestTypeId);
+
 	}
 }
