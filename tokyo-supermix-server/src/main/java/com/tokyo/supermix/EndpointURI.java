@@ -48,6 +48,8 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
+  public static final String GET_SUPPLIER_BY_PLANT_CODE =
+      SUPPLIER + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Employee apis
    */
@@ -159,6 +161,8 @@ public final class EndpointURI {
   public static final String DELETE_CUSTOMER = CUSTOMER + ID;
   public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
   public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
+  public static final String GET_CUSTOMER_BY_PLANT_CODE =
+      CUSTOMER + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * Equation APIs
