@@ -51,43 +51,6 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   @Transactional(readOnly = true)
-  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId,
-      String incomingSampleCode) {
-    Long rawMaterialId =
-        incomingSampleRepository.findById(incomingSampleCode).get().getRawMaterial().getId();
-    List<TestParameter> testParameterLists =
-        testParameterRepository.findByTestConfigureId(testConfigureId);
-    List<TestParameter> testParameters = new ArrayList<TestParameter>();
-    for (TestParameter testParameter : testParameterLists) {
-      if (testParameter.getQualityParameter() == null) {
-        System.out.println("quality parameter" + testParameter.getQualityParameter());
-        System.out.println("rawMaterialId" + rawMaterialId);
-        if (testParameter.getParameter() != null && testParameter.getValue() == null
-            && testParameter.getEntryLevel().equals(EntryLevel.TEST)) {
-          testParameters.add(testParameter);
-        }
-      }
-      if (testParameter.getParameter() == null) {
-        if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
-            testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
-          if ((testParameter.getQualityParameter() != null && testParameter.getValue() == null
-              && materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
-                  testParameter.getQualityParameter().getId(), rawMaterialId).getValue() == null
-              && testParameter.getEntryLevel().equals(EntryLevel.TEST))) {
-            testParameters.add(testParameter);
-          }
-        } else if ((materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
-            testParameter.getQualityParameter().getId(), rawMaterialId) == null
-            && testParameter.getQualityParameter() != null && testParameter.getValue() == null)) {
-          testParameters.add(testParameter);
-        }
-      }
-    }
-    return testParameters;
-  }
-
-
-  @Transactional(readOnly = true)
   public boolean isTestConfigureIdExist(Long id) {
     return testParameterRepository.existsByTestConfigureId(id);
   }
@@ -121,5 +84,74 @@ public class TestParameterServiceImpl implements TestParameterService {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestParameter> getTestAndQualityParameterByTestConfigureId(Long testConfigureId,
+      String incomingSampleCode) {
+    Long rawMaterialId =
+        incomingSampleRepository.findById(incomingSampleCode).get().getRawMaterial().getId();
+    List<TestParameter> testParameterLists =
+        testParameterRepository.findByTestConfigureId(testConfigureId);
+    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+    for (TestParameter testParameter : testParameterLists) {
+      if (testParameter.getQualityParameter() == null && testParameter.getParameter() != null) {
+        testParameters.add(testParameter);
+      }
+      if (testParameter.getParameter() == null) {
+        if (testParameter.getEntryLevel().equals(EntryLevel.TEST)) {
+          testParameters.add(testParameter);
+        }
+        if (testParameter.getEntryLevel().equals(EntryLevel.CONFIGURE)) {
+          if (testParameter.getValue() != null) {
+            testParameters.add(testParameter);
+          }
+          if (testParameter.getValue() == null) {
+            if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
+                testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
+              if ((materialQualityParameterRepository
+                  .findByQualityParameterIdAndRawMaterialId(
+                      testParameter.getQualityParameter().getId(), rawMaterialId)
+                  .getValue() != null)) {
+                testParameter.setValue(materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(testParameter.getQualityParameter().getId(), rawMaterialId).getValue());
+                testParameters.add(testParameter);
+              }
+
+            } else {
+              testParameters.add(testParameter);
+            }
+          }
+        }
+      }
+    }
+    return testParameters;
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestParameter> getAllTestParametersByTestConfigureId(Long testConfigureId) {
+    List<TestParameter> testParameterLists =
+        testParameterRepository.findByTestConfigureId(testConfigureId);
+    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+    for (TestParameter testParameter : testParameterLists) {
+      if (testParameter.getParameter() != null) {
+        testParameters.add(testParameter);
+      }
+    }
+
+    return testParameters;
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId) {
+    List<TestParameter> testParameterLists =
+        testParameterRepository.findByTestConfigureId(testConfigureId);
+    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+    for (TestParameter testParameter : testParameterLists) {
+      if (testParameter.getQualityParameter() != null) {
+        testParameters.add(testParameter);
+      }
+    }
+
+    return testParameters;
   }
 }

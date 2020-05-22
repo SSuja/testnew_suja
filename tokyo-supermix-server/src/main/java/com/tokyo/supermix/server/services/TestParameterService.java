@@ -19,15 +19,20 @@ public interface TestParameterService {
 
   public void deleteTestParameter(Long id);
 
-  public List<TestParameter> getTestParameterByTestConfigureId(Long testConfigureId, String incomingSampleCode);
+  public List<TestParameter> getTestAndQualityParameterByTestConfigureId(Long testConfigureId,
+      String incomingSampleCode);
 
   public boolean isTestConfigureIdExist(Long id);
 
-  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId, Long unitId,
-      String abbreviation, EntryLevel entryLevel);
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId,
+      Long unitId, String abbreviation, EntryLevel entryLevel);
 
   public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
       Long qualityParameterId, Long unitId, String abbreviation, EntryLevel entryLevel);
 
   public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page);
+
+  public List<TestParameter> getAllTestParametersByTestConfigureId(Long testConfigureId);
+
+  public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId);
 }
