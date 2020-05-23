@@ -19,6 +19,7 @@ public interface MixDesignService {
       Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
       Double targetGradeEqual, Double targetWaterCementRetioMin, Double targetWaterCementRetioMax,
       Double targetWaterCementRetioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
-      Double waterBinderRatioEqual,String plantCode,int page,
-      int size);
+      Double waterBinderRatioEqual, String plantCode, int page, int size);
+
+  public List<MixDesign> getMixDesignByPlantCode(String plantCode);
 }
