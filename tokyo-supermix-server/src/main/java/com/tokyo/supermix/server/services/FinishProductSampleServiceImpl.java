@@ -83,7 +83,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getByPlantCode(String plantCode) {
+  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
     return finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
   }
 }

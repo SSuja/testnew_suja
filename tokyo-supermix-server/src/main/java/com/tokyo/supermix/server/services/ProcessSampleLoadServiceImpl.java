@@ -39,7 +39,7 @@ public class ProcessSampleLoadServiceImpl implements ProcessSampleLoadService {
   }
 
   @Transactional(readOnly = true)
-  public List<ProcessSampleLoad> getByPlantCode(String plantCode) {
+  public List<ProcessSampleLoad> getProcessSampleLoadByPlantCode(String plantCode) {
     return processSampleLoadRepository.findByProcessSampleIncomingSamplePlantCode(plantCode);
   }
 

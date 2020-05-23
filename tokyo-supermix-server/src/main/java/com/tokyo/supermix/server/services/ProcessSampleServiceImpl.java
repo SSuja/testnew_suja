@@ -55,7 +55,7 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<ProcessSample> getByPlantCode(String plantCode) {
+  public List<ProcessSample> getProcessSampleByPlantCode(String plantCode) {
     return processSampleRepository.findByIncomingSamplePlantCode(plantCode);
   }
 }

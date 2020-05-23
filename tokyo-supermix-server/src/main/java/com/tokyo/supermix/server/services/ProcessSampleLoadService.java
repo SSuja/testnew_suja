@@ -14,5 +14,5 @@ public interface ProcessSampleLoadService {
 
   boolean isProcessSampleLoadExist(Long id);
 
-  public List<ProcessSampleLoad> getByPlantCode(String plantCode);
+  public List<ProcessSampleLoad> getProcessSampleLoadByPlantCode(String plantCode);
 }

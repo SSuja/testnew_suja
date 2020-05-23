@@ -163,11 +163,11 @@ public class FinishProductSampleController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE)
   public ResponseEntity<Object> getFinishProductSampleByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-          mapper.map(finishProductSampleService.getByPlantCode(plantCode),
+          mapper.map(finishProductSampleService.getFinishProductSampleByPlantCode(plantCode),
               FinishProductSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }

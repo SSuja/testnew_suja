@@ -126,7 +126,7 @@ public class CustomerController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_CUSTOMER_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
   public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,

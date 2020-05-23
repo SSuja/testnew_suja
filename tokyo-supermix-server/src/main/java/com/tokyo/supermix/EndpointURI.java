@@ -48,8 +48,8 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
-  public static final String GET_SUPPLIER_BY_PLANT_CODE =
-      SUPPLIER + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_SUPPLIERS_BY_PLANT_CODE =
+      SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Employee apis
    */
@@ -161,8 +161,8 @@ public final class EndpointURI {
   public static final String DELETE_CUSTOMER = CUSTOMER + ID;
   public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
   public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
-  public static final String GET_CUSTOMER_BY_PLANT_CODE =
-      CUSTOMER + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_CUSTOMERS_BY_PLANT_CODE =
+      CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * Equation APIs
@@ -203,8 +203,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
       INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
   public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
-  public static final String INCOMING_SAMPLE_BY_PLANT_CODE =
-      INCOMING_SAMPLE + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
+      INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Project APIs
    */
@@ -227,8 +227,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
   public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
   public static final String PROCESS_SAMPLE_LOAD_BY_ID = PROCESS_SAMPLE_LOAD + ID;
-  public static final String PROCESS_SAMPLE_LOAD_BY_PLANT_CODE =
-      PROCESS_SAMPLE_LOAD + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String PROCESS_SAMPLE_LOADS_BY_PLANT_CODE =
+      PROCESS_SAMPLE_LOADS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * User
    */
@@ -260,8 +260,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
   public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
-  public static final String PROCESS_SAMPLE_BY_PLANT_CODE =
-      PROCESS_SAMPLE + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String PROCESS_SAMPLES_BY_PLANT_CODE =
+      PROCESS_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * Mix design proportion apis
@@ -410,8 +410,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
       FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
   public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
-  public static final String FINISH_PRODUCT_SAMPLE_BY_PLANT_CODE =
-      FINISH_PRODUCT_SAMPLE + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE =
+      FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Concrete Mixer apis
    */
@@ -444,8 +444,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + ID;
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH =
       FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH;
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_PLANT_CODE =
-      FINISH_PRODUCT_SAMPLE_ISSUE + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT_CODE =
+      FINISH_PRODUCT_SAMPLE_ISSUES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * incoming samples count APIs
    */

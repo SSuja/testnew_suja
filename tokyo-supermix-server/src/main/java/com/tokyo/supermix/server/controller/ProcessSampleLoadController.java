@@ -94,11 +94,11 @@ public class ProcessSampleLoadController {
         validationFailureStatusCodes.getProcessSampleLoadNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOADS_BY_PLANT_CODE)
   public ResponseEntity<Object> getProcessSampleLoadByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_LOAD,
-          mapper.map(processSampleLoadService.getByPlantCode(plantCode),
+          mapper.map(processSampleLoadService.getProcessSampleLoadByPlantCode(plantCode),
               ProcessSampleLoadResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }

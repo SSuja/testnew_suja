@@ -19,5 +19,5 @@ public interface FinishProductSampleIssueService {
   public Page<FinishProductSampleIssue> searchFinishProductSampleIssue(Predicate predicate,
       int size, int page);
 
-  public List<FinishProductSampleIssue> findByPlantCode(String plantCode);
+  public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode);
 }

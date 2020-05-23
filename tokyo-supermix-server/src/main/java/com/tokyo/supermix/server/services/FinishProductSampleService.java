@@ -32,5 +32,5 @@ public interface FinishProductSampleService {
   public Page<FinishProductSample> searchFinishProductSample(Predicate predicate, int page,
       int size);
 
-  public List<FinishProductSample> getByPlantCode(String plantCode);
+  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode);
 }

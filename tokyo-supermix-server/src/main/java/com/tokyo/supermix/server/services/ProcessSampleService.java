@@ -19,5 +19,5 @@ public interface ProcessSampleService {
 
   public Page<ProcessSample> searchProcessSample(Predicate predicate, int page, int size);
 
-  public List<ProcessSample> getByPlantCode(String plantCode);
+  public List<ProcessSample> getProcessSampleByPlantCode(String plantCode);
 }

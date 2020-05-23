@@ -114,11 +114,11 @@ public class ProcessSampleController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLES_BY_PLANT_CODE)
   public ResponseEntity<Object> getProcessSampleByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES, mapper
-          .map(processSampleService.getByPlantCode(plantCode), ProcessSampleResponseDto.class),
+          .map(processSampleService.getProcessSampleByPlantCode(plantCode), ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No ProcessSample record exist for given plantCode");

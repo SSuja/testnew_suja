@@ -74,7 +74,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getByPlantCode(String plantCode) {
+  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode) {
     return incomingSampleRepository.findByPlantCode(plantCode);
   }
 }

@@ -51,7 +51,7 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSampleIssue> findByPlantCode(String plantCode) {
+  public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode) {
     return finishProductSampleIssueRepository
         .findByFinishProductSampleMixDesignPlantCode(plantCode);
   }

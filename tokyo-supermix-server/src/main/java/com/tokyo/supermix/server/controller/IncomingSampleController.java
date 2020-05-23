@@ -138,11 +138,11 @@ public class IncomingSampleController {
         incomingSampleService.searchIncomingSample(predicate, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
   public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES, mapper
-          .map(incomingSampleService.getByPlantCode(plantCode), IncomingSampleResponseDto.class),
+          .map(incomingSampleService.getIncomingSampleByPlantCode(plantCode), IncomingSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
