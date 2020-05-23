@@ -40,18 +40,18 @@ public class EquationServiceImpl implements EquationService {
 
   public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId) {
     if ((!getEquationById(id).getTestConfigure().getId().equals(testConfigureId))
-        && (configurationIdExist(testConfigureId))) {
+        && (configureIdExist(testConfigureId))) {
       return true;
     }
     return false;
   }
 
   @Transactional(readOnly = true)
-  public boolean configurationIdExist(Long testConfigureId) {
+  public boolean configureIdExist(Long testConfigureId) {
     return equationRepository.existsByTestConfigureId(testConfigureId);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public Equation findByConfigureId(Long testConfigureId) {
     return equationRepository.findByTestConfigureId(testConfigureId);
   }

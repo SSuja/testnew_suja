@@ -40,7 +40,7 @@ public class EquationController {
   // Add Equation
   @PostMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationRequestDto equationDto) {
-    if (equationService.configurationIdExist(equationDto.getTestConfigureId())) {
+    if (equationService.configureIdExist(equationDto.getTestConfigureId())) {
       logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);

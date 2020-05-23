@@ -113,10 +113,14 @@ public class TestParameterServiceImpl implements TestParameterService {
                   .findByQualityParameterIdAndRawMaterialId(
                       testParameter.getQualityParameter().getId(), rawMaterialId)
                   .getValue() != null)) {
-                testParameter.setValue(materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(testParameter.getQualityParameter().getId(), rawMaterialId).getValue());
+                testParameter
+                    .setValue(
+                        materialQualityParameterRepository
+                            .findByQualityParameterIdAndRawMaterialId(
+                                testParameter.getQualityParameter().getId(), rawMaterialId)
+                            .getValue());
                 testParameters.add(testParameter);
               }
-
             } else {
               testParameters.add(testParameter);
             }
@@ -137,7 +141,6 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameters.add(testParameter);
       }
     }
-
     return testParameters;
   }
 
@@ -151,7 +154,6 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameters.add(testParameter);
       }
     }
-
     return testParameters;
   }
 }

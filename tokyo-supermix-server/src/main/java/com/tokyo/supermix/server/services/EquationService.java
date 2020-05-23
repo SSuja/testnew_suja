@@ -16,7 +16,7 @@ public interface EquationService {
 
   public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId);
 
-  public boolean configurationIdExist(Long testConfigureId);
+  public boolean configureIdExist(Long testConfigureId);
   
   public Equation findByConfigureId(Long testConfigureId);
 }
