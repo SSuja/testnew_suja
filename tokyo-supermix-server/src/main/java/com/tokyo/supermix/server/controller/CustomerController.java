@@ -119,15 +119,14 @@ public class CustomerController {
 				customerService.searchCustomer(predicate, page, size), RestApiResponseStatus.OK), null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = EndpointURI.GET_CUSTOMER_BY_PLANT_CODE)
-	public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
-		if (plantService.isPlantExist(plantCode)) {
-			return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-					mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
-					RestApiResponseStatus.OK), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(
-				new ValidationFailureResponse(Constants.PLANT, validationFailureStatusCodes.getPlantNotExist()),
-				HttpStatus.BAD_REQUEST);
-	}
+  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
+  public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+          mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

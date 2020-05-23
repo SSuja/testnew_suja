@@ -142,7 +142,7 @@ public class SupplierController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE)
   public ResponseEntity<Object> getSupplierByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,

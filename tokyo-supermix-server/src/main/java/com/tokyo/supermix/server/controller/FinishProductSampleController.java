@@ -26,6 +26,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -38,6 +39,8 @@ public class FinishProductSampleController {
   private Mapper mapper;
   @Autowired
   private FinishProductSampleService finishProductSampleService;
+  @Autowired
+  private PlantService plantService;
   private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
@@ -158,5 +161,17 @@ public class FinishProductSampleController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
         finishProductSampleService.searchFinishProductSample(predicate, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE)
+  public ResponseEntity<Object> getFinishProductSampleByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleService.getFinishProductSampleByPlantCode(plantCode),
+              FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

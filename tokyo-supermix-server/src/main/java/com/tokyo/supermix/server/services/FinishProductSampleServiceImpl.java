@@ -81,4 +81,9 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     return finishProductSampleRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
+    return finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
+  }
 }
