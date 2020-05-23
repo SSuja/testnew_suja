@@ -27,6 +27,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.IncomingSampleService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -39,6 +40,8 @@ public class IncomingSampleController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private PlantService plantService;
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
@@ -127,7 +130,6 @@ public class IncomingSampleController {
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // search api
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
   public ResponseEntity<Object> getIncomingSampleSearch(
       @QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
@@ -135,5 +137,15 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
         incomingSampleService.searchIncomingSample(predicate, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT_CODE)
+  public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES, mapper
+          .map(incomingSampleService.getByPlantCode(plantCode), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

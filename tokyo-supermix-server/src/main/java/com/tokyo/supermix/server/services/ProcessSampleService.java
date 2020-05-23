@@ -18,4 +18,6 @@ public interface ProcessSampleService {
   public boolean isProcessSampleExist(String code);
 
   public Page<ProcessSample> searchProcessSample(Predicate predicate, int page, int size);
+
+  public List<ProcessSample> getByPlantCode(String plantCode);
 }

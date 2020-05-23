@@ -26,6 +26,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -39,6 +40,8 @@ public class FinishProductSampleIssueController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private PlantService plantService;
   private static final Logger logger = Logger.getLogger(FinishProductSampleIssueController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
@@ -116,5 +119,20 @@ public class FinishProductSampleIssueController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
         finishProductSampleIssueService.searchFinishProductSampleIssue(predicate, size, page),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_PLANT_CODE)
+  public ResponseEntity<Object> getFinishProductSampleIssueByPlantCode(
+      @PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
+              mapper.map(finishProductSampleIssueService.findByPlantCode(plantCode),
+                  FinishProductSampleIssueResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
