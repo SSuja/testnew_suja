@@ -67,13 +67,14 @@ public final class EndpointURI {
 	public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
 	public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
 	/*
-	 * Material Category APIs
+	 * Pour APIs
 	 */
 	public static final String POUR = BASE_API_PATH + "pour";
 	public static final String POURS = BASE_API_PATH + "pours";
 	public static final String GET_POUR_BY_ID = POUR + ID;
 	public static final String DELETE_POUR = POUR + ID;
 	public static final String POUR_SEARCH = POUR + SEARCH;
+	public static final String GET_POURS_BY_PLANT_CODE = POURS + SLASH + "plant" + SLASH + "{plantCode}";
 	/*
 	 * Unit apis
 	 */
@@ -139,6 +140,8 @@ public final class EndpointURI {
 	public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
 	public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
 	public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH = EQUIPMENT_PLANT_CALIBRATION + SEARCH;
+	public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE = EQUIPMENT_PLANT_CALIBRATIONS + SLASH
+			+ "plant" + SLASH + "{plantCode}";
 	/*
 	 * PlantEquipment
 	 * 
