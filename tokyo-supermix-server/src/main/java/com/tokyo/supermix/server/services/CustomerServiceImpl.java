@@ -73,4 +73,9 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+
+  @Transactional(readOnly = true)
+  public List<Customer> getCustomerByPlantCode(String plantCode) {
+    return customerRepository.findByPlantCode(plantCode);
+  }
 }

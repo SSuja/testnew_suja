@@ -8,6 +8,7 @@ public class SupplierResponseDto {
   private String phoneNumber;
   private String email;
   private SupplierCategoryDto supplierCategory;
+  private PlantDto plant;
 
   public Long getId() {
     return id;
@@ -65,4 +66,11 @@ public class SupplierResponseDto {
     this.supplierCategory = supplierCategory;
   }
 
+  public PlantDto getPlant() {
+    return plant;
+  }
+
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
+  }
 }
