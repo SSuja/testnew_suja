@@ -350,6 +350,8 @@ public final class EndpointURI {
   public static final String SIEVE_TEST_TRIAL_BY_ID = SIEVE_TEST_TRIAL + ID;
   public static final String SIEVE_TEST_TRIAL_BY_SIEVE_TEST_CODE =
       SIEVE_TEST_TRIAL + SLASH + "sieve-test" + SLASH + "{sieveTestCode}";
+  public static final String GET_SIEVE_TEST_TRIAL_BY_PLANT =
+      SIEVE_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * Sieve Size

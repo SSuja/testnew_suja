@@ -146,4 +146,9 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
     materialTestService.updateIncomingSampleStatusByIncomingSample(incomingSample);
         
   }
+
+  @Transactional(readOnly = true)
+  public List<SieveTestTrial> getSieveTestTrialByPlantCode(String plantCode) {
+    return sieveTestTrialRepository.findBySieveTestPlantCode(plantCode);
+  }
 }
