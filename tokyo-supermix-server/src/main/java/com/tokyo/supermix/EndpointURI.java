@@ -342,6 +342,8 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
   public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
+  public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
+      MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * sieve-test-trial

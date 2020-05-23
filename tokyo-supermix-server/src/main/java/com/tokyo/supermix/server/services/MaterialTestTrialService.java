@@ -17,6 +17,8 @@ public interface MaterialTestTrialService {
   public List<MaterialTestTrial> getMaterialTestTrialByMaterialTestCode(String materialTestCode);
 
   public boolean isMaterialTestIdExits(String materialTestCode);
-  
+
   public void getAverageAndStatus(String materialTestCode);
+
+  List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode);
 }
