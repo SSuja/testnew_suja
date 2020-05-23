@@ -80,7 +80,7 @@ public class TestConfigureController {
   }
 
   @PutMapping(value = EndpointURI.TEST_CONFIGURE)
-  public ResponseEntity<Object> updateTest(
+  public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
       if (testConfigureService.isDuplicateEntryExist(testConfigureRequestDto.getTestId(),
@@ -103,7 +103,7 @@ public class TestConfigureController {
   }
 
   @DeleteMapping(EndpointURI.DELETE_TEST_CONFIGURE)
-  public ResponseEntity<Object> deleteTest(@PathVariable Long id) {
+  public ResponseEntity<Object> deleteTestConfigure(@PathVariable Long id) {
     if (testConfigureService.isTestConfigureExist(id)) {
       testConfigureService.deleteTestConfigure(id);
       return new ResponseEntity<>(
@@ -116,7 +116,7 @@ public class TestConfigureController {
   }
 
   @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_TEST_TYPE_ID)
-  public ResponseEntity<Object> getTestByTestTypeId(@PathVariable Long testTypeId) {
+  public ResponseEntity<Object> getTestConfigureByTestTypeId(@PathVariable Long testTypeId) {
     if (testTypeService.isTestTypeIdExist(testTypeId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPE,
           mapper.map(testConfigureService.getTestConfigureByTestType(

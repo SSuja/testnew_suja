@@ -222,16 +222,19 @@ public final class EndpointURI {
 	public static final String USERS = BASE_API_PATH + "users";
 	public static final String USER_BY_ID = USER + ID;
 
-	/*
-	 * Test Parameter APIs
-	 * 
-	 */
-	public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
-	public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
-	public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
-	public static final String GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID = TEST_PARAMETER + "/test-configure"
-			+ "/{testConfigureId}" + "/incoming-sample" + "/{incomingSampleCode}";
-	public static final String SEARCH_TEST_PARAMETER = TEST_PARAMETER + SEARCH;
+  /*
+   * Test Parameter APIs
+   * 
+   */
+  public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
+  public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
+  public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
+  public static final String GET_TEST_AND_QUALIY_PARAMETER_BY_TEST_CONFIGURE_ID = TEST_PARAMETER
+      + "/test-quality-parameters" + "/{testConfigureId}" + "/incoming-sample" + "/{incomingSampleCode}";
+  public static final String SEARCH_TEST_PARAMETER = TEST_PARAMETER + SEARCH;
+  public static final String TEST_PARAMETERS_BY_TEST_CONFIGURE_ID = TEST_PARAMETER + "/test-parameters" + "/{testConfigureId}";
+  public static final String QUALITY_PARAMETERS_BY_TEST_CONFIGURE_ID = TEST_PARAMETER +"/quality-parameters" + "/{testConfigureId}";
+
 
 	/*
 	 * ProcessSample APIs
@@ -475,6 +478,7 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID = CONCRETE_TEST_RESULT + SLASH
 			+ "concrete-test-type" + SLASH + "{concreteTestTypeId}";
 
+<<<<<<< HEAD
 	/*
 	 * concreteTestStatus
 	 * 
@@ -486,4 +490,7 @@ public final class EndpointURI {
 
 	private EndpointURI() {
 	}
+=======
+  private EndpointURI() {}
+>>>>>>> 0323911db6aeaa2ed6bb01fce29f5d3fd6026e92
 }

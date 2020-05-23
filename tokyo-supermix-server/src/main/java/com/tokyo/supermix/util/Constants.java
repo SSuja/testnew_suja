@@ -114,7 +114,7 @@ public class Constants {
 	/*
 	 * Constants for Equation validation key & Success messages
 	 */
-	public static final String EQUATION_FORMULA = "formula";
+	
 	public static final String EQUATIONS = "equations";
 	public static final String EQUATION = "equation";
 	public static final String EQUATION_ID = "equationId";

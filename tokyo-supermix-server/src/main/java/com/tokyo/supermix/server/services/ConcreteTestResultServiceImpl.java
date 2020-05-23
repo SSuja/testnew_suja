@@ -249,7 +249,6 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 	public Double getTargetGradre(Long finishProductSampleId) {
 		FinishProductSample finishProductSample = finishProductSampleRepository.findById(finishProductSampleId).get();
 		return finishProductSample.getMixDesign().getTargetGrade();
-
 	}
 
 	private Status calculateConcreteStatus(Long finishProductSampleId, Double slump) {
@@ -304,6 +303,5 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
 	@Transactional(readOnly = true)
 	public List<ConcreteTestResult> findByConcreteTestTypeId(Long concreteTestTypeId) {
 		return concreteTestResultRepository.findByConcreteTestConcreteTestTypeId(concreteTestTypeId);
-
 	}
 }

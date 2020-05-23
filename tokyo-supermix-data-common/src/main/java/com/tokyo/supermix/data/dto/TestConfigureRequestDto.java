@@ -7,14 +7,14 @@ import javax.validation.constraints.Pattern;
 public class TestConfigureRequestDto {
   private Long id;
   private Long testTypeId;
-  private Long equationId;
   private Long testId;
   private boolean coreTest;
   private String description;
   private String testProcedure;
   @NotNull(message = "{testConfigureRequestDto.prefix.null}")
   @NotEmpty(message = "{testConfigureRequestDto.prefix.empty}")
-  @Pattern(regexp = "^[a-zA-Z\\s]+$*", message = "{testConfigureRequestDto.prefix.specialcharacter}")
+  @Pattern(regexp = "^[a-zA-Z\\s]+$*",
+      message = "{testConfigureRequestDto.prefix.specialcharacter}")
   private String prefix;
 
   public Long getId() {
@@ -31,14 +31,6 @@ public class TestConfigureRequestDto {
 
   public void setTestTypeId(Long testTypeId) {
     this.testTypeId = testTypeId;
-  }
-
-  public Long getEquationId() {
-    return equationId;
-  }
-
-  public void setEquationId(Long equationId) {
-    this.equationId = equationId;
   }
 
   public Long getTestId() {
