@@ -116,7 +116,7 @@ public class EmployeeController {
 				employeeService.searchEmployee(predicate, size, page), RestApiResponseStatus.OK), null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = EndpointURI.GET_EMPLOYEE_BY_PLANT_CODE)
+	@GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT_CODE)
 	public ResponseEntity<Object> getEmployeeByPlantCode(@PathVariable String plantCode) {
 		if (plantService.isPlantExist(plantCode)) {
 			return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
@@ -124,7 +124,7 @@ public class EmployeeController {
 					RestApiResponseStatus.OK), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(
-				new ValidationFailureResponse(Constants.EMPLOYEE, validationFailureStatusCodes.getPlantNotExist()),
+				new ValidationFailureResponse(Constants.PLANT, validationFailureStatusCodes.getPlantNotExist()),
 				HttpStatus.BAD_REQUEST);
 	}
 }

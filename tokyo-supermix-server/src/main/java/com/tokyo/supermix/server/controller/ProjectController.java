@@ -123,7 +123,7 @@ public class ProjectController {
 				projectService.searchProject(predicate, size, page), RestApiResponseStatus.OK), null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = EndpointURI.GET_PROJECT_BY_PLANT_CODE)
+	@GetMapping(value = EndpointURI.GET_PROJECTS_BY_PLANT_CODE)
 	public ResponseEntity<Object> getProjectByPlantCode(@PathVariable String plantCode) {
 		if (plantService.isPlantExist(plantCode)) {
 			return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
@@ -131,7 +131,7 @@ public class ProjectController {
 					RestApiResponseStatus.OK), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(
-				new ValidationFailureResponse(Constants.PROJECTS, validationFailureStatusCodes.getPlantNotExist()),
+				new ValidationFailureResponse(Constants.PLANT, validationFailureStatusCodes.getPlantNotExist()),
 				HttpStatus.BAD_REQUEST);
 	}
 }

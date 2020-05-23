@@ -58,7 +58,7 @@ public final class EndpointURI {
 	public static final String UPDATE_EMPLOYEE = EMPLOYEE;
 	public static final String EMPLOYEES = BASE_API_PATH + "employees";
 	public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
-	public static final String GET_EMPLOYEE_BY_PLANT_CODE = EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
+	public static final String GET_EMPLOYEES_BY_PLANT_CODE = EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
 	/*
 	 * Material Category APIs
 	 */
@@ -148,7 +148,7 @@ public final class EndpointURI {
 	public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
 	public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
 	public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
-	public static final String GET_PLANTEQUIPMENT_BY_PLANT_CODE = PLANTEQUIPMENTS + SLASH + "plant" + SLASH
+	public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE = PLANTEQUIPMENTS + SLASH + "plant" + SLASH
 			+ "{plantCode}";
 	/*
 	 * Customer apis
@@ -205,7 +205,7 @@ public final class EndpointURI {
 	public static final String PROJECT_BY_ID = PROJECT + CODE;
 	public static final String PROJECTS = BASE_API_PATH + "projects";
 	public static final String SEARCH_PROJECT = PROJECT + SEARCH;
-	public static final String GET_PROJECT_BY_PLANT_CODE = PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
+	public static final String GET_PROJECTS_BY_PLANT_CODE = PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
 
 	/*
 	 * Mix design apis

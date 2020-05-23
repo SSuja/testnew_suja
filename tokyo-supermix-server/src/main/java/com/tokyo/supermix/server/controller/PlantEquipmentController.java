@@ -119,7 +119,7 @@ public class PlantEquipmentController {
 				null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = EndpointURI.GET_PLANTEQUIPMENT_BY_PLANT_CODE)
+	@GetMapping(value = EndpointURI.GET_PLANTEQUIPMENTS_BY_PLANT_CODE)
 	public ResponseEntity<Object> getPlantEquipmentByPlantCode(@PathVariable String plantCode) {
 		if (plantService.isPlantExist(plantCode)) {
 			return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
@@ -127,7 +127,7 @@ public class PlantEquipmentController {
 							PlantEquipmentResponseDto.class),
 					RestApiResponseStatus.OK), HttpStatus.OK);
 		}
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTEQUIPMENTS,
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
 				validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
 	}
 }
