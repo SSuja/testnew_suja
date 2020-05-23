@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/api/v1/auth/**").permitAll()
         .antMatchers("/api/v1/users").permitAll()
-        .antMatchers(HttpMethod.GET,"/supermix-service/api/v1/units").hasAuthority("read_unit")
+//        .antMatchers(HttpMethod.GET,"/supermix-service/api/v1/units").hasAuthority("read_unit")
         .anyRequest().authenticated();
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     http.headers().cacheControl();
