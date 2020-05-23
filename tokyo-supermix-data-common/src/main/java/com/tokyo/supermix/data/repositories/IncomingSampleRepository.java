@@ -31,4 +31,6 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
       Long materialSubCategoryId, Date date, Status status);
+
+  List<IncomingSample> findByPlantCode(String plantCode);
 }

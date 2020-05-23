@@ -38,4 +38,9 @@ public class ProcessSampleLoadServiceImpl implements ProcessSampleLoadService {
     return processSampleLoadRepository.existsById(id);
   }
 
+  @Transactional(readOnly = true)
+  public List<ProcessSampleLoad> getProcessSampleLoadByPlantCode(String plantCode) {
+    return processSampleLoadRepository.findByProcessSampleIncomingSamplePlantCode(plantCode);
+  }
+
 }

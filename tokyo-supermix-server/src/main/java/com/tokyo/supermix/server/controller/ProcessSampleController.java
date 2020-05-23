@@ -25,6 +25,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProcessSampleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -38,6 +39,9 @@ public class ProcessSampleController {
   private Mapper mapper;
   @Autowired
   private ProcessSampleService processSampleService;
+  @Autowired
+  private PlantService plantService;
+
   private static final Logger logger = Logger.getLogger(ProcessSampleController.class);
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
@@ -78,7 +82,7 @@ public class ProcessSampleController {
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
   public ResponseEntity<Object> getProcessSampleByCode(@PathVariable String code) {
     if (processSampleService.isProcessSampleExist(code)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_CODE, mapper
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE, mapper
           .map(processSampleService.getProcessSampleByCode(code), ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -108,5 +112,17 @@ public class ProcessSampleController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
         processSampleService.searchProcessSample(predicate, page, size), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLES_BY_PLANT_CODE)
+  public ResponseEntity<Object> getProcessSampleByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES, mapper
+          .map(processSampleService.getProcessSampleByPlantCode(plantCode), ProcessSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("No ProcessSample record exist for given plantCode");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
