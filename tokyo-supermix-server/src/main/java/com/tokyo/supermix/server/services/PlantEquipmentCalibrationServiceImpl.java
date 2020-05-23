@@ -16,43 +16,47 @@ import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 @Service
 public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalibrationService {
 
-  @Autowired
-  private PlantEquipmentCalibrationRepository plantEquipmentCalibrationRepository;
+	@Autowired
+	private PlantEquipmentCalibrationRepository plantEquipmentCalibrationRepository;
 
-  @Transactional
-  public PlantEquipmentCalibration savePlantEquipmentCalibration(
-      PlantEquipmentCalibration plantEquipmentCalibration) {
-    LocalDate localDueDate = plantEquipmentCalibration.getCalibratedDate().toLocalDate()
-        .plusDays(plantEquipmentCalibration.getNoOfDays());
-    java.sql.Date dueDate = java.sql.Date.valueOf(localDueDate);
-    plantEquipmentCalibration.setDueDate(dueDate);
-    return plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
-  }
+	@Transactional
+	public PlantEquipmentCalibration savePlantEquipmentCalibration(
+			PlantEquipmentCalibration plantEquipmentCalibration) {
+		LocalDate localDueDate = plantEquipmentCalibration.getCalibratedDate().toLocalDate()
+				.plusDays(plantEquipmentCalibration.getNoOfDays());
+		java.sql.Date dueDate = java.sql.Date.valueOf(localDueDate);
+		plantEquipmentCalibration.setDueDate(dueDate);
+		return plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+	}
 
-  @Transactional(readOnly = true)
-  public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration() {
-    return plantEquipmentCalibrationRepository.findAll();
-  }
+	@Transactional(readOnly = true)
+	public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration() {
+		return plantEquipmentCalibrationRepository.findAll();
+	}
 
-  @Transactional(readOnly = true)
-  public PlantEquipmentCalibration getPlantEquipmentCalibrationById(Long id) {
-    return plantEquipmentCalibrationRepository.findById(id).get();
-  }
+	@Transactional(readOnly = true)
+	public PlantEquipmentCalibration getPlantEquipmentCalibrationById(Long id) {
+		return plantEquipmentCalibrationRepository.findById(id).get();
+	}
 
-  @Transactional(propagation = Propagation.NEVER)
-  public void deletePlantEquipmentCalibration(Long id) {
-    plantEquipmentCalibrationRepository.deleteById(id);
-  }
+	@Transactional(propagation = Propagation.NEVER)
+	public void deletePlantEquipmentCalibration(Long id) {
+		plantEquipmentCalibrationRepository.deleteById(id);
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isPlantEquipmentCalibrationExit(Long id) {
-    return plantEquipmentCalibrationRepository.existsById(id);
-  }
+	@Transactional(readOnly = true)
+	public boolean isPlantEquipmentCalibrationExit(Long id) {
+		return plantEquipmentCalibrationRepository.existsById(id);
+	}
 
-  @Transactional(readOnly = true)
-  public Page<PlantEquipmentCalibration> searchPlantEquipmentCalibration(Predicate predicate,
-      int page, int size) {
-    return plantEquipmentCalibrationRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
+	@Transactional(readOnly = true)
+	public Page<PlantEquipmentCalibration> searchPlantEquipmentCalibration(Predicate predicate, int page, int size) {
+		return plantEquipmentCalibrationRepository.findAll(predicate,
+				PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+	}
+
+	@Transactional(readOnly = true)
+	public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationsByPlantCode(String plantCode) {
+		return plantEquipmentCalibrationRepository.findByPlantEquipmentPlantCode(plantCode);
+	}
 }

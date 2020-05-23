@@ -5,8 +5,14 @@ import com.tokyo.supermix.data.entities.ProcessSampleLoad;
 
 public interface ProcessSampleLoadService {
   public void saveProcessSampleLoad(ProcessSampleLoad processSampleLoad);
+
   public List<ProcessSampleLoad> getAllProcessSampleLoads();
+
   public ProcessSampleLoad getProcessSampleLoadById(Long id);
+
   public void deleteProcessSampleLoad(Long id);
+
   boolean isProcessSampleLoadExist(Long id);
+
+  public List<ProcessSampleLoad> getProcessSampleLoadByPlantCode(String plantCode);
 }

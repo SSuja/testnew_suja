@@ -59,6 +59,8 @@ public final class EndpointURI {
   public static final String UPDATE_EMPLOYEE = EMPLOYEE;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
   public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
+  public static final String GET_EMPLOYEES_BY_PLANT_CODE =
+      EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Material Category APIs
    */
@@ -67,13 +69,15 @@ public final class EndpointURI {
   public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
   public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
   /*
-   * Material Category APIs
+   * Pour APIs
    */
   public static final String POUR = BASE_API_PATH + "pour";
   public static final String POURS = BASE_API_PATH + "pours";
   public static final String GET_POUR_BY_ID = POUR + ID;
   public static final String DELETE_POUR = POUR + ID;
   public static final String POUR_SEARCH = POUR + SEARCH;
+  public static final String GET_POURS_BY_PLANT_CODE =
+      POURS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Unit apis
    */
@@ -131,7 +135,6 @@ public final class EndpointURI {
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
   public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
-
   /*
    * EquipmentPlantCalibration apis
    */
@@ -144,6 +147,8 @@ public final class EndpointURI {
   public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
   public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
       EQUIPMENT_PLANT_CALIBRATION + SEARCH;
+  public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
+      EQUIPMENT_PLANT_CALIBRATIONS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * PlantEquipment
    * 
@@ -153,6 +158,8 @@ public final class EndpointURI {
   public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
   public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
   public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
+  public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
+      PLANTEQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Customer apis
    */
@@ -163,14 +170,12 @@ public final class EndpointURI {
   public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
   public static final String GET_CUSTOMER_BY_PLANT_CODE =
       CUSTOMER + SLASH + "plant" + SLASH + "{plantCode}";
-
   /*
    * Equation APIs
    */
   public static final String EQUATION = BASE_API_PATH + "equation";
   public static final String EQUATIONS = BASE_API_PATH + "equations";
   public static final String EQUATION_BY_ID = EQUATION + ID;
-
   /*
    * Parameter apis
    * 
@@ -182,7 +187,12 @@ public final class EndpointURI {
   public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
   /*
-   * TestType
+   * public static final String PARAMETER = BASE_API_PATH + "parameter"; public static final String
+   * PARAMETERS = BASE_API_PATH + "parameters"; public static final String GET_PARAMETER_BY_ID =
+   * PARAMETER + ID; public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID; public
+   * static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
+   * 
+   * /* TestType
    */
   public static final String TEST_TYPE = BASE_API_PATH + "test-type";
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
@@ -203,6 +213,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
       INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
   public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
+  public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
+      INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Project APIs
    */
@@ -210,6 +222,8 @@ public final class EndpointURI {
   public static final String PROJECT_BY_ID = PROJECT + CODE;
   public static final String PROJECTS = BASE_API_PATH + "projects";
   public static final String SEARCH_PROJECT = PROJECT + SEARCH;
+  public static final String GET_PROJECTS_BY_PLANT_CODE =
+      PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * Mix design apis
@@ -227,6 +241,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
   public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
   public static final String PROCESS_SAMPLE_LOAD_BY_ID = PROCESS_SAMPLE_LOAD + ID;
+  public static final String PROCESS_SAMPLE_LOADS_BY_PLANT_CODE =
+      PROCESS_SAMPLE_LOADS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * User
    */
@@ -251,6 +267,7 @@ public final class EndpointURI {
       TEST_PARAMETER + "/quality-parameters" + "/{testConfigureId}";
 
 
+
   /*
    * ProcessSample APIs
    */
@@ -258,6 +275,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
   public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
+  public static final String PROCESS_SAMPLES_BY_PLANT_CODE =
+      PROCESS_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * Mix design proportion apis
@@ -297,25 +316,6 @@ public final class EndpointURI {
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
   public static final String GET_PARAMETER_RESULT_BY_PLANT =
       PARAMETER_RESULT + SLASH + "plant" + SLASH + "{plantCode}";
-  /*
-   * AdmixtureAcceptedValue Apis
-   */
-  public static final String ADMIXTURE_ACCEPTED_VALUE = BASE_API_PATH + "admixture-accepted-value";
-  public static final String ADMIXTURE_ACCEPTED_VALUES =
-      BASE_API_PATH + "admixture-accepted-values";
-  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
-  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
-      ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
-  public static final String SEARCH_ADMIXTURE_ACCEPTED_VALUE = ADMIXTURE_ACCEPTED_VALUE + SEARCH;
-  /*
-   * AcceptedValue
-   */
-  public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
-  public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
-  public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
-  public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
-      ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-  public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
   /*
    * Material Tests
    */
@@ -413,6 +413,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
       FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
   public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
+  public static final String FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE =
+      FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Concrete Mixer apis
    */
@@ -445,6 +447,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + ID;
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH =
       FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH;
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT_CODE =
+      FINISH_PRODUCT_SAMPLE_ISSUES + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * incoming samples count APIs
    */
@@ -519,6 +523,25 @@ public final class EndpointURI {
   public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
   public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
 
+  /*
+   * AdmixtureAcceptedValue Apis
+   */
+  public static final String ADMIXTURE_ACCEPTED_VALUE = BASE_API_PATH + "admixture-accepted-value";
+  public static final String ADMIXTURE_ACCEPTED_VALUES =
+      BASE_API_PATH + "admixture-accepted-values";
+  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
+  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
+      ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
+  public static final String SEARCH_ADMIXTURE_ACCEPTED_VALUE = ADMIXTURE_ACCEPTED_VALUE + SEARCH;
+  /*
+   * AcceptedValue
+   */
+  public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
+  public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
+  public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
+  public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
+      ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
 
   private EndpointURI() {}
 }

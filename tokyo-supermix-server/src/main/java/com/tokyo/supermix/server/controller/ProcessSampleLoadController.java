@@ -21,6 +21,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProcessSampleLoadService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -34,6 +35,8 @@ public class ProcessSampleLoadController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private PlantService plantService;
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOADS)
   public ResponseEntity<Object> getProcessSampleLoads() {
@@ -89,5 +92,17 @@ public class ProcessSampleLoadController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_LOAD_ID,
         validationFailureStatusCodes.getProcessSampleLoadNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOADS_BY_PLANT_CODE)
+  public ResponseEntity<Object> getProcessSampleLoadByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_LOAD,
+          mapper.map(processSampleLoadService.getProcessSampleLoadByPlantCode(plantCode),
+              ProcessSampleLoadResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
