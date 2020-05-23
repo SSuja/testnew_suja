@@ -121,7 +121,7 @@ public class PlantEquipmentController {
 	@GetMapping(value = EndpointURI.GET_PLANTEQUIPMENT_BY_PLANT_CODE)
 	public ResponseEntity<Object> getPlantEquipmentByPlantCode(@PathVariable String plantCode) {
 		if (plantService.isPlantExist(plantCode)) {
-			return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+			return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
 					mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode),
 							PlantEquipmentResponseDto.class),
 					RestApiResponseStatus.OK), HttpStatus.OK);

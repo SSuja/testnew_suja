@@ -119,7 +119,7 @@ public class EmployeeController {
 	@GetMapping(value = EndpointURI.GET_EMPLOYEE_BY_PLANT_CODE)
 	public ResponseEntity<Object> getEmployeeByPlantCode(@PathVariable String plantCode) {
 		if (plantService.isPlantExist(plantCode)) {
-			return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+			return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
 					mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
 					RestApiResponseStatus.OK), HttpStatus.OK);
 		}
