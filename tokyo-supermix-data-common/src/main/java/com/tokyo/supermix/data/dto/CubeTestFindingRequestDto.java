@@ -8,7 +8,6 @@ public class CubeTestFindingRequestDto {
 	private Long cubeNo;
 	@NotNull(message = "{cubeTestFindingRequestDto.age.null}")
 	private Long age;
-	@NotNull(message = "{cubeTestFindingRequestDto.value.null}")
 	private Double value;
 	private Long finishProductSampleId;
 
