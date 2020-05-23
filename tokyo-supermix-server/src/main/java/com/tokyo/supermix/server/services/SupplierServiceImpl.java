@@ -83,4 +83,9 @@ public class SupplierServiceImpl implements SupplierService {
     return supplierRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+
+  @Transactional(readOnly = true)
+  public List<Supplier> getSupplierByPlantCode(String plantCode) {
+    return supplierRepository.findByPlantCode(plantCode);
+  }
 }

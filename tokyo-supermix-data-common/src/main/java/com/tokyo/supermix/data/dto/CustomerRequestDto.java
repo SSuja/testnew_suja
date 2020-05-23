@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class CustomerDto {
+public class CustomerRequestDto {
   private Long id;
   @NotNull(message = "{customerDto.name.null}")
   @NotEmpty(message = "{customerDto.name.empty}")
@@ -14,6 +14,9 @@ public class CustomerDto {
   @NotNull(message = "{customerDto.email.null}")
   @NotEmpty(message = "{customerDto.email.empty}")
   private String email;
+  @NotNull(message = "{customerDto.plantCode.null}")
+  @NotEmpty(message = "{customerDto.plantCode.empty}")
+  private String plantCode;
 
   public Long getId() {
     return id;
@@ -53,5 +56,13 @@ public class CustomerDto {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getPlantCode() {
+    return plantCode;
+  }
+
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
   }
 }

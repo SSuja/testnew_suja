@@ -25,6 +25,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
 import com.tokyo.supermix.util.Constants;
@@ -41,6 +42,8 @@ public class SupplierController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private PlantService plantService;
 
   private static final Logger logger = Logger.getLogger(SupplierController.class);
 
@@ -137,5 +140,16 @@ public class SupplierController {
         new ContentResponse<>(Constants.SUPPLIER,
             supplierService.searchSupplier(predicate, page, size), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_PLANT_CODE)
+  public ResponseEntity<Object> getSupplierByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+          mapper.map(supplierService.getSupplierByPlantCode(plantCode), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

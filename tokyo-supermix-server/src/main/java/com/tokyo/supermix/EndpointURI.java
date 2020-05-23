@@ -38,47 +38,49 @@ public final class EndpointURI {
 	public static final String DELETE_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + ID;
 	public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
 
-	/*
-	 * Supplier Apis
-	 */
-	public static final String SUPPLIER = BASE_API_PATH + "supplier";
-	public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
-	public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
-	public static final String DELETE_SUPPLIER = SUPPLIER + ID;
-	public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID = SUPPLIER + SLASH + "supplier-category" + SLASH
-			+ "{suppilerCategoryId}";
-	public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
-	/*
-	 * Employee apis
-	 */
-	public static final String EMPLOYEE = BASE_API_PATH + "employee";
-	public static final String DELETE_EMPLOYEE = EMPLOYEE + ID;
-	public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
-	public static final String UPDATE_EMPLOYEE = EMPLOYEE;
-	public static final String EMPLOYEES = BASE_API_PATH + "employees";
-	public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
-	/*
-	 * Material Category APIs
-	 */
-	public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
-	public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
-	public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
-	public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
-	/*
-	 * Material Category APIs
-	 */
-	public static final String POUR = BASE_API_PATH + "pour";
-	public static final String POURS = BASE_API_PATH + "pours";
-	public static final String GET_POUR_BY_ID = POUR + ID;
-	public static final String DELETE_POUR = POUR + ID;
-	public static final String POUR_SEARCH = POUR + SEARCH;
-	/*
-	 * Unit apis
-	 */
-	public static final String UNIT = BASE_API_PATH + "unit";
-	public static final String UNITS = BASE_API_PATH + "units";
-	public static final String GET_UNIT_BY_ID = UNIT + ID;
-	public static final String DELETE_UNIT_BY_ID = UNIT + ID;
+  /*
+   * Supplier Apis
+   */
+  public static final String SUPPLIER = BASE_API_PATH + "supplier";
+  public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
+  public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
+  public static final String DELETE_SUPPLIER = SUPPLIER + ID;
+  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
+      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
+  public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
+  public static final String GET_SUPPLIER_BY_PLANT_CODE =
+      SUPPLIER + SLASH + "plant" + SLASH + "{plantCode}";
+  /*
+   * Employee apis
+   */
+  public static final String EMPLOYEE = BASE_API_PATH + "employee";
+  public static final String DELETE_EMPLOYEE = EMPLOYEE + ID;
+  public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
+  public static final String UPDATE_EMPLOYEE = EMPLOYEE;
+  public static final String EMPLOYEES = BASE_API_PATH + "employees";
+  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
+  /*
+   * Material Category APIs
+   */
+  public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
+  public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
+  public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
+  public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
+  /*
+   * Material Category APIs
+   */
+  public static final String POUR = BASE_API_PATH + "pour";
+  public static final String POURS = BASE_API_PATH + "pours";
+  public static final String GET_POUR_BY_ID = POUR + ID;
+  public static final String DELETE_POUR = POUR + ID;
+  public static final String POUR_SEARCH = POUR + SEARCH;
+  /*
+   * Unit apis
+   */
+  public static final String UNIT = BASE_API_PATH + "unit";
+  public static final String UNITS = BASE_API_PATH + "units";
+  public static final String GET_UNIT_BY_ID = UNIT + ID;
+  public static final String DELETE_UNIT_BY_ID = UNIT + ID;
 
 	/*
 	 * MaterialSubCategory Apis
@@ -129,31 +131,37 @@ public final class EndpointURI {
 	public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
 	public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
 
-	/*
-	 * EquipmentPlantCalibration apis
-	 */
-	public static final String EQUIPMENT_PLANT_CALIBRATION = BASE_API_PATH + "plant-equipment-calibration";
-	public static final String EQUIPMENT_PLANT_CALIBRATIONS = BASE_API_PATH + "plant-equipment-calibrations";
-	public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
-	public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
-	public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH = EQUIPMENT_PLANT_CALIBRATION + SEARCH;
-	/*
-	 * PlantEquipment
-	 * 
-	 */
-	public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
-	public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
-	public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
-	public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
-	public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
-	/*
-	 * Customer apis
-	 */
-	public static final String CUSTOMER = BASE_API_PATH + "customer";
-	public static final String CUSTOMERS = BASE_API_PATH + "customers";
-	public static final String DELETE_CUSTOMER = CUSTOMER + ID;
-	public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
-	public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
+  /*
+   * EquipmentPlantCalibration apis
+   */
+  public static final String EQUIPMENT_PLANT_CALIBRATION =
+      BASE_API_PATH + "plant-equipment-calibration";
+  public static final String EQUIPMENT_PLANT_CALIBRATIONS =
+      BASE_API_PATH + "plant-equipment-calibrations";
+  public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID =
+      EQUIPMENT_PLANT_CALIBRATION + ID;
+  public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
+  public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
+      EQUIPMENT_PLANT_CALIBRATION + SEARCH;
+  /*
+   * PlantEquipment
+   * 
+   */
+  public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
+  public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
+  public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
+  public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
+  public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
+  /*
+   * Customer apis
+   */
+  public static final String CUSTOMER = BASE_API_PATH + "customer";
+  public static final String CUSTOMERS = BASE_API_PATH + "customers";
+  public static final String DELETE_CUSTOMER = CUSTOMER + ID;
+  public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
+  public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
+  public static final String GET_CUSTOMER_BY_PLANT_CODE =
+      CUSTOMER + SLASH + "plant" + SLASH + "{plantCode}";
 
 	/*
 	 * Equation APIs

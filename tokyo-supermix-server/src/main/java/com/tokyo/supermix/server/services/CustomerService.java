@@ -12,6 +12,8 @@ public interface CustomerService {
 
   public boolean isEmailExist(String email);
 
+  public List<Customer> getCustomerByPlantCode(String plantCode);
+
   boolean isCustomerExist(Long id);
 
   public Customer getCustomerById(Long id);

@@ -1,31 +1,12 @@
-package com.tokyo.supermix.data.entities;
+package com.tokyo.supermix.data.dto;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-@Entity
-@Table(schema = "tokyo-supermix", name = "customer")
-public class Customer implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+public class CustomerResponseDto {
   private Long id;
   private String name;
   private String phoneNumber;
   private String address;
   private String email;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
+  private PlantDto plant;
 
   public Long getId() {
     return id;
@@ -67,15 +48,11 @@ public class Customer implements Serializable {
     this.email = email;
   }
 
-  public Plant getPlant() {
+  public PlantDto getPlant() {
     return plant;
   }
 
-  public void setPlant(Plant plant) {
+  public void setPlant(PlantDto plant) {
     this.plant = plant;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
   }
 }

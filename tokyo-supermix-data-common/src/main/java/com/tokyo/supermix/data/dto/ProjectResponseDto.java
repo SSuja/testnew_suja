@@ -8,10 +8,8 @@ public class ProjectResponseDto {
   private String contactNumber;
   private String contactPerson;
   private Date startDate;
-  private Long customerId;
-  private String plantCode;
-  private String plantName;
-  private String customerName;
+  private PlantDto plant;
+  private CustomerResponseDto customer;
 
   public String getCode() {
     return code;
@@ -53,36 +51,19 @@ public class ProjectResponseDto {
     this.startDate = startDate;
   }
 
-  public Long getCustomerId() {
-    return customerId;
+  public PlantDto getPlant() {
+    return plant;
   }
 
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
   }
 
-  public String getPlantCode() {
-    return plantCode;
+  public CustomerResponseDto getCustomer() {
+    return customer;
   }
 
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
+  public void setCustomer(CustomerResponseDto customer) {
+    this.customer = customer;
   }
-
-  public String getPlantName() {
-    return plantName;
-  }
-
-  public void setPlantName(String plantName) {
-    this.plantName = plantName;
-  }
-
-  public String getCustomerName() {
-    return customerName;
-  }
-
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
-  }
-
 }
