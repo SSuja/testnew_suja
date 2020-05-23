@@ -5,6 +5,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 
 public interface PlantEquipmentCalibrationRepository
-    extends JpaRepository<PlantEquipmentCalibration, Long>,
-    QuerydslPredicateExecutor<PlantEquipmentCalibration> {
+		extends JpaRepository<PlantEquipmentCalibration, Long>, QuerydslPredicateExecutor<PlantEquipmentCalibration> {
 }

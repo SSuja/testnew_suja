@@ -12,46 +12,50 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
 
-
 @Service
 public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
-  @Autowired
-  private PlantEquipmentRepository PlantEquipmentRepository;
+	@Autowired
+	private PlantEquipmentRepository PlantEquipmentRepository;
 
-  @Transactional
-  public void savePlantEquipment(PlantEquipment Plantequipment) {
-    PlantEquipmentRepository.save(Plantequipment);
-  }
+	@Transactional
+	public void savePlantEquipment(PlantEquipment Plantequipment) {
+		PlantEquipmentRepository.save(Plantequipment);
+	}
 
-  @Transactional(readOnly = true)
-  public List<PlantEquipment> getAllPlantEquipments() {
+	@Transactional(readOnly = true)
+	public List<PlantEquipment> getAllPlantEquipments() {
 
-    return PlantEquipmentRepository.findAll();
-  }
+		return PlantEquipmentRepository.findAll();
+	}
 
-  @Transactional(propagation = Propagation.NEVER)
-  public void deletePlantEquipment(String serialNo) {
-    PlantEquipmentRepository.deleteById(serialNo);
+	@Transactional(propagation = Propagation.NEVER)
+	public void deletePlantEquipment(String serialNo) {
+		PlantEquipmentRepository.deleteById(serialNo);
 
-  }
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isPlantEquipmentExist(String serialNo) {
+	@Transactional(readOnly = true)
+	public boolean isPlantEquipmentExist(String serialNo) {
 
-    return PlantEquipmentRepository.existsByserialNo(serialNo);
-  }
+		return PlantEquipmentRepository.existsByserialNo(serialNo);
+	}
 
-  @Transactional(readOnly = true)
-  public PlantEquipment getPlantEquipmentBySerialNo(String serialNo) {
+	@Transactional(readOnly = true)
+	public PlantEquipment getPlantEquipmentBySerialNo(String serialNo) {
 
-    return PlantEquipmentRepository.findPlantEquipmentBySerialNo(serialNo);
-  }
+		return PlantEquipmentRepository.findPlantEquipmentBySerialNo(serialNo);
+	}
 
-  @Transactional(readOnly = true)
-  public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size) {
-    return PlantEquipmentRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "serialNo")));
-  }
+	@Transactional(readOnly = true)
+	public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size) {
+		return PlantEquipmentRepository.findAll(predicate,
+				PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "serialNo")));
+	}
+
+	@Transactional(readOnly = true)
+	public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode) {
+		return PlantEquipmentRepository.findByPlantCode(plantCode);
+	}
 
 }
