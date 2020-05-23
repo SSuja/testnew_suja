@@ -13,11 +13,6 @@ public class EquationServiceImpl implements EquationService {
   @Autowired
   private EquationRepository equationRepository;
 
-  @Transactional(readOnly = true)
-  public boolean isFormulaExist(String formula) {
-    return equationRepository.existsByFormula(formula);
-  }
-
   @Transactional
   public void saveEquation(Equation equation) {
     equationRepository.save(equation);
@@ -43,11 +38,21 @@ public class EquationServiceImpl implements EquationService {
     equationRepository.deleteById(id);
   }
 
-  public boolean isUpdatedFormulaExist(Long id, String formula) {
-    if ((!getEquationById(id).getFormula().equalsIgnoreCase(formula))
-        && (isFormulaExist(formula))) {
+  public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId) {
+    if ((!getEquationById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (configureIdExist(testConfigureId))) {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean configureIdExist(Long testConfigureId) {
+    return equationRepository.existsByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public Equation findByConfigureId(Long testConfigureId) {
+    return equationRepository.findByTestConfigureId(testConfigureId);
   }
 }

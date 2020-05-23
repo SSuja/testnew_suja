@@ -3,7 +3,6 @@ package com.tokyo.supermix.data.dto;
 public class TestConfigureResponseDto {
   private Long id;
   private TestTypeResponseDto testType;
-  private EquationDto equation;
   private Long testId;
   private String testName;
   private boolean coreTest;
@@ -25,14 +24,6 @@ public class TestConfigureResponseDto {
 
   public void setTestType(TestTypeResponseDto testType) {
     this.testType = testType;
-  }
-
-  public EquationDto getEquation() {
-    return equation;
-  }
-
-  public void setEquation(EquationDto equation) {
-    this.equation = equation;
   }
 
   public Long getTestId() {

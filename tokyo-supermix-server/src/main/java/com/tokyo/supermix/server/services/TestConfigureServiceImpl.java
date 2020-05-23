@@ -54,7 +54,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   public boolean isDuplicateEntryExist(Long testId, Long testTypeId) {
-    if (testConfigureRepository.existsByTestIdAndTestTypeId(testId, testTypeId)) {
+    if ((!findByTestTypeId(testTypeId).equals(testId))
+        && (testConfigureRepository.existsByTestTypeIdAndTestId(testId, testTypeId))) {
       return true;
     }
     return false;

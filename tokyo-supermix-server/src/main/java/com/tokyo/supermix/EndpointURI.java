@@ -235,9 +235,12 @@ public final class EndpointURI {
   public static final String TEST_PARAMETER = BASE_API_PATH + "test-parameter";
   public static final String TEST_PARAMETERS = BASE_API_PATH + "test-parameters";
   public static final String TEST_PARAMETER_BY_ID = TEST_PARAMETER + ID;
-  public static final String GET_TEST_PARAMETER_BY_TEST_CONFIGURE_ID = TEST_PARAMETER
-      + "/test-configure" + "/{testConfigureId}" + "/incoming-sample" + "/{incomingSampleCode}";
+  public static final String GET_TEST_AND_QUALIY_PARAMETER_BY_TEST_CONFIGURE_ID = TEST_PARAMETER
+      + "/test-quality-parameters" + "/{testConfigureId}" + "/incoming-sample" + "/{incomingSampleCode}";
   public static final String SEARCH_TEST_PARAMETER = TEST_PARAMETER + SEARCH;
+  public static final String TEST_PARAMETERS_BY_TEST_CONFIGURE_ID = TEST_PARAMETER + "/test-parameters" + "/{testConfigureId}";
+  public static final String QUALITY_PARAMETERS_BY_TEST_CONFIGURE_ID = TEST_PARAMETER +"/quality-parameters" + "/{testConfigureId}";
+
 
   /*
    * ProcessSample APIs
@@ -471,7 +474,6 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
-
 
   private EndpointURI() {}
 }

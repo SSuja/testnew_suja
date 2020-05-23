@@ -29,6 +29,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   private TestParameterRepository testParameterRepository;
   @Autowired
   private TestParameterService testParameterService;
+  @Autowired
+  private EquationService equationService;
 
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
@@ -90,13 +92,13 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
-    if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation() == null) {
+    if (equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula() == null) {
       for (ParameterResult parameterResult : parameterResultList) {
         materialTestTrial.setResult(parameterResult.getValue());
       }
     } else {
       Double result = roundDoubleValue(calculateTestResult(
-          materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula(),
+          equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula(),
           parameterResultList));
       materialTestTrial.setResult(result);
       materialTestTrialRepository.save(materialTestTrial);
