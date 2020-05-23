@@ -478,7 +478,6 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID = CONCRETE_TEST_RESULT + SLASH
 			+ "concrete-test-type" + SLASH + "{concreteTestTypeId}";
 
-<<<<<<< HEAD
 	/*
 	 * concreteTestStatus
 	 * 
@@ -487,10 +486,5 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "test-parameter-statuses";
 	public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
 	public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
-
-	private EndpointURI() {
-	}
-=======
   private EndpointURI() {}
->>>>>>> 0323911db6aeaa2ed6bb01fce29f5d3fd6026e92
 }
