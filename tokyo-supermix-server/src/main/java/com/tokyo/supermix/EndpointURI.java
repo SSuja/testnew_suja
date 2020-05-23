@@ -205,6 +205,7 @@ public final class EndpointURI {
 	public static final String PROJECT_BY_ID = PROJECT + CODE;
 	public static final String PROJECTS = BASE_API_PATH + "projects";
 	public static final String SEARCH_PROJECT = PROJECT + SEARCH;
+	public static final String GET_PROJECT_BY_PLANT_CODE = PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
 
 	/*
 	 * Mix design apis
