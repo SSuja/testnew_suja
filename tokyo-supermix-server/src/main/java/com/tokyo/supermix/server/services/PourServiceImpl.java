@@ -55,12 +55,12 @@ public class PourServiceImpl implements PourService {
 		return false;
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public Page<Pour> searchPour(Predicate predicate, int page, int size) {
 		return pourRepository.findAll(predicate, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
 	}
 
-	@Override
+	@Transactional(readOnly = true)
 	public List<Pour> getPoursByPlantCode(String plantCode) {
 		return pourRepository.findByProjectPlantCode(plantCode);
 	}
