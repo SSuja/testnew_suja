@@ -1,10 +1,13 @@
-package com.gateway.auth.config;
+package com.gateway.zuul.security;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,10 +33,11 @@ public class JwtTokenProvider {
     Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
     return Jwts.builder().setSubject(Long.toString(userPrincipal.getId())).setIssuedAt(new Date())
         .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret)
-        .claim("id", Long.toString(userPrincipal.getId())).claim("email", userPrincipal.getEmail())
-        .claim("role", userPrincipal.getRole().getRoleName().toUpperCase())
+        .claim("id", Long.toString(userPrincipal.getId()))
+        .claim("email", userPrincipal.getEmail())
+//        .claim("role", userPrincipal.getRole().getRoleName().toUpperCase())
+        .claim("authorities",userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
         .claim("userName", userPrincipal.getUsername()).compact();
-    
   }
 
   public Long getUserIdFromJWT(String token) {

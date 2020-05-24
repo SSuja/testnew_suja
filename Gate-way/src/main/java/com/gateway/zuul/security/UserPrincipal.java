@@ -1,4 +1,4 @@
-package com.gateway.auth.config;
+package com.gateway.zuul.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
