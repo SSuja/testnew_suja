@@ -60,11 +60,6 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.mindrot</groupId>
-			<artifactId>jbcrypt</artifactId>
-			<version>0.3m</version>
-		</dependency>
-		<dependency>
 			<groupId>com.tokyo.supermix</groupId>
 			<artifactId>tokyo-data-common</artifactId>
 			<version>1.0</version>

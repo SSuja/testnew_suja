@@ -17,8 +17,8 @@ import com.auth.security.mapper.Mapper;
 import com.auth.security.service.UserService;
 import com.auth.security.util.AuthConstants;
 import com.auth.security.util.AuthValidationFailureCodes;
-import com.tokyo.supermix.data.dto.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRequestDto;
+import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -34,10 +34,6 @@ public class UserController {
   private Mapper mapper;
   @Autowired
   private AuthValidationFailureCodes authValidationFailureCodes;
-  // @Autowired
-  // private EmailService emailService;
-  // @Autowired
-  // private MailConstants mailConstants;
   private static final Logger logger = Logger.getLogger(UserController.class);
 
   @GetMapping(value = AuthEndpointURI.USERS)

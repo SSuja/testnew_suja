@@ -6,7 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.Employee;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
@@ -17,9 +19,9 @@ public class User extends DateAudit {
   private String userName;
   private String password;
   private String email;
-//  @OneToOne
-//  @JoinColumn(name = "employeeId")
-//  private Employee employee;
+  @OneToOne
+  @JoinColumn(name = "employee_id")
+  private Employee employee;
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;
@@ -47,13 +49,13 @@ public class User extends DateAudit {
     this.password = password;
   }
 
-//  public Employee getEmployee() {
-//    return employee;
-//  }
-//
-//  public void setEmployee(Employee employee) {
-//    this.employee = employee;
-//  }
+  public Employee getEmployee() {
+    return employee;
+  }
+
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
+  }
 
   public String getEmail() {
     return email;

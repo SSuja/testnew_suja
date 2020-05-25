@@ -8,8 +8,8 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableEurekaClient   
 @EnableZuulProxy
-@EntityScan("com.tokyo.supermix.data.entities.auth")
-@EnableJpaRepositories("com.tokyo.supermix.data.repositories.auth")
+@EntityScan("com.tokyo.supermix.data.entities")
+@EnableJpaRepositories("com.tokyo.supermix.data.repositories")
 @SpringBootApplication
 public class GateWayApplication {
 

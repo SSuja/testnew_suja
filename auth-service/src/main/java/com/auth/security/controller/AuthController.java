@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auth.security.AuthEndpointURI;
 import com.auth.security.mapper.Mapper;
 import com.auth.security.service.AuthService;
+import com.auth.security.service.EmailService;
 import com.auth.security.service.UserService;
 import com.auth.security.util.AuthConstants;
 import com.auth.security.util.AuthValidationFailureCodes;
@@ -32,8 +33,8 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 @CrossOrigin(origins = "*")
 @RestController
 public class AuthController {
-  // @Autowired
-  // private EmailService emailService;
+   @Autowired
+   private EmailService emailService;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -72,7 +73,12 @@ public class AuthController {
       return new ResponseEntity<>(new ValidationFailureResponse(AuthConstants.EMAIL,
           authValidationFailureCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    userService.saveUser(mapper.map(userRequestDto, User.class));
+    User user =userService.saveUser(mapper.map(userRequestDto, User.class));
+    if (user != null) {
+      String message = "Your Account sucessfully created. Your Username is " + userRequestDto.getUserName()
+              + ". Password is " + userRequestDto.getPassword();
+      emailService.sendMail(user.getEmail(), AuthConstants.SUBJECT_NEW_USER, message);
+  }
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, AuthConstants.ADD_USER_SUCCESS),
         HttpStatus.OK);
@@ -98,8 +104,8 @@ public class AuthController {
       if (user != null) {
         final String token = UUID.randomUUID().toString();
         authService.createForgotPasswordToken(token, user);
-        // emailService.sendMail(userEmail,AuthConstants.SUBJECT_FORGOT_PASSWORD,AuthConstants.MESSAGE_OF_FORGOT_PASSWORD
-        // + token);
+         emailService.sendMail(userEmail,AuthConstants.SUBJECT_FORGOT_PASSWORD,AuthConstants.MESSAGE_OF_FORGOT_PASSWORD
+         + token);
         return new ResponseEntity<>(
             new BasicResponse<>(RestApiResponseStatus.OK, AuthConstants.GENERATE_PASSWORD_SUCCESS),
             HttpStatus.OK);

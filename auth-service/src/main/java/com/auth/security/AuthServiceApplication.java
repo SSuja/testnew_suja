@@ -7,8 +7,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EntityScan("com.tokyo.supermix.data.entities.auth")
-@EnableJpaRepositories("com.tokyo.supermix.data.repositories.auth")
+@EntityScan("com.tokyo.supermix.data.entities")
+@EnableJpaRepositories("com.tokyo.supermix.data.repositories")
 @EnableEurekaClient
 @SpringBootApplication
 public class AuthServiceApplication {
