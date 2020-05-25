@@ -18,11 +18,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 UserRepository userRepository;
 @Autowired
 private JwtTokenProvider tokenProvider;
-private final JwtConfig jwtConfig;
 
-public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
- this.jwtConfig = jwtConfig;
-}
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

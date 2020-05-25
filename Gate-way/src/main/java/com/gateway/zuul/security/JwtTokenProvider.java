@@ -1,6 +1,5 @@
 package com.gateway.zuul.security;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -35,7 +34,6 @@ public class JwtTokenProvider {
         .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret)
         .claim("id", Long.toString(userPrincipal.getId()))
         .claim("email", userPrincipal.getEmail())
-//        .claim("role", userPrincipal.getRole().getRoleName().toUpperCase())
         .claim("authorities",userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
         .claim("userName", userPrincipal.getUsername()).compact();
   }

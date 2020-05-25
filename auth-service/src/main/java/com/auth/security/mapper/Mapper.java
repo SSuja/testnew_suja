@@ -37,7 +37,7 @@ public class Mapper {
 
   private ModelMapper createModelMapper() {
     ModelMapper mapper = new ModelMapper();
-   
+
     return mapper;
   }
 }

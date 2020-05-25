@@ -55,7 +55,8 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public String validatePasswordResetToken(String token) {
     final VerificationToken passToken = verificationTokenRepository.findByToken(token);
-    return !isTokenFound(passToken) ? "tokenString" : isTokenExpired(passToken) ? "expiryDate" : null;
+    return !isTokenFound(passToken) ? "tokenString"
+        : isTokenExpired(passToken) ? "expiryDate" : null;
   }
 
   private boolean isTokenFound(VerificationToken passToken) {
@@ -66,6 +67,7 @@ public class AuthServiceImpl implements AuthService {
     final Calendar cal = Calendar.getInstance();
     return passToken.getExpiryDate().before(cal.getTime());
   }
+
   @Override
   public User getUserByPasswordResetToken(String token) {
     return verificationTokenRepository.findByToken(token).getUser();

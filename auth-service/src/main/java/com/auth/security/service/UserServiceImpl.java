@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   public User saveUser(User user) {
-   return saveUserPassword(user, user.getPassword());
+    return saveUserPassword(user, user.getPassword());
   }
 
   private User saveUserPassword(User user, String password) {
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
   @Transactional(readOnly = true)
   public boolean isEmployeeExist(Long employeeId) {
-//    return userRepository.existsByEmployeeId(employeeId);
+    // return userRepository.existsByEmployeeId(employeeId);
     return false;
   }
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void changeUserPassword(User user, String newPassword) {
-   saveUserPassword(user,newPassword);
+    saveUserPassword(user, newPassword);
   }
 
   @Override
