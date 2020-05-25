@@ -21,6 +21,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.SieveTestService;
 import com.tokyo.supermix.server.services.SieveTestTrialService;
 import com.tokyo.supermix.util.Constants;
@@ -35,6 +36,8 @@ public class SieveTestTrialController {
   private Mapper mapper;
   @Autowired
   private SieveTestTrialService sieveTestTrialService;
+  @Autowired
+  private PlantService plantService;
   @Autowired
   private SieveTestService sieveTestService;
   private static final Logger logger = Logger.getLogger(SieveTestTrialController.class);
@@ -94,6 +97,20 @@ public class SieveTestTrialController {
       logger.debug("No Sieve Test Trial record exist for given Sieve Test id");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
           validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = EndpointURI.GET_SIEVE_TEST_TRIAL_BY_PLANT)
+  public ResponseEntity<Object> getSieveTestTrialByPlant(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+          mapper.map(sieveTestTrialService.getSieveTestTrialByPlantCode(plantCode),
+              SieveTestTrialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Sieve Test Trial record exist for given Plant Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
 

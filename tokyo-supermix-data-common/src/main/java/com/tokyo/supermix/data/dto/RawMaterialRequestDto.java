@@ -11,6 +11,7 @@ public class RawMaterialRequestDto {
   private String name;
   private Nature nature;
   private Long materialSubCategoryId;
+  private String description;
 
   public Long getId() {
     return id;
@@ -44,4 +45,11 @@ public class RawMaterialRequestDto {
     this.materialSubCategoryId = materialSubCategoryId;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

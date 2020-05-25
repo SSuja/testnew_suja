@@ -1,17 +1,9 @@
 package com.tokyo.supermix.data.dto;
 
-import com.tokyo.supermix.data.enums.Status;
-
 public class ConcreteTestResponseDto {
 	private Long id;
-	private FinishProductSampleResponseDto finishProductSample;
-	private Double slump;
-	private String temperature;
-	private Double waterContent;
-	private Double slumpGradeRatio;
-	private Double waterCementRatio;
-	private Double waterBinderRatio;
-	private Status status;
+	private String name;
+	private ConcreteTestTypeDto ConcreteTestType;
 
 	public Long getId() {
 		return id;
@@ -21,67 +13,19 @@ public class ConcreteTestResponseDto {
 		this.id = id;
 	}
 
-	public FinishProductSampleResponseDto getFinishProductSample() {
-		return finishProductSample;
+	public String getName() {
+		return name;
 	}
 
-	public void setFinishProductSample(FinishProductSampleResponseDto finishProductSample) {
-		this.finishProductSample = finishProductSample;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Double getSlump() {
-		return slump;
+	public ConcreteTestTypeDto getConcreteTestType() {
+		return ConcreteTestType;
 	}
 
-	public void setSlump(Double slump) {
-		this.slump = slump;
-	}
-
-	public String getTemperature() {
-		return temperature;
-	}
-
-	public void setTemperature(String temperature) {
-		this.temperature = temperature;
-	}
-
-	public Double getWaterContent() {
-		return waterContent;
-	}
-
-	public void setWaterContent(Double waterContent) {
-		this.waterContent = waterContent;
-	}
-
-	public Double getSlumpGradeRatio() {
-		return slumpGradeRatio;
-	}
-
-	public void setSlumpGradeRatio(Double slumpGradeRatio) {
-		this.slumpGradeRatio = slumpGradeRatio;
-	}
-
-	public Double getWaterCementRatio() {
-		return waterCementRatio;
-	}
-
-	public void setWaterCementRatio(Double waterCementRatio) {
-		this.waterCementRatio = waterCementRatio;
-	}
-
-	public Double getWaterBinderRatio() {
-		return waterBinderRatio;
-	}
-
-	public void setWaterBinderRatio(Double waterBinderRatio) {
-		this.waterBinderRatio = waterBinderRatio;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setConcreteTestType(ConcreteTestTypeDto concreteTestType) {
+		ConcreteTestType = concreteTestType;
 	}
 }

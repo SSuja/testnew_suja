@@ -49,4 +49,10 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
     return finishProductSampleIssueRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode) {
+    return finishProductSampleIssueRepository
+        .findByFinishProductSampleMixDesignPlantCode(plantCode);
+  }
 }

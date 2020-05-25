@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.ParameterResultRequestDto;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.EntryLevel;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
@@ -25,6 +27,10 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   private MaterialTestTrialRepository materialTestTrialRepository;
   @Autowired
   private TestParameterRepository testParameterRepository;
+  @Autowired
+  private TestParameterService testParameterService;
+  @Autowired
+  private EquationService equationService;
 
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
@@ -58,7 +64,11 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     for (ParameterResult parameterResult : parameterResultList) {
       TestParameter testParameter =
           testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
-      engine.put(testParameter.getParameter().getAbbreviation(), parameterResult.getValue());
+      if (testParameter.getEntryLevel() == EntryLevel.TEST) {
+        engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
+      } else {
+        engine.put(testParameter.getAbbreviation(), testParameter.getValue());
+      }
     }
     try {
       result = (double) engine.eval(equation);
@@ -82,16 +92,30 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
-    if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation() == null) {
+    if (equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula() == null) {
       for (ParameterResult parameterResult : parameterResultList) {
         materialTestTrial.setResult(parameterResult.getValue());
       }
     } else {
       Double result = roundDoubleValue(calculateTestResult(
-          materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula(),
+          equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula(),
           parameterResultList));
       materialTestTrial.setResult(result);
       materialTestTrialRepository.save(materialTestTrial);
     }
+  }
+
+  public void isTestParameterValueInConfigureLevel(ParameterResultRequestDto parameterResult) {
+    if (testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+        .getEntryLevel() == EntryLevel.CONFIGURE) {
+      parameterResult.setValue(testParameterService
+          .getTestParameterById(parameterResult.getTestParameterId()).getValue());
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public List<ParameterResult> findParameterResultByPlantCode(String plantCode) {
+    return parameterResultRepository
+        .findByMaterialTestTrialMaterialTestIncomingSamplePlantCode(plantCode);
   }
 }

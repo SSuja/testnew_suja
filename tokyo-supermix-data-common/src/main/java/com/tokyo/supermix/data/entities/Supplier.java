@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +26,9 @@ public class Supplier implements Serializable {
   @ManyToOne
   @JoinColumn(name = "suppilerCategoryId", nullable = false)
   private SupplierCategory suppilerCategory;
-
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = false)
+  private Plant plant;
 
   public Long getId() {
     return id;
@@ -85,8 +86,15 @@ public class Supplier implements Serializable {
     this.suppilerCategory = suppilerCategory;
   }
 
+  public Plant getPlant() {
+    return plant;
+  }
+
+  public void setPlant(Plant plant) {
+    this.plant = plant;
+  }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

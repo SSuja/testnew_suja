@@ -26,4 +26,6 @@ public interface IncomingSampleService {
   public List<IncomingSample> getIncomingSampleByStatus(Status status);
 
   public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
+
+  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
 }

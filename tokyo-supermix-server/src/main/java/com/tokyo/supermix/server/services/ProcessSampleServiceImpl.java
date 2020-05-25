@@ -53,4 +53,9 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
     return processSampleRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.Direction.ASC, "code"));
   }
+
+  @Transactional(readOnly = true)
+  public List<ProcessSample> getProcessSampleByPlantCode(String plantCode) {
+    return processSampleRepository.findByIncomingSamplePlantCode(plantCode);
+  }
 }

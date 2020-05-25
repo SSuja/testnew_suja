@@ -17,12 +17,12 @@ public class TestConfigure implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private boolean coreTest;
+  private String description;
+  private String testProcedure;
+  private String prefix;
   @ManyToOne
   @JoinColumn(name = "testTypeId", nullable = false)
   private TestType testType;
-  @ManyToOne
-  @JoinColumn(name = "equationId", nullable = true)
-  private Equation equation;
   @ManyToOne
   @JoinColumn(name = "testId", nullable = false)
   private Test test;
@@ -43,14 +43,6 @@ public class TestConfigure implements Serializable {
     this.testType = testType;
   }
 
-  public Equation getEquation() {
-    return equation;
-  }
-
-  public void setEquation(Equation equation) {
-    this.equation = equation;
-  }
-
   public boolean isCoreTest() {
     return coreTest;
   }
@@ -65,6 +57,30 @@ public class TestConfigure implements Serializable {
 
   public void setTest(Test test) {
     this.test = test;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public String getTestProcedure() {
+    return testProcedure;
+  }
+
+  public void setTestProcedure(String testProcedure) {
+    this.testProcedure = testProcedure;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 
   public static long getSerialversionuid() {

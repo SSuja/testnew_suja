@@ -114,7 +114,7 @@ public class Constants {
 	/*
 	 * Constants for Equation validation key & Success messages
 	 */
-	public static final String EQUATION_FORMULA = "formula";
+	
 	public static final String EQUATIONS = "equations";
 	public static final String EQUATION = "equation";
 	public static final String EQUATION_ID = "equationId";
@@ -432,7 +432,7 @@ public class Constants {
 	public static final String CUBE_TEST_FINDING_AGE = "age";
 	public static final String CUBE_TEST_FINDING_DELETED = "Cube Test Finding Successfully Deleted";
 	public static final String ADD_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Successfully Added Successfully";
-	public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Successfully Updated Successfully";
+	public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Updated Successfully";
 	/*
 	 * Constants for Test validation key & Success messages
 	 */
@@ -441,6 +441,60 @@ public class Constants {
 	public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
 	public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
 	public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
+	/*
+	 * Constants for Quality Parameter validation key & Success messages
+	 */
+	public static final String QUALITY_PARAMETER = "qualityParameter";
+	public static final String QUALITY_PARAMETERS = "qualityParameters";
+	public static final String QUALITY_PARAMETER_ID = "qualityParameterId";
+	public static final String ADD_QUALITY_PARAMETER_SUCCESS = "Quality Parameter Added Successfully";
+	public static final String DELETED_QUALITY_PARAMETER = "Quality Parameter Successfully Deleted";
+	public static final String UPDATE_QUALITY_PARAMETER_SUCCESS = "Quality Parameter Updated Successfully";
+
+	/*
+	 * Constants for Material Quality Parameter validation key & Success messages
+	 */
+	public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
+	public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
+	public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
+	public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS = "Material Quality Parameter Added Successfully";
+	public static final String DELETED_MATERIAL_QUALITY_PARAMETER = "Material Quality Parameter Successfully Deleted";
+	public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS = "Material Quality Parameter Updated Successfully";
+	/*
+	 * 
+	 */
+	public static final String CONCRETE_TEST_TYPE = "concreteTestType";
+	public static final String CONCRETE_TEST_TYPE_TYPE = "type";
+	public static final String CONCRETE_TEST_TYPES = "concreteTestTypes";
+	public static final String ADD_CONCRETE_TEST_TYPE_SUCCESS = "Concrete Test Type Added Successfully";
+	public static final String CONCRETE_TEST_TYPE_DELETED = "Concrete Test Type Successfully Deleted";
+	public static final String UPDATE_CONCRETE_TEST_TYPE_SUCCESS = "Concrete Test Type Updated Successfully";
+	/*
+	 * 
+	 */
+	public static final String CONCRETE_TEST_RESULT = "concreteTestResult";
+	public static final String CONCRETE_TEST_RESULTS = "concreteTestResults";
+	public static final String STRENGTH = "strength";
+	public static final String SLUMP = "slump";
+	public static final String STRENGTH_TEST = "strengthTest";
+	public static final String SLUMP_TEST = "slumpTest";
+	public static final String MOISTURE = "moisture";
+	public static final String STRENGTH_GRADE_RATIO = "strengthGradeRatio";
+	public static final String SLUMP_GRADE_RATIO = "slumpGradeRatio";
+	public static final String WATER_CEMENT_RATIO = "waterCementRatio";
+	public static final String WATER_BINDER_RATIO = "waterBinderRatio";
+	public static final String ADD_CONCRETE_TEST_RESULT_SUCCESS = "Concrete Test Result Added Successfully";
+	public static final String CONCRETE_TEST_RESULT_DELETED = "Concrete Test Result Successfully Deleted";
+	public static final String UPDATE_CONCRETE_TEST_RESULT_SUCCESS = "Concrete Test Result Updated Successfully";
+	/*
+	 * Constants for Concrete Test Status validation key & Success messages
+	 */
+	public static final String CONCRETE_TEST_STATUSES = "concreteTestStatuses";
+	public static final String CONCRETE_TEST_STATUS = "concreteTestStatus";
+	public static final String CONCRETE_TEST_STATUS_ID = "concreteTestStatusId";
+	public static final String ADD_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Added Successfully";
+	public static final String CONCRETE_TEST_STATUS_DELETED = "Concrete Test Status Successfully Deleted";
+	public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Updated Successfully";
 
 	/*
 	 * Encapsulate constructor to restrict modification from outside

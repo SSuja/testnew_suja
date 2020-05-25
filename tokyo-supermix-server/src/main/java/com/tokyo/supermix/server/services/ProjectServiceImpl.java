@@ -14,50 +14,53 @@ import com.tokyo.supermix.data.repositories.ProjectRepository;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
-  @Autowired
-  private ProjectRepository projectRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
 
-  @Transactional(readOnly = true)
-  public boolean isNameExist(String name) {
-    return projectRepository.existsByName(name);
-  }
+	@Transactional(readOnly = true)
+	public boolean isNameExist(String name) {
+		return projectRepository.existsByName(name);
+	}
 
-  @Transactional(readOnly = true)
-  public List<Project> getAllProjects() {
-    return projectRepository.findAll();
-  }
+	@Transactional(readOnly = true)
+	public List<Project> getAllProjects() {
+		return projectRepository.findAll();
+	}
 
-  @Transactional
-  public void saveProject(Project project) {
-    projectRepository.save(project);
-  }
+	@Transactional
+	public void saveProject(Project project) {
+		projectRepository.save(project);
+	}
 
+	@Transactional(readOnly = true)
+	public Project getProjectByCode(String code) {
+		return projectRepository.findById(code).get();
+	}
 
-  @Transactional(readOnly = true)
-  public Project getProjectByCode(String code) {
-    return projectRepository.findById(code).get();
-  }
+	@Transactional(readOnly = true)
+	public boolean isProjectExist(String code) {
+		return projectRepository.existsById(code);
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isProjectExist(String code) {
-    return projectRepository.existsById(code);
-  }
+	@Transactional(propagation = Propagation.NEVER)
+	public void deleteProject(String code) {
+		projectRepository.deleteById(code);
+	}
 
-  @Transactional(propagation = Propagation.NEVER)
-  public void deleteProject(String code) {
-    projectRepository.deleteById(code);
-  }
+	public boolean isUpdatedProjectExist(String code, String name) {
+		if ((!getProjectByCode(code).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
+			return true;
+		}
+		return false;
+	}
 
-  public boolean isUpdatedProjectExist(String code, String name) {
-    if ((!getProjectByCode(code).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
-      return true;
-    }
-    return false;
-  }
+	@Transactional(readOnly = true)
+	public Page<Project> searchProject(Predicate predicate, int size, int page) {
+		return projectRepository.findAll(predicate, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+	}
 
-  @Transactional(readOnly = true)
-  public Page<Project> searchProject(Predicate predicate, int size, int page) {
-    return projectRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
-  }
+	@Transactional(readOnly = true)
+	public List<Project> getProjectByPlantCode(String plantCode) {
+		return projectRepository.findByPlantCode(plantCode);
+	}
 }

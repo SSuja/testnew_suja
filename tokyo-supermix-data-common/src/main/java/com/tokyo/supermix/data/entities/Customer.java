@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +23,9 @@ public class Customer implements Serializable {
   private String phoneNumber;
   private String address;
   private String email;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = false)
+  private Plant plant;
 
   public Long getId() {
     return id;
@@ -62,8 +67,15 @@ public class Customer implements Serializable {
     this.email = email;
   }
 
+  public Plant getPlant() {
+    return plant;
+  }
+
+  public void setPlant(Plant plant) {
+    this.plant = plant;
+  }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

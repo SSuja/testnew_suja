@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,6 +26,7 @@ public class RawMaterial implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = false)
   private MaterialSubCategory materialSubCategory;
+  private String description;
 
   public Long getId() {
     return id;
@@ -64,4 +64,11 @@ public class RawMaterial implements Serializable {
     return serialVersionUID;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

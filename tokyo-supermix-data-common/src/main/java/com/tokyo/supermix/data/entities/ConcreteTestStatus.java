@@ -1,7 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,32 +11,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.ConcreteStatus;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "concrete_strength_test")
-public class ConcreteStrengthTest implements Serializable {
+@Table(schema = "tokyo-supermix", name = "concrete_test_status")
+public class ConcreteTestStatus implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Long concreteAge;
-	private Double strength;
-	private Date date;
-	private Double strengthGradeRatio;
-	@Enumerated(EnumType.ORDINAL)
-	private Status status;
+	@ManyToOne
+	@JoinColumn(name = "concreteTestTypeId", nullable = false)
+	private ConcreteTestType concreteTestType;
 	@ManyToOne
 	@JoinColumn(name = "finishProductSampleId", nullable = false)
 	private FinishProductSample finishProductSample;
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	@Enumerated(EnumType.ORDINAL)
+	private ConcreteStatus concreteStatus;
 
 	public Long getId() {
 		return id;
@@ -46,36 +37,12 @@ public class ConcreteStrengthTest implements Serializable {
 		this.id = id;
 	}
 
-	public Long getConcreteAge() {
-		return concreteAge;
+	public ConcreteTestType getConcreteTestType() {
+		return concreteTestType;
 	}
 
-	public void setConcreteAge(Long concreteAge) {
-		this.concreteAge = concreteAge;
-	}
-
-	public Double getStrength() {
-		return strength;
-	}
-
-	public void setStrength(Double strength) {
-		this.strength = strength;
-	}
-
-	public Double getStrengthGradeRatio() {
-		return strengthGradeRatio;
-	}
-
-	public void setStrengthGradeRatio(Double strengthGradeRatio) {
-		this.strengthGradeRatio = strengthGradeRatio;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setConcreteTestType(ConcreteTestType concreteTestType) {
+		this.concreteTestType = concreteTestType;
 	}
 
 	public FinishProductSample getFinishProductSample() {
@@ -84,6 +51,14 @@ public class ConcreteStrengthTest implements Serializable {
 
 	public void setFinishProductSample(FinishProductSample finishProductSample) {
 		this.finishProductSample = finishProductSample;
+	}
+
+	public ConcreteStatus getConcreteStatus() {
+		return concreteStatus;
+	}
+
+	public void setConcreteStatus(ConcreteStatus concreteStatus) {
+		this.concreteStatus = concreteStatus;
 	}
 
 	public static long getSerialversionuid() {

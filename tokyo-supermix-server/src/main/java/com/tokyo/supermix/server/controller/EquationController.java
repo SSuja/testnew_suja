@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.EquationDto;
+import com.tokyo.supermix.data.dto.EquationRequestDto;
+import com.tokyo.supermix.data.dto.EquationResponseDto;
 import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -38,10 +39,10 @@ public class EquationController {
 
   // Add Equation
   @PostMapping(value = EndpointURI.EQUATION)
-  public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationDto equationDto) {
-    if (equationService.isFormulaExist(equationDto.getFormula())) {
-      logger.debug("formula is already exists: createEquation(), isNameExist: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+  public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationRequestDto equationDto) {
+    if (equationService.configureIdExist(equationDto.getTestConfigureId())) {
+      logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     equationService.saveEquation(mapper.map(equationDto, Equation.class));
@@ -55,7 +56,7 @@ public class EquationController {
   public ResponseEntity<Object> getAllEquations() {
     logger.debug("get all equations");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATIONS,
-        mapper.map(equationService.getAllEquations(), EquationDto.class), RestApiResponseStatus.OK),
+        mapper.map(equationService.getAllEquations(), Equation.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
 
@@ -65,7 +66,7 @@ public class EquationController {
     if (equationService.isEquationExist(id)) {
       logger.debug("Get equation By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
-          mapper.map(equationService.getEquationById(id), EquationDto.class),
+          mapper.map(equationService.getEquationById(id), EquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
@@ -88,10 +89,11 @@ public class EquationController {
 
   // Update Equation
   @PutMapping(value = EndpointURI.EQUATION)
-  public ResponseEntity<Object> updateEquation(@Valid @RequestBody EquationDto equationDto) {
+  public ResponseEntity<Object> updateEquation(@Valid @RequestBody EquationRequestDto equationDto) {
     if (equationService.isEquationExist(equationDto.getId())) {
-      if (equationService.isUpdatedFormulaExist(equationDto.getId(), equationDto.getFormula())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+      if (equationService.isUpdatedTestConfigureIdExist(equationDto.getId(),
+          equationDto.getTestConfigureId())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
             validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       equationService.saveEquation(mapper.map(equationDto, Equation.class));
