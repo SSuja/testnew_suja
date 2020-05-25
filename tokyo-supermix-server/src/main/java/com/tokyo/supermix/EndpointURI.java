@@ -48,8 +48,8 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
-  public static final String GET_SUPPLIER_BY_PLANT_CODE =
-      SUPPLIER + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_SUPPLIERS_BY_PLANT_CODE =
+      SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Employee apis
    */
@@ -168,8 +168,9 @@ public final class EndpointURI {
   public static final String DELETE_CUSTOMER = CUSTOMER + ID;
   public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
   public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
-  public static final String GET_CUSTOMER_BY_PLANT_CODE =
-      CUSTOMER + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_CUSTOMERS_BY_PLANT_CODE =
+      CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
+
   /*
    * Equation APIs
    */
@@ -201,7 +202,15 @@ public final class EndpointURI {
   public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID =
       TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
   public static final String SEARCH_TEST_TYPE = TEST_TYPE + SEARCH;
-
+  /*
+   * Project APIs
+   */
+  public static final String PROJECT = BASE_API_PATH + "project";
+  public static final String PROJECT_BY_ID = PROJECT + CODE;
+  public static final String PROJECTS = BASE_API_PATH + "projects";
+  public static final String SEARCH_PROJECT = PROJECT + SEARCH;
+  public static final String GET_PROJECTS_BY_PLANT_CODE =
+      PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * IncomingSample Apis
    */
@@ -215,16 +224,6 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
   public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
-  /*
-   * Project APIs
-   */
-  public static final String PROJECT = BASE_API_PATH + "project";
-  public static final String PROJECT_BY_ID = PROJECT + CODE;
-  public static final String PROJECTS = BASE_API_PATH + "projects";
-  public static final String SEARCH_PROJECT = PROJECT + SEARCH;
-  public static final String GET_PROJECTS_BY_PLANT_CODE =
-      PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
-
   /*
    * Mix design apis
    * 
