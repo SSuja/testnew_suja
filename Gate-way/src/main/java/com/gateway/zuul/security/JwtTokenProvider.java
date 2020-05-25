@@ -25,19 +25,7 @@ public class JwtTokenProvider {
 
   @Value("${app.jwtExpirationInMs}")
   private int jwtExpirationInMs;
-
-  public String generateToken(Authentication authentication) {
-    UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-    Date now = new Date();
-    Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
-    return Jwts.builder().setSubject(Long.toString(userPrincipal.getId())).setIssuedAt(new Date())
-        .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret)
-        .claim("id", Long.toString(userPrincipal.getId()))
-        .claim("email", userPrincipal.getEmail())
-        .claim("authorities",userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-        .claim("userName", userPrincipal.getUsername()).compact();
-  }
-
+  
   public Long getUserIdFromJWT(String token) {
     Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
     return Long.parseLong(claims.getSubject());
