@@ -6,4 +6,7 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 
 public interface ParameterResultRepository extends JpaRepository<ParameterResult, Long> {
   List<ParameterResult> findByMaterialTestTrialCode(String materialTestTrialCode);
+
+  List<ParameterResult> findByMaterialTestTrialMaterialTestIncomingSamplePlantCode(
+      String plantCode);
 }

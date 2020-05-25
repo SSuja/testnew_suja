@@ -192,4 +192,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.findAll(booleanBuilder,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getMaterialTestByPlantCode(String plantCode) {
+    return materialTestRepository.findByIncomingSamplePlantCode(plantCode);
+  }
 }

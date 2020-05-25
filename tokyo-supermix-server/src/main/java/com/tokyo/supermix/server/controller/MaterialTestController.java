@@ -27,6 +27,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -36,6 +37,8 @@ public class MaterialTestController {
 
   @Autowired
   MaterialTestService materialTestService;
+  @Autowired
+  private PlantService plantService;
   @Autowired
   private IncomingSampleService incomingSampleService;
   @Autowired
@@ -151,5 +154,19 @@ public class MaterialTestController {
                 averageMin, averageMax, booleanBuilder, page, size),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_BY_PLANT)
+  public ResponseEntity<Object> getMaterialTestByPlant(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+          mapper.map(materialTestService.getMaterialTestByPlantCode(plantCode),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Material Test record exist for given Plant Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

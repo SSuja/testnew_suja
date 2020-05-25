@@ -112,4 +112,10 @@ public class ParameterResultServiceImpl implements ParameterResultService {
           .getTestParameterById(parameterResult.getTestParameterId()).getValue());
     }
   }
+
+  @Transactional(readOnly = true)
+  public List<ParameterResult> findParameterResultByPlantCode(String plantCode) {
+    return parameterResultRepository
+        .findByMaterialTestTrialMaterialTestIncomingSamplePlantCode(plantCode);
+  }
 }
