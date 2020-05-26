@@ -13,6 +13,7 @@ import com.tokyo.supermix.data.entities.Employee;
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
 public class User extends DateAudit {
+  private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -25,6 +26,7 @@ public class User extends DateAudit {
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;
+
   public Long getId() {
     return id;
   }
