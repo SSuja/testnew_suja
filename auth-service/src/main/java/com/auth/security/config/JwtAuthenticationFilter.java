@@ -21,6 +21,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private JwtTokenProvider tokenProvider;
   @Autowired
   private AuthUserDetailsService authUserDetailsService;
+  
   private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
   @Override
@@ -28,21 +29,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       FilterChain filterChain) throws ServletException, IOException {
     try {
       String jwt = getJwtFromRequest(request);
-      if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-        Long userId = tokenProvider.getUserIdFromJWT(jwt);
-        UserDetails userDetails = authUserDetailsService.loadUserById(userId);
-        UsernamePasswordAuthenticationToken authentication =
-            new UsernamePasswordAuthenticationToken(userDetails, null,
-                userDetails.getAuthorities());
-        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+      String username = request.getHeader("X-User-Header");
+      if(username != null) {
+        UserDetails userDetails = authUserDetailsService.loadUserByUsername(username);
+        setAuth(userDetails,request);
       }
+      if(jwt != null ) {     
+        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+          Long userId = tokenProvider.getUserIdFromJWT(jwt);
+          UserDetails userDetails = authUserDetailsService.loadUserById(userId);
+          setAuth(userDetails,request);
+      }
+      }
+      
     } catch (Exception ex) {
       logger.error("Could not set user authentication in security context", ex);
     }
     filterChain.doFilter(request, response);
   }
-
+  
+  private void setAuth(UserDetails userDetails,HttpServletRequest request) {
+    UsernamePasswordAuthenticationToken authentication =
+        new UsernamePasswordAuthenticationToken(userDetails, null,
+            userDetails.getAuthorities());
+    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+  }
+  
   private String getJwtFromRequest(HttpServletRequest request) {
     String bearerToken = request.getHeader("Authorization");
     if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
