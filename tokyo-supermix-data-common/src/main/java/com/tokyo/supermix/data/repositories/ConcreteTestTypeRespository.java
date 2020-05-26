@@ -8,4 +8,6 @@ import com.tokyo.supermix.data.entities.ConcreteTestType;
 public interface ConcreteTestTypeRespository
 		extends JpaRepository<ConcreteTestType, Long>, QuerydslPredicateExecutor<ConcreteTestType> {
 	boolean existsByType(String type);
+
+	ConcreteTestType findByType(String type);
 }
