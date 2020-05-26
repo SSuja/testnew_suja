@@ -94,8 +94,10 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
       calculateStatus(average, admixtureAcceptedValue.getMinValue(),
           admixtureAcceptedValue.getMaxValue(), materialTestCode);
     } else {
-      calculateStatus(average, acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
-          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(), materialTestCode);
+      calculateStatus(average,
+          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
+          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
+          materialTestCode);
     }
   }
 
@@ -132,5 +134,10 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     materialTest.setAverage(roundDoubleValue(average));
     materialTest.setStatus(status);
     return materialTestRepository.save(materialTest);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode) {
+    return materialTestTrialRepository.findByMaterialTestIncomingSamplePlantCode(plantCode);
   }
 }

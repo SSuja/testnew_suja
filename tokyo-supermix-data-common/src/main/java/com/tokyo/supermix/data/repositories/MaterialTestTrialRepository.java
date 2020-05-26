@@ -8,8 +8,10 @@ public interface MaterialTestTrialRepository extends JpaRepository<MaterialTestT
   boolean existsByMaterialTestCode(String materialTestCode);
 
   List<MaterialTestTrial> findByMaterialTestCode(String materialTestCode);
-  
+
   boolean existsByCode(String code);
- 
+
   MaterialTestTrial findByCode(String code);
+
+  List<MaterialTestTrial> findByMaterialTestIncomingSamplePlantCode(String plantCode);
 }

@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.repositories;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
@@ -10,4 +11,6 @@ public interface CustomerRepository
   boolean existsByEmail(String mail);
 
   boolean existsByName(String name);
+
+  List<Customer> findByPlantCode(String plantCode);
 }
