@@ -190,6 +190,10 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   public void saveConcreteSlumpTestSlumpResult(ConcreteTestResult concreteTestResult) {
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.SLUMP_TEST);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+    concreteTestResult.setStatus(calculateConcreteStatus(
+        concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getResult()));
+    setConcreteTestSlumpStatus(concreteTestResult.getFinishProductSample().getId(),
+        concreteTestResult.getStatus());
     concreteTestResultRepository.save(concreteTestResult);
   }
 
@@ -204,18 +208,14 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   public void saveConcreteSlumpTestSlumpGradeRatioResult(ConcreteTestResult concreteTestResult) {
     concreteTestResult.setResult(calculateSlumpGradeRatio(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getResult()));
-    concreteTestResult.setStatus(calculateConcreteStatus(
-        concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getResult()));
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.SLUMP_GRADE_RATIO);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
-    setConcreteTestSlumpStatus(concreteTestResult.getFinishProductSample().getId(),
-        concreteTestResult.getStatus());
     concreteTestResultRepository.save(concreteTestResult);
   }
 
   @Transactional
   public void saveConcreteStrengthTestAverageStrengthResult(ConcreteTestResult concreteTestResult) {
-    concreteTestResult.setResult(roundDoubleValue(calculateAverageCubStrength(
+    concreteTestResult.setResult(roundDoubleValue(calculateAverageCubeStrength(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_TEST);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
@@ -225,7 +225,7 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   @Transactional
   public void saveConcreteStrengthTestStrengthGradeRatioResult(
       ConcreteTestResult concreteTestResult) {
-    concreteTestResult.setResult(roundDoubleValue(calculateCubStrengthRatio(
+    concreteTestResult.setResult(roundDoubleValue(calculateCubeStrengthRatio(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
     calculateConcreteStrengthStatus(concreteTestResult);
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_GRADE_RATIO);
@@ -283,19 +283,18 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     }
   }
 
-  public Double calculateAverageCubStrength(Long finishProductSampleId, Long concretAge) {
+  public Double calculateAverageCubeStrength(Long finishProductSampleId, Long concretAge) {
     List<CubeTestFinding> CubeTestFindingList =
         cubeTestFindingRepository.findByFinishProductSampleId(finishProductSampleId);
-    double sum = 0;
-    double count = 0;
+    double cubeResult = 0;
+    double cubeTotalNum = 0;
     for (CubeTestFinding cubeTestFinding : CubeTestFindingList) {
-
       if (cubeTestFinding.getAge() == concretAge) {
-        sum = sum + cubeTestFinding.getValue();
-        count++;
+        cubeResult = cubeResult + cubeTestFinding.getValue();
+        cubeTotalNum++;
       }
     }
-    return (sum / count);
+    return (cubeResult / cubeTotalNum);
   }
 
   public Double getTargetGradre(Long finishProductSampleId) {
@@ -314,8 +313,8 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     }
   }
 
-  public Double calculateCubStrengthRatio(Long finishProductSampleId, Long age) {
-    return calculateAverageCubStrength(finishProductSampleId, age)
+  public Double calculateCubeStrengthRatio(Long finishProductSampleId, Long age) {
+    return calculateAverageCubeStrength(finishProductSampleId, age)
         / getTargetGradre(finishProductSampleId);
   }
 

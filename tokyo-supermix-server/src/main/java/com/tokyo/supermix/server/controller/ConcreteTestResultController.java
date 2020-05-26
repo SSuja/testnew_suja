@@ -88,8 +88,9 @@ public class ConcreteTestResultController {
 
   @GetMapping(value = EndpointURI.CONCRETE_TEST_RESULTS)
   public ResponseEntity<Object> getAllConcreteTestResult() {
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS, mapper
-        .map(concreteTestResultService.getAllConcreteTestResults(), ConcreteTestResponseDto.class),
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS,
+        mapper.map(concreteTestResultService.getAllConcreteTestResults(),
+            ConcreteTestResultResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
