@@ -521,6 +521,8 @@ public final class EndpointURI {
   public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "test-parameter-statuses";
   public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
   public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
+  public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS =
+      CONCRETE_TEST_STATUS + SLASH + "concrete-status" + SLASH + "{concreteStatus}";
 
   /*
    * AdmixtureAcceptedValue Apis
