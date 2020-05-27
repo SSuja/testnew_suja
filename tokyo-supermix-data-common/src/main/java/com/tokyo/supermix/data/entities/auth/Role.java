@@ -21,11 +21,11 @@ public class Role {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String roleName;
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "permission_role", joinColumns = {
-          @JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {
-          @JoinColumn(name = "permission_id", referencedColumnName = "id")})
-  private List<Permission> permissions;
+//  @ManyToMany(fetch = FetchType.EAGER)
+//  @JoinTable(name = "permission_role", joinColumns = {
+//          @JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {
+//          @JoinColumn(name = "permission_id", referencedColumnName = "id")})
+//  private List<Permission> permissions;
   public Long getId() {
     return id;
   }
@@ -42,12 +42,12 @@ public class Role {
     this.roleName = roleName;
   }
 
-public List<Permission> getPermissions() {
-	return permissions;
-}
-
-public void setPermissions(List<Permission> permissions) {
-	this.permissions = permissions;
-}
+//public List<Permission> getPermissions() {
+//	return permissions;
+//}
+//
+//public void setPermissions(List<Permission> permissions) {
+//	this.permissions = permissions;
+//}
 
 }

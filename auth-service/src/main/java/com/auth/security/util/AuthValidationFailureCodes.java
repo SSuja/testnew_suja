@@ -27,7 +27,7 @@ public class AuthValidationFailureCodes {
   private String passwordIsEmpty;
   @Value("${userRequestDto.password.null}")
   private String passwordIsNull;
-  
+
   // Authentication
   @Value("${auth.password.invalid}")
   private String password;
@@ -161,6 +161,31 @@ public class AuthValidationFailureCodes {
 
   public void setRoleNameAlreadyExists(String roleNameAlreadyExists) {
     this.roleNameAlreadyExists = roleNameAlreadyExists;
+  }
+
+  /*
+   * Role Permission
+   */
+  @Value("${validation.rolePermission.notExists}")
+  private String rolePermissionNotExist;
+
+  @Value("${validation.rolePermission.alreadyExist}")
+  private String rolePermissionAlreadyExist;
+
+  public String getRolePermissionNotExist() {
+    return rolePermissionNotExist;
+  }
+
+  public void setRolePermissionNotExist(String rolePermissionNotExist) {
+    this.rolePermissionNotExist = rolePermissionNotExist;
+  }
+
+  public String getRolePermissionAlreadyExist() {
+    return rolePermissionAlreadyExist;
+  }
+
+  public void setRolePermissionAlreadyExist(String rolePermissionAlreadyExist) {
+    this.rolePermissionAlreadyExist = rolePermissionAlreadyExist;
   }
 
 }

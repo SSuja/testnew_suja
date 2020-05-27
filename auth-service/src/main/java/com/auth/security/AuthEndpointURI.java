@@ -15,7 +15,7 @@ public final class AuthEndpointURI {
    * Authentication
    * 
    */
-  public static final String AUTH = BASE_API_PATH + "auth"+SLASH;
+  public static final String AUTH = BASE_API_PATH + "auth" + SLASH;
   public static final String SIGNIN = AUTH + "sign-in";
   public static final String SIGNUP = AUTH + "sign-up";
   public static final String CHANGE_PASSWORD = AUTH + "change-password";
@@ -35,6 +35,12 @@ public final class AuthEndpointURI {
   public static final String USER = BASE_API_PATH + "user";
   public static final String USERS = BASE_API_PATH + "users";
   public static final String USER_BY_ID = USER + ID;
+  /*
+   * Role_Permission
+   */
+  public static final String ROLE_PERMISSION = BASE_API_PATH + "role-permission";
+  public static final String ROLE_PERMISSIONS = BASE_API_PATH + "role-permissions";
+  public static final String ROLE_PERMISSION_BY_ID = ROLE_PERMISSION + ID;
 
   private AuthEndpointURI() {}
 }
