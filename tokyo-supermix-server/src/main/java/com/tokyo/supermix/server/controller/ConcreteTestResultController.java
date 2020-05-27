@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.ConcreteTestResponseDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResultRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResultResponseDto;
 import com.tokyo.supermix.data.entities.ConcreteTest;
