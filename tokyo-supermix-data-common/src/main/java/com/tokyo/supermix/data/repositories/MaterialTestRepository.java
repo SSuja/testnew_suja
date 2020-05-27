@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -24,4 +23,7 @@ public interface MaterialTestRepository
   List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
   List<MaterialTest> findByIncomingSamplePlantCode(String plantCode);
+
+  List<MaterialTest> findByCodeContaining(String code);
+
 }

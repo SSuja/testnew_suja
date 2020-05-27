@@ -1,12 +1,10 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestLevel;
 
 public class MaterialTestRequestDto {
-
   private String code;
   private Date date;
   private Long noOfTrial;
