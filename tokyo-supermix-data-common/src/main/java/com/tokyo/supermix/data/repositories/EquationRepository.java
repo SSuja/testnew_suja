@@ -4,5 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tokyo.supermix.data.entities.Equation;
 
 public interface EquationRepository extends JpaRepository<Equation, Long> {
-  boolean existsByFormula(String formula);
+  boolean existsByTestConfigureId(Long testConfigureId);
+
+  Equation findByTestConfigureId(Long testConfigureId);
 }

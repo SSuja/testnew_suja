@@ -25,6 +25,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MixDesignService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -34,6 +35,8 @@ public class MixDesignController {
 
   @Autowired
   MixDesignService mixDesignService;
+  @Autowired
+  private PlantService plantService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -121,5 +124,18 @@ public class MixDesignController {
             waterCementRatioMax, waterCementRatioEqual, waterBinderRatioMin, waterBinderRatioMax,
             waterBinderRatioEqual, plantName, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_PLANT)
+  public ResponseEntity<Object> getMixDesignByPlant(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID, mapper
+          .map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No MixDesign record exist for given Plant Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

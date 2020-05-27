@@ -123,4 +123,9 @@ public class MixDesignServiceImpl implements MixDesignService {
     return mixDesignRepository.findAll(booleanBuilder.getValue(),
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getMixDesignByPlantCode(String plantCode) {
+    return mixDesignRepository.findByPlantCode(plantCode);
+  }
 }

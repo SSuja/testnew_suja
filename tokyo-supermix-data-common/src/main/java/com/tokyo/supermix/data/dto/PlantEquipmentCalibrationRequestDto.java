@@ -9,8 +9,6 @@ public class PlantEquipmentCalibrationRequestDto {
   private Long id;
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.calibratedDate.null}")
   private Date calibratedDate;
-  @NotNull(message = "{plantEquipmentCalibrationRequestDto.dueDate.null}")
-  private Date dueDate;
   private CalibrationType calibrationType;
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.userId.null}")
   private Long userId;
@@ -23,6 +21,17 @@ public class PlantEquipmentCalibrationRequestDto {
   @NotEmpty(message = "{plantEquipmentCalibrationRequestDto.status.empty}")
   private String status;
   private Long employeeId;
+  private String accuracy;
+  @NotNull(message = "{plantEquipmentCalibrationRequestDto.noOfDays.null}")
+  private Long noOfDays;
+
+  public Long getNoOfDays() {
+    return noOfDays;
+  }
+
+  public void setNoOfDays(Long noOfDays) {
+    this.noOfDays = noOfDays;
+  }
 
   public Long getEmployeeId() {
     return employeeId;
@@ -46,14 +55,6 @@ public class PlantEquipmentCalibrationRequestDto {
 
   public void setCalibratedDate(Date calibratedDate) {
     this.calibratedDate = calibratedDate;
-  }
-
-  public Date getDueDate() {
-    return dueDate;
-  }
-
-  public void setDueDate(Date dueDate) {
-    this.dueDate = dueDate;
   }
 
   public CalibrationType getCalibrationType() {
@@ -104,4 +105,11 @@ public class PlantEquipmentCalibrationRequestDto {
     this.status = status;
   }
 
+  public String getAccuracy() {
+    return accuracy;
+  }
+
+  public void setAccuracy(String accuracy) {
+    this.accuracy = accuracy;
+  }
 }

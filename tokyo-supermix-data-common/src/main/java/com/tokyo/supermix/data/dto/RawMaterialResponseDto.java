@@ -7,6 +7,7 @@ public class RawMaterialResponseDto {
   private String name;
   private Nature nature;
   private MaterialSubCategoryResponseDto materialSubCategory;
+  private String description;
 
   public Long getId() {
     return id;
@@ -40,4 +41,11 @@ public class RawMaterialResponseDto {
     this.materialSubCategory = materialSubCategory;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

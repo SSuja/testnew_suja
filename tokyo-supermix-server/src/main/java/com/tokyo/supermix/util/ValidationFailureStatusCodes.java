@@ -987,7 +987,7 @@ public class ValidationFailureStatusCodes {
 	// for concreteTest
 	@Value("${validation.concreteTest.alreadyExists}")
 	private String concreteTestAlreadyExists;
-	
+
 	@Value("${validation.concreteTest.notExists}")
 	private String concreteTestNotExist;
 
@@ -998,6 +998,7 @@ public class ValidationFailureStatusCodes {
 	public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
 		this.concreteTestAlreadyExists = concreteTestAlreadyExists;
 	}
+
 	public String getConcreteTestNotExist() {
 		return concreteTestNotExist;
 	}
@@ -1098,209 +1099,284 @@ public class ValidationFailureStatusCodes {
 		this.quantityIsEmpty = quantityNotEmpty;
 	}
 
-  /*
-   * ProcessSampleLoad
-   */
+	/*
+	 * ProcessSampleLoad
+	 */
 
-  @Value("${validation.processSampleLoad.notExists}")
-  private String processSampleLoadNotExist;
+	@Value("${validation.processSampleLoad.notExists}")
+	private String processSampleLoadNotExist;
 
-  @Value("${validation.processSampleLoad.alreadyExist}")
-  private String processSampleLoadAlreadyExist;
+	@Value("${validation.processSampleLoad.alreadyExist}")
+	private String processSampleLoadAlreadyExist;
 
-  public String getProcessSampleLoadNotExist() {
-    return processSampleLoadNotExist;
-  }
+	public String getProcessSampleLoadNotExist() {
+		return processSampleLoadNotExist;
+	}
 
-  public void setProcessSampleLoadNotExist(String processSampleLoadNotExist) {
-    this.processSampleLoadNotExist = processSampleLoadNotExist;
-  }
+	public void setProcessSampleLoadNotExist(String processSampleLoadNotExist) {
+		this.processSampleLoadNotExist = processSampleLoadNotExist;
+	}
 
-  public String getProcessSampleLoadAlreadyExist() {
-    return processSampleLoadAlreadyExist;
-  }
+	public String getProcessSampleLoadAlreadyExist() {
+		return processSampleLoadAlreadyExist;
+	}
 
-  public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
-    this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
-  }
+	public void setProcessSampleLoadAlreadyExist(String processSampleLoadAlreadyExist) {
+		this.processSampleLoadAlreadyExist = processSampleLoadAlreadyExist;
+	}
 
-  @Value("${validation.testParameter.notExists}")
-  private String testParameterNotExist;
+	@Value("${validation.testParameter.notExists}")
+	private String testParameterNotExist;
 
-  @Value("${validation.testParameter.alreadyExist}")
-  private String testParameterAlreadyExist;
+	@Value("${validation.testParameter.alreadyExist}")
+	private String testParameterAlreadyExist;
 
-  public String getTestParameterNotExist() {
-    return testParameterNotExist;
-  }
+	public String getTestParameterNotExist() {
+		return testParameterNotExist;
+	}
 
-  public void setTestParameterNotExist(String testParameterExist) {
-    this.testParameterNotExist = testParameterExist;
-  }
+	public void setTestParameterNotExist(String testParameterExist) {
+		this.testParameterNotExist = testParameterExist;
+	}
 
-  public String getTestParameterAlreadyExist() {
-    return testParameterAlreadyExist;
-  }
+	public String getTestParameterAlreadyExist() {
+		return testParameterAlreadyExist;
+	}
 
-  public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
-    this.testParameterAlreadyExist = testParameterAlreadyExist;
-  }
+	public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
+		this.testParameterAlreadyExist = testParameterAlreadyExist;
+	}
 
-  /*
-   * User
-   */
-  @Value("${validation.user.notExists}")
-  private String userNotExist;
-  @Value("${validation.user.aleadyExists}")
-  private String userAlreadyExist;
-  @Value("${userRequestDto.userName.empty}")
-  private String userNameIsEmpty;
-  @Value("${userRequestDto.userName.null}")
-  private String userNameIsNull;
-  @Value("${userRequestDto.password.empty}")
-  private String passwordIsEmpty;
-  @Value("${userRequestDto.password.null}")
-  private String passwordIsNull;
+	/*
+	 * User
+	 */
+	@Value("${validation.user.notExists}")
+	private String userNotExist;
+	@Value("${validation.user.aleadyExists}")
+	private String userAlreadyExist;
+	@Value("${userRequestDto.userName.empty}")
+	private String userNameIsEmpty;
+	@Value("${userRequestDto.userName.null}")
+	private String userNameIsNull;
+	@Value("${userRequestDto.password.empty}")
+	private String passwordIsEmpty;
+	@Value("${userRequestDto.password.null}")
+	private String passwordIsNull;
 
-  public String getUserNotExist() {
-    return userNotExist;
-  }
+	public String getUserNotExist() {
+		return userNotExist;
+	}
 
-  public void setUserNotExist(String userNotExist) {
-    this.userNotExist = userNotExist;
-  }
+	public void setUserNotExist(String userNotExist) {
+		this.userNotExist = userNotExist;
+	}
 
-  public String getUserAlreadyExist() {
-    return userAlreadyExist;
-  }
+	public String getUserAlreadyExist() {
+		return userAlreadyExist;
+	}
 
-  public void setUserAlreadyExist(String userAlreadyExist) {
-    this.userAlreadyExist = userAlreadyExist;
-  }
+	public void setUserAlreadyExist(String userAlreadyExist) {
+		this.userAlreadyExist = userAlreadyExist;
+	}
 
-  public String getUserNameIsEmpty() {
-    return userNameIsEmpty;
-  }
+	public String getUserNameIsEmpty() {
+		return userNameIsEmpty;
+	}
 
-  public void setUserNameIsEmpty(String userNameIsEmpty) {
-    this.userNameIsEmpty = userNameIsEmpty;
-  }
+	public void setUserNameIsEmpty(String userNameIsEmpty) {
+		this.userNameIsEmpty = userNameIsEmpty;
+	}
 
-  public String getUserNameIsNull() {
-    return userNameIsNull;
-  }
+	public String getUserNameIsNull() {
+		return userNameIsNull;
+	}
 
-  public void setUserNameIsNull(String userNameIsNull) {
-    this.userNameIsNull = userNameIsNull;
-  }
+	public void setUserNameIsNull(String userNameIsNull) {
+		this.userNameIsNull = userNameIsNull;
+	}
 
-  public String getPasswordIsEmpty() {
-    return passwordIsEmpty;
-  }
+	public String getPasswordIsEmpty() {
+		return passwordIsEmpty;
+	}
 
-  public void setPasswordIsEmpty(String passwordIsEmpty) {
-    this.passwordIsEmpty = passwordIsEmpty;
-  }
+	public void setPasswordIsEmpty(String passwordIsEmpty) {
+		this.passwordIsEmpty = passwordIsEmpty;
+	}
 
-  public String getPasswordIsNull() {
-    return passwordIsNull;
-  }
+	public String getPasswordIsNull() {
+		return passwordIsNull;
+	}
 
-  public void setPasswordIsNull(String passwordIsNull) {
-    this.passwordIsNull = passwordIsNull;
-  }
+	public void setPasswordIsNull(String passwordIsNull) {
+		this.passwordIsNull = passwordIsNull;
+	}
 
-  // for ProcessSample
-  @Value("${validation.processSample.alreadyExist}")
-  private String processSampleAlreadyExist;
-  @Value("${validation.processSample.notExists}")
-  private String processSampleNotExist;
+	// for ProcessSample
+	@Value("${validation.processSample.alreadyExist}")
+	private String processSampleAlreadyExist;
+	@Value("${validation.processSample.notExists}")
+	private String processSampleNotExist;
 
-  public String getProcessSampleAlreadyExist() {
-    return processSampleAlreadyExist;
-  }
+	public String getProcessSampleAlreadyExist() {
+		return processSampleAlreadyExist;
+	}
 
-  public void setProcessSampleAlreadyExist(String processSampleAlreadyExist) {
-    this.processSampleAlreadyExist = processSampleAlreadyExist;
-  }
+	public void setProcessSampleAlreadyExist(String processSampleAlreadyExist) {
+		this.processSampleAlreadyExist = processSampleAlreadyExist;
+	}
 
-  public String getProcessSampleNotExist() {
-    return processSampleNotExist;
-  }
+	public String getProcessSampleNotExist() {
+		return processSampleNotExist;
+	}
 
-  public void setProcessSampleNotExist(String processSampleNotExist) {
-    this.processSampleNotExist = processSampleNotExist;
-  }
+	public void setProcessSampleNotExist(String processSampleNotExist) {
+		this.processSampleNotExist = processSampleNotExist;
+	}
 
-  // for ConcreteStrengthTest
-  @Value("${validation.concreteStrengthTest.notExists}")
-  private String concreteStrengthTestNotExist;
-  @Value("${validation.concreteStrengthTestConcreteAge.notValid}")
-  private String concreteStrengthTestConcreteAgeNotValid;
+	// for ConcreteStrengthTest
+	@Value("${validation.concreteStrengthTest.notExists}")
+	private String concreteStrengthTestNotExist;
+	@Value("${validation.concreteStrengthTestConcreteAge.notValid}")
+	private String concreteStrengthTestConcreteAgeNotValid;
 
-  public String getConcreteStrengthTestConcreteAgeNotValid() {
-    return concreteStrengthTestConcreteAgeNotValid;
-  }
+	public String getConcreteStrengthTestConcreteAgeNotValid() {
+		return concreteStrengthTestConcreteAgeNotValid;
+	}
 
-  public void setConcreteStrengthTestConcreteAgeNotValid(
-      String concreteStrengthTestConcreteAgeNotValid) {
-    this.concreteStrengthTestConcreteAgeNotValid = concreteStrengthTestConcreteAgeNotValid;
-  }
+	public void setConcreteStrengthTestConcreteAgeNotValid(String concreteStrengthTestConcreteAgeNotValid) {
+		this.concreteStrengthTestConcreteAgeNotValid = concreteStrengthTestConcreteAgeNotValid;
+	}
 
-  public String getConcreteStrengthTestNotExist() {
-    return concreteStrengthTestNotExist;
-  }
+	public String getConcreteStrengthTestNotExist() {
+		return concreteStrengthTestNotExist;
+	}
 
-  public void setConcreteStrengthTestNotExist(String concreteStrengthTestNotExist) {
-    this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
-  }
+	public void setConcreteStrengthTestNotExist(String concreteStrengthTestNotExist) {
+		this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
+	}
 
-  // for finish product
-  @Value("${validation.finishProduct.notExist}")
-  private String finishProductNotExist;
+	// for finish product
+	@Value("${validation.finishProduct.notExist}")
+	private String finishProductNotExist;
 
-  @Value("${validation.finishProduct.alreadyExist}")
-  private String finishProductAlreadyExist;
+	@Value("${validation.finishProduct.alreadyExist}")
+	private String finishProductAlreadyExist;
 
-  @Value("${finishProductRequestDto.mixDesignCode.empty}")
-  private String mixDesignCodeIsEmpty;
+	@Value("${finishProductRequestDto.mixDesignCode.empty}")
+	private String mixDesignCodeIsEmpty;
 
-  @Value("${finishProductRequestDto.mixDesignCode.null}")
-  private String mixDesignCodeIsNull;
+	@Value("${finishProductRequestDto.mixDesignCode.null}")
+	private String mixDesignCodeIsNull;
 
-  @Value("${finishProductRequestDto.projectCode.empty}")
-  private String projectCodeIsEmpty;
+	@Value("${finishProductRequestDto.projectCode.empty}")
+	private String projectCodeIsEmpty;
 
-  
+	// public String getPhoneNumberIsEmpty() {
+	// return phoneNumberIsEmpty;
+	// }
+	// //
+	// public String getSuppilerCategoryIdIsNull() {
+	// return suppilerCategoryIdIsNull;
+	// }
+	//
+	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
+	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
+	// }
+	//
+	// public String getSuppilerCategoryIdIsEmpty() {
+	// return suppilerCategoryIdIsEmpty;
+	// }
+	//
+	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
+	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
+	// }
 
-  // public String getPhoneNumberIsEmpty() {
-  // return phoneNumberIsEmpty;
-  // }
-  // //
-  // public String getSuppilerCategoryIdIsNull() {
-  // return suppilerCategoryIdIsNull;
-  // }
-  //
-  // public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-  // this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-  // }
-  //
-  // public String getSuppilerCategoryIdIsEmpty() {
-  // return suppilerCategoryIdIsEmpty;
-  // }
-  //
-  // public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-  // this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-  // }
+	// public void setPlantEquipmentBrandNameIsEmpty(String
+	// plantEquipmentBrandNameIsEmpty) {
+	// this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
+	// }
 
-  // public void setPlantEquipmentBrandNameIsEmpty(String plantEquipmentBrandNameIsEmpty) {
-  // this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
-  // }
+	// for parameter
+	// @Value("${validation.parameter.notExists}")
+	// private String parameterNotExist;
+	// for AdmixtureAcceptedValue
 
-  // for parameter
-  // @Value("${validation.parameter.notExists}")
-  // private String parameterNotExist;
-  // for AdmixtureAcceptedValue
+	// Authentication
+	@Value("${auth.password.invalid}")
+	private String password;
+	@Value("${auth.emailOrUserName.invalid}")
+	private String emailOrUserName;
+	@Value("${auth.credentials.invalid}")
+	private String credentials;
+	@Value("${auth.password.match}")
+	private String isMatchPassword;
+	@Value("${auth.passwordToken.invalid}")
+	private String isPasswordTokenFailed;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmailOrUserName() {
+		return emailOrUserName;
+	}
+
+	public void setEmailOrUserName(String emailOrUserName) {
+		this.emailOrUserName = emailOrUserName;
+	}
+
+	public String getCredentials() {
+		return credentials;
+	}
+
+	public void setCredentials(String credentials) {
+		this.credentials = credentials;
+	}
+
+	public String getIsMatchPassword() {
+		return isMatchPassword;
+	}
+
+	public void setIsMatchPassword(String isMatchPassword) {
+		this.isMatchPassword = isMatchPassword;
+	}
+
+	public String getIsPasswordTokenFailed() {
+		return isPasswordTokenFailed;
+	}
+
+	public void setIsPasswordTokenFailed(String isPasswordTokenFailed) {
+		this.isPasswordTokenFailed = isPasswordTokenFailed;
+	}
+
+	/*
+	 * Role
+	 */
+	@Value("${validation.role.notExists}")
+	private String roleNotExists;
+
+	@Value("${validation.role.alreadyExists}")
+	private String roleAlreadyExists;
+
+	@Value("${validation.roleName.alreadyExists}")
+	private String roleNameAlreadyExists;
+
+	public String getRoleNotExists() {
+		return roleNotExists;
+	}
+
+	public void setRoleNotExists(String roleNotExists) {
+		this.roleNotExists = roleNotExists;
+	}
+
+	public String getRoleAlreadyExists() {
+		return roleAlreadyExists;
+	}
+
 	@Value("${finishProductRequestDto.projectCode.null}")
 	private String projectCodeIsNull;
 
@@ -1425,6 +1501,7 @@ public class ValidationFailureStatusCodes {
 	public void setEquationParameterNotExist(String equationParameterNotExist) {
 		this.equationParameterNotExist = equationParameterNotExist;
 	}
+
 	@Value("${validation.admixtureAcceptedValue.notExists}")
 	private String admixtureAcceptedValueNotExist;
 
@@ -1800,87 +1877,132 @@ public class ValidationFailureStatusCodes {
 	public void setTestAlreadyExist(String testAlreadyExist) {
 		this.testAlreadyExist = testAlreadyExist;
 	}
-  //Authentication
-  @Value("${auth.password.invalid}")
-  private String password;
-  @Value("${auth.emailOrUserName.invalid}")
-  private String emailOrUserName;
-  @Value("${auth.credentials.invalid}")
-  private String credentials;
-  @Value("${auth.password.match}")
-  private String isMatchPassword;
-  @Value("${auth.passwordToken.invalid}")
-  private String isPasswordTokenFailed;
-  
-  public String getPassword() {
-    return password;
-  }
-  public void setPassword(String password) {
-    this.password = password;
-  }
-  public String getEmailOrUserName() {
-    return emailOrUserName;
-  }
-  public void setEmailOrUserName(String emailOrUserName) {
-    this.emailOrUserName = emailOrUserName;
-  }
-  public String getCredentials() {
-    return credentials;
-  }
-  public void setCredentials(String credentials) {
-    this.credentials = credentials;
-  }
-  public String getIsMatchPassword() {
-    return isMatchPassword;
-  }
 
-  public void setIsMatchPassword(String isMatchPassword) {
-    this.isMatchPassword = isMatchPassword;
-  }
+	@Value("${validation.qualityParameter.notExists}")
+	private String qualityParameterNotExist;
+	@Value("${validation.qualityParameter.alreadyExist}")
+	private String qualityParameterAlreadyExist;
 
-  public String getIsPasswordTokenFailed() {
-    return isPasswordTokenFailed;
-  }
+	public String getQualityParameterNotExist() {
+		return qualityParameterNotExist;
+	}
 
-  public void setIsPasswordTokenFailed(String isPasswordTokenFailed) {
-    this.isPasswordTokenFailed = isPasswordTokenFailed;
-  }
-  /*
-   * Role
-   */
-  @Value("${validation.role.notExists}")
-  private String roleNotExists;
+	public void setQualityParameterNotExist(String qualityParameterNotExist) {
+		this.qualityParameterNotExist = qualityParameterNotExist;
+	}
 
-  @Value("${validation.role.alreadyExists}")
-  private String roleAlreadyExists;
+	public String getQualityParameterAlreadyExist() {
+		return qualityParameterAlreadyExist;
+	}
 
-  @Value("${validation.roleName.alreadyExists}")
-  private String roleNameAlreadyExists;
+	public void setQualityParameterAlreadyExist(String qualityParameterAlreadyExist) {
+		this.qualityParameterAlreadyExist = qualityParameterAlreadyExist;
+	}
 
-public String getRoleNotExists() {
-	return roleNotExists;
-}
+	@Value("${validation.materialQualityParameter.notExists}")
+	private String materialQualityParameterNotExist;
+	@Value("${validation.materialQualityParameter.alreadyExist}")
+	private String materialQualityParameterAlreadyExist;
 
-public void setRoleNotExists(String roleNotExists) {
-	this.roleNotExists = roleNotExists;
-}
+	public String getMaterialQualityParameterNotExist() {
+		return materialQualityParameterNotExist;
+	}
 
-public String getRoleAlreadyExists() {
-	return roleAlreadyExists;
-}
+	public void setMaterialQualityParameterNotExist(String materialQualityParameterNotExist) {
+		this.materialQualityParameterNotExist = materialQualityParameterNotExist;
+	}
 
-public void setRoleAlreadyExists(String roleAlreadyExists) {
-	this.roleAlreadyExists = roleAlreadyExists;
-}
+	public String getMaterialQualityParameterAlreadyExist() {
+		return materialQualityParameterAlreadyExist;
+	}
 
-public String getRoleNameAlreadyExists() {
-	return roleNameAlreadyExists;
-}
+	public void setMaterialQualityParameterAlreadyExist(String materialQualityParameterAlreadyExist) {
+		this.materialQualityParameterAlreadyExist = materialQualityParameterAlreadyExist;
+	}
+	/*
+	 * 
+	 */
 
-public void setRoleNameAlreadyExists(String roleNameAlreadyExists) {
-	this.roleNameAlreadyExists = roleNameAlreadyExists;
-}
-  
-  
-  
+	@Value("${validation.concreteTestType.notExists}")
+	private String concreteTestTypeNotExist;
+	@Value("${validation.concreteTestType.alreadyExist}")
+	private String concreteTestTypeAlreadyExist;
+
+	public String getConcreteTestTypeNotExist() {
+		return concreteTestTypeNotExist;
+	}
+
+	public void setConcreteTestTypeNotExist(String concreteTestTypeNotExist) {
+		this.concreteTestTypeNotExist = concreteTestTypeNotExist;
+	}
+
+	public String getConcreteTestTypeAlreadyExist() {
+		return concreteTestTypeAlreadyExist;
+	}
+
+	public void setConcreteTestTypeAlreadyExist(String concreteTestTypeAlreadyExist) {
+		this.concreteTestTypeAlreadyExist = concreteTestTypeAlreadyExist;
+	}
+
+	/*
+	 * 
+	 */
+	@Value("${validation.concreteTestResult.notExists}")
+	private String concreteTestResultNotExist;
+
+	public String getConcreteTestResultNotExist() {
+		return concreteTestResultNotExist;
+	}
+
+	public void setConcreteTestResultNotExist(String concreteTestResultNotExist) {
+		this.concreteTestResultNotExist = concreteTestResultNotExist;
+	}
+
+	/*
+	 * 
+	 */
+	@Value("${validation.concreteTestStatus.notExists}")
+	private String concreteTestStatusNotExist;
+
+	@Value("${validation.concreteTestStatus.alreadyExist}")
+	private String concreteTestStatusAlreadyExist;
+	@Value("${validation.concreteStatus.statusNotCompleted}")
+	private String concreteStatusStatusNotCompleted;
+
+	public String getConcreteStatusStatusNotCompleted() {
+		return concreteStatusStatusNotCompleted;
+	}
+
+	public void setConcreteStatusStatusNotCompleted(String concreteStatusStatusNotCompleted) {
+		this.concreteStatusStatusNotCompleted = concreteStatusStatusNotCompleted;
+	}
+
+	public String getConcreteTestStatusNotExist() {
+		return concreteTestStatusNotExist;
+	}
+
+	public void setConcreteTestStatusNotExist(String concreteTestStatusNotExist) {
+		this.concreteTestStatusNotExist = concreteTestStatusNotExist;
+	}
+
+	public String getConcreteTestStatusAlreadyExist() {
+		return concreteTestStatusAlreadyExist;
+	}
+
+	public void setConcreteTestStatusAlreadyExist(String concreteTestStatusAlreadyExist) {
+		this.concreteTestStatusAlreadyExist = concreteTestStatusAlreadyExist;
+	}
+
+	public void setRoleAlreadyExists(String roleAlreadyExists) {
+		this.roleAlreadyExists = roleAlreadyExists;
+	}
+
+	public String getRoleNameAlreadyExists() {
+		return roleNameAlreadyExists;
+	}
+
+	public void setRoleNameAlreadyExists(String roleNameAlreadyExists) {
+		this.roleNameAlreadyExists = roleNameAlreadyExists;
+	}
+
 }

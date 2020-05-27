@@ -25,6 +25,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.ParameterResultService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -33,6 +34,8 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class ParameterResultController {
   @Autowired
   private ParameterResultService parameterResultService;
+  @Autowired
+  private PlantService plantService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -45,6 +48,7 @@ public class ParameterResultController {
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<ParameterResultRequestDto> parameterResultRequestDtoList) {
     for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
+      parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
       parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
       parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
           .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));
@@ -112,6 +116,20 @@ public class ParameterResultController {
       logger.debug("No Parameter Result record exist for given Material Test Trial code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
           validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = EndpointURI.GET_PARAMETER_RESULT_BY_PLANT)
+  public ResponseEntity<Object> getParameterResultByPlant(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+          mapper.map(parameterResultService.findParameterResultByPlantCode(plantCode),
+              ParameterResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Result record exist for given Plant Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
 }

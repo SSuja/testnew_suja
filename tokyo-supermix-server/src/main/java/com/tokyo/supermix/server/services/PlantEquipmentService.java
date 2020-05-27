@@ -18,4 +18,6 @@ public interface PlantEquipmentService {
   public PlantEquipment getPlantEquipmentBySerialNo(String serialNo);
 
   public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size);
+
+  public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode);
 }

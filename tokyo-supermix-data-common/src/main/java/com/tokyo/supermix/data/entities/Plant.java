@@ -17,6 +17,7 @@ public class Plant implements Serializable {
   private String name;
   private String address;
   private String phoneNumber;
+  private String description;
 
   public String getCode() {
     return code;
@@ -54,4 +55,11 @@ public class Plant implements Serializable {
     return serialVersionUID;
   }
 
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

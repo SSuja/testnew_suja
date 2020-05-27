@@ -1,29 +1,29 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-  // for email notification
-  public static final String ADMIXTURE = "Admixture";
-  public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : equipment calibration";
-  public static final String SUBJECT_ADMIXTURE_EXPIRY="Notification : expiry date for Admixture";
-  public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY="Notification : Information for Samples";
-  public static final String SUBJECT_MIX_DESIGN="Notification : About Mixdesign ";
-  public static final String SUBJECT_PENDING_SAMPLES="Notification : Pending Incoming Sample";
-  public static final String SUBJECT_NEW_USER="Notification : Congratulations!";
-  public static final String SUBJECT_NEW_PROJECT="Notification : New Project";
-  public static final String SUBJECT_NEW_FINISH_PRODUCT="Notification : New Finish Product";
-  public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST="Notifiation : Congrete Strength Test";
-  public static final String SUBJECT_NEW_CONGRETE_TEST="Notification : New Concrete Test";
-  public static final String SUBJECT_INCOMING_SAMPLE_RESULT = "Notification : Information for Incoming Sample Test Status";
-  public static final String SUBJECT_NEW_MATERIAL_TEST="Notification : New Material Test";
-  public static final String SUBJECT_NEW_SEIVE_TEST="Notification : New Seive Test";
-  public static final String SUBJECT_FORGOT_PASSWORD="Forgot Password";
-  //Authentication
-  public static final String PASSWORD="passWord";
-  public static final String EMAIL_OR_USERNAME="emailOrUserName";
-  public static final String CREDENCIALS="credentials";
-  public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
-  public static final String GENERATE_PASSWORD_SUCCESS = "Random Password token Generate and mailed Successfully";
-  public static final String MESSAGE_OF_FORGOT_PASSWORD="This the token for Reset your Password ";
+	// for email notification
+	public static final String ADMIXTURE = "Admixture";
+	public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : equipment calibration";
+	public static final String SUBJECT_ADMIXTURE_EXPIRY = "Notification : expiry date for Admixture";
+	public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY = "Notification : Information for Samples";
+	public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
+	public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
+	public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
+	public static final String SUBJECT_NEW_PROJECT = "Notification : New Project";
+	public static final String SUBJECT_NEW_FINISH_PRODUCT = "Notification : New Finish Product";
+	public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST = "Notifiation : Congrete Strength Test";
+	public static final String SUBJECT_NEW_CONGRETE_TEST = "Notification : New Concrete Test";
+	public static final String SUBJECT_INCOMING_SAMPLE_RESULT = "Notification : Information for Incoming Sample Test Status";
+	public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
+	public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
+	public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
+	// Authentication
+	public static final String PASSWORD = "passWord";
+	public static final String EMAIL_OR_USERNAME = "emailOrUserName";
+	public static final String CREDENCIALS = "credentials";
+	public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
+	public static final String GENERATE_PASSWORD_SUCCESS = "Random Password token Generate and mailed Successfully";
+	public static final String MESSAGE_OF_FORGOT_PASSWORD = "This the token for Reset your Password ";
 //for sample counts
 	public static final String SAMPLE_COUNTS = "sampleCounts";
 //for plants
@@ -423,46 +423,96 @@ public class Constants {
 	 * Constants for Mix Design validation key & Success messages
 	 */
 
+	/*
+	 * Constants for Cube Test Finding validation key & Success messages
+	 */
+	public static final String CUBE_TEST_FINDING_ID = "cubeTestFindingId";
+	public static final String CUBE_TEST_FINDING = "cubeTestFinding";
+	public static final String CUBE_TEST_FINDINGS = "cubeTestFindings";
+	public static final String CUBE_TEST_FINDING_AGE = "age";
+	public static final String CUBE_TEST_FINDING_DELETED = "Cube Test Finding Successfully Deleted";
+	public static final String ADD_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Successfully Added Successfully";
+	public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS = "Cube Test Finding Successfully Updated Successfully";
+	/*
+	 * Constants for Test validation key & Success messages
+	 */
+	public static final String TEST = "test";
+	public static final String TEST_ID = "testId";
+	public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
+	public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
+	public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
+
+	public static final String ROLE = "role";
+	public static final String ROLES = "roles";
+	public static final String ROLE_ID = "roleId";
+	public static final String ADD_ROLE_SUCCESS = "Role Added Successfully";
+	public static final String ROLE_DELETED = "Role Successfully Deleted";
+	public static final String ROLE_UPDATED_SUCCESS = "Role Updated Successfully";
+
 	public static final String ADD_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS = "Finish Product Sample Issue Added Successfully";
 	public static final String FINISH_PRODUCT_SAMPLE_ISSUE = "finishProductSampleIssue";
 	public static final String FINISH_PRODUCT_SAMPLE_ISSUES = "finishProductSampleIssues";
 	public static final String FINISH_PRODUCT_SAMPLE_ISSUE_DELETED = "Finish Product Sample Issue Successfully Deleted";
 	public static final String FINISH_PRODUCT_SAMPLE_ISSUE_ID = "finishProductSampleIssueId";
 	public static final String UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS = "Finish Product Sample Issue Updated Successfully";
+	/*
+	 * Constants for Quality Parameter validation key & Success messages
+	 */
+	public static final String QUALITY_PARAMETER = "qualityParameter";
+	public static final String QUALITY_PARAMETERS = "qualityParameters";
+	public static final String QUALITY_PARAMETER_ID = "qualityParameterId";
+	public static final String ADD_QUALITY_PARAMETER_SUCCESS = "Quality Parameter Added Successfully";
+	public static final String DELETED_QUALITY_PARAMETER = "Quality Parameter Successfully Deleted";
+	public static final String UPDATE_QUALITY_PARAMETER_SUCCESS = "Quality Parameter Updated Successfully";
 
-  /*
-   * Constants for Cube Test Finding validation key & Success messages
-   */
-  public static final String CUBE_TEST_FINDING_ID = "cubeTestFindingId";
-  public static final String CUBE_TEST_FINDING = "cubeTestFinding";
-  public static final String CUBE_TEST_FINDINGS = "cubeTestFindings";
-  public static final String CUBE_TEST_FINDING_AGE = "age";
-  public static final String CUBE_TEST_FINDING_DELETED = "Cube Test Finding Successfully Deleted";
-  public static final String ADD_CUBE_TEST_FINDING_SUCCESS =
-      "Cube Test Finding Successfully Added Successfully";
-  public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS =
-      "Cube Test Finding Successfully Updated Successfully";
-  /*
-   * Constants for Test validation key & Success messages
-   */
-  public static final String TEST = "test";
-  public static final String TEST_ID = "testId";
-  public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
-  public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
-  public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
-  
-  public static final String ROLE = "role";
-  public static final String ROLES = "roles";
-  public static final String ROLE_ID = "roleId";
-  public static final String ADD_ROLE_SUCCESS = "Role Added Successfully";
-  public static final String ROLE_DELETED = "Role Successfully Deleted";
-  public static final String ROLE_UPDATED_SUCCESS = "Role Updated Successfully";
-  
+	/*
+	 * Constants for Material Quality Parameter validation key & Success messages
+	 */
+	public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
+	public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
+	public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
+	public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS = "Material Quality Parameter Added Successfully";
+	public static final String DELETED_MATERIAL_QUALITY_PARAMETER = "Material Quality Parameter Successfully Deleted";
+	public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS = "Material Quality Parameter Updated Successfully";
+	/*
+	 * 
+	 */
+	public static final String CONCRETE_TEST_TYPE = "concreteTestType";
+	public static final String CONCRETE_TEST_TYPE_TYPE = "type";
+	public static final String CONCRETE_TEST_TYPES = "concreteTestTypes";
+	public static final String ADD_CONCRETE_TEST_TYPE_SUCCESS = "Concrete Test Type Added Successfully";
+	public static final String CONCRETE_TEST_TYPE_DELETED = "Concrete Test Type Successfully Deleted";
+	public static final String UPDATE_CONCRETE_TEST_TYPE_SUCCESS = "Concrete Test Type Updated Successfully";
+	/*
+	 * 
+	 */
+	public static final String CONCRETE_TEST_RESULT = "concreteTestResult";
+	public static final String CONCRETE_TEST_RESULTS = "concreteTestResults";
+	public static final String STRENGTH = "strength";
+	public static final String SLUMP = "slump";
+	public static final String STRENGTH_TEST = "strengthTest";
+	public static final String SLUMP_TEST = "slumpTest";
+	public static final String MOISTURE = "moisture";
+	public static final String STRENGTH_GRADE_RATIO = "strengthGradeRatio";
+	public static final String SLUMP_GRADE_RATIO = "slumpGradeRatio";
+	public static final String WATER_CEMENT_RATIO = "waterCementRatio";
+	public static final String WATER_BINDER_RATIO = "waterBinderRatio";
+	public static final String ADD_CONCRETE_TEST_RESULT_SUCCESS = "Concrete Test Result Added Successfully";
+	public static final String CONCRETE_TEST_RESULT_DELETED = "Concrete Test Result Successfully Deleted";
+	public static final String UPDATE_CONCRETE_TEST_RESULT_SUCCESS = "Concrete Test Result Updated Successfully";
+	/*
+	 * Constants for Concrete Test Status validation key & Success messages
+	 */
+	public static final String CONCRETE_TEST_STATUSES = "concreteTestStatuses";
+	public static final String CONCRETE_TEST_STATUS = "concreteTestStatus";
+	public static final String CONCRETE_TEST_STATUS_ID = "concreteTestStatusId";
+	public static final String ADD_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Added Successfully";
+	public static final String CONCRETE_TEST_STATUS_DELETED = "Concrete Test Status Successfully Deleted";
+	public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Updated Successfully";
 
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */
-	 
 	private Constants() {
 	}
 }

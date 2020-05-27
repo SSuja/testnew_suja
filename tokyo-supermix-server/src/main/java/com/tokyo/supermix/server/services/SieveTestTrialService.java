@@ -18,4 +18,6 @@ public interface SieveTestTrialService {
   public List<SieveTestTrial> findSieveTestTrialBySieveTestCode(String sieveTestCode);
 
   public void updateSieveTestStatus(SieveTest sieveTest);
+
+  public List<SieveTestTrial> getSieveTestTrialByPlantCode(String plantCode);
 }

@@ -6,4 +6,6 @@ import com.tokyo.supermix.data.entities.SieveTestTrial;
 
 public interface SieveTestTrialRepository extends JpaRepository<SieveTestTrial, Long> {
   List<SieveTestTrial> findBySieveTestCode(String sieveTestCode);
+
+  List<SieveTestTrial> findBySieveTestPlantCode(String plantCode);
 }

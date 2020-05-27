@@ -34,4 +34,6 @@ public interface MaterialTestService {
   public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
       Double average, String testName, Double averageMin, Double averageMax,
       BooleanBuilder booleanBuilder, int page, int size);
+
+  List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 }

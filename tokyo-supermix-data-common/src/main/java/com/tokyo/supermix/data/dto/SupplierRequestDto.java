@@ -16,6 +16,9 @@ public class SupplierRequestDto {
   @NotNull(message = "{supplierRequestDto.email.null}")
   @NotEmpty(message = "{supplierRequestDto.email.empty}")
   private String email;
+  @NotNull(message = "{supplierRequestDto.plantCode.null}")
+  @NotEmpty(message = "{supplierRequestDto.plantCode.empty}")
+  private String plantCode;
   private Long suppilerCategoryId;
 
   public Long getId() {
@@ -66,6 +69,14 @@ public class SupplierRequestDto {
     this.email = email;
   }
 
+  public String getPlantCode() {
+    return plantCode;
+  }
+
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
+  }
+
   public Long getSuppilerCategoryId() {
     return suppilerCategoryId;
   }
@@ -73,5 +84,4 @@ public class SupplierRequestDto {
   public void setSuppilerCategoryId(Long suppilerCategoryId) {
     this.suppilerCategoryId = suppilerCategoryId;
   }
-
 }
