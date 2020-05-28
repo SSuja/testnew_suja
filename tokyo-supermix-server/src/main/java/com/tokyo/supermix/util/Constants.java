@@ -495,7 +495,12 @@ public class Constants {
 	public static final String ADD_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Added Successfully";
 	public static final String CONCRETE_TEST_STATUS_DELETED = "Concrete Test Status Successfully Deleted";
 	public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Updated Successfully";
-
+	
+	/*
+     * Constants for report
+     */
+    public static final String TEST_REPORT = "testReport";
+    
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */
