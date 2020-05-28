@@ -513,7 +513,12 @@ public final class EndpointURI {
 	public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID = ACCEPTED_VALUE + SLASH + "test-configure"
 			+ SLASH + "{testConfigureId}";
 	public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
-
+	/*
+	 * test Report
+	 */
+	public static final String TEST_REPORT = BASE_API_PATH + "test-report";
+  	public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
+  	public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
 	private EndpointURI() {
 	}
 }
