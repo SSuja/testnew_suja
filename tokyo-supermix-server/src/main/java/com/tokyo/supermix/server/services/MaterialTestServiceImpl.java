@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,9 +43,34 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private TestTypeRepository testTypeRepository;
 
   @Transactional
-  public void saveMaterialTest(MaterialTest materialTest) {
+  public String saveMaterialTest(MaterialTest materialTest) {
+    if (materialTest.getCode() == null) {
+      String prefix =
+          testConfigureRepository.getOne(materialTest.getTestConfigure().getId()).getPrefix();
+      List<MaterialTest> materialTestList = materialTestRepository.findByCodeContaining(prefix);
+      if (materialTestList.size() == 0) {
+        materialTest.setCode(prefix + String.format("%04d", 1));
+      } else {
+        materialTest
+            .setCode(prefix + String.format("%04d", maxNumberFromCode(materialTestList) + 1));
+      }
+    }
     materialTest.setStatus(Status.NEW);
     materialTestRepository.save(materialTest);
+    return materialTest.getCode();
+  }
+
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+
+  private Integer maxNumberFromCode(List<MaterialTest> materialTestList) {
+    List<Integer> list = new ArrayList<Integer>();
+    materialTestList.forEach(obj -> {
+      list.add(getNumberFromCode(obj.getCode()));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)

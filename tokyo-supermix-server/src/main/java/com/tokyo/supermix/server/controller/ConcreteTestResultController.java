@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.ConcreteTestResponseDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResultRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestResultResponseDto;
 import com.tokyo.supermix.data.entities.ConcreteTest;
@@ -34,6 +34,7 @@ import com.tokyo.supermix.server.services.ConcreteTestTypeService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ConcreteTestResultController {
 	@Autowired
@@ -55,6 +56,12 @@ public class ConcreteTestResultController {
 		ConcreteTest concreteTest = concreteTestService
 				.getConcreteTestById(concreteTestResultRequestDto.getConcreteTestId());
 		if (concreteTest.getConcreteTestType().getType().equalsIgnoreCase(Constants.SLUMP)) {
+			concreteTestResultService
+					.saveConcreteTestSlumpStatus(concreteTestResultRequestDto.getFinishProductSampleId());
+			concreteTestResultService
+					.saveConcreteTestStrengthStatus(concreteTestResultRequestDto.getFinishProductSampleId());
+			concreteTestResultService
+					.saveConcreteTestMoistureStatus(concreteTestResultRequestDto.getFinishProductSampleId());
 			concreteTestResultService.saveConcreteSlumpTestSlumpResult(
 					mapper.map(concreteTestResultRequestDto, ConcreteTestResult.class));
 			concreteTestResultService.saveConcreteSlumpTestWaterCementRatioResult(
@@ -83,7 +90,7 @@ public class ConcreteTestResultController {
 	@GetMapping(value = EndpointURI.CONCRETE_TEST_RESULTS)
 	public ResponseEntity<Object> getAllConcreteTestResult() {
 		return new ResponseEntity<Object>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS,
-				mapper.map(concreteTestResultService.getAllConcreteTestResults(), ConcreteTestResponseDto.class),
+				mapper.map(concreteTestResultService.getAllConcreteTestResults(), ConcreteTestResultResponseDto.class),
 				RestApiResponseStatus.OK), HttpStatus.OK);
 	}
 

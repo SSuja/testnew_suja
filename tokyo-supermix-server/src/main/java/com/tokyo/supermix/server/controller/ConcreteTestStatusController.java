@@ -17,6 +17,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestStatusRequestDto;
 import com.tokyo.supermix.data.dto.ConcreteTestStatusResponseDto;
 import com.tokyo.supermix.data.entities.ConcreteTestStatus;
+import com.tokyo.supermix.data.enums.ConcreteStatus;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -102,5 +103,13 @@ public class ConcreteTestStatusController {
 		}
 		return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_STATUS_ID,
 				validationFailureStatusCodes.getConcreteTestStatusNotExist()), HttpStatus.BAD_REQUEST);
+	}
+
+	@GetMapping(value = EndpointURI.CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS)
+	public ResponseEntity<Object> getConcreteTestStatusByConcreteStatus(@PathVariable ConcreteStatus concreteStatus) {
+		return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_STATUS,
+				mapper.map(concreteTestStatusService.getConcreteTestStatusByConcreteStatus(concreteStatus),
+						ConcreteTestStatusResponseDto.class),
+				RestApiResponseStatus.OK), HttpStatus.OK);
 	}
 }
