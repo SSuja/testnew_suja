@@ -186,6 +186,8 @@ public final class EndpointURI {
 	 * PARAMETER_SEARCH = PARAMETER + SEARCH;
 	 * 
 	 * /* TestType
+	 * 
+	 * TestType
 	 */
 	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
 	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
@@ -506,9 +508,12 @@ public final class EndpointURI {
 	public static final String GET_ROLE_BY_ID = ROLE + ID;
 	public static final String DELETE_ROLE_BY_ID = ROLE + ID;
 
-	/* concreteTestStatus **/
+	/*
+	 * concreteTestStatus
+	 * 
+	 */
 	public static final String CONCRETE_TEST_STATUS = BASE_API_PATH + "concrete-test-status";
-	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "test-parameter-statuses";
+	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "concrete-test-statuses";
 	public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
 	public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
 	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS = CONCRETE_TEST_STATUS + SLASH
@@ -533,6 +538,12 @@ public final class EndpointURI {
 			+ SLASH + "{testConfigureId}";
 	public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
 
+	/*
+	 * test Report
+	 */
+	public static final String TEST_REPORT = BASE_API_PATH + "test-report";
+  	public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
+  	public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
 	private EndpointURI() {
 	}
 }

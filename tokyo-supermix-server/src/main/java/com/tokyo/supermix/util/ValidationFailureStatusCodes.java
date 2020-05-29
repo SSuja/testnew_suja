@@ -1255,22 +1255,6 @@ public class ValidationFailureStatusCodes {
 		this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
 	}
 
-	// for finish product
-	@Value("${validation.finishProduct.notExist}")
-	private String finishProductNotExist;
-
-	@Value("${validation.finishProduct.alreadyExist}")
-	private String finishProductAlreadyExist;
-
-	@Value("${finishProductRequestDto.mixDesignCode.empty}")
-	private String mixDesignCodeIsEmpty;
-
-	@Value("${finishProductRequestDto.mixDesignCode.null}")
-	private String mixDesignCodeIsNull;
-
-	@Value("${finishProductRequestDto.projectCode.empty}")
-	private String projectCodeIsEmpty;
-
 	// public String getPhoneNumberIsEmpty() {
 	// return phoneNumberIsEmpty;
 	// }
@@ -1377,6 +1361,18 @@ public class ValidationFailureStatusCodes {
 		return roleAlreadyExists;
 	}
 
+	@Value("${validation.finishProduct.alreadyExist}")
+	private String finishProductAlreadyExist;
+
+	@Value("${finishProductRequestDto.mixDesignCode.empty}")
+	private String mixDesignCodeIsEmpty;
+
+	@Value("${finishProductRequestDto.mixDesignCode.null}")
+	private String mixDesignCodeIsNull;
+
+	@Value("${finishProductRequestDto.projectCode.empty}")
+	private String projectCodeIsEmpty;
+
 	@Value("${finishProductRequestDto.projectCode.null}")
 	private String projectCodeIsNull;
 
@@ -1410,14 +1406,6 @@ public class ValidationFailureStatusCodes {
 
 	public void setQuantityIsEmpty(String quantityIsEmpty) {
 		this.quantityIsEmpty = quantityIsEmpty;
-	}
-
-	public String getFinishProductNotExist() {
-		return finishProductNotExist;
-	}
-
-	public void setFinishProductNotExist(String finishProductNotExist) {
-		this.finishProductNotExist = finishProductNotExist;
 	}
 
 	public String getFinishProductAlreadyExist() {
