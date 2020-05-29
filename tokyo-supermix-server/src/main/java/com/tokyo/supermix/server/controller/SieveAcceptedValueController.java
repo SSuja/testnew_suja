@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class SieveAcceptedValueController {
   private static final Logger logger = Logger.getLogger(SieveAcceptedValueController.class);
 
   @PostMapping(value = EndpointURI.SIEVE_ACCEPTED_VALUE)
+  @PreAuthorize("hasAuthority('add_sieve_accepted_value')")
   public ResponseEntity<Object> createSieveAcceptedValue(
       @Valid @RequestBody List<SieveAcceptedValueRequestDto> sieveAcceptedValueRequestDtoList) {
     for (SieveAcceptedValueRequestDto sieveAcceptedValueRequestDto : sieveAcceptedValueRequestDtoList) {
@@ -60,6 +62,7 @@ public class SieveAcceptedValueController {
   }
 
   @GetMapping(value = EndpointURI.SIEVE_ACCEPTED_VALUES)
+  @PreAuthorize("hasAuthority('get_sieve_accepted_value')")
   public ResponseEntity<Object> getSieveAcceptedValues() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_ACCEPTED_VALUES,
         mapper.map(sieveAcceptedValueService.getAllSieveAcceptedValues(),
@@ -81,6 +84,7 @@ public class SieveAcceptedValueController {
   }
 
   @PutMapping(value = EndpointURI.SIEVE_ACCEPTED_VALUE)
+  @PreAuthorize("hasAuthority('edit_sieve_accepted_value')")
   public ResponseEntity<Object> updateSieveAcceptedValue(
       @Valid @RequestBody SieveAcceptedValueRequestDto sieveAcceptedValueRequestDto) {
     if (sieveAcceptedValueService.isSieveAcceptedValueExist(sieveAcceptedValueRequestDto.getId())) {
@@ -100,6 +104,7 @@ public class SieveAcceptedValueController {
   }
 
   @DeleteMapping(EndpointURI.SIEVE_ACCEPTED_VALUE_BY_ID)
+  @PreAuthorize("hasAuthority('delete_sieve_accepted_value')")
   public ResponseEntity<Object> deleteSieveAcceptedValue(@PathVariable Long id) {
     if (sieveAcceptedValueService.isSieveAcceptedValueExist(id)) {
       sieveAcceptedValueService.deleteSieveAcceptedValue(id);

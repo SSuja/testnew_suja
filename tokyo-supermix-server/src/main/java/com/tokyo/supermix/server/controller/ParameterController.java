@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ public class ParameterController {
   private static final Logger logger = Logger.getLogger(ParameterController.class);
 
   @GetMapping(value = EndpointURI.PARAMETERS)
+  @PreAuthorize("hasAuthority('get_parameter')")
   public ResponseEntity<Object> getAllParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
         mapper.map(parameterService.getAllParameters(), ParameterDto.class),
@@ -47,6 +49,7 @@ public class ParameterController {
   }
 
   @PostMapping(value = EndpointURI.PARAMETER)
+  @PreAuthorize("hasAuthority('add_parameter')")
   public ResponseEntity<Object> createParameter(@Valid @RequestBody ParameterDto parameterDto) {
     if (parameterService.isNameExist(parameterDto.getName())) {
       logger.debug("parameter already exists: createparameter(), parameterName: {}");
@@ -61,6 +64,7 @@ public class ParameterController {
   }
 
   @DeleteMapping(value = EndpointURI.DELETE_PARAMETER_BY_ID)
+  @PreAuthorize("hasAuthority('delete_parameter')")
   public ResponseEntity<Object> deleteParameter(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
       parameterService.deleteParameter(id);
@@ -87,6 +91,7 @@ public class ParameterController {
   }
 
   @PutMapping(value = EndpointURI.PARAMETER)
+  @PreAuthorize("hasAuthority('edit_parameter')")
   public ResponseEntity<Object> UpdateParameter(@Valid @RequestBody ParameterDto parameterDto) {
     if (parameterService.isParameterExist(parameterDto.getId())) {
       if (parameterService.isUpdatedNameExist(parameterDto.getId(), parameterDto.getName())) {
