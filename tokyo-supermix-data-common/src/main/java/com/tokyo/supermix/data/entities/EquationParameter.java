@@ -12,43 +12,42 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "equation_parameter")
 public class EquationParameter implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  @ManyToOne
-  @JoinColumn(name = "equationId", nullable = false)
-  private Equation equation;
-  @ManyToOne
-  @JoinColumn(name = "parameterId", nullable = false)
-  private Parameter parameter;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "equationId", nullable = false)
+	private Equation equation;
+	@ManyToOne
+	@JoinColumn(name = "testParameterId", nullable = false)
+	private TestParameter testParameter;
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public Equation getEquation() {
-    return equation;
-  }
+	public Equation getEquation() {
+		return equation;
+	}
 
-  public void setEquation(Equation equation) {
-    this.equation = equation;
-  }
+	public void setEquation(Equation equation) {
+		this.equation = equation;
+	}
 
-  public Parameter getParameter() {
-    return parameter;
-  }
+	public TestParameter getTestParameter() {
+		return testParameter;
+	}
 
-  public void setParameter(Parameter parameter) {
-    this.parameter = parameter;
-  }
+	public void setTestParameter(TestParameter testParameter) {
+		this.testParameter = testParameter;
+	}
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

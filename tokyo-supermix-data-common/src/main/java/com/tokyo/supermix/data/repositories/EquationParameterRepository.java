@@ -9,5 +9,5 @@ public interface EquationParameterRepository extends JpaRepository<EquationParam
 
   boolean existsByEquationId(Long equationId);
 
-  boolean existsByEquationIdAndParameterId(Long equationId, Long parameterId);
+  boolean existsByEquationIdAndTestParameterId(Long equationId, Long testParameterId);
 }
