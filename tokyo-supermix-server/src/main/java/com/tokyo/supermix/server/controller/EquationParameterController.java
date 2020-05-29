@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class EquationParameterController {
   private static final Logger logger = Logger.getLogger(EquationParameterController.class);
 
   @PostMapping(value = EndpointURI.EQUATION_PARAMETER)
+  @PreAuthorize("hasAuthority('add_equation_parameter')")
   public ResponseEntity<Object> createEquationParameter(
       @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
     for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
@@ -57,6 +59,7 @@ public class EquationParameterController {
   }
 
   @GetMapping(value = EndpointURI.EQUATION_PARAMETERS)
+  @PreAuthorize("hasAuthority('get_equation_parameter')")
   public ResponseEntity<Object> getAllEquationParameters() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.EQUATION_PARAMETERS,
@@ -94,6 +97,7 @@ public class EquationParameterController {
   }
 
   @DeleteMapping(EndpointURI.EQUATION_PARAMETER_BY_ID)
+  @PreAuthorize("hasAuthority('delete_equation_parameter')")
   public ResponseEntity<Object> deleteEquationParameterById(@PathVariable Long id) {
     if (equationParameterService.isEquationParameterExist(id)) {
       equationParameterService.deleteTestParameter(id);
