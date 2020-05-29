@@ -118,6 +118,24 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('94', 'get_test
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('95', 'delete_test');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('96', 'edit_test');
 
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('97', 'add_material_test_trial');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('98', 'get_material_test_trial');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('99', 'add_sieve_test');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('100', 'get_sieve_test');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('101', 'delete_sieve_test');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('102', 'add_sieve_test_trial');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('103', 'get_sieve_test_trial');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('104', 'add_mix_design');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('105', 'get_mix_design');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('106', 'delete_mix_design');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('107', 'edit_mix_design');
+
+
+
+
 
 
 
