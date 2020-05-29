@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,96 +36,105 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @CrossOrigin(origins = "*")
 @RestController
 public class EmployeeController {
-	@Autowired
-	private ValidationFailureStatusCodes validationFailureStatusCodes;
-	@Autowired
-	private Mapper mapper;
-	@Autowired
-	private EmployeeService employeeService;
-	@Autowired
-	private PlantService plantService;
-	private static final Logger logger = Logger.getLogger(EmployeeController.class);
+  @Autowired
+  private ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  private Mapper mapper;
+  @Autowired
+  private EmployeeService employeeService;
+  @Autowired
+  private PlantService plantService;
+  private static final Logger logger = Logger.getLogger(EmployeeController.class);
 
-	// Add Employee
-	@PostMapping(value = EndpointURI.EMPLOYEE)
-	public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
-		if (employeeService.isEmailExist(employeeDto.getEmail())) {
-			logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
-			return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-					validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
-		}
-		employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
-		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
-				HttpStatus.OK);
-	}
+  // Add Employee
+  @PostMapping(value = EndpointURI.EMPLOYEE)
+  @PreAuthorize("hasAuthority('add_employee')")
+  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
+    if (employeeService.isEmailExist(employeeDto.getEmail())) {
+      logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+          validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
+        HttpStatus.OK);
+  }
 
-	// Delete Employee
-	@DeleteMapping(value = EndpointURI.DELETE_EMPLOYEE)
-	public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
-		if (employeeService.isEmployeeExist(id)) {
-			logger.debug("delete employee by id");
-			employeeService.deleteEmployee(id);
-			return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.EMPLOYEE_DELETED),
-					HttpStatus.OK);
-		}
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
-				validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  // Delete Employee
+  @DeleteMapping(value = EndpointURI.DELETE_EMPLOYEE)
+  @PreAuthorize("hasAuthority('delete_employee')")
+  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
+    if (employeeService.isEmployeeExist(id)) {
+      logger.debug("delete employee by id");
+      employeeService.deleteEmployee(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.EMPLOYEE_DELETED), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+        validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
-	// Get Employee By Id
-	@GetMapping(value = EndpointURI.GET_EMPLOYEE_BY_ID)
-	public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
-		if (employeeService.isEmployeeExist(id)) {
-			logger.debug("Get Employee By Id");
-			return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEE,
-					mapper.map(employeeService.getEmployeeById(id), EmployeeResponseDto.class),
-					RestApiResponseStatus.OK), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
-				validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  // Get Employee By Id
+  @GetMapping(value = EndpointURI.GET_EMPLOYEE_BY_ID)
+  public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
+    if (employeeService.isEmployeeExist(id)) {
+      logger.debug("Get Employee By Id");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEE,
+          mapper.map(employeeService.getEmployeeById(id), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+        validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
-	// Update Employee
-	@PutMapping(value = EndpointURI.UPDATE_EMPLOYEE)
-	public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
-		if (employeeService.isEmployeeExist(employeeDto.getId())) {
-			if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(), employeeDto.getEmail())) {
-				return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-						validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
-			}
-			employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
-			return new ResponseEntity<>(
-					new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
-				validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  // Update Employee
+  @PutMapping(value = EndpointURI.UPDATE_EMPLOYEE)
+  @PreAuthorize("hasAuthority('edit_employee')")
+  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
+    if (employeeService.isEmployeeExist(employeeDto.getId())) {
+      if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
+          employeeDto.getEmail())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+            validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+        validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
-	/* Get All Employees */
-	@GetMapping(value = EndpointURI.EMPLOYEES)
-	public ResponseEntity<Object> getAllEmployees() {
-		logger.debug("get all employee");
-		return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-				mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class), RestApiResponseStatus.OK),
-				null, HttpStatus.OK);
-	}
+  /* Get All Employees */
+  @GetMapping(value = EndpointURI.EMPLOYEES)
+  @PreAuthorize("hasAuthority('get_employee')")
+  public ResponseEntity<Object> getAllEmployees() {
+    logger.debug("get all employee");
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+        mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 
-	@GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
-	public ResponseEntity<Object> getEmployeeSearch(@QuerydslPredicate(root = Employee.class) Predicate predicate,
-			@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-		return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-				employeeService.searchEmployee(predicate, size, page), RestApiResponseStatus.OK), null, HttpStatus.OK);
-	}
+  @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
+  public ResponseEntity<Object> getEmployeeSearch(
+      @QuerydslPredicate(root = Employee.class) Predicate predicate,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.EMPLOYEES,
+            employeeService.searchEmployee(predicate, size, page), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 
-	@GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT_CODE)
-	public ResponseEntity<Object> getEmployeeByPlantCode(@PathVariable String plantCode) {
-		if (plantService.isPlantExist(plantCode)) {
-			return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-					mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
-					RestApiResponseStatus.OK), HttpStatus.OK);
-		}
-		return new ResponseEntity<>(
-				new ValidationFailureResponse(Constants.PLANT, validationFailureStatusCodes.getPlantNotExist()),
-				HttpStatus.BAD_REQUEST);
-	}
+  @GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT_CODE)
+  public ResponseEntity<Object> getEmployeeByPlantCode(@PathVariable String plantCode) {
+    if (plantService.isPlantExist(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
