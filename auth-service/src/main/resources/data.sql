@@ -133,7 +133,80 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('105', 'get_mix
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('106', 'delete_mix_design');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('107', 'edit_mix_design');
 
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('108', 'get_plant');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('109', 'add_plant');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('110', 'edit_plant');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('111','delete_plant');
 
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('112', 'get_concrete_mixer');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('113', 'add_concrete_mixer');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('114', 'edit_concrete_mixer');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('115','delete_concrete_mixer');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('116', 'get_designation');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('117', 'add_designation');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('118', 'edit_designation');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('119','delete_designation');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('120', 'get_employee');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('121', 'add_employee');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('122', 'edit_employee');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('123','delete_employee');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('124', 'get_customer');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('125', 'add_customer');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('126', 'edit_customer');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('127','delete_customer');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('128', 'get_supplier_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('129', 'add_supplier_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('130', 'edit_supplier_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('131','delete_supplier_category');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('132', 'get_supplier');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('133', 'add_supplier');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('134', 'edit_supplier');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('135','delete_supplier');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('136', 'get_material_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('137', 'add_material_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('138', 'edit_material_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('139','delete_material_category');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('140', 'get_material_sub_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('141', 'add_material_sub_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('142', 'edit_material_sub_category');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('143','delete_material_sub_category');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('144', 'get_raw_material');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('145', 'add_raw_material');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('146', 'edit_raw_material');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('147','delete_raw_material');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('148', 'get_unit');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('149', 'add_unit');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('150', 'edit_unit');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('151','delete_unit');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('152', 'get_material_state');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('153', 'add_material_state');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('154', 'edit_material_state');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('155','delete_material_state');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('156', 'get_equipment');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('157', 'add_equipment');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('158', 'edit_equipment');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('159','delete_equipment');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('160', 'get_plant_equipment');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('161', 'add_plant_equipment');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('162', 'edit_plant_equipment');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('163','delete_plant_equipment');
+
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('164', 'get_plant_equipment_calibration');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('165', 'add_plant_equipment_calibration');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('166', 'edit_plant_equipment_calibration');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`) VALUES ('167','delete_plant_equipment_calibration');
 
 
 
