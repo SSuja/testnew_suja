@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class AdmixtureAcceptedValueController {
 
   // get all AdmixtureAcceptedValues
   @GetMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUES)
+  @PreAuthorize("hasAuthority('get_accepted_admixture_value')")
   public ResponseEntity<Object> getAllAdmixtureAcceptedValues() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.ADMIXTURE_ACCEPTED_VALUES,
@@ -53,6 +55,7 @@ public class AdmixtureAcceptedValueController {
   }
 
   @PostMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUE)
+  @PreAuthorize("hasAuthority('add_accepted_admixture_value')")
   public ResponseEntity<Object> createAdmixtureAcceptedValue(
       @Valid @RequestBody AdmixtureAcceptedValueRequestDto admixtureAcceptedValueRequestDto) {
     if (admixtureAcceptedValueService.isAdmixtureAcceptedValueExistsByTestConfigureId(
@@ -68,6 +71,7 @@ public class AdmixtureAcceptedValueController {
 
   // update API for AdmixtureAcceptedValue
   @PutMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUE)
+  @PreAuthorize("hasAuthority('edit_accepted_admixture_value')")
   public ResponseEntity<Object> updateAdmixtureAcceptedValue(
       @Valid @RequestBody AdmixtureAcceptedValueRequestDto admixtureAcceptedValueRequestDto) {
     if (admixtureAcceptedValueService
@@ -91,6 +95,7 @@ public class AdmixtureAcceptedValueController {
 
   // DELETE API for AdmixtureAcceptedValue
   @DeleteMapping(value = EndpointURI.ADMIXTURE_ACCEPTED_VALUE_BY_ID)
+  @PreAuthorize("hasAuthority('delete_accepted_admixture_value')")
   public ResponseEntity<Object> deleteAdmixtureAcceptedValue(@PathVariable Long id) {
     if (admixtureAcceptedValueService.isAdmixtureAcceptedValueExist(id)) {
       admixtureAcceptedValueService.deleteAdmixtureAcceptedValue(id);
