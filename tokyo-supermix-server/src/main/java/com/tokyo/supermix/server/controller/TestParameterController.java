@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class TestParameterController {
   private static final Logger logger = Logger.getLogger(TestParameterController.class);
 
   @PostMapping(value = EndpointURI.TEST_PARAMETER)
+  @PreAuthorize("hasAuthority('add_test_parameter')")
   public ResponseEntity<Object> createTestParameter(
       @Valid @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
     for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
@@ -82,6 +84,7 @@ public class TestParameterController {
   }
 
   @GetMapping(value = EndpointURI.TEST_PARAMETERS)
+  @PreAuthorize("hasAuthority('get_test_parameter')")
   public ResponseEntity<Object> getTestParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
         mapper.map(testParameterService.getAllTestParameters(), TestParameterResponseDto.class),
@@ -100,6 +103,7 @@ public class TestParameterController {
   }
 
   @DeleteMapping(EndpointURI.TEST_PARAMETER_BY_ID)
+  @PreAuthorize("hasAuthority('delete_test_parameter')")
   public ResponseEntity<Object> deleteTestParameter(@PathVariable Long id) {
     if (testParameterService.isTestParameterExist(id)) {
       testParameterService.deleteTestParameter(id);
@@ -155,6 +159,7 @@ public class TestParameterController {
   }
 
   @PutMapping(value = EndpointURI.TEST_PARAMETER)
+  @PreAuthorize("hasAuthority('edit_test_parameter')")
   public ResponseEntity<Object> updateTestParameter(
       @RequestBody TestParameterRequestDto testParameterRequestDto) {
     if (testParameterService.isTestParameterExist(testParameterRequestDto.getId())) {
