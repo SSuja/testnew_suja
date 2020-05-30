@@ -361,7 +361,7 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   }
 
   @Transactional(readOnly = true)
-  public ConcreteTestResult findByFinishProductSampleId(Long finishProductSampleId) {
+  public List<ConcreteTestResult> findByFinishProductSampleId(Long finishProductSampleId) {
     return concreteTestResultRepository.findByFinishProductSampleId(finishProductSampleId);
   }
 }
