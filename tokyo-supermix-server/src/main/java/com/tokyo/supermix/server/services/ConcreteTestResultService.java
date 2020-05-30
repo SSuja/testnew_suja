@@ -38,7 +38,7 @@ public interface ConcreteTestResultService {
 
   public ConcreteTestResult findByConcreteTestId(Long concreteTestId);
 
-  public ConcreteTestResult findByFinishProductSampleId(Long finishProductSampleId);
+  public List<ConcreteTestResult> findByFinishProductSampleId(Long finishProductSampleId);
 
   public void saveConcreteTestStrengthStatus(Long finishProductSampleId);
 
