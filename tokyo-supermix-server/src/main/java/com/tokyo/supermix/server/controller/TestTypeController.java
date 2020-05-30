@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class TestTypeController {
 
   // get all TestTypes
   @GetMapping(value = EndpointURI.TEST_TYPES)
+  @PreAuthorize("hasAuthority('get_test_type')")
   public ResponseEntity<Object> getAllTestTypes() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_TYPES,
         mapper.map(testTypeService.getAllTestTypes(), TestTypeResponseDto.class),
@@ -52,6 +54,7 @@ public class TestTypeController {
 
   // Add TestType
   @PostMapping(value = EndpointURI.TEST_TYPE)
+  @PreAuthorize("hasAuthority('add_test_type')")
   public ResponseEntity<Object> saveTestType(
       @Valid @RequestBody TestTypeRequestDto testTypeRequestDto) {
     if (testTypeService.isTestTypeExist(testTypeRequestDto.getType())) {
@@ -79,6 +82,7 @@ public class TestTypeController {
 
   // Delete TestType
   @DeleteMapping(value = EndpointURI.DELETE_TEST_TYPE)
+  @PreAuthorize("hasAuthority('delete_test_type')")
   public ResponseEntity<Object> deleteTestType(@PathVariable Long id) {
     if (testTypeService.isTestTypeIdExist(id)) {
       testTypeService.deleteTestType(id);
@@ -92,6 +96,7 @@ public class TestTypeController {
 
   // Update TestType
   @PutMapping(value = EndpointURI.TEST_TYPE)
+  @PreAuthorize("hasAuthority('edit_test_type')")
   public ResponseEntity<Object> updateTestType(
       @Valid @RequestBody TestTypeRequestDto testTypeRequestDto) {
     if (testTypeService.isTestTypeIdExist(testTypeRequestDto.getId())) {

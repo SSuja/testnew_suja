@@ -1,6 +1,5 @@
 package com.auth.security.controller;
 
-import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,8 @@ import com.auth.security.mapper.Mapper;
 import com.auth.security.service.RoleService;
 import com.auth.security.util.AuthConstants;
 import com.auth.security.util.AuthValidationFailureCodes;
-import com.tokyo.supermix.data.dto.auth.RoleDto;
+import com.tokyo.supermix.data.dto.auth.RoleRequestDto;
+import com.tokyo.supermix.data.dto.auth.RoleResponsedto;
 import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -42,24 +42,24 @@ public class RoleController {
   private static final Logger logger = Logger.getLogger(RoleController.class);
 
   @PostMapping(value = AuthEndpointURI.ROLE)
-  public ResponseEntity<Object> createRole(@Valid @RequestBody RoleDto roleDto) {
-    if (roleService.existsByRoleName(roleDto.getRoleName())) {
+  public ResponseEntity<Object> createRole(@Valid @RequestBody RoleRequestDto roleRequestDto) {
+    if (roleService.existsByRoleName(roleRequestDto.getRoleName())) {
       return new ResponseEntity<>(new ValidationFailureResponse(AuthConstants.ROLE,
           authValidationFailureCodes.getRoleNameAlreadyExists()), HttpStatus.BAD_REQUEST);
     }
 
-    roleService.saveRole(mapper.map(roleDto, Role.class));
+    roleService.saveRole(mapper.map(roleRequestDto, Role.class), roleRequestDto.getPermissionIds());
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, AuthConstants.ADD_ROLE_SUCCESS), HttpStatus.OK);
+        new BasicResponse<>(RestApiResponseStatus.OK, AuthConstants.ADD_ROLE_SUCCESS),
+        HttpStatus.OK);
   }
 
-
   @GetMapping(value = AuthEndpointURI.ROLES)
-  public ResponseEntity<Object> getAllRoll() {
-    List<RoleDto> roleDtoList = mapper.map(roleService.getAllRoles(), RoleDto.class);
+  public ResponseEntity<Object> getAllRoles() {
     return new ResponseEntity<>(
-        new ContentResponse<>(AuthConstants.ROLES, roleDtoList, RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+        new ContentResponse<>(AuthConstants.ROLES,
+            mapper.map(roleService.getAllRoles(), RoleResponsedto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
 
@@ -79,10 +79,9 @@ public class RoleController {
   @GetMapping(value = AuthEndpointURI.GET_ROLE_BY_ID)
   public ResponseEntity<Object> getRoleById(@PathVariable Long id) {
     if (roleService.isRoleExists(id)) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(AuthConstants.ROLE,
-              mapper.map(roleService.findRoleById(id), RoleDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(AuthConstants.ROLE,
+          mapper.map(roleService.findRoleById(id), RoleResponsedto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(AuthConstants.ROLE_ID,
@@ -90,13 +89,13 @@ public class RoleController {
   }
 
   @PutMapping(value = AuthEndpointURI.ROLE)
-  public ResponseEntity<Object> updateRole(@Valid @RequestBody RoleDto roleDto) {
-    if (roleService.isRoleExists(roleDto.getId())) {
-      if (roleService.isUpdatedRoleExists(roleDto.getId(), roleDto.getRoleName())) {
+  public ResponseEntity<Object> updateRole(@Valid @RequestBody RoleRequestDto roleRequestDto) {
+    if (roleService.isRoleExists(roleRequestDto.getId())) {
+      if (roleService.isUpdatedRoleExists(roleRequestDto.getId(), roleRequestDto.getRoleName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(AuthConstants.ROLE,
             authValidationFailureCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
       }
-      roleService.saveRole(mapper.map(roleDto, Role.class));
+      roleService.saveRole(mapper.map(roleRequestDto, Role.class), roleRequestDto.getPermissionIds());
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, AuthConstants.ROLE_UPDATED_SUCCESS),
           HttpStatus.OK);

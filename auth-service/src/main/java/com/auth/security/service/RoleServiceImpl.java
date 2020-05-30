@@ -1,11 +1,14 @@
 package com.auth.security.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.auth.Permission;
 import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
 
 @Service
@@ -13,9 +16,13 @@ public class RoleServiceImpl implements RoleService {
 
   @Autowired
   private RoleRepository roleRepository;
+  @Autowired PermissionRepository permissionRepository;
 
   @Transactional
-  public void saveRole(Role role) {
+  public void saveRole(Role role,List<Long> permissionIds) {
+    List<Permission> permissionList = new ArrayList<Permission>();
+    permissionIds.forEach(id->permissionList.add(permissionRepository.findById(id).get()));
+    role.setPermissions(permissionList);
     roleRepository.save(role);
   }
 
@@ -28,8 +35,7 @@ public class RoleServiceImpl implements RoleService {
   public void deleteRole(Long id) {
     roleRepository.deleteById(id);
   }
-
-
+  
   @Transactional(readOnly = true)
   public Role findRoleById(Long id) {
     return roleRepository.findById(id).get();
@@ -53,6 +59,4 @@ public class RoleServiceImpl implements RoleService {
     }
     return false;
   }
-
-
 }

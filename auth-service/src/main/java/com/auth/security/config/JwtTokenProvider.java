@@ -32,8 +32,8 @@ public class JwtTokenProvider {
         .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret)
         .claim("id", Long.toString(userPrincipal.getId())).claim("email", userPrincipal.getEmail())
         .claim("role", userPrincipal.getRole().getRoleName().toUpperCase())
-        .claim("userName", userPrincipal.getUsername()).compact();
-
+        .claim("userName", userPrincipal.getUsername())
+        .claim("permissions",userPrincipal.getRole().getPermissions()).compact();
   }
 
   public Long getUserIdFromJWT(String token) {

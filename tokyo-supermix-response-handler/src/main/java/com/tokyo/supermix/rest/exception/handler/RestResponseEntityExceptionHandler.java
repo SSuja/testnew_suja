@@ -59,12 +59,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(Exception.class)
-  public ResponseEntity<ApiResponse> handleExceptions(Exception ex, WebRequest request) {
-    exceptionlogger.error("General exception occured", ex);
-    return new ResponseEntity<>(new ApiResponse(RestApiResponseStatus.ERROR),
-        HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+//  @ExceptionHandler(Exception.class)
+//  public ResponseEntity<ApiResponse> handleExceptions(Exception ex, WebRequest request) {
+//    exceptionlogger.error("General exception occured", ex);
+//    return new ResponseEntity<>(new ApiResponse(RestApiResponseStatus.ERROR),
+//        HttpStatus.INTERNAL_SERVER_ERROR);
+//  }
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

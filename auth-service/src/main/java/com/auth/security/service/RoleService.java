@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.auth.Role;
 
 public interface RoleService {
-  public void saveRole(Role role);
+  public void saveRole(Role role,List<Long> permissionIds);
 
   public boolean isRoleExists(Long id);
 
