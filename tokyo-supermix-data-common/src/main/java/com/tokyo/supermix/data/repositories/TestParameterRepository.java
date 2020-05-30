@@ -22,4 +22,6 @@ public interface TestParameterRepository
 
 	public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
 			Long qualityParameterId, Long unitId, String abbreviation);
+
+	public TestParameter findByQualityParameterId(Long testParameterId);
 }
