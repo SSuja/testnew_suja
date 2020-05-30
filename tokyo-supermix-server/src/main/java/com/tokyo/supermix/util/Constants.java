@@ -17,9 +17,9 @@ public class Constants {
 	public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
 	public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
 
-//for sample counts
+	// for sample counts
 	public static final String SAMPLE_COUNTS = "sampleCounts";
-//for plants
+	// for plants
 	public static final String PLANT_NAME = "PlantName";
 	public static final String PLANT_ID = "PlantId";
 	public static final String PLANTS = "plants";
@@ -114,7 +114,7 @@ public class Constants {
 	/*
 	 * Constants for Equation validation key & Success messages
 	 */
-	
+
 	public static final String EQUATIONS = "equations";
 	public static final String EQUATION = "equation";
 	public static final String EQUATION_ID = "equationId";
@@ -495,7 +495,12 @@ public class Constants {
 	public static final String ADD_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Added Successfully";
 	public static final String CONCRETE_TEST_STATUS_DELETED = "Concrete Test Status Successfully Deleted";
 	public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Updated Successfully";
-
+	
+	/*
+     * Constants for report
+     */
+    public static final String TEST_REPORT = "testReport";
+    
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */

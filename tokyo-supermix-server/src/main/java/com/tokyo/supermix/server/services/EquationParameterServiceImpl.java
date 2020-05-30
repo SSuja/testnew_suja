@@ -10,48 +10,48 @@ import com.tokyo.supermix.data.repositories.EquationParameterRepository;
 
 @Service
 public class EquationParameterServiceImpl implements EquationParameterService {
-  @Autowired
-  private EquationParameterRepository equationParameterRepository;
+	@Autowired
+	private EquationParameterRepository equationParameterRepository;
 
-  @Transactional
-  public List<EquationParameter> saveEquationParameter(List<EquationParameter> equationParameter) {
-    return equationParameterRepository.saveAll(equationParameter);
-  }
+	@Transactional
+	public List<EquationParameter> saveEquationParameter(List<EquationParameter> equationParameter) {
+		return equationParameterRepository.saveAll(equationParameter);
+	}
 
-  @Transactional(readOnly = true)
-  public List<EquationParameter> getAllEquationParameters() {
-    return equationParameterRepository.findAll();
-  }
+	@Transactional(readOnly = true)
+	public List<EquationParameter> getAllEquationParameters() {
+		return equationParameterRepository.findAll();
+	}
 
-  @Transactional(readOnly = true)
-  public EquationParameter getEquationParameterById(Long id) {
-    return equationParameterRepository.findById(id).get();
-  }
+	@Transactional(readOnly = true)
+	public EquationParameter getEquationParameterById(Long id) {
+		return equationParameterRepository.findById(id).get();
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isEquationParameterExist(Long id) {
-    return equationParameterRepository.existsById(id);
-  }
+	@Transactional(readOnly = true)
+	public boolean isEquationParameterExist(Long id) {
+		return equationParameterRepository.existsById(id);
+	}
 
-  @Transactional(readOnly = true)
-  public List<EquationParameter> getEquationByEquationId(Long equationId) {
-    return equationParameterRepository.findByEquationId(equationId);
-  }
+	@Transactional(readOnly = true)
+	public List<EquationParameter> getEquationByEquationId(Long equationId) {
+		return equationParameterRepository.findByEquationId(equationId);
+	}
 
-  @Transactional(propagation = Propagation.NEVER)
-  public void deleteTestParameter(Long id) {
-    equationParameterRepository.deleteById(id);
-  }
+	@Transactional(propagation = Propagation.NEVER)
+	public void deleteTestParameter(Long id) {
+		equationParameterRepository.deleteById(id);
+	}
 
-  public boolean isDuplicateRowExists(Long equationId, Long parameterId) {
-    if (equationParameterRepository.existsByEquationIdAndParameterId(equationId, parameterId)) {
-      return true;
-    }
-    return false;
-  }
+	public boolean isDuplicateRowExists(Long equationId, Long testParameterId) {
+		if (equationParameterRepository.existsByEquationIdAndTestParameterId(equationId, testParameterId)) {
+			return true;
+		}
+		return false;
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isEquationIdExist(Long equationId) {
-    return equationParameterRepository.existsByEquationId(equationId);
-  }
+	@Transactional(readOnly = true)
+	public boolean isEquationIdExist(Long equationId) {
+		return equationParameterRepository.existsByEquationId(equationId);
+	}
 }
