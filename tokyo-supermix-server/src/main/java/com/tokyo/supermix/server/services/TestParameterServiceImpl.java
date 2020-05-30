@@ -77,10 +77,10 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
-      Long qualityParameterId, Long unitId, String abbreviation, EntryLevel entryLevel) {
+      Long qualityParameterId, Long unitId, String abbreviation) {
     if (testParameterRepository
-        .existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
-            testConfigureId, qualityParameterId, unitId, abbreviation, entryLevel)) {
+        .existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviation(testConfigureId,
+            qualityParameterId, unitId, abbreviation)) {
       return true;
     }
     return false;
@@ -99,35 +99,28 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameters.add(testParameter);
       }
       if (testParameter.getParameter() == null) {
-        if (testParameter.getEntryLevel().equals(EntryLevel.TEST)) {
-          testParameters.add(testParameter);
-        }
-        if (testParameter.getEntryLevel().equals(EntryLevel.CONFIGURE)) {
-          if (testParameter.getValue() != null) {
-            testParameters.add(testParameter);
-          }
-          if (testParameter.getValue() == null) {
-            if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
-                testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
-              if ((materialQualityParameterRepository
-                  .findByQualityParameterIdAndRawMaterialId(
-                      testParameter.getQualityParameter().getId(), rawMaterialId)
-                  .getValue() != null)) {
-                testParameter
-                    .setValue(
-                        materialQualityParameterRepository
-                            .findByQualityParameterIdAndRawMaterialId(
-                                testParameter.getQualityParameter().getId(), rawMaterialId)
-                            .getValue());
-                testParameters.add(testParameter);
-              }
-            } else {
+        if (testParameter.getValue() == null) {
+          if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
+              testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
+            if ((materialQualityParameterRepository
+                .findByQualityParameterIdAndRawMaterialId(
+                    testParameter.getQualityParameter().getId(), rawMaterialId)
+                .getValue() != null)) {
+              testParameter
+                  .setValue(
+                      materialQualityParameterRepository
+                          .findByQualityParameterIdAndRawMaterialId(
+                              testParameter.getQualityParameter().getId(), rawMaterialId)
+                          .getValue());
               testParameters.add(testParameter);
             }
+          } else {
+            testParameters.add(testParameter);
           }
         }
       }
     }
+
     return testParameters;
   }
 
