@@ -550,6 +550,7 @@ public final class EndpointURI {
   public static final String TEST_REPORT = BASE_API_PATH + "test-report";
   public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
   public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
-
+  public static final String INCOMING_CODE = "incoming-sample" + SLASH + "{icomingSampleCode}";
+  public static final String MATERIAL_TEST_DETAIL_REPORT = TEST_REPORT + SLASH + INCOMING_CODE;
   private EndpointURI() {}
 }
