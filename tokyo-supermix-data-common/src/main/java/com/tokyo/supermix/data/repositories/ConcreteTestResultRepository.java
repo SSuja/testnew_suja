@@ -14,4 +14,7 @@ public interface ConcreteTestResultRepository
   ConcreteTestResult findByConcreteTestId(Long concreteTestId);
 
   List<ConcreteTestResult> findByConcreteTestConcreteTestTypeId(Long concreteTestTypeId);
+
+  List<ConcreteTestResult> findByConcreteTestConcreteTestTypeIdAndFinishProductSampleId(
+      Long concreteTestTypeId, Long finishProductSampleId);
 }
