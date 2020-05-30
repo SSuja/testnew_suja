@@ -183,11 +183,9 @@ public final class EndpointURI {
 	 * static final String PARAMETERS = BASE_API_PATH + "parameters"; public static
 	 * final String GET_PARAMETER_BY_ID = PARAMETER + ID; public static final String
 	 * DELETE_PARAMETER_BY_ID = PARAMETER + ID; public static final String
-	 * PARAMETER_SEARCH = PARAMETER + SEARCH;
+	 * PARAMETER_SEARCH = PARAMETER + SEARCH; /
 	 * 
 	 * /* TestType
-	 * 
-	 * TestType
 	 */
 	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
 	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
@@ -445,7 +443,6 @@ public final class EndpointURI {
 			+ "material-sub-category" + SLASH + "{materialSubCategoryName}";
 	public static final String MATERIAL_CATEGORY_STATUS_COUNT = INCOMING_SAMPLES_COUNT + SLASH + "material-category"
 			+ SLASH + "{materialCategoryName}";
-
 	/*
 	 * concreteTest
 	 * 
@@ -509,15 +506,14 @@ public final class EndpointURI {
 	public static final String DELETE_ROLE_BY_ID = ROLE + ID;
 
 	/*
-	 * concreteTestStatus
+	 * concreteTestResult
 	 * 
 	 */
-	public static final String CONCRETE_TEST_STATUS = BASE_API_PATH + "concrete-test-status";
-	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "concrete-test-statuses";
-	public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
-	public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
-	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS = CONCRETE_TEST_STATUS + SLASH
-			+ "concrete-status" + SLASH + "{concreteStatus}";
+	public static final String CONCRETE_TEST_RESULT_BY_FINISH_PRODUCT_SAMPLE_ID = CONCRETE_TEST_RESULT + SLASH
+			+ "finish-product-sample" + SLASH + "{finishProductSampleId}";
+	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID_AND_FINISH_PRODUCT_SAMPLE_ID = CONCRETE_TEST_RESULT
+			+ SLASH + "concrete-test-type" + SLASH + "{concreteTestTypeId}" + SLASH + "finish-product-sample" + SLASH
+			+ "{finishProductSampleId}";
 
 	/*
 	 * AdmixtureAcceptedValue Apis
@@ -542,8 +538,20 @@ public final class EndpointURI {
 	 * test Report
 	 */
 	public static final String TEST_REPORT = BASE_API_PATH + "test-report";
-  	public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
-  	public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
+	public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
+	public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
+
+	/*
+	 * concreteTestStatus
+	 * 
+	 */
+	public static final String CONCRETE_TEST_STATUS = BASE_API_PATH + "concrete-test-status";
+	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "concrete-test-statuses";
+	public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
+	public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
+	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS = CONCRETE_TEST_STATUS + SLASH
+			+ "concrete-status" + SLASH + "{concreteStatus}";
+
 	private EndpointURI() {
 	}
 }
