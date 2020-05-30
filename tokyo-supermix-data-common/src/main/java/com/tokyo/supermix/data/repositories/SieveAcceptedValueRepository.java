@@ -7,4 +7,6 @@ import com.tokyo.supermix.data.entities.SieveAcceptedValue;
 public interface SieveAcceptedValueRepository
     extends JpaRepository<SieveAcceptedValue, Long>, QuerydslPredicateExecutor<SieveAcceptedValue> {
   boolean existsBySieveSizeId(Long sieveSizeId);
+
+  SieveAcceptedValue findBySieveSizeMaterialSubCategoryId(Long materialSubCategoryId);
 }
