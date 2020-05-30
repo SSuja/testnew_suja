@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.report.TestDetailForSampleDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
+import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialTestService;
+import com.tokyo.supermix.server.services.SieveTestReportService;
+import com.tokyo.supermix.server.services.SieveTestService;
 import com.tokyo.supermix.server.services.TestReportService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -27,6 +30,11 @@ public class TestReportController {
   MaterialTestService materialTestService;
   @Autowired
   private TestReportService testReportService;
+  @Autowired
+  private SieveTestReportService sieveTestReportService;
+  @Autowired
+  private SieveTestService sieveTestService;
+  
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -66,5 +74,16 @@ public class TestReportController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  @GetMapping(value = EndpointURI.SIEVE_TEST_REPORT)
+  public ResponseEntity<Object> getSieveTestReportBySieveTestCode(@PathVariable String sieveTestCode) {
+    if (sieveTestService.isSieveTestExists(sieveTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(
+          Constants.TEST_REPORT, mapper
+              .map(sieveTestReportService.getSeiveTestReport(sieveTestCode), SieveTestReportDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
+        validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
