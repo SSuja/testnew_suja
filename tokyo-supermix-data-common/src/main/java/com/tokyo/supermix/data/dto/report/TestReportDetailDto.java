@@ -3,21 +3,16 @@ package com.tokyo.supermix.data.dto.report;
 import java.util.List;
 import com.tokyo.supermix.data.dto.PlantDto;
 
-public class TestReportDto {
+public class TestReportDetailDto {
   private String testName;
   private String equation;
   private PlantDto plant;
-  private IncomingSampleReportDto incomingSample;
+  private IncomingSampleReportDto incomingsample;
   private MaterialTestReportDto materialTest;
-  private List<TestTrialReportDto> testTrials;
+  private List<TestTrialDto> testTrials;
+  private List<TrailValueDto> trailValues;
   private AcceptedValueDto acceptanceCriteria;
   
-  public MaterialTestReportDto getMaterialTest() {
-    return materialTest;
-  }
-  public void setMaterialTest(MaterialTestReportDto materialTest) {
-    this.materialTest = materialTest;
-  }
   public String getTestName() {
     return testName;
   }
@@ -30,22 +25,28 @@ public class TestReportDto {
   public void setEquation(String equation) {
     this.equation = equation;
   }
-  public IncomingSampleReportDto getIncomingSample() {
-    return incomingSample;
-  }
-  public void setIncomingSample(IncomingSampleReportDto incomingSample) {
-    this.incomingSample = incomingSample;
-  }
   public PlantDto getPlant() {
     return plant;
   }
   public void setPlant(PlantDto plant) {
     this.plant = plant;
   }
-  public List<TestTrialReportDto> getTestTrials() {
+  public IncomingSampleReportDto getIncomingsample() {
+    return incomingsample;
+  }
+  public void setIncomingsample(IncomingSampleReportDto incomingsample) {
+    this.incomingsample = incomingsample;
+  }
+  public MaterialTestReportDto getMaterialTest() {
+    return materialTest;
+  }
+  public void setMaterialTest(MaterialTestReportDto materialTest) {
+    this.materialTest = materialTest;
+  }
+  public List<TestTrialDto> getTestTrials() {
     return testTrials;
   }
-  public void setTestTrials(List<TestTrialReportDto> testTrials) {
+  public void setTestTrials(List<TestTrialDto> testTrials) {
     this.testTrials = testTrials;
   }
   public AcceptedValueDto getAcceptanceCriteria() {
@@ -53,6 +54,12 @@ public class TestReportDto {
   }
   public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
     this.acceptanceCriteria = acceptanceCriteria;
+  }
+  public List<TrailValueDto> getTrailValues() {
+    return trailValues;
+  }
+  public void setTrailValues(List<TrailValueDto> trailValues) {
+    this.trailValues = trailValues;
   }
   
 }
