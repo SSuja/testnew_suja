@@ -74,6 +74,7 @@ public class TestReportController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
   @GetMapping(value = EndpointURI.SIEVE_TEST_REPORT)
   public ResponseEntity<Object> getSieveTestReportBySieveTestCode(@PathVariable String sieveTestCode) {
     if (sieveTestService.isSieveTestExists(sieveTestCode)) {

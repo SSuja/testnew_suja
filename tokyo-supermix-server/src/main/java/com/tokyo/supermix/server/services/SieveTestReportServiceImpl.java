@@ -4,20 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
-import com.tokyo.supermix.data.dto.report.SieveAcceptedValueDto;
-import com.tokyo.supermix.data.dto.report.SieveSizeDto;
 import com.tokyo.supermix.data.dto.report.SieveTestDto;
 import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.SieveTestTrialDto;
 import com.tokyo.supermix.data.entities.SieveAcceptedValue;
-import com.tokyo.supermix.data.entities.SieveSize;
 import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.SieveTestTrial;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.SieveAcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.SieveSizeRepository;
 import com.tokyo.supermix.data.repositories.SieveTestRepository;
 import com.tokyo.supermix.data.repositories.SieveTestTrialRepository;
 
@@ -28,26 +25,20 @@ public class SieveTestReportServiceImpl implements SieveTestReportService {
   @Autowired
   private SieveTestRepository sieveTestRepository;
   @Autowired
-  private SieveSizeRepository sieveSizeRepository;
-  @Autowired
   private SieveTestTrialRepository sieveTestTrialRepository;
   @Autowired
   private SieveAcceptedValueRepository sieveAcceptedValueRepository;
 
-  @Override
+  @Transactional(readOnly = true)
   public SieveTestReportDto getSeiveTestReport(String seiveTestCode) {
     SieveTestReportDto sieveTestReportDto = new SieveTestReportDto();
     SieveTest sieveTest = sieveTestRepository.findByCode(seiveTestCode);
     SieveTestDto sieveTestDto = mapper.map(sieveTest, SieveTestDto.class);
-   sieveTestReportDto.setSieveTest(sieveTestDto);
+    sieveTestReportDto.setSieveTest(sieveTestDto);
     sieveTestReportDto.setIncomingsample(getIncomingSampleDetails(sieveTest));
-    sieveTestReportDto.setSieveSizes(getSieveSizeDetails(
-        sieveTest.getIncomingSample().getRawMaterial().getMaterialSubCategory().getId()));
-    sieveTestReportDto.setSieveTestTrials(getSeiveTestTrialReport(seiveTestCode));
+    sieveTestReportDto.setSieveTestTrials(getSeiveTestTrialReport(sieveTest));
     sieveTestReportDto
         .setPlant(mapper.map(sieveTest.getIncomingSample().getPlant(), PlantDto.class));
-    sieveTestReportDto.setSeiveAcceptedValueDto(getSieveAcceptedValueDetails(
-        sieveTest.getIncomingSample().getRawMaterial().getMaterialSubCategory().getId()));
     return sieveTestReportDto;
   }
 
@@ -61,37 +52,20 @@ public class SieveTestReportServiceImpl implements SieveTestReportService {
     return incomingSampleReportDto;
   }
 
-  private SieveAcceptedValueDto getSieveAcceptedValueDetails(Long materialSubCategoryId) {
-    SieveAcceptedValue sieveAcceptedValue =
-        sieveAcceptedValueRepository.findBySieveSizeMaterialSubCategoryId(materialSubCategoryId);
-    SieveAcceptedValueDto sieveAcceptedValueDto =
-        mapper.map(sieveAcceptedValue, SieveAcceptedValueDto.class);
-    sieveAcceptedValueDto.setMax(sieveAcceptedValue.getMax());
-    sieveAcceptedValueDto.setMin(sieveAcceptedValue.getMin());
-    return sieveAcceptedValueDto;
-  }
-
-  private List<SieveSizeDto> getSieveSizeDetails(Long materialSubCategoryId) {
-    List<SieveSizeDto> sieveSizeDtoList = new ArrayList<SieveSizeDto>();
-    List<SieveSize> sieveSizelist =
-        sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId);
-    for (SieveSize sieveSize : sieveSizelist) {
-      SieveSizeDto sieveSizeDto = new SieveSizeDto();
-      sieveSizeDto.setSize(sieveSize.getSize());
-      sieveSizeDtoList.add(sieveSizeDto);
-    }
-    return sieveSizeDtoList;
-  }
-
-  public List<SieveTestTrialDto> getSeiveTestTrialReport(String sieveTestCode) {
+  public List<SieveTestTrialDto> getSeiveTestTrialReport(SieveTest sieveTest) {
     List<SieveTestTrialDto> sieveTestTrialDtoList = new ArrayList<SieveTestTrialDto>();
     List<SieveTestTrial> sieveTestTrialList =
-        sieveTestTrialRepository.findBySieveTestCode(sieveTestCode);
+        sieveTestTrialRepository.findBySieveTestCode(sieveTest.getCode());
     for (SieveTestTrial sieveTestTrial : sieveTestTrialList) {
       SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
       sieveTestTrialDto.setCumulativeRetained(sieveTestTrial.getCumulativeRetained());
       sieveTestTrialDto.setPassing(sieveTestTrial.getPassing());
       sieveTestTrialDto.setPercentageRetained(sieveTestTrial.getPercentageRetained());
+      sieveTestTrialDto.setSize(sieveTestTrial.getSieveSize().getSize());
+      SieveAcceptedValue sieveAcceptedValue =
+          sieveAcceptedValueRepository.findBySieveSizeId(sieveTestTrial.getSieveSize().getId());
+      sieveTestTrialDto.setMax(sieveAcceptedValue.getMax());
+      sieveTestTrialDto.setMin(sieveAcceptedValue.getMin());
       sieveTestTrialDtoList.add(sieveTestTrialDto);
     }
     return sieveTestTrialDtoList;
