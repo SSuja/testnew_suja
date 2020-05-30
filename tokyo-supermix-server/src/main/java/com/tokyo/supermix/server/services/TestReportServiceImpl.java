@@ -11,8 +11,11 @@ import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
 import com.tokyo.supermix.data.dto.report.ParameterResultDto;
 import com.tokyo.supermix.data.dto.report.TestDetailDto;
 import com.tokyo.supermix.data.dto.report.TestDetailForSampleDto;
+import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.dto.report.TestReportDto;
+import com.tokyo.supermix.data.dto.report.TestTrialDto;
 import com.tokyo.supermix.data.dto.report.TestTrialReportDto;
+import com.tokyo.supermix.data.dto.report.TrailValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -53,7 +56,7 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestConfigureId(materialTest.getTestConfigure().getId()).getFormula());
     reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
     reportDto
-        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+        .setIncomingSample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
     reportDto.setTestTrials(getMaterialTestTrialReport(materialTestCode));
     reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     reportDto
@@ -126,4 +129,61 @@ public class TestReportServiceImpl implements TestReportService {
         incomingSampleRepository.findById(incomingSampleCode).get().getPlant(), PlantDto.class));
     return testDetailForSampleDto;
   }
+
+  @Override
+  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode) {
+    TestReportDetailDto reportDto = new TestReportDetailDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+    reportDto.setMaterialTest(materialTestDto);
+    reportDto.setEquation(equationRepository
+        .findByTestConfigureId(materialTest.getTestConfigure().getId()).getFormula());
+    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    reportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
+    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    reportDto
+        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    return reportDto;
+  }
+
+  private List<TestTrialDto> getMaterialTestTrialDtoReport(String materialTestCode) {
+    List<TestTrialDto> trailList = new ArrayList<TestTrialDto>();
+    materialTestTrialRepository.findByMaterialTestCode(materialTestCode).forEach(trail -> {
+      trailList.add(mapper.map(trail, TestTrialDto.class));
+    });
+    return trailList;
+  }
+
+  private List<TrailValueDto> getTrailValueDtoList(String materialTestCode) {
+    List<TrailValueDto> trailValueDtoList = new ArrayList<TrailValueDto>();
+    List<MaterialTestTrial> testTrailList =
+        materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
+    List<ParameterResult> parameterResults =
+        parameterResultRepository.findByMaterialTestTrialCode(testTrailList.get(0).getCode());
+    int paramerListSize = parameterResults.size();
+    parameterResults.forEach(paramResult -> {
+      TrailValueDto trailValueDto = new TrailValueDto();
+      trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
+      trailValueDtoList.add(trailValueDto);
+    });
+    trailValueDtoList.forEach(dto -> {
+      int index = 0;
+      for (int i = 0; i < paramerListSize; i++) {
+        List<Double> values = new ArrayList<Double>();
+        for (MaterialTestTrial obj : testTrailList) {
+          values.add(parameterResultRepository.findByMaterialTestTrialCode(obj.getCode()).get(index)
+              .getValue());
+        }
+        dto.setValues(values);
+        System.out.println(index);
+        index++;
+      }
+    });
+
+    return trailValueDtoList;
+  }
+
 }
