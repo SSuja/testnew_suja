@@ -508,6 +508,10 @@ public final class EndpointURI {
       CONCRETE_TEST_RESULT + SLASH + "concrete-test-type" + SLASH + "{concreteTestTypeId}";
   public static final String CONCRETE_TEST_RESULT_BY_FINISH_PRODUCT_SAMPLE_ID =
       CONCRETE_TEST_RESULT + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}";
+  public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID_AND_FINISH_PRODUCT_SAMPLE_ID =
+      CONCRETE_TEST_RESULT + SLASH + "concrete-test-type" + SLASH + "{concreteTestTypeId}" + SLASH
+          + "finish-product-sample" + SLASH + "{finishProductSampleId}";
+
 
 
   /*

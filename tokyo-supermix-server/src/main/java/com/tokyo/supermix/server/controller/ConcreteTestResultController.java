@@ -217,4 +217,24 @@ public class ConcreteTestResultController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
         validationFailureStatusCodes.getFinishProductSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(
+      value = EndpointURI.CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID_AND_FINISH_PRODUCT_SAMPLE_ID)
+  public ResponseEntity<Object> getConcreteTestResultByConcreteTestTypeIdAndFinishProductSampleId(
+      @PathVariable Long concreteTestTypeId, @PathVariable Long finishProductSampleId) {
+    if (finishProductSampleService.isFinishProductSampleExist(finishProductSampleId)
+        && concreteTestTypeService.isConcreteTestTypeExists(concreteTestTypeId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_RESULTS,
+          mapper.map(
+              concreteTestResultService
+                  .getConcreteTestResultByConcreteTestConcreteTestTypeIdAndFinishProductSampleId(
+                      concreteTestTypeId, finishProductSampleId),
+              ConcreteTestResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
+        validationFailureStatusCodes.getFinishProductSampleNotExist()), HttpStatus.BAD_REQUEST);
+
+  }
 }
