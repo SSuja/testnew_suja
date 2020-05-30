@@ -552,6 +552,9 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS = CONCRETE_TEST_STATUS + SLASH
 			+ "concrete-status" + SLASH + "{concreteStatus}";
 
+	public static final String INCOMING_CODE = "incoming-sample" + SLASH + "{icomingSampleCode}";
+	public static final String MATERIAL_TEST_DETAIL_REPORT = TEST_REPORT + SLASH + INCOMING_CODE;
+
 	private EndpointURI() {
 	}
 }

@@ -515,10 +515,10 @@ public class Constants {
 	public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Updated Successfully";
 
 	/*
-	 * Constants for report
-	 */
-	public static final String TEST_REPORT = "testReport";
-
+     * Constants for report
+     */
+    public static final String TEST_REPORT = "testReport";
+    public static final String TEST_DETAIL_REPORT = "testDetailReport";
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */
