@@ -25,5 +25,4 @@ public interface MaterialTestRepository
   List<MaterialTest> findByIncomingSamplePlantCode(String plantCode);
 
   List<MaterialTest> findByCodeContaining(String code);
-
 }

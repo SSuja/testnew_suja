@@ -550,6 +550,16 @@ public final class EndpointURI {
   public static final String TEST_REPORT = BASE_API_PATH + "test-report";
   public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
   public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
+  public static final String INCOMING_CODE = "incoming-sample" + SLASH + "{icomingSampleCode}";
+  public static final String MATERIAL_TEST_DETAIL_REPORT = TEST_REPORT + SLASH + INCOMING_CODE;
+  public static final String TEST_REPORT_DETAIL = BASE_API_PATH + "test-detail-report";
+  public static final String MATERIAL_TEST_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + MATERIAL_TEST_CODE;
+  public static final String SIEVE_TEST_CODE = "sieve-test" + SLASH + "{sieveTestCode}";
+  public static final String SIEVE_TEST_REPORT = TEST_REPORT + SLASH + SIEVE_TEST_CODE;
+
+  public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
+      + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
 
   private EndpointURI() {}
 }

@@ -8,12 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.report.TestDetailForSampleDto;
+import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
+import com.tokyo.supermix.data.dto.report.ConcreteStrengthTestDto;
+import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.ConcreteTestTypeService;
 import com.tokyo.supermix.server.services.MaterialTestService;
+import com.tokyo.supermix.server.services.SieveTestReportService;
+import com.tokyo.supermix.server.services.SieveTestService;
 import com.tokyo.supermix.server.services.TestReportService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -26,12 +33,19 @@ public class TestReportController {
   @Autowired
   private TestReportService testReportService;
   @Autowired
+  private SieveTestReportService sieveTestReportService;
+  @Autowired
+  private SieveTestService sieveTestService;
+  @Autowired
+  private ConcreteTestTypeService concreteTestTypeService;
+
+  @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT)
-  public ResponseEntity<Object> getParameterResultByID(@PathVariable String materialTestCode) {
+  public ResponseEntity<Object> getMaterialTestReport(@PathVariable String materialTestCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(
           Constants.TEST_REPORT, mapper
@@ -40,5 +54,55 @@ public class TestReportController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_DETAIL_REPORT)
+  public ResponseEntity<Object> getTestDetailsReportBySample(
+      @PathVariable String icomingSampleCode) {
+    if (materialTestService.findByIncomingSampleCode(icomingSampleCode).size() > 0) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_DETAIL_REPORT, mapper
+          .map(testReportService.getTestDetails(icomingSampleCode), TestDetailForSampleDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
+  public ResponseEntity<Object> getMaterialTestReportDetails(
+      @PathVariable String materialTestCode) {
+    if (materialTestService.isMaterialTestExists(materialTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode),
+              TestReportDetailDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SIEVE_TEST_REPORT)
+  public ResponseEntity<Object> getSieveTestReportBySieveTestCode(
+      @PathVariable String sieveTestCode) {
+    if (sieveTestService.isSieveTestExists(sieveTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT, mapper
+          .map(sieveTestReportService.getSeiveTestReport(sieveTestCode), SieveTestReportDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
+        validationFailureStatusCodes.getSieveTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.CONCRETE_STRENGTH)
+  public ResponseEntity<Object> getByConcreteStrength(@PathVariable String concreteTestType,
+      @PathVariable String concreteTestName) {
+    if (concreteTestTypeService.isTypeExists(concreteTestType)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TYPE,
+          mapper.map(testReportService.getStrengthResult(concreteTestType, concreteTestName),
+              ConcreteStrengthTestDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TYPE,
+        validationFailureStatusCodes.getConcreteTestTypeNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
