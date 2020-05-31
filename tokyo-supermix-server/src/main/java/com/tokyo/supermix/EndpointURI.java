@@ -561,6 +561,8 @@ public final class EndpointURI {
 	 */
 	public static final String SIEVE_TEST_CODE = "sieve-test" + SLASH + "{sieveTestCode}";
 	public static final String SIEVE_TEST_REPORT = TEST_REPORT + SLASH + SIEVE_TEST_CODE;
+	public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
+			+ "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
 
 	private EndpointURI() {
 	}
