@@ -36,5 +36,7 @@ public interface TestParameterService {
 
   public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId);
 
+  public TestParameter getQualityParameterById(Long testParameterId);
+
 
 }

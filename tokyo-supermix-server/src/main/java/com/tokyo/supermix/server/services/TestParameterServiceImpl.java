@@ -149,4 +149,9 @@ public class TestParameterServiceImpl implements TestParameterService {
     }
     return testParameters;
   }
+
+  @Transactional(readOnly = true)
+  public TestParameter getQualityParameterById(Long testParameterId) {
+    return testParameterRepository.findByQualityParameterId(testParameterId);
+  }
 }
