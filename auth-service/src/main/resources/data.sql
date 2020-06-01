@@ -253,4 +253,14 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('3', 'edit_plant', '1');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('4', 'delete_plant', '1');
 
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('21', 'quality_parameter', '7');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('22', 'quality_parameter_value', '7');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('23', 'project', '8');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('24', 'pour', '8');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('25', 'sieve_size', '9');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('26', 'sieve_accepted_value', '9');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('27', 'finess_module', '9');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('28', 'incoming_sample', '10');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('29', 'process_sample', '10');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('30', 'finish_product_sample', '10');
 
