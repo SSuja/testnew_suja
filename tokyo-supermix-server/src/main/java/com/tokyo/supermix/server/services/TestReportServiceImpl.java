@@ -178,8 +178,8 @@ public class TestReportServiceImpl implements TestReportService {
       int index = 0;
       for (int i = 0; i < paramerListSize; i++) {
         List<Double> values = new ArrayList<Double>();
-        for (MaterialTestTrial obj : testTrailList) {
-          values.add(parameterResultRepository.findByMaterialTestTrialCode(obj.getCode()).get(index)
+        for (MaterialTestTrial materialTestTrial : testTrailList) {
+          values.add(parameterResultRepository.findByMaterialTestTrialCode(materialTestTrial.getCode()).get(index)
               .getValue());
         }
         dto.setValues(values);
@@ -187,7 +187,6 @@ public class TestReportServiceImpl implements TestReportService {
         index++;
       }
     });
-
     return trailValueDtoList;
   }
 
@@ -197,11 +196,27 @@ public class TestReportServiceImpl implements TestReportService {
     List<ConcreteStrengthTestDto> concreteStrengthTestDto =
         new ArrayList<ConcreteStrengthTestDto>();
     concreteTestResultRepository.findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
-        concreteTestType, concreteTestName)
-        .forEach(strength -> {
+        concreteTestType, concreteTestName).forEach(strength -> {
           concreteStrengthTestDto.add(mapper.map(strength, ConcreteStrengthTestDto.class));
         });
     return concreteStrengthTestDto;
+  }
+
+  @Transactional(readOnly = true)
+  public TestReportDetailDto getAdmixtureDetailReport(String materialTestCode) {
+    TestReportDetailDto reportDto = new TestReportDetailDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+    reportDto.setMaterialTest(materialTestDto);
+    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    reportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
+    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    reportDto
+        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    return reportDto;
   }
 
 }

@@ -15,4 +15,6 @@ public interface TestReportService {
 
   public List<ConcreteStrengthTestDto> getStrengthResult(String concreteTestType,
       String concreteTestName);
+
+  public TestReportDetailDto getAdmixtureDetailReport(String materialTestCode);
 }

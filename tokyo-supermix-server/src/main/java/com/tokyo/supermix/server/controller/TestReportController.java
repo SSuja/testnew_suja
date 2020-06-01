@@ -105,4 +105,15 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TYPE,
         validationFailureStatusCodes.getConcreteTestTypeNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+  @GetMapping(value = EndpointURI.ADMIXTURE_REPORT_DETAIL)
+  public ResponseEntity<Object> getAdmixtureReportDetails(@PathVariable String materialTestCode) {
+      if (materialTestService.isMaterialTestExists(materialTestCode)) {
+          return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+                  mapper.map(testReportService.getAdmixtureDetailReport(materialTestCode), TestReportDetailDto.class),
+                  RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+              validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
