@@ -560,6 +560,8 @@ public final class EndpointURI {
 
   public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
       + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
+  public static final String ADMIXTURE_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + "admixture" + SLASH + MATERIAL_TEST_CODE;
 
   private EndpointURI() {}
 }
