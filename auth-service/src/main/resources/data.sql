@@ -236,23 +236,7 @@ INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('12', 'test_rep
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('13', 'test_configuration');
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('14', 'manage_test');
 
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('31', 'finish_product_sample_issue', '10');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('32', 'mix_design', '11');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('33', 'raw_material_test_result', '12');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('34', 'sieve_test_result', '12');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('35', 'finish_product_test_result', '12');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('36', 'add_material_test', '13');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('37', 'add_concrete_test', '13');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('38', 'manage_tests', '13');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('39', 'manage_accepted_value', '13');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('40', 'manage_test_parameter', '13');
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('41', 'manage_equation', '13');
-
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('1', 'get_plant', '1');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('2', 'add_plant', '1');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('3', 'edit_plant', '1');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('4', 'delete_plant', '1');
-
+--privilege model
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('21', 'quality_parameter', '7');
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('22', 'quality_parameter_value', '7');
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('23', 'project', '8');
@@ -264,3 +248,14 @@ INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('29', 'process_sample', '10');
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('30', 'finish_product_sample', '10');
 
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('31', 'finish_product_sample_issue', '10');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('32', 'mix_design', '11');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('33', 'raw_material_test_result', '12');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('34', 'sieve_test_result', '12');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('35', 'finish_product_test_result', '12');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('36', 'add_material_test', '13');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('37', 'add_concrete_test', '13');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('38', 'manage_tests', '13');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('39', 'manage_accepted_value', '13');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('40', 'manage_test_parameter', '13');
+INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('41', 'manage_equation', '13');
