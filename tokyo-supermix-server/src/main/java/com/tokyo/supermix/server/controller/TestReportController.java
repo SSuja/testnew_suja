@@ -58,10 +58,10 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_DETAIL_REPORT)
   public ResponseEntity<Object> getTestDetailsReportBySample(
-      @PathVariable String icomingSampleCode, @PathVariable String testType) {
+      @PathVariable String icomingSampleCode, @PathVariable String classification) {
     if (materialTestService.findByIncomingSampleCode(icomingSampleCode).size() > 0) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_DETAIL_REPORT, mapper
-          .map(testReportService.getTestDetails(icomingSampleCode, testType), TestDetailForSampleDto.class),
+          .map(testReportService.getTestDetails(icomingSampleCode, classification), TestDetailForSampleDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
