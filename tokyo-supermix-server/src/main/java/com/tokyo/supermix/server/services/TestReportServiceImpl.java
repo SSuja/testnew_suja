@@ -114,7 +114,7 @@ public class TestReportServiceImpl implements TestReportService {
   }
 
   @Override
-  public TestDetailForSampleDto getTestDetails(String incomingSampleCode) {
+  public TestDetailForSampleDto getTestDetails(String incomingSampleCode,String testType) {
     TestDetailForSampleDto testDetailForSampleDto = new TestDetailForSampleDto();
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
@@ -203,7 +203,7 @@ public class TestReportServiceImpl implements TestReportService {
   }
 
   @Transactional(readOnly = true)
-  public TestReportDetailDto getAdmixtureDetailReport(String materialTestCode) {
+  public TestReportDetailDto getCementDetailReport(String materialTestCode) {
     TestReportDetailDto reportDto = new TestReportDetailDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);

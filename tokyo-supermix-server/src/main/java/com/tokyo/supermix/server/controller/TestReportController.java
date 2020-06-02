@@ -58,10 +58,10 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_DETAIL_REPORT)
   public ResponseEntity<Object> getTestDetailsReportBySample(
-      @PathVariable String icomingSampleCode) {
+      @PathVariable String icomingSampleCode, @PathVariable String testType) {
     if (materialTestService.findByIncomingSampleCode(icomingSampleCode).size() > 0) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_DETAIL_REPORT, mapper
-          .map(testReportService.getTestDetails(icomingSampleCode), TestDetailForSampleDto.class),
+          .map(testReportService.getTestDetails(icomingSampleCode, testType), TestDetailForSampleDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
@@ -106,11 +106,11 @@ public class TestReportController {
         validationFailureStatusCodes.getConcreteTestTypeNotExist()), HttpStatus.BAD_REQUEST);
   }
   
-  @GetMapping(value = EndpointURI.ADMIXTURE_REPORT_DETAIL)
+  @GetMapping(value = EndpointURI.CEMENT_REPORT_DETAIL)
   public ResponseEntity<Object> getAdmixtureReportDetails(@PathVariable String materialTestCode) {
       if (materialTestService.isMaterialTestExists(materialTestCode)) {
           return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-                  mapper.map(testReportService.getAdmixtureDetailReport(materialTestCode), TestReportDetailDto.class),
+                  mapper.map(testReportService.getCementDetailReport(materialTestCode), TestReportDetailDto.class),
                   RestApiResponseStatus.OK), HttpStatus.OK);
       }
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
