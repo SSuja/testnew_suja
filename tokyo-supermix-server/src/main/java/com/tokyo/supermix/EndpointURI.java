@@ -563,6 +563,8 @@ public final class EndpointURI {
 	public static final String SIEVE_TEST_REPORT = TEST_REPORT + SLASH + SIEVE_TEST_CODE;
 	public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
 			+ "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
+	public static final String CEMENT_REPORT_DETAIL = TEST_REPORT_DETAIL + SLASH + "cement" + SLASH
+			+ MATERIAL_TEST_CODE;
 
 	private EndpointURI() {
 	}

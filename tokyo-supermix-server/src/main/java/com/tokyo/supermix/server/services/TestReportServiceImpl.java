@@ -114,18 +114,20 @@ public class TestReportServiceImpl implements TestReportService {
   }
 
   @Override
-  public TestDetailForSampleDto getTestDetails(String incomingSampleCode) {
+  public TestDetailForSampleDto getTestDetails(String incomingSampleCode, String classification) {
     TestDetailForSampleDto testDetailForSampleDto = new TestDetailForSampleDto();
-    List<MaterialTest> materialTestList =
-        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    List<ParameterResult> parameterResultList = parameterResultRepository
+        .findByMaterialTestTrialMaterialTestIncomingSampleCode(incomingSampleCode);
     List<TestDetailDto> testDetailDtoList = new ArrayList<TestDetailDto>();
-    materialTestList.forEach(mTest -> {
+    parameterResultList.forEach(mTest -> {
       TestDetailDto testDetailDto = new TestDetailDto();
-      testDetailDto.setTestName(mTest.getTestConfigure().getTest().getName());
-      testDetailDto.setActualValue(mTest.getAverage());
+      testDetailDto.setTestName(
+          mTest.getMaterialTestTrial().getMaterialTest().getTestConfigure().getTest().getName());
+      testDetailDto.setActualValue(mTest.getValue());
+      testDetailDto.setAcceptanceCriteria(getAcceptedCriteriaDetails(
+          mTest.getMaterialTestTrial().getMaterialTest().getTestConfigure().getId()));
       testDetailDto
-          .setAcceptanceCriteria(getAcceptedCriteriaDetails(mTest.getTestConfigure().getId()));
-      testDetailDto.setStatus(mTest.getStatus().toString());
+          .setStatus(mTest.getMaterialTestTrial().getMaterialTest().getStatus().toString());
       testDetailDtoList.add(testDetailDto);
     });
     testDetailForSampleDto.setTestDetails(testDetailDtoList);
@@ -178,16 +180,15 @@ public class TestReportServiceImpl implements TestReportService {
       int index = 0;
       for (int i = 0; i < paramerListSize; i++) {
         List<Double> values = new ArrayList<Double>();
-        for (MaterialTestTrial obj : testTrailList) {
-          values.add(parameterResultRepository.findByMaterialTestTrialCode(obj.getCode()).get(index)
-              .getValue());
+        for (MaterialTestTrial materialTestTrial : testTrailList) {
+          values.add(parameterResultRepository
+              .findByMaterialTestTrialCode(materialTestTrial.getCode()).get(index).getValue());
         }
         dto.setValues(values);
         System.out.println(index);
         index++;
       }
     });
-
     return trailValueDtoList;
   }
 
@@ -197,11 +198,27 @@ public class TestReportServiceImpl implements TestReportService {
     List<ConcreteStrengthTestDto> concreteStrengthTestDto =
         new ArrayList<ConcreteStrengthTestDto>();
     concreteTestResultRepository.findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
-        concreteTestType, concreteTestName)
-        .forEach(strength -> {
+        concreteTestType, concreteTestName).forEach(strength -> {
           concreteStrengthTestDto.add(mapper.map(strength, ConcreteStrengthTestDto.class));
         });
     return concreteStrengthTestDto;
+  }
+
+  @Transactional(readOnly = true)
+  public TestReportDetailDto getCementDetailReport(String materialTestCode) {
+    TestReportDetailDto reportDto = new TestReportDetailDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+    reportDto.setMaterialTest(materialTestDto);
+    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    reportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
+    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    reportDto
+        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    return reportDto;
   }
 
 }
