@@ -542,5 +542,9 @@ public final class EndpointURI {
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
 
+  /*
+   * privilage
+   */
+  public static final String PRIVILAGE = BASE_API_PATH + "privilage";
   private EndpointURI() {}
 }
