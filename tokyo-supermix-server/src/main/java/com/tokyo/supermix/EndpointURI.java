@@ -545,5 +545,9 @@ public final class EndpointURI {
   public static final String PERMISSION = BASE_API_PATH + "permission";
   public static final String GET_PERMISSION_BY_ROLE_ID=PERMISSION+ SLASH + "role-id"+ SLASH +"{roleId}";
 
+  /*
+   * privilage
+   */
+  public static final String PRIVILAGE = BASE_API_PATH + "privilage";
   private EndpointURI() {}
 }
