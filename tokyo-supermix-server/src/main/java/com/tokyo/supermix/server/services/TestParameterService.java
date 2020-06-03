@@ -38,5 +38,7 @@ public interface TestParameterService {
 
   public TestParameter getQualityParameterById(Long testParameterId);
 
+  public boolean isAbbreviationNull(String abbreviation);
+
 
 }

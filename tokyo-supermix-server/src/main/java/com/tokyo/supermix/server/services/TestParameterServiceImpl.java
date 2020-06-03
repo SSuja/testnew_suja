@@ -154,4 +154,12 @@ public class TestParameterServiceImpl implements TestParameterService {
   public TestParameter getQualityParameterById(Long testParameterId) {
     return testParameterRepository.findByQualityParameterId(testParameterId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isAbbreviationNull(String abbreviation) {
+    if (abbreviation.isEmpty()) {
+      return true;
+    }
+    return false;
+  }
 }
