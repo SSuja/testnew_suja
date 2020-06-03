@@ -19,8 +19,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private TestConfigureRepository testConfigureRepository;
 
   @Transactional
-  public TestConfigure saveTestConfigure(TestConfigure testConfigure) {
-    return testConfigureRepository.save(testConfigure);
+  public Long saveTestConfigure(TestConfigure testConfigure) {
+     testConfigureRepository.save(testConfigure);
+     return testConfigure.getId();
   }
 
   @Transactional(readOnly = true)

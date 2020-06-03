@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.repositories;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.tokyo.supermix.data.entities.ConcreteTestStatus;
@@ -13,8 +14,10 @@ public interface ConcreteTestStatusRepository extends JpaRepository<ConcreteTest
   ConcreteTestStatus findByConcreteTestTypeTypeAndFinishProductSampleId(String Type,
       Long finishProductSampleId);
 
-  ConcreteTestStatus findByConcreteStatus(ConcreteStatus concreteStatus);
+  List<ConcreteTestStatus> findByConcreteStatus(ConcreteStatus concreteStatus);
 
   boolean existsByConcreteTestTypeIdAndFinishProductSampleId(Long concreteTestTypeId,
       Long finishProductSampleId);
+
+
 }

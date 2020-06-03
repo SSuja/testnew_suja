@@ -28,11 +28,15 @@ public interface TestParameterService {
       Long unitId, String abbreviation, EntryLevel entryLevel);
 
   public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
-      Long qualityParameterId, Long unitId, String abbreviation, EntryLevel entryLevel);
+      Long qualityParameterId, Long unitId, String abbreviation);
 
   public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page);
 
   public List<TestParameter> getAllTestParametersByTestConfigureId(Long testConfigureId);
 
   public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId);
+
+  public TestParameter getQualityParameterById(Long testParameterId);
+
+
 }

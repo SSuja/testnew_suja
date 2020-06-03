@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
@@ -31,6 +32,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   private TestParameterService testParameterService;
   @Autowired
   private EquationService equationService;
+  @Autowired
+  MaterialQualityParameterRepository materialQualityParameterRepository;
 
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
@@ -64,9 +67,24 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     for (ParameterResult parameterResult : parameterResultList) {
       TestParameter testParameter =
           testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
-      if (testParameter.getEntryLevel() == EntryLevel.TEST) {
-        engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
-      } else {
+      if (testParameter.getParameter() != null) {
+        if (testParameter.getEntryLevel() == EntryLevel.TEST) {
+          engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
+        } else {
+          engine.put(testParameter.getAbbreviation(), testParameter.getValue());
+        }
+      }
+      if (testParameter.getQualityParameter() != null) {
+        if (materialQualityParameterRepository
+            .findByQualityParameterId(testParameter.getQualityParameter().getId()) != null) {
+          if ((materialQualityParameterRepository
+              .findByQualityParameterId(testParameter.getQualityParameter().getId()))
+                  .getValue() != null) {
+            testParameter.setValue(materialQualityParameterRepository
+                .findByQualityParameterId(testParameter.getQualityParameter().getId()).getValue());
+            engine.put(testParameter.getAbbreviation(), testParameter.getValue());
+          }
+        }
         engine.put(testParameter.getAbbreviation(), testParameter.getValue());
       }
     }
@@ -92,24 +110,41 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
-    if (equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula() == null) {
+    if (equationService
+        .findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId())
+        .getFormula() == null) {
       for (ParameterResult parameterResult : parameterResultList) {
         materialTestTrial.setResult(parameterResult.getValue());
       }
     } else {
-      Double result = roundDoubleValue(calculateTestResult(
-          equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula(),
-          parameterResultList));
+      Double result = roundDoubleValue(calculateTestResult(equationService
+          .findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId())
+          .getFormula(), parameterResultList));
       materialTestTrial.setResult(result);
       materialTestTrialRepository.save(materialTestTrial);
     }
   }
 
   public void isTestParameterValueInConfigureLevel(ParameterResultRequestDto parameterResult) {
-    if (testParameterService.getTestParameterById(parameterResult.getTestParameterId())
-        .getEntryLevel() == EntryLevel.CONFIGURE) {
-      parameterResult.setValue(testParameterService
-          .getTestParameterById(parameterResult.getTestParameterId()).getValue());
+    if (testParameterService.getTestParameterById(parameterResult.getTestParameterId()) != null) {
+      if (testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+          .getEntryLevel() == EntryLevel.CONFIGURE) {
+        parameterResult.setValue(testParameterService
+            .getTestParameterById(parameterResult.getTestParameterId()).getValue());
+      }
+      TestParameter testParameter =
+          testParameterService.getTestParameterById(parameterResult.getTestParameterId());
+      if (testParameter.getQualityParameter() != null) {
+        if (materialQualityParameterRepository
+            .findByQualityParameterId(testParameter.getQualityParameter().getId()) != null) {
+          if ((materialQualityParameterRepository
+              .findByQualityParameterId(testParameter.getQualityParameter().getId()))
+                  .getValue() != null) {
+            parameterResult.setValue(materialQualityParameterRepository
+                .findByQualityParameterId(testParameter.getQualityParameter().getId()).getValue());
+          }
+        }
+      }
     }
   }
 

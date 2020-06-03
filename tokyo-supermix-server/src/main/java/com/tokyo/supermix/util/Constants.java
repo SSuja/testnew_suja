@@ -500,7 +500,8 @@ public class Constants {
      * Constants for report
      */
     public static final String TEST_REPORT = "testReport";
-    
+    public static final String TEST_DETAIL_REPORT = "testDetailReport";
+    public static final String CONCRETE_TYPE = "concreteType";
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */
