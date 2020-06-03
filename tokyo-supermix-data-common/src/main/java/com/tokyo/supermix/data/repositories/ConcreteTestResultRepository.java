@@ -20,4 +20,7 @@ public interface ConcreteTestResultRepository
 
   List<ConcreteTestResult> findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
       String concreteTestType, String concreteTestName);
+
+  ConcreteTestResult findByFinishProductSampleIdAndConcreteTestName(
+      Long finishProductSampleId, String concreteTestName);
 }
