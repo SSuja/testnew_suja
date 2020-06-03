@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.report.FinishProductSampleResultReportDto;
+import com.tokyo.supermix.data.dto.report.MixDesignProportionDto;
 import com.tokyo.supermix.data.dto.report.StrengthResultDto;
 import com.tokyo.supermix.data.entities.ConcreteTestResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
+import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.util.Constants;
 
@@ -28,6 +31,8 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
   private ConcreteTestResultRepository concreteTestResultRepository;
   @Autowired
   private MixDesignRepository mixDesignRepository;
+  @Autowired
+  private MixDesignProportionRepository mixDesignProportionRepository;
 
   @Transactional(readOnly = true)
   public FinishProductSampleResultReportDto getFinishProductSampleResultReportByFinishProductSampleId(
@@ -46,6 +51,8 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
         mixDesignRepository.findById(finishProductSample.getMixDesign().getCode()).get();
     finishProductSampleResultReportDto.setTargetGrade(mixDesign.getTargetGrade());
     finishProductSampleResultReportDto.setTargetSlump(mixDesign.getTargetSlump());
+    finishProductSampleResultReportDto
+        .setMixDesignProportions(getMixDesignProprtion(mixDesign.getCode()));
     for (ConcreteTestResult concreteTestResult : concreteTestResultList) {
 
       if (concreteTestResult.getConcreteTest().getName().equalsIgnoreCase(Constants.SLUMP_TEST)) {
@@ -92,6 +99,29 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
       }
     }
     return strengthResultDtoList;
+  }
+
+  public List<MixDesignProportionDto> getMixDesignProprtion(String mixDesignCode) {
+    List<MixDesignProportionDto> mixDesignProportionDtoList =
+        new ArrayList<MixDesignProportionDto>();
+    List<MixDesignProportion> mixDesignProportionList =
+        mixDesignProportionRepository.findByMixDesignCode(mixDesignCode);
+    for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
+      MixDesignProportionDto mixDesignProportionDto = new MixDesignProportionDto();
+      if (mixDesignProportion.getRawMaterial().getName()
+          .contentEquals(Constants.RAW_MATERIAL_CEMENT)) {
+        mixDesignProportionDto.setMaterialName(Constants.RAW_MATERIAL_CEMENT);
+        mixDesignProportionDto.setQuantity(mixDesignProportion.getQuantity());
+        mixDesignProportionDtoList.add(mixDesignProportionDto);
+      }
+      if (mixDesignProportion.getRawMaterial().getName()
+          .contentEquals(Constants.RAW_MATERIAL_FLYASH)) {
+        mixDesignProportionDto.setMaterialName(Constants.RAW_MATERIAL_FLYASH);
+        mixDesignProportionDto.setQuantity(mixDesignProportion.getQuantity());
+        mixDesignProportionDtoList.add(mixDesignProportionDto);
+      }
+    }
+    return mixDesignProportionDtoList;
   }
 
 

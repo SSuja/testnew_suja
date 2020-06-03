@@ -4,6 +4,7 @@ import java.util.List;
 
 public class FinishProductSampleResultReportDto {
   private List<StrengthResultDto> StrengthResults;
+  private List<MixDesignProportionDto> MixDesignProportions;
   private String projectName;
   private Double targetGrade;
   private Double targetSlump;
@@ -18,6 +19,12 @@ public class FinishProductSampleResultReportDto {
   }
   public void setStrengthResults(List<StrengthResultDto> strengthResults) {
     StrengthResults = strengthResults;
+  }
+  public List<MixDesignProportionDto> getMixDesignProportions() {
+    return MixDesignProportions;
+  }
+  public void setMixDesignProportions(List<MixDesignProportionDto> mixDesignProportions) {
+    MixDesignProportions = mixDesignProportions;
   }
   public String getProjectName() {
     return projectName;
