@@ -6,8 +6,9 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 
 public interface FinishProductSampleIssueRepository
-    extends JpaRepository<FinishProductSampleIssue, Long>,
-    QuerydslPredicateExecutor<FinishProductSampleIssue> {
-  List<FinishProductSampleIssue> findByFinishProductSampleMixDesignPlantCode(String plantCode);
+		extends JpaRepository<FinishProductSampleIssue, Long>, QuerydslPredicateExecutor<FinishProductSampleIssue> {
+	FinishProductSampleIssue findByFinishProductSampleId(Long finishProductSampleId);
+
+	List<FinishProductSampleIssue> findByFinishProductSampleMixDesignPlantCode(String plantCode);
 
 }
