@@ -48,7 +48,6 @@ public class TestConfigureController {
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   @PreAuthorize("hasAuthority('add_test_configure')")
-  public ResponseEntity<Object> createTestConfigure(
   public Long createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     return testConfigureService
