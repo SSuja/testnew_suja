@@ -9,12 +9,12 @@ import com.tokyo.supermix.data.dto.report.TestReportDto;
 public interface TestReportService {
   public TestReportDto getMaterialTestReport(String materialTestCode);
 
-  public TestDetailForSampleDto getTestDetails(String incommingSampleCode,String classification);
+  public TestDetailForSampleDto getTestDetails(String incommingSampleCode);
 
   public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode);
 
   public List<ConcreteStrengthTestDto> getStrengthResult(String concreteTestType,
       String concreteTestName);
 
-  public TestReportDetailDto getCementDetailReport(String materialTestCode);
+  public TestReportDetailDto getAdmixtureDetailReport(String materialTestCode);
 }

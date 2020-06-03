@@ -13,6 +13,7 @@
 	<artifactId>gate-way</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gate-way</name>
+	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -81,6 +82,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>gate-way</finalName>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

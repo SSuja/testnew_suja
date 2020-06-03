@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestType;
 
 public interface TestConfigureService {
-  public Long saveTestConfigure(TestConfigure testConfigure);
+  public TestConfigure saveTestConfigure(TestConfigure testConfigure);
 
   public boolean isTestConfigureExist(Long id);
 

@@ -1,0 +1,38 @@
+version: "3"
+services:
+  supermix:
+    image: supermix
+    ports:
+      - "8085:8085"
+    networks:
+      - supermix-mysql
+    depends_on:
+      - auth-service
+ 
+  auth-service:
+    image: auth-service
+    ports:
+      - "1725:1725"
+    networks:
+      - supermix-mysql
+    depends_on:
+      - gate-way
+
+  gate-way:
+    image: gate-way
+    ports:
+      - "8762:8762"
+    networks:
+      - supermix-mysql
+    depends_on:
+      - service-registry
+
+  service-registry:
+    image: service-registry
+    ports:
+      - "8761:8761"
+    networks:
+      - supermix-mysql
+
+networks:
+  supermix-mysql:
