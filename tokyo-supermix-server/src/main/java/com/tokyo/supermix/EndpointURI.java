@@ -541,10 +541,14 @@ public final class EndpointURI {
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
+  
+ 
+ 
 
   /*
    * privilage
    */
   public static final String PRIVILAGE = BASE_API_PATH + "privilage";
+  public static final String GET_PRIVILAGE_BY_ROLE_ID=PRIVILAGE+ SLASH + "role-id"+ SLASH +"{roleId}";
   private EndpointURI() {}
 }
