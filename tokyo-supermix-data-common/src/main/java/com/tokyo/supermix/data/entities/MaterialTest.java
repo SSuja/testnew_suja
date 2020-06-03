@@ -18,7 +18,6 @@ import com.tokyo.supermix.data.enums.TestLevel;
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_test")
 public class MaterialTest implements Serializable {
-
   private static final long serialVersionUID = 1L;
   @Id
   private String code;

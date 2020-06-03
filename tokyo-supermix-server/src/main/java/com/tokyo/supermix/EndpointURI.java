@@ -188,12 +188,8 @@ public final class EndpointURI {
   public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
   /*
-   * public static final String PARAMETER = BASE_API_PATH + "parameter"; public static final String
-   * PARAMETERS = BASE_API_PATH + "parameters"; public static final String GET_PARAMETER_BY_ID =
-   * PARAMETER + ID; public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID; public
-   * static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
    * 
-   * /* TestType
+   * TestType
    */
   public static final String TEST_TYPE = BASE_API_PATH + "test-type";
   public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
@@ -264,8 +260,6 @@ public final class EndpointURI {
       TEST_PARAMETER + "/test-parameters" + "/{testConfigureId}";
   public static final String QUALITY_PARAMETERS_BY_TEST_CONFIGURE_ID =
       TEST_PARAMETER + "/quality-parameters" + "/{testConfigureId}";
-
-
 
   /*
    * ProcessSample APIs
@@ -512,15 +506,24 @@ public final class EndpointURI {
       CONCRETE_TEST_RESULT + SLASH + "concrete-test" + SLASH + "{concreteTestId}";
   public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID =
       CONCRETE_TEST_RESULT + SLASH + "concrete-test-type" + SLASH + "{concreteTestTypeId}";
+  public static final String CONCRETE_TEST_RESULT_BY_FINISH_PRODUCT_SAMPLE_ID =
+      CONCRETE_TEST_RESULT + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}";
+  public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID_AND_FINISH_PRODUCT_SAMPLE_ID =
+      CONCRETE_TEST_RESULT + SLASH + "concrete-test-type" + SLASH + "{concreteTestTypeId}" + SLASH
+          + "finish-product-sample" + SLASH + "{finishProductSampleId}";
+
+
 
   /*
    * concreteTestStatus
    * 
    */
   public static final String CONCRETE_TEST_STATUS = BASE_API_PATH + "concrete-test-status";
-  public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "test-parameter-statuses";
+  public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "concrete-test-statuses";
   public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
   public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
+  public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS =
+      CONCRETE_TEST_STATUS + SLASH + "concrete-status" + SLASH + "{concreteStatus}";
 
   /*
    * AdmixtureAcceptedValue Apis
@@ -541,14 +544,32 @@ public final class EndpointURI {
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
-  
- 
- 
+  /*
+   * test Report
+   */
+  public static final String TEST_REPORT = BASE_API_PATH + "test-report";
+  public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
+  public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
+  public static final String INCOMING_CODE = "incoming-sample" + SLASH + "{icomingSampleCode}";
+  public static final String MATERIAL_TEST_DETAIL_REPORT =
+      TEST_REPORT + SLASH + INCOMING_CODE + SLASH + "classification" + SLASH + "{classification}";
+  public static final String TEST_REPORT_DETAIL = BASE_API_PATH + "test-detail-report";
+  public static final String MATERIAL_TEST_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + MATERIAL_TEST_CODE;
+  public static final String SIEVE_TEST_CODE = "sieve-test" + SLASH + "{sieveTestCode}";
+  public static final String SIEVE_TEST_REPORT = TEST_REPORT + SLASH + SIEVE_TEST_CODE;
+
+  public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
+      + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
+  public static final String CEMENT_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
 
   /*
    * privilage
    */
   public static final String PRIVILAGE = BASE_API_PATH + "privilage";
-  public static final String GET_PRIVILAGE_BY_ROLE_ID=PRIVILAGE+ SLASH + "role-id"+ SLASH +"{roleId}";
+  public static final String GET_PRIVILAGE_BY_ROLE_ID =
+      PRIVILAGE + SLASH + "role-id" + SLASH + "{roleId}";
+
   private EndpointURI() {}
 }

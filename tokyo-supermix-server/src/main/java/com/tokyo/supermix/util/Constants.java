@@ -555,6 +555,12 @@ public class Constants {
       "Concrete Test Status Updated Successfully";
 
   /*
+   * Constants for report
+   */
+  public static final String TEST_REPORT = "testReport";
+  public static final String TEST_DETAIL_REPORT = "testDetailReport";
+  public static final String CONCRETE_TYPE = "concreteType";
+  /*
    * Constants for privilage validation key & Success messages
    */
   public static final String PERMISSIONS_SUCCESS = "permission updated successfully";

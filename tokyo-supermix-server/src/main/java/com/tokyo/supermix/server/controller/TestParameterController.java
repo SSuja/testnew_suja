@@ -66,7 +66,7 @@ public class TestParameterController {
         if ((testParameterService.isDuplicateQualityTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(),
             testParameterRequestDto.getQualityParameterId(), testParameterRequestDto.getUnitId(),
-            testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+            testParameterRequestDto.getAbbreviation()))) {
           logger.debug(
               "row is already exists: createTestParameter(), isDuplicateQualityTestParameterEntryExist: {}");
           return new ResponseEntity<>(
@@ -181,7 +181,7 @@ public class TestParameterController {
         if ((testParameterService.isDuplicateQualityTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(),
             testParameterRequestDto.getQualityParameterId(), testParameterRequestDto.getUnitId(),
-            testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+            testParameterRequestDto.getAbbreviation()))) {
           logger.debug(
               "row is already exists: createTestParameter(), isDuplicateQualityTestParameterEntryExist: {}");
           return new ResponseEntity<>(

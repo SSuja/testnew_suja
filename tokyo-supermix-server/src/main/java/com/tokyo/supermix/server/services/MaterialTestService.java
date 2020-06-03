@@ -9,7 +9,7 @@ import com.tokyo.supermix.data.enums.Status;
 
 public interface MaterialTestService {
 
-  public void saveMaterialTest(MaterialTest materialTest);
+  public String saveMaterialTest(MaterialTest materialTest);
 
   public boolean isMaterialTestExists(String code);
 

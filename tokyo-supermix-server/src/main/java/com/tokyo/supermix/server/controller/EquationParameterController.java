@@ -43,7 +43,7 @@ public class EquationParameterController {
       @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
     for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
       if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
-          equationParameterRequestDto.getParameterId())) {
+          equationParameterRequestDto.getTestParameterId())) {
         logger.debug("row is already exists: createEquationParameter(), isDuplicateRowExists: {}");
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.EQUATION_PARAMETER,

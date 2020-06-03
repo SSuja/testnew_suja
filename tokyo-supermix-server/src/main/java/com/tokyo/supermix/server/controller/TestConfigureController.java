@@ -48,18 +48,10 @@ public class TestConfigureController {
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   @PreAuthorize("hasAuthority('add_test_configure')")
-  public ResponseEntity<Object> createTestConfigure(
+  public Long createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
-    if (testConfigureService.isDuplicateEntryExist(testConfigureRequestDto.getTestId(),
-        testConfigureRequestDto.getTestTypeId())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
-          validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
-    testConfigureService
+    return testConfigureService
         .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
-        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.TEST_CONFIGURES)

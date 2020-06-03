@@ -1861,6 +1861,16 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.concreteTestStatus.alreadyExist}")
   private String concreteTestStatusAlreadyExist;
+  @Value("${validation.concreteStatus.statusNotCompleted}")
+  private String concreteStatusStatusNotCompleted;
+
+  public String getConcreteStatusStatusNotCompleted() {
+    return concreteStatusStatusNotCompleted;
+  }
+
+  public void setConcreteStatusStatusNotCompleted(String concreteStatusStatusNotCompleted) {
+    this.concreteStatusStatusNotCompleted = concreteStatusStatusNotCompleted;
+  }
 
   public String getConcreteTestStatusNotExist() {
     return concreteTestStatusNotExist;
@@ -1888,5 +1898,4 @@ public class ValidationFailureStatusCodes {
   public void setRoleNotExist(String roleNotExist) {
     this.roleNotExist = roleNotExist;
   }
-
 }

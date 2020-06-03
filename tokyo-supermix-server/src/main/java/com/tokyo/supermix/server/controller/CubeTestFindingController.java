@@ -42,11 +42,21 @@ public class CubeTestFindingController {
 	private ValidationFailureStatusCodes validationFailureStatusCodes;
 	@Autowired
 	private CubeTestFindingService cubeTestFindingService;
+
 	private static final Logger logger = Logger.getLogger(CubeTestFindingController.class);
 
 	@PostMapping(value = EndpointURI.CUBE_TEST_FINDING)
 	public ResponseEntity<Object> saveCubeTestFinding(
 			@Valid @RequestBody List<CubeTestFindingRequestDto> cubeTestFindingRequestDtoList) {
+		for (CubeTestFindingRequestDto cubeTestFindingRequestDto : cubeTestFindingRequestDtoList) {
+			if (cubeTestFindingService.checkConcreteStatus(cubeTestFindingRequestDto.getFinishProductSampleId())) {
+				return new ResponseEntity<>(
+						new ValidationFailureResponse(Constants.CONCRETE_TEST_STATUS,
+								validationFailureStatusCodes.getConcreteStatusStatusNotCompleted()),
+						HttpStatus.BAD_REQUEST);
+			}
+			break;
+		}
 		for (CubeTestFindingRequestDto cubeTestFindingRequestDto : cubeTestFindingRequestDtoList) {
 			if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
 				return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
@@ -91,14 +101,17 @@ public class CubeTestFindingController {
 	@PutMapping(value = EndpointURI.CUBE_TEST_FINDING)
 	public ResponseEntity<Object> updateCubeTestFinding(
 			@Valid @RequestBody List<CubeTestFindingRequestDto> cubeTestFindingRequestDtoList) {
+		cubeTestFindingService.updateCubTestFinding(mapper.map(cubeTestFindingRequestDtoList, CubeTestFinding.class));
 		for (CubeTestFindingRequestDto cubeTestFindingRequestDto : cubeTestFindingRequestDtoList) {
 			if (cubeTestFindingService.isCubeTestFindingExist(cubeTestFindingRequestDto.getId())) {
 				if (cubeTestFindingService.checkAge(cubeTestFindingRequestDto.getAge())) {
 					return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUBE_TEST_FINDING_AGE,
 							validationFailureStatusCodes.getCubeTestFindingAgeValid()), HttpStatus.BAD_REQUEST);
 				}
-				cubeTestFindingService
-						.saveCubeTestFinding(mapper.map(cubeTestFindingRequestDto, CubeTestFinding.class));
+				cubeTestFindingService.saveCubeTestFindingConcretTestResultStrengthAverage(
+						cubeTestFindingRequestDto.getFinishProductSampleId(), cubeTestFindingRequestDto.getAge());
+				cubeTestFindingService.saveCubeTestFindingConcretTestResultStrengthGradeRatio(
+						cubeTestFindingRequestDto.getFinishProductSampleId(), cubeTestFindingRequestDto.getAge());
 			}
 			return new ResponseEntity<>(
 					new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CUBE_TEST_FINDING_SUCCESS),
