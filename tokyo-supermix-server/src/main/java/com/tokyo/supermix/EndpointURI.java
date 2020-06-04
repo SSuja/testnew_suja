@@ -524,7 +524,9 @@ public final class EndpointURI {
   public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
   public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS =
       CONCRETE_TEST_STATUS + SLASH + "concrete-status" + SLASH + "{concreteStatus}";
-
+  public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE =
+      CONCRETE_TEST_STATUS + SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH
+          + "concrete-test-type" + SLASH + "{concreteTestType}";
   /*
    * AdmixtureAcceptedValue Apis
    */
@@ -563,9 +565,13 @@ public final class EndpointURI {
       + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
   public static final String CEMENT_REPORT_DETAIL =
       TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
-  public static final String FINISH_PRODUCT_SAMPLE_ID= "finish-product" + SLASH + "{finishProductSampleId}";
-  public static final String FINISH_PRODUCT_RESULT_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_SAMPLE_ID;
-  public static final String FINISH_PRODUCT_RESULTS="all-results";
-  public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT = TEST_REPORT + SLASH +FINISH_PRODUCT_RESULTS;
+  public static final String FINISH_PRODUCT_SAMPLE_ID =
+      "finish-product" + SLASH + "{finishProductSampleId}";
+  public static final String FINISH_PRODUCT_RESULT_REPORT =
+      TEST_REPORT + SLASH + FINISH_PRODUCT_SAMPLE_ID;
+  public static final String FINISH_PRODUCT_RESULTS = "all-results";
+  public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT =
+      TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
+
   private EndpointURI() {}
 }
