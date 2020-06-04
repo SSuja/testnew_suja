@@ -146,7 +146,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
       finishProductSampleDto.setTargetSlump(mixDesign.getTargetSlump());
       finishProductSampleDto
           .setFinishProductCode(concreteTestStatus.getFinishProductSample().getFinishProductCode());
-
       finishProductSampleDto
           .setStrengthResults(getStrengths(concreteTestStatus.getFinishProductSample().getId()));
       finishProductSampleDto.setMixDesignProportions(
@@ -155,7 +154,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
           getAllSlumpTestResults(concreteTestStatus.getFinishProductSample().getId()));
       FinishProductAllResultsDtoList.add(finishProductSampleDto);
     }
-
     return FinishProductAllResultsDtoList;
   }
 
@@ -181,7 +179,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
         mixDesignProportionDtoList.add(mixDesignProportionDto);
       }
     }
-
     return mixDesignProportionDtoList;
   }
 
@@ -204,8 +201,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
         strengthResultDtoList.add(strengthResultDto);
       }
     }
-
-
     return strengthResultDtoList;
   }
 
