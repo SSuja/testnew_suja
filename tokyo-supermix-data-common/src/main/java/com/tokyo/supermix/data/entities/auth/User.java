@@ -21,7 +21,7 @@ public class User extends DateAudit {
   private String password;
   private String email;
   @OneToOne
-  @JoinColumn(name = "employee_id")
+  @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)

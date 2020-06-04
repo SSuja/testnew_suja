@@ -1,11 +1,11 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
+import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.auth.User;
 
 public interface UserService {
-  User saveUser(User user);
+  UserCredentialDto saveUser(User user);
 
   public boolean isUserNameExist(String userName);
 

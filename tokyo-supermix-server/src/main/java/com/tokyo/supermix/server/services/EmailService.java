@@ -60,7 +60,6 @@ public class EmailService {
 	        mailSender.send(preparator);
 	    }
 	    catch (MailException ex) {
-	        // simply log it and go on...
 	        System.err.println(ex.getMessage());
 	    }
 	}

@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.auth.JwtAuthenticationDtoResponse;
 import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
@@ -93,15 +90,16 @@ public class AuthController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PASSWORD_SUCCESS),
         HttpStatus.OK);
   }
-  
+
   @PutMapping(value = EndpointURI.FORGOT_PASSWORD)
-  public ResponseEntity<?> forgotPassword(@RequestParam("userEmail") String userEmail) { 
+  public ResponseEntity<?> forgotPassword(@RequestParam("userEmail") String userEmail) {
     if (userService.existsByEmail(userEmail)) {
       final User user = userService.findUserByEmail(userEmail);
       if (user != null) {
         final String token = UUID.randomUUID().toString();
-        authService.createForgotPasswordToken(token,user);
-        emailService.sendMail(userEmail,Constants.SUBJECT_FORGOT_PASSWORD,Constants.MESSAGE_OF_FORGOT_PASSWORD + token);
+        authService.createForgotPasswordToken(token, user);
+        emailService.sendMail(userEmail, Constants.SUBJECT_FORGOT_PASSWORD,
+            Constants.MESSAGE_OF_FORGOT_PASSWORD + token);
         return new ResponseEntity<>(
             new BasicResponse<>(RestApiResponseStatus.OK, Constants.GENERATE_PASSWORD_SUCCESS),
             HttpStatus.OK);
@@ -110,14 +108,15 @@ public class AuthController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
         validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @PutMapping(value = EndpointURI.RESET_PASSWORD)
-  public ResponseEntity<?> resetPassword(@RequestParam("token") String token , @RequestBody ResetPasswordDto passwordDto ){
-    String result =authService.validatePasswordResetToken(token);
-    if(result != null) {
+  public ResponseEntity<?> resetPassword(@RequestParam("token") String token,
+      @RequestBody ResetPasswordDto passwordDto) {
+    String result = authService.validatePasswordResetToken(token);
+    if (result != null) {
       return new ResponseEntity<>(new ValidationFailureResponse(result,
           validationFailureStatusCodes.getIsPasswordTokenFailed()), HttpStatus.BAD_REQUEST);
-}
+    }
     User user = authService.getUserByPasswordResetToken(token);
     userService.changeUserPassword(user, passwordDto.getPassword());
     return new ResponseEntity<>(

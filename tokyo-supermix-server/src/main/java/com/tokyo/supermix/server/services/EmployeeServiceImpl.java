@@ -18,6 +18,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Transactional()
 	public void saveEmployee(Employee employee) {
+	  employee.setHasUser(false);
 		employeeRepository.save(employee);
 	}
 

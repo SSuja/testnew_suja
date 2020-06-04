@@ -1,14 +1,19 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.Arrays;
 import java.util.List;
-
+import org.passay.CharacterRule;
+import org.passay.EnglishCharacterData;
+import org.passay.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
+import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
 
 @Service
@@ -17,10 +22,33 @@ public class UserServiceImpl implements UserService {
   private UserRepository userRepository;
   @Autowired
   PasswordEncoder passwordEncoder;
+  @Autowired
+  private EmployeeRepository employeeRepository;
 
   @Transactional
-  public User saveUser(User user) {
-   return saveUserPassword(user, user.getPassword());
+  public UserCredentialDto saveUser(User user) {
+    String email = user.getEmail();
+    String userName = email.substring(0, email.indexOf('@'));
+    user.setUserName(userName);
+    String password = generateRandomPassword();
+    saveUserPassword(user, password);
+    Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
+    employee.setHasUser(true);
+    employeeRepository.save(employee);
+    UserCredentialDto dto = new UserCredentialDto();
+    dto.setUserName(userName);
+    dto.setPassword(password);
+    dto.setEmail(email);
+    return dto;
+  }
+
+  public String generateRandomPassword() {
+    List<CharacterRule> rules = Arrays.asList(new CharacterRule(EnglishCharacterData.UpperCase, 2),
+        new CharacterRule(EnglishCharacterData.LowerCase, 2),
+        new CharacterRule(EnglishCharacterData.Digit, 4));
+    PasswordGenerator generator = new PasswordGenerator();
+    String password = generator.generatePassword(8, rules);
+    return password;
   }
 
   private User saveUserPassword(User user, String password) {
@@ -74,7 +102,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void changeUserPassword(User user, String newPassword) {
-   saveUserPassword(user,newPassword);
+    saveUserPassword(user, newPassword);
   }
 
   @Override
