@@ -173,8 +173,10 @@ public class TestReportServiceImpl implements TestReportService {
     int paramerListSize = parameterResults.size();
     parameterResults.forEach(paramResult -> {
       TrailValueDto trailValueDto = new TrailValueDto();
+      if(paramResult.getTestParameter().getParameter() != null) {
       trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
       trailValueDtoList.add(trailValueDto);
+      }
     });
     trailValueDtoList.forEach(dto -> {
       int index = 0;
