@@ -249,6 +249,7 @@ public class Constants {
 	public static final String ADD_TEST_PARAMETER_SUCCESS = "Test Parameter Added Successfully";
 	public static final String TEST_PARAMETER_DELETED = "Test Parameter Successfully Deleted";
 	public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test Parameter Updated Successfully";
+	public static final String ABBREVIATION = "abbreviation";
 	/*
 	 * Constants for User validation key & Success messages
 	 */
@@ -397,7 +398,6 @@ public class Constants {
 	public static final String ADD_FINENESS_MODULUS_SUCCESS = "Fineness Modulus Added Successfully";
 	public static final String FINENESS_MODULUS_DELETED = "Fineness Modulus Successfully Deleted";
 	public static final String UPDATE_FINENESS_MODULUS_SUCCESS = "Fineness Modulus Updated Successfully";
-
 	/*
 	 * Finish Product Sample
 	 */
@@ -513,13 +513,13 @@ public class Constants {
 	public static final String ADD_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Added Successfully";
 	public static final String CONCRETE_TEST_STATUS_DELETED = "Concrete Test Status Successfully Deleted";
 	public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS = "Concrete Test Status Updated Successfully";
-
 	/*
-     * Constants for report
-     */
-    public static final String TEST_REPORT = "testReport";
-    public static final String TEST_DETAIL_REPORT = "testDetailReport";
-    public static final String CONCRETE_TYPE = "concreteType";
+	 * Constants for report
+	 */
+	public static final String TEST_REPORT = "testReport";
+	public static final String TEST_DETAIL_REPORT = "testDetailReport";
+	public static final String CONCRETE_TYPE = "concreteType";
+
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */

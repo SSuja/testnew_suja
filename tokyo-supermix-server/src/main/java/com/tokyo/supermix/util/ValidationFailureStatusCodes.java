@@ -762,8 +762,8 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.parameter.alreadyExist}")
 	private String parameterAlreadyExist;
 
-	@Value("${parameterDto.abbreviation.null}")
-	private String abbreviationIsNull;
+	// @Value("${parameterDto.abbreviation.null}")
+	// private String abbreviationIsNull;
 
 	@Value("${parameterDto.abbreviation.empty}")
 	private String abbreviationIsempty;
@@ -771,13 +771,13 @@ public class ValidationFailureStatusCodes {
 	@Value("${parameterDto.name.null}")
 	private String nameIsNull;
 
-	public String getAbbreviationIsNull() {
-		return abbreviationIsNull;
-	}
-
-	public void setAbbreviationIsNull(String abbreviationIsNull) {
-		this.abbreviationIsNull = abbreviationIsNull;
-	}
+	// public String getAbbreviationIsNull() {
+	// return abbreviationIsNull;
+	// }
+	//
+	// public void setAbbreviationIsNull(String abbreviationIsNull) {
+	// this.abbreviationIsNull = abbreviationIsNull;
+	// }
 
 	public String getAbbreviationIsempty() {
 		return abbreviationIsempty;
@@ -1255,35 +1255,112 @@ public class ValidationFailureStatusCodes {
 		this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
 	}
 
-	// public String getPhoneNumberIsEmpty() {
-	// return phoneNumberIsEmpty;
-	// }
-	// //
-	// public String getSuppilerCategoryIdIsNull() {
-	// return suppilerCategoryIdIsNull;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsNull(String suppilerCategoryIdIsNull) {
-	// this.suppilerCategoryIdIsNull = suppilerCategoryIdIsNull;
-	// }
-	//
-	// public String getSuppilerCategoryIdIsEmpty() {
-	// return suppilerCategoryIdIsEmpty;
-	// }
-	//
-	// public void setSuppilerCategoryIdIsEmpty(String suppilerCategoryIdIsEmpty) {
-	// this.suppilerCategoryIdIsEmpty = suppilerCategoryIdIsEmpty;
-	// }
+	// for finish product
+	@Value("${validation.finishProduct.notExist}")
+	private String finishProductNotExist;
 
-	// public void setPlantEquipmentBrandNameIsEmpty(String
-	// plantEquipmentBrandNameIsEmpty) {
-	// this.plantEquipmentBrandNameIsEmpty = plantEquipmentBrandNameIsEmpty;
-	// }
+	@Value("${validation.finishProduct.alreadyExist}")
+	private String finishProductAlreadyExist;
 
-	// for parameter
-	// @Value("${validation.parameter.notExists}")
-	// private String parameterNotExist;
-	// for AdmixtureAcceptedValue
+	@Value("${finishProductRequestDto.mixDesignCode.empty}")
+	private String mixDesignCodeIsEmpty;
+
+	@Value("${finishProductRequestDto.mixDesignCode.null}")
+	private String mixDesignCodeIsNull;
+
+	@Value("${finishProductRequestDto.projectCode.empty}")
+	private String projectCodeIsEmpty;
+
+	@Value("${finishProductRequestDto.projectCode.null}")
+	private String projectCodeIsNull;
+
+	public String getTestTypeIsNull() {
+		return testTypeIsNull;
+	}
+
+	public void setTestTypeIsNull(String testTypeIsNull) {
+		this.testTypeIsNull = testTypeIsNull;
+	}
+
+	public String getTestTypeIsEmpty() {
+		return testTypeIsEmpty;
+	}
+
+	public void setTestTypeIsEmpty(String testTypeIsEmpty) {
+		this.testTypeIsEmpty = testTypeIsEmpty;
+	}
+
+	public String getQuantityIsNull() {
+		return quantityIsNull;
+	}
+
+	public void setQuantityIsNull(String quantityIsNull) {
+		this.quantityIsNull = quantityIsNull;
+	}
+
+	public String getQuantityIsEmpty() {
+		return quantityIsEmpty;
+	}
+
+	public void setQuantityIsEmpty(String quantityIsEmpty) {
+		this.quantityIsEmpty = quantityIsEmpty;
+	}
+
+	public String getFinishProductNotExist() {
+		return finishProductNotExist;
+	}
+
+	public void setFinishProductNotExist(String finishProductNotExist) {
+		this.finishProductNotExist = finishProductNotExist;
+	}
+
+	public String getFinishProductAlreadyExist() {
+		return finishProductAlreadyExist;
+	}
+
+	public void setFinishProductAlreadyExist(String finishProductAlreadyExist) {
+		this.finishProductAlreadyExist = finishProductAlreadyExist;
+	}
+
+	public String getMixDesignCodeIsEmpty() {
+		return mixDesignCodeIsEmpty;
+	}
+
+	public void setMixDesignCodeIsEmpty(String mixDesignCodeIsEmpty) {
+		this.mixDesignCodeIsEmpty = mixDesignCodeIsEmpty;
+	}
+
+	public String getMixDesignCodeIsNull() {
+		return mixDesignCodeIsNull;
+	}
+
+	public void setMixDesignCodeIsNull(String mixDesignCodeIsNull) {
+		this.mixDesignCodeIsNull = mixDesignCodeIsNull;
+	}
+
+	public String getProjectCodeIsEmpty() {
+		return projectCodeIsEmpty;
+	}
+
+	public void setProjectCodeIsEmpty(String projectCodeIsEmpty) {
+		this.projectCodeIsEmpty = projectCodeIsEmpty;
+	}
+
+	public String getProjectCodeIsNull() {
+		return projectCodeIsNull;
+	}
+
+	public String getProjectNotExist() {
+		return projectNotExist;
+	}
+
+	public void setProjectNotExist(String projectNotExist) {
+		this.projectNotExist = projectNotExist;
+	}
+
+	public String getProjectAlreadyExist() {
+		return projectAlreadyExist;
+	}
 
 	// Authentication
 	@Value("${auth.password.invalid}")
@@ -1359,101 +1436,6 @@ public class ValidationFailureStatusCodes {
 
 	public String getRoleAlreadyExists() {
 		return roleAlreadyExists;
-	}
-
-	@Value("${validation.finishProduct.alreadyExist}")
-	private String finishProductAlreadyExist;
-
-	@Value("${finishProductRequestDto.mixDesignCode.empty}")
-	private String mixDesignCodeIsEmpty;
-
-	@Value("${finishProductRequestDto.mixDesignCode.null}")
-	private String mixDesignCodeIsNull;
-
-	@Value("${finishProductRequestDto.projectCode.empty}")
-	private String projectCodeIsEmpty;
-
-	@Value("${finishProductRequestDto.projectCode.null}")
-	private String projectCodeIsNull;
-
-	public String getTestTypeIsNull() {
-		return testTypeIsNull;
-	}
-
-	public void setTestTypeIsNull(String testTypeIsNull) {
-		this.testTypeIsNull = testTypeIsNull;
-	}
-
-	public String getTestTypeIsEmpty() {
-		return testTypeIsEmpty;
-	}
-
-	public void setTestTypeIsEmpty(String testTypeIsEmpty) {
-		this.testTypeIsEmpty = testTypeIsEmpty;
-	}
-
-	public String getQuantityIsNull() {
-		return quantityIsNull;
-	}
-
-	public void setQuantityIsNull(String quantityIsNull) {
-		this.quantityIsNull = quantityIsNull;
-	}
-
-	public String getQuantityIsEmpty() {
-		return quantityIsEmpty;
-	}
-
-	public void setQuantityIsEmpty(String quantityIsEmpty) {
-		this.quantityIsEmpty = quantityIsEmpty;
-	}
-
-	public String getFinishProductAlreadyExist() {
-		return finishProductAlreadyExist;
-	}
-
-	public void setFinishProductAlreadyExist(String finishProductAlreadyExist) {
-		this.finishProductAlreadyExist = finishProductAlreadyExist;
-	}
-
-	public String getMixDesignCodeIsEmpty() {
-		return mixDesignCodeIsEmpty;
-	}
-
-	public void setMixDesignCodeIsEmpty(String mixDesignCodeIsEmpty) {
-		this.mixDesignCodeIsEmpty = mixDesignCodeIsEmpty;
-	}
-
-	public String getMixDesignCodeIsNull() {
-		return mixDesignCodeIsNull;
-	}
-
-	public void setMixDesignCodeIsNull(String mixDesignCodeIsNull) {
-		this.mixDesignCodeIsNull = mixDesignCodeIsNull;
-	}
-
-	public String getProjectCodeIsEmpty() {
-		return projectCodeIsEmpty;
-	}
-
-	public void setProjectCodeIsEmpty(String projectCodeIsEmpty) {
-		this.projectCodeIsEmpty = projectCodeIsEmpty;
-	}
-
-	public String getProjectCodeIsNull() {
-		return projectCodeIsNull;
-	}
-
-	public String getProjectNotExist() {
-		return projectNotExist;
-	}
-
-	public void setProjectNotExist(String projectNotExist) {
-		this.projectNotExist = projectNotExist;
-	}
-
-	public String getProjectAlreadyExist() {
-		return projectAlreadyExist;
 	}
 
 	public void setProjectAlreadyExist(String projectAlreadyExist) {
@@ -1979,6 +1961,17 @@ public class ValidationFailureStatusCodes {
 
 	public void setConcreteTestStatusAlreadyExist(String concreteTestStatusAlreadyExist) {
 		this.concreteTestStatusAlreadyExist = concreteTestStatusAlreadyExist;
+	}
+
+	@Value("${testParameterDto.abbreviation.null}")
+	private String abbreviationIsNull;
+
+	public String getAbbreviationIsNull() {
+		return abbreviationIsNull;
+	}
+
+	public void setAbbreviationIsNull(String abbreviationIsNull) {
+		this.abbreviationIsNull = abbreviationIsNull;
 	}
 
 	public void setRoleAlreadyExists(String roleAlreadyExists) {
