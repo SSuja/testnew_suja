@@ -1,7 +1,8 @@
 package com.auth.security.service;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.auth.Role;
+
+import com.tokyo.supermix.data.entities.privilege.Role;
 
 public interface RoleService {
   public void saveRole(Role role,List<Long> permissionIds);

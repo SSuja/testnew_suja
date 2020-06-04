@@ -1,4 +1,4 @@
-package com.tokyo.supermix.data.entities.auth;
+package com.tokyo.supermix.data.entities.privilege;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;

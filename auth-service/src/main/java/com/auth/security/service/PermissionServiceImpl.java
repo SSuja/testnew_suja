@@ -1,10 +1,12 @@
 package com.auth.security.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.auth.Permission;
+
+import com.tokyo.supermix.data.entities.privilege.Permission;
 import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
 
 @Service

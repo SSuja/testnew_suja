@@ -1,6 +1,7 @@
 package com.auth.security.controller;
 
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.auth.security.AuthEndpointURI;
 import com.auth.security.mapper.Mapper;
 import com.auth.security.service.RoleService;
@@ -20,7 +22,7 @@ import com.auth.security.util.AuthConstants;
 import com.auth.security.util.AuthValidationFailureCodes;
 import com.tokyo.supermix.data.dto.auth.RoleRequestDto;
 import com.tokyo.supermix.data.dto.auth.RoleResponsedto;
-import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.entities.privilege.Role;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -61,8 +63,7 @@ public class RoleController {
             mapper.map(roleService.getAllRoles(), RoleResponsedto.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
-
-
+  
   @DeleteMapping(value = AuthEndpointURI.DELETE_ROLE_BY_ID)
   public ResponseEntity<Object> deleteRole(@PathVariable Long id) {
     if (roleService.isRoleExists(id)) {

@@ -2,12 +2,14 @@ package com.auth.security.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.auth.Permission;
-import com.tokyo.supermix.data.entities.auth.Role;
+
+import com.tokyo.supermix.data.entities.privilege.Permission;
+import com.tokyo.supermix.data.entities.privilege.Role;
 import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
 
@@ -22,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
   public void saveRole(Role role,List<Long> permissionIds) {
     List<Permission> permissionList = new ArrayList<Permission>();
     permissionIds.forEach(id->permissionList.add(permissionRepository.findById(id).get()));
-    role.setPermissions(permissionList);
+//    role.se.setPermissions(permissionList);
     roleRepository.save(role);
   }
 
@@ -43,7 +45,7 @@ public class RoleServiceImpl implements RoleService {
 
   @Transactional(readOnly = true)
   public boolean existsByRoleName(String roleName) {
-    return roleRepository.existsByRoleName(roleName);
+    return roleRepository.existsByName(roleName);
   }
 
   @Transactional(readOnly = true)
@@ -53,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
 
   @Transactional(readOnly = true)
   public boolean isUpdatedRoleExists(Long id, String roleName) {
-    if ((!findRoleById(id).getRoleName().equalsIgnoreCase(roleName))
+    if ((!findRoleById(id).getName().equalsIgnoreCase(roleName))
         && (existsByRoleName(roleName))) {
       return true;
     }

@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.auth.Permission;
+
+import com.tokyo.supermix.data.entities.privilege.Permission;
 
 public class PrivilageServiceImpl implements PrivilageService {
 

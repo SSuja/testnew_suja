@@ -3,17 +3,21 @@ package com.auth.security.config;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
 import com.tokyo.supermix.data.dto.auth.PrivilegeRouteDto;
 import com.tokyo.supermix.data.dto.auth.SubRouteDto;
-import com.tokyo.supermix.data.entities.auth.Permission;
+import com.tokyo.supermix.data.entities.privilege.RolePermission;
 import com.tokyo.supermix.data.repositories.auth.MainRouteRepository;
 import com.tokyo.supermix.data.repositories.auth.SubRouteRepository;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -39,18 +43,19 @@ public class JwtTokenProvider {
 
   public String generateToken(Authentication authentication) {
     UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-    Date now = new Date();
+    Date now = new Date(); 
+    System.out.println("user permssions "+ userPrincipal.getAuthorities().toString());
     Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
     return Jwts.builder().setSubject(Long.toString(userPrincipal.getId())).setIssuedAt(new Date())
         .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret)
         .claim("id", Long.toString(userPrincipal.getId())).claim("email", userPrincipal.getEmail())
-        .claim("role", userPrincipal.getRole().getRoleName().toUpperCase())
+        .claim("role", userPrincipal.getRole().getName().toUpperCase())
         .claim("userName", userPrincipal.getUsername())
-        .claim("permissions", getPrivilegeRouteDto(userPrincipal.getRole().getPermissions()))
+//        .claim("permissions", getPrivilegeRouteDto(userPrincipal.getRole().getRolePermission()))
         .compact();
   }
 
-  private List<PrivilegeRouteDto> getPrivilegeRouteDto(List<Permission> permissions) {
+  private List<PrivilegeRouteDto> getPrivilegeRouteDto(Set<RolePermission> set) {
     List<PrivilegeRouteDto> permissionRoutes = new ArrayList<PrivilegeRouteDto>();
     mainRouteRepository.findAll().forEach(main -> {
       List<SubRouteDto> subRouteDtoList = new ArrayList<SubRouteDto>();
@@ -60,9 +65,9 @@ public class JwtTokenProvider {
         SubRouteDto subRouteDto = new SubRouteDto();
         subRouteDto.setName(sub.getName());
         List<String> permissionList = new ArrayList<String>();
-        permissions.forEach(permission -> {
-          if (permission.getSubRoute().getId().equals(sub.getId())) {
-            permissionList.add(permission.getName());
+        set.stream().forEach(rp -> {
+          if (rp.getPermission().getSubRoute().getId().equals(sub.getId())) {
+            permissionList.add(rp.getPermission().getName());
           }
         });
         subRouteDto.setPermissions(permissionList);

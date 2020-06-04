@@ -8,7 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.privilege.Role;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")

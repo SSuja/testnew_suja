@@ -1,7 +1,8 @@
 package com.tokyo.supermix.data.dto.auth;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.auth.Permission;
+
+import com.tokyo.supermix.data.entities.privilege.Permission;
 
 public class RoleResponsedto {
   private Long id;
