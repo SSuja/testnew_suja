@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.Plant;
-import com.tokyo.supermix.data.entities.User;
+import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.Status;
 
 public class SieveTestResponseDto {

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tokyo.supermix.data.entities.User;
-import com.tokyo.supermix.data.repositories.UserRepository;
+import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.repositories.auth.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {

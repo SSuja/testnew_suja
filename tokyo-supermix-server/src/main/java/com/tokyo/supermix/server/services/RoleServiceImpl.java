@@ -1,12 +1,14 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.Role;
-import com.tokyo.supermix.data.repositories.RoleRepository;
+
+import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.repositories.auth.RoleRepository;
 
 @Service
 public class RoleServiceImpl implements RoleService {

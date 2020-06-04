@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tokyo.supermix.data.entities.Role;
-import com.tokyo.supermix.data.entities.User;
+import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.entities.auth.User;
 
 public class UserPrincipal implements UserDetails {
   private static final long serialVersionUID = -394792056682796726L;

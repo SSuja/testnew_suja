@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.User;
+
+import com.tokyo.supermix.data.entities.auth.User;
 
 public interface UserService {
   User saveUser(User user);

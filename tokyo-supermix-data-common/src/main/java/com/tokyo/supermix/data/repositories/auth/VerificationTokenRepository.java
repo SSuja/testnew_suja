@@ -1,9 +1,9 @@
-package com.tokyo.supermix.data.repositories;
+package com.tokyo.supermix.data.repositories.auth;
 
 import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.tokyo.supermix.data.entities.User;
-import com.tokyo.supermix.data.entities.VerificationToken;
+import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.entities.auth.VerificationToken;
 
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
   VerificationToken findByToken(String token);

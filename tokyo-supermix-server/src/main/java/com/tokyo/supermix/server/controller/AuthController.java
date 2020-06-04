@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.UUID;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +15,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.JwtAuthenticationDtoResponse;
-import com.tokyo.supermix.data.dto.LoginRequestDto;
-import com.tokyo.supermix.data.dto.PasswordDto;
-import com.tokyo.supermix.data.dto.ResetPasswordDto;
-import com.tokyo.supermix.data.dto.UserRequestDto;
-import com.tokyo.supermix.data.entities.User;
+import com.tokyo.supermix.data.dto.auth.JwtAuthenticationDtoResponse;
+import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
+import com.tokyo.supermix.data.dto.auth.PasswordDto;
+import com.tokyo.supermix.data.dto.auth.ResetPasswordDto;
+import com.tokyo.supermix.data.dto.auth.UserRequestDto;
+import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;

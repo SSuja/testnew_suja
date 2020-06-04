@@ -1,4 +1,4 @@
-package com.tokyo.supermix.data.dto;
+package com.tokyo.supermix.data.dto.auth;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

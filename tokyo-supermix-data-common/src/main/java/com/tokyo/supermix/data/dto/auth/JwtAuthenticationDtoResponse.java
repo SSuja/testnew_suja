@@ -1,4 +1,4 @@
-package com.tokyo.supermix.data.dto;
+package com.tokyo.supermix.data.dto.auth;
 
 public class JwtAuthenticationDtoResponse {private String accessToken;
 private String tokenType = "Bearer";

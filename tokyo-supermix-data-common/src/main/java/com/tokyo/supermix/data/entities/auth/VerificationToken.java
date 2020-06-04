@@ -1,4 +1,4 @@
-package com.tokyo.supermix.data.entities;
+package com.tokyo.supermix.data.entities.auth;
 
 import java.io.Serializable;
 import java.util.Calendar;

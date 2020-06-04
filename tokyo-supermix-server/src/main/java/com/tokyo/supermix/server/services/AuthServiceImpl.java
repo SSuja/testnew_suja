@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,10 +9,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.tokyo.supermix.data.dto.LoginRequestDto;
-import com.tokyo.supermix.data.entities.User;
-import com.tokyo.supermix.data.entities.VerificationToken;
-import com.tokyo.supermix.data.repositories.VerificationTokenRepository;
+
+import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
+import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.entities.auth.VerificationToken;
+import com.tokyo.supermix.data.repositories.auth.VerificationTokenRepository;
 import com.tokyo.supermix.security.JwtTokenProvider;
 
 @Service

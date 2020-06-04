@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.Role;
+
+import com.tokyo.supermix.data.entities.auth.Role;
 
 public interface RoleService {
   public void saveRole(Role role);

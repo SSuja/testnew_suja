@@ -1,4 +1,4 @@
-package com.tokyo.supermix.data.dto;
+package com.tokyo.supermix.data.dto.auth;
 
 public class ResetPasswordDto {
   private String password;

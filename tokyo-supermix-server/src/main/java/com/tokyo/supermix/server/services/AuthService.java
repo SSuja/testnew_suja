@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.services;
 
-import com.tokyo.supermix.data.dto.LoginRequestDto;
-import com.tokyo.supermix.data.entities.User;
+import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
+import com.tokyo.supermix.data.entities.auth.User;
 
 public interface AuthService {
   String generateUserToken(LoginRequestDto loginRequestDto);

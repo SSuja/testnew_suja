@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tokyo.supermix.data.entities.User;
-import com.tokyo.supermix.data.repositories.UserRepository;
+import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 
 @Service

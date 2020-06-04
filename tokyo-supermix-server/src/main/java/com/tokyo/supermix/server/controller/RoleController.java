@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,9 +16,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.RoleDto;
-import com.tokyo.supermix.data.entities.Role;
+import com.tokyo.supermix.data.dto.auth.RoleDto;
+import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
