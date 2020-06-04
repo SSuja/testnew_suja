@@ -565,6 +565,7 @@ public final class EndpointURI {
       TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
   public static final String FINISH_PRODUCT_SAMPLE_ID= "finish-product" + SLASH + "{finishProductSampleId}";
   public static final String FINISH_PRODUCT_RESULT_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_SAMPLE_ID;
-
+  public static final String FINISH_PRODUCT_RESULTS="all-results";
+  public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT = TEST_REPORT + SLASH +FINISH_PRODUCT_RESULTS;
   private EndpointURI() {}
 }
