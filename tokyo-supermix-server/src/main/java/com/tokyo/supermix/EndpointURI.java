@@ -569,6 +569,9 @@ public final class EndpointURI {
 	public static final String FINISH_PRODUCT_RESULT_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_SAMPLE_ID;
 	public static final String FINISH_PRODUCT_RESULTS = "all-results";
 	public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
+	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE = CONCRETE_TEST_STATUS
+			+ SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH + "concrete-test-type" + SLASH
+			+ "{concreteTestType}";
 
 	private EndpointURI() {
 	}

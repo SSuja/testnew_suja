@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.SieveAcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthTestDto;
-import com.tokyo.supermix.data.dto.report.FinishProductAllResultsDto;
+import com.tokyo.supermix.data.dto.report.FinishProductSampleDto;
 import com.tokyo.supermix.data.dto.report.FinishProductSampleResultReportDto;
 import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.TestDetailForSampleDto;
@@ -146,8 +145,8 @@ public class TestReportController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_ALL_RESULTS_REPORT)
   public ResponseEntity<Object> getAllFinishProductResults() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE,
-        mapper.map(finishProductResultReportService.getAllResults(),
-            FinishProductAllResultsDto.class),
+        mapper.map(finishProductResultReportService.getAllFinishProductSamples(),
+            FinishProductSampleDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.dto.report.FinishProductAllResultsDto;
 import com.tokyo.supermix.data.dto.report.FinishProductSampleDto;
 import com.tokyo.supermix.data.dto.report.FinishProductSampleResultReportDto;
 import com.tokyo.supermix.data.dto.report.MixDesignProportionDto;
@@ -130,16 +129,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
     return mixDesignProportionDtoList;
   }
 
-  @Override
-  public FinishProductAllResultsDto getAllResults() {
-    FinishProductAllResultsDto finishProductAllResultsDto = new FinishProductAllResultsDto();
-    finishProductAllResultsDto.setFinishProductSamples(getAllFinishProductSamples());
-    finishProductAllResultsDto.setStrengthResults(getStrengths());
-    finishProductAllResultsDto.setMixDesignProportions(getAllMixDesignproportion());
-    finishProductAllResultsDto.setSlumpTestResults(getAllSlumpTestResults());
-    return finishProductAllResultsDto;
-  }
-
   public List<FinishProductSampleDto> getAllFinishProductSamples() {
     List<FinishProductSampleDto> FinishProductAllResultsDtoList =
         new ArrayList<FinishProductSampleDto>();
@@ -147,111 +136,106 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
         .findByConcreteStatusAndConcreteTestTypeType(ConcreteStatus.COMPLETED, Constants.STRENGTH);
     for (ConcreteTestStatus concreteTestStatus : concreteTestStatusList) {
       FinishProductSampleDto finishProductSampleDto = new FinishProductSampleDto();
-      finishProductSampleDto
-          .setFinishProductCode(concreteTestStatus.getFinishProductSample().getFinishProductCode());
       MixDesign mixDesign = mixDesignRepository
           .findById(concreteTestStatus.getFinishProductSample().getMixDesign().getCode()).get();
       FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository
           .findByFinishProductSampleId(concreteTestStatus.getFinishProductSample().getId());
       finishProductSampleDto.setProjectName(finishProductSampleIssue.getProject().getName());
+      finishProductSampleDto.setPourName(finishProductSampleIssue.getPour().getName());
       finishProductSampleDto.setTargetGrade(mixDesign.getTargetGrade());
       finishProductSampleDto.setTargetSlump(mixDesign.getTargetSlump());
+      finishProductSampleDto
+          .setFinishProductCode(concreteTestStatus.getFinishProductSample().getFinishProductCode());
+      finishProductSampleDto
+          .setStrengthResults(getStrengths(concreteTestStatus.getFinishProductSample().getId()));
+      finishProductSampleDto.setMixDesignProportions(
+          getAllMixDesignproportion(concreteTestStatus.getFinishProductSample().getId()));
+      finishProductSampleDto.setSlumpTestResults(
+          getAllSlumpTestResults(concreteTestStatus.getFinishProductSample().getId()));
       FinishProductAllResultsDtoList.add(finishProductSampleDto);
     }
     return FinishProductAllResultsDtoList;
   }
 
-  public List<MixDesignProportionDto> getAllMixDesignproportion() {
+  public List<MixDesignProportionDto> getAllMixDesignproportion(Long finihProductSampleId) {
     List<MixDesignProportionDto> mixDesignProportionDtoList =
         new ArrayList<MixDesignProportionDto>();
-    List<ConcreteTestStatus> concreteTestStatusList = concreteTestStatusRepository
-        .findByConcreteStatusAndConcreteTestTypeType(ConcreteStatus.COMPLETED, Constants.STRENGTH);
-    for (ConcreteTestStatus concreteTestStatus : concreteTestStatusList) {
-      List<MixDesignProportion> mixDesignProportionList =
-          mixDesignProportionRepository.findByMixDesignCode(
-              concreteTestStatus.getFinishProductSample().getMixDesign().getCode());
-      for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
-        MixDesignProportionDto mixDesignProportionDto = new MixDesignProportionDto();
-        if (mixDesignProportion.getRawMaterial().getName()
-            .contentEquals(Constants.RAW_MATERIAL_CEMENT)) {
-          mixDesignProportionDto.setMaterialName(Constants.RAW_MATERIAL_CEMENT);
-          mixDesignProportionDto.setQuantity(mixDesignProportion.getQuantity());
-          mixDesignProportionDtoList.add(mixDesignProportionDto);
-        }
-        if (mixDesignProportion.getRawMaterial().getName()
-            .contentEquals(Constants.RAW_MATERIAL_FLYASH)) {
-          mixDesignProportionDto.setMaterialName(Constants.RAW_MATERIAL_FLYASH);
-          mixDesignProportionDto.setQuantity(mixDesignProportion.getQuantity());
-          mixDesignProportionDtoList.add(mixDesignProportionDto);
-        }
+    FinishProductSample finishProductSample =
+        finishProductSampleRepository.findById(finihProductSampleId).get();
+    List<MixDesignProportion> mixDesignProportionList = mixDesignProportionRepository
+        .findByMixDesignCode(finishProductSample.getMixDesign().getCode());
+    for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
+      MixDesignProportionDto mixDesignProportionDto = new MixDesignProportionDto();
+      if (mixDesignProportion.getRawMaterial().getName()
+          .contentEquals(Constants.RAW_MATERIAL_CEMENT)) {
+        mixDesignProportionDto.setMaterialName(Constants.RAW_MATERIAL_CEMENT);
+        mixDesignProportionDto.setQuantity(mixDesignProportion.getQuantity());
+        mixDesignProportionDtoList.add(mixDesignProportionDto);
+      }
+      if (mixDesignProportion.getRawMaterial().getName()
+          .contentEquals(Constants.RAW_MATERIAL_FLYASH)) {
+        mixDesignProportionDto.setMaterialName(Constants.RAW_MATERIAL_FLYASH);
+        mixDesignProportionDto.setQuantity(mixDesignProportion.getQuantity());
+        mixDesignProportionDtoList.add(mixDesignProportionDto);
       }
     }
     return mixDesignProportionDtoList;
   }
 
-  public List<StrengthResultDto> getStrengths() {
+  public List<StrengthResultDto> getStrengths(Long finihProductSampleId) {
     List<StrengthResultDto> strengthResultDtoList = new ArrayList<StrengthResultDto>();
-    List<ConcreteTestStatus> concreteTestStatusList = concreteTestStatusRepository
-        .findByConcreteStatusAndConcreteTestTypeType(ConcreteStatus.COMPLETED, Constants.STRENGTH);
-    for (ConcreteTestStatus concreteTestStatus : concreteTestStatusList) {
-      List<ConcreteTestResult> concreteTestResultList = concreteTestResultRepository
-          .findByFinishProductSampleId(concreteTestStatus.getFinishProductSample().getId());
-      for (ConcreteTestResult concreteTestResult : concreteTestResultList) {
-        StrengthResultDto strengthResultDto = new StrengthResultDto();
-        if (concreteTestResult.getConcreteTest().getName()
-            .equalsIgnoreCase(Constants.STRENGTH_TEST)) {
-          strengthResultDto.setAge(concreteTestResult.getAge());
-          strengthResultDto.setStrengthAverage(concreteTestResult.getResult());
-          strengthResultDtoList.add(strengthResultDto);
-        }
-        if (concreteTestResult.getConcreteTest().getName()
-            .equalsIgnoreCase(Constants.STRENGTH_GRADE_RATIO)) {
-          strengthResultDto.setAge(concreteTestResult.getAge());
-          strengthResultDto.setStrengthGradeRatio(concreteTestResult.getResult());
-          strengthResultDtoList.add(strengthResultDto);
-        }
+    List<ConcreteTestResult> concreteTestResultList =
+        concreteTestResultRepository.findByFinishProductSampleId(finihProductSampleId);
+    for (ConcreteTestResult concreteTestResult : concreteTestResultList) {
+      StrengthResultDto strengthResultDto = new StrengthResultDto();
+      if (concreteTestResult.getConcreteTest().getName()
+          .equalsIgnoreCase(Constants.STRENGTH_TEST)) {
+        strengthResultDto.setAge(concreteTestResult.getAge());
+        strengthResultDto.setStrengthAverage(concreteTestResult.getResult());
+        strengthResultDtoList.add(strengthResultDto);
       }
-
+      if (concreteTestResult.getConcreteTest().getName()
+          .equalsIgnoreCase(Constants.STRENGTH_GRADE_RATIO)) {
+        strengthResultDto.setAge(concreteTestResult.getAge());
+        strengthResultDto.setStrengthGradeRatio(concreteTestResult.getResult());
+        strengthResultDtoList.add(strengthResultDto);
+      }
     }
     return strengthResultDtoList;
   }
 
-  public List<SlumpTestResult> getAllSlumpTestResults() {
+  public List<SlumpTestResult> getAllSlumpTestResults(Long finishProductSampleId) {
     List<SlumpTestResult> slumpTestResultList = new ArrayList<SlumpTestResult>();
-    List<ConcreteTestStatus> concreteTestStatusList = concreteTestStatusRepository
-        .findByConcreteStatusAndConcreteTestTypeType(ConcreteStatus.COMPLETED, Constants.STRENGTH);
-    for (ConcreteTestStatus concreteTestStatus : concreteTestStatusList) {
-      List<ConcreteTestResult> concreteTestResultList = concreteTestResultRepository
-          .findByFinishProductSampleId(concreteTestStatus.getFinishProductSample().getId());
-      for (ConcreteTestResult concreteTestResult : concreteTestResultList) {
-        SlumpTestResult slumpTestResult = new SlumpTestResult();
-        if (concreteTestResult.getConcreteTest().getName().equalsIgnoreCase(Constants.SLUMP_TEST)) {
-          slumpTestResult.setSlumpValue(concreteTestResult.getResult());
-          slumpTestResult.setTemperature(concreteTestResult.getTemperature());
-          slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
-          slumpTestResultList.add(slumpTestResult);
-        }
-        if (concreteTestResult.getConcreteTest().getName()
-            .equalsIgnoreCase(Constants.WATER_CEMENT_RATIO)) {
-          slumpTestResult.setWaterCementRatio(concreteTestResult.getResult());
-          slumpTestResult.setTemperature(concreteTestResult.getTemperature());
-          slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
-          slumpTestResultList.add(slumpTestResult);
-        }
-        if (concreteTestResult.getConcreteTest().getName()
-            .equalsIgnoreCase(Constants.WATER_BINDER_RATIO)) {
-          slumpTestResult.setWaterBinderRatio(concreteTestResult.getResult());
-          slumpTestResult.setTemperature(concreteTestResult.getTemperature());
-          slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
-          slumpTestResultList.add(slumpTestResult);
-        }
-        if (concreteTestResult.getConcreteTest().getName()
-            .equalsIgnoreCase(Constants.SLUMP_GRADE_RATIO)) {
-          slumpTestResult.setSlumpGradeRatio(concreteTestResult.getResult());
-          slumpTestResult.setTemperature(concreteTestResult.getTemperature());
-          slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
-          slumpTestResultList.add(slumpTestResult);
-        }
+    List<ConcreteTestResult> concreteTestResultList =
+        concreteTestResultRepository.findByFinishProductSampleId(finishProductSampleId);
+    for (ConcreteTestResult concreteTestResult : concreteTestResultList) {
+      SlumpTestResult slumpTestResult = new SlumpTestResult();
+      if (concreteTestResult.getConcreteTest().getName().equalsIgnoreCase(Constants.SLUMP_TEST)) {
+        slumpTestResult.setSlumpValue(concreteTestResult.getResult());
+        slumpTestResult.setTemperature(concreteTestResult.getTemperature());
+        slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
+        slumpTestResultList.add(slumpTestResult);
+      }
+      if (concreteTestResult.getConcreteTest().getName()
+          .equalsIgnoreCase(Constants.WATER_CEMENT_RATIO)) {
+        slumpTestResult.setWaterCementRatio(concreteTestResult.getResult());
+        slumpTestResult.setTemperature(concreteTestResult.getTemperature());
+        slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
+        slumpTestResultList.add(slumpTestResult);
+      }
+      if (concreteTestResult.getConcreteTest().getName()
+          .equalsIgnoreCase(Constants.WATER_BINDER_RATIO)) {
+        slumpTestResult.setWaterBinderRatio(concreteTestResult.getResult());
+        slumpTestResult.setTemperature(concreteTestResult.getTemperature());
+        slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
+        slumpTestResultList.add(slumpTestResult);
+      }
+      if (concreteTestResult.getConcreteTest().getName()
+          .equalsIgnoreCase(Constants.SLUMP_GRADE_RATIO)) {
+        slumpTestResult.setSlumpGradeRatio(concreteTestResult.getResult());
+        slumpTestResult.setTemperature(concreteTestResult.getTemperature());
+        slumpTestResult.setWaterContent(concreteTestResult.getWaterContent());
+        slumpTestResultList.add(slumpTestResult);
       }
     }
     return slumpTestResultList;

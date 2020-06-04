@@ -87,7 +87,6 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleReportDto;
   }
 
-
   private List<TestTrialReportDto> getMaterialTestTrialReport(String materialTestCode) {
     List<TestTrialReportDto> trailList = new ArrayList<TestTrialReportDto>();
     List<MaterialTestTrial> testTrailList =
@@ -170,25 +169,31 @@ public class TestReportServiceImpl implements TestReportService {
         materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
     List<ParameterResult> parameterResults =
         parameterResultRepository.findByMaterialTestTrialCode(testTrailList.get(0).getCode());
-    int paramerListSize = parameterResults.size();
     parameterResults.forEach(paramResult -> {
       TrailValueDto trailValueDto = new TrailValueDto();
-      trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
-      trailValueDtoList.add(trailValueDto);
-    });
-    trailValueDtoList.forEach(dto -> {
-      int index = 0;
-      for (int i = 0; i < paramerListSize; i++) {
-        List<Double> values = new ArrayList<Double>();
-        for (MaterialTestTrial materialTestTrial : testTrailList) {
-          values.add(parameterResultRepository
-              .findByMaterialTestTrialCode(materialTestTrial.getCode()).get(index).getValue());
-        }
-        dto.setValues(values);
-        System.out.println(index);
-        index++;
+      if (paramResult.getTestParameter().getParameter() != null) {
+        trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
+        trailValueDtoList.add(trailValueDto);
       }
     });
+    for (TrailValueDto dto : trailValueDtoList) {
+      List<ParameterResult> combined = new ArrayList<ParameterResult>();
+      List<Double> values = new ArrayList<Double>();
+      for (int i = 0; i < testTrailList.size(); i++) {
+        List<ParameterResult> parameterResultss =
+            parameterResultRepository.findByMaterialTestTrialCode(testTrailList.get(i).getCode());
+        combined.addAll(parameterResultss);
+      }
+      for (ParameterResult parameterResult : combined) {
+        if (parameterResult.getTestParameter().getParameter() != null) {
+          if (dto.getParameterName() == parameterResult.getTestParameter().getParameter()
+              .getName()) {
+            values.add(parameterResult.getValue());
+          }
+        }
+      }
+      dto.setValues(values);
+    }
     return trailValueDtoList;
   }
 
