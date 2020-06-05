@@ -110,4 +110,5 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     return incomingSampleRepository
         .findByRawMaterialMaterialSubCategoryMaterialCategoryName(materialCategoryName);
   }
+
 }
