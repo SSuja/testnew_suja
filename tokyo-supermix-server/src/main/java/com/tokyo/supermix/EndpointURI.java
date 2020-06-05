@@ -570,6 +570,12 @@ public final class EndpointURI {
 	public static final String FINISH_PRODUCT_RESULTS = "all-results";
 	public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
 
+	/*
+     * role Permission
+     */
+	public static final String PRIVILEGE = BASE_API_PATH + "privilege";
+	public static final String PRIVILEGES = BASE_API_PATH + "privileges";
+	
 	private EndpointURI() {
 	}
 }
