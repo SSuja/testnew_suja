@@ -109,13 +109,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 		TestConfigure testConfigure = testConfigureRepository.findById(id).get();
 	AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
 	Equation equation = equationRepository.findByTestConfigureId(id);
-	List<EquationParameter> parameters= equationParameterService.getEquationByEquationId(equation.getId());
-	List<String> parameter= new ArrayList();
-	for(EquationParameter equationParameter: parameters) 
-     	{
-     		
-     		parameter.add(equationParameter.getTestParameter().getParameter().getName());
-     		}
+	
+	List<String> parameter= new ArrayList<>();
+	
 		
 		testConfigureDto.setId(testConfigure.getId());
 		testConfigureDto.setPrefix(testConfigure.getPrefix());
@@ -125,13 +121,20 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 		if (!testConfigure.getTestType().getMaterialSubCategory().getMaterialCategory().getName()
 				.equalsIgnoreCase("Admixture")) {
 			testConfigureDto.setEquation(equation.getFormula());
+			List<EquationParameter> parameters= equationParameterService.getEquationByEquationId(equation.getId());
+			for(EquationParameter equationParameter: parameters) 
+	     	{
+	     		
+	     		parameter.add(equationParameter.getTestParameter().getParameter().getName());
+	     		}
+			testConfigureDto.setParameters(parameter);
 			
 		}
 	testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
 
 		testConfigureDto.setCoreTest(testConfigure.isCoreTest());
 		testConfigureDto.setDescription(testConfigure.getDescription());
-		testConfigureDto.setParameters(parameter);
+		
 
 		return testConfigureDto;
 	}
