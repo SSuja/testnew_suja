@@ -1,16 +1,16 @@
 package com.tokyo.supermix.data.dto.privilege;
 
 public class PrivilegeRequestDto {
-  private String roleName;
+  private Long roleId;
   private Long permissionId;
   private Boolean status;
 
-  public String getRoleName() {
-    return roleName;
+  public Long getRoleId() {
+    return roleId;
   }
 
-  public void setRoleName(String roleName) {
-    this.roleName = roleName;
+  public void setRoleId(Long roleId) {
+    this.roleId = roleId;
   }
 
   public Long getPermissionId() {
