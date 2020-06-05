@@ -28,4 +28,6 @@ public interface IncomingSampleService {
   public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
 
   public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
+
+  public List<IncomingSample> getIncomingSampleByMaterialCategory(String materialCategoryName);
 }
