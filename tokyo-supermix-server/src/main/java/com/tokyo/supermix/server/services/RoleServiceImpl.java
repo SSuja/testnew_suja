@@ -39,7 +39,7 @@ public class RoleServiceImpl implements RoleService {
 
   @Transactional(readOnly = true)
   public boolean existsByRoleName(String roleName) {
-    return roleRepository.existsByRoleName(roleName);
+    return roleRepository.existsByName(roleName);
   }
 
   @Transactional(readOnly = true)
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
 
   @Transactional(readOnly = true)
   public boolean isUpdatedRoleExists(Long id, String roleName) {
-    if ((!findRoleById(id).getRoleName().equalsIgnoreCase(roleName))
+    if ((!findRoleById(id).getName().equalsIgnoreCase(roleName))
         && (existsByRoleName(roleName))) {
       return true;
     }

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "verification_token")
-public class VerificationToken implements Serializable{
+public class VerificationToken implements Serializable {
   private static final long serialVersionUID = 1L;
   private static final int EXPIRATION = 30;
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,9 @@ public class VerificationToken implements Serializable{
   @JoinColumn(nullable = false, name = "user_id")
   private User user;
   private Date expiryDate;
+
   public VerificationToken() {}
+
   public VerificationToken(final String token) {
     super();
 
@@ -33,10 +35,10 @@ public class VerificationToken implements Serializable{
   }
 
   public VerificationToken(final String token, final User user) {
-      super();
-      this.token = token;
-      this.user = user;
-      this.expiryDate = calculateExpiryDate(EXPIRATION);
+    super();
+    this.token = token;
+    this.user = user;
+    this.expiryDate = calculateExpiryDate(EXPIRATION);
   }
 
   public Long getId() {

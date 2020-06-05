@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.auth.User;
@@ -36,7 +34,7 @@ public class UserPrincipal implements UserDetails {
 
   public static UserPrincipal create(User user) {
     List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-    authorities.add(new SimpleGrantedAuthority(user.getRole().getRoleName()));
+    authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
     return new UserPrincipal(user.getId(), user.getUserName(), user.getRole(), user.getEmail(),
         user.getPassword(), authorities);
   }

@@ -8,12 +8,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.tokyo.supermix.data.entities.Employee;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
 public class User extends DateAudit {
+  private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;

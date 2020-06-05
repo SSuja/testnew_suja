@@ -1,27 +1,27 @@
-package com.tokyo.supermix.data.entities.auth;
+package com.tokyo.supermix.data.entities.privilege;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.tokyo.supermix.data.entities.privilege.RolePermission;
-
 @Entity
-@Table(name = "role")
-public class Role  implements Serializable{
-	/**
-	 * 
-	 */
+@Table(name = "permission")
+public class Permission implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long id;
 	private String name;
-	 @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
-	    private Set<RolePermission> rolePermission ;
-	
+	 @OneToMany(mappedBy = "permission")
+	    private Set<RolePermission> rolePermission = new HashSet<RolePermission>();
+	 @ManyToOne
+	  @JoinColumn(name = "sub_route_id", nullable = false)
+	  private SubRoute subRoute;
 	public Long getId() {
 		return id;
 	}
@@ -34,11 +34,18 @@ public class Role  implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public Set<RolePermission> getRolePermission() {
 		return rolePermission;
 	}
 	public void setRolePermission(Set<RolePermission> rolePermission) {
 		this.rolePermission = rolePermission;
+	}
+	public SubRoute getSubRoute() {
+		return subRoute;
+	}
+	public void setSubRoute(SubRoute subRoute) {
+		this.subRoute = subRoute;
 	}
 
 }

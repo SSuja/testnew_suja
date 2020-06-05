@@ -13,32 +13,32 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class DateAudit implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4156949822224573781L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -4156949822224573781L;
 
-	@CreatedDate
-	@Column(nullable = false, updatable = false)
-	private Instant createdAt;
-	
-	@LastModifiedDate
-	@Column(nullable = false)
-	private Instant updatedAt;
+  @CreatedDate
+  @Column(nullable = false, updatable = false)
+  private Instant createdAt;
 
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
+  @LastModifiedDate
+  @Column(nullable = false)
+  private Instant updatedAt;
 
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
-	}
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
 
-	public Instant getUpdatedAt() {
-		return updatedAt;
-	}
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
 
-	public void setUpdatedAt(Instant updatedAt) {
-		this.updatedAt = updatedAt;
-	}
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Instant updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 }
