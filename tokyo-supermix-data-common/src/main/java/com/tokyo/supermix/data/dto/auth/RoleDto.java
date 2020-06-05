@@ -5,9 +5,9 @@ import javax.validation.constraints.NotNull;
 
 public class RoleDto {
   private Long id;
-  @NotNull(message = "{RoleDto.RoleName.null}")
-  @NotEmpty(message = "{RoleDto.RoleName.empty}")
-  private String roleName;
+  @NotNull(message = "{RoleDto.name.null}")
+  @NotEmpty(message = "{RoleDto.name.empty}")
+  private String name;
 
   public Long getId() {
     return id;
@@ -17,13 +17,12 @@ public class RoleDto {
     this.id = id;
   }
 
-  public String getRoleName() {
-    return roleName;
+  public String getName() {
+    return name;
   }
 
-  public void setRoleName(String roleName) {
-    this.roleName = roleName;
+  public void setName(String name) {
+    this.name = name;
   }
-
 
 }

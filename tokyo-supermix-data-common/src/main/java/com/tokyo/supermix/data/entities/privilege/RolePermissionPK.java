@@ -13,4 +13,11 @@ public class RolePermissionPK implements Serializable {
 
   @Column(name = "PERMISSION_ID")
   private Long permission_id;
+
+  public RolePermissionPK(Long role_id, Long permission_id) {
+    super();
+    this.role_id = role_id;
+    this.permission_id = permission_id;
+  }
+  public RolePermissionPK() {}
 }

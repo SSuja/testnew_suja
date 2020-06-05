@@ -16,7 +16,7 @@ public class RolePermission implements Serializable {
   @EmbeddedId
   private RolePermissionPK id;
   @ManyToOne
-  @MapsId("role_id") // This is the name of attr in EmployerDeliveryAgentPK class
+  @MapsId("role_id") 
   @JoinColumn(name = "ROLE_ID")
   private Role role;
 

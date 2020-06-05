@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.auth.RoleDto;
 import com.tokyo.supermix.data.entities.auth.Role;
@@ -46,16 +43,14 @@ public class RoleController {
 
   @PostMapping(value = EndpointURI.ROLE)
   public ResponseEntity<Object> createRole(@Valid @RequestBody RoleDto roleDto) {
-    if (roleService.existsByRoleName(roleDto.getRoleName())) {
+    if (roleService.existsByRoleName(roleDto.getName())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE,
           validationFailureStatusCodes.getRoleNameAlreadyExists()), HttpStatus.BAD_REQUEST);
     }
-
-    roleService.saveRole(mapper.map(roleDto, Role.class));
+    roleService.createRole(mapper.map(roleDto, Role.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_ROLE_SUCCESS), HttpStatus.OK);
   }
-
 
   @GetMapping(value = EndpointURI.ROLES)
   public ResponseEntity<Object> getAllRoll() {
@@ -64,7 +59,6 @@ public class RoleController {
         new ContentResponse<>(Constants.ROLES, roleDtoList, RestApiResponseStatus.OK), null,
         HttpStatus.OK);
   }
-
 
   @DeleteMapping(value = EndpointURI.DELETE_ROLE_BY_ID)
   public ResponseEntity<Object> deleteRole(@PathVariable Long id) {
@@ -95,11 +89,11 @@ public class RoleController {
   @PutMapping(value = EndpointURI.ROLE)
   public ResponseEntity<Object> updateRole(@Valid @RequestBody RoleDto roleDto) {
     if (roleService.isRoleExists(roleDto.getId())) {
-      if (roleService.isUpdatedRoleExists(roleDto.getId(), roleDto.getRoleName())) {
+      if (roleService.isUpdatedRoleExists(roleDto.getId(), roleDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE,
             validationFailureStatusCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
       }
-      roleService.saveRole(mapper.map(roleDto, Role.class));
+      roleService.updateRole(mapper.map(roleDto, Role.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.ROLE_UPDATED_SUCCESS),
           HttpStatus.OK);
