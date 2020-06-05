@@ -92,7 +92,10 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
-    if (equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula() == null) {
+    if (equationService
+        .findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId())== null) 
+    
+    {
       for (ParameterResult parameterResult : parameterResultList) {
         materialTestTrial.setResult(parameterResult.getValue());
       }
