@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class EquationController {
 
   // Add Equation
   @PostMapping(value = EndpointURI.EQUATION)
+  @PreAuthorize("hasAuthority('add_equation')")
   public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationRequestDto equationDto) {
     if (equationService.configureIdExist(equationDto.getTestConfigureId())) {
       logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
@@ -53,6 +55,7 @@ public class EquationController {
 
   // Get All Equations
   @GetMapping(value = EndpointURI.EQUATIONS)
+  @PreAuthorize("hasAuthority('get_equation')")
   public ResponseEntity<Object> getAllEquations() {
     logger.debug("get all equations");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATIONS,
@@ -75,6 +78,7 @@ public class EquationController {
 
   // Delete Equation
   @DeleteMapping(value = EndpointURI.EQUATION_BY_ID)
+  @PreAuthorize("hasAuthority('delete_equation')")
   public ResponseEntity<Object> deleteEquation(@PathVariable Long id) {
     if (equationService.isEquationExist(id)) {
       logger.debug("delete equation by id");
@@ -89,6 +93,7 @@ public class EquationController {
 
   // Update Equation
   @PutMapping(value = EndpointURI.EQUATION)
+  @PreAuthorize("hasAuthority('edit_equation')")
   public ResponseEntity<Object> updateEquation(@Valid @RequestBody EquationRequestDto equationDto) {
     if (equationService.isEquationExist(equationDto.getId())) {
       if (equationService.isUpdatedTestConfigureIdExist(equationDto.getId(),

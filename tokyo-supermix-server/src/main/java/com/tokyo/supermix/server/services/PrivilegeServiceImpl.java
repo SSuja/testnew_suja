@@ -47,7 +47,8 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     MainRouteList.forEach(main -> {
       PermissionResponseDto permissionResponseDto = new PermissionResponseDto();
       permissionResponseDto.setMainRoute(main.getName());
-      List<SubRoutePermissionDto> subRoutePermissionDtoList = new ArrayList<SubRoutePermissionDto>();
+      List<SubRoutePermissionDto> subRoutePermissionDtoList =
+          new ArrayList<SubRoutePermissionDto>();
       subRouteRepository.findByMainRouteId(main.getId()).forEach(sub -> {
         SubRoutePermissionDto subRoutePermissionDto = new SubRoutePermissionDto();
         subRoutePermissionDto.setSubRoute(sub.getName());
@@ -76,14 +77,15 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         SubRoutePrivilegeDto subRoutePrivilegeDto = new SubRoutePrivilegeDto();
         subRoutePrivilegeDto.setSubRoute(sub.getName());
         List<PrivilegeDto> PrivilegeDtoList = new ArrayList<PrivilegeDto>();
-        permissionRepository.findByRolePermissionRoleIdAndSubRouteId(roleId,sub.getId()).forEach(permission -> {
-          PrivilegeDto privilegeDto = new PrivilegeDto();
-          privilegeDto.setId(permission.getId());
-          privilegeDto.setPermission(permission.getName());
-          privilegeDto.setStatus(
-              rolePermissionRepository.findByRoleIdAndPermissionId(roleId, permission.getId()).isStatus());
-          PrivilegeDtoList.add(privilegeDto);
-        });
+        permissionRepository.findByRolePermissionRoleIdAndSubRouteId(roleId, sub.getId())
+            .forEach(permission -> {
+              PrivilegeDto privilegeDto = new PrivilegeDto();
+              privilegeDto.setId(permission.getId());
+              privilegeDto.setPermission(permission.getName());
+              privilegeDto.setStatus(rolePermissionRepository
+                  .findByRoleIdAndPermissionId(roleId, permission.getId()).isStatus());
+              PrivilegeDtoList.add(privilegeDto);
+            });
         subRoutePrivilegeDto.setPrivileges(PrivilegeDtoList);
         SubRoutePrivilegeDtoList.add(subRoutePrivilegeDto);
       });

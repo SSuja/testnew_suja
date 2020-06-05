@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,7 @@ public class MaterialQualityParameterController {
   private static final Logger logger = Logger.getLogger(MaterialQualityParameterController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETER)
+  @PreAuthorize("hasAuthority('add_material_quality_parameter')")
   public ResponseEntity<Object> createMaterialQualityParameter(
       @RequestBody MaterialQualityParameterRequestDto materialQualityParameterRequestDto) {
     if (materialQualityParameterService.isDuplicateRowExists(
@@ -58,6 +60,7 @@ public class MaterialQualityParameterController {
   }
 
   @GetMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETERS)
+  @PreAuthorize("hasAuthority('get_material_quality_parameter')")
   public ResponseEntity<Object> getAllMaterialQualityParameters() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.MATERIAL_QUALITY_PARAMETERS,
@@ -68,6 +71,7 @@ public class MaterialQualityParameterController {
   }
 
   @DeleteMapping(EndpointURI.MATERIAL_QUALITY_PARAMETER_BY_ID)
+  @PreAuthorize("hasAuthority('delete_material_quality_parameter')")
   public ResponseEntity<Object> deleteMaterialQualityParameterById(@PathVariable Long id) {
     if (materialQualityParameterService.isMaterialQualityParameterIdExist(id)) {
       materialQualityParameterService.deleteMaterialQualityParameter(id);
@@ -99,6 +103,7 @@ public class MaterialQualityParameterController {
   }
 
   @PutMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETER)
+  @PreAuthorize("hasAuthority('edit_material_quality_parameter')")
   public ResponseEntity<Object> updateMaterialQualityParameter(
       @RequestBody MaterialQualityParameterRequestDto materialQualityParameterRequestDto) {
     if (materialQualityParameterService
