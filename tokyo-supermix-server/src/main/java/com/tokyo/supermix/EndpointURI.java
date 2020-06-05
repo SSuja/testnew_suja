@@ -177,15 +177,9 @@ public final class EndpointURI {
 	public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
 	public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
 	public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
-
 	/*
-	 * public static final String PARAMETER = BASE_API_PATH + "parameter"; public
-	 * static final String PARAMETERS = BASE_API_PATH + "parameters"; public static
-	 * final String GET_PARAMETER_BY_ID = PARAMETER + ID; public static final String
-	 * DELETE_PARAMETER_BY_ID = PARAMETER + ID; public static final String
-	 * PARAMETER_SEARCH = PARAMETER + SEARCH; /
 	 * 
-	 * /* TestType
+	 * TestType
 	 */
 	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
 	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
@@ -214,6 +208,8 @@ public final class EndpointURI {
 	public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
 	public static final String INCOMING_SAMPLES_BY_PLANT_CODE = INCOMING_SAMPLES + SLASH + "plant" + SLASH
 			+ "{plantCode}";
+	public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY = INCOMING_SAMPLE + SLASH + "material-category"
+			+ SLASH + "{materialCategoryName}";
 	/*
 	 * Mix design apis
 	 * 
