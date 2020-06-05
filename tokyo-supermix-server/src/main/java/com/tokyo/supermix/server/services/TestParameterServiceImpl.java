@@ -99,7 +99,6 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameters.add(testParameter);
       }
       if (testParameter.getParameter() == null) {
-        if (testParameter.getValue() == null) {
           if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
               testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
             if ((materialQualityParameterRepository
@@ -119,8 +118,6 @@ public class TestParameterServiceImpl implements TestParameterService {
           }
         }
       }
-    }
-
     return testParameters;
   }
 
