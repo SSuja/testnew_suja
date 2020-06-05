@@ -582,7 +582,8 @@ public class Constants {
    * Constants for privilege
    */
   public static final String UPDATE_PRIVILEGE_SUCCESS = "Privileges Updated Successfully";
-
+  public static final String PRIVILEGES = "privileges";
+  public static final String PERMISSIONS = "permissions";
   /*
    * Encapsulate constructor to restrict modification from outside
    */

@@ -2,21 +2,23 @@ package com.tokyo.supermix.data.dto.privilege;
 
 import java.util.List;
 
-public class PrivilegeResponseDto {
+public class PermissionResponseDto {
   private String mainRoute;
-  private List<SubRoutePrivilegeDto> subRoutes;
- 
+  private List<SubRoutePermissionDto> subRoutes;
+
   public String getMainRoute() {
     return mainRoute;
   }
+
   public void setMainRoute(String mainRoute) {
     this.mainRoute = mainRoute;
   }
-  
-  public List<SubRoutePrivilegeDto> getSubRoutes() {
+
+  public List<SubRoutePermissionDto> getSubRoutes() {
     return subRoutes;
   }
-  public void setSubRoutes(List<SubRoutePrivilegeDto> subRoutes) {
+
+  public void setSubRoutes(List<SubRoutePermissionDto> subRoutes) {
     this.subRoutes = subRoutes;
   }
 }
