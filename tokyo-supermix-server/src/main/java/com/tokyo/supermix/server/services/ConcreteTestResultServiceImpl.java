@@ -217,6 +217,9 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   public void saveConcreteStrengthTestAverageStrengthResult(ConcreteTestResult concreteTestResult) {
     concreteTestResult.setResult(roundDoubleValue(calculateAverageCubeStrength(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
+    long millis = System.currentTimeMillis();
+    java.sql.Date date = new java.sql.Date(millis);
+    concreteTestResult.setDate(date);
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_TEST);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
     concreteTestResultRepository.save(concreteTestResult);
@@ -228,6 +231,9 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     concreteTestResult.setResult(roundDoubleValue(calculateCubeStrengthRatio(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
     calculateConcreteStrengthStatus(concreteTestResult);
+    long millis = System.currentTimeMillis();
+    java.sql.Date date = new java.sql.Date(millis);
+    concreteTestResult.setDate(date);
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_GRADE_RATIO);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
     setConcreteTestStrengthStatus(concreteTestResult.getFinishProductSample().getId(),
@@ -361,7 +367,15 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   }
 
   @Transactional(readOnly = true)
-  public ConcreteTestResult findByFinishProductSampleId(Long finishProductSampleId) {
+  public List<ConcreteTestResult> findByFinishProductSampleId(Long finishProductSampleId) {
     return concreteTestResultRepository.findByFinishProductSampleId(finishProductSampleId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<ConcreteTestResult> getConcreteTestResultByConcreteTestConcreteTestTypeIdAndFinishProductSampleId(
+      Long concreteTestTypeId, Long finishProductSampleId) {
+    return concreteTestResultRepository
+        .findByConcreteTestConcreteTestTypeIdAndFinishProductSampleId(concreteTestTypeId,
+            finishProductSampleId);
   }
 }

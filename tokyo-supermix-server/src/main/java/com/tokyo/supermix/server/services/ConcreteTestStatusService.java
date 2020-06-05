@@ -18,6 +18,11 @@ public interface ConcreteTestStatusService {
 
   public boolean isDuplicateEntryExist(Long concreteTestTypeId, Long finishProductSampleId);
 
-  public ConcreteTestStatus getConcreteTestStatusByConcreteStatus(ConcreteStatus concreteStatus);
+  public List<ConcreteTestStatus> getConcreteTestStatusByConcreteStatus(
+      ConcreteStatus concreteStatus);
 
+  public boolean isConcreteTestTypeExits(String concreteTestType);
+
+  public List<ConcreteTestStatus> getConcreteTestStatusByConcreteStatusAndConcreteTestType(
+      ConcreteStatus concreteStatus, String concreteTestType);
 }

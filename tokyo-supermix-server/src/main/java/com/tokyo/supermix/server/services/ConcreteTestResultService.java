@@ -38,7 +38,7 @@ public interface ConcreteTestResultService {
 
   public ConcreteTestResult findByConcreteTestId(Long concreteTestId);
 
-  public ConcreteTestResult findByFinishProductSampleId(Long finishProductSampleId);
+  public List<ConcreteTestResult> findByFinishProductSampleId(Long finishProductSampleId);
 
   public void saveConcreteTestStrengthStatus(Long finishProductSampleId);
 
@@ -49,4 +49,7 @@ public interface ConcreteTestResultService {
   public Page<ConcreteTestResult> searchConcreteTestResult(Long finishProductSampleId,
       Long ConcreteTestId, Status status, Double result, Double resultMin, Double resultMax,
       BooleanBuilder booleanBuilder, int page, int size);
+
+  public List<ConcreteTestResult> getConcreteTestResultByConcreteTestConcreteTestTypeIdAndFinishProductSampleId(
+      Long concreteTestTypeId, Long finishProductSampleId);
 }

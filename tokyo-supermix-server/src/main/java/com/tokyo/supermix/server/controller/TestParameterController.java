@@ -45,6 +45,10 @@ public class TestParameterController {
   public ResponseEntity<Object> createTestParameter(
       @Valid @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
     for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
+      if (testParameterService.isAbbreviationNull(testParameterRequestDto.getAbbreviation())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+            validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
+      }
       if (testParameterRequestDto.getParameterId() != null
           && testParameterRequestDto.getQualityParameterId() == null) {
         if ((testParameterService.isDuplicateTestParameterEntryExist(
@@ -64,7 +68,7 @@ public class TestParameterController {
         if ((testParameterService.isDuplicateQualityTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(),
             testParameterRequestDto.getQualityParameterId(), testParameterRequestDto.getUnitId(),
-            testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+            testParameterRequestDto.getAbbreviation()))) {
           logger.debug(
               "row is already exists: createTestParameter(), isDuplicateQualityTestParameterEntryExist: {}");
           return new ResponseEntity<>(
@@ -176,7 +180,7 @@ public class TestParameterController {
         if ((testParameterService.isDuplicateQualityTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(),
             testParameterRequestDto.getQualityParameterId(), testParameterRequestDto.getUnitId(),
-            testParameterRequestDto.getAbbreviation(), testParameterRequestDto.getEntryLevel()))) {
+            testParameterRequestDto.getAbbreviation()))) {
           logger.debug(
               "row is already exists: createTestParameter(), isDuplicateQualityTestParameterEntryExist: {}");
           return new ResponseEntity<>(

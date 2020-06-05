@@ -52,7 +52,20 @@ public class ConcreteTestStatusServiceImpl implements ConcreteTestStatusService 
   }
 
   @Transactional(readOnly = true)
-  public ConcreteTestStatus getConcreteTestStatusByConcreteStatus(ConcreteStatus concreteStatus) {
+  public List<ConcreteTestStatus> getConcreteTestStatusByConcreteStatus(
+      ConcreteStatus concreteStatus) {
     return concreteTestStatusRepository.findByConcreteStatus(concreteStatus);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isConcreteTestTypeExits(String concreteTestType) {
+    return concreteTestStatusRepository.existsByConcreteTestTypeType(concreteTestType);
+  }
+
+  @Transactional(readOnly = true)
+  public List<ConcreteTestStatus> getConcreteTestStatusByConcreteStatusAndConcreteTestType(
+      ConcreteStatus concreteStatus, String concreteTestType) {
+    return concreteTestStatusRepository.findByConcreteStatusAndConcreteTestTypeType(concreteStatus,
+        concreteTestType);
   }
 }

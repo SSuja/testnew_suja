@@ -8,10 +8,19 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.ConcreteTestResult;
 
 public interface ConcreteTestResultRepository
-		extends JpaRepository<ConcreteTestResult, Long>, QuerydslPredicateExecutor<ConcreteTestResult> {
-	ConcreteTestResult findByFinishProductSampleId(Long finishProductSampleId);
+    extends JpaRepository<ConcreteTestResult, Long>, QuerydslPredicateExecutor<ConcreteTestResult> {
+  List<ConcreteTestResult> findByFinishProductSampleId(Long finishProductSampleId);
 
-	ConcreteTestResult findByConcreteTestId(Long concreteTestId);
+  ConcreteTestResult findByConcreteTestId(Long concreteTestId);
 
-	List<ConcreteTestResult> findByConcreteTestConcreteTestTypeId(Long concreteTestTypeId);
+  List<ConcreteTestResult> findByConcreteTestConcreteTestTypeId(Long concreteTestTypeId);
+
+  List<ConcreteTestResult> findByConcreteTestConcreteTestTypeIdAndFinishProductSampleId(
+      Long concreteTestTypeId, Long finishProductSampleId);
+
+  List<ConcreteTestResult> findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
+      String concreteTestType, String concreteTestName);
+
+  ConcreteTestResult findByFinishProductSampleIdAndConcreteTestName(
+      Long finishProductSampleId, String concreteTestName);
 }
