@@ -9,7 +9,8 @@ public class FinishProductSampleIssueRequestDto {
   @NotNull(message = "{finishProductSampleIssueRequestDto.truckNo.null}")
   private String truckNo;
   private Long finishProductSampleId;
-  private String projectCode;
+  private ProjectRequestDto project;
+  private Long pourId;
 
   public Long getId() {
     return id;
@@ -35,14 +36,20 @@ public class FinishProductSampleIssueRequestDto {
     this.finishProductSampleId = finishProductSampleId;
   }
 
-  public String getProjectCode() {
-    return projectCode;
+  public ProjectRequestDto getProject() {
+    return project;
   }
 
-  public void setProjectCode(String projectCode) {
-    this.projectCode = projectCode;
+  public void setProject(ProjectRequestDto project) {
+    this.project = project;
   }
 
+  public Long getPourId() {
+    return pourId;
+  }
 
+  public void setPourId(Long pourId) {
+    this.pourId = pourId;
+  }
 
 }
