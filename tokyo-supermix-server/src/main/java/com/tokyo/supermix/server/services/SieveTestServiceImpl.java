@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +22,31 @@ public class SieveTestServiceImpl implements SieveTestService {
   private SieveTestRepository sieveTestRepository;
 
   @Transactional
-  public void saveSieveTest(SieveTest sieveTest) {
+  public String saveSieveTest(SieveTest sieveTest) {
+    if (sieveTest.getCode() == null) {
+      String prefix = "SIV";
+      List<SieveTest> sieveTestList = sieveTestRepository.findByCodeContaining(prefix);
+      if (sieveTestList.size() == 0) {
+        sieveTest.setCode(prefix + String.format("%04d", 1));
+      } else {
+        sieveTest.setCode(prefix + String.format("%04d", maxNumberFromCode(sieveTestList) + 1));
+      }
+    }
     sieveTestRepository.save(sieveTest);
+    return sieveTest.getCode();
+  }
+
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+
+  private Integer maxNumberFromCode(List<SieveTest> sieveTestList) {
+    List<Integer> list = new ArrayList<Integer>();
+    sieveTestList.forEach(obj -> {
+      list.add(getNumberFromCode(obj.getCode()));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)

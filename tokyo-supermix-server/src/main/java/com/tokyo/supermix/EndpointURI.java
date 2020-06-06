@@ -161,7 +161,7 @@ public final class EndpointURI {
 	public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
 	public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
 	public static final String GET_CUSTOMERS_BY_PLANT_CODE = CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
-
+	public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID = TEST_CONFIGURE + SLASH + "testDetails" + ID;
 	/*
 	 * Equation APIs
 	 */
@@ -178,65 +178,62 @@ public final class EndpointURI {
 	public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
 	public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
-  /*
-   * 
-   * TestType
-   */
-  public static final String TEST_TYPE = BASE_API_PATH + "test-type";
-  public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
-  public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
-  public static final String TEST_TYPES = BASE_API_PATH + "test-types";
-  public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID =
-      TEST_TYPE + "/materialSubCategory" + "/{materialSubCategoryId}";
-  public static final String SEARCH_TEST_TYPE = TEST_TYPE + SEARCH;
-  /*
-   * Project APIs
-   */
-  public static final String PROJECT = BASE_API_PATH + "project";
-  public static final String PROJECT_BY_ID = PROJECT + CODE;
-  public static final String PROJECTS = BASE_API_PATH + "projects";
-  public static final String SEARCH_PROJECT = PROJECT + SEARCH;
-  public static final String GET_PROJECTS_BY_PLANT_CODE =
-      PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
-  /*
-   * IncomingSample Apis
-   */
-  public static final String INCOMING_SAMPLE = BASE_API_PATH + "incoming-sample";
-  public static final String INCOMING_SAMPLES = BASE_API_PATH + "incoming-samples";
-  public static final String INCOMING_SAMPLE_BY_STATUS =
-      INCOMING_SAMPLE + "/test-status" + "/{status}";
-  public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
-  public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
-      INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
-  public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
-  public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
-      INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
-      INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
-  /*
-   * Mix design apis
-   * 
-   */
-  public static final String MIX_DESIGN = BASE_API_PATH + "mix-design";
-  public static final String MIX_DESIGNS = BASE_API_PATH + "mix-designs";
-  public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
-  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
-  public static final String GET_MIX_DESIGN_BY_PLANT =
-      MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
-  /*
-   * ProcessSampleLoad Apis
-   */
-  public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
-  public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
-  public static final String PROCESS_SAMPLE_LOAD_BY_ID = PROCESS_SAMPLE_LOAD + ID;
-  public static final String PROCESS_SAMPLE_LOADS_BY_PLANT_CODE =
-      PROCESS_SAMPLE_LOADS + SLASH + "plant" + SLASH + "{plantCode}";
-  /*
-   * User
-   */
-  public static final String USER = BASE_API_PATH + "user";
-  public static final String USERS = BASE_API_PATH + "users";
-  public static final String USER_BY_ID = USER + ID;
+	/*
+	 * 
+	 * TestType
+	 */
+	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
+	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
+	public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
+	public static final String TEST_TYPES = BASE_API_PATH + "test-types";
+	public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory"
+			+ "/{materialSubCategoryId}";
+	public static final String SEARCH_TEST_TYPE = TEST_TYPE + SEARCH;
+	/*
+	 * Project APIs
+	 */
+	public static final String PROJECT = BASE_API_PATH + "project";
+	public static final String PROJECT_BY_ID = PROJECT + CODE;
+	public static final String PROJECTS = BASE_API_PATH + "projects";
+	public static final String SEARCH_PROJECT = PROJECT + SEARCH;
+	public static final String GET_PROJECTS_BY_PLANT_CODE = PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
+	/*
+	 * IncomingSample Apis
+	 */
+	public static final String INCOMING_SAMPLE = BASE_API_PATH + "incoming-sample";
+	public static final String INCOMING_SAMPLES = BASE_API_PATH + "incoming-samples";
+	public static final String INCOMING_SAMPLE_BY_STATUS = INCOMING_SAMPLE + "/test-status" + "/{status}";
+	public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
+	public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS = INCOMING_SAMPLE_BY_CODE + "/test-status"
+			+ "/{status}";
+	public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
+	public static final String INCOMING_SAMPLES_BY_PLANT_CODE = INCOMING_SAMPLES + SLASH + "plant" + SLASH
+			+ "{plantCode}";
+	public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY = INCOMING_SAMPLE + SLASH + "material-category"
+			+ SLASH + "{materialCategoryName}";
+	/*
+	 * Mix design apis
+	 * 
+	 */
+	public static final String MIX_DESIGN = BASE_API_PATH + "mix-design";
+	public static final String MIX_DESIGNS = BASE_API_PATH + "mix-designs";
+	public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
+	public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
+	public static final String GET_MIX_DESIGN_BY_PLANT = MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
+	/*
+	 * ProcessSampleLoad Apis
+	 */
+	public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
+	public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
+	public static final String PROCESS_SAMPLE_LOAD_BY_ID = PROCESS_SAMPLE_LOAD + ID;
+	public static final String PROCESS_SAMPLE_LOADS_BY_PLANT_CODE = PROCESS_SAMPLE_LOADS + SLASH + "plant" + SLASH
+			+ "{plantCode}";
+	/*
+	 * User
+	 */
+	public static final String USER = BASE_API_PATH + "user";
+	public static final String USERS = BASE_API_PATH + "users";
+	public static final String USER_BY_ID = USER + ID;
 
 	/*
 	 * Test Parameter APIs
@@ -572,19 +569,24 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE = CONCRETE_TEST_STATUS
 			+ SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH + "concrete-test-type" + SLASH
 			+ "{concreteTestType}";
+	public static final String INCOMING_SAMPLE_REPORT_DETAIL = BASE_API_PATH + SLASH + "incoming-sample-delivery-report"
+			+ SLASH + "{incomingSampleCode}";
+	public static final String INCOMING_SAMPLE_REPORT_DETAILS = BASE_API_PATH + SLASH
+			+ "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}" + SLASH + "test-name" + SLASH
+			+ "{testName}";
 
 	/*
-     * role Permission
-     */
+	 * role Permission
+	 */
 	public static final String PRIVILEGE = BASE_API_PATH + "privilege";
 	public static final String PERMISSION = BASE_API_PATH + "permission";
 	public static final String PERMISSIONS = BASE_API_PATH + "permissions";
-	public static final String PRIVILEGES = PRIVILEGE +SLASH+ "{roleId}";
-	public static final String SUBROUTE = "sub-route"+SLASH+ "{subRouteName}";
-	public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH+SUBROUTE;
+	public static final String PRIVILEGES = PRIVILEGE + SLASH + "{roleId}";
+	public static final String SUBROUTE = "sub-route" + SLASH + "{subRouteName}";
+	public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
 	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
-	public static final String SUB_ROUTES_BY_MAIN_ROUTE=PERMISSION +SLASH+"{mainRoute}";
-	
+	public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
+
 	private EndpointURI() {
 	}
 }
