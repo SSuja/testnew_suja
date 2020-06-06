@@ -161,6 +161,7 @@ public final class EndpointURI {
 	public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
 	public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
 	public static final String GET_CUSTOMERS_BY_PLANT_CODE = CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
+	public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID = TEST_CONFIGURE + SLASH + "testDetails" + ID;
 
 	/*
 	 * Equation APIs
@@ -179,13 +180,7 @@ public final class EndpointURI {
 	public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
 	/*
-	 * public static final String PARAMETER = BASE_API_PATH + "parameter"; public
-	 * static final String PARAMETERS = BASE_API_PATH + "parameters"; public static
-	 * final String GET_PARAMETER_BY_ID = PARAMETER + ID; public static final String
-	 * DELETE_PARAMETER_BY_ID = PARAMETER + ID; public static final String
-	 * PARAMETER_SEARCH = PARAMETER + SEARCH; /
-	 * 
-	 * /* TestType
+	 * TestType
 	 */
 	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
 	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
@@ -237,6 +232,9 @@ public final class EndpointURI {
 	public static final String USER = BASE_API_PATH + "user";
 	public static final String USERS = BASE_API_PATH + "users";
 	public static final String USER_BY_ID = USER + ID;
+
+	public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY = INCOMING_SAMPLE + SLASH + "material-category"
+			+ SLASH + "{materialCategoryName}";
 
 	/*
 	 * Test Parameter APIs
@@ -572,6 +570,11 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE = CONCRETE_TEST_STATUS
 			+ SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH + "concrete-test-type" + SLASH
 			+ "{concreteTestType}";
+	public static final String INCOMING_SAMPLE_REPORT_DETAIL = BASE_API_PATH + SLASH + "incoming-sample-delivery-report"
+			+ SLASH + "{incomingSampleCode}";
+	public static final String INCOMING_SAMPLE_REPORT_DETAILS = BASE_API_PATH + SLASH
+			+ "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}" + SLASH + "test-name" + SLASH
+			+ "{testName}";
 
 	private EndpointURI() {
 	}

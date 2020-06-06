@@ -27,6 +27,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.IncomingSampleService;
+import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -42,6 +43,8 @@ public class IncomingSampleController {
   private Mapper mapper;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  protected MaterialCategoryService materialCategoryService;
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
@@ -138,14 +141,34 @@ public class IncomingSampleController {
         incomingSampleService.searchIncomingSample(predicate, page, size),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
   public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES, mapper
-          .map(incomingSampleService.getIncomingSampleByPlantCode(plantCode), IncomingSampleResponseDto.class),
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
+              IncomingSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_MATERIAL_CATEGORY)
+  public ResponseEntity<Object> getIncomingSampleByMaterialCategory(
+      @PathVariable String materialCategoryName) {
+    if (materialCategoryService.isNameExist(materialCategoryName)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORY_NAME,
+          mapper.map(
+              incomingSampleService.getIncomingSampleByMaterialCategory(materialCategoryName),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Incoming Sample record exist for given Material Category");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_NAME,
+              validationFailureStatusCodes.getMaterialSubCategoryNotExist()),
+          HttpStatus.BAD_REQUEST);
+    }
   }
 }
