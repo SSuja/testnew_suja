@@ -20,4 +20,7 @@ public interface TestReportService {
   public TestReportDetailDto getCementDetailReport(String materialTestCode);
 
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReport(String incomingSampleCode);
+
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
+      String testName);
 }

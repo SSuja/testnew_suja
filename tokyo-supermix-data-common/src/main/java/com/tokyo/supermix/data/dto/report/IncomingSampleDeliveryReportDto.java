@@ -8,6 +8,7 @@ public class IncomingSampleDeliveryReportDto {
   private IncomingSampleReportDto incomingsample;
   private List<IncomingSampleTestDto> incomingSampleTestDtos;
   private List<IncomingSampleStatusCount> incomingSampleStatusCounts;
+  private SupplierReportDto supplierReportDtos;
 
   public PlantDto getPlant() {
     return plant;
@@ -40,6 +41,14 @@ public class IncomingSampleDeliveryReportDto {
   public void setIncomingSampleStatusCounts(
       List<IncomingSampleStatusCount> incomingSampleStatusCounts) {
     this.incomingSampleStatusCounts = incomingSampleStatusCounts;
+  }
+
+  public SupplierReportDto getSupplierReportDtos() {
+    return supplierReportDtos;
+  }
+
+  public void setSupplierReportDtos(SupplierReportDto supplierReportDtos) {
+    this.supplierReportDtos = supplierReportDtos;
   }
 
 }

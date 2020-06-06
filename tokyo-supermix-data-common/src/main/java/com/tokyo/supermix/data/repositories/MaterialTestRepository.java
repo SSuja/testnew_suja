@@ -31,4 +31,7 @@ public interface MaterialTestRepository
       String incomingSampleCode, String classification);
 
   List<MaterialTest> findByIncomingSampleCodeAndStatus(String incomingSampleCode, Status status);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestName(String incomingSampleCode,
+      String testName);
 }

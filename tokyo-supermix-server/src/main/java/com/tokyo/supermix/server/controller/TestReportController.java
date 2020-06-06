@@ -167,4 +167,18 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_REPORT_DETAILS)
+  public ResponseEntity<Object> getIncomingSampleReportDetails(
+      @PathVariable String incomingSampleCode, @PathVariable String testName) {
+    if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+          mapper.map(
+              testReportService.getIncomingSampleDeliveryReports(incomingSampleCode, testName),
+              IncomingSampleDeliveryReportDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

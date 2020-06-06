@@ -576,6 +576,9 @@ public final class EndpointURI {
       TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
   public static final String INCOMING_SAMPLE_REPORT_DETAIL =
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}";
+  public static final String INCOMING_SAMPLE_REPORT_DETAILS =
+      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
+          + SLASH + "test-name" +SLASH+ "{testName}";
 
   private EndpointURI() {}
 }

@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
 import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
 import com.tokyo.supermix.data.dto.report.ParameterResultDto;
+import com.tokyo.supermix.data.dto.report.SupplierReportDto;
 import com.tokyo.supermix.data.dto.report.TestDetailDto;
 import com.tokyo.supermix.data.dto.report.TestDetailForSampleDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
@@ -26,6 +27,7 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -35,6 +37,7 @@ import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.SupplierRepository;
 
 @Service
 public class TestReportServiceImpl implements TestReportService {
@@ -54,6 +57,8 @@ public class TestReportServiceImpl implements TestReportService {
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
   private ConcreteTestResultRepository concreteTestResultRepository;
+  @Autowired
+  private SupplierRepository supplierRepository;
 
   @Override
   public TestReportDto getMaterialTestReport(String materialTestCode) {
@@ -245,15 +250,38 @@ public class TestReportServiceImpl implements TestReportService {
         .setIncomingSampleTestDtos(getIncomingSampleTestDtoReport(incomingSampleCode));
     incomingSampleDeliveryReportDto
         .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
+    incomingSampleDeliveryReportDto.setSupplierReportDtos(
+        getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
   }
 
   private List<IncomingSampleTestDto> getIncomingSampleTestDtoReport(String incomingSampleCode) {
     List<IncomingSampleTestDto> incomingSampleTestDtoList = new ArrayList<IncomingSampleTestDto>();
     materialTestRepository.findByIncomingSampleCode(incomingSampleCode).forEach(test -> {
-      incomingSampleTestDtoList.add(mapper.map(test, IncomingSampleTestDto.class));
+      IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
+      incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
+      incomingSampleTestDto.setAverage(test.getAverage());
+      incomingSampleTestDto.setStatus(test.getStatus());
+      incomingSampleTestDto.setDate(test.getDate());
+      incomingSampleTestDto
+          .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
+      incomingSampleTestDtoList.add(incomingSampleTestDto);
     });
     return incomingSampleTestDtoList;
+  }
+
+  private SupplierReportDto getSupplierReport(Long supplierId) {
+    Supplier supplier = supplierRepository.findById(supplierId).get();
+    SupplierReportDto supplierReportDto = mapper.map(supplier, SupplierReportDto.class);
+    supplierReportDto.setId(supplierId);
+    supplierReportDto.setName(supplier.getName());
+    supplierReportDto.setPhoneNumber(supplier.getPhoneNumber());
+    supplierReportDto.setAddress(supplier.getAddress());
+    supplierReportDto.setCompanyName(supplier.getCompanyName());
+    supplierReportDto.setSupplierCategoryName(supplier.getSuppilerCategory().getCategory());
+    supplierReportDto.setEmail(supplier.getEmail());
+    supplierReportDto.setPlantName(supplier.getPlant().getName());
+    return supplierReportDto;
   }
 
   private List<IncomingSampleStatusCount> getIncomingSampleStatusCount(String incomingSampleCode) {
@@ -279,6 +307,26 @@ public class TestReportServiceImpl implements TestReportService {
     incomingSampleStatusCount.setProcessCount(materialTestRepository
         .findByIncomingSampleCodeAndStatus(incomingSampleCode, Status.PROCESS).size());
     return incomingSampleStatusCount;
+  }
+
+  @Transactional(readOnly = true)
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
+      String testName) {
+    IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
+        new IncomingSampleDeliveryReportDto();
+    List<MaterialTest> materialTest =
+        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    incomingSampleDeliveryReportDto.setIncomingsample(
+        getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+    incomingSampleDeliveryReportDto
+        .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleTestDtos(getIncomingSampleTestDtoReport(incomingSampleCode));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
+    incomingSampleDeliveryReportDto.setSupplierReportDtos(
+        getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
+    return incomingSampleDeliveryReportDto;
   }
 
 }
