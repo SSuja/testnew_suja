@@ -48,4 +48,9 @@ public class PrivilegeController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,PrivilegeService.getPermissionsByRole(roleId) ,
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  @GetMapping(value = EndpointURI.PERMISSION_BY_SUBROUTE)
+  public ResponseEntity<Object> getPrivilegesByRole(@PathVariable("subRouteName") String subRouteName){
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,PrivilegeService.getPermissionsBySubRoute(subRouteName) ,
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }

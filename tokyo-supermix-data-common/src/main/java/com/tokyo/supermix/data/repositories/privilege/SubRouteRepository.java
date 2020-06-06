@@ -6,5 +6,6 @@ import com.tokyo.supermix.data.entities.privilege.SubRoute;
 
 public interface SubRouteRepository extends JpaRepository<SubRoute, Long>{
   List<SubRoute> findByMainRouteId(Long mainRouteId);
+  SubRoute findByName(String name);
 
 }

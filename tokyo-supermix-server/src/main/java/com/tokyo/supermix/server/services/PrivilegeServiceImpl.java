@@ -2,9 +2,9 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.privilege.PermissionDto;
 import com.tokyo.supermix.data.dto.privilege.PermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PrivilegeDto;
@@ -43,37 +43,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     return rolePermissionRepository.findByRoleIdAndPermissionId(permissionId, roleId);
   }
 
-  private List<PermissionResponseDto> getPermissionsByMainRoute(List<MainRoute> MainRouteList) {
-    List<PermissionResponseDto> PermissionResponseDtolist = new ArrayList<PermissionResponseDto>();
-    MainRouteList.forEach(main -> {
-      PermissionResponseDto permissionResponseDto = new PermissionResponseDto();
-      permissionResponseDto.setMainRoute(main.getName());
-      List<SubRoutePermissionDto> subRoutePermissionDtoList =
-          new ArrayList<SubRoutePermissionDto>();
-      setPermissiontoSubRoute(main,subRoutePermissionDtoList);
-      permissionResponseDto.setSubRoutes(subRoutePermissionDtoList);
-      PermissionResponseDtolist.add(permissionResponseDto);
-    });
-    return PermissionResponseDtolist;
-  }
-
-  private void setPermissiontoSubRoute(MainRoute main,
-      List<SubRoutePermissionDto> subRoutePermissionDtoList) {
-     subRouteRepository.findByMainRouteId(main.getId()).forEach(sub -> {
-     SubRoutePermissionDto subRoutePermissionDto = new SubRoutePermissionDto();
-     subRoutePermissionDto.setSubRoute(sub.getName());
-     List<PermissionDto> PermissionDtoList = new ArrayList<PermissionDto>();
-     permissionRepository.findBySubRouteId(sub.getId()).forEach(permission -> {
-     PermissionDto permissionDto = mapper.map(permission, PermissionDto.class);
-     PermissionDtoList.add(permissionDto);
-     });
-     subRoutePermissionDto.setPermissions(PermissionDtoList);
-     subRoutePermissionDtoList.add(subRoutePermissionDto);
-     });
-
-  }
-
-  @Override
+  @Transactional(readOnly = true)
   public List<PrivilegeResponseDto> getPermissionsByRole(Long roleId) {
     return setPermissionsByRole(roleId);
   }
@@ -118,9 +88,43 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     return PermissionResponseDtolist;
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<PermissionResponseDto> getPermissions() {
     return getPermissionsByMainRoute(mainRouteRepository.findAll());
+  }
+
+  private List<PermissionResponseDto> getPermissionsByMainRoute(List<MainRoute> MainRouteList) {
+    List<PermissionResponseDto> PermissionResponseDtolist = new ArrayList<PermissionResponseDto>();
+    MainRouteList.forEach(main -> {
+      PermissionResponseDto permissionResponseDto = new PermissionResponseDto();
+      permissionResponseDto.setMainRoute(main.getName());
+      List<SubRoutePermissionDto> subRoutePermissionDtoList =
+          new ArrayList<SubRoutePermissionDto>();
+      setPermissiontoSubRoute(main, subRoutePermissionDtoList);
+      permissionResponseDto.setSubRoutes(subRoutePermissionDtoList);
+      PermissionResponseDtolist.add(permissionResponseDto);
+    });
+    return PermissionResponseDtolist;
+  }
+
+  private void setPermissiontoSubRoute(MainRoute main,
+      List<SubRoutePermissionDto> subRoutePermissionDtoList) {
+    subRouteRepository.findByMainRouteId(main.getId()).forEach(sub -> {
+      SubRoutePermissionDto subRoutePermissionDto = getPermissionsSubRouteName(sub.getName());
+      subRoutePermissionDtoList.add(subRoutePermissionDto);
+    });
+  }
+
+  private SubRoutePermissionDto getPermissionsSubRouteName(String subRouteName) {
+    SubRoutePermissionDto subRoutePermissionDto = new SubRoutePermissionDto();
+    List<PermissionDto> PermissionDtoList = new ArrayList<PermissionDto>();
+    permissionRepository.findBySubRouteName(subRouteName).forEach(permission -> {
+      PermissionDto permissionDto = mapper.map(permission, PermissionDto.class);
+      PermissionDtoList.add(permissionDto);
+    });
+    subRoutePermissionDto.setPermissions(PermissionDtoList);
+    subRoutePermissionDto.setSubRoute(subRouteName);
+    return subRoutePermissionDto;
   }
 
   @Override
@@ -135,10 +139,9 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     return null;
   }
 
-  @Override
-  public List<PermissionResponseDto> getPermissionsBySubRoute(String subRoute) {
-    // TODO Auto-generated method stub
-    return null;
+  @Transactional(readOnly = true)
+  public SubRoutePermissionDto getPermissionsBySubRoute(String subRoute) {
+    return getPermissionsSubRouteName(subRoute);
   }
 
 
