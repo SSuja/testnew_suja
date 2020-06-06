@@ -55,7 +55,7 @@ public class EmployeeController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
+    employeeService.createEmployee(mapper.map(employeeDto, Employee.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -98,7 +98,7 @@ public class EmployeeController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      employeeService.saveEmployee(mapper.map(employeeDto, Employee.class));
+      employeeService.updateEmployee(mapper.map(employeeDto, Employee.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
           HttpStatus.OK);

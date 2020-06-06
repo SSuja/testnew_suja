@@ -52,18 +52,6 @@ public class MaterialTestController {
   // create material tests
   @PostMapping(value = EndpointURI.MATERIAL_TEST)
   @PreAuthorize("hasAuthority('add_material_test')")
-  public ResponseEntity<Object> createMaterialTest(
-      @Valid @RequestBody MaterialTestRequestDto materialTestDto) {
-
-    if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
-      logger.debug("Code already exists");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-          validationFailureStatusCodes.getMaterialTestAlreadyExists()), HttpStatus.BAD_REQUEST);
-    }
-    materialTestService.saveMaterialTest(mapper.map(materialTestDto, MaterialTest.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MATERIAL_TEST_SUCCESS),
-        HttpStatus.OK);
   public String createMaterialTest(@Valid @RequestBody MaterialTestRequestDto materialTestDto) {
     return materialTestService.saveMaterialTest(mapper.map(materialTestDto, MaterialTest.class));
   }
