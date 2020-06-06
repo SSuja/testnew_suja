@@ -569,6 +569,11 @@ public final class EndpointURI {
 	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE = CONCRETE_TEST_STATUS
 			+ SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH + "concrete-test-type" + SLASH
 			+ "{concreteTestType}";
+	public static final String INCOMING_SAMPLE_REPORT_DETAIL = BASE_API_PATH + SLASH + "incoming-sample-delivery-report"
+			+ SLASH + "{incomingSampleCode}";
+	public static final String INCOMING_SAMPLE_REPORT_DETAILS = BASE_API_PATH + SLASH
+			+ "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}" + SLASH + "test-name" + SLASH
+			+ "{testName}";
 
 	private EndpointURI() {
 	}
