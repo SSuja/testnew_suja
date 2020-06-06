@@ -129,12 +129,12 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
   @Override
   public List<PermissionDto> getSubRoutesByMainRoute(Long mainRouteId) {
-    List<SubRoute> permissions = subRouteRepository.findByMainRouteId(mainRouteId);
-    PermissionDto permissionDto = new PermissionDto();
+    List<SubRoute> subRoutes = subRouteRepository.findByMainRouteId(mainRouteId);
     List<PermissionDto> permissionDtolist = new ArrayList<PermissionDto>();
-    for(SubRoute permission:permissions) {
-    permissionDto.setId(permission.getId());
-    permissionDto.setName(permission.getName());
+    for(SubRoute subRoute:subRoutes) {
+      PermissionDto permissionDto = new PermissionDto();
+    permissionDto.setId(subRoute.getId());
+    permissionDto.setName(subRoute.getName());
     permissionDtolist.add(permissionDto);
     }
     return permissionDtolist;

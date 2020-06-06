@@ -583,7 +583,7 @@ public final class EndpointURI {
 	public static final String SUBROUTE = "sub-route"+SLASH+ "{subRouteName}";
 	public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH+SUBROUTE;
 	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
-	public static final String SUB_ROUTES_BY_MAIN_ROUTE=PERMISSIONS +SLASH+"{mainRoute}";
+	public static final String SUB_ROUTES_BY_MAIN_ROUTE=PERMISSION +SLASH+"{mainRoute}";
 	
 	private EndpointURI() {
 	}
