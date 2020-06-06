@@ -579,6 +579,8 @@ public final class EndpointURI {
 	public static final String PRIVILEGE = BASE_API_PATH + "privilege";
 	public static final String PERMISSIONS = BASE_API_PATH + "permissions";
 	public static final String PRIVILEGES = PRIVILEGE +SLASH+ "{roleId}";
+	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
+	public static final String SUB_ROUTES_BY_MAIN_ROUTE=PERMISSIONS +SLASH+"{mainRoute}";
 	
 	private EndpointURI() {
 	}

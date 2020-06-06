@@ -38,14 +38,33 @@ public class PrivilegeController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PRIVILEGE_SUCCESS),
         HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.PERMISSIONS)
-  public ResponseEntity<Object> getAllPermissions(){
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,PrivilegeService.getPermissions() ,
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllPermissions() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+        PrivilegeService.getPermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.PRIVILEGES)
-  public ResponseEntity<Object> getPrivilegesByRole(@PathVariable("roleId") Long roleId){
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,PrivilegeService.getPermissionsByRole(roleId) ,
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getPrivilegesByRole(@PathVariable("roleId") Long roleId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+        PrivilegeService.getPermissionsByRole(roleId), RestApiResponseStatus.OK), null,
+        HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.MAIN_ROUTES)
+  public ResponseEntity<Object> getallMainRoutes() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MAIN_ROUTES,
+        PrivilegeService.getMainRoutes(), RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SUB_ROUTES_BY_MAIN_ROUTE)
+  public ResponseEntity<Object> getSubRoutesByMainRoute(@PathVariable String mainRoute) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.SUB_ROUTES,
+            PrivilegeService.getSubRoutesByMainRoute(
+                PrivilegeService.findByMainRouteName(mainRoute).getId()),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }
