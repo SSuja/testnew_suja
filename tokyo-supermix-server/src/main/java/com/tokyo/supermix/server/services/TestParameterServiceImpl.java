@@ -99,7 +99,6 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameters.add(testParameter);
       }
       if (testParameter.getParameter() == null) {
-        if (testParameter.getValue() == null) {
           if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
               testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
             if ((materialQualityParameterRepository
@@ -119,8 +118,6 @@ public class TestParameterServiceImpl implements TestParameterService {
           }
         }
       }
-    }
-
     return testParameters;
   }
 
@@ -153,5 +150,13 @@ public class TestParameterServiceImpl implements TestParameterService {
   @Transactional(readOnly = true)
   public TestParameter getQualityParameterById(Long testParameterId) {
     return testParameterRepository.findByQualityParameterId(testParameterId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAbbreviationNull(String abbreviation) {
+    if (abbreviation.isEmpty()) {
+      return true;
+    }
+    return false;
   }
 }

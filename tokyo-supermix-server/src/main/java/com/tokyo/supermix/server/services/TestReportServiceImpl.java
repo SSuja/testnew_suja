@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
+import com.tokyo.supermix.data.dto.report.ConcreteStrengthTestDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
 import com.tokyo.supermix.data.dto.report.ParameterResultDto;
@@ -23,6 +25,7 @@ import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
 import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -45,6 +48,8 @@ public class TestReportServiceImpl implements TestReportService {
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  private ConcreteTestResultRepository concreteTestResultRepository;
 
   @Override
   public TestReportDto getMaterialTestReport(String materialTestCode) {
@@ -82,7 +87,6 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleReportDto;
   }
 
-
   private List<TestTrialReportDto> getMaterialTestTrialReport(String materialTestCode) {
     List<TestTrialReportDto> trailList = new ArrayList<TestTrialReportDto>();
     List<MaterialTestTrial> testTrailList =
@@ -109,18 +113,20 @@ public class TestReportServiceImpl implements TestReportService {
   }
 
   @Override
-  public TestDetailForSampleDto getTestDetails(String incomingSampleCode) {
+  public TestDetailForSampleDto getTestDetails(String incomingSampleCode, String classification) {
     TestDetailForSampleDto testDetailForSampleDto = new TestDetailForSampleDto();
-    List<MaterialTest> materialTestList =
-        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    List<ParameterResult> parameterResultList = parameterResultRepository
+        .findByMaterialTestTrialMaterialTestIncomingSampleCode(incomingSampleCode);
     List<TestDetailDto> testDetailDtoList = new ArrayList<TestDetailDto>();
-    materialTestList.forEach(mTest -> {
+    parameterResultList.forEach(mTest -> {
       TestDetailDto testDetailDto = new TestDetailDto();
-      testDetailDto.setTestName(mTest.getTestConfigure().getTest().getName());
-      testDetailDto.setActualValue(mTest.getAverage());
+      testDetailDto.setTestName(
+          mTest.getMaterialTestTrial().getMaterialTest().getTestConfigure().getTest().getName());
+      testDetailDto.setActualValue(mTest.getValue());
+      testDetailDto.setAcceptanceCriteria(getAcceptedCriteriaDetails(
+          mTest.getMaterialTestTrial().getMaterialTest().getTestConfigure().getId()));
       testDetailDto
-          .setAcceptanceCriteria(getAcceptedCriteriaDetails(mTest.getTestConfigure().getId()));
-      testDetailDto.setStatus(mTest.getStatus().toString());
+          .setStatus(mTest.getMaterialTestTrial().getMaterialTest().getStatus().toString());
       testDetailDtoList.add(testDetailDto);
     });
     testDetailForSampleDto.setTestDetails(testDetailDtoList);
@@ -163,27 +169,61 @@ public class TestReportServiceImpl implements TestReportService {
         materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
     List<ParameterResult> parameterResults =
         parameterResultRepository.findByMaterialTestTrialCode(testTrailList.get(0).getCode());
-    int paramerListSize = parameterResults.size();
     parameterResults.forEach(paramResult -> {
       TrailValueDto trailValueDto = new TrailValueDto();
-      trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
-      trailValueDtoList.add(trailValueDto);
-    });
-    trailValueDtoList.forEach(dto -> {
-      int index = 0;
-      for (int i = 0; i < paramerListSize; i++) {
-        List<Double> values = new ArrayList<Double>();
-        for (MaterialTestTrial obj : testTrailList) {
-          values.add(parameterResultRepository.findByMaterialTestTrialCode(obj.getCode()).get(index)
-              .getValue());
-        }
-        dto.setValues(values);
-        System.out.println(index);
-        index++;
+      if (paramResult.getTestParameter().getParameter() != null) {
+        trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
+        trailValueDtoList.add(trailValueDto);
       }
     });
-
+    for (TrailValueDto dto : trailValueDtoList) {
+      List<ParameterResult> combined = new ArrayList<ParameterResult>();
+      List<Double> values = new ArrayList<Double>();
+      for (int i = 0; i < testTrailList.size(); i++) {
+        List<ParameterResult> parameterResultss =
+            parameterResultRepository.findByMaterialTestTrialCode(testTrailList.get(i).getCode());
+        combined.addAll(parameterResultss);
+      }
+      for (ParameterResult parameterResult : combined) {
+        if (parameterResult.getTestParameter().getParameter() != null) {
+          if (dto.getParameterName() == parameterResult.getTestParameter().getParameter()
+              .getName()) {
+            values.add(parameterResult.getValue());
+          }
+        }
+      }
+      dto.setValues(values);
+    }
     return trailValueDtoList;
+  }
+
+  @Transactional(readOnly = true)
+  public List<ConcreteStrengthTestDto> getStrengthResult(String concreteTestType,
+      String concreteTestName) {
+    List<ConcreteStrengthTestDto> concreteStrengthTestDto =
+        new ArrayList<ConcreteStrengthTestDto>();
+    concreteTestResultRepository.findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
+        concreteTestType, concreteTestName).forEach(strength -> {
+          concreteStrengthTestDto.add(mapper.map(strength, ConcreteStrengthTestDto.class));
+        });
+    return concreteStrengthTestDto;
+  }
+
+  @Transactional(readOnly = true)
+  public TestReportDetailDto getCementDetailReport(String materialTestCode) {
+    TestReportDetailDto reportDto = new TestReportDetailDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+    reportDto.setMaterialTest(materialTestDto);
+    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    reportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
+    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    reportDto
+        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    return reportDto;
   }
 
 }

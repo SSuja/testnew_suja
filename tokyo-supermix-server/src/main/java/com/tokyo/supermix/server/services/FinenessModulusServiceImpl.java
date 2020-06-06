@@ -66,4 +66,13 @@ public class FinenessModulusServiceImpl implements FinenessModulusService {
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 
+  @Transactional(readOnly = true)
+  public boolean isDuplicateRowExist(Double min, Double max, Long materialSubCategoryId) {
+    if (finenessModulusRepository.existsByMinAndMaxAndMaterialSubCategoryId(min, max,
+        materialSubCategoryId)) {
+      return true;
+    }
+    return false;
+  }
+
 }

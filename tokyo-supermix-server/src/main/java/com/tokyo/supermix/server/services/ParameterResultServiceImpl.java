@@ -73,7 +73,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         } else {
           engine.put(testParameter.getAbbreviation(), testParameter.getValue());
         }
-      } else if (testParameter.getQualityParameter() != null) {
+      }
+      if (testParameter.getQualityParameter() != null) {
         if (materialQualityParameterRepository
             .findByQualityParameterId(testParameter.getQualityParameter().getId()) != null) {
           if ((materialQualityParameterRepository
@@ -86,7 +87,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         }
         engine.put(testParameter.getAbbreviation(), testParameter.getValue());
       }
-
     }
     try {
       result = (double) engine.eval(equation);
@@ -110,9 +110,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
     List<ParameterResult> parameterResultList =
         findByMaterialTestTrialCode(materialTestTrial.getCode());
-    if (equationService
-        .findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId())
-        .getFormula() == null) {
+    if (equationService.findByConfigureId(
+        materialTestTrial.getMaterialTest().getTestConfigure().getId()) == null) {
       for (ParameterResult parameterResult : parameterResultList) {
         materialTestTrial.setResult(parameterResult.getValue());
       }

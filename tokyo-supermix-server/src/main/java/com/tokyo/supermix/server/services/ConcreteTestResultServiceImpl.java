@@ -157,6 +157,14 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     }
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.WATER_CEMENT_RATIO);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+    ConcreteTestResult concreteTestResultSlump =
+        concreteTestResultRepository.findByFinishProductSampleIdAndConcreteTestName(
+            concreteTestResult.getFinishProductSample().getId(), Constants.SLUMP_TEST);
+    if (concreteTestResultSlump.getStatus().equals(Status.PASS)) {
+      concreteTestResult.setStatus(Status.PASS);
+    } else if (concreteTestResultSlump.getStatus().equals(Status.FAIL)) {
+      concreteTestResult.setStatus(Status.FAIL);
+    }
     concreteTestResultRepository.save(concreteTestResult);
   }
 
@@ -182,6 +190,14 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     concreteTestResult.setResult(calculateWaterBinderRatio(concreteTestResult.getWaterContent(),
         binderquantity.doubleValue(), quantity.doubleValue()));
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.WATER_BINDER_RATIO);
+    ConcreteTestResult concreteTestResultSlump =
+        concreteTestResultRepository.findByFinishProductSampleIdAndConcreteTestName(
+            concreteTestResult.getFinishProductSample().getId(), Constants.SLUMP_TEST);
+    if (concreteTestResultSlump.getStatus().equals(Status.PASS)) {
+      concreteTestResult.setStatus(Status.PASS);
+    } else if (concreteTestResultSlump.getStatus().equals(Status.FAIL)) {
+      concreteTestResult.setStatus(Status.FAIL);
+    }
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
     concreteTestResultRepository.save(concreteTestResult);
   }
@@ -210,6 +226,14 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getResult()));
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.SLUMP_GRADE_RATIO);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
+    ConcreteTestResult concreteTestResultSlump =
+        concreteTestResultRepository.findByFinishProductSampleIdAndConcreteTestName(
+            concreteTestResult.getFinishProductSample().getId(), Constants.SLUMP_TEST);
+    if (concreteTestResultSlump.getStatus().equals(Status.PASS)) {
+      concreteTestResult.setStatus(Status.PASS);
+    } else if (concreteTestResultSlump.getStatus().equals(Status.FAIL)) {
+      concreteTestResult.setStatus(Status.FAIL);
+    }
     concreteTestResultRepository.save(concreteTestResult);
   }
 
@@ -217,6 +241,9 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
   public void saveConcreteStrengthTestAverageStrengthResult(ConcreteTestResult concreteTestResult) {
     concreteTestResult.setResult(roundDoubleValue(calculateAverageCubeStrength(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
+    long millis = System.currentTimeMillis();
+    java.sql.Date date = new java.sql.Date(millis);
+    concreteTestResult.setDate(date);
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_TEST);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
     concreteTestResultRepository.save(concreteTestResult);
@@ -228,6 +255,9 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     concreteTestResult.setResult(roundDoubleValue(calculateCubeStrengthRatio(
         concreteTestResult.getFinishProductSample().getId(), concreteTestResult.getAge())));
     calculateConcreteStrengthStatus(concreteTestResult);
+    long millis = System.currentTimeMillis();
+    java.sql.Date date = new java.sql.Date(millis);
+    concreteTestResult.setDate(date);
     ConcreteTest concreteTest = concreteTestRepository.findByName(Constants.STRENGTH_GRADE_RATIO);
     concreteTestResult.getConcreteTest().setId(concreteTest.getId());
     setConcreteTestStrengthStatus(concreteTestResult.getFinishProductSample().getId(),

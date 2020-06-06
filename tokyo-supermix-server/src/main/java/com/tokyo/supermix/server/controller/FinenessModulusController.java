@@ -101,8 +101,8 @@ public class FinenessModulusController {
   public ResponseEntity<Object> updateFinenessModulus(
       @Valid @RequestBody FinenessModulusRequestDto finenessModulusRequestDto) {
     if (finenessModulusService.isFinenessModulusExists(finenessModulusRequestDto.getId())) {
-      if (finenessModulusService.isUpdatedMaterialSubCategoryExist(
-          finenessModulusRequestDto.getId(),
+      if (finenessModulusService.isDuplicateRowExist(finenessModulusRequestDto.getMin(),
+          finenessModulusRequestDto.getMax(),
           finenessModulusRequestDto.getMaterialSubCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,

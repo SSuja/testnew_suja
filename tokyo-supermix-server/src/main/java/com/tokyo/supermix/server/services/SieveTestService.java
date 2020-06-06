@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface SieveTestService {
-  public void saveSieveTest(SieveTest sieveTest);
+  public String saveSieveTest(SieveTest sieveTest);
 
   public List<SieveTest> getAllSieveTests();
 
