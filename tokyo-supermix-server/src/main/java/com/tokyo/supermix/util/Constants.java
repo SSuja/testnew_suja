@@ -311,7 +311,7 @@ public class Constants {
   public static final String CONCRETE_TESTS = "concreteTests";
   public static final String RAW_MATERIAL_CEMENT = "cement";
   public static final String RAW_MATERIAL_FLYASH = "flyAsh";
-  public static final String DECIMAL_FORMAT = "#.####";
+  public static final String DECIMAL_FORMAT = "#.##";
   public static final String ADD_CONCRETE_TEST_SUCCESS = "Concrete Test Added Successfully";
   public static final String CONCRETE_TEST_DELETED = "Concrete Test Successfully Deleted";
   public static final String UPDATE_CONCRETE_TEST_SUCCESS = "Concrete Test Updated Successfully";
