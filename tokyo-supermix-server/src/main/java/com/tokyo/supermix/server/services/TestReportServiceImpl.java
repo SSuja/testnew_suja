@@ -8,7 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthTestDto;
+import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
+import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
+import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
 import com.tokyo.supermix.data.dto.report.ParameterResultDto;
 import com.tokyo.supermix.data.dto.report.TestDetailDto;
@@ -23,6 +26,7 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
@@ -224,6 +228,57 @@ public class TestReportServiceImpl implements TestReportService {
         .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
     reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
     return reportDto;
+  }
+
+  @Transactional(readOnly = true)
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReport(
+      String incomingSampleCode) {
+    IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
+        new IncomingSampleDeliveryReportDto();
+    List<MaterialTest> materialTest =
+        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    incomingSampleDeliveryReportDto.setIncomingsample(
+        getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+    incomingSampleDeliveryReportDto
+        .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleTestDtos(getIncomingSampleTestDtoReport(incomingSampleCode));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
+    return incomingSampleDeliveryReportDto;
+  }
+
+  private List<IncomingSampleTestDto> getIncomingSampleTestDtoReport(String incomingSampleCode) {
+    List<IncomingSampleTestDto> incomingSampleTestDtoList = new ArrayList<IncomingSampleTestDto>();
+    materialTestRepository.findByIncomingSampleCode(incomingSampleCode).forEach(test -> {
+      incomingSampleTestDtoList.add(mapper.map(test, IncomingSampleTestDto.class));
+    });
+    return incomingSampleTestDtoList;
+  }
+
+  private List<IncomingSampleStatusCount> getIncomingSampleStatusCount(String incomingSampleCode) {
+    List<IncomingSampleStatusCount> incomingSampleStatusCountList =
+        new ArrayList<IncomingSampleStatusCount>();
+    List<MaterialTest> materialTestList =
+        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    Status status = null;
+    incomingSampleStatusCountList.add(setIncomingSampleStatusCount(
+        materialTestList.get(0).getIncomingSample().getCode(), status));
+    return incomingSampleStatusCountList;
+  }
+
+  private IncomingSampleStatusCount setIncomingSampleStatusCount(String incomingSampleCode,
+      Status status) {
+    IncomingSampleStatusCount incomingSampleStatusCount = new IncomingSampleStatusCount();
+    incomingSampleStatusCount.setNewCount(materialTestRepository
+        .findByIncomingSampleCodeAndStatus(incomingSampleCode, Status.NEW).size());
+    incomingSampleStatusCount.setPassCount(materialTestRepository
+        .findByIncomingSampleCodeAndStatus(incomingSampleCode, Status.PASS).size());
+    incomingSampleStatusCount.setFailCount(materialTestRepository
+        .findByIncomingSampleCodeAndStatus(incomingSampleCode, Status.FAIL).size());
+    incomingSampleStatusCount.setProcessCount(materialTestRepository
+        .findByIncomingSampleCodeAndStatus(incomingSampleCode, Status.PROCESS).size());
+    return incomingSampleStatusCount;
   }
 
 }

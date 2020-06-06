@@ -18,6 +18,7 @@ public class Plant implements Serializable {
   private String address;
   private String phoneNumber;
   private String description;
+  private String faxNumber;
 
   public String getCode() {
     return code;
@@ -62,4 +63,13 @@ public class Plant implements Serializable {
   public void setDescription(String description) {
     this.description = description;
   }
+
+  public String getFaxNumber() {
+    return faxNumber;
+  }
+
+  public void setFaxNumber(String faxNumber) {
+    this.faxNumber = faxNumber;
+  }
+
 }
