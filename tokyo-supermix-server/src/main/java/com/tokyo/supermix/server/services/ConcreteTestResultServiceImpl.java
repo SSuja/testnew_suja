@@ -317,14 +317,12 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     List<CubeTestFinding> CubeTestFindingList =
         cubeTestFindingRepository.findByFinishProductSampleId(finishProductSampleId);
     double cubeResult = 0;
-    double cubeTotalNum = 0;
     for (CubeTestFinding cubeTestFinding : CubeTestFindingList) {
       if (cubeTestFinding.getAge() == concretAge) {
-        cubeResult = cubeResult + cubeTestFinding.getValue();
-        cubeTotalNum++;
+        cubeResult = cubeResult + cubeTestFinding.getValue();       
       }
     }
-    return (cubeResult / cubeTotalNum);
+    return (cubeResult / 2);
   }
 
   public Double getTargetGradre(Long finishProductSampleId) {
