@@ -584,6 +584,8 @@ public class Constants {
   public static final String UPDATE_PRIVILEGE_SUCCESS = "Privileges Updated Successfully";
   public static final String PRIVILEGES = "privileges";
   public static final String PERMISSIONS = "permissions";
+  public static final String MAIN_ROUTES = "mainRoutes";
+  public static final String SUB_ROUTES = "subRoutes";
   /*
    * Encapsulate constructor to restrict modification from outside
    */

@@ -128,15 +128,21 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   }
 
   @Override
-  public List<SubRoute> getSubRoutesByMainRoute(String mainRoute) {
-    // TODO Auto-generated method stub
-    return null;
+  public List<PermissionDto> getSubRoutesByMainRoute(Long mainRouteId) {
+    List<SubRoute> permissions = subRouteRepository.findByMainRouteId(mainRouteId);
+    PermissionDto permissionDto = new PermissionDto();
+    List<PermissionDto> permissionDtolist = new ArrayList<PermissionDto>();
+    for(SubRoute permission:permissions) {
+    permissionDto.setId(permission.getId());
+    permissionDto.setName(permission.getName());
+    permissionDtolist.add(permissionDto);
+    }
+    return permissionDtolist;
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<MainRoute> getMainRoutes() {
-    // TODO Auto-generated method stub
-    return null;
+    return mainRouteRepository.findAll();
   }
 
   @Transactional(readOnly = true)
@@ -144,5 +150,8 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     return getPermissionsSubRouteName(subRoute);
   }
 
-
+  @Transactional(readOnly = true)
+  public MainRoute findByMainRouteName(String mainRoute) {
+    return mainRouteRepository.findByName(mainRoute);
+  }
 }
