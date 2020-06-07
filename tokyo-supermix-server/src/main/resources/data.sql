@@ -33,10 +33,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('4', 'delete_plant', '1');
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('2', 'congrete_mixer', '1');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('5', 'get_congrete_mixer', '2');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('6', 'add_congrete_mixer', '2');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('7', 'edit_congrete_mixer', '2');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('8', 'delete_congrete_mixer', '2');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('5', 'get_concrete_mixer', '2');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('6', 'add_concrete_mixer', '2');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('7', 'edit_concrete_mixer', '2');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('8', 'delete_concrete_mixer', '2');
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('3', 'designation', '1');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('9', 'get_designation', '3');
@@ -81,10 +81,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('36', 'delete_material_sub_category', '9');
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('10', 'manage_unit', '3');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('37', 'get_manage_unit', '10');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('38', 'add_manage_unit', '10');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('39', 'edit_manage_unit', '10');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('40', 'delete_manage_unit', '10');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('37', 'get_unit', '10');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('38', 'add_unit', '10');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('39', 'edit_unit', '10');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('40', 'delete_unit', '10');
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('11', 'material_state', '4');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('41', 'get_material_state', '11');
@@ -95,10 +95,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
  
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('12', 'materials', '4');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('45', 'get_materials', '12');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('46', 'add_materials', '12');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('47', 'edit_materials', '12');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('48', 'delete_materials', '12');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('45', 'get_raw_material', '12');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('46', 'add_raw_material', '12');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('47', 'edit_raw_material', '12');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('48', 'delete_raw_material', '12');
 
  
 
