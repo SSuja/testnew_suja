@@ -30,8 +30,10 @@ public class JwtTokenProvider {
     Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
     return Jwts.builder().setSubject(Long.toString(userPrincipal.getId())).setIssuedAt(new Date())
         .setExpiration(expiryDate).signWith(SignatureAlgorithm.HS512, jwtSecret)
-        .claim("id", Long.toString(userPrincipal.getId())).claim("email", userPrincipal.getEmail())
-        .claim("role", userPrincipal.getRole().getName().toUpperCase())
+        .claim("userId", Long.toString(userPrincipal.getId()))
+        .claim("email", userPrincipal.getEmail())
+        .claim("roleName", userPrincipal.getRole().getName().toUpperCase())
+        .claim("roleName", Long.toString(userPrincipal.getRole().getId()))
         .claim("userName", userPrincipal.getUsername()).compact();
   }
 
