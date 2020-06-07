@@ -171,10 +171,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('84', 'delete_quality_parameter', '21');
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('22', 'quality_parameter_value', '7');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('85', 'get_quality_parameter_value', '22');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('86', 'add_quality_parameter_value', '22');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('87', 'edit_quality_parameter_value', '22');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('88', 'delete_quality_parameter_value', '22');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('85', 'get_material_quality_parameter', '22');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('86', 'add_material_quality_parameter', '22');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('87', 'edit_material_quality_parameter', '22');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('88', 'delete_material_quality_parameter', '22');
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('23', 'project', '8');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('89', 'get_project', '23');
