@@ -12,6 +12,7 @@ import com.tokyo.supermix.data.dto.privilege.PrivilegeResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubRoutePermissionDto;
 import com.tokyo.supermix.data.dto.privilege.SubRoutePrivilegeDto;
 import com.tokyo.supermix.data.entities.privilege.MainRoute;
+import com.tokyo.supermix.data.entities.privilege.Permission;
 import com.tokyo.supermix.data.entities.privilege.RolePermission;
 import com.tokyo.supermix.data.entities.privilege.SubRoute;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -89,7 +90,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   }
 
   @Transactional(readOnly = true)
-  public List<PermissionResponseDto> getPermissions() {
+  public List<PermissionResponseDto> getRoutePermissions() {
     return getPermissionsByMainRoute(mainRouteRepository.findAll());
   }
 
@@ -153,5 +154,18 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   @Transactional(readOnly = true)
   public MainRoute findByMainRouteName(String mainRoute) {
     return mainRouteRepository.findByName(mainRoute);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PermissionDto> getPermissions() {
+    List<Permission> permissions = permissionRepository.findAll() ;
+    List<PermissionDto> permissionDtolist = new ArrayList<PermissionDto>();
+    for(Permission permission:permissions) {
+      PermissionDto permissionDto = new PermissionDto();
+    permissionDto.setId(permission.getId());
+    permissionDto.setName(permission.getName());
+    permissionDtolist.add(permissionDto);
+    }
+    return permissionDtolist;
   }
 }
