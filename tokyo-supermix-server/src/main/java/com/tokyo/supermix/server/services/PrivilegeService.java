@@ -12,9 +12,9 @@ import com.tokyo.supermix.data.entities.privilege.RolePermission;
 public interface PrivilegeService {
   public void savePrivilege(RolePermission rolePermissions);
   public RolePermission findByRoleIdAndPermissionId(Long permissionId, Long roleId);
-  public List<PermissionResponseDto> getPermissions();
   public List<PrivilegeResponseDto> getRoutePrivilegeByRole(Long roleId);
   public List<PrivilegeDto> getPrivilegeByRole(Long roleId);
+  public List<PermissionResponseDto> getRoutePermissions();
   public List<PermissionDto> getSubRoutesByMainRoute(Long mainRouteId);
   public List<MainRoute> getMainRoutes();
   public SubRoutePermissionDto getPermissionsBySubRoute(String subRoute);
@@ -22,6 +22,7 @@ public interface PrivilegeService {
 //  
 //  public PrivilegeResponseDto getPrivilegeByMainRoute(String subRoute);
   public MainRoute findByMainRouteName(String mainRoute);
+  public List<PermissionDto> getPermissions();
 
   
 }

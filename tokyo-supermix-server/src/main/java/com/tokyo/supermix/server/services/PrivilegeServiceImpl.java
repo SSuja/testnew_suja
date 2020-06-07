@@ -90,7 +90,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   }
 
   @Transactional(readOnly = true)
-  public List<PermissionResponseDto> getPermissions() {
+  public List<PermissionResponseDto> getRoutePermissions() {
     return getPermissionsByMainRoute(mainRouteRepository.findAll());
   }
 
@@ -156,10 +156,22 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     return mainRouteRepository.findByName(mainRoute);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<PrivilegeDto> getPrivilegeByRole(Long roleId) {
     List<PrivilegeDto> PrivilegeDtoList = new ArrayList<PrivilegeDto>();
     List<Permission> PermissionList = permissionRepository.findByRolePermissionRoleId(roleId);
     return setPrivilegeByRole(roleId,PermissionList,PrivilegeDtoList);
+  }
+  @Transactional(readOnly = true)
+  public List<PermissionDto> getPermissions() {
+    List<Permission> permissions = permissionRepository.findAll() ;
+    List<PermissionDto> permissionDtolist = new ArrayList<PermissionDto>();
+    for(Permission permission:permissions) {
+      PermissionDto permissionDto = new PermissionDto();
+    permissionDto.setId(permission.getId());
+    permissionDto.setName(permission.getName());
+    permissionDtolist.add(permissionDto);
+    }
+    return permissionDtolist;
   }
 }
