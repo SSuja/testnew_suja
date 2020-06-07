@@ -40,7 +40,7 @@ public class ProcessSampleLoadController {
   private PlantService plantService;
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOADS)
-  @PreAuthorize("hasAuthority('get_process_sample_load')")
+ // @PreAuthorize("hasAuthority('get_process_sample_load')")
   public ResponseEntity<Object> getProcessSampleLoads() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_LOADS,
         mapper.map(processSampleLoadService.getAllProcessSampleLoads(),
@@ -49,7 +49,7 @@ public class ProcessSampleLoadController {
   }
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD)
-  @PreAuthorize("hasAuthority('add_process_sample_load')")
+ // @PreAuthorize("hasAuthority('add_process_sample_load')")
   public ResponseEntity<Object> createProcessSampleLoad(
       @Valid @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
     processSampleLoadService
@@ -73,7 +73,7 @@ public class ProcessSampleLoadController {
   }
 
   @PutMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD)
-  @PreAuthorize("hasAuthority('edit_process_sample_load')")
+ // @PreAuthorize("hasAuthority('edit_process_sample_load')")
   public ResponseEntity<Object> updateProcessSampleLoad(
       @Valid @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
     if (processSampleLoadService.isProcessSampleLoadExist(processSampleLoadRequestDto.getId())) {
@@ -87,7 +87,7 @@ public class ProcessSampleLoadController {
   }
 
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID)
-  @PreAuthorize("hasAuthority('delete_process_sample_load')")
+ // @PreAuthorize("hasAuthority('delete_process_sample_load')")
   public ResponseEntity<Object> deleteProcessSampleLoadById(@PathVariable Long id) {
     if (processSampleLoadService.isProcessSampleLoadExist(id)) {
       processSampleLoadService.deleteProcessSampleLoad(id);

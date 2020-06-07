@@ -43,7 +43,7 @@ public class SieveTestController {
 
   // post API for
   @PostMapping(value = EndpointURI.SIEVE_TEST)
-  @PreAuthorize("hasAuthority('add_sieve_test')")
+ // @PreAuthorize("hasAuthority('add_sieve_test')")
   public ResponseEntity<Object> createSieveTest(
       @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
@@ -52,7 +52,7 @@ public class SieveTestController {
   }
 
   @GetMapping(value = EndpointURI.SIEVE_TESTS)
-  @PreAuthorize("hasAuthority('get_sieve_test')")
+//  @PreAuthorize("hasAuthority('get_sieve_test')")
   public ResponseEntity<Object> getAllSieveTests() {
     return new ResponseEntity<Object>(new ContentResponse<>(Constants.SIEVE_TESTS,
         mapper.map(sieveTestService.getAllSieveTests(), SieveTestResponseDto.class),
@@ -75,7 +75,7 @@ public class SieveTestController {
 
   // get SieveTest Delete
   @DeleteMapping(value = EndpointURI.SIEVE_TEST_BY_CODE)
-  @PreAuthorize("hasAuthority('delete_sieve_test')")
+ // @PreAuthorize("hasAuthority('delete_sieve_test')")
   public ResponseEntity<Object> deleteSieveTest(@PathVariable String code) {
     if (sieveTestService.isSieveTestExists(code)) {
       sieveTestService.deleteSieveTest(code);

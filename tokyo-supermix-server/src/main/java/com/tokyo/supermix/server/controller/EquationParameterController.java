@@ -38,7 +38,7 @@ public class EquationParameterController {
   private static final Logger logger = Logger.getLogger(EquationParameterController.class);
 
   @PostMapping(value = EndpointURI.EQUATION_PARAMETER)
-  @PreAuthorize("hasAuthority('add_equation_parameter')")
+ // @PreAuthorize("hasAuthority('add_equation_parameter')")
   public ResponseEntity<Object> createEquationParameter(
       @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
     for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
@@ -59,7 +59,7 @@ public class EquationParameterController {
   }
 
   @GetMapping(value = EndpointURI.EQUATION_PARAMETERS)
-  @PreAuthorize("hasAuthority('get_equation_parameter')")
+ // @PreAuthorize("hasAuthority('get_equation_parameter')")
   public ResponseEntity<Object> getAllEquationParameters() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.EQUATION_PARAMETERS,
@@ -97,7 +97,7 @@ public class EquationParameterController {
   }
 
   @DeleteMapping(EndpointURI.EQUATION_PARAMETER_BY_ID)
-  @PreAuthorize("hasAuthority('delete_equation_parameter')")
+//  @PreAuthorize("hasAuthority('delete_equation_parameter')")
   public ResponseEntity<Object> deleteEquationParameterById(@PathVariable Long id) {
     if (equationParameterService.isEquationParameterExist(id)) {
       equationParameterService.deleteTestParameter(id);
