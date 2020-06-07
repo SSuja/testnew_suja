@@ -45,13 +45,18 @@ public class PrivilegeController {
         PrivilegeService.getPermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
+  @GetMapping(value = EndpointURI.ROUTE_PRIVILEGES)
+  public ResponseEntity<Object> getRoutePrivilegesByRole(@PathVariable("roleId") Long roleId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+        PrivilegeService.getRoutePrivilegeByRole(roleId), RestApiResponseStatus.OK), null,
+        HttpStatus.OK);
+  }
   @GetMapping(value = EndpointURI.PRIVILEGES)
   public ResponseEntity<Object> getPrivilegesByRole(@PathVariable("roleId") Long roleId) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
-        PrivilegeService.getPermissionsByRole(roleId), RestApiResponseStatus.OK), null,
+        PrivilegeService.getPrivilegeByRole(roleId), RestApiResponseStatus.OK), null,
         HttpStatus.OK);
   }
-
   @GetMapping(value = EndpointURI.MAIN_ROUTES)
   public ResponseEntity<Object> getallMainRoutes() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MAIN_ROUTES,
