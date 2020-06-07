@@ -21,7 +21,6 @@ INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('8', 'site');
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('9', 'sieve');
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('10', 'sample');
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('11', 'mix_design');
-INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('12', 'test_report');
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('13', 'test_configuration');
 INSERT INTO `tokyo-supermix`.`main_route` (`id`, `name`) VALUES ('14', 'manage_test');
 
@@ -127,10 +126,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
  
 
 INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('16', 'material_test', '6');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('61', 'get_material_test', '16');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('62', 'add_material_test', '16');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('63', 'edit_material_test', '16');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('64', 'delete_material_test', '16');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('61', 'get_test', '16');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('62', 'add_test', '16');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('63', 'edit_test', '16');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('64', 'delete_test', '16');
 
  
 
@@ -235,24 +234,6 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES 
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('126', 'add_mix_design', '32');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('127', 'edit_mix_design', '32');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('128', 'delete_mix_design', '32');
-
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('33', 'raw_material_test_result', '12');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('129', 'get_raw_material_test_result', '33');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('130', 'add_raw_material_test_result', '33');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('131', 'edit_raw_material_test_result', '33');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('132', 'delete_raw_material_test_result', '33');
-
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('34', 'sieve_test_result', '12');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('133', 'get_sieve_test_result', '34');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('134', 'add_sieve_test_result', '34');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('135', 'edit_sieve_test_result', '34');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('136', 'delete_sieve_test_result', '34');
-
-INSERT INTO `tokyo-supermix`.`sub_route` (`id`, `name`, `main_route_id`) VALUES ('35', 'finish_product_test_result', '12');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('137', 'get_finish_product_test_result', '35');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('138', 'add_finish_product_test_result', '35');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('139', 'edit_finish_product_test_result', '35');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_route_id`) VALUES ('140', 'delete_finish_product_test_result', '35');
 
 
 
