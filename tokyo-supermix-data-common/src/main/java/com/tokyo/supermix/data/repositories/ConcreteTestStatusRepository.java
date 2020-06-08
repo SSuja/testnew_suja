@@ -24,5 +24,6 @@ public interface ConcreteTestStatusRepository extends JpaRepository<ConcreteTest
   boolean existsByConcreteTestTypeIdAndFinishProductSampleId(Long concreteTestTypeId,
       Long finishProductSampleId);
 
+  List<ConcreteTestStatus> findByConcreteTestTypeType( String concreteTestType);
 
 }

@@ -14,7 +14,10 @@ public class TestConfigureDto {
 	private String prefix;
 	private AcceptedValueDto acceptedValue;
 	private String  equation;
-	private List<String> parameters;
+	private List<EquationParameterResponseDto> parameters;
+	private List<TestParameterDto> testparameters;
+
+
 
 	public Long getId() {
 		return id;
@@ -22,9 +25,7 @@ public class TestConfigureDto {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-		
+	}		
 
 	public boolean isCoreTest() {
 		return coreTest;
@@ -90,14 +91,21 @@ public class TestConfigureDto {
 		this.testType = testType;
 	}
 
-	public List<String> getParameters() {
+	public List<EquationParameterResponseDto> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(List<String> parameters) {
+	public void setParameters(List<EquationParameterResponseDto> parameters) {
 		this.parameters = parameters;
 	}
 
-	
+	public List<TestParameterDto> getTestparameters() {
+		return testparameters;
+	}
 
+	public void setTestparameters(List<TestParameterDto> testparameters) {
+		this.testparameters = testparameters;
+	}
+
+	
 }

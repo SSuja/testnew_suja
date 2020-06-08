@@ -136,4 +136,15 @@ public class ConcreteTestStatusController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_TYPE,
         validationFailureStatusCodes.getConcreteTestStatusNotExist()), HttpStatus.BAD_REQUEST);
   }
+  @GetMapping(value = EndpointURI.CONCRETE_TEST_STATUS_BYCONCRETE_TEST_TYPE)
+  public ResponseEntity<Object> getConcreteTestStatusByConcreteTestType(@PathVariable String concreteTestType) {
+    if (concreteTestStatusService.isConcreteTestTypeExits(concreteTestType)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_TEST_STATUS,
+          mapper.map(concreteTestStatusService.findByConcreteTestTypeType(concreteTestType),
+              ConcreteTestStatusResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_TEST_TYPE,
+        validationFailureStatusCodes.getConcreteTestStatusNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

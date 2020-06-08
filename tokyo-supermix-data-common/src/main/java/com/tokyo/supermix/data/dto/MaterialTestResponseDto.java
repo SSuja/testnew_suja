@@ -10,7 +10,7 @@ public class MaterialTestResponseDto {
   private Double average;
   private String status;
   private String testLevel;
-  private String incomingSampleCode;
+  private IncomingSampleResponseDto incomingSample;
   private TestConfigureResponseDto testConfigure;
   private Long materialStateId;
   private String materialState;
@@ -63,15 +63,15 @@ public class MaterialTestResponseDto {
     this.testLevel = testLevel;
   }
 
-  public String getIncomingSampleCode() {
-    return incomingSampleCode;
-  }
+  public IncomingSampleResponseDto getIncomingSample() {
+	return incomingSample;
+}
 
-  public void setIncomingSampleCode(String incomingSampleCode) {
-    this.incomingSampleCode = incomingSampleCode;
-  }
+public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
+	this.incomingSample = incomingSample;
+}
 
-  public TestConfigureResponseDto getTestConfigure() {
+public TestConfigureResponseDto getTestConfigure() {
     return testConfigure;
   }
 
