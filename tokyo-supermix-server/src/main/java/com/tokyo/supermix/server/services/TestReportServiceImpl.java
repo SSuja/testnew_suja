@@ -209,13 +209,16 @@ public class TestReportServiceImpl implements TestReportService {
   @Transactional(readOnly = true)
   public List<ConcreteStrengthTestDto> getStrengthResult(String concreteTestType,
       String concreteTestName) {
-    List<ConcreteStrengthTestDto> concreteStrengthTestDto =
+    List<ConcreteStrengthTestDto> concreteStrengthTestDtos =
         new ArrayList<ConcreteStrengthTestDto>();
     concreteTestResultRepository.findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
         concreteTestType, concreteTestName).forEach(strength -> {
-          concreteStrengthTestDto.add(mapper.map(strength, ConcreteStrengthTestDto.class));
+          ConcreteStrengthTestDto concreteStrengthTestDto = new ConcreteStrengthTestDto();
+          concreteStrengthTestDto = mapper.map(strength, ConcreteStrengthTestDto.class);
+          concreteStrengthTestDto.setCubeCode(strength.getFinishProductSample().getFinishProductCode());
+          concreteStrengthTestDtos.add(concreteStrengthTestDto);
         });
-    return concreteStrengthTestDto;
+    return concreteStrengthTestDtos;
   }
 
   @Transactional(readOnly = true)

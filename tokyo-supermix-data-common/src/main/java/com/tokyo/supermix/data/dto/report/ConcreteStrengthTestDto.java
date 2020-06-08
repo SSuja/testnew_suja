@@ -7,6 +7,7 @@ public class ConcreteStrengthTestDto {
   private Long age;
   private Double result;
   private String concreteTestName;
+  private Long cubeCode;
 
   public Date getDate() {
     return date;
@@ -38,6 +39,14 @@ public class ConcreteStrengthTestDto {
 
   public void setConcreteTestName(String concreteTestName) {
     this.concreteTestName = concreteTestName;
+  }
+
+  public Long getCubeCode() {
+    return cubeCode;
+  }
+
+  public void setCubeCode(Long cubeCode) {
+    this.cubeCode = cubeCode;
   }
 
 }
