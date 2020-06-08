@@ -10,4 +10,6 @@ public interface RawMaterialRepository
   boolean existsByName(String name);
 
   List<RawMaterial> findByMaterialSubCategoryId(Long materialSubCategoryId);
+
+  RawMaterial findByName(String name);
 }

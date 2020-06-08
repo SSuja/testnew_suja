@@ -19,7 +19,8 @@ public class Constants {
       "Notification : Information for Incoming Sample Test Status";
   public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
   public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
-
+  public static final String SUBJECT_REPORT = "Notification : Test Report";
+  public static final String BODY_FOR_REPORT ="Here you can find the Test Details Report";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
@@ -311,7 +312,7 @@ public class Constants {
   public static final String CONCRETE_TESTS = "concreteTests";
   public static final String RAW_MATERIAL_CEMENT = "cement";
   public static final String RAW_MATERIAL_FLYASH = "flyAsh";
-  public static final String DECIMAL_FORMAT = "#.####";
+  public static final String DECIMAL_FORMAT = "#.##";
   public static final String ADD_CONCRETE_TEST_SUCCESS = "Concrete Test Added Successfully";
   public static final String CONCRETE_TEST_DELETED = "Concrete Test Successfully Deleted";
   public static final String UPDATE_CONCRETE_TEST_SUCCESS = "Concrete Test Updated Successfully";
@@ -561,7 +562,9 @@ public class Constants {
   public static final String TEST_REPORT = "testReport";
   public static final String TEST_DETAIL_REPORT = "testDetailReport";
   public static final String CONCRETE_TYPE = "concreteType";
-
+  public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
+  public static final String REPORT_SEND_ERROR = "Unable to send email";
+  
   /*
    * Encapsulate constructor to restrict modification from outside
    */
