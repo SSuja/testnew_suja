@@ -8,8 +8,8 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Employee;
 
 public interface EmployeeService {
-	public void saveEmployee(Employee employee);
-
+	public void createEmployee(Employee employee);
+	public void updateEmployee(Employee employee);
 	public boolean isEmailExist(String email);
 
 	public void deleteEmployee(Long id);

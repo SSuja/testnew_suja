@@ -17,7 +17,6 @@ import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.enums.ConcreteStatus;
-import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
 import com.tokyo.supermix.data.repositories.ConcreteTestStatusRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
@@ -56,7 +55,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
         .setProjectName(finishProductSampleIssue.getProject().getName());
     MixDesign mixDesign =
         mixDesignRepository.findById(finishProductSample.getMixDesign().getCode()).get();
-    finishProductSampleResultReportDto.setStatus(Status.PASS);
     finishProductSampleResultReportDto.setTargetGrade(mixDesign.getTargetGrade());
     finishProductSampleResultReportDto.setTargetSlump(mixDesign.getTargetSlump());
     finishProductSampleResultReportDto
@@ -138,7 +136,6 @@ public class FinishProductResultReportServiceImpl implements FinishProductResult
         .findByConcreteStatusAndConcreteTestTypeType(ConcreteStatus.COMPLETED, Constants.STRENGTH);
     for (ConcreteTestStatus concreteTestStatus : concreteTestStatusList) {
       FinishProductSampleDto finishProductSampleDto = new FinishProductSampleDto();
-      finishProductSampleDto.setStatus(Status.PASS);
       MixDesign mixDesign = mixDesignRepository
           .findById(concreteTestStatus.getFinishProductSample().getMixDesign().getCode()).get();
       FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository

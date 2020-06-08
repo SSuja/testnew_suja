@@ -23,6 +23,7 @@ public class EmployeeRequestDto {
   @NotEmpty(message = "{employeeDto.plantCode.empty}")
   private String plantCode;
   private Long designationId;
+  private boolean hasUser;
 
   public Long getId() {
     return id;
@@ -87,5 +88,13 @@ public class EmployeeRequestDto {
   public void setDesignationId(Long designationId) {
     this.designationId = designationId;
   }
+
+public Boolean getHasUser() {
+	return hasUser;
+}
+
+public void setHasUser(Boolean hasUser) {
+	this.hasUser = hasUser;
+}
 
 }

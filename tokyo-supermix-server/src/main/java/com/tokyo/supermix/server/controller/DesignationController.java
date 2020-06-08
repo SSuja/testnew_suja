@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.DesignationDto;
@@ -44,6 +45,7 @@ public class DesignationController {
 
   // get all designations
   @GetMapping(value = EndpointURI.DESIGNATIONS)
+  @PreAuthorize("hasAuthority('get_designation')")
   public ResponseEntity<Object> getAllDesignations() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATIONS,
         mapper.map(designationService.getAllDesignations(), DesignationDto.class),
@@ -67,6 +69,7 @@ public class DesignationController {
 
   // delete api for designation
   @DeleteMapping(value = EndpointURI.DELETE_DESIGNATION_BY_ID)
+  @PreAuthorize("hasAuthority('delete_designation')")
   public ResponseEntity<Object> deleteDesignation(@PathVariable Long id) {
     if (designationService.isDesignationExist(id)) {
       designationService.deleteDesignation(id);
@@ -82,6 +85,7 @@ public class DesignationController {
 
   // post API for designation
   @PostMapping(value = EndpointURI.DESIGNATION)
+  @PreAuthorize("hasAuthority('add_designation')")
   public ResponseEntity<Object> createDesignation(
       @Valid @RequestBody DesignationDto designationDto) {
     if (designationService.isDesignationExist(designationDto.getName())) {
@@ -100,6 +104,7 @@ public class DesignationController {
 
   // update API for designations
   @PutMapping(value = EndpointURI.DESIGNATION)
+  @PreAuthorize("hasAuthority('edit_designation')")
   public ResponseEntity<Object> updateDesignation(
       @Valid @RequestBody DesignationDto designationDto) {
 

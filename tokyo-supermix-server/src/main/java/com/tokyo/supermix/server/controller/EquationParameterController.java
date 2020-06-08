@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,75 +29,84 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @RestController
 @CrossOrigin
 public class EquationParameterController {
-	@Autowired
-	private ValidationFailureStatusCodes validationFailureStatusCodes;
-	@Autowired
-	private Mapper mapper;
-	@Autowired
-	private EquationParameterService equationParameterService;
-	private static final Logger logger = Logger.getLogger(EquationParameterController.class);
+  @Autowired
+  private ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  private Mapper mapper;
+  @Autowired
+  private EquationParameterService equationParameterService;
+  private static final Logger logger = Logger.getLogger(EquationParameterController.class);
 
-	@PostMapping(value = EndpointURI.EQUATION_PARAMETER)
-	public ResponseEntity<Object> createEquationParameter(
-			@RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
-		for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
-			if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
-					equationParameterRequestDto.getTestParameterId())) {
-				logger.debug("row is already exists: createEquationParameter(), isDuplicateRowExists: {}");
-				return new ResponseEntity<>(
-						new ValidationFailureResponse(Constants.EQUATION_PARAMETER,
-								validationFailureStatusCodes.getEquationParameterAlreadyExist()),
-						HttpStatus.BAD_REQUEST);
-			}
-		}
-		equationParameterService
-				.saveEquationParameter(mapper.map(equationParameterRequestDtoList, EquationParameter.class));
-		return new ResponseEntity<>(
-				new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_PARAMETER_SUCCESS), HttpStatus.OK);
-	}
+  @PostMapping(value = EndpointURI.EQUATION_PARAMETER)
+ // @PreAuthorize("hasAuthority('add_equation_parameter')")
+  public ResponseEntity<Object> createEquationParameter(
+      @RequestBody List<EquationParameterRequestDto> equationParameterRequestDtoList) {
+    for (EquationParameterRequestDto equationParameterRequestDto : equationParameterRequestDtoList) {
+      if (equationParameterService.isDuplicateRowExists(equationParameterRequestDto.getEquationId(),
+          equationParameterRequestDto.getTestParameterId())) {
+        logger.debug("row is already exists: createEquationParameter(), isDuplicateRowExists: {}");
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.EQUATION_PARAMETER,
+                validationFailureStatusCodes.getEquationParameterAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+    }
+    equationParameterService.saveEquationParameter(
+        mapper.map(equationParameterRequestDtoList, EquationParameter.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_PARAMETER_SUCCESS),
+        HttpStatus.OK);
+  }
 
-	@GetMapping(value = EndpointURI.EQUATION_PARAMETERS)
-	public ResponseEntity<Object> getAllEquationParameters() {
-		return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION_PARAMETERS,
-				mapper.map(equationParameterService.getAllEquationParameters(), EquationParameterResponseDto.class),
-				RestApiResponseStatus.OK), null, HttpStatus.OK);
-	}
+  @GetMapping(value = EndpointURI.EQUATION_PARAMETERS)
+ // @PreAuthorize("hasAuthority('get_equation_parameter')")
+  public ResponseEntity<Object> getAllEquationParameters() {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.EQUATION_PARAMETERS,
+            mapper.map(equationParameterService.getAllEquationParameters(),
+                EquationParameterResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 
-	@GetMapping(value = EndpointURI.EQUATION_PARAMETER_BY_ID)
-	public ResponseEntity<Object> getEquationParameterById(@PathVariable Long id) {
-		if (equationParameterService.isEquationParameterExist(id)) {
-			return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION_PARAMETER, mapper
-					.map(equationParameterService.getEquationParameterById(id), EquationParameterResponseDto.class),
-					RestApiResponseStatus.OK), HttpStatus.OK);
-		}
-		logger.debug("No Equation Parameter record exist for given id");
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_PARAMETER_ID,
-				validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  @GetMapping(value = EndpointURI.EQUATION_PARAMETER_BY_ID)
+  public ResponseEntity<Object> getEquationParameterById(@PathVariable Long id) {
+    if (equationParameterService.isEquationParameterExist(id)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION_PARAMETER,
+          mapper.map(equationParameterService.getEquationParameterById(id),
+              EquationParameterResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("No Equation Parameter record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_PARAMETER_ID,
+        validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
-	@GetMapping(value = EndpointURI.GET_PARAMETERS_BY_EQUATION_ID)
-	public ResponseEntity<Object> getAllParameterByEquationId(@PathVariable Long equationId) {
-		if (equationParameterService.isEquationIdExist(equationId)) {
-			return new ResponseEntity<>(
-					new ContentResponse<>(Constants.EQUATION_PARAMETERS,
-							mapper.map(equationParameterService.getEquationByEquationId(equationId),
-									EquationParameterResponseDto.class),
-							RestApiResponseStatus.OK),
-					null, HttpStatus.OK);
-		}
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
-				validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  @GetMapping(value = EndpointURI.GET_PARAMETERS_BY_EQUATION_ID)
+  public ResponseEntity<Object> getAllParameterByEquationId(@PathVariable Long equationId) {
+    if (equationParameterService.isEquationIdExist(equationId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.EQUATION_PARAMETERS,
+              mapper.map(equationParameterService.getEquationByEquationId(equationId),
+                  EquationParameterResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
+        validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
-	@DeleteMapping(EndpointURI.EQUATION_PARAMETER_BY_ID)
-	public ResponseEntity<Object> deleteEquationParameterById(@PathVariable Long id) {
-		if (equationParameterService.isEquationParameterExist(id)) {
-			equationParameterService.deleteTestParameter(id);
-			return new ResponseEntity<>(
-					new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETED_EQUATION_PARAMETER), HttpStatus.OK);
-		}
-		logger.debug("No Equation Parameter record exist for given id");
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
-				validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  @DeleteMapping(EndpointURI.EQUATION_PARAMETER_BY_ID)
+//  @PreAuthorize("hasAuthority('delete_equation_parameter')")
+  public ResponseEntity<Object> deleteEquationParameterById(@PathVariable Long id) {
+    if (equationParameterService.isEquationParameterExist(id)) {
+      equationParameterService.deleteTestParameter(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETED_EQUATION_PARAMETER),
+          HttpStatus.OK);
+    }
+    logger.debug("No Equation Parameter record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
+        validationFailureStatusCodes.getEquationParameterNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

@@ -10,7 +10,4 @@ public interface FinenessModulusRepository
   List<FinenessModulus> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
   boolean existsByMaterialSubCategoryId(Long materialSubCategoryId);
-
-  boolean existsByMinAndMaxAndMaterialSubCategoryId(Double min, Double max,
-      Long materialSubCategoryId);
 }

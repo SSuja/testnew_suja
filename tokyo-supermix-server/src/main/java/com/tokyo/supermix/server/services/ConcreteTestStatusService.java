@@ -25,4 +25,6 @@ public interface ConcreteTestStatusService {
 
   public List<ConcreteTestStatus> getConcreteTestStatusByConcreteStatusAndConcreteTestType(
       ConcreteStatus concreteStatus, String concreteTestType);
+
+  public List<ConcreteTestStatus> findByConcreteTestTypeType(String concreteTestType);
 }

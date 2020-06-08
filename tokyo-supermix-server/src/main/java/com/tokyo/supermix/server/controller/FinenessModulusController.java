@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class FinenessModulusController {
 
   // Create Fineness Modulus API
   @PostMapping(value = EndpointURI.FINENESS_MODULUS)
+  @PreAuthorize("hasAuthority('add_finess_module')")
   public ResponseEntity<Object> createFinenessModulus(
       @Valid @RequestBody FinenessModulusRequestDto finenessModulusRequestDto) {
     if (finenessModulusService
@@ -62,6 +64,7 @@ public class FinenessModulusController {
 
   // Get all Fineness Modulus API
   @GetMapping(value = EndpointURI.FINENESS_MODULUS)
+  @PreAuthorize("hasAuthority('get_finess_module')")
   public ResponseEntity<Object> getAllFinenessModuluss() {
     return new ResponseEntity<Object>(new ContentResponse<>(Constants.FINENESS_MODULUS, mapper
         .map(finenessModulusService.getAllFinenessModulus(), FinenessModulusResponseDto.class),
@@ -84,6 +87,7 @@ public class FinenessModulusController {
 
   // Delete Fineness Modulus API
   @DeleteMapping(value = EndpointURI.FINENESS_MODULUS_BY_ID)
+  @PreAuthorize("hasAuthority('delete_finess_module')")
   public ResponseEntity<Object> deleteFinenessModulus(@PathVariable Long id) {
     if (finenessModulusService.isFinenessModulusExists(id)) {
       finenessModulusService.deleteFinenessModulus(id);
@@ -98,11 +102,12 @@ public class FinenessModulusController {
 
   // Update Fineness Modulus API
   @PutMapping(value = EndpointURI.FINENESS_MODULUS)
+  @PreAuthorize("hasAuthority('edit_finess_module')")
   public ResponseEntity<Object> updateFinenessModulus(
       @Valid @RequestBody FinenessModulusRequestDto finenessModulusRequestDto) {
     if (finenessModulusService.isFinenessModulusExists(finenessModulusRequestDto.getId())) {
-      if (finenessModulusService.isDuplicateRowExist(finenessModulusRequestDto.getMin(),
-          finenessModulusRequestDto.getMax(),
+      if (finenessModulusService.isUpdatedMaterialSubCategoryExist(
+          finenessModulusRequestDto.getId(),
           finenessModulusRequestDto.getMaterialSubCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,

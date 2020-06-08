@@ -19,6 +19,15 @@ public class Constants {
       "Notification : Information for Incoming Sample Test Status";
   public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
   public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
+  public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
+  // Authentication
+  public static final String PASSWORD = "passWord";
+  public static final String EMAIL_OR_USERNAME = "emailOrUserName";
+  public static final String CREDENCIALS = "credentials";
+  public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
+  public static final String GENERATE_PASSWORD_SUCCESS =
+      "Random Password token Generate and mailed Successfully";
+  public static final String MESSAGE_OF_FORGOT_PASSWORD = "This the token for Reset your Password ";
   public static final String SUBJECT_REPORT = "Notification : Test Report";
   public static final String BODY_FOR_REPORT ="Here you can find the Test Details Report";
   // for sample counts
@@ -123,7 +132,7 @@ public class Constants {
   /*
    * Constants for Equation validation key & Success messages
    */
-
+  public static final String EQUATION_FORMULA = "formula";
   public static final String EQUATIONS = "equations";
   public static final String EQUATION = "equation";
   public static final String EQUATION_ID = "equationId";
@@ -256,11 +265,11 @@ public class Constants {
    */
   public static final String TEST_PARAMETERS = "testparameters";
   public static final String TEST_PARAMETER = "testparameter";
-  public static final String ABBREVIATION = "abbreviation";
   public static final String TEST_PARAMETER_ID = "testParameterId";
   public static final String ADD_TEST_PARAMETER_SUCCESS = "Test Parameter Added Successfully";
   public static final String TEST_PARAMETER_DELETED = "Test Parameter Successfully Deleted";
   public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test Parameter Updated Successfully";
+  public static final String ABBREVIATION = "abbreviation";
   /*
    * Constants for User validation key & Success messages
    */
@@ -430,7 +439,6 @@ public class Constants {
   public static final String FINENESS_MODULUS_DELETED = "Fineness Modulus Successfully Deleted";
   public static final String UPDATE_FINENESS_MODULUS_SUCCESS =
       "Fineness Modulus Updated Successfully";
-
   /*
    * Finish Product Sample
    */
@@ -459,16 +467,6 @@ public class Constants {
    * Constants for Mix Design validation key & Success messages
    */
 
-  public static final String ADD_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS =
-      "Finish Product Sample Issue Added Successfully";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE = "finishProductSampleIssue";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUES = "finishProductSampleIssues";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_DELETED =
-      "Finish Product Sample Issue Successfully Deleted";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_ID = "finishProductSampleIssueId";
-  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS =
-      "Finish Product Sample Issue Updated Successfully";
-
   /*
    * Constants for Cube Test Finding validation key & Success messages
    */
@@ -480,7 +478,7 @@ public class Constants {
   public static final String ADD_CUBE_TEST_FINDING_SUCCESS =
       "Cube Test Finding Successfully Added Successfully";
   public static final String UPDATE_CUBE_TEST_FINDING_SUCCESS =
-      "Cube Test Finding Updated Successfully";
+      "Cube Test Finding Successfully Updated Successfully";
   /*
    * Constants for Test validation key & Success messages
    */
@@ -489,6 +487,27 @@ public class Constants {
   public static final String ADD_TEST_SUCCESS = "Test Added Successfully";
   public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
+
+  public static final String ROLE = "role";
+  public static final String ROLES = "roles";
+  public static final String ROLE_ID = "roleId";
+  public static final String ADD_ROLE_SUCCESS = "Role Added Successfully";
+  public static final String ROLE_DELETED = "Role Successfully Deleted";
+  public static final String ROLE_UPDATED_SUCCESS = "Role Updated Successfully";
+
+  /*
+   * Constants for Mix Design validation key & Success messages
+   */
+
+  public static final String ADD_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS =
+      "Finish Product Sample Issue Added Successfully";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE = "finishProductSampleIssue";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUES = "finishProductSampleIssues";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_DELETED =
+      "Finish Product Sample Issue Successfully Deleted";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_ID = "finishProductSampleIssueId";
+  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS =
+      "Finish Product Sample Issue Updated Successfully";
   /*
    * Constants for Quality Parameter validation key & Success messages
    */
@@ -555,16 +574,26 @@ public class Constants {
       "Concrete Test Status Successfully Deleted";
   public static final String UPDATE_CONCRETE_TEST_STATUS_SUCCESS =
       "Concrete Test Status Updated Successfully";
-
   /*
    * Constants for report
    */
   public static final String TEST_REPORT = "testReport";
   public static final String TEST_DETAIL_REPORT = "testDetailReport";
   public static final String CONCRETE_TYPE = "concreteType";
+
+  /*
+   * Constants for privilege
+   */
+  public static final String UPDATE_PRIVILEGE_SUCCESS = "Privileges Updated Successfully";
+  public static final String PRIVILEGES = "privileges";
+  public static final String PERMISSIONS = "permissions";
+  public static final String MAIN_ROUTES = "mainRoutes";
+  public static final String SUB_ROUTES = "subRoutes";
+
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
   
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */

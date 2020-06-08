@@ -21,6 +21,7 @@ public class Employee implements Serializable {
   private String email;
   private String phoneNumber;
   private String address;
+  private Boolean hasUser;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
@@ -96,4 +97,11 @@ public class Employee implements Serializable {
     return serialVersionUID;
   }
 
+  public Boolean getHasUser() {
+    return hasUser;
+  }
+
+  public void setHasUser(Boolean hasUser) {
+    this.hasUser = hasUser;
+  }
 }

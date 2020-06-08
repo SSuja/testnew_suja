@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,7 @@ public class QualityParameterController {
   private static final Logger logger = Logger.getLogger(QualityParameterController.class);
 
   @PostMapping(value = EndpointURI.QUALITY_PARAMETER)
+  @PreAuthorize("hasAuthority('add_quality_parameter')")
   public ResponseEntity<Object> createQualityParameter(
       @Valid @RequestBody QualityParameterRequestDto qualityParameterRequestDto) {
     if (qualityParameterService.isDuplicateRowExists(qualityParameterRequestDto.getName(),
@@ -56,6 +58,7 @@ public class QualityParameterController {
   }
 
   @GetMapping(value = EndpointURI.QUALITY_PARAMETERS)
+  @PreAuthorize("hasAuthority('get_quality_parameter')")
   public ResponseEntity<Object> getAllQualityParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.QUALITY_PARAMETERS, mapper
         .map(qualityParameterService.getAllQualityParameters(), QualityParameterResponseDto.class),
@@ -63,6 +66,7 @@ public class QualityParameterController {
   }
 
   @DeleteMapping(EndpointURI.QUALITY_PARAMETER_BY_ID)
+  @PreAuthorize("hasAuthority('delete_quality_parameter')")
   public ResponseEntity<Object> deleteQualityParameterById(@PathVariable Long id) {
     if (qualityParameterService.isQualityParameterIdExist(id)) {
       qualityParameterService.deleteQualityParameter(id);
@@ -102,6 +106,7 @@ public class QualityParameterController {
   }
 
   @PutMapping(value = EndpointURI.QUALITY_PARAMETER)
+  @PreAuthorize("hasAuthority('edit_quality_parameter')")
   public ResponseEntity<Object> updateQualityParameter(
       @RequestBody QualityParameterRequestDto qualityParameterRequestDto) {
     if (qualityParameterService.isQualityParameterIdExist(qualityParameterRequestDto.getId())) {

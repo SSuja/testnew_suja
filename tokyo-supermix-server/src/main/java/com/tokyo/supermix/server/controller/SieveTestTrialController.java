@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class SieveTestTrialController {
   private static final Logger logger = Logger.getLogger(SieveTestTrialController.class);
 
   @PostMapping(value = EndpointURI.SIEVE_TEST_TRIAL)
+ // @PreAuthorize("hasAuthority('add_sieve_test_trial')")
   public ResponseEntity<Object> createSieveTestTrial(
       @RequestBody List<SieveTestTrialRequestDto> sieveTestTrialRequestDtoList) {
     sieveTestTrialService
@@ -55,6 +57,7 @@ public class SieveTestTrialController {
   }
 
   @GetMapping(value = EndpointURI.SIEVE_TEST_TRIALS)
+ // @PreAuthorize("hasAuthority('get_sieve_test_trial')")
   public ResponseEntity<Object> getSieveTestTrials() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST_TRIALS,
         mapper.map(sieveTestTrialService.getAllSieveTestTrials(), SieveTestTrialResponseDto.class),
