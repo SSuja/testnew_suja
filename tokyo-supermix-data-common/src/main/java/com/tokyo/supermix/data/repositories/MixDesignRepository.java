@@ -10,4 +10,6 @@ public interface MixDesignRepository
   boolean existsByCode(String code);
 
   List<MixDesign> findByPlantCode(String plantCode);
+
+  MixDesign findByCode(String code);
 }
