@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
+import com.tokyo.supermix.data.entities.Employee;
 
 public class PlantEquipmentCalibrationResponseDto {
   private Long id;
@@ -15,8 +16,7 @@ public class PlantEquipmentCalibrationResponseDto {
   private Long supplierId;
   private String supplierName;
   private String plantEquipmentEquipmentName;
-  private Long employeeId;
-  private String employeeName;
+  private Employee employee;
   private String accuracy;
   private Long noOfDays;
 
@@ -28,20 +28,12 @@ public class PlantEquipmentCalibrationResponseDto {
     this.noOfDays = noOfDays;
   }
 
-  public Long getEmployeeId() {
-    return employeeId;
+  public Employee getEmployee() {
+    return employee;
   }
 
-  public void setEmployeeId(Long employeeId) {
-    this.employeeId = employeeId;
-  }
-
-  public String getEmployeeName() {
-    return employeeName;
-  }
-
-  public void setEmployeeName(String employeeName) {
-    this.employeeName = employeeName;
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
   }
 
   public String getplantEquipmentEquipmentName() {
@@ -147,5 +139,4 @@ public class PlantEquipmentCalibrationResponseDto {
   public void setAccuracy(String accuracy) {
     this.accuracy = accuracy;
   }
-
 }

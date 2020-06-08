@@ -1,17 +1,18 @@
-package com.tokyo.supermix.data.entities;
+package com.tokyo.supermix.data.entities.auth;
 
-import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.Employee;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
-public class User implements Serializable {
+public class User extends DateAudit {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +21,11 @@ public class User implements Serializable {
   private String password;
   private String email;
   @OneToOne
-  @JoinColumn(name = "employeeId", nullable = false)
+  @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
+  @ManyToOne
+  @JoinColumn(name = "role_id", nullable = false)
+  private Role role;
 
   public Long getId() {
     return id;
@@ -63,8 +67,12 @@ public class User implements Serializable {
     this.email = email;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
+  public Role getRole() {
+    return role;
+  }
+
+  public void setRole(Role role) {
+    this.role = role;
   }
 
 }

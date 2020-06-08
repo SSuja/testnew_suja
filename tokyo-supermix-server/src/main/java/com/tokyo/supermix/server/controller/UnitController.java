@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.UnitDto;
 import com.tokyo.supermix.data.entities.Unit;
@@ -26,6 +25,8 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.UnitService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import org.springframework.security.access.prepost.PreAuthorize;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -44,6 +45,7 @@ public class UnitController {
 
   // create unit api
   @PostMapping(value = EndpointURI.UNIT)
+  @PreAuthorize("hasAuthority('add_unit')")
   public ResponseEntity<Object> createUnit(@Valid @RequestBody UnitDto unitDto) {
     if (unitService.isUnitExist(unitDto.getUnit())) {
       logger.debug("Unit already exists: createUnit(), unit: {}");
@@ -58,6 +60,7 @@ public class UnitController {
 
   // get all unit api
   @GetMapping(value = EndpointURI.UNITS)
+  @PreAuthorize("hasAuthority('get_unit')")
   public ResponseEntity<Object> getAllUnits() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.UNITS,
         mapper.map(unitService.getAllUnits(), UnitDto.class), RestApiResponseStatus.OK), null,
@@ -66,6 +69,7 @@ public class UnitController {
 
   // delete unit api
   @DeleteMapping(value = EndpointURI.DELETE_UNIT_BY_ID)
+  @PreAuthorize("hasAuthority('delete_unit')")
   public ResponseEntity<Object> deleteUnit(@PathVariable Long id) {
     if (unitService.isUnitExist(id)) {
       unitService.deleteUnit(id);
@@ -94,6 +98,7 @@ public class UnitController {
 
   // update unit api
   @PutMapping(value = EndpointURI.UNIT)
+  @PreAuthorize("hasAuthority('edit_unit')")
   public ResponseEntity<Object> updateUnit(@Valid @RequestBody UnitDto unitDto) {
     if (unitService.isUnitExist(unitDto.getId())) {
       if (unitService.isUpdatedUnitExist(unitDto.getId(), unitDto.getUnit())) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class AcceptedValueController {
   private static final Logger logger = Logger.getLogger(AcceptedValueController.class);
 
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
+  @PreAuthorize("hasAuthority('add_accepted_value')")
   public ResponseEntity<Object> createAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
     if (acceptedValueService
@@ -62,6 +64,7 @@ public class AcceptedValueController {
   }
 
   @GetMapping(value = EndpointURI.ACCEPTED_VALUES)
+  @PreAuthorize("hasAuthority('get_accepted_value')")
   public ResponseEntity<Object> getAllAcceptedValues() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
         mapper.map(acceptedValueService.getAllAcceptedValues(), AcceptedValueResponseDto.class),
@@ -82,6 +85,7 @@ public class AcceptedValueController {
   }
 
   @DeleteMapping(value = EndpointURI.ACCEPTED_VALUE_BY_ID)
+  @PreAuthorize("hasAuthority('delete_accepted_value')")
   public ResponseEntity<Object> deleteAcceptedValue(@PathVariable Long id) {
     if (acceptedValueService.isAcceptedValueExist(id)) {
       acceptedValueService.deleteAcceptedValue(id);
@@ -95,6 +99,7 @@ public class AcceptedValueController {
   }
 
   @PutMapping(value = EndpointURI.ACCEPTED_VALUE)
+  @PreAuthorize("hasAuthority('edit_accepted_value')")
   public ResponseEntity<Object> updateAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
     if (acceptedValueService.isAcceptedValueExist(acceptedValueRequestDto.getId())) {

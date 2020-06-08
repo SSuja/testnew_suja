@@ -23,6 +23,4 @@ public interface FinenessModulusService {
   public boolean isUpdatedMaterialSubCategoryExist(Long id, Long materialSubCategoryId);
 
   public Page<FinenessModulus> searchFinenessModulus(Predicate predicate, int size, int page);
-
-  public boolean isDuplicateRowExist(Double min, Double max, Long materialSubCategoryId);
 }
