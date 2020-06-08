@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.Status;
@@ -14,8 +13,9 @@ public class SieveTestResponseDto {
   private Double totalWeight;
   private Status status;
   private User userId;
-  private Plant plantCode;
-  private IncomingSample incomingSampleCode;
+  private Plant plant;
+  private IncomingSampleResponseDto incomingSample;
+
 
   public String getCode() {
     return code;
@@ -57,20 +57,20 @@ public class SieveTestResponseDto {
     this.userId = userId;
   }
 
-  public Plant getPlantCode() {
-    return plantCode;
+  public Plant getPlant() {
+    return plant;
   }
 
-  public void setPlantCode(Plant plantCode) {
-    this.plantCode = plantCode;
+  public void setPlant(Plant plant) {
+    this.plant = plant;
   }
 
-  public IncomingSample getIncomingSampleCode() {
-    return incomingSampleCode;
+  public IncomingSampleResponseDto getIncomingSample() {
+    return incomingSample;
   }
 
-  public void setIncomingSampleCode(IncomingSample incomingSampleCode) {
-    this.incomingSampleCode = incomingSampleCode;
+  public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
+    this.incomingSample = incomingSample;
   }
 
   public Double getPanWeight() {
@@ -88,5 +88,6 @@ public class SieveTestResponseDto {
   public void setTotalWeight(Double totalWeight) {
     this.totalWeight = totalWeight;
   }
+
 
 }
