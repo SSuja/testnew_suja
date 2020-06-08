@@ -16,7 +16,7 @@ public interface FinenessModulusService {
 
   public boolean isFinenessModulusExists(Long id);
 
-  public List<FinenessModulus> getFinenessModulusByMaterialSubCategory(Long materialSubCategoryId);
+  public FinenessModulus getFinenessModulusByMaterialSubCategory(Long materialSubCategoryId);
 
   public boolean isMaterialSubCategoryIdExists(Long materialSubCategoryId);
 
