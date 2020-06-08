@@ -48,8 +48,7 @@ public class MixDesignServiceImpl implements MixDesignService {
       Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
       Double targetGradeEqual, Double waterCementRatioMin, Double waterCementRatioMax,
       Double waterCementRatioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
-      Double waterBinderRatioEqual, String plantName,int page,
-      int size) {
+      Double waterBinderRatioEqual, String plantName, int page, int size) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.plant.name.eq(plantName));

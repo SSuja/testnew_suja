@@ -222,6 +222,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
   public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
+      INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
   /*
    * Mix design apis
    * 
@@ -574,6 +576,16 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_RESULTS = "all-results";
   public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT =
       TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
-
+  public static final String INCOMING_SAMPLE_REPORT_DETAIL =
+      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}";
+  public static final String INCOMING_SAMPLE_REPORT_DETAILS =
+      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
+          + SLASH + "test-name" + SLASH + "{testName}";
+  /*
+   * File Export
+   */
+  public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
+  public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
+  public static final String MAIL_REPORT = BASE_API_PATH+"mail-report";
   private EndpointURI() {}
 }

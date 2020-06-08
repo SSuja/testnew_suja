@@ -5,8 +5,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class SieveTestRequestDto {
-  @NotNull(message = "{sieveTestRequestDto.code.null}")
-  @NotEmpty(message = "{sieveTestRequestDto.code.empty}")
   private String code;
   @NotNull(message = "{sieveTestRequestDto.date.null}")
   private Date date;

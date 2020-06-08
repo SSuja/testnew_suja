@@ -44,14 +44,9 @@ public class SieveTestController {
   @PostMapping(value = EndpointURI.SIEVE_TEST)
   public ResponseEntity<Object> createSieveTest(
       @Valid @RequestBody SieveTestRequestDto sieveTestRequestDto) {
-    if (sieveTestService.isSieveTestExists(sieveTestRequestDto.getCode())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_TEST_CODE,
-          validationFailureStatusCodes.getSieveTestAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
-    sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SIEVE_TEST_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
+        sieveTestService.saveSieveTest(mapper.map(sieveTestRequestDto, SieveTest.class)),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.SIEVE_TESTS)
