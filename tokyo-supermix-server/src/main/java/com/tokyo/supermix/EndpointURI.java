@@ -120,6 +120,8 @@ public final class EndpointURI {
   public static final String TEST_CONFIGURE_BY_ID_AND_CORE_TEST =
       TEST_CONFIGURE + SLASH + "core-test";
   public static final String TEST_CONFIGURE_SEARCH = TEST_CONFIGURE + SEARCH;
+  
+  public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID = TEST_CONFIGURE+ SLASH + "testDetails" + ID;
   /*
    * Material State
    */
@@ -584,6 +586,6 @@ public final class EndpointURI {
    */
   public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
   public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
-
+  public static final String MAIL_REPORT = BASE_API_PATH+"mail-report";
   private EndpointURI() {}
 }

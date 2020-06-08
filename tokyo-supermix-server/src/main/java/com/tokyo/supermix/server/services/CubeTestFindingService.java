@@ -35,4 +35,6 @@ public interface CubeTestFindingService {
       Long concreteAge);
 
   public boolean checkConcreteStatus(Long finishProductSampleId);
+
+  public boolean checkNoOfTimeCubeTestFindValue(Long finishProductSampleId, Long concreteAge);
 }

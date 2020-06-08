@@ -56,6 +56,12 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
     cubeTestFindingRepository.saveAll(cubeTestFindinglist);
   }
 
+  public void saveCubeTestFindinretTestResultStrengthAverage(CubeTestFinding cubeTestFinding) {
+    if (cubeTestFinding.getAge() == 7) {
+
+    }
+  }
+
   @Transactional
   public void saveCubeTestFindingConcretTestResultStrengthAverage(Long finishProductSampleId,
       Long concreteAge) {
@@ -80,6 +86,27 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
     concreteTestResult.setFinishProductSample(finishProductSample);
     concreteTestResult.setAge(concreteAge);
     concreteTestResultService.saveConcreteStrengthTestStrengthGradeRatioResult(concreteTestResult);
+  }
+
+  public Long countCubetestingValue(Long finishProductSampleId, Long concreteAge) {
+    List<CubeTestFinding> cubeTestFindingList =
+        cubeTestFindingRepository.findByFinishProductSampleId(finishProductSampleId);
+    Long cubeValuecount = (long) 0;
+    for (CubeTestFinding cubeTestFinding : cubeTestFindingList) {
+      if (cubeTestFinding.getAge() == concreteAge && cubeTestFinding.getValue() != 0) {
+        cubeValuecount++;
+      }
+    }
+    return cubeValuecount;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean checkNoOfTimeCubeTestFindValue(Long finishProductSampleId, Long concreteAge) {
+    if (countCubetestingValue(finishProductSampleId, concreteAge) == 2) {
+      return true;
+    }
+    return false;
+
   }
 
   @Transactional(readOnly = true)
@@ -126,4 +153,5 @@ public class CubeTestFindingServiceImpl implements CubeTestFindingService {
     return cubeTestFindingRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+
 }
