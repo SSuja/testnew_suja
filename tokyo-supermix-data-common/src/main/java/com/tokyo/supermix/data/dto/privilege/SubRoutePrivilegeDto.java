@@ -4,17 +4,17 @@ import java.util.List;
 
 public class SubRoutePrivilegeDto {
   private String subRoute;
-  private List<PrivilegeDto> privileges;
+  private List<PrivilegeRequestDto> privileges;
   public String getSubRoute() {
     return subRoute;
   }
   public void setSubRoute(String subRoute) {
     this.subRoute = subRoute;
   }
-  public List<PrivilegeDto> getPrivileges() {
+  public List<PrivilegeRequestDto> getPrivileges() {
     return privileges;
   }
-  public void setPrivileges(List<PrivilegeDto> privileges) {
+  public void setPrivileges(List<PrivilegeRequestDto> privileges) {
     this.privileges = privileges;
   }
   

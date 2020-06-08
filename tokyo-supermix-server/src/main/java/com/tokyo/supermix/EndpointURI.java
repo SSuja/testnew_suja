@@ -587,6 +587,7 @@ public final class EndpointURI {
 	public static final String ROUTE_PRIVILEGES = PRIVILEGE +SLASH+ ROUTE + SLASH + "{roleId}";
 	public static final String ROUTE_PERMISSIONS = PERMISSIONS +SLASH +ROUTE;
 	public static final String PRIVILEGES = PRIVILEGE + SLASH + "{roleId}";
+	public static final String STATUS_PRIVILEGES = PRIVILEGE + SLASH +"/status/"+"{status}";
 	public static final String SUBROUTE = "sub-route" + SLASH + "{subRouteName}";
 	public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
 	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
