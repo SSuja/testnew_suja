@@ -1,9 +1,9 @@
 -- plant
-INSERT INTO `tokyo-supermix`.`plant` (`code`, `address`, `name`, `phone_number`) VALUES ('pl001', 'jaffna', 'jaffnaplant', '0215486546');
+INSERT INTO `tokyo-supermix`.`plant` (`code`, `address`, `name`, `phone_number`,`fax_number`) VALUES ('PR', '77, New,Nuge Road', 'Peliyagoda', '0114587452','0112-945866');
 -- designation
-INSERT INTO `tokyo-supermix`.`designation` (`id`, `description`, `name`) VALUES ('1', 'administration', 'administrater');
+INSERT INTO `tokyo-supermix`.`designation` (`id`, `description`, `name`) VALUES ('1', 'Main Admin', 'Administrator');
 -- employee
-INSERT INTO `tokyo-supermix`.`employee` (`id`, `address`, `email`, `first_name`, `last_name`, `phone_number`, `designation_id`, `plant_code`, `has_user`) VALUES ('1', 'jaffna', 'tokyotester4@gmail.com', 'tokyoTester', 'supermix', '02155489', '1', 'pl001', 1);
+INSERT INTO `tokyo-supermix`.`employee` (`id`, `address`, `email`, `first_name`, `last_name`, `phone_number`, `designation_id`, `plant_code`, `has_user`) VALUES ('1', 'Colombo-12', 'tokyotester4@gmail.com', 'Tokyo', 'Tester', '0761452365', '1', 'PR', 1);
 -- role
 INSERT INTO `tokyo-supermix`.`role` (`id`, `name`) VALUES ('1', 'ADMIN');
 -- user
