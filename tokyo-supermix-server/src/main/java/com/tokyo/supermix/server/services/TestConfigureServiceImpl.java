@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +11,21 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.EquationParameterResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
+import com.tokyo.supermix.data.dto.TestParameterDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.entities.EquationParameter;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.entities.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class TestConfigureServiceImpl implements TestConfigureService {
@@ -34,9 +37,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
 	@Autowired
 	private EquationRepository equationRepository;
+	@Autowired
+	private TestParameterRepository testParameterRepository;
 	
 	@Autowired
 	private EquationParameterService equationParameterService;
+	
+	
 
 	@Autowired
 	private Mapper mapper;
@@ -109,8 +116,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 		TestConfigure testConfigure = testConfigureRepository.findById(id).get();
 	AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
 	Equation equation = equationRepository.findByTestConfigureId(id);
+	List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id); 
 	
-	List<String> parameter= new ArrayList<>();
+	
+	
+	
 	
 		
 		testConfigureDto.setId(testConfigure.getId());
@@ -122,12 +132,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 				.equalsIgnoreCase("Admixture")) {
 			testConfigureDto.setEquation(equation.getFormula());
 			List<EquationParameter> parameters= equationParameterService.getEquationByEquationId(equation.getId());
-			for(EquationParameter equationParameter: parameters) 
-	     	{
-	     		
-	     		parameter.add(equationParameter.getTestParameter().getParameter().getName());
-	     		}
-			testConfigureDto.setParameters(parameter);
+			
+			List<TestParameterDto> testParameterList= mapper.map(testParameter, TestParameterDto.class);
+			List<EquationParameterResponseDto> parameterList =mapper.map(parameters, EquationParameterResponseDto.class);
+			testConfigureDto.setParameters( parameterList);
+			testConfigureDto.setTestparameters(testParameterList);
 			
 		}
 	testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
