@@ -529,6 +529,8 @@ public final class EndpointURI {
   public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE =
       CONCRETE_TEST_STATUS + SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH
           + "concrete-test-type" + SLASH + "{concreteTestType}";
+  public static final String CONCRETE_TEST_STATUS_BYCONCRETE_TEST_TYPE =
+      CONCRETE_TEST_STATUS + SLASH +"concrete-test-type" + SLASH + "{concreteTestType}";
   /*
    * AdmixtureAcceptedValue Apis
    */
