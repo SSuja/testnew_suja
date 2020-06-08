@@ -580,7 +580,7 @@ public class Constants {
   public static final String TEST_REPORT = "testReport";
   public static final String TEST_DETAIL_REPORT = "testDetailReport";
   public static final String CONCRETE_TYPE = "concreteType";
-<<<<<<< HEAD
+
   /*
    * Constants for privilege
    */
@@ -589,11 +589,11 @@ public class Constants {
   public static final String PERMISSIONS = "permissions";
   public static final String MAIN_ROUTES = "mainRoutes";
   public static final String SUB_ROUTES = "subRoutes";
-=======
+
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
   
->>>>>>> d216022f9dd2b9615be015951dfeadbc7fb5db99
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */

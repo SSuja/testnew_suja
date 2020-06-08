@@ -590,24 +590,6 @@ public final class EndpointURI {
 	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
 	public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
 
-	private EndpointURI() {
-	}
-  public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
-      + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
-  public static final String CEMENT_REPORT_DETAIL =
-      TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
-  public static final String FINISH_PRODUCT_SAMPLE_ID =
-      "finish-product" + SLASH + "{finishProductSampleId}";
-  public static final String FINISH_PRODUCT_RESULT_REPORT =
-      TEST_REPORT + SLASH + FINISH_PRODUCT_SAMPLE_ID;
-  public static final String FINISH_PRODUCT_RESULTS = "all-results";
-  public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT =
-      TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
-  public static final String INCOMING_SAMPLE_REPORT_DETAIL =
-      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}";
-  public static final String INCOMING_SAMPLE_REPORT_DETAILS =
-      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
-          + SLASH + "test-name" + SLASH + "{testName}";
   /*
    * File Export
    */
