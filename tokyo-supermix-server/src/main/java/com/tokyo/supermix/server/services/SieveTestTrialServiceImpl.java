@@ -122,10 +122,10 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
   public void updateSieveTestStatus(SieveTest sieveTest) {
     Long materialSubCategoryId = sieveTestRepository.findByCode(sieveTest.getCode())
         .getIncomingSample().getRawMaterial().getMaterialSubCategory().getId();
-    if (finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
+    if (finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId)
         .getMin() <= sieveTest.getFinenessModulus()
-        && finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId).get(0)
-            .getMax() >= sieveTest.getFinenessModulus()) {
+        && sieveTest.getFinenessModulus() <= finenessModulusRepository
+            .findByMaterialSubCategoryId(materialSubCategoryId).getMax()) {
       sieveTest.setStatus(Status.PASS);
       sieveTestRepository.save(sieveTest);
       notifyMail(sieveTest);
@@ -135,16 +135,16 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
       notifyMail(sieveTest);
     }
   }
+
   private void notifyMail(SieveTest sieveTest) {
-    IncomingSample  incomingSample =sieveTest.getIncomingSample();
+    IncomingSample incomingSample = sieveTest.getIncomingSample();
     emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
         Constants.SUBJECT_NEW_SEIVE_TEST,
-        "<p>The Seive Test is <b>" + sieveTest.getStatus() + "</b> for the Sample Code is <b>" + incomingSample.getCode()
-            + "</b>. This Sample arrived on " + incomingSample.getDate()
-            + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName()
-            + "</b>.");
+        "<p>The Seive Test is <b>" + sieveTest.getStatus() + "</b> for the Sample Code is <b>"
+            + incomingSample.getCode() + "</b>. This Sample arrived on " + incomingSample.getDate()
+            + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName() + "</b>.");
     materialTestService.updateIncomingSampleStatusByIncomingSample(incomingSample);
-        
+
   }
 
   @Transactional(readOnly = true)
