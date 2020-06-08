@@ -580,7 +580,12 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}";
   public static final String INCOMING_SAMPLE_REPORT_DETAILS =
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
-          + SLASH + "test-name" +SLASH+ "{testName}";
+          + SLASH + "test-name" + SLASH + "{testName}";
+  /*
+   * File Export
+   */
+  public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
+  public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH+"mail-report";
   private EndpointURI() {}
 }
