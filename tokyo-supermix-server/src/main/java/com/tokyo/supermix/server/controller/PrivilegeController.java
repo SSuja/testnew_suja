@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PrivilegeRequestDto;
 import com.tokyo.supermix.data.entities.privilege.RolePermission;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -24,7 +25,8 @@ import com.tokyo.supermix.util.Constants;
 public class PrivilegeController {
   @Autowired
   private PrivilegeService PrivilegeService;
-
+  @Autowired
+  private Mapper mapper;
   @PutMapping(value = EndpointURI.PRIVILEGE)
   public ResponseEntity<Object> updatePrivilage(
       @RequestBody List<PrivilegeRequestDto> privilegeRequestDtos) {
@@ -55,6 +57,12 @@ public class PrivilegeController {
   public ResponseEntity<Object> getPrivilegesByRole(@PathVariable("roleId") Long roleId) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
         PrivilegeService.getPrivilegeByRole(roleId), RestApiResponseStatus.OK), null,
+        HttpStatus.OK);
+  }
+  @GetMapping(value = EndpointURI.STATUS_PRIVILEGES)
+  public ResponseEntity<Object> getPrivilegesByRoleAndStatus(@PathVariable("status") boolean status) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+       mapper.map( PrivilegeService.getPrivilegeByStatus(status),PrivilegeRequestDto.class), RestApiResponseStatus.OK), null,
         HttpStatus.OK);
   }
   @GetMapping(value = EndpointURI.MAIN_ROUTES)
