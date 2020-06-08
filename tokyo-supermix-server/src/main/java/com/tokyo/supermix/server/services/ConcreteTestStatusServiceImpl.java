@@ -68,4 +68,9 @@ public class ConcreteTestStatusServiceImpl implements ConcreteTestStatusService 
     return concreteTestStatusRepository.findByConcreteStatusAndConcreteTestTypeType(concreteStatus,
         concreteTestType);
   }
+
+  @Transactional(readOnly = true)
+  public List<ConcreteTestStatus> findByConcreteTestTypeType(String concreteTestType) {
+    return concreteTestStatusRepository.findByConcreteTestTypeType(concreteTestType);
+  }
 }
