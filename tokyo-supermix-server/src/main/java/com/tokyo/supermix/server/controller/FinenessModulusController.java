@@ -101,22 +101,20 @@ public class FinenessModulusController {
   public ResponseEntity<Object> updateFinenessModulus(
       @Valid @RequestBody FinenessModulusRequestDto finenessModulusRequestDto) {
     if (finenessModulusService.isFinenessModulusExists(finenessModulusRequestDto.getId())) {
-      if (finenessModulusService.isDuplicateRowExist(finenessModulusRequestDto.getMin(),
-          finenessModulusRequestDto.getMax(),
+      if (finenessModulusService.isUpdatedMaterialSubCategoryExist(
+          finenessModulusRequestDto.getId(),
           finenessModulusRequestDto.getMaterialSubCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
                 validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      finenessModulusService
-          .saveFinenessModulus(mapper.map(finenessModulusRequestDto, FinenessModulus.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_FINENESS_MODULUS_SUCCESS),
-          HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINENESS_MODULUS_ID,
-        validationFailureStatusCodes.getFinenessModulusNotExist()), HttpStatus.BAD_REQUEST);
+    finenessModulusService
+        .saveFinenessModulus(mapper.map(finenessModulusRequestDto, FinenessModulus.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_FINENESS_MODULUS_SUCCESS),
+        HttpStatus.OK);
   }
 
   // Get Fineness Modulus by Material SubCategory API
