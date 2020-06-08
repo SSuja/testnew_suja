@@ -5,23 +5,19 @@ import com.tokyo.supermix.data.enums.EntryLevel;
 
 public class TestParameterDto {
 	private Long id;
-	  private Parameter parameter;
+	  private String parameterName;
 	  private String qualityParameterName;
 	  private String abbreviation;
 	  private EntryLevel entryLevel;
 	  private Double value;
+	  private UnitDto unit;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Parameter getParameter() {
-		return parameter;
-	}
-	public void setParameter(Parameter parameter) {
-		this.parameter = parameter;
-	}
+	
 
 	public String getAbbreviation() {
 		return abbreviation;
@@ -46,6 +42,21 @@ public class TestParameterDto {
 	}
 	public void setQualityParameterName(String qualityParameterName) {
 		this.qualityParameterName = qualityParameterName;
+	}
+	public String getParameterName() {
+		return parameterName;
+	}
+	public void setParameterName(String parameterName) {
+		this.parameterName = parameterName;
+	}
+	
+	
+	
+	public UnitDto getUnit() {
+		return unit;
+	}
+	public void setUnit(UnitDto unit) {
+		this.unit = unit;
 	}
 	  
 	  
