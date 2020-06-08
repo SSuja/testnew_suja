@@ -1,4 +1,6 @@
-package com.tokyo.supermix.data.dto;
+package com.tokyo.supermix.data.dto.auth;
+
+import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 
 public class UserResponseDto {
   private Long id;

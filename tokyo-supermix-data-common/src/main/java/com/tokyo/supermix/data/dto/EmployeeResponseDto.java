@@ -11,7 +11,7 @@ public class EmployeeResponseDto {
   private String designationName;
   private String plantCode;
   private Long designationId;
-
+  private boolean hasUser;
   public Long getId() {
     return id;
   }
@@ -91,5 +91,13 @@ public class EmployeeResponseDto {
   public void setDesignationId(Long designationId) {
     this.designationId = designationId;
   }
+
+public boolean isHasUser() {
+	return hasUser;
+}
+
+public void setHasUser(boolean hasUser) {
+	this.hasUser = hasUser;
+}
 
 }

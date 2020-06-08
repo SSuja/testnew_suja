@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.util.List;
-import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleDto {
   private Long finishProductCode;
@@ -12,7 +11,6 @@ public class FinishProductSampleDto {
   private List<StrengthResultDto> strengthResults;
   private List<MixDesignProportionDto> mixDesignProportions;
   private List<SlumpTestResult> slumpTestResults;
-  private Status status;
 
   public Long getFinishProductCode() {
     return finishProductCode;
@@ -76,13 +74,5 @@ public class FinishProductSampleDto {
 
   public void setSlumpTestResults(List<SlumpTestResult> slumpTestResults) {
     this.slumpTestResults = slumpTestResults;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
   }
 }

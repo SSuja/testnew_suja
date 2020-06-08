@@ -17,7 +17,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeRepository employeeRepository;
 
 	@Transactional()
-	public void saveEmployee(Employee employee) {
+	public void createEmployee(Employee employee) {
+		employee.setHasUser(false);
 		employeeRepository.save(employee);
 	}
 
@@ -62,5 +63,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = true)
 	public List<Employee> getEmployeeByPlantCode(String plantCode) {
 		return employeeRepository.findByPlantCode(plantCode);
+	}
+
+	@Override
+	public void updateEmployee(Employee employee) {
+		employeeRepository.save(employee);
 	}
 }

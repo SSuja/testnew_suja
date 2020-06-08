@@ -1363,6 +1363,82 @@ public class ValidationFailureStatusCodes {
     return projectAlreadyExist;
   }
 
+  // Authentication
+  @Value("${auth.password.invalid}")
+  private String password;
+  @Value("${auth.emailOrUserName.invalid}")
+  private String emailOrUserName;
+  @Value("${auth.credentials.invalid}")
+  private String credentials;
+  @Value("${auth.password.match}")
+  private String isMatchPassword;
+  @Value("${auth.passwordToken.invalid}")
+  private String isPasswordTokenFailed;
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public String getEmailOrUserName() {
+    return emailOrUserName;
+  }
+
+  public void setEmailOrUserName(String emailOrUserName) {
+    this.emailOrUserName = emailOrUserName;
+  }
+
+  public String getCredentials() {
+    return credentials;
+  }
+
+  public void setCredentials(String credentials) {
+    this.credentials = credentials;
+  }
+
+  public String getIsMatchPassword() {
+    return isMatchPassword;
+  }
+
+  public void setIsMatchPassword(String isMatchPassword) {
+    this.isMatchPassword = isMatchPassword;
+  }
+
+  public String getIsPasswordTokenFailed() {
+    return isPasswordTokenFailed;
+  }
+
+  public void setIsPasswordTokenFailed(String isPasswordTokenFailed) {
+    this.isPasswordTokenFailed = isPasswordTokenFailed;
+  }
+
+  /*
+   * Role
+   */
+  @Value("${validation.role.notExists}")
+  private String roleNotExists;
+
+  @Value("${validation.role.alreadyExists}")
+  private String roleAlreadyExists;
+
+  @Value("${validation.name.alreadyExists}")
+  private String roleNameAlreadyExists;
+
+  public String getRoleNotExists() {
+    return roleNotExists;
+  }
+
+  public void setRoleNotExists(String roleNotExists) {
+    this.roleNotExists = roleNotExists;
+  }
+
+  public String getRoleAlreadyExists() {
+    return roleAlreadyExists;
+  }
+
   public void setProjectAlreadyExist(String projectAlreadyExist) {
     this.projectAlreadyExist = projectAlreadyExist;
   }
@@ -1899,4 +1975,15 @@ public class ValidationFailureStatusCodes {
     this.abbreviationIsNull = abbreviationIsNull;
   }
 
+  public void setRoleNameAlreadyExists(String roleNameAlreadyExists) {
+    this.roleNameAlreadyExists = roleNameAlreadyExists;
+  }
+
+  public void setRoleAlreadyExists(String roleAlreadyExists) {
+    this.roleAlreadyExists = roleAlreadyExists;
+  }
+
+  public String getRoleNameAlreadyExists() {
+    return roleNameAlreadyExists;
+  }
 }

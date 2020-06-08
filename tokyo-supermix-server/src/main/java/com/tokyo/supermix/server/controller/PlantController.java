@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class PlantController {
   private static final Logger logger = Logger.getLogger(PlantController.class);
 
   @PostMapping(value = EndpointURI.PLANT)
+  @PreAuthorize("hasAuthority('add_plant')")
   public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantNameExist(plantDto.getName())) {
       logger.debug("PlantName already exists: createPlant(), plantName: {}");
@@ -59,7 +61,8 @@ public class PlantController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.PLANTS)
+ @GetMapping(value = EndpointURI.PLANTS)
+@PreAuthorize("hasAuthority('get_plant')")
   public ResponseEntity<Object> getAllPlants() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.PLANTS,
@@ -81,6 +84,7 @@ public class PlantController {
   }
 
   @PutMapping(value = EndpointURI.PLANT)
+  @PreAuthorize("hasAuthority('edit_plant')")
   public ResponseEntity<Object> updatePlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantExist(plantDto.getCode())) {
       if (plantService.isUpdatedPlantNameExist(plantDto.getCode(), plantDto.getName())) {
@@ -97,6 +101,7 @@ public class PlantController {
   }
 
   @DeleteMapping(value = EndpointURI.DELETE_PLANT_BY_CODE)
+  @PreAuthorize("hasAuthority('delete_plant')")
   public ResponseEntity<Object> deletePlant(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       plantService.deletePlant(code);
