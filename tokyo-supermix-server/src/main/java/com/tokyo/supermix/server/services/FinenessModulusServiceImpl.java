@@ -43,7 +43,7 @@ public class FinenessModulusServiceImpl implements FinenessModulusService {
   }
 
   @Transactional(readOnly = true)
-  public List<FinenessModulus> getFinenessModulusByMaterialSubCategory(Long materialSubCategoryId) {
+  public FinenessModulus getFinenessModulusByMaterialSubCategory(Long materialSubCategoryId) {
     return finenessModulusRepository.findByMaterialSubCategoryId(materialSubCategoryId);
   }
 
