@@ -8,6 +8,17 @@ public class MaterialSubCategoryRequestDto {
 	@NotNull(message = "{materialSubCategoryRequestDto.name.null}")
 	@NotEmpty(message = "{materialSubCategoryRequestDto.name.empty}")
 	private String name;
+	@NotNull(message = "{materialSubCategoryRequestDto.prefix.null}")
+	@NotEmpty(message = "{materialSubCategoryRequestDto.prefix.empty}")
+	private String prefix;
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
 	private Long materialCategoryId;
 
 	public Long getId() {
