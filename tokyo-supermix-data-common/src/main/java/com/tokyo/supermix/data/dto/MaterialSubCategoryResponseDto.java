@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 public class MaterialSubCategoryResponseDto {
   private Long id;
   private String name;
+  private String prefix;
   private Long materialCategoryId;
   private String materialCategoryName;
 
@@ -37,5 +38,13 @@ public class MaterialSubCategoryResponseDto {
   public void setMaterialCategoryName(String materialCategoryName) {
     this.materialCategoryName = materialCategoryName;
   }
+
+public String getPrefix() {
+	return prefix;
+}
+
+public void setPrefix(String prefix) {
+	this.prefix = prefix;
+}
 
 }
