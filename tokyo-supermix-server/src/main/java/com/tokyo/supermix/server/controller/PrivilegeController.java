@@ -41,12 +41,6 @@ public class PrivilegeController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.ROUTE_PERMISSIONS)
-  public ResponseEntity<Object> getAllRoutePermissions() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
-        PrivilegeService.getRoutePermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.ROUTE_PRIVILEGES)
   public ResponseEntity<Object> getRoutePrivilegesByRole(@PathVariable("roleId") Long roleId) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
@@ -91,4 +85,16 @@ public class PrivilegeController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
         PrivilegeService.getPermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  @GetMapping(value = EndpointURI.ROUTE_PERMISSIONS)
+  public ResponseEntity<Object> getAllRoutePermissions() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+        PrivilegeService.getRoutePermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  @GetMapping(value = "privilege/route/status/{roleId}")
+  public ResponseEntity<Object> getRoutePrivilegesByRoleAndRouteStatus(@PathVariable("roleId") Long roleId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+        PrivilegeService.getPrivilegeWithRouteByRoleId(roleId), RestApiResponseStatus.OK), null,
+        HttpStatus.OK);
+  }
+  
 }

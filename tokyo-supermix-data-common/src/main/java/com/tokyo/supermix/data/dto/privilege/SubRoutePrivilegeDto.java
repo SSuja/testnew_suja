@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SubRoutePrivilegeDto {
   private String subRoute;
+  private boolean status;
   private List<PrivilegeRequestDto> privileges;
   public String getSubRoute() {
     return subRoute;
@@ -16,6 +17,12 @@ public class SubRoutePrivilegeDto {
   }
   public void setPrivileges(List<PrivilegeRequestDto> privileges) {
     this.privileges = privileges;
+  }
+  public boolean isStatus() {
+    return status;
+  }
+  public void setStatus(boolean status) {
+    this.status = status;
   }
   
 }

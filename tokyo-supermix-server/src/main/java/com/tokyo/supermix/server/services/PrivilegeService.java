@@ -24,6 +24,6 @@ public interface PrivilegeService {
   public MainRoute findByMainRouteName(String mainRoute);
   public List<PermissionDto> getPermissions();
   public List<RolePermission>  getPrivilegeByStatus( boolean status);
-
+  public List<PrivilegeResponseDto> getPrivilegeWithRouteByRoleId(Long roleId);
   
 }

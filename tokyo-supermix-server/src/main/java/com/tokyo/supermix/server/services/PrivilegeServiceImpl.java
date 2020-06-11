@@ -17,7 +17,6 @@ import com.tokyo.supermix.data.entities.privilege.RolePermission;
 import com.tokyo.supermix.data.entities.privilege.SubRoute;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
-import com.tokyo.supermix.data.repositories.auth.RoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainRouteRepository;
 import com.tokyo.supermix.data.repositories.privilege.RolePermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubRouteRepository;
@@ -34,8 +33,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   private SubRouteRepository subRouteRepository;
   @Autowired
   private Mapper mapper;
-  @Autowired
-  private RoleRepository roleRepository;
+
   @Transactional
   public void savePrivilege(RolePermission rolePermission) {
     rolePermissionRepository.save(rolePermission);
@@ -55,12 +53,12 @@ public class PrivilegeServiceImpl implements PrivilegeService {
       List<PrivilegeRequestDto> PrivilegeDtoList) {
     permissionList.forEach(permission -> {
       PrivilegeRequestDto privilegeDto = new PrivilegeRequestDto();
-          privilegeDto.setPermissionId(permission.getId());
-          privilegeDto.setRoleId(roleId);
-          privilegeDto.setStatus(rolePermissionRepository
-              .findByRoleIdAndPermissionId(roleId, permission.getId()).isStatus());
-          PrivilegeDtoList.add(privilegeDto);
-        });
+      privilegeDto.setPermissionId(permission.getId());
+      privilegeDto.setRoleId(roleId);
+      privilegeDto.setStatus(rolePermissionRepository
+          .findByRoleIdAndPermissionId(roleId, permission.getId()).isStatus());
+      PrivilegeDtoList.add(privilegeDto);
+    });
     return PrivilegeDtoList;
   }
 
@@ -70,8 +68,9 @@ public class PrivilegeServiceImpl implements PrivilegeService {
       SubRoutePrivilegeDto subRoutePrivilegeDto = new SubRoutePrivilegeDto();
       subRoutePrivilegeDto.setSubRoute(sub.getName());
       List<PrivilegeRequestDto> PrivilegeDtoList = new ArrayList<PrivilegeRequestDto>();
-      List<Permission> PermissionList = permissionRepository.findByRolePermissionRoleIdAndSubRouteId(roleId,sub.getId());
-      setPrivilegeByRole(roleId,PermissionList, PrivilegeDtoList);
+      List<Permission> PermissionList =
+          permissionRepository.findByRolePermissionRoleIdAndSubRouteId(roleId, sub.getId());
+      setPrivilegeByRole(roleId, PermissionList, PrivilegeDtoList);
       subRoutePrivilegeDto.setPrivileges(PrivilegeDtoList);
       SubRoutePrivilegeDtoList.add(subRoutePrivilegeDto);
     });
@@ -84,8 +83,8 @@ public class PrivilegeServiceImpl implements PrivilegeService {
       PrivilegeResponseDto privilegeResponseDto = new PrivilegeResponseDto();
       privilegeResponseDto.setMainRoute(main.getName());
       List<SubRoutePrivilegeDto> SubRoutePrivilegeDtoList = new ArrayList<SubRoutePrivilegeDto>();
-      setSubRoutesByMainRoute(SubRoutePrivilegeDtoList, main.getId(), roleId);
-      privilegeResponseDto.setSubRoutes(SubRoutePrivilegeDtoList);
+      privilegeResponseDto
+          .setSubRoutes(setSubRoutesByMainRoute(SubRoutePrivilegeDtoList, main.getId(), roleId));
       PermissionResponseDtolist.add(privilegeResponseDto);
     });
     return PermissionResponseDtolist;
@@ -134,11 +133,11 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   public List<PermissionDto> getSubRoutesByMainRoute(Long mainRouteId) {
     List<SubRoute> subRoutes = subRouteRepository.findByMainRouteId(mainRouteId);
     List<PermissionDto> permissionDtolist = new ArrayList<PermissionDto>();
-    for(SubRoute subRoute:subRoutes) {
+    for (SubRoute subRoute : subRoutes) {
       PermissionDto permissionDto = new PermissionDto();
-    permissionDto.setId(subRoute.getId());
-    permissionDto.setName(subRoute.getName());
-    permissionDtolist.add(permissionDto);
+      permissionDto.setId(subRoute.getId());
+      permissionDto.setName(subRoute.getName());
+      permissionDtolist.add(permissionDto);
     }
     return permissionDtolist;
   }
@@ -162,22 +161,65 @@ public class PrivilegeServiceImpl implements PrivilegeService {
   public List<PrivilegeRequestDto> getPrivilegeByRole(Long roleId) {
     List<PrivilegeRequestDto> PrivilegeDtoList = new ArrayList<PrivilegeRequestDto>();
     List<Permission> PermissionList = permissionRepository.findByRolePermissionRoleId(roleId);
-    return setPrivilegeByRole(roleId,PermissionList,PrivilegeDtoList);
+    return setPrivilegeByRole(roleId, PermissionList, PrivilegeDtoList);
   }
+
   @Transactional(readOnly = true)
   public List<RolePermission> getPrivilegeByStatus(boolean status) {
-    return rolePermissionRepository.findByStatus(status) ;
+    return rolePermissionRepository.findByStatus(status);
   }
+
   @Transactional(readOnly = true)
   public List<PermissionDto> getPermissions() {
-    List<Permission> permissions = permissionRepository.findAll() ;
+    List<Permission> permissions = permissionRepository.findAll();
     List<PermissionDto> permissionDtolist = new ArrayList<PermissionDto>();
-    for(Permission permission:permissions) {
+    for (Permission permission : permissions) {
       PermissionDto permissionDto = new PermissionDto();
-    permissionDto.setId(permission.getId());
-    permissionDto.setName(permission.getName());
-    permissionDtolist.add(permissionDto);
+      permissionDto.setId(permission.getId());
+      permissionDto.setName(permission.getName());
+      permissionDtolist.add(permissionDto);
     }
     return permissionDtolist;
+  }
+
+  public List<PrivilegeResponseDto> getPrivilegeWithRouteByRoleId(Long roleId) {
+    List<PrivilegeResponseDto> PermissionResponseDtolist = new ArrayList<PrivilegeResponseDto>();
+    mainRouteRepository.findAll().forEach(main -> {
+      PrivilegeResponseDto privilegeResponseDto = new PrivilegeResponseDto();
+      privilegeResponseDto.setMainRoute(main.getName());
+      boolean mainStatus = false;
+      List<SubRoutePrivilegeDto> SubRoutePrivilegeDtoList = new ArrayList<SubRoutePrivilegeDto>();
+      List<SubRoute> subRouteList = subRouteRepository.findByMainRouteId(main.getId());
+      for (SubRoute sub : subRouteList) {
+        SubRoutePrivilegeDto subRoutePrivilegeDto = new SubRoutePrivilegeDto();
+        subRoutePrivilegeDto.setSubRoute(sub.getName());
+        boolean subStatus = false;
+        List<PrivilegeRequestDto> PrivilegeDtoList = new ArrayList<PrivilegeRequestDto>();
+        List<Permission> PermissionList =
+            permissionRepository.findByRolePermissionRoleIdAndSubRouteId(roleId, sub.getId());
+        for (Permission permission : PermissionList) {
+          PrivilegeRequestDto privilegeDto = new PrivilegeRequestDto();
+          privilegeDto.setPermissionId(permission.getId());
+          privilegeDto.setRoleId(roleId);
+          boolean privilegeStatus = rolePermissionRepository
+              .findByRoleIdAndPermissionId(roleId, permission.getId()).isStatus();
+          if (privilegeStatus) {
+            subStatus = true;
+          }
+          privilegeDto.setStatus(privilegeStatus);
+          PrivilegeDtoList.add(privilegeDto);
+        }
+        subRoutePrivilegeDto.setStatus(subStatus);
+        subRoutePrivilegeDto.setPrivileges(PrivilegeDtoList);
+        SubRoutePrivilegeDtoList.add(subRoutePrivilegeDto);
+        if (subStatus) {
+          mainStatus = true;
+        }
+      }
+      privilegeResponseDto.setStatus(mainStatus);
+      privilegeResponseDto.setSubRoutes(SubRoutePrivilegeDtoList);
+      PermissionResponseDtolist.add(privilegeResponseDto);
+    });
+    return PermissionResponseDtolist;
   }
 }
