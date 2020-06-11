@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +20,7 @@ public class SupplierRequestDto {
   @NotNull(message = "{supplierRequestDto.plantCode.null}")
   @NotEmpty(message = "{supplierRequestDto.plantCode.empty}")
   private String plantCode;
-  private Long suppilerCategoryId;
+  private List<Long> suppilerCategoryIds;
 
   public Long getId() {
     return id;
@@ -77,11 +78,11 @@ public class SupplierRequestDto {
     this.plantCode = plantCode;
   }
 
-  public Long getSuppilerCategoryId() {
-    return suppilerCategoryId;
+  public List<Long> getSuppilerCategoryIds() {
+    return suppilerCategoryIds;
   }
 
-  public void setSuppilerCategoryId(Long suppilerCategoryId) {
-    this.suppilerCategoryId = suppilerCategoryId;
+  public void setSuppilerCategoryIds(List<Long> suppilerCategoryIds) {
+    this.suppilerCategoryIds = suppilerCategoryIds;
   }
 }
