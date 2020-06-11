@@ -28,7 +28,7 @@ public class MaterialTest implements Serializable {
   private Status status;
   @Enumerated(EnumType.ORDINAL)
   private TestLevel testLevel;
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "incomingSampleCode", nullable = false)
   private IncomingSample incomingSample;
   @ManyToOne
