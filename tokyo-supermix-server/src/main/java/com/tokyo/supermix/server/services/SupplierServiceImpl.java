@@ -51,7 +51,7 @@ public class SupplierServiceImpl implements SupplierService {
     supplierRepository.deleteById(id);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public Supplier getSupplierById(Long id) {
     return supplierRepository.findById(id).get();
   }
@@ -103,7 +103,6 @@ public class SupplierServiceImpl implements SupplierService {
     return supplierRepository.findByPlantCode(plantCode);
   }
 
-  @Override
   public List<Long> supplierCategoriesIds(List<Long> suppilerCategoryIds, Long id) {
     List<Long> CategoriesIds = new ArrayList<>();
     List<SupplierCategory> supplierCategories =

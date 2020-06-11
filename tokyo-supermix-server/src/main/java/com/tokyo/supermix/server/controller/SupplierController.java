@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,7 +49,7 @@ public class SupplierController {
   private static final Logger logger = Logger.getLogger(SupplierController.class);
 
   @GetMapping(value = EndpointURI.SUPPLIERS)
-  // @PreAuthorize("hasAuthority('get_supplier')")
+  @PreAuthorize("hasAuthority('get_supplier')")
   public ResponseEntity<Object> getSuppliers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
         mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
@@ -56,7 +57,7 @@ public class SupplierController {
   }
 
   @PostMapping(value = EndpointURI.SUPPLIER)
-  // @PreAuthorize("hasAuthority('add_supplier')")
+  @PreAuthorize("hasAuthority('add_supplier')")
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
     if (supplierService.isEmailExist(supplierDto.getEmail())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
@@ -74,7 +75,7 @@ public class SupplierController {
   }
 
   @PutMapping(value = EndpointURI.SUPPLIER)
-  // @PreAuthorize("hasAuthority('edit_supplier')")
+  @PreAuthorize("hasAuthority('edit_supplier')")
   public ResponseEntity<Object> updateSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
 
     if (supplierService.isSupplierExist(supplierDto.getId())) {
@@ -99,7 +100,7 @@ public class SupplierController {
   }
 
   @DeleteMapping(value = EndpointURI.DELETE_SUPPLIER)
-  // @PreAuthorize("hasAuthority('delete_supplier')")
+  @PreAuthorize("hasAuthority('delete_supplier')")
   public ResponseEntity<Object> deleteSupplierById(@PathVariable Long id) {
     if (supplierService.isSupplierExist(id)) {
       supplierService.deleteSupplierById(id);
