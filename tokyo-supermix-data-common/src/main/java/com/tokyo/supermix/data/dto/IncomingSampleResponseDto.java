@@ -1,16 +1,33 @@
 package com.tokyo.supermix.data.dto;
 
-import java.sql.Date;
+import java.time.Instant;
 import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleResponseDto {
   private String code;
   private String vehicleNo;
-  private Date date;
+  private Instant createdAt;
+  private Instant updatedAt;
   private Status status;
   private RawMaterialResponseDto rawMaterial;
   private PlantDto plant;
   private SupplierResponseDto supplier;
+
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public Instant getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Instant updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
   public String getCode() {
     return code;
@@ -26,14 +43,6 @@ public class IncomingSampleResponseDto {
 
   public void setVehicleNo(String vehicleNo) {
     this.vehicleNo = vehicleNo;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
   }
 
   public Status getStatus() {
