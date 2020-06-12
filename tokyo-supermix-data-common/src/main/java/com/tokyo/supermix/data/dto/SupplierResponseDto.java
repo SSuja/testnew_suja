@@ -1,5 +1,8 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
+import com.tokyo.supermix.data.entities.SupplierCategory;
+
 public class SupplierResponseDto {
   private Long id;
   private String name;
@@ -7,8 +10,8 @@ public class SupplierResponseDto {
   private String address;
   private String phoneNumber;
   private String email;
-  private SupplierCategoryDto supplierCategory;
   private PlantDto plant;
+  private List<SupplierCategory> supplierCategories;
 
   public Long getId() {
     return id;
@@ -58,19 +61,19 @@ public class SupplierResponseDto {
     this.email = email;
   }
 
-  public SupplierCategoryDto getSupplierCategory() {
-    return supplierCategory;
-  }
-
-  public void setSupplierCategory(SupplierCategoryDto supplierCategory) {
-    this.supplierCategory = supplierCategory;
-  }
-
   public PlantDto getPlant() {
     return plant;
   }
 
   public void setPlant(PlantDto plant) {
     this.plant = plant;
+  }
+
+  public List<SupplierCategory> getSupplierCategories() {
+    return supplierCategories;
+  }
+
+  public void setSupplierCategories(List<SupplierCategory> supplierCategories) {
+    this.supplierCategories = supplierCategories;
   }
 }

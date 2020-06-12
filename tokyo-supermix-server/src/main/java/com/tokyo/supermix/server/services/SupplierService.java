@@ -8,7 +8,7 @@ import com.tokyo.supermix.data.entities.Supplier;
 public interface SupplierService {
   public List<Supplier> getSuppliers();
 
-  public Supplier createSupplier(Supplier supplier);
+  public void createSupplier(Supplier supplier, List<Long> supplierCategoryIds);
 
   public Supplier getSupplierById(Long id);
 
@@ -31,5 +31,7 @@ public interface SupplierService {
   public Page<Supplier> searchSupplier(Predicate predicate, int page, int size);
 
   public List<Supplier> getSupplierByPlantCode(String plantCode);
+
+  public List<Long> supplierCategoriesIds(List<Long> suppilerCategoryIds, Long id);
 
 }
