@@ -48,11 +48,25 @@ public class TestConfigureController {
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   @PreAuthorize("hasAuthority('add_test_configure')")
-  public Long createTestConfigure(
+  public  ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
-    return testConfigureService
-        .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
-  }
+	  if(!(testTypeService.getTestTypeById(testConfigureRequestDto.getTestTypeId()).getMaterialSubCategory().getMaterialCategory().getName() == "Admixture") ){
+	  
+	  if(!testConfigureService.isexistByTestTypeIdAndTestId(testConfigureRequestDto.getTestTypeId(), testConfigureRequestDto.getTestId() )) {
+		  testConfigureService
+	        .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
+		  return new ResponseEntity<>(
+			        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
+			        HttpStatus.OK);
+		  	  }
+	  return new ResponseEntity<>(    new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+              validationFailureStatusCodes.getTestConfigureAlreadyExist()),
+          HttpStatus.BAD_REQUEST);
+	  }
+	  return new ResponseEntity<>( new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
+		        HttpStatus.OK);
+	  }
+  
 
   @GetMapping(value = EndpointURI.TEST_CONFIGURES)
   @PreAuthorize("hasAuthority('get_test_configure')")
