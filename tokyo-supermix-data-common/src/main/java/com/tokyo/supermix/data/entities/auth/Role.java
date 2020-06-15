@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.RolePermission;
 
 @Entity
@@ -19,6 +21,8 @@ public class Role  implements Serializable{
 	@Id
 	private Long id;
 	private String name;
+	 @OneToMany(mappedBy = "role")
+	    Set<PlantRole> plantRole;
 	 @OneToMany(mappedBy = "role",fetch = FetchType.EAGER)
 	    private Set<RolePermission> rolePermission ;
 	
