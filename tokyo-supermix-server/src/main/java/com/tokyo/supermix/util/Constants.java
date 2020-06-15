@@ -598,8 +598,8 @@ public class Constants {
   public static final String PLANT_PERMISSIONS = "PlantPermissions";
   public static final String PLANT_PERMISSION_NAME = "PlantPermissionName";
   
-
-  /*
+  public static final String ADD_PLANT_ROLE_SUCCESS = "Sucessfully added plantRole";
+    /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}

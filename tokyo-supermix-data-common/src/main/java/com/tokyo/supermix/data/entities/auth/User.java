@@ -1,11 +1,12 @@
 package com.tokyo.supermix.data.entities.auth;
 
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Employee;
@@ -25,10 +26,12 @@ public class User extends DateAudit {
   @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
   private UserType userType;
-  
-  @ManyToOne
-  @JoinColumn(name = "role_id", nullable = false)
-  private Role role;
+
+  @OneToMany(mappedBy = "role")
+  private Set<UserRole> userRoles;
+
+  @OneToMany(mappedBy = "user")
+  private Set<UserPlantRole> userPlantRoles;
 
   public Long getId() {
     return id;
@@ -70,20 +73,28 @@ public class User extends DateAudit {
     this.email = email;
   }
 
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
   public UserType getUserType() {
     return userType;
   }
 
   public void setUserType(UserType userType) {
     this.userType = userType;
+  }
+
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(Set<UserRole> userRoles) {
+    this.userRoles = userRoles;
+  }
+
+  public Set<UserPlantRole> getUserPlantRoles() {
+    return userPlantRoles;
+  }
+
+  public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
+    this.userPlantRoles = userPlantRoles;
   }
 
 }
