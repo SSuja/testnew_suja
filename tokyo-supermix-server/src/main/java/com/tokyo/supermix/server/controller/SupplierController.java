@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +31,6 @@ import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
-
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -68,7 +67,8 @@ public class SupplierController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
           validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    supplierService.createSupplier(mapper.map(supplierDto, Supplier.class));
+    supplierService.createSupplier(mapper.map(supplierDto, Supplier.class),
+        supplierDto.getSuppilerCategoryIds());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SUPPLIER_SUCCESS),
         HttpStatus.OK);
@@ -88,7 +88,9 @@ public class SupplierController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
             validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      supplierService.updateSupplier(mapper.map(supplierDto, Supplier.class));
+      supplierService.createSupplier(mapper.map(supplierDto, Supplier.class), supplierService
+          .supplierCategoriesIds(supplierDto.getSuppilerCategoryIds(), supplierDto.getId()));
+
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SUPPLIER_SUCCESS),
           HttpStatus.OK);

@@ -148,7 +148,7 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
         .findByMixDesignCode(finishProductSample.getMixDesign().getCode());
     Long quantity = null;
     for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
-      if (mixDesignProportion.getRawMaterial().getName()
+      if (mixDesignProportion.getRawMaterial().getMaterialSubCategory().getName()
           .equalsIgnoreCase(Constants.RAW_MATERIAL_CEMENT)) {
         quantity = mixDesignProportion.getQuantity();
         concreteTestResult.setResult(calculateWaterCementRatio(concreteTestResult.getWaterContent(),
@@ -178,11 +178,11 @@ public class ConcreteTestResultServiceImpl implements ConcreteTestResultService 
     Long binderquantity = 0L;
     for (MixDesignProportion mixDesignProportion : mixDesignProportionList) {
 
-      if (mixDesignProportion.getRawMaterial().getName()
+      if (mixDesignProportion.getRawMaterial().getMaterialSubCategory().getName()
           .equalsIgnoreCase(Constants.RAW_MATERIAL_CEMENT)) {
         quantity = mixDesignProportion.getQuantity();
       }
-      if (mixDesignProportion.getRawMaterial().getName()
+      if (mixDesignProportion.getRawMaterial().getMaterialSubCategory().getName()
           .equalsIgnoreCase(Constants.RAW_MATERIAL_FLYASH)) {
         binderquantity = mixDesignProportion.getQuantity();
       }

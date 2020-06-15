@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,21 +11,34 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.SupplierCategory;
+import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
   @Autowired
   private SupplierRepository supplierRepository;
+  @Autowired
+  private SupplierCategoryRepository supplierCategoryRepository;
 
-  @Transactional
+  @Transactional(readOnly = true)
   public List<Supplier> getSuppliers() {
-    return supplierRepository.findAll();
+    List<Supplier> suppliers = supplierRepository.findAll();
+    for (Supplier supplier : suppliers) {
+      supplier.setSupplierCategories(
+          supplierRepository.findById(supplier.getId()).get().getSupplierCategories());
+    }
+    return suppliers;
   }
 
   @Transactional
-  public Supplier createSupplier(Supplier supplier) {
-    return supplierRepository.save(supplier);
+  public void createSupplier(Supplier supplier, List<Long> supplierCategoryIds) {
+    List<SupplierCategory> supplierList = new ArrayList<SupplierCategory>();
+    supplierCategoryIds
+        .forEach(id -> supplierList.add(supplierCategoryRepository.findById(id).get()));
+    supplier.setSupplierCategories(supplierList);
+    supplierRepository.save(supplier);
   }
 
   @Transactional
@@ -37,7 +51,7 @@ public class SupplierServiceImpl implements SupplierService {
     supplierRepository.deleteById(id);
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public Supplier getSupplierById(Long id) {
     return supplierRepository.findById(id).get();
   }
@@ -75,7 +89,7 @@ public class SupplierServiceImpl implements SupplierService {
 
   @Transactional(readOnly = true)
   public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId) {
-    return supplierRepository.findBySuppilerCategoryId(suppilerCategoryId);
+    return supplierRepository.findBySupplierCategoriesId(suppilerCategoryId);
   }
 
   @Transactional(readOnly = true)
@@ -87,5 +101,17 @@ public class SupplierServiceImpl implements SupplierService {
   @Transactional(readOnly = true)
   public List<Supplier> getSupplierByPlantCode(String plantCode) {
     return supplierRepository.findByPlantCode(plantCode);
+  }
+
+  public List<Long> supplierCategoriesIds(List<Long> suppilerCategoryIds, Long id) {
+    List<Long> CategoriesIds = new ArrayList<>();
+    List<SupplierCategory> supplierCategories =
+        supplierRepository.findById(id).get().getSupplierCategories();
+    for (SupplierCategory supplierCategory : supplierCategories) {
+      CategoriesIds.add(supplierCategory.getId());
+    }
+    suppilerCategoryIds.removeAll(CategoriesIds);
+    CategoriesIds.addAll(suppilerCategoryIds);
+    return CategoriesIds;
   }
 }
