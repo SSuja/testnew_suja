@@ -47,7 +47,7 @@ public class TestConfigureController {
 	private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
 	@PostMapping(value = EndpointURI.TEST_CONFIGURE)
-	@PreAuthorize("hasAuthority('add_test_configure')")
+//	@PreAuthorize("hasAuthority('add_test_configure')")
 	public ResponseEntity<Object> createTestConfigure(
 			@Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
 		if (!testTypeService.getTestTypeById(testConfigureRequestDto.getTestTypeId()).getMaterialSubCategory()
