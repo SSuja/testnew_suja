@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.controller;
+package com.tokyo.supermix.server.controller.privilege;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
-import com.tokyo.supermix.server.services.PrivilegeService;
+import com.tokyo.supermix.server.services.privilege.PrivilegeService;
 import com.tokyo.supermix.util.Constants;
 
 @CrossOrigin

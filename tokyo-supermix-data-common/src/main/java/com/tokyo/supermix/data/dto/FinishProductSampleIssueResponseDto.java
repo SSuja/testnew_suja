@@ -1,13 +1,11 @@
 package com.tokyo.supermix.data.dto;
 
-import com.tokyo.supermix.data.entities.FinishProductSample;
-import com.tokyo.supermix.data.entities.Project;
-
 public class FinishProductSampleIssueResponseDto {
   private Long id;
   private String truckNo;
-  private FinishProductSample finishProductSample;
-  private Project project;
+  private FinishProductSampleResponseDto finishProductSample;
+  private ProjectResponseDto project;
+  private PourDtoResponse pour;
 
   public Long getId() {
     return id;
@@ -25,22 +23,27 @@ public class FinishProductSampleIssueResponseDto {
     this.truckNo = truckNo;
   }
 
-  public FinishProductSample getFinishProductSample() {
+  public FinishProductSampleResponseDto getFinishProductSample() {
     return finishProductSample;
   }
 
-  public void setFinishProductSample(FinishProductSample finishProductSample) {
+  public void setFinishProductSample(FinishProductSampleResponseDto finishProductSample) {
     this.finishProductSample = finishProductSample;
   }
 
-  public Project getProject() {
+  public ProjectResponseDto getProject() {
     return project;
   }
 
-  public void setProject(Project project) {
+  public void setProject(ProjectResponseDto project) {
     this.project = project;
   }
 
+  public PourDtoResponse getPour() {
+    return pour;
+  }
 
-
+  public void setPour(PourDtoResponse pour) {
+    this.pour = pour;
+  }
 }

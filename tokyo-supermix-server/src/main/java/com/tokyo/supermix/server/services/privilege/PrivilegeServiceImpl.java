@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.services;
+package com.tokyo.supermix.server.services.privilege;
 
 import java.util.ArrayList;
 import java.util.List;
