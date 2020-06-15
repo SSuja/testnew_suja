@@ -610,5 +610,13 @@ public final class EndpointURI {
   public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
   public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH+"mail-report";
+    /*
+   * plant permission
+   */
+  public static final String PLANT_PERMISSION = BASE_API_PATH + "plant-permission";
+	public static final String PLANT_PERMISSIONS = BASE_API_PATH + "plant-permissions";
+	public static final String PLANT_PERMISSION_BY_ID = PLANT_PERMISSION + ID;
+	public static final String PLANT_PERMISSION_BY_PERMISSION_NAME = PLANT_PERMISSION   + SLASH + "{permissionName}";
+	public static final String PLANT_ROLE = BASE_API_PATH +"plant-role";
   private EndpointURI() {}
 }

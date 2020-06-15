@@ -10,16 +10,29 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
+import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.PlantRepository;
+import com.tokyo.supermix.data.repositories.auth.RoleRepository;
+import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 
 @Service
 public class PlantServiceImpl implements PlantService {
   @Autowired
   private PlantRepository plantRepository;
+  @Autowired
+  private PlantRoleRepository plantRoleRepository;
+  @Autowired
+  private RoleRepository roleRepository;
 
   @Transactional
   public void savePlant(Plant plant) {
-    plantRepository.save(plant);
+    PlantRole plantRole = new PlantRole();
+    plantRole.setPlant(plantRepository.save(plant));
+    Role role = roleRepository.findById(1l).get();
+    plantRole.setRole(role);
+    plantRole.setName(plant.getName().toUpperCase() + "_" + role.getName());
+    plantRoleRepository.save(plantRole);
   }
 
   @Transactional(readOnly = true)
