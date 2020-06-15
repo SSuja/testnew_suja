@@ -1,11 +1,12 @@
 package com.tokyo.supermix.data.entities.privilege;
 
 import java.io.Serializable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.Role;
 
@@ -13,24 +14,22 @@ import com.tokyo.supermix.data.entities.auth.Role;
 @Table(name = "role_permission")
 public class RolePermission implements Serializable {
   private static final long serialVersionUID = 1L;
-  @EmbeddedId
-  private RolePermissionPK id;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id
+  private Long id;
   @ManyToOne
-  @MapsId("role_id") 
-  @JoinColumn(name = "ROLE_ID")
+  @JoinColumn(name = "role_id")
   private Role role;
-
   @ManyToOne
-  @MapsId("permission_id")
-  @JoinColumn(name = "PERMISSION_ID")
+  @JoinColumn(name = "permission_id")
   private Permission permission;
   private boolean status;
 
-  public RolePermissionPK getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(RolePermissionPK id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
@@ -58,4 +57,7 @@ public class RolePermission implements Serializable {
     this.status = status;
   }
 
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 }
