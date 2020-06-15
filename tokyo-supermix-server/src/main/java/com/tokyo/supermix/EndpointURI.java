@@ -592,12 +592,13 @@ public final class EndpointURI {
 	public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
 	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
 	public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
-
+	public static final String PLANT_ROLE = PRIVILEGE+SLASH+"plant-role";
   /*
    * File Export
    */
   public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
   public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH+"mail-report";
+  
   private EndpointURI() {}
 }

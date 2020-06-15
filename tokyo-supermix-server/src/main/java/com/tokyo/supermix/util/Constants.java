@@ -593,6 +593,9 @@ public class Constants {
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
   
+  
+  public static final String ADD_PLANT_ROLE_SUCCESS = "Sucessfully added plantRole";
+  
 
   /*
    * Encapsulate constructor to restrict modification from outside
