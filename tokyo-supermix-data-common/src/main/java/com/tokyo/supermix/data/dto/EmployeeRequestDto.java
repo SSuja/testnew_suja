@@ -19,8 +19,6 @@ public class EmployeeRequestDto {
   private String email;
   private String phoneNumber;
   private String address;
-  @NotNull(message = "{employeeDto.plantCode.null}")
-  @NotEmpty(message = "{employeeDto.plantCode.empty}")
   private String plantCode;
   private Long designationId;
   private boolean hasUser;
@@ -89,12 +87,12 @@ public class EmployeeRequestDto {
     this.designationId = designationId;
   }
 
-public Boolean getHasUser() {
-	return hasUser;
-}
+  public Boolean getHasUser() {
+    return hasUser;
+  }
 
-public void setHasUser(Boolean hasUser) {
-	this.hasUser = hasUser;
-}
+  public void setHasUser(Boolean hasUser) {
+    this.hasUser = hasUser;
+  }
 
 }
