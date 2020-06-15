@@ -53,4 +53,18 @@ public class SieveAcceptedValueServiceImpl implements SieveAcceptedValueService 
     return sieveAcceptedValueRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+  
+  @Transactional(readOnly = true)
+  public boolean isUpdatedSieveSizeExist(Long id, Long sieveSizeId) {
+    if ((!getSieveAcceptedValueById(id).getSieveSize().getId().equals(sieveSizeId))
+        && (isSieveSizeExist(sieveSizeId))) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public SieveAcceptedValue getSieveAcceptedValueBySieveSize(Long sieveSizeId) {
+    return sieveAcceptedValueRepository.findBySieveSizeId(sieveSizeId);
+  }
 }

@@ -23,7 +23,7 @@ public class Employee implements Serializable {
   private String address;
   private Boolean hasUser;
   @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
+  @JoinColumn(name = "plantCode", nullable = true)
   private Plant plant;
   @ManyToOne
   @JoinColumn(name = "designationId", nullable = false)

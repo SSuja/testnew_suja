@@ -1,7 +1,7 @@
 package com.tokyo.supermix.data.entities.auth;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -20,25 +20,29 @@ public abstract class DateAudit implements Serializable {
 
   @CreatedDate
   @Column(nullable = false, updatable = false)
-  private Instant createdAt;
+  private Timestamp createdAt;
 
   @LastModifiedDate
   @Column(nullable = false)
-  private Instant updatedAt;
+  private Timestamp updatedAt;
 
-  public Instant getCreatedAt() {
+  public Timestamp getCreatedAt() {
     return createdAt;
   }
 
-  public void setCreatedAt(Instant createdAt) {
+  public void setCreatedAt(Timestamp createdAt) {
     this.createdAt = createdAt;
   }
 
-  public Instant getUpdatedAt() {
+  public Timestamp getUpdatedAt() {
     return updatedAt;
   }
 
-  public void setUpdatedAt(Instant updatedAt) {
+  public void setUpdatedAt(Timestamp updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }
