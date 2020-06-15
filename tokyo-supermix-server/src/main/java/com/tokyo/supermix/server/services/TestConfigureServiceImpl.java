@@ -142,9 +142,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	}
 
 	@Override
-	public boolean isexistByTestTypeIdAndTestId(Long testId, Long testTypeId) {
+	public boolean isexistByTestTypeIdAndTestId(Long testTypeId, Long testId) {
 		
-		return testConfigureRepository.existsByTestTypeIdAndTestId(testTypeId, testId);
+		return testConfigureRepository.existsByTestTypeIdAndTestId(testTypeId,testId);
 	
 
 	}

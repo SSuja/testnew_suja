@@ -35,7 +35,6 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @RestController
 @CrossOrigin
 public class MaterialTestController {
-
   @Autowired
   MaterialTestService materialTestService;
   @Autowired
