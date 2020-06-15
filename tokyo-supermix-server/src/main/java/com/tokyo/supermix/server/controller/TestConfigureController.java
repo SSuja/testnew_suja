@@ -52,7 +52,6 @@ public class TestConfigureController {
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (!(testTypeService.getTestTypeById(testConfigureRequestDto.getTestTypeId())
         .getMaterialSubCategory().getMaterialCategory().getName() == "Admixture")) {
-
       if (!testConfigureService.isexistByTestTypeIdAndTestId(
           testConfigureRequestDto.getTestTypeId(), testConfigureRequestDto.getTestId())) {
         return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,

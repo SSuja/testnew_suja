@@ -20,7 +20,7 @@ public interface TestConfigureService {
 
   public boolean isDuplicateEntryExist(Long testId, Long testTypeId);
   
-  public boolean isexistByTestTypeIdAndTestId(Long testId, Long testTypeId);
+  public boolean isexistByTestTypeIdAndTestId( Long testTypeId, Long testId);
 
   public void deleteTestConfigure(Long id);
 
