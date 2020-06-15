@@ -32,6 +32,7 @@ public class PlantRole implements Serializable {
 
   @OneToMany(mappedBy = "plantRole")
   private Set<UserPlantRole> userPlantRoles;
+  private String name;
 
   public Long getId() {
     return id;
