@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.enums.UserType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
@@ -23,6 +24,8 @@ public class User extends DateAudit {
   @OneToOne
   @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
+  private UserType userType;
+  
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
   private Role role;
@@ -73,6 +76,14 @@ public class User extends DateAudit {
 
   public void setRole(Role role) {
     this.role = role;
+  }
+
+  public UserType getUserType() {
+    return userType;
+  }
+
+  public void setUserType(UserType userType) {
+    this.userType = userType;
   }
 
 }
