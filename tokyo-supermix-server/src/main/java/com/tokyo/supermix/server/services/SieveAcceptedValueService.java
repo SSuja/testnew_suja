@@ -19,4 +19,8 @@ public interface SieveAcceptedValueService {
   public boolean isSieveSizeExist(Long sieveSizeId);
 
   public Page<SieveAcceptedValue> searchSieveAcceptedValue(Predicate predicate, int page, int size);
+
+  public boolean isUpdatedSieveSizeExist(Long id, Long sieveSizeId);
+
+  public SieveAcceptedValue getSieveAcceptedValueBySieveSize(Long sieveSizeId);
 }

@@ -14,12 +14,10 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
-import com.tokyo.supermix.data.entities.SieveTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
-import com.tokyo.supermix.data.repositories.SieveTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestTypeRepository;
 import com.tokyo.supermix.util.Constants;
@@ -35,8 +33,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private MaterialTestRepository materialTestRepository;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
-  @Autowired
-  private SieveTestRepository sieveTestRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
   @Autowired
@@ -114,61 +110,39 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
-    String bodyMessage = "";
     Integer count = 0;
-    Integer passCount = 0;
-    List<MaterialTest> materialTestList =
-        materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
+    String bodyMessage = "";
+    Integer failCount = 0;
     List<TestConfigure> testConfigureList = testConfigureRepository
         .findByTestTypeAndCoreTest(testTypeRepository.findTestTypeByMaterialSubCategoryId(
             incomingSample.getRawMaterial().getMaterialSubCategory().getId()), true);
-    SieveTest seiveTest = sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode());
+    List<MaterialTest> materialTestList =
+        materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
     for (TestConfigure testConfigure : testConfigureList) {
       for (MaterialTest materialTest : materialTestList) {
         if (testConfigure.getTest().getName()
             .equalsIgnoreCase(materialTest.getTestConfigure().getTest().getName())
-            && materialTest.getTestConfigure().isCoreTest()) {
-          bodyMessage = bodyMessage + "<li>" + materialTest.getTestConfigure().getTest().getName()
-              + " : " + materialTest.getStatus() + "</li>";
-          count = count + 1;
-          if (materialTest.getStatus() == Status.PASS) {
-            passCount = passCount + 1;
-          }
+            && materialTest.getTestConfigure().isCoreTest()
+            && materialTest.getStatus().equals(Status.PASS)) {
+          count++;
         }
       }
-    }
-
-    if (incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getName()
-        .equalsIgnoreCase("Aggregates")) {
-      if (seiveTest != null) {
-        if (seiveTest.getStatus() == Status.PASS) {
-          bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
-          calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
-        } else if (sieveTestRepository.findByIncomingSampleCode(incomingSample.getCode())
-            .getStatus() == Status.FAIL) {
-          bodyMessage = bodyMessage + "<li> Seive Test : " + seiveTest.getStatus() + "</li>";
-          updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
-        }
-      } else {
-        incomingSample.setStatus(Status.PROCESS);
-        incomingSampleRepository.save(incomingSample);
+      if (materialTestRepository.countByIncomingSampleCodeAndStatusAndTestConfigureTestName(
+          incomingSample.getCode(), Status.FAIL, testConfigure.getTest().getName()) == 2) {
+        failCount++;
       }
-    } else {
-      calculateTest(count, passCount, testConfigureList.size(), incomingSample, bodyMessage);
     }
+    calculateTest(count, failCount, testConfigureList.size(), incomingSample, bodyMessage);
   }
 
-  private void calculateTest(Integer count, Integer passCount, Integer testSize,
+  private void calculateTest(Integer count, Integer failCount, Integer testSize,
       IncomingSample incomingSample, String bodyMessage) {
     if (count == testSize) {
-      if (passCount == count) {
-        updateStatusSample(Status.PASS, incomingSample, bodyMessage);
-      } else {
-        updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
-      }
+      updateStatusSample(Status.PASS, incomingSample, bodyMessage);
+    } else if (failCount == 1) {
+      updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
     } else {
-      incomingSample.setStatus(Status.PROCESS);
-      incomingSampleRepository.save(incomingSample);
+      updateStatusSample(Status.PROCESS, incomingSample, bodyMessage);
     }
   }
 

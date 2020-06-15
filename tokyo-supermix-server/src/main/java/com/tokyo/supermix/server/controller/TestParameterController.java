@@ -42,6 +42,7 @@ public class TestParameterController {
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(TestParameterController.class);
 
+  //test parameter add API
   @PostMapping(value = EndpointURI.TEST_PARAMETER)
   @PreAuthorize("hasAuthority('add_test_parameter')")
   public ResponseEntity<Object> createTestParameter(
