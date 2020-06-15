@@ -88,8 +88,8 @@ public class SieveAcceptedValueController {
   public ResponseEntity<Object> updateSieveAcceptedValue(
       @Valid @RequestBody SieveAcceptedValueRequestDto sieveAcceptedValueRequestDto) {
     if (sieveAcceptedValueService.isSieveAcceptedValueExist(sieveAcceptedValueRequestDto.getId())) {
-      if (sieveAcceptedValueService
-          .isSieveSizeExist(sieveAcceptedValueRequestDto.getSieveSizeId())) {
+      if (sieveAcceptedValueService.isUpdatedSieveSizeExist(sieveAcceptedValueRequestDto.getId(),
+          sieveAcceptedValueRequestDto.getSieveSizeId())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.SIEVE_SIZE,
             validationFailureStatusCodes.getSieveSizeNotExist()), HttpStatus.BAD_REQUEST);
       }
