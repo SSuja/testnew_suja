@@ -43,8 +43,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	@Autowired
 	private EquationParameterService equationParameterService;
 	
-	
-
 	@Autowired
 	private Mapper mapper;
 
@@ -118,11 +116,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	Equation equation = equationRepository.findByTestConfigureId(id);
 	List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id); 
 	
-	
-	
-	
-	
-		
 		testConfigureDto.setId(testConfigure.getId());
 		testConfigureDto.setPrefix(testConfigure.getPrefix());
 		testConfigureDto.setTestName(testConfigure.getTest().getName());
@@ -147,4 +140,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
 		return testConfigureDto;
 	}
+
+	@Override
+	public boolean isexistByTestTypeIdAndTestId(Long testTypeId, Long testId) {
+		
+		return testConfigureRepository.existsByTestTypeIdAndTestId(testTypeId,testId);
+	
+
+	}
+	
+
 }

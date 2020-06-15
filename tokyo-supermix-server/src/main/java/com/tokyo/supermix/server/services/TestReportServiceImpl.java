@@ -215,7 +215,8 @@ public class TestReportServiceImpl implements TestReportService {
         concreteTestType, concreteTestName).forEach(strength -> {
           ConcreteStrengthTestDto concreteStrengthTestDto = new ConcreteStrengthTestDto();
           concreteStrengthTestDto = mapper.map(strength, ConcreteStrengthTestDto.class);
-          concreteStrengthTestDto.setCubeCode(strength.getFinishProductSample().getFinishProductCode());
+          concreteStrengthTestDto
+              .setCubeCode(strength.getFinishProductSample().getFinishProductCode());
           concreteStrengthTestDtos.add(concreteStrengthTestDto);
         });
     return concreteStrengthTestDtos;
@@ -281,7 +282,7 @@ public class TestReportServiceImpl implements TestReportService {
     supplierReportDto.setPhoneNumber(supplier.getPhoneNumber());
     supplierReportDto.setAddress(supplier.getAddress());
     supplierReportDto.setCompanyName(supplier.getCompanyName());
-    supplierReportDto.setSupplierCategoryName(supplier.getSuppilerCategory().getCategory());
+    // supplierReportDto.setSupplierCategoryName(supplier.getSuppilerCategory().getCategory());
     supplierReportDto.setEmail(supplier.getEmail());
     supplierReportDto.setPlantName(supplier.getPlant().getName());
     return supplierReportDto;

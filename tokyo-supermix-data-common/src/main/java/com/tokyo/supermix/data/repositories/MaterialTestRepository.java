@@ -34,4 +34,10 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestName(String incomingSampleCode,
       String testName);
+
+  boolean existsByIncomingSampleCodeAndStatusAndTestConfigureTestName(String incomingSampleCode,
+      Status status, String testName);
+
+  Integer countByIncomingSampleCodeAndStatusAndTestConfigureTestName(String incomingSampleCode,
+      Status status, String testName);
 }

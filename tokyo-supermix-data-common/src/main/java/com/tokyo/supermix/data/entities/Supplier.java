@@ -1,16 +1,20 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "suppiler")
+@Table(schema = "tokyo-supermix", name = "supplier")
 public class Supplier implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -23,9 +27,11 @@ public class Supplier implements Serializable {
   private String address;
   private String phoneNumber;
   private String email;
-  @ManyToOne
-  @JoinColumn(name = "suppilerCategoryId", nullable = false)
-  private SupplierCategory suppilerCategory;
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "supplier_supplierCategory",
+      joinColumns = {@JoinColumn(name = "supplier_id", referencedColumnName = "id")},
+      inverseJoinColumns = {@JoinColumn(name = "supplierCategory_id", referencedColumnName = "id")})
+  private List<SupplierCategory> supplierCategories;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
@@ -78,12 +84,12 @@ public class Supplier implements Serializable {
     this.email = email;
   }
 
-  public SupplierCategory getSuppilerCategory() {
-    return suppilerCategory;
+  public List<SupplierCategory> getSupplierCategories() {
+    return supplierCategories;
   }
 
-  public void setSuppilerCategory(SupplierCategory suppilerCategory) {
-    this.suppilerCategory = suppilerCategory;
+  public void setSupplierCategories(List<SupplierCategory> supplierCategories) {
+    this.supplierCategories = supplierCategories;
   }
 
   public Plant getPlant() {
