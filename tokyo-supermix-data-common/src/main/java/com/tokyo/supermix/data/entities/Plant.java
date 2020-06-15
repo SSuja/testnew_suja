@@ -1,10 +1,14 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant")
@@ -19,8 +23,18 @@ public class Plant implements Serializable {
   private String phoneNumber;
   private String description;
   private String faxNumber;
+  @OneToMany(mappedBy = "plant")
+  Set<PlantRole> plantRole;
+  
+  public Set<PlantRole> getPlantRole() {
+	return plantRole;
+}
 
-  public String getCode() {
+public void setPlantRole(Set<PlantRole> plantRole) {
+	this.plantRole = plantRole;
+}
+
+public String getCode() {
     return code;
   }
 
