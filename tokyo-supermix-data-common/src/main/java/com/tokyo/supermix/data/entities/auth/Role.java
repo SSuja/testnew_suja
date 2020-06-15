@@ -13,7 +13,7 @@ import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.RolePermission;
 
 @Entity
-@Table(name = "role")
+@Table(name = "role", schema = "tokyo-supermix")
 public class Role implements Serializable {
   private static final long serialVersionUID = 1L;
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +24,8 @@ public class Role implements Serializable {
   Set<PlantRole> plantRole;
   @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
   private Set<RolePermission> rolePermission;
+  @OneToMany(mappedBy = "role")
+  private Set<UserRole> userRoles;
 
   public Long getId() {
     return id;

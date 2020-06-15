@@ -8,25 +8,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.enums.UserType;
 
 public class UserPrincipal implements UserDetails {
   private static final long serialVersionUID = -394792056682796726L;
   private Long id;
   private String username;
-  private Role role;
   @JsonIgnore
   private String email;
   @JsonIgnore
   private String password;
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserPrincipal(Long id, String username, Role role, String email, String password,
+  public UserPrincipal(Long id, String username, String email, String password,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
-    this.role = role;
     this.email = email;
     this.password = password;
     this.authorities = authorities;
@@ -34,13 +32,28 @@ public class UserPrincipal implements UserDetails {
 
   public static UserPrincipal create(User user) {
     List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-    authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
-    user.getRole().getRolePermission().forEach(rolePermission -> {
-      if(rolePermission.isStatus()) {
-          authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
-      }
-    });
-    return new UserPrincipal(user.getId(), user.getUserName(), user.getRole(), user.getEmail(),
+    if(user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
+     user.getUserRoles().forEach(userRole->{
+       authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));     
+       userRole.getRole().getRolePermission().forEach(rolePermission -> {
+         if(rolePermission.isStatus()) {
+           authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
+         }
+       });
+     });
+    }
+//    else {
+//      user.getUserPlantRoles().forEach(userPlantRole->{
+//        authorities.add(new SimpleGrantedAuthority(userPlantRole.getPlantRole().getName()));     
+//        userPlantRole.getRole().getRolePermission().forEach(rolePermission -> {
+//          if(rolePermission.isStatus()) {
+//            authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
+//          }
+//        });
+//      });
+//    }
+    
+    return new UserPrincipal(user.getId(), user.getUserName(), user.getEmail(),
         user.getPassword(), authorities);
   }
 
@@ -51,17 +64,6 @@ public class UserPrincipal implements UserDetails {
   public String getEmail() {
     return email;
   }
-
-  public Role getRole() {
-    return role;
-  }
-
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
-
   @Override
   public String getUsername() {
     return username;
@@ -110,7 +112,6 @@ public class UserPrincipal implements UserDetails {
 
   @Override
   public int hashCode() {
-
     return Objects.hash(id);
   }
 
