@@ -48,25 +48,26 @@ public class TestConfigureController {
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   @PreAuthorize("hasAuthority('add_test_configure')")
-  public  ResponseEntity<Object> createTestConfigure(
+  public ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
-	  if(!(testTypeService.getTestTypeById(testConfigureRequestDto.getTestTypeId()).getMaterialSubCategory().getMaterialCategory().getName() == "Admixture") ){
-	  
-	  if(!testConfigureService.isexistByTestTypeIdAndTestId(testConfigureRequestDto.getTestTypeId(), testConfigureRequestDto.getTestId() )) {
-		  testConfigureService
-	        .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
-		  return new ResponseEntity<>(
-			        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
-			        HttpStatus.OK);
-		  	  }
-	  return new ResponseEntity<>(    new ValidationFailureResponse(Constants.TEST_CONFIGURE,
-              validationFailureStatusCodes.getTestConfigureAlreadyExist()),
-          HttpStatus.BAD_REQUEST);
-	  }
-	  return new ResponseEntity<>( new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
-		        HttpStatus.OK);
-	  }
-  
+    if (!(testTypeService.getTestTypeById(testConfigureRequestDto.getTestTypeId())
+        .getMaterialSubCategory().getMaterialCategory().getName() == "Admixture")) {
+
+      if (!testConfigureService.isexistByTestTypeIdAndTestId(
+          testConfigureRequestDto.getTestTypeId(), testConfigureRequestDto.getTestId())) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+            testConfigureService
+                .saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class)),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+          validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
+        HttpStatus.OK);
+  }
+
 
   @GetMapping(value = EndpointURI.TEST_CONFIGURES)
   @PreAuthorize("hasAuthority('get_test_configure')")
@@ -169,13 +170,14 @@ public class TestConfigureController {
         testConfigureService.searchTestConfigure(predicate, page, size), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.GET_TEST_DETAILS_BY_CONFIGURE_ID)
   public ResponseEntity<Object> getTestDetailsById(@PathVariable Long id) {
     if (testConfigureService.isTestConfigureExist(id)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
-         testConfigureService.getTestDetailsByConfigureId(id),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.TEST_CONFIGURE,
+              testConfigureService.getTestDetailsByConfigureId(id), RestApiResponseStatus.OK),
+          HttpStatus.OK);
     }
     logger.debug("No Test record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
