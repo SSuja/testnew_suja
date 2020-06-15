@@ -19,8 +19,8 @@ public class Permission implements Serializable {
   @OneToMany(mappedBy = "permission")
   private Set<RolePermission> rolePermission;
   @ManyToOne
-  @JoinColumn(name = "sub_route_id", nullable = false)
-  private SubRoute subRoute;
+  @JoinColumn(name = "sub_module_id", nullable = false)
+  private SubModule subModule;
 
   public Long getId() {
     return id;
@@ -46,12 +46,11 @@ public class Permission implements Serializable {
     this.rolePermission = rolePermission;
   }
 
-  public SubRoute getSubRoute() {
-    return subRoute;
+  public SubModule getSubModule() {
+    return subModule;
   }
 
-  public void setSubRoute(SubRoute subRoute) {
-    this.subRoute = subRoute;
+  public void setSubModule(SubModule subModule) {
+    this.subModule = subModule;
   }
-
 }

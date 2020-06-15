@@ -578,22 +578,33 @@ public final class EndpointURI {
 			+ "{testName}";
 
 	/*
-	 * role Permission
+	 * Permission
 	 */
-	public static final String PRIVILEGE = BASE_API_PATH + "privilege";
 	public static final String PERMISSION = BASE_API_PATH + "permission";
 	public static final String PERMISSIONS = BASE_API_PATH + "permissions";
-	public static final String ROUTE = "route";
-	public static final String ROUTE_PRIVILEGES = PRIVILEGE +SLASH+ ROUTE + SLASH + "{roleId}";
-	public static final String ROUTE_PERMISSIONS = PERMISSIONS +SLASH +ROUTE;
-	public static final String PRIVILEGES = PRIVILEGE + SLASH + "{roleId}";
-	public static final String STATUS_PRIVILEGES = PRIVILEGE + SLASH +"/status/"+"{status}";
-	public static final String SUBROUTE = "sub-route" + SLASH + "{subRouteName}";
-	public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
-	public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
-	public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
-
-  /*
+    public static final String SUBMODULE = "sub-module" + SLASH + "{subModuleName}";
+	public static final String PERMISSION_BY_SUBMODULE = PERMISSION + SLASH + SUBMODULE;
+	
+	/*
+     * role Permission
+     */
+	public static final String ROLE_PERMISSION = BASE_API_PATH + "role-permission";
+	public static final String ROLE_PERMISSIONS = ROLE_PERMISSION + SLASH + "{roleId}";
+	public static final String STATUS_ROLE_PERMISSIONS = ROLE_PERMISSION + SLASH +"status"+ SLASH +"{status}";
+	public static final String ROLE_PERMISSION_MODULE_STATUS = ROLE_PERMISSION + SLASH + "module" + SLASH + "status" +SLASH +"{roleId}";
+	 
+	
+	/*
+     * main Module
+     */
+	public static final String MODULE = "module";
+	public static final String MAIN_MODULES = BASE_API_PATH + "main-modules";
+	public static final String MODULE_ROLE_PERMISSIONS = ROLE_PERMISSION +SLASH +MODULE;
+	/*
+     * sub Module
+     */
+	public static final String SUB_MODULES_BY_MAIN_MODULE = PERMISSION + SLASH + "{mainModule}";
+	 /*
    * File Export
    */
   public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";

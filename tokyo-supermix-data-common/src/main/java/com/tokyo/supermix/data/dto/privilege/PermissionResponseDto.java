@@ -3,22 +3,22 @@ package com.tokyo.supermix.data.dto.privilege;
 import java.util.List;
 
 public class PermissionResponseDto {
-  private String mainRoute;
-  private List<SubRoutePermissionDto> subRoutes;
+  private String mainModule;
+  private List<SubModulePermissionDto> subModules;
 
-  public String getMainRoute() {
-    return mainRoute;
+  public String getMainModule() {
+    return mainModule;
   }
 
-  public void setMainRoute(String mainRoute) {
-    this.mainRoute = mainRoute;
+  public void setMainModule(String mainModule) {
+    this.mainModule = mainModule;
   }
 
-  public List<SubRoutePermissionDto> getSubRoutes() {
-    return subRoutes;
+  public List<SubModulePermissionDto> getSubModules() {
+    return subModules;
   }
 
-  public void setSubRoutes(List<SubRoutePermissionDto> subRoutes) {
-    this.subRoutes = subRoutes;
+  public void setSubModules(List<SubModulePermissionDto> subModules) {
+    this.subModules = subModules;
   }
 }
