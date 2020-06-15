@@ -10,7 +10,7 @@ public interface TestConfigureRepository
     extends JpaRepository<TestConfigure, Long>, QuerydslPredicateExecutor<TestConfigure> {
   List<TestConfigure> findByTestType(TestType testType);
 
-  boolean existsByTestTypeIdAndTestId(Long testId, Long testTypeId);
+  boolean existsByTestTypeIdAndTestId(Long testTypeId,Long testId );
 
   List<TestConfigure> findByTestTypeId(Long testTypeId);
 
