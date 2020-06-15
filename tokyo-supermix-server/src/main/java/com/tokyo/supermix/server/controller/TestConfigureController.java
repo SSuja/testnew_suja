@@ -47,25 +47,25 @@ public class TestConfigureController {
 	private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
 	@PostMapping(value = EndpointURI.TEST_CONFIGURE)
-//	@PreAuthorize("hasAuthority('add_test_configure')")
+	@PreAuthorize("hasAuthority('add_test_configure')")
 	public ResponseEntity<Object> createTestConfigure(
 			@Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
 		if (!testTypeService.getTestTypeById(testConfigureRequestDto.getTestTypeId()).getMaterialSubCategory()
 				.getMaterialCategory().getName().equalsIgnoreCase("Admixture")) {
 			if (!testConfigureService.isexistByTestTypeIdAndTestId(testConfigureRequestDto.getTestTypeId(),
 					testConfigureRequestDto.getTestId())) {
-				testConfigureService.saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
-				return new ResponseEntity<>(
-						new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS),
-						HttpStatus.OK);
+				return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+						testConfigureService.saveTestConfigure(
+								mapper.map(testConfigureRequestDto, TestConfigure.class)),
+						RestApiResponseStatus.OK), HttpStatus.OK);
 			}
 
 			return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
 					validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
 		} else {
-			testConfigureService.saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
-			return new ResponseEntity<>(
-					new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_CONFIGURE_SUCCESS), HttpStatus.OK);
+			return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+					testConfigureService.saveTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class)),
+					RestApiResponseStatus.OK), HttpStatus.OK);
 		}
 	}
 
