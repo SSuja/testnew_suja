@@ -74,8 +74,4 @@ public class PlantRole implements Serializable {
     this.plantRolePlantPermissions = plantRolePlantPermissions;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
 }
