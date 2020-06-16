@@ -21,6 +21,8 @@ public class Permission implements Serializable {
   @ManyToOne
   @JoinColumn(name = "sub_module_id", nullable = false)
   private SubModule subModule;
+  @OneToMany(mappedBy = "permission")
+  private Set<PlantPermission> plantPermission;
 
   public Long getId() {
     return id;
@@ -53,4 +55,17 @@ public class Permission implements Serializable {
   public void setSubModule(SubModule subModule) {
     this.subModule = subModule;
   }
+
+  public Set<PlantPermission> getPlantPermission() {
+    return plantPermission;
+  }
+
+  public void setPlantPermission(Set<PlantPermission> plantPermission) {
+    this.plantPermission = plantPermission;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
 }

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
 @Entity
@@ -21,6 +23,8 @@ public class Plant implements Serializable {
   private String faxNumber;
   @OneToMany(mappedBy = "plant")
   Set<PlantRole> plantRole;
+  @OneToMany(mappedBy = "plant")
+  Set<PlantPermission> plantPermission;
 
   public Set<PlantRole> getPlantRole() {
     return plantRole;
@@ -81,5 +85,14 @@ public class Plant implements Serializable {
   public void setFaxNumber(String faxNumber) {
     this.faxNumber = faxNumber;
   }
+
+  public Set<PlantPermission> getPlantPermission() {
+    return plantPermission;
+  }
+
+  public void setPlantPermission(Set<PlantPermission> plantPermission) {
+    this.plantPermission = plantPermission;
+  }
+
 
 }

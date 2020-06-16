@@ -1,12 +1,14 @@
 package com.tokyo.supermix.data.entities.privilege;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.auth.Role;
@@ -28,8 +30,8 @@ public class PlantRole implements Serializable {
   private Role role;
 
   private String name;
-//  @OneToMany(mappedBy = "plantRole")
-//  private Set<UserPlantRole> userPlantRoles;
+  @OneToMany(mappedBy = "plantRole")
+  private Set<RolePlantPermission> rolePlantPermission;
 
   public Long getId() {
     return id;
@@ -61,6 +63,18 @@ public class PlantRole implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Set<RolePlantPermission> getRolePlantPermission() {
+    return rolePlantPermission;
+  }
+
+  public void setRolePlantPermission(Set<RolePlantPermission> rolePlantPermission) {
+    this.rolePlantPermission = rolePlantPermission;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 
 }

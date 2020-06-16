@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities.privilege;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,17 +13,12 @@ public class RolePlantPermission implements Serializable {
 	 private static final long serialVersionUID = 1L;
 		@Id
 	    private Long id;
-		
-
-	    @ManyToOne
+		@ManyToOne
 	    @JoinColumn(name = "plantPermission_id")
-	    private PlantPermission plantpermission;
-	            
-	 
+	    private PlantPermission plantpermission;      
 	    @ManyToOne
 	    @JoinColumn(name = "plantRole_id")
 	    private PlantRole plantRole;
-	    
 	    private boolean status;
 
 		public Long getId() {
