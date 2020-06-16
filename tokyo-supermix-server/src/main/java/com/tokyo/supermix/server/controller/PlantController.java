@@ -34,13 +34,10 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class PlantController {
   @Autowired
   PlantService plantService;
-
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
   private static final Logger logger = Logger.getLogger(PlantController.class);
 
   @PostMapping(value = EndpointURI.PLANT)
@@ -61,8 +58,8 @@ public class PlantController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
   }
 
- @GetMapping(value = EndpointURI.PLANTS)
-@PreAuthorize("hasAuthority('get_plant')")
+  @GetMapping(value = EndpointURI.PLANTS)
+  @PreAuthorize("hasAuthority('get_plant')")
   public ResponseEntity<Object> getAllPlants() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.PLANTS,
