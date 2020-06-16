@@ -14,10 +14,10 @@ public class RolePlantPermission implements Serializable {
 		@Id
 	    private Long id;
 		@ManyToOne
-	    @JoinColumn(name = "plantPermission_id")
-	    private PlantPermission plantpermission;      
+	    @JoinColumn(name = "plant_permission_id")
+	    private PlantPermission plantPermission;      
 	    @ManyToOne
-	    @JoinColumn(name = "plantRole_id")
+	    @JoinColumn(name = "plant_role_id")
 	    private PlantRole plantRole;
 	    private boolean status;
 
@@ -27,14 +27,6 @@ public class RolePlantPermission implements Serializable {
 
 		public void setId(Long id) {
 			this.id = id;
-		}
-
-		public PlantPermission getPlantpermission() {
-			return plantpermission;
-		}
-
-		public void setPlantpermission(PlantPermission plantpermission) {
-			this.plantpermission = plantpermission;
 		}
 
 		public PlantRole getPlantRole() {

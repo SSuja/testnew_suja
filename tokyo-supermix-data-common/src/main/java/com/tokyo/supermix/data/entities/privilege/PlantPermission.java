@@ -22,10 +22,10 @@ public class PlantPermission implements Serializable {
   private Permission permission;
   @ManyToOne
   @JoinColumn(name = "plant_code")
-  @OneToMany(mappedBy = "plantpermission")
-  private Set<RolePlantPermission> rolePlantPermission;
-
   private Plant plant;
+  
+  @OneToMany(mappedBy = "plantPermission")
+  private Set<RolePlantPermission> rolePlantPermission;
 
   public Long getId() {
     return id;
