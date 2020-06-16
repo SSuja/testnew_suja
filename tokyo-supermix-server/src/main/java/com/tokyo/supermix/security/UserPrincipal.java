@@ -33,26 +33,28 @@ public class UserPrincipal implements UserDetails {
   public static UserPrincipal create(User user) {
     List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
     if(user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-     user.getUserRoles().forEach(userRole->{
-       authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));     
-       userRole.getRole().getRolePermission().forEach(rolePermission -> {
-         if(rolePermission.isStatus()) {
-           authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
-         }
-       });
-     });
+      user.getRoles().forEach(role->{
+        authorities.add(new SimpleGrantedAuthority(role.getName()));     
+      role.getRolePermissions().forEach(rolePermission -> {
+        if(rolePermission.isStatus()) {
+          System.out.println("permissions "+rolePermission.getPermission().getName());
+          authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
+        }
+      });
+    });
+//      user.getUserRoles().forEach(userRole->{
+//      authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));     
+//      userRole.getRole().getRolePermissions().forEach(rolePermission -> {
+//      if(rolePermission.isStatus()) {
+//        System.out.println("permissions "+rolePermission.getPermission().getName());
+//        authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
+//      }
+//    });
+//  });
     }
-//    else {
-//      user.getUserPlantRoles().forEach(userPlantRole->{
-//        authorities.add(new SimpleGrantedAuthority(userPlantRole.getPlantRole().getName()));     
-//        userPlantRole.getRole().getRolePermission().forEach(rolePermission -> {
-//          if(rolePermission.isStatus()) {
-//            authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
-//          }
-//        });
-//      });
-//    }
-    
+    else {
+      
+    }
     return new UserPrincipal(user.getId(), user.getUserName(), user.getEmail(),
         user.getPassword(), authorities);
   }

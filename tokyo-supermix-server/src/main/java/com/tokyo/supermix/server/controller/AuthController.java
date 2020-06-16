@@ -73,7 +73,7 @@ public class AuthController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    userService.saveUser(mapper.map(userRequestDto, User.class));
+    userService.saveUser(mapper.map(userRequestDto, User.class),userRequestDto.getRoleIds());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS), HttpStatus.OK);
   }

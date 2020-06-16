@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
@@ -12,7 +14,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
+import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
 
@@ -24,21 +29,38 @@ public class UserServiceImpl implements UserService {
   PasswordEncoder passwordEncoder;
   @Autowired
   private EmployeeRepository employeeRepository;
-
+  
   @Transactional
-  public UserCredentialDto saveUser(User user) {
-    String email = user.getEmail();
-    String userName = email.substring(0, email.indexOf('@'));
-    user.setUserName(userName);
+  public UserCredentialDto saveUser(User user,List<Long> roles) {
+    user.setUserName(user.getEmail());
     String password = generateRandomPassword();
+  if(user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
+    Set<Role> roleList = new HashSet<Role>();
+    roles.forEach(roleId->{
+      Role role = new Role();
+      role.setId(roleId);
+      roleList.add(role);
+    });
+    user.setRoles(roleList);
+  }else {
+    Set<PlantRole> plantRoleList = new HashSet<PlantRole>();
+    roles.forEach(roleId->{
+      PlantRole plantrole = new PlantRole();
+      plantrole.setId(roleId);
+      plantRoleList.add(plantrole);
+    });
+    user.setPlantRoles(plantRoleList);
+  }
     saveUserPassword(user, password);
-    Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
-    employee.setHasUser(true);
-    employeeRepository.save(employee);
+    if(user.getEmployee()!=null) {  
+      Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
+      employee.setHasUser(true);
+      employeeRepository.save(employee);
+    }
     UserCredentialDto dto = new UserCredentialDto();
-    dto.setUserName(userName);
+    dto.setUserName(user.getUserName());
     dto.setPassword(password);
-    dto.setEmail(email);
+    dto.setEmail(user.getEmail());
     return dto;
   }
 

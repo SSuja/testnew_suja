@@ -5,7 +5,7 @@ import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.auth.User;
 
 public interface UserService {
-  UserCredentialDto saveUser(User user);
+  UserCredentialDto saveUser(User user,List<Long> roleIds);
 
   public boolean isUserNameExist(String userName);
 

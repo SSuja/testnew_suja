@@ -6,10 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.UserType;
 
 @Entity
@@ -27,11 +29,24 @@ public class User extends DateAudit {
   private Employee employee;
   private UserType userType;
 
-  @OneToMany(mappedBy = "role")
-  private Set<UserRole> userRoles;
+  @ManyToMany
+  @JoinTable(
+    name = "user_role", 
+    joinColumns = @JoinColumn(name = "user_id"), 
+    inverseJoinColumns = @JoinColumn(name = "role_id"))
+    Set<Role> roles;
+  @ManyToMany
+  @JoinTable(
+    name = "user_plant_role", 
+    joinColumns = @JoinColumn(name = "user_id"), 
+    inverseJoinColumns = @JoinColumn(name = "plant_role_id"))
+    Set<PlantRole> plantRoles;
+  
+//  @OneToMany(mappedBy = "role")
+//  private Set<UserRole> userRoles;
 
-  @OneToMany(mappedBy = "user")
-  private Set<UserPlantRole> userPlantRoles;
+//  @OneToMany(mappedBy = "user")
+//  private Set<UserPlantRole> userPlantRoles;
 
   public Long getId() {
     return id;
@@ -81,20 +96,36 @@ public class User extends DateAudit {
     this.userType = userType;
   }
 
-  public Set<UserRole> getUserRoles() {
-    return userRoles;
+  public Set<Role> getRoles() {
+    return roles;
   }
 
-  public void setUserRoles(Set<UserRole> userRoles) {
-    this.userRoles = userRoles;
+  public void setRoles(Set<Role> roles) {
+    this.roles = roles;
   }
 
-  public Set<UserPlantRole> getUserPlantRoles() {
-    return userPlantRoles;
+  public Set<PlantRole> getPlantRoles() {
+    return plantRoles;
   }
 
-  public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
-    this.userPlantRoles = userPlantRoles;
+  public void setPlantRoles(Set<PlantRole> plantRoles) {
+    this.plantRoles = plantRoles;
   }
+
+//  public Set<UserRole> getUserRoles() {
+//    return userRoles;
+//  }
+//
+//  public void setUserRoles(Set<UserRole> userRoles) {
+//    this.userRoles = userRoles;
+//  }
+
+//  public Set<UserPlantRole> getUserPlantRoles() {
+//    return userPlantRoles;
+//  }
+//
+//  public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
+//    this.userPlantRoles = userPlantRoles;
+//  }
 
 }

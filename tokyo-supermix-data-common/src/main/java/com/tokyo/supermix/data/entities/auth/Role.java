@@ -23,10 +23,10 @@ public class Role implements Serializable {
   @OneToMany(mappedBy = "role")
   Set<PlantRole> plantRole;
   @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
-  private Set<RolePermission> rolePermission;
-  @OneToMany(mappedBy = "role")
-  private Set<UserRole> userRoles;
-
+  private Set<RolePermission> rolePermissions;
+//  @OneToMany(mappedBy = "role")
+//  private Set<UserRole> userRoles;
+  
   public Long getId() {
     return id;
   }
@@ -43,12 +43,20 @@ public class Role implements Serializable {
     this.name = name;
   }
 
-  public Set<RolePermission> getRolePermission() {
-    return rolePermission;
+  public Set<PlantRole> getPlantRole() {
+    return plantRole;
   }
 
-  public void setRolePermission(Set<RolePermission> rolePermission) {
-    this.rolePermission = rolePermission;
+  public void setPlantRole(Set<PlantRole> plantRole) {
+    this.plantRole = plantRole;
   }
 
+  public Set<RolePermission> getRolePermissions() {
+    return rolePermissions;
+  }
+
+  public void setRolePermissions(Set<RolePermission> rolePermissions) {
+    this.rolePermissions = rolePermissions;
+  }
+ 
 }
