@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionRequestDto;
 import com.tokyo.supermix.data.entities.privilege.RolePermission;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -28,7 +28,7 @@ public class RolePermissionController {
   @Autowired
   private Mapper mapper;
 
-  @PutMapping(value = EndpointURI.ROLE_PERMISSION)
+  @PutMapping(value = PrivilegeEndpointURI.ROLE_PERMISSION)
   public ResponseEntity<Object> updatePrivilage(
       @RequestBody List<RolePermissionRequestDto> rolePermissionRequestDtos) {
     for (RolePermissionRequestDto RolePermissionRequestDto : rolePermissionRequestDtos) {
@@ -42,7 +42,7 @@ public class RolePermissionController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.ROLE_PERMISSIONS)
+  @GetMapping(value = PrivilegeEndpointURI.ROLE_PERMISSIONS)
   public ResponseEntity<Object> getRolePermissionsByRole(@PathVariable("roleId") Long roleId) {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.ROLE_PERMISSIONS,
@@ -50,20 +50,20 @@ public class RolePermissionController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.STATUS_ROLE_PERMISSIONS)
+  @GetMapping(value = PrivilegeEndpointURI.STATUS_ROLE_PERMISSIONS)
   public ResponseEntity<Object> getRolePermissionsByRoleAndStatus(
       @PathVariable("status") boolean status) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.ROLE_PERMISSIONS,
-        mapper.map(RolePermissionService.getRolePermissionByStatus(status), RolePermissionRequestDto.class),
+        mapper.map(RolePermissionService.getRolePermissionByStatus(status),
+            RolePermissionRequestDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.ROLE_PERMISSION_MODULE_STATUS)
+  @GetMapping(value = PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS)
   public ResponseEntity<Object> getModuleRolePermissionsByRoleAndModuleStatus(
       @PathVariable("roleId") Long roleId) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.ROLE_PERMISSIONS,
-            RolePermissionService.getRolePermissionWithModuleByRoleId(roleId), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.ROLE_PERMISSIONS,
+        RolePermissionService.getRolePermissionWithModuleByRoleId(roleId),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

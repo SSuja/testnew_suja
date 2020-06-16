@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PlantRoleDto;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -27,7 +27,7 @@ public class PlantRoleController {
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
 
-  @PostMapping(value = EndpointURI.PLANT_ROLE)
+  @PostMapping(value = PrivilegeEndpointURI.PLANT_ROLE)
   public ResponseEntity<Object> createParameter(@Valid @RequestBody PlantRoleDto plantRoleDto) {
     if (plantRoleService.existsByPlantCodeAndRoleId(plantRoleDto.getPlantCode(),
         plantRoleDto.getRoleId())) {
