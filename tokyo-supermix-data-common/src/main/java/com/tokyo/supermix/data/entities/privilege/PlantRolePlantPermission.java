@@ -37,6 +37,14 @@ public class PlantRolePlantPermission implements Serializable {
     this.plantRole = plantRole;
   }
 
+  public PlantPermission getPlantPermission() {
+    return plantPermission;
+  }
+
+  public void setPlantPermission(PlantPermission plantPermission) {
+    this.plantPermission = plantPermission;
+  }
+
   public boolean isStatus() {
     return status;
   }
