@@ -31,7 +31,7 @@ public class PlantRole implements Serializable {
 
   private String name;
   @OneToMany(mappedBy = "plantRole")
-  private Set<PlantRolePlantPermission> plantRolePlantPermission;
+  private Set<PlantRolePlantPermission> plantRolePlantPermissions;
 
   public Long getId() {
     return id;
@@ -65,12 +65,13 @@ public class PlantRole implements Serializable {
     this.name = name;
   }
 
-  public Set<PlantRolePlantPermission> getRolePlantPermission() {
-    return plantRolePlantPermission;
+  public Set<PlantRolePlantPermission> getPlantRolePlantPermissions() {
+    return plantRolePlantPermissions;
   }
 
-  public void setRolePlantPermission(Set<PlantRolePlantPermission> plantRolePlantPermission) {
-    this.plantRolePlantPermission = plantRolePlantPermission;
+  public void setPlantRolePlantPermissions(
+      Set<PlantRolePlantPermission> plantRolePlantPermissions) {
+    this.plantRolePlantPermissions = plantRolePlantPermissions;
   }
 
   public static long getSerialversionuid() {
