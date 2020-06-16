@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "role_plant_permission")
-public class RolePlantPermission implements Serializable {
+public class PlantRolePermission implements Serializable {
 	 private static final long serialVersionUID = 1L;
 		@Id
 	    private Long id;
