@@ -584,17 +584,22 @@ public class Constants {
   /*
    * Constants for privilege
    */
-  public static final String UPDATE_PRIVILEGE_SUCCESS = "Privileges Updated Successfully";
-  public static final String PRIVILEGES = "privileges";
+  public static final String UPDATE_ROLE_PERMISSION_SUCCESS = "Role Permissions Updated Successfully";
+  public static final String ROLE_PERMISSIONS = "rolePermissions";
   public static final String PERMISSIONS = "permissions";
-  public static final String MAIN_ROUTES = "mainRoutes";
-  public static final String SUB_ROUTES = "subRoutes";
+  public static final String MAIN_MODULES = "mainModules";
+  public static final String SUB_MODULES = "subModules";
 
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
   
-
-  /*
+  public static final String PLANT_PERMISSION_ID = "PlantPermissionId";
+  public static final String PLANT_PERMISSION = "Plants";
+  public static final String PLANT_PERMISSIONS = "PlantPermissions";
+  public static final String PLANT_PERMISSION_NAME = "PlantPermissionName";
+  
+  public static final String ADD_PLANT_ROLE_SUCCESS = "Sucessfully added plantRole";
+    /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}

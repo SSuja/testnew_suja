@@ -9,8 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "main_route")
-public class MainRoute implements Serializable {
+@Table(schema = "tokyo-supermix", name = "main_module")
+public class MainModule implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

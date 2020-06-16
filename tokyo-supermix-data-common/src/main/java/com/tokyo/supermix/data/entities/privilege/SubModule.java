@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "sub_route")
-public class SubRoute implements Serializable {
+@Table(schema = "tokyo-supermix", name = "sub_module")
+public class SubModule implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +20,8 @@ public class SubRoute implements Serializable {
   @Column(name = "name")
   private String name;
   @ManyToOne
-  @JoinColumn(name = "main_route_id", nullable = false)
-  private MainRoute mainRoute;
+  @JoinColumn(name = "main_module_id", nullable = false)
+  private MainModule mainModule;
 
   public Long getId() {
     return id;
@@ -39,11 +39,11 @@ public class SubRoute implements Serializable {
     this.name = name;
   }
 
-  public MainRoute getMainRoute() {
-    return mainRoute;
+  public MainModule getMainModule() {
+    return mainModule;
   }
 
-  public void setMainRoute(MainRoute mainRoute) {
-    this.mainRoute = mainRoute;
+  public void setMainModule(MainModule mainModule) {
+    this.mainModule = mainModule;
   }
 }

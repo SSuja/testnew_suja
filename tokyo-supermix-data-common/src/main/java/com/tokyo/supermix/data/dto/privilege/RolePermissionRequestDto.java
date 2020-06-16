@@ -1,6 +1,6 @@
 package com.tokyo.supermix.data.dto.privilege;
 
-public class PrivilegeRequestDto {
+public class RolePermissionRequestDto {
   private Long roleId;
   private Long permissionId;
   private Boolean status;
