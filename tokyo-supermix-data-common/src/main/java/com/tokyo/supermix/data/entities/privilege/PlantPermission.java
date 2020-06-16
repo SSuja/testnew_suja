@@ -1,12 +1,14 @@
 package com.tokyo.supermix.data.entities.privilege;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Plant;
 
@@ -24,6 +26,8 @@ public class PlantPermission implements Serializable {
   @JoinColumn(name = "plant_code")
   private Plant plant;
   private String name;
+  @OneToMany(mappedBy = "plantPermission")
+  private Set<PlantRolePlantPermission> plantRolePlantPermission;
 
   public Long getId() {
     return id;
@@ -49,15 +53,23 @@ public class PlantPermission implements Serializable {
     this.plant = plant;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Set<PlantRolePlantPermission> getPlantRolePlantPermission() {
+    return plantRolePlantPermission;
+  }
+
+  public void setPlantRolePlantPermission(Set<PlantRolePlantPermission> plantRolePlantPermission) {
+    this.plantRolePlantPermission = plantRolePlantPermission;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }
