@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
+import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
 
 @Service
 public class PlantServiceImpl implements PlantService {
@@ -24,15 +25,19 @@ public class PlantServiceImpl implements PlantService {
   private PlantRoleRepository plantRoleRepository;
   @Autowired
   private RoleRepository roleRepository;
+  @Autowired
+  private PlantPermissionService plantPermissionService;
 
   @Transactional
   public void savePlant(Plant plant) {
     PlantRole plantRole = new PlantRole();
-    plantRole.setPlant(plantRepository.save(plant));
+    Plant plantObj = plantRepository.save(plant);
+    plantRole.setPlant(plantObj);
     Role role = roleRepository.findById(1l).get();
     plantRole.setRole(role);
     plantRole.setName(plant.getName().toUpperCase() + "_" + role.getName());
     plantRoleRepository.save(plantRole);
+    plantPermissionService.savePlantPermission(plantObj);
   }
 
   @Transactional(readOnly = true)

@@ -1,36 +1,42 @@
 package com.tokyo.supermix.data.dto.privilege;
 
-import com.tokyo.supermix.data.entities.Plant;
-import com.tokyo.supermix.data.entities.privilege.Permission;
+import com.tokyo.supermix.data.dto.PlantDto;
 
 public class PlantPermissionResponseDto {
+  private Long id;
+  private String permissionName;
+  private PlantDto plant;
+  private String name;
 
-	private Long id;
-	private Permission Permission;
-	private Plant plant;
+  public Long getId() {
+    return id;
+  }
 
-	public Long getId() {
-		return id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public String getPermissionName() {
+    return permissionName;
+  }
 
-	public Permission getPermission() {
-		return Permission;
-	}
+  public void setPermissionName(String permissionName) {
+    this.permissionName = permissionName;
+  }
 
-	public void setPermission(Permission permission) {
-		Permission = permission;
-	}
+  public PlantDto getPlant() {
+    return plant;
+  }
 
-	public Plant getPlant() {
-		return plant;
-	}
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
+  }
 
-	public void setPlant(Plant plant) {
-		this.plant = plant;
-	}
+  public String getName() {
+    return name;
+  }
 
+  public void setName(String name) {
+    this.name = name;
+  }
 }
