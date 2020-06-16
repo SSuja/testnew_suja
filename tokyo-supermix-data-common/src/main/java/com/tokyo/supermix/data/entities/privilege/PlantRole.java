@@ -27,6 +27,7 @@ public class PlantRole implements Serializable {
   @JoinColumn(name = "role_id")
   private Role role;
 
+  private String name;
 //  @OneToMany(mappedBy = "plantRole")
 //  private Set<UserPlantRole> userPlantRoles;
 
