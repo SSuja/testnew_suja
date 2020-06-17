@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.auth.GenerateUserDto;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
@@ -41,16 +42,20 @@ public class UserController {
   private EmailService emailService;
   private static final Logger logger = Logger.getLogger(UserController.class);
 
-  @PostMapping(value = EndpointURI.USER)
+  @PostMapping(value = PrivilegeEndpointURI.USER)
   public ResponseEntity<Object> createUser(@Valid @RequestBody GenerateUserDto generateUserDto) {
+    if (userService.existsByEmail(generateUserDto.getEmail())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
+          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     if (generateUserDto.getUserType().name().equalsIgnoreCase(UserType.PLANT_USER.name())) {
       if (generateUserDto.getEmployeeId() == null) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
             validationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
       } else if (userService.isEmployeeExist(generateUserDto.getEmployeeId())) {
         logger.debug("Employee already exists: createUser(), employee: {}");
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
-            validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
+            validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     }
     UserCredentialDto userDto =
@@ -64,7 +69,7 @@ public class UserController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.USERS)
+  @GetMapping(value = PrivilegeEndpointURI.USERS)
   public ResponseEntity<Object> getAllUsers() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.USER,
@@ -72,7 +77,7 @@ public class UserController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.USER_BY_ID)
+  @GetMapping(value = PrivilegeEndpointURI.USER_BY_ID)
   public ResponseEntity<Object> getUserById(@PathVariable Long id) {
     if (userService.isUserExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.USER,
@@ -84,7 +89,7 @@ public class UserController {
         validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(EndpointURI.USER_BY_ID)
+  @DeleteMapping(PrivilegeEndpointURI.USER_BY_ID)
   public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
     if (userService.isUserExist(id)) {
       userService.deleteUser(id);
@@ -97,16 +102,16 @@ public class UserController {
         validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // @PutMapping(value = EndpointURI.USER)
-  // public ResponseEntity<Object> updateUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-  // if (userService.isUserExist(userRequestDto.getId())) {
-  // userService.saveUser(mapper.map(userRequestDto, User.class),);
-  // return new ResponseEntity<>(
-  // new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_USER_SUCCESS),
-  // HttpStatus.OK);
-  // }
-  // logger.debug("No User record exist for given id");
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-  // validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
-  // }
+  @PutMapping(value = PrivilegeEndpointURI.UPDATE_USER_STATUS_BY_ID)
+  public ResponseEntity<Object> updateUserStatus(@PathVariable Long userId,
+      @PathVariable Boolean status) {
+    if (userService.isUserExist(userId)) {
+      userService.updateUserStatus(userId, status);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_USER_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
+        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

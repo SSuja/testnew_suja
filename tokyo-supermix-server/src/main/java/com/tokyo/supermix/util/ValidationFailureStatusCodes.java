@@ -1374,7 +1374,9 @@ public class ValidationFailureStatusCodes {
   private String isMatchPassword;
   @Value("${auth.passwordToken.invalid}")
   private String isPasswordTokenFailed;
-
+  @Value("${auth.userNotActive.invalid}")
+  private String userNotActive;
+  
   public String getPassword() {
     return password;
   }
@@ -1413,6 +1415,14 @@ public class ValidationFailureStatusCodes {
 
   public void setIsPasswordTokenFailed(String isPasswordTokenFailed) {
     this.isPasswordTokenFailed = isPasswordTokenFailed;
+  }
+
+  public String getUserNotActive() {
+    return userNotActive;
+  }
+
+  public void setUserNotActive(String userNotActive) {
+    this.userNotActive = userNotActive;
   }
 
   /*

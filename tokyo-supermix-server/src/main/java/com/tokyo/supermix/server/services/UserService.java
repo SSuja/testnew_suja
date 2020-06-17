@@ -26,4 +26,6 @@ public interface UserService {
   void changeUserPassword(User user, String password);
 
   User findUserByEmail(String userEmail);
+
+  void updateUserStatus(Long userId, Boolean status);
 }
