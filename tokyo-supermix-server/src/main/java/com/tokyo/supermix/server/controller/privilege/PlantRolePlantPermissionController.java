@@ -31,13 +31,22 @@ public class PlantRolePlantPermissionController {
   public ResponseEntity<Object> getPlantRolePlantPermissionByPlantRoleId(
       @PathVariable Long plantRoleId) {
     if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_PERMISSIONS,
-        mapper.map(
-            plantRolePlantPermissionServices.getPlantRolePermissionsByPlantRoleId(plantRoleId),
-            PlantRolePlantPermissionDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.PLANT_PERMISSIONS,
+              mapper.map(plantRolePlantPermissionServices.getPlantRolePermissionsByPlantRoleId(
+                  plantRoleId), PlantRolePlantPermissionDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ROLE_ID,
         validationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PERMISSION_MODULE_STATUS)
+  public ResponseEntity<Object> getModulePlantRolePermissionsByRoleAndModuleStatus(
+      @PathVariable("plantRoleId") Long plantRoleId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_PERMISSIONS,
+        plantRolePlantPermissionServices.getPlantRolePermissionWithModuleByRoleId(plantRoleId),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
