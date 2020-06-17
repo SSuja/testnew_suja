@@ -7,14 +7,18 @@ import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
 
 public interface PlantRolePlantPermissionRepository
     extends JpaRepository<PlantRolePlantPermission, Long> {
-  
+
   public List<PlantRolePlantPermission> findByPlantRoleIdAndPlantPermissionPermissionSubModuleId(
       Long plantRoleId, Long subModuleId);
 
+  public List<PlantRolePlantPermission> findByPlantRoleIdAndPlantPermissionPermissionSubModuleIdAndStatus(
+      Long plantRoleId, Long subModuleId, Boolean status);
+
   public List<PlantRolePlantPermission> findByPlantRoleIdAndStatus(Long plantRoleId,
       Boolean status);
-      public List<PlantRolePlantPermission> findByPlantRoleId(Long plantRoleId);
+
+  public List<PlantRolePlantPermission> findByPlantRoleId(Long plantRoleId);
 
   public boolean existsByPlantRoleId(Long plantRoleId);
 
-    }
+}

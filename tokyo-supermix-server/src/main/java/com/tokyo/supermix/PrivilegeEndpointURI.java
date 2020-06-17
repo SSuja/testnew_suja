@@ -41,7 +41,7 @@ public final class PrivilegeEndpointURI {
    * sub Module
    */
   public static final String SUB_MODULES_BY_MAIN_MODULE = PERMISSION + SLASH + "{mainModule}";
-   /*
+  /*
    * plant permission
    */
   public static final String PLANT_PERMISSION = BASE_API_PATH + "plant-permission";
@@ -57,12 +57,16 @@ public final class PrivilegeEndpointURI {
       BASE_API_PATH + "plant-role-plant-permission";
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}";
-  
+
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID =
-      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}"+SLASH+ "subModuleId"+ SLASH + "{subModuleId}";
-  
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
+          + "{subModuleId}";
+
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_STATUS =
-      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}"+SLASH+ "status"+ SLASH + "{status}";
-     
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "status" + SLASH + "{status}";
+  public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID_AND_STATUS =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
+          + "{subModuleId}"+ SLASH + "status" + SLASH + "{status}";;
+
 
 }
