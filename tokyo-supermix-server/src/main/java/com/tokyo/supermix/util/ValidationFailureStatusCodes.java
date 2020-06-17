@@ -1986,4 +1986,26 @@ public class ValidationFailureStatusCodes {
   public String getRoleNameAlreadyExists() {
     return roleNameAlreadyExists;
   }
+  @Value("${validation.plantRole.notExists}")
+  private String plantRoleNotExist;
+
+  @Value("${validation.plantRole.alreadyExist}")
+  private String plantRoleAlreadyExist;
+
+  public String getPlantRoleNotExist() {
+    return plantRoleNotExist;
+  }
+
+  public void setPlantRoleNotExist(String plantRoleNotExist) {
+    this.plantRoleNotExist = plantRoleNotExist;
+  }
+
+  public String getPlantRoleAlreadyExist() {
+    return plantRoleAlreadyExist;
+  }
+
+  public void setPlantRoleAlreadyExist(String plantRoleAlreadyExist) {
+    this.plantRoleAlreadyExist = plantRoleAlreadyExist;
+  }
 }
+
