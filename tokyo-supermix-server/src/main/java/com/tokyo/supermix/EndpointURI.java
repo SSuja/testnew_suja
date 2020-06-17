@@ -272,14 +272,6 @@ public final class EndpointURI {
 	public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
 	/*
-	 * ConcreteStrengthTest APIs
-	 */
-	public static final String CONCRETE_STRENGTH_TEST = BASE_API_PATH + "concrete-strength-test";
-	public static final String CONCRETE_STRENGTH_TESTS = BASE_API_PATH + "concrete-strength-tests";
-	public static final String CONCRETE_STRENGTH_TEST_BY_ID = CONCRETE_STRENGTH_TEST + ID;
-	public static final String SEARCH_CONCRETE_STRENGTH_TEST = CONCRETE_STRENGTH_TEST + SEARCH;
-
-	/*
 	 * Equation Parameter
 	 */
 	public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
@@ -402,17 +394,6 @@ public final class EndpointURI {
 	public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
 	public static final String CONCRETE_MIXER_BY_PLANT_CODE = CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
 	public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
-	/*
-	 * Cube Test Finding
-	 */
-	public static final String CUBE_TEST_FINDING = BASE_API_PATH + "cube-test-finding";
-	public static final String CUBE_TEST_FINDINGS = BASE_API_PATH + "cube-test-findings";
-	public static final String CUBE_TEST_FINDING_BY_ID = CUBE_TEST_FINDING + ID;
-	public static final String CUBE_TEST_FINDING_BY_FINISH_PRODUCT_SAMPLE_ID = CUBE_TEST_FINDING + SLASH
-			+ "finish-product-sample" + SLASH + "{finishProductSampleId}";
-	public static final String CUBE_TEST_FINDING_BY_CONCRETE_TEST_ID = CUBE_TEST_FINDING + SLASH + "concrete-test"
-			+ SLASH + "{concreteTestId}";
-	public static final String SEARCH_CUBE_TEST_FINDING = CUBE_TEST_FINDING + SEARCH;
 
 	/*
 	 * finish product sample issue apis
@@ -440,14 +421,7 @@ public final class EndpointURI {
 			+ "material-sub-category" + SLASH + "{materialSubCategoryName}";
 	public static final String MATERIAL_CATEGORY_STATUS_COUNT = INCOMING_SAMPLES_COUNT + SLASH + "material-category"
 			+ SLASH + "{materialCategoryName}";
-	/*
-	 * concreteTest
-	 * 
-	 */
-	public static final String CONCRETE_TEST = BASE_API_PATH + "concrete-test";
-	public static final String CONCRETE_TESTS = BASE_API_PATH + "concrete-tests";
-	public static final String CONCRETE_TEST_BY_ID = CONCRETE_TEST + ID;
-	public static final String SEARCH_CONCRETE_TEST = CONCRETE_TEST + SEARCH;
+
 	/*
 	 * qualityParameter
 	 */
@@ -464,25 +438,7 @@ public final class EndpointURI {
 	public static final String MATERIAL_QUALITY_PARAMETER = BASE_API_PATH + "material-quality-parameter";
 	public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
 	public static final String MATERIAL_QUALITY_PARAMETERS = BASE_API_PATH + "material-quality-parameters";
-	/*
-	 * concreteTestType
-	 */
-	public static final String CONCRETE_TEST_TYPE = BASE_API_PATH + "concrete-test-type";
-	public static final String CONCRETE_TEST_TYPES = BASE_API_PATH + "concrete-test-types";
-	public static final String CONCRETE_TEST_TYPE_BY_ID = CONCRETE_TEST_TYPE + ID;
-	public static final String SEARCH_CONCRETE_TEST_TYPE = CONCRETE_TEST_TYPE + SEARCH;
-	/*
-	 * concreteTestResult
-	 * 
-	 */
-	public static final String CONCRETE_TEST_RESULT = BASE_API_PATH + "concrete-test-result";
-	public static final String CONCRETE_TEST_RESULTS = BASE_API_PATH + "concrete-test-results";
-	public static final String CONCRETE_TEST_RESULT_BY_ID = CONCRETE_TEST_RESULT + ID;
-	public static final String SEARCH_CONCRETE_TEST_RESULT = CONCRETE_TEST_RESULT + SEARCH;
-	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_ID = CONCRETE_TEST_RESULT + SLASH + "concrete-test"
-			+ SLASH + "{concreteTestId}";
-	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID = CONCRETE_TEST_RESULT + SLASH
-			+ "concrete-test-type" + SLASH + "{concreteTestTypeId}";
+	
 	/*
 	 * Authentication
 	 * 
@@ -501,16 +457,6 @@ public final class EndpointURI {
 	public static final String ROLES = BASE_API_PATH + "roles";
 	public static final String GET_ROLE_BY_ID = ROLE + ID;
 	public static final String DELETE_ROLE_BY_ID = ROLE + ID;
-
-	/*
-	 * concreteTestResult
-	 * 
-	 */
-	public static final String CONCRETE_TEST_RESULT_BY_FINISH_PRODUCT_SAMPLE_ID = CONCRETE_TEST_RESULT + SLASH
-			+ "finish-product-sample" + SLASH + "{finishProductSampleId}";
-	public static final String CONCRETE_TEST_RESULT_BY_CONCRETE_TEST_TYPE_ID_AND_FINISH_PRODUCT_SAMPLE_ID = CONCRETE_TEST_RESULT
-			+ SLASH + "concrete-test-type" + SLASH + "{concreteTestTypeId}" + SLASH + "finish-product-sample" + SLASH
-			+ "{finishProductSampleId}";
 
 	/*
 	 * AdmixtureAcceptedValue Apis
@@ -536,20 +482,7 @@ public final class EndpointURI {
 	 */
 	public static final String TEST_REPORT = BASE_API_PATH + "test-report";
 	public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
-	public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
-
-	/*
-	 * concreteTestStatus
-	 * 
-	 */
-	public static final String CONCRETE_TEST_STATUS = BASE_API_PATH + "concrete-test-status";
-	public static final String CONCRETE_TEST_STATUSES = BASE_API_PATH + "concrete-test-statuses";
-	public static final String CONCRETE_TEST_STATUS_BY_ID = CONCRETE_TEST_STATUS + ID;
-	public static final String SEARCH_CONCRETE_TEST_STATUS = CONCRETE_TEST_STATUS + SEARCH;
-	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS = CONCRETE_TEST_STATUS + SLASH
-			+ "concrete-status" + SLASH + "{concreteStatus}";
-	public static final String CONCRETE_TEST_STATUS_BYCONCRETE_TEST_TYPE =
-      CONCRETE_TEST_STATUS + SLASH +"concrete-test-type" + SLASH + "{concreteTestType}";		
+	public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;		
 
 	public static final String INCOMING_CODE = "incoming-sample" + SLASH + "{icomingSampleCode}";
 	public static final String MATERIAL_TEST_DETAIL_REPORT = TEST_REPORT + SLASH + INCOMING_CODE;
@@ -568,9 +501,6 @@ public final class EndpointURI {
 	public static final String FINISH_PRODUCT_RESULT_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_SAMPLE_ID;
 	public static final String FINISH_PRODUCT_RESULTS = "all-results";
 	public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT = TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
-	public static final String CONCRETE_TEST_STATUS_BY_CONCRETE_STATUS_AND_CONCRETE_TEST_TYPE = CONCRETE_TEST_STATUS
-			+ SLASH + "concrete-status" + SLASH + "{concreteStatus}" + SLASH + "concrete-test-type" + SLASH
-			+ "{concreteTestType}";
 	public static final String INCOMING_SAMPLE_REPORT_DETAIL = BASE_API_PATH + SLASH + "incoming-sample-delivery-report"
 			+ SLASH + "{incomingSampleCode}";
 	public static final String INCOMING_SAMPLE_REPORT_DETAILS = BASE_API_PATH + SLASH

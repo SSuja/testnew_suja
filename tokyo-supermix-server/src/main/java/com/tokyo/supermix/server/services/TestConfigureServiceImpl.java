@@ -39,10 +39,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	private EquationRepository equationRepository;
 	@Autowired
 	private TestParameterRepository testParameterRepository;
-	
+
 	@Autowired
 	private EquationParameterService equationParameterService;
-	
+
 	@Autowired
 	private Mapper mapper;
 
@@ -112,10 +112,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	public TestConfigureDto getTestDetailsByConfigureId(Long id) {
 		TestConfigureDto testConfigureDto = new TestConfigureDto();
 		TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-	AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
-	Equation equation = equationRepository.findByTestConfigureId(id);
-	List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id); 
-	
+		AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
+		Equation equation = equationRepository.findByTestConfigureId(id);
+		List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id);
+
 		testConfigureDto.setId(testConfigure.getId());
 		testConfigureDto.setPrefix(testConfigure.getPrefix());
 		testConfigureDto.setTestName(testConfigure.getTest().getName());
@@ -124,30 +124,28 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 		if (!testConfigure.getTestType().getMaterialSubCategory().getMaterialCategory().getName()
 				.equalsIgnoreCase("Admixture")) {
 			testConfigureDto.setEquation(equation.getFormula());
-			List<EquationParameter> parameters= equationParameterService.getEquationByEquationId(equation.getId());
-			
-			List<TestParameterDto> testParameterList= mapper.map(testParameter, TestParameterDto.class);
-			List<EquationParameterResponseDto> parameterList =mapper.map(parameters, EquationParameterResponseDto.class);
-			testConfigureDto.setParameters( parameterList);
+			List<EquationParameter> parameters = equationParameterService.getEquationByEquationId(equation.getId());
+
+			List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
+			List<EquationParameterResponseDto> parameterList = mapper.map(parameters,
+					EquationParameterResponseDto.class);
+			testConfigureDto.setParameters(parameterList);
 			testConfigureDto.setTestparameters(testParameterList);
-			
+
 		}
-	testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
+		testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
 
 		testConfigureDto.setCoreTest(testConfigure.isCoreTest());
 		testConfigureDto.setDescription(testConfigure.getDescription());
-		
 
 		return testConfigureDto;
 	}
 
 	@Override
 	public boolean isexistByTestTypeIdAndTestId(Long testTypeId, Long testId) {
-		
-		return testConfigureRepository.existsByTestTypeIdAndTestId(testTypeId,testId);
-	
+
+		return testConfigureRepository.existsByTestTypeIdAndTestId(testTypeId, testId);
 
 	}
-	
 
 }

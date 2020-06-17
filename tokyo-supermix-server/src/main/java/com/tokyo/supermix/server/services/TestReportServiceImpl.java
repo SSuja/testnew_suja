@@ -2,12 +2,13 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
-import com.tokyo.supermix.data.dto.report.ConcreteStrengthTestDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
@@ -31,7 +32,6 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
 import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -55,8 +55,6 @@ public class TestReportServiceImpl implements TestReportService {
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
-  @Autowired
-  private ConcreteTestResultRepository concreteTestResultRepository;
   @Autowired
   private SupplierRepository supplierRepository;
 
@@ -204,22 +202,6 @@ public class TestReportServiceImpl implements TestReportService {
       dto.setValues(values);
     }
     return trailValueDtoList;
-  }
-
-  @Transactional(readOnly = true)
-  public List<ConcreteStrengthTestDto> getStrengthResult(String concreteTestType,
-      String concreteTestName) {
-    List<ConcreteStrengthTestDto> concreteStrengthTestDtos =
-        new ArrayList<ConcreteStrengthTestDto>();
-    concreteTestResultRepository.findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
-        concreteTestType, concreteTestName).forEach(strength -> {
-          ConcreteStrengthTestDto concreteStrengthTestDto = new ConcreteStrengthTestDto();
-          concreteStrengthTestDto = mapper.map(strength, ConcreteStrengthTestDto.class);
-          concreteStrengthTestDto
-              .setCubeCode(strength.getFinishProductSample().getFinishProductCode());
-          concreteStrengthTestDtos.add(concreteStrengthTestDto);
-        });
-    return concreteStrengthTestDtos;
   }
 
   @Transactional(readOnly = true)
