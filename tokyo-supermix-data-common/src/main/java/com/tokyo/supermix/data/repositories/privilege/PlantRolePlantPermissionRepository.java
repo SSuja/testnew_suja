@@ -16,4 +16,7 @@ public interface PlantRolePlantPermissionRepository
 
   public List<PlantRolePlantPermission> findByPlantRoleIdAndStatus(Long plantRoleId,
       boolean status);
+
+  public PlantRolePlantPermission findByPlantRoleIdAndPlantPermissionId(Long plantRoleId,
+      Long plantPermissionId);
 }

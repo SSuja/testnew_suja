@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionResponseDto;
@@ -27,16 +27,15 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
 
 
   @Transactional(readOnly = true)
-  public List<PlantRolePlantPermissionResponseDto> getRolePlantPermissionsByPlantRoleIdAndSubModuleID(
+  public List<PlantRolePlantPermissionRequestDto> getRolePlantPermissionsByPlantRoleIdAndSubModuleID(
       Long plantRoleId, Long subModuleId) {
-
     List<PlantRolePlantPermission> PlantRolePlantPermissionList = plantRolePlantPermissionRepository
         .findByPlantRoleIdAndPlantPermissionPermissionSubModuleId(plantRoleId, subModuleId);
-    List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
-        new ArrayList<PlantRolePlantPermissionResponseDto>();
+    List<PlantRolePlantPermissionRequestDto> plantRolePlantPermissionResponseDtolist =
+        new ArrayList<PlantRolePlantPermissionRequestDto>();
     PlantRolePlantPermissionList.forEach(permission -> {
-      PlantRolePlantPermissionResponseDto plantRolePlantPermissionResponseDto =
-          new PlantRolePlantPermissionResponseDto();
+      PlantRolePlantPermissionRequestDto plantRolePlantPermissionResponseDto =
+          new PlantRolePlantPermissionRequestDto();
       plantRolePlantPermissionResponseDto.setId(permission.getId());
       plantRolePlantPermissionResponseDto.setName(permission.getPlantPermission().getName());
       plantRolePlantPermissionResponseDto.setPlantRoleId(permission.getPlantRole().getId());;
@@ -48,17 +47,17 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   }
 
   @Transactional(readOnly = true)
-  public List<PlantRolePlantPermissionResponseDto> getByPlantRoleIdAndStatus(Long plantRoleId,
+  public List<PlantRolePlantPermissionRequestDto> getByPlantRoleIdAndStatus(Long plantRoleId,
       Boolean status) {
     List<PlantRolePlantPermission> PlantRolePlantPermissionList =
         plantRolePlantPermissionRepository.findByPlantRoleIdAndStatus(plantRoleId, status);
-   
-    List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
-        new ArrayList<PlantRolePlantPermissionResponseDto>();
+
+    List<PlantRolePlantPermissionRequestDto> plantRolePlantPermissionResponseDtolist =
+        new ArrayList<PlantRolePlantPermissionRequestDto>();
     PlantRolePlantPermissionList.forEach(permission -> {
 
-      PlantRolePlantPermissionResponseDto plantRolePlantPermissionResponseDto =
-          new PlantRolePlantPermissionResponseDto();
+      PlantRolePlantPermissionRequestDto plantRolePlantPermissionResponseDto =
+          new PlantRolePlantPermissionRequestDto();
       plantRolePlantPermissionResponseDto.setId(permission.getId());
       plantRolePlantPermissionResponseDto.setName(permission.getPlantPermission().getName());
       plantRolePlantPermissionResponseDto.setPlantRoleId(permission.getPlantRole().getId());;
@@ -137,5 +136,17 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       PermissionResponseDtolist.add(rolePermissionResponseDto);
     });
     return PermissionResponseDtolist;
+  }
+
+  @Transactional(readOnly = true)
+  public PlantRolePlantPermission findByPlantRoleIdAndPlantPermissionId(Long plantRoleId,
+      Long plantPermissionId) {
+    return plantRolePlantPermissionRepository.findByPlantRoleIdAndPlantPermissionId(plantRoleId,
+        plantPermissionId);
+  }
+
+  @Transactional
+  public void saveRolePermission(PlantRolePlantPermission plantRolePlantPermission) {
+    plantRolePlantPermissionRepository.save(plantRolePlantPermission);
   }
 }
