@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services.privilege;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
+import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
 
 public interface PlantRolePlantPermissionServices {
 
@@ -17,4 +18,6 @@ public interface PlantRolePlantPermissionServices {
   public List<PlantRolePlantPermissionDto> getPlantRolePermissionsByPlantRoleId(Long plantRoleId);
 
   public boolean isPlantRoleIdExist(Long plantRoleId);
+  
+  public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission);
 }

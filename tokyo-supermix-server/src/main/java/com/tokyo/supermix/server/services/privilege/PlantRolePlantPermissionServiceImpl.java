@@ -102,6 +102,13 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermissionDtolist.add(plantRolePlantPermissionDto);
     });
 
-    return plantRolePlantPermissionDtolist;
+    return plantRolePlantPermissionDtolist; 
+       
+  }
+
+    @Transactional
+    public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission) {
+   
+      plantRolePlantPermissionRepository.save(plantRolePlantPermission);
   }
 }
