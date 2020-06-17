@@ -10,9 +10,7 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 public interface TestConfigureRepository
     extends JpaRepository<TestConfigure, Long>, QuerydslPredicateExecutor<TestConfigure> {
 
-  boolean existsByMaterialSubCategoryIdIdAndTestId(Long materialSubCategoryId,Long testId );
-
-  List<TestConfigure> findByTestTypeId(Long testTypeId);
+  //boolean existsByMaterialSubCategoryIdIdAndTestId(Long materialSubCategoryId,Long testId );
 
   List<TestConfigure> findByCoreTest(boolean coreTest);
 }

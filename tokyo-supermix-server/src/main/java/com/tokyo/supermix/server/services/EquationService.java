@@ -13,10 +13,4 @@ public interface EquationService {
   public Equation getEquationById(Long id);
 
   public void deleteEquation(Long id);
-
-  public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId);
-
-  public boolean configureIdExist(Long testConfigureId);
-  
-  public Equation findByConfigureId(Long testConfigureId);
 }

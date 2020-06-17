@@ -47,13 +47,4 @@ public class EquationServiceImpl implements EquationService {
 //    return false;
   }
 
-  @Transactional(readOnly = true)
-  public boolean configureIdExist(Long testConfigureId) {
-    return equationRepository.existsByTestConfigureId(testConfigureId);
-  }
-
-  @Transactional(readOnly = true)
-  public Equation findByConfigureId(Long testConfigureId) {
-    return equationRepository.findByTestConfigureId(testConfigureId);
-  }
 }

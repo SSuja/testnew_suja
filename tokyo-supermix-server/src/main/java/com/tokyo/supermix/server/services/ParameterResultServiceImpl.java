@@ -109,18 +109,18 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 
 	@Transactional
 	public void updateMaterialTestTrialResult(MaterialTestTrial materialTestTrial) {
-		List<ParameterResult> parameterResultList = findByMaterialTestTrialCode(materialTestTrial.getCode());
-		if (equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()) == null) {
-			for (ParameterResult parameterResult : parameterResultList) {
-				materialTestTrial.setResult(parameterResult.getValue());
-			}
-		} else {
-			Double result = roundDoubleValue(calculateTestResult(equationService
-					.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula(),
-					parameterResultList));
-			materialTestTrial.setResult(result);
-			materialTestTrialRepository.save(materialTestTrial);
-		}
+//		List<ParameterResult> parameterResultList = findByMaterialTestTrialCode(materialTestTrial.getCode());
+//		if (equationService.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()) == null) {
+//			for (ParameterResult parameterResult : parameterResultList) {
+//				materialTestTrial.setResult(parameterResult.getValue());
+//			}
+//		} else {
+//			Double result = roundDoubleValue(calculateTestResult(equationService
+//					.findByConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId()).getFormula(),
+//					parameterResultList));
+//			materialTestTrial.setResult(result);
+//			materialTestTrialRepository.save(materialTestTrial);
+//		}
 	}
 
 	public void isTestParameterValueInConfigureLevel(ParameterResultRequestDto parameterResult) {

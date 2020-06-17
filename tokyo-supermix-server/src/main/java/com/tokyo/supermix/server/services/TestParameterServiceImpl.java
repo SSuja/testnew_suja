@@ -78,11 +78,11 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   public boolean isDuplicateQualityTestParameterEntryExist(Long testConfigureId,
       Long qualityParameterId, Long unitId, String abbreviation) {
-    if (testParameterRepository
-        .existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviation(testConfigureId,
-            qualityParameterId, unitId, abbreviation)) {
-      return true;
-    }
+//    if (testParameterRepository
+//        .existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviation(testConfigureId,
+//            qualityParameterId, unitId, abbreviation)) {
+//      return true;
+//    }
     return false;
   }
 
@@ -151,7 +151,8 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public TestParameter getQualityParameterById(Long testParameterId) {
-    return testParameterRepository.findByQualityParameterId(testParameterId);
+	return null;
+//    return testParameterRepository.findByQualityParameterId(testParameterId);
   }
 
   @Transactional(readOnly = true)

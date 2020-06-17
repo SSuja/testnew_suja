@@ -73,14 +73,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
 	@Transactional(readOnly = true)
 	public List<TestConfigure> findByTestTypeId(Long testTypeId) {
-		return testConfigureRepository.findByTestTypeId(testTypeId);
+		return null;
+		//return testConfigureRepository.findByTestTypeId(testTypeId);
 	}
 
 	public boolean isDuplicateEntryExist(Long testId, Long testTypeId) {
-		if ((!findByTestTypeId(testTypeId).equals(testId))
-				&& (testConfigureRepository.existsByMaterialSubCategoryIdIdAndTestId(testId, testTypeId))) {
-			return true;
-		}
+//		if ((!findByTestTypeId(testTypeId).equals(testId))
+//				&& (testConfigureRepository.existsByMaterialSubCategoryIdIdAndTestId(testId, testTypeId))) {
+//			return true;
+//		}
 		return false;
 	}
 
@@ -104,40 +105,42 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
 	@Transactional(readOnly = true)
 	public TestConfigureDto getTestDetailsByConfigureId(Long id) {
-		TestConfigureDto testConfigureDto = new TestConfigureDto();
-		TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-		AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
-		Equation equation = equationRepository.findByTestConfigureId(id);
-		List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id);
-
-		testConfigureDto.setId(testConfigure.getId());
-		testConfigureDto.setPrefix(testConfigure.getPrefix());
-		testConfigureDto.setTestName(testConfigure.getTest().getName());
-		testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
-		// testConfigureDto.setTestType(testConfigure.getTestType().getType());
-		if (!testConfigure.getMaterialSubCategory().getMaterialCategory().getName().equalsIgnoreCase("Admixture")) {
-			testConfigureDto.setEquation(equation.getFormula());
-			List<EquationParameter> parameters = equationParameterService.getEquationByEquationId(equation.getId());
-
-			List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
-			List<EquationParameterResponseDto> parameterList = mapper.map(parameters,
-					EquationParameterResponseDto.class);
-			testConfigureDto.setParameters(parameterList);
-			testConfigureDto.setTestparameters(testParameterList);
-
-		}
-		testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
-
-		testConfigureDto.setCoreTest(testConfigure.isCoreTest());
-		testConfigureDto.setDescription(testConfigure.getDescription());
-
-		return testConfigureDto;
+		return null;
+//		TestConfigureDto testConfigureDto = new TestConfigureDto();
+//		TestConfigure testConfigure = testConfigureRepository.findById(id).get();
+//		AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
+//		//Equation equation = equationRepository.findByTestConfigureId(id);
+//		List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id);
+//
+//		testConfigureDto.setId(testConfigure.getId());
+//		testConfigureDto.setPrefix(testConfigure.getPrefix());
+//		testConfigureDto.setTestName(testConfigure.getTest().getName());
+//		testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
+//		// testConfigureDto.setTestType(testConfigure.getTestType().getType());
+//		if (!testConfigure.getMaterialSubCategory().getMaterialCategory().getName().equalsIgnoreCase("Admixture")) {
+//			testConfigureDto.setEquation(equation.getFormula());
+//			List<EquationParameter> parameters = equationParameterService.getEquationByEquationId(equation.getId());
+//
+//			List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
+//			List<EquationParameterResponseDto> parameterList = mapper.map(parameters,
+//					EquationParameterResponseDto.class);
+//			testConfigureDto.setParameters(parameterList);
+//			testConfigureDto.setTestparameters(testParameterList);
+//
+//		}
+//		testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
+//
+//		testConfigureDto.setCoreTest(testConfigure.isCoreTest());
+//		testConfigureDto.setDescription(testConfigure.getDescription());
+//
+//		return testConfigureDto;
 	}
 
 	@Override
 	public boolean isexistByTestTypeIdAndTestId(Long testTypeId, Long testId) {
+		return false;
 
-		return testConfigureRepository.existsByMaterialSubCategoryIdIdAndTestId(testTypeId, testId);
+		//return testConfigureRepository.existsByMaterialSubCategoryIdIdAndTestId(testTypeId, testId);
 
 	}
 

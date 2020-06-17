@@ -27,8 +27,8 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByCodeContaining(String code);
 
-  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestTypeClassification(
-      String incomingSampleCode, String classification);
+//  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestTypeClassification(
+//      String incomingSampleCode, String classification);
 
   List<MaterialTest> findByIncomingSampleCodeAndStatus(String incomingSampleCode, Status status);
 

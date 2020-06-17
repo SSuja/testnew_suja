@@ -42,11 +42,11 @@ public class EquationController {
   @PostMapping(value = EndpointURI.EQUATION)
   @PreAuthorize("hasAuthority('add_equation')")
   public ResponseEntity<Object> createEquation(@Valid @RequestBody EquationRequestDto equationDto) {
-    if (equationService.configureIdExist(equationDto.getTestConfigureId())) {
-      logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
+//    if (equationService.configureIdExist(equationDto.getTestConfigureId())) {
+//      logger.debug("formula is already exists: createEquation(), isDuplicateEntryExist: {}");
+//      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+//          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
+//    }
     equationService.saveEquation(mapper.map(equationDto, Equation.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_SUCCESS),
@@ -96,11 +96,11 @@ public class EquationController {
   @PreAuthorize("hasAuthority('edit_equation')")
   public ResponseEntity<Object> updateEquation(@Valid @RequestBody EquationRequestDto equationDto) {
     if (equationService.isEquationExist(equationDto.getId())) {
-      if (equationService.isUpdatedTestConfigureIdExist(equationDto.getId(),
-          equationDto.getTestConfigureId())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-            validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
+//      if (equationService.isUpdatedTestConfigureIdExist(equationDto.getId(),
+//          equationDto.getTestConfigureId())) {
+//        return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+//            validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
+//      }
       equationService.saveEquation(mapper.map(equationDto, Equation.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EQUATION_SUCCESS),

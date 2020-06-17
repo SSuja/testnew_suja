@@ -17,11 +17,11 @@ public interface TestParameterRepository
 	public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(Long testConfigureId,
 			Long parameterId, Long unitId, String abbreviation, EntryLevel entryLevel);
 
-	public boolean existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
-			Long parameterId, Long unitId, String abbreviation);
+//	public boolean existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
+//			Long parameterId, Long unitId, String abbreviation);
 
 	public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
 			Long qualityParameterId, Long unitId, String abbreviation);
 
-	public TestParameter findByQualityParameterId(Long testParameterId);
+//	public TestParameter findByQualityParameterId(Long testParameterId);
 }
