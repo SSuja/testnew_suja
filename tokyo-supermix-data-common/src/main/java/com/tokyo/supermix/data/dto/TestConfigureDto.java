@@ -17,8 +17,6 @@ public class TestConfigureDto {
 	private List<EquationParameterResponseDto> parameters;
 	private List<TestParameterDto> testparameters;
 
-
-
 	public Long getId() {
 		return id;
 	}

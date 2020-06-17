@@ -20,7 +20,6 @@ import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.entities.EquationParameter;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.entities.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.EquationRepository;
@@ -73,18 +72,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<TestConfigure> getTestConfigureByTestType(TestType testType) {
-		return testConfigureRepository.findByTestType(testType);
-	}
-
-	@Transactional(readOnly = true)
 	public List<TestConfigure> findByTestTypeId(Long testTypeId) {
 		return testConfigureRepository.findByTestTypeId(testTypeId);
 	}
 
 	public boolean isDuplicateEntryExist(Long testId, Long testTypeId) {
 		if ((!findByTestTypeId(testTypeId).equals(testId))
-				&& (testConfigureRepository.existsByTestTypeIdAndTestId(testId, testTypeId))) {
+				&& (testConfigureRepository.existsByMaterialSubCategoryIdIdAndTestId(testId, testTypeId))) {
 			return true;
 		}
 		return false;
@@ -120,9 +114,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 		testConfigureDto.setPrefix(testConfigure.getPrefix());
 		testConfigureDto.setTestName(testConfigure.getTest().getName());
 		testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
-		testConfigureDto.setTestType(testConfigure.getTestType().getType());
-		if (!testConfigure.getTestType().getMaterialSubCategory().getMaterialCategory().getName()
-				.equalsIgnoreCase("Admixture")) {
+		// testConfigureDto.setTestType(testConfigure.getTestType().getType());
+		if (!testConfigure.getMaterialSubCategory().getMaterialCategory().getName().equalsIgnoreCase("Admixture")) {
 			testConfigureDto.setEquation(equation.getFormula());
 			List<EquationParameter> parameters = equationParameterService.getEquationByEquationId(equation.getId());
 
@@ -144,7 +137,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	@Override
 	public boolean isexistByTestTypeIdAndTestId(Long testTypeId, Long testId) {
 
-		return testConfigureRepository.existsByTestTypeIdAndTestId(testTypeId, testId);
+		return testConfigureRepository.existsByMaterialSubCategoryIdIdAndTestId(testTypeId, testId);
 
 	}
 

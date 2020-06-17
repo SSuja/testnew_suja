@@ -98,15 +98,7 @@ public class Constants {
   public static final String ADD_UNIT_SUCCESS = "Unit Added Successfully";
   public static final String UNIT_DELETED = "Unit Successfully Deleted";
   public static final String UNIT_UPDATED_SUCCESS = "Unit Updated Successfully";
-  /*
-   * Constants for Test Type validation key & Success messages
-   */
-  public static final String TEST_TYPE_ID = "testTypeId";
-  public static final String TEST_TYPES = "testTypes";
-  public static final String TEST_TYPE = "testType";
-  public static final String TEST_TYPE_DELETED = "Test Type Successfully Deleted";
-  public static final String ADD_TEST_TYPE_SUCCESS = "Test Type Added Successfully";
-  public static final String UPDATE_TEST_TYPE_SUCCESS = "Test Type Updated Successfully";
+
   /*
    * Constants for Parameter validation key & Success messages
    */

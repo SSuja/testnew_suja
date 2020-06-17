@@ -2,6 +2,8 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,82 +11,124 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.tokyo.supermix.data.enums.TestType;
+
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_configure")
 public class TestConfigure implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  private boolean coreTest;
-  private String description;
-  private String testProcedure;
-  private String prefix;
-  @ManyToOne
-  @JoinColumn(name = "testTypeId", nullable = false)
-  private TestType testType;
-  @ManyToOne
-  @JoinColumn(name = "testId", nullable = false)
-  private Test test;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private boolean coreTest;
+	private String description;
+	private String testProcedure;
+	private String prefix;
+	@Enumerated(EnumType.ORDINAL)
+	private TestType testType;
+	private boolean isEquationExists;
+	@ManyToOne
+	@JoinColumn(name = "equationId", nullable = true)
+	private Equation equation;
+	@ManyToOne
+	@JoinColumn(name = "testId", nullable = false)
+	private Test test;
+	@ManyToOne
+	@JoinColumn(name = "materialCategoryId", nullable = false)
+	private MaterialCategory materialCategory;
+	@ManyToOne
+	@JoinColumn(name = "materialSubCategoryId", nullable = true)
+	private MaterialSubCategory materialSubCategory;
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public TestType getTestType() {
-    return testType;
-  }
+	public MaterialCategory getMaterialCategory() {
+		return materialCategory;
+	}
 
-  public void setTestType(TestType testType) {
-    this.testType = testType;
-  }
+	public void setMaterialCategory(MaterialCategory materialCategory) {
+		this.materialCategory = materialCategory;
+	}
 
-  public boolean isCoreTest() {
-    return coreTest;
-  }
+	public MaterialSubCategory getMaterialSubCategory() {
+		return materialSubCategory;
+	}
 
-  public void setCoreTest(boolean coreTest) {
-    this.coreTest = coreTest;
-  }
+	public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+		this.materialSubCategory = materialSubCategory;
+	}
 
-  public Test getTest() {
-    return test;
-  }
+	public boolean isCoreTest() {
+		return coreTest;
+	}
 
-  public void setTest(Test test) {
-    this.test = test;
-  }
+	public void setCoreTest(boolean coreTest) {
+		this.coreTest = coreTest;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public Test getTest() {
+		return test;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public void setTest(Test test) {
+		this.test = test;
+	}
 
-  public String getTestProcedure() {
-    return testProcedure;
-  }
+	public String getDescription() {
+		return description;
+	}
 
-  public void setTestProcedure(String testProcedure) {
-    this.testProcedure = testProcedure;
-  }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  public String getPrefix() {
-    return prefix;
-  }
+	public String getTestProcedure() {
+		return testProcedure;
+	}
 
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
-  }
+	public void setTestProcedure(String testProcedure) {
+		this.testProcedure = testProcedure;
+	}
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+	public String getPrefix() {
+		return prefix;
+	}
 
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public TestType getTestType() {
+		return testType;
+	}
+
+	public void setTestType(TestType testType) {
+		this.testType = testType;
+	}
+
+	public boolean isEquationExists() {
+		return isEquationExists;
+	}
+
+	public void setEquationExists(boolean isEquationExists) {
+		this.isEquationExists = isEquationExists;
+	}
+
+	public Equation getEquation() {
+		return equation;
+	}
+
+	public void setEquation(Equation equation) {
+		this.equation = equation;
+	}
 }

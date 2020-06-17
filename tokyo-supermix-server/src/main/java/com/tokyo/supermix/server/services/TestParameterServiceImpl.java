@@ -89,36 +89,37 @@ public class TestParameterServiceImpl implements TestParameterService {
   @Transactional(readOnly = true)
   public List<TestParameter> getTestAndQualityParameterByTestConfigureId(Long testConfigureId,
       String incomingSampleCode) {
-    Long rawMaterialId =
-        incomingSampleRepository.findById(incomingSampleCode).get().getRawMaterial().getId();
-    List<TestParameter> testParameterLists =
-        testParameterRepository.findByTestConfigureId(testConfigureId);
-    List<TestParameter> testParameters = new ArrayList<TestParameter>();
-    for (TestParameter testParameter : testParameterLists) {
-      if (testParameter.getQualityParameter() == null && testParameter.getParameter() != null) {
-        testParameters.add(testParameter);
-      }
-      if (testParameter.getParameter() == null) {
-          if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
-              testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
-            if ((materialQualityParameterRepository
-                .findByQualityParameterIdAndRawMaterialId(
-                    testParameter.getQualityParameter().getId(), rawMaterialId)
-                .getValue() != null)) {
-              testParameter
-                  .setValue(
-                      materialQualityParameterRepository
-                          .findByQualityParameterIdAndRawMaterialId(
-                              testParameter.getQualityParameter().getId(), rawMaterialId)
-                          .getValue());
-              testParameters.add(testParameter);
-            }
-          } else {
-            testParameters.add(testParameter);
-          }
-        }
-      }
-    return testParameters;
+		return null;
+//    Long rawMaterialId =
+//        incomingSampleRepository.findById(incomingSampleCode).get().getRawMaterial().getId();
+//    List<TestParameter> testParameterLists =
+//        testParameterRepository.findByTestConfigureId(testConfigureId);
+//    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+//    for (TestParameter testParameter : testParameterLists) {
+//      if (testParameter.getQualityParameter() == null && testParameter.getParameter() != null) {
+//        testParameters.add(testParameter);
+//      }
+//      if (testParameter.getParameter() == null) {
+//          if (materialQualityParameterRepository.findByQualityParameterIdAndRawMaterialId(
+//              testParameter.getQualityParameter().getId(), rawMaterialId) != null) {
+//            if ((materialQualityParameterRepository
+//                .findByQualityParameterIdAndRawMaterialId(
+//                    testParameter.getQualityParameter().getId(), rawMaterialId)
+//                .getValue() != null)) {
+//              testParameter
+//                  .setValue(
+//                      materialQualityParameterRepository
+//                          .findByQualityParameterIdAndRawMaterialId(
+//                              testParameter.getQualityParameter().getId(), rawMaterialId)
+//                          .getValue());
+//              testParameters.add(testParameter);
+//            }
+//          } else {
+//            testParameters.add(testParameter);
+//          }
+//        }
+//      }
+//    return testParameters;
   }
 
   @Transactional(readOnly = true)
@@ -136,15 +137,16 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId) {
-    List<TestParameter> testParameterLists =
-        testParameterRepository.findByTestConfigureId(testConfigureId);
-    List<TestParameter> testParameters = new ArrayList<TestParameter>();
-    for (TestParameter testParameter : testParameterLists) {
-      if (testParameter.getQualityParameter() != null) {
-        testParameters.add(testParameter);
-      }
-    }
-    return testParameters;
+	return null;
+//    List<TestParameter> testParameterLists =
+//        testParameterRepository.findByTestConfigureId(testConfigureId);
+//    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+//    for (TestParameter testParameter : testParameterLists) {
+//      if (testParameter.getQualityParameter() != null) {
+//        testParameters.add(testParameter);
+//      }
+//    }
+//    return testParameters;
   }
 
   @Transactional(readOnly = true)

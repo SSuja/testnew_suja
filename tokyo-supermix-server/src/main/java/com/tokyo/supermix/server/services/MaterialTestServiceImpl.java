@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,16 +11,15 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
-import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
-import com.tokyo.supermix.data.repositories.TestTypeRepository;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
@@ -35,8 +35,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
-  @Autowired
-  private TestTypeRepository testTypeRepository;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -110,29 +108,29 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
-    Integer count = 0;
-    String bodyMessage = "";
-    Integer failCount = 0;
-    List<TestConfigure> testConfigureList = testConfigureRepository
-        .findByTestTypeAndCoreTest(testTypeRepository.findTestTypeByMaterialSubCategoryId(
-            incomingSample.getRawMaterial().getMaterialSubCategory().getId()), true);
-    List<MaterialTest> materialTestList =
-        materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
-    for (TestConfigure testConfigure : testConfigureList) {
-      for (MaterialTest materialTest : materialTestList) {
-        if (testConfigure.getTest().getName()
-            .equalsIgnoreCase(materialTest.getTestConfigure().getTest().getName())
-            && materialTest.getTestConfigure().isCoreTest()
-            && materialTest.getStatus().equals(Status.PASS)) {
-          count++;
-        }
-      }
-      if (materialTestRepository.countByIncomingSampleCodeAndStatusAndTestConfigureTestName(
-          incomingSample.getCode(), Status.FAIL, testConfigure.getTest().getName()) == 2) {
-        failCount++;
-      }
-    }
-    calculateTest(count, failCount, testConfigureList.size(), incomingSample, bodyMessage);
+//    Integer count = 0;
+//    String bodyMessage = "";
+//    Integer failCount = 0;
+//    List<TestConfigure> testConfigureList = testConfigureRepository
+//        .findByTestTypeAndCoreTest(testTypeRepository.findTestTypeByMaterialSubCategoryId(
+//            incomingSample.getRawMaterial().getMaterialSubCategory().getId()), true);
+//    List<MaterialTest> materialTestList =
+//        materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
+//    for (TestConfigure testConfigure : testConfigureList) {
+//      for (MaterialTest materialTest : materialTestList) {
+//        if (testConfigure.getTest().getName()
+//            .equalsIgnoreCase(materialTest.getTestConfigure().getTest().getName())
+//            && materialTest.getTestConfigure().isCoreTest()
+//            && materialTest.getStatus().equals(Status.PASS)) {
+//          count++;
+//        }
+//      }
+//      if (materialTestRepository.countByIncomingSampleCodeAndStatusAndTestConfigureTestName(
+//          incomingSample.getCode(), Status.FAIL, testConfigure.getTest().getName()) == 2) {
+//        failCount++;
+//      }
+//    }
+//    calculateTest(count, failCount, testConfigureList.size(), incomingSample, bodyMessage);
   }
 
   private void calculateTest(Integer count, Integer failCount, Integer testSize,

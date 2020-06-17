@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.entities.TestType;
 
 public interface TestConfigureService {
   public Long saveTestConfigure(TestConfigure testConfigure);
@@ -18,13 +17,11 @@ public interface TestConfigureService {
 
   public TestConfigure getTestConfigureById(Long id);
 
-  public boolean isDuplicateEntryExist(Long testId, Long testTypeId);
+  public boolean isDuplicateEntryExist(Long testId, Long subcaId);
   
   public boolean isexistByTestTypeIdAndTestId( Long testTypeId, Long testId);
 
   public void deleteTestConfigure(Long id);
-
-  public List<TestConfigure> getTestConfigureByTestType(TestType testType);
 
   public List<TestConfigure> findByTestTypeId(Long testTypeId);
 

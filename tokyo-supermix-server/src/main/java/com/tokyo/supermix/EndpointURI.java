@@ -179,17 +179,6 @@ public final class EndpointURI {
 	public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
 	/*
-	 * 
-	 * TestType
-	 */
-	public static final String TEST_TYPE = BASE_API_PATH + "test-type";
-	public static final String DELETE_TEST_TYPE = TEST_TYPE + ID;
-	public static final String GET_TEST_TYPE_BY_ID = TEST_TYPE + ID;
-	public static final String TEST_TYPES = BASE_API_PATH + "test-types";
-	public static final String GET_TEST_TYPES_BY_MATERIAL_SUB_CATEGORY_ID = TEST_TYPE + "/materialSubCategory"
-			+ "/{materialSubCategoryId}";
-	public static final String SEARCH_TEST_TYPE = TEST_TYPE + SEARCH;
-	/*
 	 * Project APIs
 	 */
 	public static final String PROJECT = BASE_API_PATH + "project";

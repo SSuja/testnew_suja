@@ -39,11 +39,12 @@ public class EquationServiceImpl implements EquationService {
   }
 
   public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId) {
-    if ((!getEquationById(id).getTestConfigure().getId().equals(testConfigureId))
-        && (configureIdExist(testConfigureId))) {
-      return true;
-    }
-    return false;
+	return false;
+//    if ((!getEquationById(id).getTestConfigure().getId().equals(testConfigureId))
+//        && (configureIdExist(testConfigureId))) {
+//      return true;
+//    }
+//    return false;
   }
 
   @Transactional(readOnly = true)

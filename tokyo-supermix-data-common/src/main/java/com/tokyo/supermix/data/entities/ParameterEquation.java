@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,19 +11,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "parameter_result")
-public class ParameterResult implements Serializable {
+@Table(schema = "tokyo-supermix", name = "parameter_equation")
+public class ParameterEquation implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Double value;
 	@ManyToOne
-	@JoinColumn(name = "materialTestTrialCode", nullable = false)
-	private MaterialTestTrial materialTestTrial;
-	@ManyToOne
-	@JoinColumn(name = "materialTestCode", nullable = false)
-	private MaterialTest materialTest;
+	@JoinColumn(name = "equationId", nullable = false)
+	private Equation equation;
 	@ManyToOne
 	@JoinColumn(name = "testParameterId", nullable = false)
 	private TestParameter testParameter;
@@ -35,20 +32,12 @@ public class ParameterResult implements Serializable {
 		this.id = id;
 	}
 
-	public Double getValue() {
-		return value;
+	public Equation getEquation() {
+		return equation;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
-	}
-
-	public MaterialTestTrial getMaterialTestTrial() {
-		return materialTestTrial;
-	}
-
-	public void setMaterialTestTrial(MaterialTestTrial materialTestTrial) {
-		this.materialTestTrial = materialTestTrial;
+	public void setEquation(Equation equation) {
+		this.equation = equation;
 	}
 
 	public TestParameter getTestParameter() {
@@ -61,13 +50,5 @@ public class ParameterResult implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public MaterialTest getMaterialTest() {
-		return materialTest;
-	}
-
-	public void setMaterialTest(MaterialTest materialTest) {
-		this.materialTest = materialTest;
 	}
 }
