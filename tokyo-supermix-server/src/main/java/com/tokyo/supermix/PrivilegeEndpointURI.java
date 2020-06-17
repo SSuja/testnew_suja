@@ -57,5 +57,12 @@ public final class PrivilegeEndpointURI {
       BASE_API_PATH + "plant-role-plant-permission";
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}";
+  
+  public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}"+SLASH+ "subModuleId"+ SLASH + "{subModuleId}";
+  
+  public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_STATUS =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}"+SLASH+ "status"+ SLASH + "{status}";
+     
 
 }
