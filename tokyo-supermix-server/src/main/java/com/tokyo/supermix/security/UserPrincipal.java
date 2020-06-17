@@ -1,9 +1,9 @@
 package com.tokyo.supermix.security;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,44 +19,44 @@ public class UserPrincipal implements UserDetails {
   private String email;
   @JsonIgnore
   private String password;
+  private boolean isActive;
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserPrincipal(Long id, String username, String email, String password,
+  public UserPrincipal(Long id, String username, String email, String password, boolean isActive,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
+    this.isActive = isActive;
     this.authorities = authorities;
   }
 
   public static UserPrincipal create(User user) {
-    List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-    if(user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-      user.getRoles().forEach(role->{
-        authorities.add(new SimpleGrantedAuthority(role.getName()));     
-      role.getRolePermissions().forEach(rolePermission -> {
-        if(rolePermission.isStatus()) {
-          System.out.println("permissions "+rolePermission.getPermission().getName());
-          authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
-        }
+    Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
+    if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
+      user.getRoles().forEach(role -> {
+        authorities.add(new SimpleGrantedAuthority(role.getName()));
+        role.getRolePermissions().forEach(rolePermission -> {
+          if (rolePermission.isStatus()) {
+            authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
+          }
+        });
       });
-    });
-//      user.getUserRoles().forEach(userRole->{
-//      authorities.add(new SimpleGrantedAuthority(userRole.getRole().getName()));     
-//      userRole.getRole().getRolePermissions().forEach(rolePermission -> {
-//      if(rolePermission.isStatus()) {
-//        System.out.println("permissions "+rolePermission.getPermission().getName());
-//        authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
-//      }
-//    });
-//  });
+    } else {
+      user.getPlantRoles().forEach(plantrole -> {
+        authorities.add(new SimpleGrantedAuthority(plantrole.getName()));
+        plantrole.getPlantRolePlantPermissions().forEach(plantRolePlantPermission -> {
+          if (plantRolePlantPermission.isStatus()) {
+            authorities.add(new SimpleGrantedAuthority(
+                plantRolePlantPermission.getPlantPermission().getPermission().getName()));
+          }
+        });
+      });
     }
-    else {
-      
-    }
-    return new UserPrincipal(user.getId(), user.getUserName(), user.getEmail(),
-        user.getPassword(), authorities);
+    System.out.println("permissions " + authorities.toString());
+    return new UserPrincipal(user.getId(), user.getUserName(), user.getEmail(), user.getPassword(),
+        user.getIsActive(), authorities);
   }
 
   public Long getId() {
@@ -66,6 +66,15 @@ public class UserPrincipal implements UserDetails {
   public String getEmail() {
     return email;
   }
+
+  public boolean isActive() {
+    return isActive;
+  }
+
+  public void setActive(boolean isActive) {
+    this.isActive = isActive;
+  }
+
   @Override
   public String getUsername() {
     return username;

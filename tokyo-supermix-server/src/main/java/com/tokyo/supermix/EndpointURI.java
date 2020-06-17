@@ -241,13 +241,7 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_LOAD_BY_ID = PROCESS_SAMPLE_LOAD + ID;
   public static final String PROCESS_SAMPLE_LOADS_BY_PLANT_CODE =
       PROCESS_SAMPLE_LOADS + SLASH + "plant" + SLASH + "{plantCode}";
-  /*
-   * User
-   */
-  public static final String USER = BASE_API_PATH + "user";
-  public static final String USERS = BASE_API_PATH + "users";
-  public static final String USER_BY_ID = USER + ID;
-
+ 
   /*
    * Test Parameter APIs
    * 

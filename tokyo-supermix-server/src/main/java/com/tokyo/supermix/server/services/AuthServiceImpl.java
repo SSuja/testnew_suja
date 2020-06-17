@@ -33,12 +33,14 @@ public class AuthServiceImpl implements AuthService {
   public String generateUserToken(LoginRequestDto loginRequestDto) {
     UserDetails userDetails =
         authUserDetailsService.loadUserByUsername(loginRequestDto.getUsernameOrEmail());
-    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-        new UsernamePasswordAuthenticationToken(userDetails, loginRequestDto.getPassword(),
-            userDetails.getAuthorities());
-    if (authenticationManager.authenticate(usernamePasswordAuthenticationToken).isAuthenticated()) {
-      SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-      return tokenProvider.generateToken(usernamePasswordAuthenticationToken);
+    if(userDetails != null) {
+      UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+          new UsernamePasswordAuthenticationToken(userDetails, loginRequestDto.getPassword(),
+              userDetails.getAuthorities());
+      if (authenticationManager.authenticate(usernamePasswordAuthenticationToken).isAuthenticated()) {
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        return tokenProvider.generateToken(usernamePasswordAuthenticationToken);
+      }
     }
     return null;
   }

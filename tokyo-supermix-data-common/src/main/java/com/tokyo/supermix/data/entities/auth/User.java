@@ -28,7 +28,7 @@ public class User extends DateAudit {
   @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
   private UserType userType;
-
+  private Boolean isActive;
   @ManyToMany
   @JoinTable(
     name = "user_role", 
@@ -41,12 +41,6 @@ public class User extends DateAudit {
     joinColumns = @JoinColumn(name = "user_id"), 
     inverseJoinColumns = @JoinColumn(name = "plant_role_id"))
     Set<PlantRole> plantRoles;
-  
-//  @OneToMany(mappedBy = "role")
-//  private Set<UserRole> userRoles;
-
-//  @OneToMany(mappedBy = "user")
-//  private Set<UserPlantRole> userPlantRoles;
 
   public Long getId() {
     return id;
@@ -112,20 +106,11 @@ public class User extends DateAudit {
     this.plantRoles = plantRoles;
   }
 
-//  public Set<UserRole> getUserRoles() {
-//    return userRoles;
-//  }
-//
-//  public void setUserRoles(Set<UserRole> userRoles) {
-//    this.userRoles = userRoles;
-//  }
+  public Boolean getIsActive() {
+    return isActive;
+  }
 
-//  public Set<UserPlantRole> getUserPlantRoles() {
-//    return userPlantRoles;
-//  }
-//
-//  public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
-//    this.userPlantRoles = userPlantRoles;
-//  }
-
+  public void setIsActive(Boolean isActive) {
+    this.isActive = isActive;
+  }
 }

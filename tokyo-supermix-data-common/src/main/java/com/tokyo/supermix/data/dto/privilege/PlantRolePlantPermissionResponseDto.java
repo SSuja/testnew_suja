@@ -1,20 +1,18 @@
 package com.tokyo.supermix.data.dto.privilege;
-import com.tokyo.supermix.data.entities.privilege.PlantPermission;
-import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
 public class PlantRolePlantPermissionResponseDto {
-	private Long id;
-	private boolean status;
-	private PlantPermission plantPermission;
-	private PlantRole plantRole;
+  private Long id;
+  private boolean status;
+  private String name;
+  private Long plantRoleId;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public boolean isStatus() {
     return status;
@@ -24,21 +22,22 @@ public class PlantRolePlantPermissionResponseDto {
     this.status = status;
   }
 
-  public PlantPermission getPlantPermission() {
-    return plantPermission;
+  public String getName() {
+    return name;
   }
 
-  public void setPlantPermission(PlantPermission plantPermission) {
-    this.plantPermission = plantPermission;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public PlantRole getPlantRole() {
-    return plantRole;
+  public Long getPlantRoleId() {
+    return plantRoleId;
   }
 
-  public void setPlantRole(PlantRole plantRole) {
-    this.plantRole = plantRole;
+  public void setPlantRoleId(Long plantRoleId) {
+    this.plantRoleId = plantRoleId;
   }
+  
 
-	
+
 }

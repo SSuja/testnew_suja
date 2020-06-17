@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionResponseDto;
@@ -23,6 +24,50 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   private MainModuleRepository mainModuleRepository;
   @Autowired
   private SubModuleRepository subModuleRepository;
+
+
+  @Transactional(readOnly = true)
+  public List<PlantRolePlantPermissionResponseDto> getRolePlantPermissionsByPlantRoleIdAndSubModuleID(
+      Long plantRoleId, Long subModuleId) {
+
+    List<PlantRolePlantPermission> PlantRolePlantPermissionList = plantRolePlantPermissionRepository
+        .findByPlantRoleIdAndPlantPermissionPermissionSubModuleId(plantRoleId, subModuleId);
+    List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
+        new ArrayList<PlantRolePlantPermissionResponseDto>();
+    PlantRolePlantPermissionList.forEach(permission -> {
+      PlantRolePlantPermissionResponseDto plantRolePlantPermissionResponseDto =
+          new PlantRolePlantPermissionResponseDto();
+      plantRolePlantPermissionResponseDto.setId(permission.getId());
+      plantRolePlantPermissionResponseDto.setName(permission.getPlantPermission().getName());
+      plantRolePlantPermissionResponseDto.setPlantRoleId(permission.getPlantRole().getId());;
+      plantRolePlantPermissionResponseDto.setStatus(permission.isStatus());
+      plantRolePlantPermissionResponseDtolist.add(plantRolePlantPermissionResponseDto);
+    });
+
+    return plantRolePlantPermissionResponseDtolist;
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantRolePlantPermissionResponseDto> getByPlantRoleIdAndStatus(Long plantRoleId,
+      Boolean status) {
+    List<PlantRolePlantPermission> PlantRolePlantPermissionList =
+        plantRolePlantPermissionRepository.findByPlantRoleIdAndStatus(plantRoleId, status);
+   
+    List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
+        new ArrayList<PlantRolePlantPermissionResponseDto>();
+    PlantRolePlantPermissionList.forEach(permission -> {
+
+      PlantRolePlantPermissionResponseDto plantRolePlantPermissionResponseDto =
+          new PlantRolePlantPermissionResponseDto();
+      plantRolePlantPermissionResponseDto.setId(permission.getId());
+      plantRolePlantPermissionResponseDto.setName(permission.getPlantPermission().getName());
+      plantRolePlantPermissionResponseDto.setPlantRoleId(permission.getPlantRole().getId());;
+      plantRolePlantPermissionResponseDto.setStatus(permission.isStatus());
+      plantRolePlantPermissionResponseDtolist.add(plantRolePlantPermissionResponseDto);
+    });
+
+    return plantRolePlantPermissionResponseDtolist;
+  }
 
   @Transactional(readOnly = true)
   public List<PlantRolePlantPermissionDto> getPlantRolePermissionsByPlantRoleId(Long plantRoleId) {

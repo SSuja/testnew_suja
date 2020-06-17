@@ -11,7 +11,13 @@ public final class PrivilegeEndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
-
+  /*
+   * User
+   */
+  public static final String USER = BASE_API_PATH + "user";
+  public static final String USERS = BASE_API_PATH + "users";
+  public static final String USER_BY_ID = USER + ID;
+  public static final String UPDATE_USER_STATUS_BY_ID = USER + SLASH +"{userId}"+SLASH+ "status"+SLASH +"{status}";
   /*
    * Permission
    */
@@ -59,5 +65,14 @@ public final class PrivilegeEndpointURI {
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}";
   public static final String PLANT_ROLE_PERMISSION_MODULE_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "module" + SLASH + "status" + SLASH + "{plantRoleId}";
+  
+  public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}"+SLASH+ "subModuleId"+ SLASH + "{subModuleId}";
+  
+  public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_STATUS =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}"+SLASH+ "status"+ SLASH + "{status}";
+     
+
+  
 
 }
