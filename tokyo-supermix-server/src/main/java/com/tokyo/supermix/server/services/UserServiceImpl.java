@@ -131,4 +131,11 @@ public class UserServiceImpl implements UserService {
   public User findUserByEmail(String userEmail) {
     return userRepository.findByEmail(userEmail);
   }
+
+  @Override
+  public void updateUserStatus(Long userId, Boolean status) {
+    User user=userRepository.findById(userId).get();
+    user.setIsActive(status);
+    userRepository.save(user);
+  }
 }

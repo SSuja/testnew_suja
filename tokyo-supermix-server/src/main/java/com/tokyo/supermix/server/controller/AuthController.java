@@ -51,8 +51,8 @@ public class AuthController {
       if (jwt != null) {
         return ResponseEntity.ok(new JwtAuthenticationDtoResponse(jwt));
       } else {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PASSWORD,
-            validationFailureStatusCodes.getPassword()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
+            validationFailureStatusCodes.getUserNotActive()), HttpStatus.BAD_REQUEST);
       }
     } catch (UsernameNotFoundException ex) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_OR_USERNAME,

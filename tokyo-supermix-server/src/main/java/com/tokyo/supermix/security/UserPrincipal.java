@@ -19,14 +19,16 @@ public class UserPrincipal implements UserDetails {
   private String email;
   @JsonIgnore
   private String password;
+  private boolean isActive;
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserPrincipal(Long id, String username, String email, String password,
+  public UserPrincipal(Long id, String username, String email, String password, boolean isActive,
       Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
+    this.isActive = isActive;
     this.authorities = authorities;
   }
 
@@ -54,7 +56,7 @@ public class UserPrincipal implements UserDetails {
     }
     System.out.println("permissions " + authorities.toString());
     return new UserPrincipal(user.getId(), user.getUserName(), user.getEmail(), user.getPassword(),
-        authorities);
+        user.getIsActive(), authorities);
   }
 
   public Long getId() {
@@ -63,6 +65,14 @@ public class UserPrincipal implements UserDetails {
 
   public String getEmail() {
     return email;
+  }
+
+  public boolean isActive() {
+    return isActive;
+  }
+
+  public void setActive(boolean isActive) {
+    this.isActive = isActive;
   }
 
   @Override
