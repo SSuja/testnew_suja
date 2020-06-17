@@ -599,6 +599,10 @@ public class Constants {
   public static final String PLANT_PERMISSION_NAME = "PlantPermissionName";
   
   public static final String ADD_PLANT_ROLE_SUCCESS = "Sucessfully added plantRole";
+  
+  public static final String PLANT_ROLE_PLANT_PERMISSIONS = "PlantRolePlantPermissions";
+  
+  
   public static final String PLANT_ROLE_ID = "PlantRoleId";
     /*
    * Encapsulate constructor to restrict modification from outside
