@@ -603,6 +603,7 @@ public class Constants {
   public static final String PLANT_ROLE_PLANT_PERMISSIONS = "PlantRolePlantPermissions";
   
   
+  public static final String PLANT_ROLE_ID = "PlantRoleId";
     /*
    * Encapsulate constructor to restrict modification from outside
    */

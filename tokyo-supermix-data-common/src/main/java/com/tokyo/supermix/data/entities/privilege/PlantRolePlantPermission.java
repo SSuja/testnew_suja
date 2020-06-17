@@ -24,6 +24,14 @@ public class PlantRolePlantPermission implements Serializable {
   private PlantRole plantRole;
   private Boolean status;
 
+  public PlantPermission getPlantPermission() {
+    return plantPermission;
+  }
+
+  public void setPlantPermission(PlantPermission plantPermission) {
+    this.plantPermission = plantPermission;
+  }
+
   public Long getId() {
     return id;
   }
@@ -40,15 +48,7 @@ public class PlantRolePlantPermission implements Serializable {
     this.plantRole = plantRole;
   }
 
-  public PlantPermission getPlantPermission() {
-    return plantPermission;
-  }
-
-  public void setPlantPermission(PlantPermission plantPermission) {
-    this.plantPermission = plantPermission;
-  }
-
-  public Boolean isStatus() {
+  public boolean isStatus() {
     return status;
   }
 
