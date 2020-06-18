@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.services;
+package com.tokyo.supermix.server.services.auth;
 
 import java.util.Calendar;
 

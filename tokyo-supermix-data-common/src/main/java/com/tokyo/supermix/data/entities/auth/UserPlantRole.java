@@ -14,8 +14,8 @@ import com.tokyo.supermix.data.entities.privilege.PlantRole;
 @Table(name = "user_plant_role", schema = "tokyo-supermix")
 public class UserPlantRole implements Serializable {
   private static final long serialVersionUID = 1L;
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   @ManyToOne
   @JoinColumn(name = "user_id")
@@ -23,6 +23,13 @@ public class UserPlantRole implements Serializable {
   @ManyToOne
   @JoinColumn(name = "plant_role_id")
   private PlantRole plantRole;
+  public UserPlantRole() {}
+  
+  public UserPlantRole(User user, PlantRole plantRole) {
+    super();
+    this.user = user;
+    this.plantRole = plantRole;
+  }
 
   public Long getId() {
     return id;

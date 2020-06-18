@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.controller;
+package com.tokyo.supermix.server.controller.auth;
 
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -18,14 +18,13 @@ import com.tokyo.supermix.data.dto.auth.GenerateUserDto;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.entities.auth.User;
-import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EmailService;
-import com.tokyo.supermix.server.services.UserService;
+import com.tokyo.supermix.server.services.auth.UserService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -47,17 +46,15 @@ public class UserController {
     if (userService.existsByEmail(generateUserDto.getEmail())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
           validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+    } else if (generateUserDto.getEmployeeId() == null) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
+          validationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
+    } else if (userService.isEmployeeExist(generateUserDto.getEmployeeId())) {
+      logger.debug("Employee already exists: createUser(), employee: {}");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
+          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    if (generateUserDto.getUserType().name().equalsIgnoreCase(UserType.PLANT_USER.name())) {
-      if (generateUserDto.getEmployeeId() == null) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
-            validationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
-      } else if (userService.isEmployeeExist(generateUserDto.getEmployeeId())) {
-        logger.debug("Employee already exists: createUser(), employee: {}");
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
-            validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-    }
+
     UserCredentialDto userDto =
         userService.saveUser(mapper.map(generateUserDto, User.class), generateUserDto.getRoleIds());
     if (userDto != null) {

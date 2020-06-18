@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.controller;
+package com.tokyo.supermix.server.controller.auth;
 
 import java.util.UUID;
 import javax.validation.Valid;
@@ -24,9 +24,9 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.AuthService;
 import com.tokyo.supermix.server.services.EmailService;
-import com.tokyo.supermix.server.services.UserService;
+import com.tokyo.supermix.server.services.auth.AuthService;
+import com.tokyo.supermix.server.services.auth.UserService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 

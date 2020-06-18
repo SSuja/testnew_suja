@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.services;
+package com.tokyo.supermix.server.services.auth;
 
 import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
 import com.tokyo.supermix.data.entities.auth.User;

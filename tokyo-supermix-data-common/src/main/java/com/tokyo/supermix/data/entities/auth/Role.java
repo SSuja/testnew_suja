@@ -24,8 +24,8 @@ public class Role implements Serializable {
   Set<PlantRole> plantRole;
   @OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
   private Set<RolePermission> rolePermissions;
-//  @OneToMany(mappedBy = "role")
-//  private Set<UserRole> userRoles;
+  @OneToMany(mappedBy = "role")
+  private Set<UserRole> userRoles;
   
   public Long getId() {
     return id;

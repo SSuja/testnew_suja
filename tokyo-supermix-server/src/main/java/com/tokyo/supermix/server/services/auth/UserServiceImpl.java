@@ -1,9 +1,8 @@
-package com.tokyo.supermix.server.services;
+package com.tokyo.supermix.server.services.auth;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
@@ -16,10 +15,14 @@ import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.entities.auth.UserPlantRole;
+import com.tokyo.supermix.data.entities.auth.UserRole;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
+import com.tokyo.supermix.server.services.UserPlantRoleRepository;
+import com.tokyo.supermix.server.services.UserRoleRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,30 +32,22 @@ public class UserServiceImpl implements UserService {
   PasswordEncoder passwordEncoder;
   @Autowired
   private EmployeeRepository employeeRepository;
-  
+  @Autowired
+  private UserRoleRepository userRoleRepository;
+  @Autowired
+  private UserPlantRoleRepository userPlantRoleRepository;
+
   @Transactional
-  public UserCredentialDto saveUser(User user,List<Long> roles) {
+  public UserCredentialDto saveUser(User user, List<Long> roles) {
     user.setUserName(user.getEmail());
     String password = generateRandomPassword();
-  if(user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-    Set<Role> roleList = new HashSet<Role>();
-    roles.forEach(roleId->{
-      Role role = new Role();
-      role.setId(roleId);
-      roleList.add(role);
-    });
-    user.setRoles(roleList);
-  }else {
-    Set<PlantRole> plantRoleList = new HashSet<PlantRole>();
-    roles.forEach(roleId->{
-      PlantRole plantrole = new PlantRole();
-      plantrole.setId(roleId);
-      plantRoleList.add(plantrole);
-    });
-    user.setPlantRoles(plantRoleList);
-  }
-    saveUserPassword(user, password);
-    if(user.getEmployee()!=null) {  
+    User userObj = saveUserPassword(user, password);
+    if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
+      createUserRoles(roles, userObj);
+    } else {
+      createUserPlantRoles(roles, userObj);
+    }
+    if (user.getEmployee() != null) {
       Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
       employee.setHasUser(true);
       employeeRepository.save(employee);
@@ -62,6 +57,26 @@ public class UserServiceImpl implements UserService {
     dto.setPassword(password);
     dto.setEmail(user.getEmail());
     return dto;
+  }
+
+  private void createUserPlantRoles(List<Long> roles, User user) {
+    List<UserPlantRole> userPlantRoles = new ArrayList<UserPlantRole>();
+    roles.forEach(roleId -> {
+      PlantRole plantrole = new PlantRole();
+      plantrole.setId(roleId);
+      userPlantRoles.add(new UserPlantRole(user, plantrole));
+    });
+    userPlantRoleRepository.saveAll(userPlantRoles);
+  }
+
+  private void createUserRoles(List<Long> roles, User user) {
+    List<UserRole> userRoles = new ArrayList<UserRole>();
+    roles.forEach(roleId -> {
+      Role role = new Role();
+      role.setId(roleId);
+      userRoles.add(new UserRole(user, role));
+    });
+    userRoleRepository.saveAll(userRoles);
   }
 
   public String generateRandomPassword() {
@@ -134,7 +149,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void updateUserStatus(Long userId, Boolean status) {
-    User user=userRepository.findById(userId).get();
+    User user = userRepository.findById(userId).get();
     user.setIsActive(status);
     userRepository.save(user);
   }

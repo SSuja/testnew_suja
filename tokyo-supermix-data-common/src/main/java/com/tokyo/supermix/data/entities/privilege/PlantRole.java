@@ -12,12 +12,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 
 @Entity
 @Table(name = "plant_role", schema = "tokyo-supermix")
 public class PlantRole implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -2155789570042170615L;
+
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
   Long id;
 
@@ -32,6 +37,8 @@ public class PlantRole implements Serializable {
   private String name;
   @OneToMany(mappedBy = "plantRole")
   private Set<PlantRolePlantPermission> plantRolePlantPermissions;
+  @OneToMany(mappedBy = "plantRole")
+  private Set<UserPlantRole> userPlantRoles;
 
   public Long getId() {
     return id;
@@ -72,6 +79,14 @@ public class PlantRole implements Serializable {
   public void setPlantRolePlantPermissions(
       Set<PlantRolePlantPermission> plantRolePlantPermissions) {
     this.plantRolePlantPermissions = plantRolePlantPermissions;
+  }
+
+  public Set<UserPlantRole> getUserPlantRoles() {
+    return userPlantRoles;
+  }
+
+  public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
+    this.userPlantRoles = userPlantRoles;
   }
 
 }
