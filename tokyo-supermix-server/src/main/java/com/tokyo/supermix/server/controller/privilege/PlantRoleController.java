@@ -16,7 +16,9 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
+import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
+
 
 @RestController
 public class PlantRoleController {
@@ -25,18 +27,18 @@ public class PlantRoleController {
   @Autowired
   private Mapper mapper;
   @Autowired
-  private ValidationFailureStatusCodes validationFailureStatusCodes;
+  private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
 
   @PostMapping(value = PrivilegeEndpointURI.PLANT_ROLE)
   public ResponseEntity<Object> createParameter(@Valid @RequestBody PlantRoleDto plantRoleDto) {
     if (plantRoleService.existsByPlantCodeAndRoleId(plantRoleDto.getPlantCode(),
         plantRoleDto.getRoleId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE,
-          validationFailureStatusCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
+          privilegeValidationFailureStatusCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
     }
     plantRoleService.savePlantRole(mapper.map(plantRoleDto, PlantRole.class));
     return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_ROLE_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_PLANT_ROLE_SUCCESS),
         HttpStatus.OK);
   }
 }

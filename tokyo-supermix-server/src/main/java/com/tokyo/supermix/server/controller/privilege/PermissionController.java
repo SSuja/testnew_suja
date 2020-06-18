@@ -11,7 +11,7 @@ import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.privilege.PermissionService;
-import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 
 @CrossOrigin
 @RestController
@@ -21,7 +21,7 @@ public class PermissionController {
 
   @GetMapping(value = PrivilegeEndpointURI.PERMISSIONS)
   public ResponseEntity<Object> getAllPermissions() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PERMISSIONS,
         permissionService.getPermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -29,7 +29,7 @@ public class PermissionController {
   public ResponseEntity<Object> getRolePermissionsByRole(
       @PathVariable("subModuleName") String subModuleName) {
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.PERMISSIONS,
+        new ContentResponse<>(PrivilegeConstants.PERMISSIONS,
             permissionService.getPermissionsBySubModule(subModuleName), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
