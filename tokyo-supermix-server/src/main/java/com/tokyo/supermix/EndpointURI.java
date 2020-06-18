@@ -554,5 +554,15 @@ public final class EndpointURI {
   public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH + "mail-report";
 
+  /*
+   * Parameter Equation apis
+   */
+  public static final String PARAMETER_EQUATION = BASE_API_PATH + "parameter-equation";
+  public static final String PARAMETER_EQUATION_BY_ID = PARAMETER_EQUATION + ID;
+  public static final String DELETE_PARAMETER_EQUATION = PARAMETER_EQUATION + ID;
+  public static final String PARAMETER_EQUATIONS = BASE_API_PATH + "parameter-equations";
+  public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
+      PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+
   private EndpointURI() {}
 }

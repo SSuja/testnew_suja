@@ -506,6 +506,18 @@ public class Constants {
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
 
+  /*
+   * Constants for Parameter Equation validation key & Success messages
+   */
+  public static final String PARAMETER_EQUATION = "parameterEquation";
+  public static final String PARAMETER_EQUATION_ID = "parameterEquationId";
+  public static final String PARAMETER_EQUATIONS = "parameterEquations";
+  public static final String ADD_PARAMETER_EQUATION_SUCCESS =
+      "Parameter Equation Added Successfully";
+  public static final String DELETE_PARAMETER_EQUATION_SCCESS =
+      "Parameter Equation Successfully Deleted";
+  public static final String UPDATE_PARAMETER_EQUATION_SUCCESS =
+      "Parameter Equation Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside
