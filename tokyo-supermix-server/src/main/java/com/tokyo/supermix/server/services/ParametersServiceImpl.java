@@ -62,7 +62,7 @@ public class ParametersServiceImpl implements ParameterService {
   }
 
   @Transactional(readOnly = true)
-  public List<Parameter> getParametersByParameterType(ParameterType parameterType) {
+  public List<Parameter> getParameterByParameterType(ParameterType parameterType) {
     return parameterRepository.findByParameterType(parameterType);
   }
 

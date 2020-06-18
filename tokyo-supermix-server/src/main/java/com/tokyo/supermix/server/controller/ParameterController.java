@@ -78,7 +78,7 @@ public class ParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_PARAMETER_BY_ID)
-  public ResponseEntity<Object> getParameterByID(@PathVariable Long id) {
+  public ResponseEntity<Object> getByParameterID(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
       logger.debug("Get Parameter by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER,
@@ -118,16 +118,17 @@ public class ParameterController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.PARAMETERS_BY_PARAMETER_TYPE)
-  public ResponseEntity<Object> getParametersByParameterType(
-      @PathVariable ParameterType parameterType) {
+  @GetMapping(value = EndpointURI.PARAMETER_BY_PARAMETER_TYPE)
+  public ResponseEntity<Object> getByParameterType(@PathVariable ParameterType parameterType) {
     if (parameterService.isParameterTypeExists(parameterType)) {
       logger.debug("Get Parameter by parameterType");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER, mapper
-          .map(parameterService.getParametersByParameterType(parameterType), ParameterDto.class),
+      return new ResponseEntity<>(new ContentResponse<>(
+          Constants.PARAMETER, mapper
+              .map(parameterService.getParameterByParameterType(parameterType), ParameterDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_TYPE,
-        validationFailureStatusCodes.getParameterType()), HttpStatus.BAD_REQUEST);
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+        validationFailureStatusCodes.getParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

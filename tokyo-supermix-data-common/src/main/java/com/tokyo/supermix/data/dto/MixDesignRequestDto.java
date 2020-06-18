@@ -1,12 +1,10 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 
 public class MixDesignRequestDto {
-  @NotEmpty(message = "{mixDesignRequestDto.code.empty}")
-  @NotNull(message = "{mixDesignRequestDto.code.null}")
   private String code;
   @NotNull(message = "{mixDesignRequestDto.targetGrade.null}")
   private Double targetGrade;

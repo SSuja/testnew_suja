@@ -5,21 +5,20 @@ import org.springframework.data.domain.Page;
 import com.tokyo.supermix.data.entities.MixDesign;
 
 public interface MixDesignService {
-  public List<MixDesign> getAllMixDesigns();
+	public List<MixDesign> getAllMixDesigns();
 
-  public MixDesign saveMixDesign(MixDesign mixDesign);
+	public String saveMixDesign(MixDesign mixDesign);
 
-  public void deleteMixDesign(String code);
+	public void deleteMixDesign(String code);
 
-  public MixDesign getMixDesignByCode(String code);
+	public MixDesign getMixDesignByCode(String code);
 
-  public boolean isCodeExist(String code);
+	public boolean isCodeExist(String code);
 
-  public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
-      Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
-      Double targetGradeEqual, Double targetWaterCementRetioMin, Double targetWaterCementRetioMax,
-      Double targetWaterCementRetioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
-      Double waterBinderRatioEqual, String plantCode, int page, int size);
+	public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax, Double targetSlumpEqual,
+			Double targetGradeMin, Double targetGradeMax, Double targetGradeEqual, Double targetWaterCementRetioMin,
+			Double targetWaterCementRetioMax, Double targetWaterCementRetioEqual, Double waterBinderRatioMin,
+			Double waterBinderRatioMax, Double waterBinderRatioEqual, String plantCode, int page, int size);
 
-  public List<MixDesign> getMixDesignByPlantCode(String plantCode);
+	public List<MixDesign> getMixDesignByPlantCode(String plantCode);
 }

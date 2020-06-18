@@ -23,7 +23,7 @@ public interface ParameterService {
 
   public Page<Parameter> searchParameter(Predicate predicate, int page, int size);
 
-  public List<Parameter> getParametersByParameterType(ParameterType parameterType);
+  public List<Parameter> getParameterByParameterType(ParameterType parameterType);
   
   public boolean isParameterTypeExists(ParameterType parameterType);
 }
