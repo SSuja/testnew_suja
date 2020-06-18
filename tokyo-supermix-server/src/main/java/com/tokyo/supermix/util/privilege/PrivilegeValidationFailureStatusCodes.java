@@ -28,7 +28,7 @@ public class PrivilegeValidationFailureStatusCodes {
   public void setPlantRoleAlreadyExist(String plantRoleAlreadyExist) {
     this.plantRoleAlreadyExist = plantRoleAlreadyExist;
   }
-  
+
   @Value("${validation.plant.notExists}")
   private String plantNotExist;
 
@@ -50,7 +50,7 @@ public class PrivilegeValidationFailureStatusCodes {
   public void setPlantAlreadyExist(String plantAlreadyExist) {
     this.plantAlreadyExist = plantAlreadyExist;
   }
-  
+
   @Value("${validation.role.notExists}")
   private String roleNotExists;
 
@@ -72,7 +72,7 @@ public class PrivilegeValidationFailureStatusCodes {
   public void setRoleAlreadyExists(String roleAlreadyExists) {
     this.roleAlreadyExists = roleAlreadyExists;
   }
-  
+
   @Value("${validation.subModule.notExists}")
   private String subModuleNotExists;
 
@@ -94,5 +94,26 @@ public class PrivilegeValidationFailureStatusCodes {
   public void setSubModuleAlreadyExists(String subModuleAlreadyExists) {
     this.subModuleAlreadyExists = subModuleAlreadyExists;
   }
-  
+
+  @Value("${validation.plantPermission.notExists}")
+  private String plantPermissionNotExists;
+
+  @Value("${validation.plantPermission.alreadyExists}")
+  private String plantPermissionAlreadyExists;
+
+  public String getPlantPermissionNotExists() {
+    return plantPermissionNotExists;
+  }
+
+  public void setPlantPermissionNotExists(String plantPermissionNotExists) {
+    this.plantPermissionNotExists = plantPermissionNotExists;
+  }
+
+  public String getPlantPermissionAlreadyExists() {
+    return plantPermissionAlreadyExists;
+  }
+
+  public void setPlantPermissionAlreadyExists(String plantPermissionAlreadyExists) {
+    this.plantPermissionAlreadyExists = plantPermissionAlreadyExists;
+  }
 }
