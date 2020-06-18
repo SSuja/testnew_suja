@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Parameter;
+import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.repositories.ParameterRepository;
 
 @Service
@@ -60,4 +61,13 @@ public class ParametersServiceImpl implements ParameterService {
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
 
+  @Transactional(readOnly = true)
+  public List<Parameter> getParametersByParameterType(ParameterType parameterType) {
+    return parameterRepository.findByParameterType(parameterType);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isParameterTypeExists(ParameterType parameterType) {
+    return parameterRepository.existsByParameterType(parameterType);
+  }
 }

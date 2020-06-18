@@ -20,6 +20,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ParameterDto;
 import com.tokyo.supermix.data.entities.Parameter;
+import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -56,7 +57,6 @@ public class ParameterController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
           validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-
     parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
     return new ResponseEntity<Object>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_SUCCESS),
@@ -116,5 +116,18 @@ public class ParameterController {
         new ContentResponse<>(Constants.PARAMETERS,
             parameterService.searchParameter(predicate, page, size), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETERS_BY_PARAMETER_TYPE)
+  public ResponseEntity<Object> getParametersByParameterType(
+      @PathVariable ParameterType parameterType) {
+    if (parameterService.isParameterTypeExists(parameterType)) {
+      logger.debug("Get Parameter by parameterType");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER, mapper
+          .map(parameterService.getParametersByParameterType(parameterType), ParameterDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_TYPE,
+        validationFailureStatusCodes.getParameterType()), HttpStatus.BAD_REQUEST);
   }
 }

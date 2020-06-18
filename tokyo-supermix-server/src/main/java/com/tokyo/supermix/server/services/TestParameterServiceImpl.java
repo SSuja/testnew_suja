@@ -86,10 +86,10 @@ public class TestParameterServiceImpl implements TestParameterService {
     return false;
   }
 
-  @Transactional(readOnly = true)
-  public List<TestParameter> getTestAndQualityParameterByTestConfigureId(Long testConfigureId,
-      String incomingSampleCode) {
-		return null;
+//  @Transactional(readOnly = true)
+//  public List<TestParameter> getTestAndQualityParameterByTestConfigureId(Long testConfigureId,
+//      String incomingSampleCode) {
+//		return null;
 //    Long rawMaterialId =
 //        incomingSampleRepository.findById(incomingSampleCode).get().getRawMaterial().getId();
 //    List<TestParameter> testParameterLists =
@@ -120,7 +120,7 @@ public class TestParameterServiceImpl implements TestParameterService {
 //        }
 //      }
 //    return testParameters;
-  }
+//  }
 
   @Transactional(readOnly = true)
   public List<TestParameter> getAllTestParametersByTestConfigureId(Long testConfigureId) {
@@ -135,25 +135,25 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameters;
   }
 
-  @Transactional(readOnly = true)
-  public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId) {
-	return null;
-//    List<TestParameter> testParameterLists =
-//        testParameterRepository.findByTestConfigureId(testConfigureId);
-//    List<TestParameter> testParameters = new ArrayList<TestParameter>();
-//    for (TestParameter testParameter : testParameterLists) {
-//      if (testParameter.getQualityParameter() != null) {
-//        testParameters.add(testParameter);
-//      }
-//    }
-//    return testParameters;
-  }
+//  @Transactional(readOnly = true)
+//  public List<TestParameter> getAllQualityParametersByTestConfigureId(Long testConfigureId) {
+//	return null;
+////    List<TestParameter> testParameterLists =
+////        testParameterRepository.findByTestConfigureId(testConfigureId);
+////    List<TestParameter> testParameters = new ArrayList<TestParameter>();
+////    for (TestParameter testParameter : testParameterLists) {
+////      if (testParameter.getQualityParameter() != null) {
+////        testParameters.add(testParameter);
+////      }
+////    }
+////    return testParameters;
+//  }
 
-  @Transactional(readOnly = true)
-  public TestParameter getQualityParameterById(Long testParameterId) {
-	return null;
-//    return testParameterRepository.findByQualityParameterId(testParameterId);
-  }
+//  @Transactional(readOnly = true)
+//  public TestParameter getQualityParameterById(Long testParameterId) {
+//	return null;
+////    return testParameterRepository.findByQualityParameterId(testParameterId);
+//  }
 
   @Transactional(readOnly = true)
   public boolean isAbbreviationNull(String abbreviation) {

@@ -177,6 +177,7 @@ public final class EndpointURI {
 	public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
 	public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
 	public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
+	public static final String PARAMETERS_BY_PARAMETER_TYPE=PARAMETERS+SLASH+"{parameterType}";
 
 	/*
 	 * Project APIs
