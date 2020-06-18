@@ -40,10 +40,4 @@ public interface MaterialTestRepository
       Status status, String testName);
 
   List<MaterialTest> findByTestConfigureTestType(TestType testType);
-
-  boolean existsByTestConfigureTestType(TestType testType);
-
-  List<MaterialTest> findByTestConfigureTestId(Long testId);
-
-  boolean existsByTestConfigureTestId(Long testId);
 }
