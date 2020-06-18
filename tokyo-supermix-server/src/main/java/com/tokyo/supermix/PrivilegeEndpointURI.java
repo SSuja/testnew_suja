@@ -76,6 +76,10 @@ public final class PrivilegeEndpointURI {
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "status" + SLASH + "{status}";
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID_AND_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
-          + "{subModuleId}" + SLASH + "status" + SLASH + "{status}";;
+          + "{subModuleId}" + SLASH + "status" + SLASH + "{status}";
+  
+  public static final String PLANT_PERMISSION_BY_PLANT_CODE_AND_SUBMODULE_ID_AND_MAINMODULE_ID =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantCode}" + SLASH + "subModuleId" + SLASH
+          + "{subModuleId}" + SLASH + "mainmodule" + SLASH + "{mainModuleId}";;
 
 }

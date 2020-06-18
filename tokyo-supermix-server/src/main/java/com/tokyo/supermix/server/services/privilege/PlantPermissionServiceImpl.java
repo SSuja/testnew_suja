@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.privilege.PlantPermissionRequestDto;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.privilege.Permission;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
@@ -45,5 +46,26 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermission.setName(plant.getCode() + "_" + permission.getName());
       plantPermissionRepository.save(plantPermission);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantPermissionRequestDto> getPlantPermissionByPlantCodeAndMainModuleAndSubModule(
+      String plantCode, Long subModuleId, Long mainModuleId) {
+    List<PlantPermission> plantPermissionList = plantPermissionRepository
+        .findByPlantCodeAndPermissionSubModuleIdAndPermissionSubModuleMainModuleId(plantCode,
+            subModuleId, mainModuleId);
+    List<PlantPermissionRequestDto> plantPermissionRequestDtolist =
+        new ArrayList<PlantPermissionRequestDto>();
+    plantPermissionList.forEach(plantPermission -> {
+
+      PlantPermissionRequestDto plantPermissionRequestDto = new PlantPermissionRequestDto();
+      plantPermissionRequestDto.setPermissionId(plantPermission.getId());
+      plantPermissionRequestDto.setName(plantPermission.getName());
+      plantPermissionRequestDto.setPlantCode(plantPermission.getPlant().getCode());
+      plantPermissionRequestDtolist.add(plantPermissionRequestDto);
+    });
+
+    return plantPermissionRequestDtolist;
+   
   }
 }
