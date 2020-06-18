@@ -177,6 +177,7 @@ public class Constants {
    * Constants for Test validation key & Success messages
    */
   public static final String TEST_CONFIGURE = "testConfigure";
+  public static final String TEST_TYPE = "testType";
   public static final String TEST_CONFIGURE_ID = "testConfigureId";
   public static final String ADD_TEST_CONFIGURE_SUCCESS = "Test Configure Added Successfully";
   public static final String UPDATE_TEST_CONFIGURE_SUCCESS = "Test Configure Updated Successfully";
