@@ -20,6 +20,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ParameterDto;
 import com.tokyo.supermix.data.entities.Parameter;
+import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -44,7 +45,7 @@ public class ParameterController {
   @PreAuthorize("hasAuthority('get_parameter')")
   public ResponseEntity<Object> getAllParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
-        mapper.map(parameterService.getAllParameters(), ParameterDto.class),
+        mapper.map(parameterService.getAllParametersByDecending(), ParameterDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -56,7 +57,6 @@ public class ParameterController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
           validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-
     parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
     return new ResponseEntity<Object>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_SUCCESS),
@@ -78,7 +78,7 @@ public class ParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_PARAMETER_BY_ID)
-  public ResponseEntity<Object> getParameterByID(@PathVariable Long id) {
+  public ResponseEntity<Object> getByParameterId(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
       logger.debug("Get Parameter by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER,
@@ -116,5 +116,19 @@ public class ParameterController {
         new ContentResponse<>(Constants.PARAMETERS,
             parameterService.searchParameter(predicate, page, size), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETER_BY_PARAMETER_TYPE)
+  public ResponseEntity<Object> getByParameterType(@PathVariable ParameterType parameterType) {
+    if (parameterService.isParameterTypeExists(parameterType)) {
+      logger.debug("Get Parameter by parameterType");
+      return new ResponseEntity<>(new ContentResponse<>(
+          Constants.PARAMETER, mapper
+              .map(parameterService.getParameterByParameterType(parameterType), ParameterDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+        validationFailureStatusCodes.getParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
