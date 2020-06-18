@@ -762,22 +762,11 @@ public class ValidationFailureStatusCodes {
 	@Value("${validation.parameter.alreadyExist}")
 	private String parameterAlreadyExist;
 
-	// @Value("${parameterDto.abbreviation.null}")
-	// private String abbreviationIsNull;
-
 	@Value("${parameterDto.abbreviation.empty}")
 	private String abbreviationIsempty;
 
 	@Value("${parameterDto.name.null}")
 	private String nameIsNull;
-
-	// public String getAbbreviationIsNull() {
-	// return abbreviationIsNull;
-	// }
-	//
-	// public void setAbbreviationIsNull(String abbreviationIsNull) {
-	// this.abbreviationIsNull = abbreviationIsNull;
-	// }
 
 	public String getAbbreviationIsempty() {
 		return abbreviationIsempty;
@@ -871,8 +860,6 @@ public class ValidationFailureStatusCodes {
 	public void setPourNotExist(String pourNotExist) {
 		PourNotExist = pourNotExist;
 	}
-
-	// For TestTypes
 
 	// For MixDesign
 	@Value("${validation.mixDesign.notExist}")
@@ -1187,7 +1174,6 @@ public class ValidationFailureStatusCodes {
 		this.processSampleNotExist = processSampleNotExist;
 	}
 
-	
 	// for finish product
 	@Value("${validation.finishProduct.notExist}")
 	private String finishProductNotExist;
@@ -1743,6 +1729,9 @@ public class ValidationFailureStatusCodes {
 		this.qualityParameterAlreadyExist = qualityParameterAlreadyExist;
 	}
 
+	/*
+	 * Quality parameter
+	 */
 	@Value("${validation.materialQualityParameter.notExists}")
 	private String materialQualityParameterNotExist;
 	@Value("${validation.materialQualityParameter.alreadyExist}")
@@ -1764,6 +1753,9 @@ public class ValidationFailureStatusCodes {
 		this.materialQualityParameterAlreadyExist = materialQualityParameterAlreadyExist;
 	}
 
+	/*
+	 * Test parameter
+	 */
 	@Value("${testParameterDto.abbreviation.null}")
 	private String abbreviationIsNull;
 

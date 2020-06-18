@@ -20,7 +20,6 @@ public class AdmixtureAcceptedValue extends AcceptedValue implements Serializabl
 	public RawMaterial getRawMaterial() {
 		return rawMaterial;
 	}
-
 	public void setRawMaterial(RawMaterial rawMaterial) {
 		this.rawMaterial = rawMaterial;
 	}
