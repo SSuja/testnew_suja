@@ -313,6 +313,8 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE =
+      MATERIAL_TESTS + "/test-configure" + "/testType" + SLASH + "{testType}";
   /*
    * material-test-trial
    * 
@@ -551,6 +553,16 @@ public final class EndpointURI {
   public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
   public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH + "mail-report";
+
+  /*
+   * Parameter Equation apis
+   */
+  public static final String PARAMETER_EQUATION = BASE_API_PATH + "parameter-equation";
+  public static final String PARAMETER_EQUATION_BY_ID = PARAMETER_EQUATION + ID;
+  public static final String DELETE_PARAMETER_EQUATION = PARAMETER_EQUATION + ID;
+  public static final String PARAMETER_EQUATIONS = BASE_API_PATH + "parameter-equations";
+  public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
+      PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
 
   private EndpointURI() {}
 }
