@@ -20,8 +20,8 @@ public class TestParameterServiceImpl implements TestParameterService {
   private TestParameterRepository testParameterRepository;
 
   @Transactional
-  public List<TestParameter> saveTestParameter(List<TestParameter> testParameter) {
-    return testParameterRepository.saveAll(testParameter);
+  public void saveTestParameter(TestParameter testParameter) {
+    testParameterRepository.save(testParameter);
   }
 
   @Transactional(readOnly = true)
@@ -47,11 +47,6 @@ public class TestParameterServiceImpl implements TestParameterService {
   @Transactional(readOnly = true)
   public boolean isTestConfigureIdExist(Long id) {
     return testParameterRepository.existsByTestConfigureId(id);
-  }
-
-  @Transactional
-  public TestParameter updateTestParameter(TestParameter testParameter) {
-    return testParameterRepository.save(testParameter);
   }
 
   public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId,
@@ -94,5 +89,10 @@ public class TestParameterServiceImpl implements TestParameterService {
   @Transactional(readOnly = true)
   public List<TestParameter> getAllParametersByDecending() {
     return testParameterRepository.findAllByOrderByIdDesc();
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isParameterIdExist(Long parameterId) {
+    return testParameterRepository.existsByParameterId(parameterId);
   }
 }

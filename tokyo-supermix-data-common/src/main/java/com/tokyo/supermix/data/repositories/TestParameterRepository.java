@@ -13,6 +13,8 @@ public interface TestParameterRepository
   List<TestParameter> findByTestConfigureId(Long testConfigureId);
 
   public boolean existsByTestConfigureId(Long testConfigureId);
+  
+  public boolean existsByParameterId(Long parameterId);
 
   public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
       Long testConfigureId, Long parameterId, Long unitId, String abbreviation,
