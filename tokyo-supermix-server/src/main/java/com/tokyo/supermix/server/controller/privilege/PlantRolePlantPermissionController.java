@@ -127,4 +127,22 @@ public class PlantRolePlantPermissionController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS),
         HttpStatus.OK);
   }
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PLANT_CODE)
+  public ResponseEntity<Object> getPlantRolePlantPermissionByPlantRoleIdandPlantCode(
+      @PathVariable Long plantRoleId, @PathVariable String plantCode) {
+    if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
+      if(plantRolePlantPermissionServices.isPlantPermissionPlantCodeExist(plantCode)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.PLANT_PERMISSIONS,
+              mapper.map(plantRolePlantPermissionServices.getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(
+                  plantRoleId,plantCode), PlantRolePlantPermissionRequestDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_CODE,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ROLE_ID,
+        validationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

@@ -39,7 +39,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermissionDto.setPlantPermission(permission.getPlantPermission().getName());
       plantRolePlantPermissionDto.setPlantRoleId(permission.getPlantRole().getId());
       plantRolePlantPermissionDto.setStatus(permission.isStatus());
-      plantRolePlantPermissionDto.setPermission(permission.getPlantPermission().getPermission().getName());
+      plantRolePlantPermissionDto
+          .setPermission(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionDtolist.add(plantRolePlantPermissionDto);
     });
 
@@ -61,7 +62,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermissionDto.setPlantPermission(permission.getPlantPermission().getName());
       plantRolePlantPermissionDto.setPlantRoleId(permission.getPlantRole().getId());
       plantRolePlantPermissionDto.setStatus(permission.isStatus());
-      plantRolePlantPermissionDto.setPermission(permission.getPlantPermission().getPermission().getName());
+      plantRolePlantPermissionDto
+          .setPermission(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionDtolist.add(plantRolePlantPermissionDto);
     });
 
@@ -97,7 +99,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   public List<PlantRolePlantPermissionDto> getRolePlantPermissionsByPlantRoleIdAndSubModuleIDAndStatus(
       Long plantRoleId, Long subModuleId, Boolean status) {
     List<PlantRolePlantPermission> PlantRolePlantPermissionList = plantRolePlantPermissionRepository
-        .findByPlantRoleIdAndPlantPermissionPermissionSubModuleIdAndStatus(plantRoleId, subModuleId, status);
+        .findByPlantRoleIdAndPlantPermissionPermissionSubModuleIdAndStatus(plantRoleId, subModuleId,
+            status);
     List<PlantRolePlantPermissionDto> plantRolePlantPermissionDtolist =
         new ArrayList<PlantRolePlantPermissionDto>();
     PlantRolePlantPermissionList.forEach(permission -> {
@@ -107,20 +110,20 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermissionDto.setPlantPermission(permission.getPlantPermission().getName());
       plantRolePlantPermissionDto.setPlantRoleId(permission.getPlantRole().getId());
       plantRolePlantPermissionDto.setStatus(permission.isStatus());
-      plantRolePlantPermissionDto.setPermission(permission.getPlantPermission().getPermission().getName());
+      plantRolePlantPermissionDto
+          .setPermission(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionDtolist.add(plantRolePlantPermissionDto);
     });
 
-    return plantRolePlantPermissionDtolist; 
-       
+    return plantRolePlantPermissionDtolist;
+
   }
 
-    @Transactional
-    public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission) {
-   
-      plantRolePlantPermissionRepository.save(plantRolePlantPermission);
-      
-    }
+  @Transactional
+  public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission) {
+   plantRolePlantPermissionRepository.save(plantRolePlantPermission);
+  }
+
   public List<RolePermissionResponseDto> getPlantRolePermissionWithModuleByRoleId(
       Long plantRoleId) {
     System.out.println("plantRoleID " + plantRoleId);
@@ -175,5 +178,19 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   @Transactional
   public void saveRolePermission(PlantRolePlantPermission plantRolePlantPermission) {
     plantRolePlantPermissionRepository.save(plantRolePlantPermission);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPlantPermissionPlantCodeExist(String plantCode) {
+    return plantRolePlantPermissionRepository.existsByPlantPermissionPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantRolePlantPermission> getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(
+      Long plantRoleId, String plantCode) {
+    System.out.println("plantCode " + plantCode);
+    System.out.println("plantRoleId " + plantRoleId);
+    return plantRolePlantPermissionRepository
+        .findByPlantRoleIdAndPlantPermissionPlantCode(plantRoleId, plantCode);
   }
 }

@@ -24,4 +24,9 @@ public interface PlantRolePlantPermissionRepository
   public PlantRolePlantPermission findByPlantRoleIdAndPlantPermissionId(Long plantRoleId,
       Long plantPermissionId);
 
+  public boolean existsByPlantPermissionPlantCode(String plantCode);
+
+  public List<PlantRolePlantPermission> findByPlantRoleIdAndPlantPermissionPlantCode(Long plantRoleId,
+      String plantCode);
+
 }

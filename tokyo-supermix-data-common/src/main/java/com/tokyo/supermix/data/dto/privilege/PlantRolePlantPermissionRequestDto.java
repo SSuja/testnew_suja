@@ -5,7 +5,6 @@ public class PlantRolePlantPermissionRequestDto {
   private Boolean status;
   private Long plantPermissionId;
   private Long plantRoleId;
-  private String name;
 
   public Long getId() {
     return id;
@@ -37,13 +36,5 @@ public class PlantRolePlantPermissionRequestDto {
 
   public void setPlantRoleId(Long plantRoleId) {
     this.plantRoleId = plantRoleId;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 }
