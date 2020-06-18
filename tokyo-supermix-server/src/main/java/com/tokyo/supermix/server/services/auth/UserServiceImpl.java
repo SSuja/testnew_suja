@@ -20,9 +20,9 @@ import com.tokyo.supermix.data.entities.auth.UserRole;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
+import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
-import com.tokyo.supermix.server.services.UserPlantRoleRepository;
-import com.tokyo.supermix.server.services.UserRoleRepository;
+import com.tokyo.supermix.data.repositories.auth.UserRoleRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
