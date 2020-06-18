@@ -18,7 +18,7 @@ public class TestConfigureDto {
   private String formula;
   private List<TestParameterDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
-  private boolean isEquationExists;
+  private boolean equationExists;
 
   public Long getId() {
     return id;
@@ -109,11 +109,11 @@ public class TestConfigureDto {
   }
 
   public boolean isEquationExists() {
-    return isEquationExists;
+    return equationExists;
   }
 
-  public void setEquationExists(boolean isEquationExists) {
-    this.isEquationExists = isEquationExists;
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
 
   public String getResultLabel() {

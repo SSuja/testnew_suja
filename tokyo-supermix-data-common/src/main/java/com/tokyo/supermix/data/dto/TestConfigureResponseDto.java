@@ -13,7 +13,7 @@ public class TestConfigureResponseDto {
   private String prefix;
   private TestType testType;
   private EquationResponseDto equation;
-  private boolean isEquationExists;
+  private boolean equationExists;
   private String resultLabel;
 
   public Long getId() {
@@ -96,19 +96,19 @@ public class TestConfigureResponseDto {
     this.equation = equation;
   }
 
-  public boolean isEquationExists() {
-    return isEquationExists;
-  }
-
-  public void setEquationExists(boolean isEquationExists) {
-    this.isEquationExists = isEquationExists;
-  }
-
   public String getResultLabel() {
     return resultLabel;
   }
 
   public void setResultLabel(String resultLabel) {
     this.resultLabel = resultLabel;
+  }
+
+  public boolean isEquationExists() {
+    return equationExists;
+  }
+
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
 }

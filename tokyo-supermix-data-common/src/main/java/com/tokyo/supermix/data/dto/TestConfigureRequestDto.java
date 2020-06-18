@@ -21,7 +21,7 @@ public class TestConfigureRequestDto {
   private Long materialCategoryId;
   private Long materialSubCategoryId;
   private Long equationId;
-  private boolean isEquationExists;
+  private boolean equationExists;
 
   public Long getId() {
     return id;
@@ -104,11 +104,11 @@ public class TestConfigureRequestDto {
   }
 
   public boolean isEquationExists() {
-    return isEquationExists;
+    return equationExists;
   }
 
-  public void setEquationExists(boolean isEquationExists) {
-    this.isEquationExists = isEquationExists;
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
 
   public String getResultLabel() {
