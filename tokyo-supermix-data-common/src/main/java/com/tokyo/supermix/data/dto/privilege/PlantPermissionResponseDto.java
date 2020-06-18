@@ -1,11 +1,9 @@
 package com.tokyo.supermix.data.dto.privilege;
 
-import com.tokyo.supermix.data.dto.PlantDto;
-
 public class PlantPermissionResponseDto {
   private Long id;
   private String permissionName;
-  private PlantDto plant;
+  private String plantCode;
   private String name;
 
   public Long getId() {
@@ -24,12 +22,12 @@ public class PlantPermissionResponseDto {
     this.permissionName = permissionName;
   }
 
-  public PlantDto getPlant() {
-    return plant;
+  public String getPlantCode() {
+    return plantCode;
   }
 
-  public void setPlant(PlantDto plant) {
-    this.plant = plant;
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
   }
 
   public String getName() {
