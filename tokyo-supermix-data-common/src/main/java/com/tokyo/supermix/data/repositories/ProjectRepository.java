@@ -11,4 +11,6 @@ public interface ProjectRepository extends JpaRepository<Project, String>, Query
 	boolean existsByName(String name);
 
 	List<Project> findByPlantCode(String plantCode);
+	
+	List<Project> findByCodeContaining(String code);
 }
