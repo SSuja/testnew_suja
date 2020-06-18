@@ -28,7 +28,6 @@ import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class MaterialAcceptedValueController {
@@ -115,9 +114,8 @@ public class MaterialAcceptedValueController {
         validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-
-  @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID)
-  public ResponseEntity<Object> getMaterialAcceptedValueByTestId(
+  @GetMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getMaterialAcceptedValueByTestConfigureId(
       @PathVariable Long testConfigureId) {
     if (testConfigureService.isTestConfigureExist(testConfigureId)) {
       return new ResponseEntity<>(

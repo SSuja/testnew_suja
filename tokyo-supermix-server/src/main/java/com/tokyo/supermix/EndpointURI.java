@@ -489,7 +489,7 @@ public final class EndpointURI {
   public static final String MATERIAL_ACCEPTED_VALUES = BASE_API_PATH + "material-accepted-values";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_ID = MATERIAL_ACCEPTED_VALUE + ID;
   public static final String MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
-      ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
+      MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String SEARCH_MATERIAL_ACCEPTED_VALUE = MATERIAL_ACCEPTED_VALUE + SEARCH;
   /*
    * AcceptedValue
