@@ -78,7 +78,7 @@ public class ParameterController {
   }
 
   @GetMapping(value = EndpointURI.GET_PARAMETER_BY_ID)
-  public ResponseEntity<Object> getByParameterID(@PathVariable Long id) {
+  public ResponseEntity<Object> getByParameterId(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
       logger.debug("Get Parameter by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER,

@@ -18,7 +18,7 @@ public class ParametersServiceImpl implements ParameterService {
   @Autowired
   private ParameterRepository parameterRepository;
 
-  @Transactional(propagation=Propagation.REQUIRED)
+  @Transactional(readOnly = true)
   public List<Parameter> getAllParameters() {
     return parameterRepository.findAll();
   }
