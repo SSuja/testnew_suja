@@ -12,7 +12,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.privilege.MainModuleService;
 import com.tokyo.supermix.server.services.privilege.SubModuleService;
-import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 
 @CrossOrigin
 @RestController
@@ -24,7 +24,7 @@ public class SubModuleController {
 
   @GetMapping(value = PrivilegeEndpointURI.SUB_MODULES_BY_MAIN_MODULE)
   public ResponseEntity<Object> getSubModulesByMainModule(@PathVariable String mainModule) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.SUB_MODULES,
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.SUB_MODULES,
         subModuleService.getSubModulesByMainModule(
             mainModuleService.findByMainModuleName(mainModule).getId()),
         RestApiResponseStatus.OK), null, HttpStatus.OK);

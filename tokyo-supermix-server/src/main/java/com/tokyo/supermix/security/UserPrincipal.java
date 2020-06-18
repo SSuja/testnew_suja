@@ -35,18 +35,18 @@ public class UserPrincipal implements UserDetails {
   public static UserPrincipal create(User user) {
     Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-      user.getRoles().forEach(role -> {
-        authorities.add(new SimpleGrantedAuthority(role.getName()));
-        role.getRolePermissions().forEach(rolePermission -> {
+      user.getUserRoles().forEach(userrole -> {
+        authorities.add(new SimpleGrantedAuthority(userrole.getRole().getName()));
+        userrole.getRole().getRolePermissions().forEach(rolePermission -> {
           if (rolePermission.isStatus()) {
             authorities.add(new SimpleGrantedAuthority(rolePermission.getPermission().getName()));
           }
         });
       });
     } else {
-      user.getPlantRoles().forEach(plantrole -> {
-        authorities.add(new SimpleGrantedAuthority(plantrole.getName()));
-        plantrole.getPlantRolePlantPermissions().forEach(plantRolePlantPermission -> {
+      user.getUserPlantRoles().forEach(userPlantrole -> {
+        authorities.add(new SimpleGrantedAuthority(userPlantrole.getPlantRole().getName()));
+        userPlantrole.getPlantRole().getPlantRolePlantPermissions().forEach(plantRolePlantPermission -> {
           if (plantRolePlantPermission.isStatus()) {
             authorities.add(new SimpleGrantedAuthority(
                 plantRolePlantPermission.getPlantPermission().getPermission().getName()));

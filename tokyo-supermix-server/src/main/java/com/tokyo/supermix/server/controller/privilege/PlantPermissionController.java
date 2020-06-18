@@ -13,8 +13,10 @@ import com.tokyo.supermix.data.dto.privilege.PlantPermissionResponseDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
-import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
+import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -23,18 +25,25 @@ public class PlantPermissionController {
   private PlantPermissionService plantPermissionService;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
 
   @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSION_BY_PERMISSION_NAME)
   public ResponseEntity<Object> getPlantsFindingByPermissionName(
       @PathVariable String permissionName) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_PERMISSION,
+    if(plantPermissionService.isPermissionNameExists(permissionName)) {
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSION,
         (plantPermissionService.getPlantsByPermissionName(permissionName)),
         RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_PERMISSION_NAME,
+        privilegeValidationFailureStatusCodes.getPlantPermissionNotExists()), HttpStatus.BAD_REQUEST);
+ 
   }
 
   @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSIONS)
   public ResponseEntity<Object> getAllPlantPermissions() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_PERMISSIONS, mapper
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS, mapper
         .map(plantPermissionService.getAllPlantsByPermissions(), PlantPermissionResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }

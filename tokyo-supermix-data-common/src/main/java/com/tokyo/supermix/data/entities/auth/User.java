@@ -6,18 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Employee;
-import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.UserType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
 public class User extends DateAudit {
-  private static final long serialVersionUID = 1L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -3475726035036394016L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -28,20 +29,11 @@ public class User extends DateAudit {
   @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
   private UserType userType;
-  private Boolean isActive;
-  @ManyToMany
-  @JoinTable(
-    name = "user_role", 
-    joinColumns = @JoinColumn(name = "user_id"), 
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
-    Set<Role> roles;
-  @ManyToMany
-  @JoinTable(
-    name = "user_plant_role", 
-    joinColumns = @JoinColumn(name = "user_id"), 
-    inverseJoinColumns = @JoinColumn(name = "plant_role_id"))
-    Set<PlantRole> plantRoles;
-
+  private Boolean isActive=true;
+  @OneToMany(mappedBy = "user")
+  private Set<UserRole> userRoles;
+  @OneToMany(mappedBy = "user")
+  private Set<UserPlantRole> userPlantRoles;
   public Long getId() {
     return id;
   }
@@ -90,22 +82,6 @@ public class User extends DateAudit {
     this.userType = userType;
   }
 
-  public Set<Role> getRoles() {
-    return roles;
-  }
-
-  public void setRoles(Set<Role> roles) {
-    this.roles = roles;
-  }
-
-  public Set<PlantRole> getPlantRoles() {
-    return plantRoles;
-  }
-
-  public void setPlantRoles(Set<PlantRole> plantRoles) {
-    this.plantRoles = plantRoles;
-  }
-
   public Boolean getIsActive() {
     return isActive;
   }
@@ -113,4 +89,21 @@ public class User extends DateAudit {
   public void setIsActive(Boolean isActive) {
     this.isActive = isActive;
   }
+
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(Set<UserRole> userRoles) {
+    this.userRoles = userRoles;
+  }
+
+  public Set<UserPlantRole> getUserPlantRoles() {
+    return userPlantRoles;
+  }
+
+  public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
+    this.userPlantRoles = userPlantRoles;
+  }
+  
 }

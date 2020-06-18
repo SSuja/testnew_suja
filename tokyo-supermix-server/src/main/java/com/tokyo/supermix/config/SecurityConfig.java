@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.tokyo.supermix.security.JwtAuthenticationEntryPoint;
 import com.tokyo.supermix.security.JwtAuthenticationFilter;
-import com.tokyo.supermix.server.services.AuthUserDetailsService;
+import com.tokyo.supermix.server.services.auth.AuthUserDetailsService;
 
 
 @Configuration
@@ -27,33 +27,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   AuthUserDetailsService authUserDetailsService;
   @Autowired
   private JwtAuthenticationEntryPoint unauthorizedHandler;
+
   @Bean
   public JwtAuthenticationFilter jwtAuthenticationFilter() {
     return new JwtAuthenticationFilter();
   }
+
   @Override
   public void configure(AuthenticationManagerBuilder authenticationManagerBuilder)
       throws Exception {
     authenticationManagerBuilder.userDetailsService(authUserDetailsService)
         .passwordEncoder(passwordEncoder());
   }
+
   @Bean(BeanIds.AUTHENTICATION_MANAGER)
   @Override
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
   }
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
+
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable().exceptionHandling()
         .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-        .antMatchers("/api/v1/auth/**").permitAll()
-        .antMatchers("/swagger-ui.html").permitAll()
-        .anyRequest().authenticated();
+        .antMatchers("/api/v1/auth/**").permitAll().antMatchers("/swagger-ui.html").permitAll();
+    // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     http.headers().cacheControl();

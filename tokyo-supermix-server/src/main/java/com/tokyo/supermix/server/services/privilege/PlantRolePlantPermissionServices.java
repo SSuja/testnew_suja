@@ -31,4 +31,9 @@ public interface PlantRolePlantPermissionServices {
 
   public void saveRolePermission(PlantRolePlantPermission plantRolePlantPermission);
 
+  public boolean isPlantPermissionPlantCodeExist(String plantCode);
+
+  public List<PlantRolePlantPermission> getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(Long plantRoleId,
+      String plantCode);
+
 }

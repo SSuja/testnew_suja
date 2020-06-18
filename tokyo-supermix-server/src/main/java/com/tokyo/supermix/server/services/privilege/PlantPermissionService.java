@@ -14,4 +14,5 @@ public interface PlantPermissionService {
 
   public List<PlantPermissionRequestDto> getPlantPermissionByPlantCodeAndMainModuleAndSubModule(
       String plantCode, Long subModuleId, Long mainModuleId);
+  public boolean isPermissionNameExists(String permissionName);
 }

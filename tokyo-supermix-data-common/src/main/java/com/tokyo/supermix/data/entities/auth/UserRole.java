@@ -22,6 +22,12 @@ public class UserRole implements Serializable {
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role role;
+  public UserRole() {}
+  public UserRole(User user, Role role) {
+    super();
+    this.user = user;
+    this.role = role;
+  }
 
   public Long getId() {
     return id;

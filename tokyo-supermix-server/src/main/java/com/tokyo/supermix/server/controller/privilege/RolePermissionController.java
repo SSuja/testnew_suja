@@ -18,7 +18,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.privilege.RolePermissionService;
-import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 
 @CrossOrigin
 @RestController
@@ -38,14 +38,14 @@ public class RolePermissionController {
       RolePermissionService.saveRolePermission(rolePermission);
     }
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_ROLE_PERMISSION_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_ROLE_PERMISSION_SUCCESS),
         HttpStatus.OK);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.ROLE_PERMISSIONS)
   public ResponseEntity<Object> getRolePermissionsByRole(@PathVariable("roleId") Long roleId) {
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.ROLE_PERMISSIONS,
+        new ContentResponse<>(PrivilegeConstants.ROLE_PERMISSIONS,
             RolePermissionService.getRolePermissionByRole(roleId), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
@@ -53,7 +53,7 @@ public class RolePermissionController {
   @GetMapping(value = PrivilegeEndpointURI.STATUS_ROLE_PERMISSIONS)
   public ResponseEntity<Object> getRolePermissionsByRoleAndStatus(
       @PathVariable("status") boolean status) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.ROLE_PERMISSIONS,
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE_PERMISSIONS,
         mapper.map(RolePermissionService.getRolePermissionByStatus(status),
             RolePermissionRequestDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -62,7 +62,7 @@ public class RolePermissionController {
   @GetMapping(value = PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS)
   public ResponseEntity<Object> getModuleRolePermissionsByRoleAndModuleStatus(
       @PathVariable("roleId") Long roleId) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.ROLE_PERMISSIONS,
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE_PERMISSIONS,
         RolePermissionService.getRolePermissionWithModuleByRoleId(roleId),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }

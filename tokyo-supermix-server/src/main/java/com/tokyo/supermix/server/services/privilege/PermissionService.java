@@ -10,4 +10,6 @@ public interface PermissionService {
   public SubModulePermissionDto getPermissionsBySubModule(String subModule);
 
   public SubModulePermissionDto getPermissionsSubModuleName(String name);
+
+  public boolean isSubModuleNameExist(String subModuleName);
 }

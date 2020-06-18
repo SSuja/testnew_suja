@@ -1,4 +1,4 @@
-package com.tokyo.supermix.server.services;
+package com.tokyo.supermix.server.services.auth;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
@@ -28,4 +28,6 @@ public interface UserService {
   User findUserByEmail(String userEmail);
 
   void updateUserStatus(Long userId, Boolean status);
+  
+  
 }
