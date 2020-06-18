@@ -29,7 +29,7 @@ public class Constants {
       "Random Password token Generate and mailed Successfully";
   public static final String MESSAGE_OF_FORGOT_PASSWORD = "This the token for Reset your Password ";
   public static final String SUBJECT_REPORT = "Notification : Test Report";
-  public static final String BODY_FOR_REPORT ="Here you can find the Test Details Report";
+  public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
@@ -485,7 +485,7 @@ public class Constants {
       "Material Quality Parameter Successfully Deleted";
   public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
       "Material Quality Parameter Updated Successfully";
-  
+
   /*
    * Constants for report
    */
@@ -504,7 +504,19 @@ public class Constants {
 
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
-  
+
+  /*
+   * Constants for Parameter Equation validation key & Success messages
+   */
+  public static final String PARAMETER_EQUATION = "parameterEquation";
+  public static final String PARAMETER_EQUATION_ID = "parameterEquationId";
+  public static final String PARAMETER_EQUATIONS = "parameterEquations";
+  public static final String ADD_PARAMETER_EQUATION_SUCCESS =
+      "Parameter Equation Added Successfully";
+  public static final String DELETE_PARAMETER_EQUATION_SCCESS =
+      "Parameter Equation Successfully Deleted";
+  public static final String UPDATE_PARAMETER_EQUATION_SUCCESS =
+      "Parameter Equation Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside
