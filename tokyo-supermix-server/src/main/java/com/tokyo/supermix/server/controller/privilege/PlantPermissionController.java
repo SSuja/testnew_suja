@@ -46,4 +46,18 @@ public class PlantPermissionController {
         .map(plantPermissionService.getAllPlantsByPermissions(), PlantPermissionResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSION_BY_PLANT_CODE_AND_SUBMODULE_ID_AND_MAINMODULE_ID)
+  public ResponseEntity<Object> getAllPlantPermissionByPlantCode(@PathVariable String plantCode,
+      @PathVariable Long subModuleId,  @PathVariable Long mainModuleId) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS ,       
+              mapper.map(
+                 plantPermissionService.getPlantPermissionByPlantCodeAndMainModuleAndSubModule(plantCode, subModuleId, mainModuleId),
+                  PlantPermissionResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+   
+  }
+
 }
