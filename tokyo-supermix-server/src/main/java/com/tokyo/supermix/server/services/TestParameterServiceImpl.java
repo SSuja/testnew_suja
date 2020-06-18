@@ -90,4 +90,9 @@ public class TestParameterServiceImpl implements TestParameterService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public List<TestParameter> getAllParametersByDecending() {
+    return testParameterRepository.findAllByOrderByIdDesc();
+  }
 }

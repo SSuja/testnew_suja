@@ -76,7 +76,7 @@ public class TestParameterController {
   @PreAuthorize("hasAuthority('get_test_parameter')")
   public ResponseEntity<Object> getTestParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
-        mapper.map(testParameterService.getAllTestParameters(), TestParameterResponseDto.class),
+        mapper.map(testParameterService.getAllParametersByDecending(), TestParameterResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

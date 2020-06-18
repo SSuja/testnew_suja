@@ -13,4 +13,6 @@ public interface ParameterRepository
   List<Parameter> findByParameterType(ParameterType parameterType);
 
   boolean existsByParameterType(ParameterType parameterType);
+
+  List<Parameter> findAllByOrderByIdDesc();
 }

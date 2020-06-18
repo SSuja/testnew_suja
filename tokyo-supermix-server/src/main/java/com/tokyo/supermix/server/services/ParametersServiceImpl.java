@@ -18,7 +18,7 @@ public class ParametersServiceImpl implements ParameterService {
   @Autowired
   private ParameterRepository parameterRepository;
 
-  @Transactional(readOnly = true)
+  @Transactional(propagation=Propagation.REQUIRED)
   public List<Parameter> getAllParameters() {
     return parameterRepository.findAll();
   }
@@ -69,5 +69,10 @@ public class ParametersServiceImpl implements ParameterService {
   @Transactional(readOnly = true)
   public boolean isParameterTypeExists(ParameterType parameterType) {
     return parameterRepository.existsByParameterType(parameterType);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Parameter> getAllParametersByDecending() {
+    return parameterRepository.findAllByOrderByIdDesc();
   }
 }

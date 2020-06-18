@@ -45,7 +45,7 @@ public class ParameterController {
   @PreAuthorize("hasAuthority('get_parameter')")
   public ResponseEntity<Object> getAllParameters() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
-        mapper.map(parameterService.getAllParameters(), ParameterDto.class),
+        mapper.map(parameterService.getAllParametersByDecending(), ParameterDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

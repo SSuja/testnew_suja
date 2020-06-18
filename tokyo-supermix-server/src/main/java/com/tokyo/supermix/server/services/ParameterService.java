@@ -26,4 +26,6 @@ public interface ParameterService {
   public List<Parameter> getParameterByParameterType(ParameterType parameterType);
   
   public boolean isParameterTypeExists(ParameterType parameterType);
+  
+  public List<Parameter> getAllParametersByDecending();
 }
