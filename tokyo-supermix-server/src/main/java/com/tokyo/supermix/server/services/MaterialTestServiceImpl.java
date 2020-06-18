@@ -200,9 +200,4 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType) {
     return materialTestRepository.findByTestConfigureTestType(testType);
   }
-
-  @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigureTestId(Long testId) {
-    return materialTestRepository.findByTestConfigureTestId(testId);
-  }
 }

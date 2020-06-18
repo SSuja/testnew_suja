@@ -40,6 +40,4 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType);
 
-  public List<MaterialTest> getMaterialTestByTestConfigureTestId(Long testId);
-
 }

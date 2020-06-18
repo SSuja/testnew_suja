@@ -180,19 +180,4 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-  // get material test by TestConfigureTestType
-  @GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_TESTCONFIGURE_TESTID)
-  public ResponseEntity<Object> getMaterialTestByTestConfigureTestId(@PathVariable Long testId) {
-    if (!materialTestService.getMaterialTestByTestConfigureTestId(testId).isEmpty()) {
-      logger.debug("testId Exists");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
-          mapper.map(materialTestService.getMaterialTestByTestConfigureTestId(testId),
-              MaterialTestResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    logger.debug("Invalid TestId");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-  }
 }
