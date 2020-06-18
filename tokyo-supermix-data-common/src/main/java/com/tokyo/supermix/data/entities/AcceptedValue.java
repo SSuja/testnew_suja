@@ -24,7 +24,7 @@ public class AcceptedValue implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "unitId", nullable = false)
+  @JoinColumn(name = "unitId", nullable = true)
   private Unit unit;
 
   public Unit getUnit() {
