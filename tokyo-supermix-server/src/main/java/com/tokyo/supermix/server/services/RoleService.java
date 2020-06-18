@@ -18,4 +18,6 @@ public interface RoleService {
   public boolean existsByRoleName(String roleName);
 
   public boolean isUpdatedRoleExists(Long id, String roleName);
+
+  public boolean existsByRole(Long roleId);
 }

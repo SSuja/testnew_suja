@@ -75,4 +75,9 @@ public class RoleServiceImpl implements RoleService {
   public void updateRole(Role role) {
     roleRepository.save(role);
   }
+
+  @Transactional
+  public boolean existsByRole(Long roleId) {
+    return roleRepository.existsById(roleId);
+  }
 }

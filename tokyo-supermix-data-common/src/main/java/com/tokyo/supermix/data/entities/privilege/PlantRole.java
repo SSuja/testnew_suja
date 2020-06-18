@@ -22,10 +22,9 @@ public class PlantRole implements Serializable {
    */
   private static final long serialVersionUID = -2155789570042170615L;
 
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
   Long id;
-
   @ManyToOne
   @JoinColumn(name = "plant_code")
   private Plant plant;
