@@ -27,7 +27,7 @@ public class TestConfigure implements Serializable {
   private String resultLabel;
   @Enumerated(EnumType.ORDINAL)
   private TestType testType;
-  private boolean isEquationExists;
+  private boolean equationExists;
   @ManyToOne
   @JoinColumn(name = "equationId", nullable = true)
   private Equation equation;
@@ -118,11 +118,11 @@ public class TestConfigure implements Serializable {
   }
 
   public boolean isEquationExists() {
-    return isEquationExists;
+    return equationExists;
   }
 
-  public void setEquationExists(boolean isEquationExists) {
-    this.isEquationExists = isEquationExists;
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
 
   public Equation getEquation() {
