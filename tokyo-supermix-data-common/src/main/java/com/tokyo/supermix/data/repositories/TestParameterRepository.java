@@ -9,19 +9,17 @@ import com.tokyo.supermix.data.enums.EntryLevel;
 
 @Repository
 public interface TestParameterRepository
-		extends JpaRepository<TestParameter, Long>, QuerydslPredicateExecutor<TestParameter> {
-	List<TestParameter> findByTestConfigureId(Long testConfigureId);
+    extends JpaRepository<TestParameter, Long>, QuerydslPredicateExecutor<TestParameter> {
+  List<TestParameter> findByTestConfigureId(Long testConfigureId);
 
-	public boolean existsByTestConfigureId(Long testConfigureId);
+  public boolean existsByTestConfigureId(Long testConfigureId);
 
-	public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(Long testConfigureId,
-			Long parameterId, Long unitId, String abbreviation, EntryLevel entryLevel);
+  public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
+      Long testConfigureId, Long parameterId, Long unitId, String abbreviation,
+      EntryLevel entryLevel);
 
-//	public boolean existsByTestConfigureIdAndQualityParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
-//			Long parameterId, Long unitId, String abbreviation);
+  public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
+      Long qualityParameterId, Long unitId, String abbreviation);
 
-	public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
-			Long qualityParameterId, Long unitId, String abbreviation);
-
-//	public TestParameter findByQualityParameterId(Long testParameterId);
+  public List<TestParameter> findAllByOrderByIdDesc();
 }
