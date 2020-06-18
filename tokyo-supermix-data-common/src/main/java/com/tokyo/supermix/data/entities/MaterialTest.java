@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -21,7 +20,6 @@ public class MaterialTest extends DateAudit implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private String code;
-	private Date date;
 	private Long noOfTrial;
 	private Double average;
 	@Enumerated(EnumType.ORDINAL)
@@ -37,22 +35,13 @@ public class MaterialTest extends DateAudit implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "materialStateId", nullable = false)
 	private MaterialState materialState;
-	private String resultLable;
-
+	
 	public String getCode() {
 		return code;
 	}
 
 	public void setCode(String code) {
 		this.code = code;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public Long getNoOfTrial() {
@@ -113,13 +102,5 @@ public class MaterialTest extends DateAudit implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public String getResultLable() {
-		return resultLable;
-	}
-
-	public void setResultLable(String resultLable) {
-		this.resultLable = resultLable;
 	}
 }

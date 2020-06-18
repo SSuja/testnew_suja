@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestResponseDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -50,14 +51,14 @@ public class MaterialTestController {
 
   // create material tests
   @PostMapping(value = EndpointURI.MATERIAL_TEST)
-  @PreAuthorize("hasAuthority('add_material_test')")
+  // @PreAuthorize("hasAuthority('add_material_test')")
   public String createMaterialTest(@Valid @RequestBody MaterialTestRequestDto materialTestDto) {
     return materialTestService.saveMaterialTest(mapper.map(materialTestDto, MaterialTest.class));
   }
 
   // get all material tests
   @GetMapping(value = EndpointURI.MATERIAL_TESTS)
-  @PreAuthorize("hasAuthority('get_material_test')")
+  // @PreAuthorize("hasAuthority('get_material_test')")
   public ResponseEntity<Object> getAllMaterialTests() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
         mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
@@ -80,7 +81,7 @@ public class MaterialTestController {
 
   // delete material test by id
   @DeleteMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
-  @PreAuthorize("hasAuthority('delete_material_test')")
+  // @PreAuthorize("hasAuthority('delete_material_test')")
   public ResponseEntity<Object> deleteMaterialTest(@PathVariable String code) {
     if (materialTestService.isMaterialTestExists(code)) {
       MaterialTest materialTest = materialTestService.getMaterialTestByCode(code);
@@ -102,7 +103,7 @@ public class MaterialTestController {
 
   // update material test
   @PutMapping(value = EndpointURI.MATERIAL_TEST)
-  @PreAuthorize("hasAuthority('edit_material_test')")
+  // @PreAuthorize("hasAuthority('edit_material_test')")
   public ResponseEntity<Object> updateMaterialTest(
       @Valid @RequestBody MaterialTestRequestDto materialTestDto) {
     if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
@@ -162,5 +163,36 @@ public class MaterialTestController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  // get material test by TestConfigureTestType
+  @GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE)
+  public ResponseEntity<Object> getMaterialTestByTestConfigureTestType(
+      @PathVariable TestType testType) {
+    if (!materialTestService.getMaterialTestByTestConfigureTestType(testType).isEmpty()) {
+      logger.debug("testType Exists");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+          mapper.map(materialTestService.getMaterialTestByTestConfigureTestType(testType),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid TestType");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  // get material test by TestConfigureTestType
+  @GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_TESTCONFIGURE_TESTID)
+  public ResponseEntity<Object> getMaterialTestByTestConfigureTestId(@PathVariable Long testId) {
+    if (!materialTestService.getMaterialTestByTestConfigureTestId(testId).isEmpty()) {
+      logger.debug("testId Exists");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+          mapper.map(materialTestService.getMaterialTestByTestConfigureTestId(testId),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid TestId");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

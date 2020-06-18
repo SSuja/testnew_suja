@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TestType;
 
 public interface MaterialTestRepository
     extends JpaRepository<MaterialTest, String>, QuerydslPredicateExecutor<MaterialTest> {
@@ -27,9 +28,6 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByCodeContaining(String code);
 
-//  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestTypeClassification(
-//      String incomingSampleCode, String classification);
-
   List<MaterialTest> findByIncomingSampleCodeAndStatus(String incomingSampleCode, Status status);
 
   List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestName(String incomingSampleCode,
@@ -40,4 +38,12 @@ public interface MaterialTestRepository
 
   Integer countByIncomingSampleCodeAndStatusAndTestConfigureTestName(String incomingSampleCode,
       Status status, String testName);
+
+  List<MaterialTest> findByTestConfigureTestType(TestType testType);
+
+  boolean existsByTestConfigureTestType(TestType testType);
+
+  List<MaterialTest> findByTestConfigureTestId(Long testId);
+
+  boolean existsByTestConfigureTestId(Long testId);
 }
