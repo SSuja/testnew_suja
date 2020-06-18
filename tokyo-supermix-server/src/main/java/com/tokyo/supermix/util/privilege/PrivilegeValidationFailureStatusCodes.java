@@ -72,4 +72,27 @@ public class PrivilegeValidationFailureStatusCodes {
   public void setRoleAlreadyExists(String roleAlreadyExists) {
     this.roleAlreadyExists = roleAlreadyExists;
   }
+  
+  @Value("${validation.subModule.notExists}")
+  private String subModuleNotExists;
+
+  @Value("${validation.subModule.alreadyExists}")
+  private String subModuleAlreadyExists;
+
+  public String getSubModuleNotExists() {
+    return subModuleNotExists;
+  }
+
+  public void setSubModuleNotExists(String subModuleNotExists) {
+    this.subModuleNotExists = subModuleNotExists;
+  }
+
+  public String getSubModuleAlreadyExists() {
+    return subModuleAlreadyExists;
+  }
+
+  public void setSubModuleAlreadyExists(String subModuleAlreadyExists) {
+    this.subModuleAlreadyExists = subModuleAlreadyExists;
+  }
+  
 }

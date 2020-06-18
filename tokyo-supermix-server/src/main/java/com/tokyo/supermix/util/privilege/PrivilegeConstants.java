@@ -9,6 +9,7 @@ public class PrivilegeConstants {
   public static final String PERMISSIONS = "permissions";
   public static final String MAIN_MODULES = "mainModules";
   public static final String SUB_MODULES = "subModules";
+  public static final String SUB_MODULE_NAME = "subModuleName";
 
 
   public static final String PLANT_PERMISSION_ID = "PlantPermissionId";

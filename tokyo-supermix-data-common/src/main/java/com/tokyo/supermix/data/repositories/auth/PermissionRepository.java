@@ -10,4 +10,6 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
   List<Permission> findBySubModuleId(Long subModuleId);
 
   List<Permission> findBySubModuleName(String subModule);
+
+  boolean existsBySubModuleName(String subModuleName);
 }
