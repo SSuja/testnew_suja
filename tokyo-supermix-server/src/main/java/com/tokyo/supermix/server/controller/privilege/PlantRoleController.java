@@ -15,7 +15,6 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.privilege.PlantRoleService;
-import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
@@ -33,7 +32,7 @@ public class PlantRoleController {
   public ResponseEntity<Object> createParameter(@Valid @RequestBody PlantRoleDto plantRoleDto) {
     if (plantRoleService.existsByPlantCodeAndRoleId(plantRoleDto.getPlantCode(),
         plantRoleDto.getRoleId())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ROLE,
+      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE,
           privilegeValidationFailureStatusCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
     }
     plantRoleService.savePlantRole(mapper.map(plantRoleDto, PlantRole.class));

@@ -26,7 +26,8 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.auth.UserService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
+import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -36,7 +37,7 @@ public class UserController {
   @Autowired
   private Mapper mapper;
   @Autowired
-  private ValidationFailureStatusCodes validationFailureStatusCodes;
+  private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
   @Autowired
   private EmailService emailService;
   private static final Logger logger = Logger.getLogger(UserController.class);
@@ -44,15 +45,15 @@ public class UserController {
   @PostMapping(value = PrivilegeEndpointURI.USER)
   public ResponseEntity<Object> createUser(@Valid @RequestBody GenerateUserDto generateUserDto) {
     if (userService.existsByEmail(generateUserDto.getEmail())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
-          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
+          privilegeValidationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
     } else if (generateUserDto.getEmployeeId() == null) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE,
-          validationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.EMPLOYEE,
+          privilegeValidationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
     } else if (userService.isEmployeeExist(generateUserDto.getEmployeeId())) {
       logger.debug("Employee already exists: createUser(), employee: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER,
-          validationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
+          privilegeValidationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
 
     UserCredentialDto userDto =
@@ -63,13 +64,13 @@ public class UserController {
       emailService.sendMail(userDto.getEmail(), Constants.SUBJECT_NEW_USER, message);
     }
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_USER_SUCCESS), HttpStatus.OK);
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_USER_SUCCESS), HttpStatus.OK);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.USERS)
   public ResponseEntity<Object> getAllUsers() {
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.USER,
+        new ContentResponse<>(PrivilegeConstants.USER,
             mapper.map(userService.getAllUsers(), UserResponseDto.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
@@ -77,13 +78,13 @@ public class UserController {
   @GetMapping(value = PrivilegeEndpointURI.USER_BY_ID)
   public ResponseEntity<Object> getUserById(@PathVariable Long id) {
     if (userService.isUserExist(id)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.USER,
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
           mapper.map(userService.getUserById(id), UserResponseDto.class), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
     logger.debug("No User record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
+        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @DeleteMapping(PrivilegeEndpointURI.USER_BY_ID)
@@ -91,12 +92,12 @@ public class UserController {
     if (userService.isUserExist(id)) {
       userService.deleteUser(id);
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_USER_SCCESS),
+          new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.DELETE_USER_SCCESS),
           HttpStatus.OK);
     }
     logger.debug("No User record exist for given id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
+        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PutMapping(value = PrivilegeEndpointURI.UPDATE_USER_STATUS_BY_ID)
@@ -105,10 +106,10 @@ public class UserController {
     if (userService.isUserExist(userId)) {
       userService.updateUserStatus(userId, status);
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_USER_SUCCESS),
+          new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_USER_SUCCESS),
           HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.USER_ID,
-        validationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
+        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
