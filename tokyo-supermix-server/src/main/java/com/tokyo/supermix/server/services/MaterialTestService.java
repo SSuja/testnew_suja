@@ -6,6 +6,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TestType;
 
 public interface MaterialTestService {
 
@@ -36,4 +37,7 @@ public interface MaterialTestService {
       BooleanBuilder booleanBuilder, int page, int size);
 
   List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
+
+  public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType);
+
 }

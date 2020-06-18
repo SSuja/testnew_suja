@@ -313,6 +313,8 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE =
+      MATERIAL_TESTS + "/test-configure" + "/testType" + SLASH + "{testType}";
   /*
    * material-test-trial
    * 
