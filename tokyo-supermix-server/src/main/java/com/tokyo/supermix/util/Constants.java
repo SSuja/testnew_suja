@@ -106,6 +106,7 @@ public class Constants {
   public static final String PARAMETER = "parameter";
   public static final String PARAMETERS = "parameters";
   public static final String PARAMETER_ID = "parameterId";
+  public static final String PARAMETER_TYPE = "parameterType";
   public static final String PARAMETER_ABBREVIATION = "abbreviation";
   public static final String ADD_PARAMETER_SUCCESS = "Parameter Added Successfully";
   public static final String PARAMETER_DELETED = "Parameter Successfully Deleted";

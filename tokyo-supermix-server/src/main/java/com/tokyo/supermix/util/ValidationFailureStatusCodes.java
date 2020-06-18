@@ -762,19 +762,12 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.parameter.alreadyExist}")
   private String parameterAlreadyExist;
 
-  @Value("${parameterDto.abbreviation.empty}")
-  private String abbreviationIsempty;
+
 
   @Value("${parameterDto.name.null}")
   private String nameIsNull;
 
-  public String getAbbreviationIsempty() {
-    return abbreviationIsempty;
-  }
 
-  public void setAbbreviationIsempty(String abbreviationIsempty) {
-    this.abbreviationIsempty = abbreviationIsempty;
-  }
 
   public String getNameIsNull() {
     return nameIsNull;
@@ -1779,6 +1772,9 @@ public class ValidationFailureStatusCodes {
     return roleNameAlreadyExists;
   }
 
+  /*
+   * Parameter Equation
+   */
   @Value("${validation.parameterEquation.notExist}")
   private String parameterEquationNotExit;
   @Value("${validation.parameterEquation.alreadyExist}")
@@ -1799,5 +1795,4 @@ public class ValidationFailureStatusCodes {
   public void setParameterEquationAlreadyExit(String parameterEquationAlreadyExit) {
     this.parameterEquationAlreadyExit = parameterEquationAlreadyExit;
   }
-  
 }
