@@ -5,5 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 
 public interface PlantPermissionRepository extends JpaRepository<PlantPermission, Long> {
-  List<PlantPermission> findByPermissionName(String permissionName);
+  public List<PlantPermission> findByPermissionName(String permissionName);
+
+  public boolean existsByPermissionName(String permissionName);
 }

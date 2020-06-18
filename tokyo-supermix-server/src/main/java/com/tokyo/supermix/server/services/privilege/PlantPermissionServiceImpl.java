@@ -20,7 +20,6 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
 
   @Transactional(readOnly = true)
   public List<String> getPlantsByPermissionName(String permissionName) {
-
     List<PlantPermission> plantPermissions =
         plantPermissionRepository.findByPermissionName(permissionName);
     List<String> plants = new ArrayList<>();
@@ -45,5 +44,10 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermission.setName(plant.getCode() + "_" + permission.getName());
       plantPermissionRepository.save(plantPermission);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPermissionNameExists(String permissionName) {
+    return plantPermissionRepository.existsByPermissionName(permissionName);
   }
 }

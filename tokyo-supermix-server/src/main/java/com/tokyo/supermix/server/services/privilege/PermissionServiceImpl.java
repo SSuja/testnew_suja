@@ -48,4 +48,9 @@ public class PermissionServiceImpl implements PermissionService {
     return subModulePermissionDto;
 
   }
+
+  @Transactional(readOnly = true)
+  public boolean isSubModuleNameExist(String subModuleName) {
+    return permissionRepository.existsBySubModuleName(subModuleName);
+  }
 }

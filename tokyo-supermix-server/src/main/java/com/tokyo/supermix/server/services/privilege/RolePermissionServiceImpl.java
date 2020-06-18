@@ -41,7 +41,8 @@ public class RolePermissionServiceImpl implements RolePermissionService {
 
   @Transactional(readOnly = true)
   public List<RolePermissionRequestDto> getRolePermissionByRole(Long roleId) {
-    List<RolePermissionRequestDto> rolePermissionDtoList = new ArrayList<RolePermissionRequestDto>();
+    List<RolePermissionRequestDto> rolePermissionDtoList =
+        new ArrayList<RolePermissionRequestDto>();
     List<Permission> permissionList = permissionRepository.findByRolePermissionRoleId(roleId);
     return mainModuleService.setRolePermissionByRole(roleId, permissionList, rolePermissionDtoList);
   }
@@ -51,9 +52,10 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     return rolePermissionRepository.findByStatus(status);
   }
 
-
+  @Transactional(readOnly = true)
   public List<RolePermissionResponseDto> getRolePermissionWithModuleByRoleId(Long roleId) {
-    List<RolePermissionResponseDto> PermissionResponseDtolist = new ArrayList<RolePermissionResponseDto>();
+    List<RolePermissionResponseDto> PermissionResponseDtolist =
+        new ArrayList<RolePermissionResponseDto>();
     mainModuleRepository.findAll().forEach(main -> {
       RolePermissionResponseDto rolePermissionResponseDto = new RolePermissionResponseDto();
       rolePermissionResponseDto.setMainModule(main.getName());
@@ -65,19 +67,18 @@ public class RolePermissionServiceImpl implements RolePermissionService {
         SubModuleRolePermissionDto subModuleRolePermissionDto = new SubModuleRolePermissionDto();
         subModuleRolePermissionDto.setSubModule(sub.getName());
         boolean subStatus = false;
-        List<RolePermissionRequestDto> rolePermissionDtoList = new ArrayList<RolePermissionRequestDto>();
-        List<Permission> PermissionList =
-            permissionRepository.findByRolePermissionRoleIdAndSubModuleId(roleId, sub.getId());
-        for (Permission permission : PermissionList) {
+        List<RolePermissionRequestDto> rolePermissionDtoList =
+            new ArrayList<RolePermissionRequestDto>();
+        List<RolePermission> PermissionList =
+            rolePermissionRepository.findByRoleIdAndPermissionSubModuleId(roleId, sub.getId());
+        for (RolePermission permission : PermissionList) {
           RolePermissionRequestDto rolePermissionRequestDto = new RolePermissionRequestDto();
           rolePermissionRequestDto.setPermissionId(permission.getId());
           rolePermissionRequestDto.setRoleId(roleId);
-          boolean rolePermissionStatus = rolePermissionRepository
-              .findByRoleIdAndPermissionId(roleId, permission.getId()).isStatus();
-          if (rolePermissionStatus) {
+          rolePermissionRequestDto.setStatus(permission.isStatus());
+          if (permission.isStatus()) {
             subStatus = true;
           }
-          rolePermissionRequestDto.setStatus(rolePermissionStatus);
           rolePermissionDtoList.add(rolePermissionRequestDto);
         }
         subModuleRolePermissionDto.setStatus(subStatus);

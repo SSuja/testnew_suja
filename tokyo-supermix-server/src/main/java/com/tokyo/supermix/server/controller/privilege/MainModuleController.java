@@ -10,7 +10,7 @@ import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.server.services.privilege.MainModuleService;
-import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 
 @CrossOrigin
 @RestController
@@ -20,13 +20,15 @@ public class MainModuleController {
 
   @GetMapping(value = PrivilegeEndpointURI.MAIN_MODULES)
   public ResponseEntity<Object> getallMainModules() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.MAIN_MODULES,
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.MAIN_MODULES,
         mainModuleService.getMainModules(), RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.MODULE_ROLE_PERMISSIONS)
   public ResponseEntity<Object> getAllModulePermissions() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PERMISSIONS,
-        mainModuleService.getModulePermissions(), RestApiResponseStatus.OK), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.PERMISSIONS,
+            mainModuleService.getModulePermissions(), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }

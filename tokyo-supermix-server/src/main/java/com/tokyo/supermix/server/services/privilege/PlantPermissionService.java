@@ -10,4 +10,6 @@ public interface PlantPermissionService {
   public List<PlantPermission> getAllPlantsByPermissions();
 
   public void savePlantPermission(Plant plant);
+
+  public boolean isPermissionNameExists(String permissionName);
 }
