@@ -113,13 +113,15 @@ public final class EndpointURI {
   public static final String TEST_CONFIGURES = BASE_API_PATH + "test-configures";
   public static final String GET_TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
   public static final String DELETE_TEST_CONFIGURE = TEST_CONFIGURE + ID;
-  public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE_ID =
-      TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testTypeId}";
+  public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE =
+      TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testType}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =
       TEST_CONFIGURE + SLASH + "core-test" + SLASH + "{coreTest}";
   public static final String TEST_CONFIGURE_BY_ID_AND_CORE_TEST =
       TEST_CONFIGURE + SLASH + "core-test";
   public static final String TEST_CONFIGURE_SEARCH = TEST_CONFIGURE + SEARCH;
+  public static final String GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY =
+      TEST_CONFIGURE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
   /*
    * Material State
    */
@@ -187,6 +189,8 @@ public final class EndpointURI {
   public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
   public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
   public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
+  public static final String PARAMETER_BY_PARAMETER_TYPE =
+      PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
 
   /*
    * Project APIs
@@ -309,6 +313,8 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE =
+      MATERIAL_TESTS + "/test-configure" + "/testType" + SLASH + "{testType}";
   /*
    * material-test-trial
    * 
@@ -557,6 +563,16 @@ public final class EndpointURI {
   public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
   public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH + "mail-report";
+
+  /*
+   * Parameter Equation apis
+   */
+  public static final String PARAMETER_EQUATION = BASE_API_PATH + "parameter-equation";
+  public static final String PARAMETER_EQUATION_BY_ID = PARAMETER_EQUATION + ID;
+  public static final String DELETE_PARAMETER_EQUATION = PARAMETER_EQUATION + ID;
+  public static final String PARAMETER_EQUATIONS = BASE_API_PATH + "parameter-equations";
+  public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
+      PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
 
   private EndpointURI() {}
 }

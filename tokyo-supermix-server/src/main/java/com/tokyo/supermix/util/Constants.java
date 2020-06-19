@@ -106,6 +106,7 @@ public class Constants {
   public static final String PARAMETER = "parameter";
   public static final String PARAMETERS = "parameters";
   public static final String PARAMETER_ID = "parameterId";
+  public static final String PARAMETER_TYPE = "parameterType";
   public static final String PARAMETER_ABBREVIATION = "abbreviation";
   public static final String ADD_PARAMETER_SUCCESS = "Parameter Added Successfully";
   public static final String PARAMETER_DELETED = "Parameter Successfully Deleted";
@@ -177,6 +178,7 @@ public class Constants {
    * Constants for Test validation key & Success messages
    */
   public static final String TEST_CONFIGURE = "testConfigure";
+  public static final String TEST_TYPE = "testType";
   public static final String TEST_CONFIGURE_ID = "testConfigureId";
   public static final String ADD_TEST_CONFIGURE_SUCCESS = "Test Configure Added Successfully";
   public static final String UPDATE_TEST_CONFIGURE_SUCCESS = "Test Configure Updated Successfully";
@@ -516,6 +518,18 @@ public class Constants {
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
 
+  /*
+   * Constants for Parameter Equation validation key & Success messages
+   */
+  public static final String PARAMETER_EQUATION = "parameterEquation";
+  public static final String PARAMETER_EQUATION_ID = "parameterEquationId";
+  public static final String PARAMETER_EQUATIONS = "parameterEquations";
+  public static final String ADD_PARAMETER_EQUATION_SUCCESS =
+      "Parameter Equation Added Successfully";
+  public static final String DELETE_PARAMETER_EQUATION_SCCESS =
+      "Parameter Equation Successfully Deleted";
+  public static final String UPDATE_PARAMETER_EQUATION_SUCCESS =
+      "Parameter Equation Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside

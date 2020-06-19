@@ -6,11 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.TestType;
 
 public interface TestConfigureRepository
     extends JpaRepository<TestConfigure, Long>, QuerydslPredicateExecutor<TestConfigure> {
-
-  //boolean existsByMaterialSubCategoryIdIdAndTestId(Long materialSubCategoryId,Long testId );
-
   List<TestConfigure> findByCoreTest(boolean coreTest);
+
+  boolean existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(Long testId,
+      Long materialCategoryId, Long materialSubCategoryId);
+
+  List<TestConfigure> findByTestType(TestType testType);
+
+  boolean existsByTestType(TestType testType);
+
+  List<TestConfigure> findByMaterialSubCategoryId(Long materialSubCategoryId);
 }

@@ -8,13 +8,13 @@ public class TestParameterRequestDto {
   private Long id;
   private Long testConfigureId;
   private Long parameterId;
-  private Long qualityParameterId;
   private Long unitId;
   @NotNull(message = "{testParameterDto.abbreviation.null}")
   @NotEmpty(message = "{testParameterDto.abbreviation.empty}")
   private String abbreviation;
   private EntryLevel entryLevel;
   private Double value;
+  private boolean equation;
 
   public Long getId() {
     return id;
@@ -34,14 +34,6 @@ public class TestParameterRequestDto {
 
   public Long getParameterId() {
     return parameterId;
-  }
-
-  public Long getQualityParameterId() {
-    return qualityParameterId;
-  }
-
-  public void setQualityParameterId(Long qualityParameterId) {
-    this.qualityParameterId = qualityParameterId;
   }
 
   public void setParameterId(Long parameterId) {
@@ -78,5 +70,13 @@ public class TestParameterRequestDto {
 
   public void setValue(Double value) {
     this.value = value;
+  }
+
+  public boolean isEquation() {
+    return equation;
+  }
+
+  public void setEquation(boolean equation) {
+    this.equation = equation;
   }
 }
