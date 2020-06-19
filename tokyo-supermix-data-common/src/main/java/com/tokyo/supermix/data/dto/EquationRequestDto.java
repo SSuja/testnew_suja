@@ -2,13 +2,18 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.EquationType;
 
 public class EquationRequestDto {
   private Long id;
   @NotNull(message = "{equationDto.formula.null}")
   @NotEmpty(message = "{equationDto.formula.empty}")
   private String formula;
-  private Long testConfigureId;
+  @NotNull(message = "{equationDto.name.null}")
+  @NotEmpty(message = "{equationDto.name.empty}")
+  private String name;
+  private EquationType equationType;
+  private boolean parameterExists;
 
   public Long getId() {
     return id;
@@ -26,11 +31,27 @@ public class EquationRequestDto {
     this.formula = formula;
   }
 
-  public Long getTestConfigureId() {
-    return testConfigureId;
+  public String getName() {
+    return name;
   }
 
-  public void setTestConfigureId(Long testConfigureId) {
-    this.testConfigureId = testConfigureId;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public EquationType getEquationType() {
+    return equationType;
+  }
+
+  public void setEquationType(EquationType equationType) {
+    this.equationType = equationType;
+  }
+
+  public boolean isParameterExists() {
+    return parameterExists;
+  }
+
+  public void setParameterExists(boolean parameterExists) {
+    this.parameterExists = parameterExists;
   }
 }
