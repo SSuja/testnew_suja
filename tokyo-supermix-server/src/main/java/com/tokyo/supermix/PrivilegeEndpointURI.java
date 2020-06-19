@@ -115,5 +115,11 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PLANT_CODE =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "plantCode" + SLASH
           + "{plantCode}";
-
+  /*
+   * plant access level
+   */
+  public static final String PLANT_ACCESS_LEVEL = BASE_API_PATH + "plant-access-level";
+  public static final String PLANT_ROLE_BY_PLANT_CODE_AND_STATUS =
+      PLANT_ACCESS_LEVEL + SLASH + "plantCode" + SLASH
+          + "{plantCode}" + SLASH + "status" + SLASH + "{status}";
 }

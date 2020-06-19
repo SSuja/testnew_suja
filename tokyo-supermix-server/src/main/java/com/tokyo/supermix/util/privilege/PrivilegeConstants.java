@@ -52,5 +52,10 @@ public class PrivilegeConstants {
   public static final String PLANT_ROLE_PLANT_PERMISSIONS = "plantRolePlantPermissions";
   public static final String PLANT_ROLE_ID = "plantRoleId";
   public static final String PLANT_CODE = "plantCode";
+  
+  public static final String PLANT_ACCESS_LEVEL = "plantAccessLevel";
+  public static final String PLANT_ACCESS_LEVELS = "plantAccessLevels";
+  public static final String ADD_PLANT_ACCESS_ROLE_SUCCESS = "Successfully added plantAccessLevel";
+   
    
 }

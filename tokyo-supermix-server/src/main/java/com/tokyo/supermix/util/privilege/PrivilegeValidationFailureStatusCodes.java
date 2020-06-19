@@ -246,4 +246,28 @@ public class PrivilegeValidationFailureStatusCodes {
   public void setPlantPermissionAlreadyExists(String plantPermissionAlreadyExists) {
     this.plantPermissionAlreadyExists = plantPermissionAlreadyExists;
   }
+  /*
+   * plantAccessLevel
+   */
+  @Value("${validation.plantAccessLevel.notExists}")
+  private String plantAccessLevelNotExists;
+
+  @Value("${validation.plantAccessLevel.alreadyExists}")
+  private String plantAccessLevelAlreadyExists;
+
+  public String getPlantAccessLevelNotExists() {
+    return plantAccessLevelNotExists;
+  }
+
+  public void setPlantAccessLevelNotExists(String plantAccessLevelNotExists) {
+    this.plantAccessLevelNotExists = plantAccessLevelNotExists;
+  }
+
+  public String getPlantAccessLevelAlreadyExists() {
+    return plantAccessLevelAlreadyExists;
+  }
+
+  public void setPlantAccessLevelAlreadyExists(String plantAccessLevelAlreadyExists) {
+    this.plantAccessLevelAlreadyExists = plantAccessLevelAlreadyExists;
+  }
 }
