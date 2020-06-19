@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "accepted_value")
+@Table(schema = "tokyo-supermix",name = "accepted_value")
 public class AcceptedValue implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
@@ -24,7 +24,7 @@ public class AcceptedValue implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "unitId", nullable = false)
+  @JoinColumn(name = "unitId", nullable = true)
   private Unit unit;
 
   public Unit getUnit() {

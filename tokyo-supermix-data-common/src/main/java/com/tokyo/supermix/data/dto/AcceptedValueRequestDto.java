@@ -4,15 +4,10 @@ import javax.validation.constraints.NotNull;
 
 public class AcceptedValueRequestDto {
   private Long id;
-  @NotNull(message = "{acceptedValueRequestDto.minValue.null}")
   private Double minValue;
-  @NotNull(message = "{acceptedValueRequestDto.maxValue.null}")
   private Double maxValue;
   @NotNull(message = "{acceptedValueRequestDto.testConfigureId.null}")
   private Long testConfigureId;
-  @NotNull(message = "{acceptedValueRequestDto.parameterId.null}")
-  private Long parameterId;
-  @NotNull(message = "{acceptedValueRequestDto.unitId.null}")
   private Long unitId;
 
   public Long getId() {
@@ -46,15 +41,6 @@ public class AcceptedValueRequestDto {
   public void setTestConfigureId(Long testConfigureId) {
     this.testConfigureId = testConfigureId;
   }
-
-  public Long getParameterId() {
-    return parameterId;
-  }
-
-  public void setParameterId(Long parameterId) {
-    this.parameterId = parameterId;
-  }
-
   public Long getUnitId() {
     return unitId;
   }

@@ -6,13 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tokyo.supermix.data.entities.AdmixtureAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.AdmixtureAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.util.Constants;
@@ -30,8 +27,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private MaterialTestRepository materialTestRepository;
-  @Autowired
-  private AdmixtureAcceptedValueRepository admixtureAcceptedValueRepository;
 
   @Transactional
   public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -84,21 +79,21 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   }
 
   private void compareWithAverage(Double average, String materialTestCode) {
-    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    Long testConfigureId = materialTest.getTestConfigure().getId();
-    if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
-        .getMaterialCategory().getName().equalsIgnoreCase(Constants.ADMIXTURE)) {
-      AdmixtureAcceptedValue admixtureAcceptedValue =
-          admixtureAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(testConfigureId,
-              materialTest.getIncomingSample().getRawMaterial().getId());
-      calculateStatus(average, admixtureAcceptedValue.getMinValue(),
-          admixtureAcceptedValue.getMaxValue(), materialTestCode);
-    } else {
-      calculateStatus(average,
-          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
-          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
-          materialTestCode);
-    }
+//    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+//    Long testConfigureId = materialTest.getTestConfigure().getId();
+//    if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
+//        .getMaterialCategory().getName().equalsIgnoreCase(Constants.ADMIXTURE)) {
+//      AdmixtureAcceptedValue admixtureAcceptedValue =
+//          admixtureAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(testConfigureId,
+//              materialTest.getIncomingSample().getRawMaterial().getId());
+//      calculateStatus(average, admixtureAcceptedValue.getMinValue(),
+//          admixtureAcceptedValue.getMaxValue(), materialTestCode);
+//    } else {
+//      calculateStatus(average,
+//          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
+//          acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
+//          materialTestCode);
+//    }
   }
 
   private void calculateStatus(Double average, Double minValue, Double maxValue,
