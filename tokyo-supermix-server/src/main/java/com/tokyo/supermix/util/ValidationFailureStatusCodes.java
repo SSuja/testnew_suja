@@ -1795,4 +1795,28 @@ public class ValidationFailureStatusCodes {
   public void setParameterEquationAlreadyExit(String parameterEquationAlreadyExit) {
     this.parameterEquationAlreadyExit = parameterEquationAlreadyExit;
   }
+
+  /*
+   * Parameter Equation Element
+   */
+  @Value("${validation.parameterEquationElement.notExist}")
+  private String parameterEquationElementNotExit;
+  @Value("${validation.parameterEquationElement.alreadyExist}")
+  private String parameterEquationElementAlreadyExit;
+
+  public String getParameterEquationElementNotExit() {
+    return parameterEquationElementNotExit;
+  }
+
+  public void setParameterEquationElementNotExit(String parameterEquationElementNotExit) {
+    this.parameterEquationElementNotExit = parameterEquationElementNotExit;
+  }
+
+  public String getParameterEquationElementAlreadyExit() {
+    return parameterEquationElementAlreadyExit;
+  }
+
+  public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
+    this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
+  }
 }
