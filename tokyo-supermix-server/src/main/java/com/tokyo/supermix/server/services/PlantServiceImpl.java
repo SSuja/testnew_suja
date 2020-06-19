@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.auth.Role;
+import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
+import com.tokyo.supermix.data.repositories.privilege.PlantAccessLevelRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
 import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
@@ -30,6 +32,8 @@ public class PlantServiceImpl implements PlantService {
   private PlantPermissionService plantPermissionService;
   @Autowired
   private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
+  @Autowired
+  private PlantAccessLevelRepository plantAccessLevelRepository;
 
   @Transactional
   public void savePlant(Plant plant) {
@@ -42,6 +46,12 @@ public class PlantServiceImpl implements PlantService {
     PlantRole plantRoleObj = plantRoleRepository.save(plantRole);
     plantPermissionService.savePlantPermission(plantObj);
     plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);
+    PlantAccessLevel plantAccessLevel= new PlantAccessLevel();
+    plantAccessLevel.setPlant(plant);
+    plantAccessLevel.setPlantRole(plantRoleObj);
+    plantAccessLevel.setStatus(true);
+    plantAccessLevelRepository.save(plantAccessLevel);
+
   }
 
   @Transactional(readOnly = true)
