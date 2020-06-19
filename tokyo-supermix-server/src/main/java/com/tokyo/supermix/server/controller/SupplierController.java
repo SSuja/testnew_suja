@@ -59,10 +59,6 @@ public class SupplierController {
   @PostMapping(value = EndpointURI.SUPPLIER)
   @PreAuthorize("hasAuthority('add_supplier')")
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
-    if (supplierService.isEmailExist(supplierDto.getEmail())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-          validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
           validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);

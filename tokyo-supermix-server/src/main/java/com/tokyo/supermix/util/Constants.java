@@ -294,16 +294,6 @@ public class Constants {
       "Mix Design Proportion Successfully Deleted";
   public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
       "Mix Design Proportion Updated Successfully";
-
-  /*
-   * Constants for Equation Parameter validation key & Success messages
-   */
-  public static final String EQUATION_PARAMETER = "equationParameter";
-  public static final String EQUATION_PARAMETERS = "equationParameters";
-  public static final String EQUATION_PARAMETER_ID = "equationParameterId";
-  public static final String ADD_EQUATION_PARAMETER_SUCCESS =
-      "Equation Parameter Added Successfully";
-  public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter Successfully Deleted";
   /*
    * Constants for Admixture Accepted Value validation key & Success messages
    */
@@ -530,6 +520,19 @@ public class Constants {
       "Parameter Equation Successfully Deleted";
   public static final String UPDATE_PARAMETER_EQUATION_SUCCESS =
       "Parameter Equation Updated Successfully";
+
+  /*
+   * Constants for Parameter Equation Element validation key & Success messages
+   */
+  public static final String PARAMETER_EQUATION_ELEMENT = "parameterEquationElement";
+  public static final String PARAMETER_EQUATION_ELEMENT_ID = "parameterEquationElementId";
+  public static final String PARAMETER_EQUATION_ELEMENTS = "parameterEquationElements";
+  public static final String ADD_PARAMETER_EQUATION_ELEMENT_SUCCESS =
+      "Parameter Equation Element Added Successfully";
+  public static final String DELETE_PARAMETER_EQUATION_ELEMENT_SCCESS =
+      "Parameter Equation Element Successfully Deleted";
+  public static final String UPDATE_PARAMETER_EQUATION_ELEMENT_SUCCESS =
+      "Parameter Equation Element Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside

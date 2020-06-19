@@ -278,16 +278,6 @@ public final class EndpointURI {
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
-  /*
-   * Equation Parameter
-   */
-  public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
-  public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
-  public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
-  public static final String EQUATION_ID = "/{equationId}";
-  public static final String GET_PARAMETERS_BY_EQUATION_ID =
-      EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
-
   /* Parameter Result */
   public static final String PARAMETER_RESULT = BASE_API_PATH + "parameter-result";
   public static final String PARAMETER_RESULTS = BASE_API_PATH + "parameter-results";
@@ -573,6 +563,20 @@ public final class EndpointURI {
   public static final String PARAMETER_EQUATIONS = BASE_API_PATH + "parameter-equations";
   public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
       PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+
+  /*
+   * Parameter Equation Element apis
+   */
+  public static final String PARAMETER_EQUATION_ELEMENT =
+      BASE_API_PATH + "parameter-equation-element";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_ID = PARAMETER_EQUATION_ELEMENT + ID;
+  public static final String DELETE_PARAMETER_EQUATION_ELEMENT = PARAMETER_EQUATION_ELEMENT + ID;
+  public static final String PARAMETER_EQUATION_ELEMENTS =
+      BASE_API_PATH + "parameter-equation-elements";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_TEST_PARAMETER_ID =
+      PARAMETER_EQUATION_ELEMENT + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
+      PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
 
   private EndpointURI() {}
 }

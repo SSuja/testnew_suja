@@ -112,18 +112,22 @@ public class ParameterEquationController {
   @PutMapping(value = EndpointURI.PARAMETER_EQUATION)
   public ResponseEntity<Object> updateParameterEquation(
       @RequestBody ParameterEquationRequestDto parameterEquationRequestDto) {
-    if (parameterEquationService.isEquationIdAndTestParameterId(
-        parameterEquationRequestDto.getEquation().getId(),
-        parameterEquationRequestDto.getTestParameter().getId())) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
-              validationFailureStatusCodes.getParameterEquationAlreadyExit()),
-          HttpStatus.BAD_REQUEST);
+    if (parameterEquationService.isParameterEquationExist(parameterEquationRequestDto.getId())) {
+      if (parameterEquationService.isEquationIdAndTestParameterId(
+          parameterEquationRequestDto.getEquation().getId(),
+          parameterEquationRequestDto.getTestParameter().getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
+                validationFailureStatusCodes.getParameterEquationAlreadyExit()),
+            HttpStatus.BAD_REQUEST);
+      }
+      parameterEquationService.updateParameterEquation(
+          mapper.map(parameterEquationRequestDto, ParameterEquation.class));
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_PARAMETER_EQUATION_SUCCESS), HttpStatus.OK);
     }
-    parameterEquationService
-        .updateParameterEquation(mapper.map(parameterEquationRequestDto, ParameterEquation.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PARAMETER_EQUATION_SUCCESS),
-        HttpStatus.OK);
+    logger.debug("No Parameter Equation record exist for given id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_EQUATION_ID,
+        validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
   }
 }
