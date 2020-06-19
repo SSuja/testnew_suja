@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
@@ -23,6 +23,8 @@ public class Plant implements Serializable {
   private String faxNumber;
   @OneToMany(mappedBy = "plant")
   Set<PlantRole> plantRole;
+  @OneToMany(mappedBy = "plant")
+  Set<PlantAccessLevel> plantAccessLevel;
   @OneToMany(mappedBy = "plant")
   Set<PlantPermission> plantPermission;
 
@@ -94,5 +96,11 @@ public class Plant implements Serializable {
     this.plantPermission = plantPermission;
   }
 
+  public Set<PlantAccessLevel> getPlantAccessLevel() {
+    return plantAccessLevel;
+  }
 
+  public void setPlantAccessLevel(Set<PlantAccessLevel> plantAccessLevel) {
+    this.plantAccessLevel = plantAccessLevel;
+  }
 }
