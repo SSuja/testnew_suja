@@ -28,7 +28,16 @@ public class PlantAccessLevelServiceImpl implements PlantAccessLevelService {
   }
 
   @Transactional(readOnly = true)
-  public List<PlantAccessLevel> getPlantRolesByPlantCodeAndStatus(String plantCode, boolean status) {
+  public List<PlantAccessLevel> getPlantRolesByPlantCodeAndStatus(String plantCode,
+      boolean status) {
     return plantAccessLevelRepository.findByPlantCodeAndStatus(plantCode, status);
+  }
+
+  @Transactional
+  public void statusUpdate(String plantCode, Long plantRoleId) {
+    PlantAccessLevel plantAccessLevel =
+        plantAccessLevelRepository.findByPlantCodeAndPlantRoleId(plantCode, plantRoleId);
+    plantAccessLevel.setStatus(true);
+    plantAccessLevelRepository.save(plantAccessLevel);
   }
 }

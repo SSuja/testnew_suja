@@ -13,4 +13,7 @@ public interface PlantAccessLevelRepository extends JpaRepository<PlantAccessLev
   public boolean existsByPlantCodeAndStatus(String plantCode, boolean status);
 
   public List<PlantAccessLevel> findByPlantCodeAndStatus(String plantCode, boolean status);
+
+  public PlantAccessLevel findByPlantCodeAndPlantRoleId(String plantCode, Long plantRoleId);
+
 }

@@ -13,4 +13,5 @@ public interface PlantAccessLevelService {
 
   public List<PlantAccessLevel> getPlantRolesByPlantCodeAndStatus(String plantCode, boolean status);
 
+  public void statusUpdate(String plantCode, Long plantRoleId);
 }

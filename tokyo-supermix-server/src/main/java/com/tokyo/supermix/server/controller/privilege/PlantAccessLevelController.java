@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
@@ -49,21 +50,27 @@ public class PlantAccessLevelController {
   }
 
   @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_BY_PLANT_CODE_AND_STATUS)
-  public ResponseEntity<Object> getPlantRolesByPlantCodeAndStatus(@PathVariable String plantCode,@PathVariable boolean status) {
-    if (plantAccessLevelService.existsByPlantCodeAndStatus(plantCode,status)) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(PrivilegeConstants.PLANT_ACCESS_LEVELS,
-              mapper.map(
-                  plantAccessLevelService
-                      .getPlantRolesByPlantCodeAndStatus(plantCode, status),
-                  PlantAccessLevelDto.class),
-              RestApiResponseStatus.OK),
-          null, HttpStatus.OK);
+  public ResponseEntity<Object> getPlantRolesByPlantCodeAndStatus(@PathVariable String plantCode,
+      @PathVariable boolean status) {
+    if (plantAccessLevelService.existsByPlantCodeAndStatus(plantCode, status)) {
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ACCESS_LEVELS,
+          mapper.map(plantAccessLevelService.getPlantRolesByPlantCodeAndStatus(plantCode, status),
+              PlantAccessLevelDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     return new ResponseEntity<>(
         new ValidationFailureResponse(PrivilegeConstants.PLANT_ACCESS_LEVEL,
             privilegeValidationFailureStatusCodes.getPlantAccessLevelNotExists()),
         HttpStatus.BAD_REQUEST);
+  }
+
+  @PutMapping(value = PrivilegeEndpointURI.PLANT_ACCESS_LEVEL)
+  public ResponseEntity<Object> updatePlantAccessLevel(
+      @RequestBody PlantAccessLevelDto plantAccessLevelDto) {
+    plantAccessLevelService.statusUpdate(plantAccessLevelDto.getPlantCode(),
+        plantAccessLevelDto.getPlantRoleId());
+    return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+        PrivilegeConstants.ADD_PLANT_ACCESS_ROLE_SUCCESS), HttpStatus.OK);
   }
 }
 
