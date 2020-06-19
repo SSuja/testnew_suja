@@ -17,27 +17,23 @@ import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 @Entity
 @Table(name = "plant_role", schema = "tokyo-supermix")
 public class PlantRole implements Serializable {
-  /**
-   * 
-   */
   private static final long serialVersionUID = -2155789570042170615L;
-
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
   Long id;
   @ManyToOne
   @JoinColumn(name = "plant_code")
   private Plant plant;
-
   @ManyToOne
   @JoinColumn(name = "role_id")
   private Role role;
-
   private String name;
   @OneToMany(mappedBy = "plantRole")
   private Set<PlantRolePlantPermission> plantRolePlantPermissions;
   @OneToMany(mappedBy = "plantRole")
   private Set<UserPlantRole> userPlantRoles;
+  @OneToMany(mappedBy = "plantRole")
+  Set<PlantAccessLevel> plantAccessLevel;
 
   public Long getId() {
     return id;
@@ -88,4 +84,15 @@ public class PlantRole implements Serializable {
     this.userPlantRoles = userPlantRoles;
   }
 
+  public Set<PlantAccessLevel> getPlantAccessLevel() {
+    return plantAccessLevel;
+  }
+
+  public void setPlantAccessLevel(Set<PlantAccessLevel> plantAccessLevel) {
+    this.plantAccessLevel = plantAccessLevel;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 }

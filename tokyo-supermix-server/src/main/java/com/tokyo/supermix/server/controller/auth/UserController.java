@@ -17,6 +17,7 @@ import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.auth.GenerateUserDto;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
+import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -111,5 +112,12 @@ public class UserController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
         privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  @PutMapping(value = PrivilegeEndpointURI.UPDATE_USER_ROLE)
+  public ResponseEntity<Object> updateUserRole(@RequestBody UserRoleDto userRoleDto){
+    userService.updateUserRoles(userRoleDto);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_USER_SUCCESS),
+        HttpStatus.OK);
   }
 }
