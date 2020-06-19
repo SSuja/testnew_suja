@@ -32,7 +32,7 @@ public class TestParameter implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private EntryLevel entryLevel;
   private Double value;
-  private boolean equation;
+  private boolean equationExists;
   public Long getId() {
     return id;
   }
@@ -75,11 +75,11 @@ public class TestParameter implements Serializable {
   public void setValue(Double value) {
     this.value = value;
   }
-  public boolean isEquation() {
-    return equation;
+  public boolean isEquationExists() {
+    return equationExists;
   }
-  public void setEquation(boolean equation) {
-    this.equation = equation;
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
   public static long getSerialversionuid() {
     return serialVersionUID;
