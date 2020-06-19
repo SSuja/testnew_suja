@@ -11,12 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.auth.Role;
-import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
-import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
-import com.tokyo.supermix.data.repositories.privilege.PlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
 import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
@@ -29,8 +26,6 @@ public class PlantServiceImpl implements PlantService {
   private PlantRoleRepository plantRoleRepository;
   @Autowired
   private RoleRepository roleRepository;
-  @Autowired
-  private PlantPermissionRepository plantPermissionRepository;
   @Autowired
   private PlantPermissionService plantPermissionService;
   @Autowired
@@ -46,16 +41,7 @@ public class PlantServiceImpl implements PlantService {
     plantRole.setName(plant.getName().toUpperCase() + "_" + role.getName());
     PlantRole plantRoleObj = plantRoleRepository.save(plantRole);
     plantPermissionService.savePlantPermission(plantObj);
-    List<PlantPermission> plantPermissionList = plantPermissionRepository.findAll();
-    plantPermissionList.forEach(plantpermission -> {
-      
-      PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
-      plantRolePlantPermission.setPlantRole(plantRoleObj);
-      plantRolePlantPermission.setStatus(true);
-      plantRolePlantPermission.setPlantPermission(plantpermission);
-      plantRolePlantPermissionServices.savePlantRolePlantPermission(plantRolePlantPermission);
-    
-    });
+    plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);
   }
 
   @Transactional(readOnly = true)

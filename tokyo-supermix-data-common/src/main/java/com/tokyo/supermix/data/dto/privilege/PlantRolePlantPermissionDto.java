@@ -2,8 +2,8 @@ package com.tokyo.supermix.data.dto.privilege;
 
 public class PlantRolePlantPermissionDto {
   private Long id;
-  private String plantPermission;
-  private String permission;
+  private String plantPermissionName;
+  private String permissionName;
   private Long plantRoleId;
   private boolean status;
 
@@ -15,20 +15,20 @@ public class PlantRolePlantPermissionDto {
     this.id = id;
   }
 
-  public String getPlantPermission() {
-    return plantPermission;
+  public String getPlantPermissionName() {
+    return plantPermissionName;
   }
 
-  public void setPlantPermission(String plantPermission) {
-    this.plantPermission = plantPermission;
+  public void setPlantPermissionName(String plantPermissionName) {
+    this.plantPermissionName = plantPermissionName;
   }
 
-  public String getPermission() {
-    return permission;
+  public String getPermissionName() {
+    return permissionName;
   }
 
-  public void setPermission(String permission) {
-    this.permission = permission;
+  public void setPermissionName(String permissionName) {
+    this.permissionName = permissionName;
   }
 
   public Long getPlantRoleId() {

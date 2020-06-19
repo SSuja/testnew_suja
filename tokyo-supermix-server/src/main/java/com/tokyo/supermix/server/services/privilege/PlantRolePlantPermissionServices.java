@@ -4,6 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionResponseDto;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
 
 public interface PlantRolePlantPermissionServices {
@@ -21,22 +22,20 @@ public interface PlantRolePlantPermissionServices {
 
   public boolean isPlantRoleIdExist(Long plantRoleId);
 
-
-  public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission);
-
+  public void createPlantRolePlantPermission(PlantRole plantRole);
 
   public List<RolePermissionResponseDto> getPlantRolePermissionWithModuleByRoleId(Long plantRoleId);
 
   public PlantRolePlantPermission findByPlantRoleIdAndPlantPermissionId(Long plantRoleId,
       Long plantPermissionId);
 
-  public void saveRolePermission(PlantRolePlantPermission plantRolePlantPermission);
+  public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission);
 
   public boolean isPlantPermissionPlantCodeExist(String plantCode);
 
-  public List<PlantRolePlantPermission> getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(Long plantRoleId,
-      String plantCode);
-  
+  public List<PlantRolePlantPermission> getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(
+      Long plantRoleId, String plantCode);
+
   public List<PlantResponseDto> getByPlantRoleIdAndPermissionNameAndStatus(Long plantRoleId,
       String permissionName, Boolean status);
 

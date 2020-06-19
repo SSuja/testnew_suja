@@ -56,7 +56,6 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
     List<PlantPermissionResponseDto> plantPermissionResponseDtolist =
         new ArrayList<PlantPermissionResponseDto>();
     plantPermissionList.forEach(plantPermission -> {
-
       PlantPermissionResponseDto plantPermissionResponseDto = new PlantPermissionResponseDto();
       plantPermissionResponseDto.setId(plantPermission.getId());;
       plantPermissionResponseDto.setName(plantPermission.getName());

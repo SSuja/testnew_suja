@@ -126,7 +126,7 @@ public class PlantRolePlantPermissionController {
               plantRolePlantPermissionRequestDto.getPlantRoleId(),
               plantRolePlantPermissionRequestDto.getPlantPermissionId());
       plantRolePlantPermission.setStatus(plantRolePlantPermissionRequestDto.getStatus());
-      plantRolePlantPermissionServices.saveRolePermission(plantRolePlantPermission);
+      plantRolePlantPermissionServices.savePlantRolePlantPermission(plantRolePlantPermission);
     }
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
