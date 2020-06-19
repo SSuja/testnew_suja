@@ -278,16 +278,6 @@ public final class EndpointURI {
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
-  /*
-   * Equation Parameter
-   */
-  public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
-  public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
-  public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
-  public static final String EQUATION_ID = "/{equationId}";
-  public static final String GET_PARAMETERS_BY_EQUATION_ID =
-      EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
-
   /* Parameter Result */
   public static final String PARAMETER_RESULT = BASE_API_PATH + "parameter-result";
   public static final String PARAMETER_RESULTS = BASE_API_PATH + "parameter-results";

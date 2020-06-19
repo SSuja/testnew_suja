@@ -1340,33 +1340,6 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
-  /*
-   * Equation Parameter
-   */
-  @Value("${validation.equationParameter.notExists}")
-  private String equationParameterNotExist;
-  @Value("${validation.equationParameter.alreadyExist}")
-  private String equationParameterAlreadyExist;
-
-  public void setProjectCodeIsNull(String projectCodeIsNull) {
-    this.projectCodeIsNull = projectCodeIsNull;
-  }
-
-  public String getEquationParameterAlreadyExist() {
-    return equationParameterAlreadyExist;
-  }
-
-  public void setEquationParameterAlreadyExist(String equationParameterAlreadyExist) {
-    this.equationParameterAlreadyExist = equationParameterAlreadyExist;
-  }
-
-  public String getEquationParameterNotExist() {
-    return equationParameterNotExist;
-  }
-
-  public void setEquationParameterNotExist(String equationParameterNotExist) {
-    this.equationParameterNotExist = equationParameterNotExist;
-  }
 
   @Value("${validation.admixtureAcceptedValue.notExists}")
   private String admixtureAcceptedValueNotExist;
