@@ -3,7 +3,10 @@ package com.tokyo.supermix.data.dto.privilege;
 public class PlantAccessLevelDto {
   private Long id;
   private String plantCode;
+  private String plantName;
   private Long plantRoleId;
+  private String plantRoleName;
+
   private boolean status;
 
   public Long getId() {
@@ -28,7 +31,7 @@ public class PlantAccessLevelDto {
 
   public void setPlantRoleId(Long plantRoleId) {
     this.plantRoleId = plantRoleId;
- }
+  }
 
   public boolean isStatus() {
     return status;
@@ -36,5 +39,21 @@ public class PlantAccessLevelDto {
 
   public void setStatus(boolean status) {
     this.status = status;
+  }
+
+  public String getPlantName() {
+    return plantName;
+  }
+
+  public void setPlantName(String plantName) {
+    this.plantName = plantName;
+  }
+
+  public String getPlantRoleName() {
+    return plantRoleName;
+  }
+
+  public void setPlantRoleName(String plantRoleName) {
+    this.plantRoleName = plantRoleName;
   }
 }
