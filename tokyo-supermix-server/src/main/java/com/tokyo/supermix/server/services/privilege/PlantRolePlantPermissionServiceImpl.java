@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModuleRolePermissionDto;
 import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRolePlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
@@ -23,6 +25,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   private MainModuleRepository mainModuleRepository;
   @Autowired
   private SubModuleRepository subModuleRepository;
+  @Autowired
+  private Mapper mapper;
 
 
   @Transactional(readOnly = true)
@@ -193,4 +197,20 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return plantRolePlantPermissionRepository
         .findByPlantRoleIdAndPlantPermissionPlantCode(plantRoleId, plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<PlantResponseDto> getByPlantRoleIdAndPermissionNameAndStatus(Long plantRoleId,
+      String permissionName, Boolean status) {
+    List<PlantRolePlantPermission> plantRolePlantPermissionList =
+        plantRolePlantPermissionRepository.findByPlantRoleIdAndPlantPermissionPermissionNameAndStatus(plantRoleId, permissionName, status);
+    List<PlantResponseDto> plantResponseDtolist = new ArrayList<PlantResponseDto>();
+    plantRolePlantPermissionList.forEach(plantRolePlantPermission -> {
+     
+      plantResponseDtolist.add(mapper.map(plantRolePlantPermission.getPlantPermission().getPlant(), PlantResponseDto.class));
+    });
+
+    return plantResponseDtolist;
+  }
+  
+ 
 }
