@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services.privilege;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,16 @@ public class PlantRoleServiceImpl implements PlantRoleService {
   @Transactional
   public boolean existsByPlantCodeAndRoleId(String plantCode, Long roleId) {
     return plantRoleRepository.existsByPlantCodeAndRoleId(plantCode, roleId);
+  }
+
+  @Override
+  public List<PlantRole> getPlantRolesByRoleName(String roleName) {
+    return plantRoleRepository.findByRoleName(roleName);
+  }
+
+  @Override
+  public List<PlantRole> getAllPlantRole() {
+    return plantRoleRepository.findAll();
   }
 
 }

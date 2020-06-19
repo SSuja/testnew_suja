@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
+import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.auth.User;
@@ -32,11 +33,10 @@ public class UserServiceImpl implements UserService {
   PasswordEncoder passwordEncoder;
   @Autowired
   private EmployeeRepository employeeRepository;
-  @Autowired
+@Autowired
   private UserRoleRepository userRoleRepository;
   @Autowired
   private UserPlantRoleRepository userPlantRoleRepository;
-
   @Transactional
   public UserCredentialDto saveUser(User user, List<Long> roles) {
     user.setUserName(user.getEmail());
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
     userPlantRoleRepository.saveAll(userPlantRoles);
   }
 
-  private void createUserRoles(List<Long> roles, User user) {
+private void createUserRoles(List<Long> roles, User user) {
     List<UserRole> userRoles = new ArrayList<UserRole>();
     roles.forEach(roleId -> {
       Role role = new Role();
@@ -152,5 +152,18 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findById(userId).get();
     user.setIsActive(status);
     userRepository.save(user);
+  }
+
+  @Override
+  public void updateUserRoles(UserRoleDto userRoleDto) {
+    User user = userRepository.findById(userRoleDto.getUserId()).get();
+    System.out.println("user roles" + userRoleDto.getRoleIds().toString());
+    if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
+      userRoleRepository.findByUserId(userRoleDto.getUserId()).forEach(userRole->userRoleRepository.deleteById(userRole.getId()));
+      createUserRoles(userRoleDto.getRoleIds(), user);
+    } else {
+//      userPlantRoleRepository.findByUserId(userRoleDto.getUserId()).forEach(userRole->userRoleRepository.delete(userRole));
+     createUserPlantRoles(userRoleDto.getRoleIds(), user);
+    }
   }
 }
