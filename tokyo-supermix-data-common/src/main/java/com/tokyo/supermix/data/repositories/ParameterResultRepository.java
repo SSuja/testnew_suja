@@ -11,4 +11,6 @@ public interface ParameterResultRepository extends JpaRepository<ParameterResult
       String plantCode);
   List<ParameterResult> findByMaterialTestTrialMaterialTestIncomingSampleCode(
       String incomingSampleCode);
+  
+  List<ParameterResult> findByMaterialTestCode(String materialTestCode);
 }
