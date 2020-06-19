@@ -27,8 +27,10 @@ public interface TestParameterService {
   public List<TestParameter> getAllTestParametersByTestConfigureId(Long testConfigureId);
 
   public boolean isAbbreviationNull(String abbreviation);
-  
+
   public List<TestParameter> getAllParametersByDecending();
-  
+
   public boolean isParameterIdExist(Long parameterId);
+
+  public boolean isAbbreviationExists(String abbreviation);
 }

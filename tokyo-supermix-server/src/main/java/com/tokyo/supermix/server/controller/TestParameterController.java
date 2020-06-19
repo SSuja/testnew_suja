@@ -56,6 +56,10 @@ public class TestParameterController {
           return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
               validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
         }
+        if (testParameterService.isAbbreviationExists(testParameterRequestDto.getAbbreviation())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
         if (testParameterService.isDuplicateTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getParameterId(),
             testParameterRequestDto.getUnitId(), testParameterRequestDto.getAbbreviation(),
@@ -133,6 +137,14 @@ public class TestParameterController {
             validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
       }
       if (testParameterRequestDto.getParameterId() != null) {
+        if (testParameterService.isParameterIdExist(testParameterRequestDto.getParameterId())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
+        if (testParameterService.isAbbreviationExists(testParameterRequestDto.getAbbreviation())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
         if ((testParameterService.isDuplicateTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getParameterId(),
             testParameterRequestDto.getUnitId(), testParameterRequestDto.getAbbreviation(),
