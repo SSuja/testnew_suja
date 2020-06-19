@@ -7,9 +7,7 @@ import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.EntryLevel;
 
 public interface TestParameterService {
-  public List<TestParameter> saveTestParameter(List<TestParameter> testParameter);
-
-  public TestParameter updateTestParameter(TestParameter testParameter);
+  public void saveTestParameter(TestParameter testParameter);
 
   public List<TestParameter> getAllTestParameters();
 
@@ -29,6 +27,10 @@ public interface TestParameterService {
   public List<TestParameter> getAllTestParametersByTestConfigureId(Long testConfigureId);
 
   public boolean isAbbreviationNull(String abbreviation);
-  
+
   public List<TestParameter> getAllParametersByDecending();
+
+  public boolean isParameterIdExist(Long parameterId);
+
+  public boolean isAbbreviationExists(String abbreviation);
 }

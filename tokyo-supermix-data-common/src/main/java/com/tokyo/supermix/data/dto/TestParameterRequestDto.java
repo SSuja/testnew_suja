@@ -14,7 +14,7 @@ public class TestParameterRequestDto {
   private String abbreviation;
   private EntryLevel entryLevel;
   private Double value;
-  private boolean isEquation;
+  private boolean equationExists;
   public Long getId() {
     return id;
   }
@@ -57,10 +57,10 @@ public class TestParameterRequestDto {
   public void setValue(Double value) {
     this.value = value;
   }
-  public boolean isEquation() {
-    return isEquation;
+  public boolean isEquationExists() {
+    return equationExists;
   }
-  public void setEquation(boolean isEquation) {
-    this.isEquation = isEquation;
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
 }

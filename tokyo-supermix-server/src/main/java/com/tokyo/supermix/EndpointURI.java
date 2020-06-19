@@ -278,16 +278,6 @@ public final class EndpointURI {
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
-  /*
-   * Equation Parameter
-   */
-  public static final String EQUATION_PARAMETER = BASE_API_PATH + "equation-parameter";
-  public static final String EQUATION_PARAMETER_BY_ID = EQUATION_PARAMETER + ID;
-  public static final String EQUATION_PARAMETERS = BASE_API_PATH + "equation-parameters";
-  public static final String EQUATION_ID = "/{equationId}";
-  public static final String GET_PARAMETERS_BY_EQUATION_ID =
-      EQUATION_PARAMETER + "/equationparameter" + EQUATION_ID;
-
   /* Parameter Result */
   public static final String PARAMETER_RESULT = BASE_API_PATH + "parameter-result";
   public static final String PARAMETER_RESULTS = BASE_API_PATH + "parameter-results";
@@ -313,6 +303,8 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE =
+      MATERIAL_TESTS + "/test-configure" + "/testType" + SLASH + "{testType}";
   /*
    * material-test-trial
    * 
@@ -485,6 +477,16 @@ public final class EndpointURI {
   public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String SEARCH_ADMIXTURE_ACCEPTED_VALUE = ADMIXTURE_ACCEPTED_VALUE + SEARCH;
+
+  /*
+   * MaterialAcceptedValue Apis
+   */
+  public static final String MATERIAL_ACCEPTED_VALUE = BASE_API_PATH + "material-accepted-value";
+  public static final String MATERIAL_ACCEPTED_VALUES = BASE_API_PATH + "material-accepted-values";
+  public static final String MATERIAL_ACCEPTED_VALUE_BY_ID = MATERIAL_ACCEPTED_VALUE + ID;
+  public static final String MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
+      MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
+  public static final String SEARCH_MATERIAL_ACCEPTED_VALUE = MATERIAL_ACCEPTED_VALUE + SEARCH;
   /*
    * AcceptedValue
    */

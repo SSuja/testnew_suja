@@ -1,9 +1,11 @@
 package com.tokyo.supermix.data.dto;
 
-public class AcceptedValueResponseDto {
+public class MaterialAcceptedValueResponseDto {
+
 	private Long id;
 	private Double minValue;
 	private Double maxValue;
+	private RawMaterialResponseDto rawMaterialResponseDto;
 	private TestConfigureResponseDto testConfigure;
 	private UnitDto unit;
 
@@ -31,6 +33,14 @@ public class AcceptedValueResponseDto {
 		this.maxValue = maxValue;
 	}
 
+	public RawMaterialResponseDto getRawMaterialResponseDto() {
+		return rawMaterialResponseDto;
+	}
+
+	public void setRawMaterialResponseDto(RawMaterialResponseDto rawMaterialResponseDto) {
+		this.rawMaterialResponseDto = rawMaterialResponseDto;
+	}
+
 	public TestConfigureResponseDto getTestConfigure() {
 		return testConfigure;
 	}
@@ -46,4 +56,5 @@ public class AcceptedValueResponseDto {
 	public void setUnit(UnitDto unit) {
 		this.unit = unit;
 	}
+
 }

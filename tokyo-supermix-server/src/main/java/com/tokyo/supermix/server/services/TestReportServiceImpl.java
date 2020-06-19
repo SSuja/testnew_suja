@@ -249,7 +249,7 @@ public class TestReportServiceImpl implements TestReportService {
       incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
       incomingSampleTestDto.setAverage(test.getAverage());
       incomingSampleTestDto.setStatus(test.getStatus());
-      incomingSampleTestDto.setDate(test.getDate());
+//      incomingSampleTestDto.setDate(test.getDate());
       incomingSampleTestDto
           .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
       incomingSampleTestDtoList.add(incomingSampleTestDto);

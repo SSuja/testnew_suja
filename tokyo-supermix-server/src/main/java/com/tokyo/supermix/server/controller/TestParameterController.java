@@ -52,10 +52,18 @@ public class TestParameterController {
             validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
       }
       if (testParameterRequestDto.getParameterId() != null) {
-        if ((testParameterService.isDuplicateTestParameterEntryExist(
+        if (testParameterService.isParameterIdExist(testParameterRequestDto.getParameterId())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
+        if (testParameterService.isAbbreviationExists(testParameterRequestDto.getAbbreviation())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
+        if (testParameterService.isDuplicateTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getParameterId(),
             testParameterRequestDto.getUnitId(), testParameterRequestDto.getAbbreviation(),
-            testParameterRequestDto.getEntryLevel()))) {
+            testParameterRequestDto.getEntryLevel())) {
           logger.debug(
               "row is already exists: createTestParameter(), isDuplicateTestParameterEntryExist: {}");
           return new ResponseEntity<>(
@@ -64,9 +72,10 @@ public class TestParameterController {
               HttpStatus.BAD_REQUEST);
         }
       }
+      testParameterService
+          .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
     }
-    testParameterService
-        .saveTestParameter(mapper.map(testParameterRequestDtoList, TestParameter.class));
+
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_PARAMETER_SUCCESS),
         HttpStatus.OK);
@@ -75,8 +84,8 @@ public class TestParameterController {
   @GetMapping(value = EndpointURI.TEST_PARAMETERS)
   @PreAuthorize("hasAuthority('get_test_parameter')")
   public ResponseEntity<Object> getTestParameters() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
-        mapper.map(testParameterService.getAllParametersByDecending(), TestParameterResponseDto.class),
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS, mapper
+        .map(testParameterService.getAllParametersByDecending(), TestParameterResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -123,7 +132,19 @@ public class TestParameterController {
   public ResponseEntity<Object> updateTestParameter(
       @RequestBody TestParameterRequestDto testParameterRequestDto) {
     if (testParameterService.isTestParameterExist(testParameterRequestDto.getId())) {
+      if (testParameterService.isAbbreviationNull(testParameterRequestDto.getAbbreviation())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+            validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
+      }
       if (testParameterRequestDto.getParameterId() != null) {
+        if (testParameterService.isParameterIdExist(testParameterRequestDto.getParameterId())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
+        if (testParameterService.isAbbreviationExists(testParameterRequestDto.getAbbreviation())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+              validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
         if ((testParameterService.isDuplicateTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getParameterId(),
             testParameterRequestDto.getUnitId(), testParameterRequestDto.getAbbreviation(),
@@ -136,7 +157,7 @@ public class TestParameterController {
         }
       }
       testParameterService
-          .updateTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
+          .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_PARAMETER_SUCCESS),
           HttpStatus.OK);

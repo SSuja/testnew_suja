@@ -294,16 +294,6 @@ public class Constants {
       "Mix Design Proportion Successfully Deleted";
   public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
       "Mix Design Proportion Updated Successfully";
-
-  /*
-   * Constants for Equation Parameter validation key & Success messages
-   */
-  public static final String EQUATION_PARAMETER = "equationParameter";
-  public static final String EQUATION_PARAMETERS = "equationParameters";
-  public static final String EQUATION_PARAMETER_ID = "equationParameterId";
-  public static final String ADD_EQUATION_PARAMETER_SUCCESS =
-      "Equation Parameter Added Successfully";
-  public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter Successfully Deleted";
   /*
    * Constants for Admixture Accepted Value validation key & Success messages
    */
@@ -316,6 +306,18 @@ public class Constants {
       "Admixture Accepted Value Added Successfully";
   public static final String UPDATE_ADMIXTURE_ACCEPTED_VALUE_SUCCESS =
       "Admixture Accepted Value Updated Successfully";
+  /*
+   * Constants for Material Accepted Value validation key & Success messages
+   */
+  public static final String MATERIAL_ACCEPTED_VALUE_ID = " materialAcceptedValueId";
+  public static final String MATERIAL_ACCEPTED_VALUE = "materialAcceptedValue";
+  public static final String MATERIAL_ACCEPTED_VALUES = "materialAcceptedValues";
+  public static final String MATERIAL_ACCEPTED_VALUE_DELETED =
+      "Material Accepted Value Successfully Deleted";
+  public static final String ADD_MATERIAL_ACCEPTED_VALUE_SUCCESS =
+      "Material Accepted Value Added Successfully";
+  public static final String UPDATE_MATERIAL_ACCEPTED_VALUE_SUCCESS =
+      "Material Accepted Value Updated Successfully";
   /*
    * Constants for Accepted Value validation key & Success messages
    */

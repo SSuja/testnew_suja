@@ -56,11 +56,6 @@ public class CustomerController {
   @PreAuthorize("hasAuthority('add_customer')")
   public ResponseEntity<Object> saveCustomer(
       @Valid @RequestBody CustomerRequestDto customerRequestDto) {
-    if (customerService.isEmailExist(customerRequestDto.getEmail())) {
-      logger.debug("email is already exists:saveCustomer(), isEmailAlreadyExist:{}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-          validationFailureStatusCodes.getEmailAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     if (customerService.isNameExist(customerRequestDto.getName())) {
       logger.debug("Name is already exists:saveCustomer(), isNameAlreadyExist:{}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,

@@ -11,8 +11,6 @@ public class CustomerRequestDto {
   @NotNull(message = "{customerDto.phoneNumber.null}")
   private String phoneNumber;
   private String address;
-  @NotNull(message = "{customerDto.email.null}")
-  @NotEmpty(message = "{customerDto.email.empty}")
   private String email;
   @NotNull(message = "{customerDto.plantCode.null}")
   @NotEmpty(message = "{customerDto.plantCode.empty}")

@@ -14,6 +14,8 @@ public interface TestParameterRepository
 
   public boolean existsByTestConfigureId(Long testConfigureId);
 
+  public boolean existsByParameterId(Long parameterId);
+
   public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
       Long testConfigureId, Long parameterId, Long unitId, String abbreviation,
       EntryLevel entryLevel);
@@ -22,4 +24,6 @@ public interface TestParameterRepository
       Long qualityParameterId, Long unitId, String abbreviation);
 
   public List<TestParameter> findAllByOrderByIdDesc();
+
+  public boolean existsByAbbreviation(String abbreviation);
 }
