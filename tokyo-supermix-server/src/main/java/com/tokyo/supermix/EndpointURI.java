@@ -564,5 +564,19 @@ public final class EndpointURI {
   public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
       PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
 
+  /*
+   * Parameter Equation Element apis
+   */
+  public static final String PARAMETER_EQUATION_ELEMENT =
+      BASE_API_PATH + "parameter-equation-element";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_ID = PARAMETER_EQUATION_ELEMENT + ID;
+  public static final String DELETE_PARAMETER_EQUATION_ELEMENT = PARAMETER_EQUATION_ELEMENT + ID;
+  public static final String PARAMETER_EQUATION_ELEMENTS =
+      BASE_API_PATH + "parameter-equation-elements";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_TEST_PARAMETER_ID =
+      PARAMETER_EQUATION_ELEMENT + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
+      PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
+
   private EndpointURI() {}
 }

@@ -522,6 +522,19 @@ public class Constants {
       "Parameter Equation Updated Successfully";
 
   /*
+   * Constants for Parameter Equation Element validation key & Success messages
+   */
+  public static final String PARAMETER_EQUATION_ELEMENT = "parameterEquationElement";
+  public static final String PARAMETER_EQUATION_ELEMENT_ID = "parameterEquationElementId";
+  public static final String PARAMETER_EQUATION_ELEMENTS = "parameterEquationElements";
+  public static final String ADD_PARAMETER_EQUATION_ELEMENT_SUCCESS =
+      "Parameter Equation Element Added Successfully";
+  public static final String DELETE_PARAMETER_EQUATION_ELEMENT_SCCESS =
+      "Parameter Equation Element Successfully Deleted";
+  public static final String UPDATE_PARAMETER_EQUATION_ELEMENT_SUCCESS =
+      "Parameter Equation Element Updated Successfully";
+
+  /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}
