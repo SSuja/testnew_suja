@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
+import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
@@ -94,12 +95,14 @@ public class PlantRolePlantPermissionController {
       @PathVariable Long plantRoleId, @PathVariable Long subModuleId,
       @PathVariable Boolean status) {
     if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ROLE_PLANT_PERMISSIONS,
-          mapper.map(plantRolePlantPermissionServices
-              .getRolePlantPermissionsByPlantRoleIdAndSubModuleIDAndStatus(plantRoleId, subModuleId,
-                  status),
-              PlantRolePlantPermissionDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(PrivilegeConstants.PLANT_ROLE_PLANT_PERMISSIONS,
+              mapper.map(plantRolePlantPermissionServices
+                  .getRolePlantPermissionsByPlantRoleIdAndSubModuleIDAndStatus(plantRoleId,
+                      subModuleId, status),
+                  PlantRolePlantPermissionDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
@@ -125,24 +128,41 @@ public class PlantRolePlantPermissionController {
       plantRolePlantPermission.setStatus(plantRolePlantPermissionRequestDto.getStatus());
       plantRolePlantPermissionServices.saveRolePermission(plantRolePlantPermission);
     }
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
   }
-  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PLANT_CODE)
+
+  @GetMapping(
+      value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PLANT_CODE)
   public ResponseEntity<Object> getPlantRolePlantPermissionByPlantRoleIdandPlantCode(
       @PathVariable Long plantRoleId, @PathVariable String plantCode) {
     if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
-      if(plantRolePlantPermissionServices.isPlantPermissionPlantCodeExist(plantCode)) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
-              mapper.map(plantRolePlantPermissionServices.getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(
-                  plantRoleId,plantCode), PlantRolePlantPermissionRequestDto.class),
-              RestApiResponseStatus.OK),
-          null, HttpStatus.OK);
-    }
+      if (plantRolePlantPermissionServices.isPlantPermissionPlantCodeExist(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+            mapper.map(plantRolePlantPermissionServices
+                .getPlantRolePermissionsByPlantRoleIdAndPlantPermissionPlantCode(plantRoleId,
+                    plantCode),
+                PlantRolePlantPermissionRequestDto.class),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+      }
       return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_CODE,
           privilegeValidationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
+        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(
+      value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PERMISSION_NAME_AND_STATUS)
+  public ResponseEntity<Object> getAllPlantsByPlantRoleIdAndPermissionName(
+      @PathVariable Long plantRoleId, @PathVariable String permissionName,
+      @PathVariable Boolean status) {
+    if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
+      return new ResponseEntity<>(new ContentResponse<>(
+          PrivilegeConstants.PLANT_ROLE_PLANT_PERMISSIONS,
+          mapper.map(plantRolePlantPermissionServices.getByPlantRoleIdAndPermissionNameAndStatus(
+              plantRoleId, permissionName, status), PlantResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);

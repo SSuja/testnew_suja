@@ -38,6 +38,7 @@ public final class PrivilegeEndpointURI {
   public static final String USER_BY_ID = USER + ID;
   public static final String UPDATE_USER_STATUS_BY_ID =
       USER + SLASH + "{userId}" + SLASH + "status" + SLASH + "{status}";
+  public static final String UPDATE_USER_ROLE = USER + SLASH + "role";
   /*
    * User Role
    */
@@ -47,9 +48,9 @@ public final class PrivilegeEndpointURI {
   /*
    * User Plant Role
    */
-  public static final String USER_PLANT_ROLE = BASE_API_PATH + "user-role";
-  public static final String USER_PLANT_ROLE_BY_USER = USER_ROLE + SLASH + "user" + SLASH + "{userId}";
-  public static final String USER_PLANT_ROLE_BY_ROLE = USER_ROLE + SLASH + "plant-role" + SLASH + "{plantRoleId}";
+  public static final String USER_PLANT_ROLE = BASE_API_PATH + "user-plant-role";
+  public static final String USER_PLANT_ROLE_BY_USER = USER_PLANT_ROLE + SLASH + "user" + SLASH + "{userId}";
+  public static final String USER_PLANT_ROLE_BY_ROLE = USER_PLANT_ROLE + SLASH + "plant-role" + SLASH + "{plantRoleId}";
   /*
    * Permission
    */
@@ -87,7 +88,13 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_PERMISSION_BY_ID = PLANT_PERMISSION + ID;
   public static final String PLANT_PERMISSION_BY_PERMISSION_NAME =
       PLANT_PERMISSION + SLASH + "{permissionName}";
+
+  /*
+   * plant Role
+   */
   public static final String PLANT_ROLE = BASE_API_PATH + "plant-role";
+  public static final String PLANT_ROLE_BY_ROLE_NAME =
+      PLANT_ROLE + SLASH + "role-name" + SLASH + "{roleName}";
   /*
    * plant Role Plant Permission
    */
@@ -108,6 +115,10 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID_AND_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
           + "{subModuleId}" + SLASH + "status" + SLASH + "{status}";
+  
+  public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PERMISSION_NAME_AND_STATUS =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "permissionName" + SLASH
+          + "{permissionName}" + SLASH + "status" + SLASH + "{status}";
 
   public static final String PLANT_PERMISSION_BY_PLANT_CODE_AND_SUBMODULE_ID_AND_MAINMODULE_ID =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantCode}" + SLASH + "subModuleId" + SLASH
