@@ -294,16 +294,6 @@ public class Constants {
       "Mix Design Proportion Successfully Deleted";
   public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
       "Mix Design Proportion Updated Successfully";
-
-  /*
-   * Constants for Equation Parameter validation key & Success messages
-   */
-  public static final String EQUATION_PARAMETER = "equationParameter";
-  public static final String EQUATION_PARAMETERS = "equationParameters";
-  public static final String EQUATION_PARAMETER_ID = "equationParameterId";
-  public static final String ADD_EQUATION_PARAMETER_SUCCESS =
-      "Equation Parameter Added Successfully";
-  public static final String DELETED_EQUATION_PARAMETER = "Equation Parameter Successfully Deleted";
   /*
    * Constants for Admixture Accepted Value validation key & Success messages
    */
