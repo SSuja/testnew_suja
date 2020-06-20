@@ -4,6 +4,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.tokyo.supermix.data.dto.privilege.PlantAccessLevelRequestDto;
 import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
 import com.tokyo.supermix.data.repositories.privilege.PlantAccessLevelRepository;
 
@@ -34,10 +35,10 @@ public class PlantAccessLevelServiceImpl implements PlantAccessLevelService {
   }
 
   @Transactional
-  public void statusUpdate(String plantCode, Long plantRoleId) {
+  public void statusUpdate(PlantAccessLevelRequestDto plantAccessLevelRequestDto) {
     PlantAccessLevel plantAccessLevel =
-        plantAccessLevelRepository.findByPlantCodeAndPlantRoleId(plantCode, plantRoleId);
-    plantAccessLevel.setStatus(true);
+        plantAccessLevelRepository.findByPlantCodeAndPlantRoleId(plantAccessLevelRequestDto.getPlantCode(),plantAccessLevelRequestDto.getPlantRoleId());
+    plantAccessLevel.setStatus(plantAccessLevelRequestDto.isStatus());
     plantAccessLevelRepository.save(plantAccessLevel);
   }
 }

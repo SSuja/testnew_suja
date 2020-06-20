@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
-import com.tokyo.supermix.data.dto.privilege.PlantAccessLevelDto;
+import com.tokyo.supermix.data.dto.privilege.PlantAccessLevelRequestDto;
+import com.tokyo.supermix.data.dto.privilege.PlantAccessLevelResponseDto;
 import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -35,16 +36,16 @@ public class PlantAccessLevelController {
 
   @PostMapping(value = PrivilegeEndpointURI.PLANT_ACCESS_LEVEL)
   public ResponseEntity<Object> createPlantAccessLevel(
-      @RequestBody PlantAccessLevelDto plantAccessLevelDto) {
-    if (plantAccessLevelService.existsByPlantCodeAndPlantRoleId(plantAccessLevelDto.getPlantCode(),
-        plantAccessLevelDto.getPlantRoleId())) {
+      @RequestBody PlantAccessLevelRequestDto plantAccessLevelRequestDto) {
+    if (plantAccessLevelService.existsByPlantCodeAndPlantRoleId(plantAccessLevelRequestDto.getPlantCode(),
+        plantAccessLevelRequestDto.getPlantRoleId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(PrivilegeConstants.PLANT_ACCESS_LEVEL,
               privilegeValidationFailureStatusCodes.getRoleAlreadyExists()),
           HttpStatus.BAD_REQUEST);
     }
     plantAccessLevelService
-        .savePlantRolePlantCode(mapper.map(plantAccessLevelDto, PlantAccessLevel.class));
+        .savePlantRolePlantCode(mapper.map(plantAccessLevelRequestDto, PlantAccessLevel.class));
     return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
         PrivilegeConstants.ADD_PLANT_ACCESS_ROLE_SUCCESS), HttpStatus.OK);
   }
@@ -55,7 +56,7 @@ public class PlantAccessLevelController {
     if (plantAccessLevelService.existsByPlantCodeAndStatus(plantCode, status)) {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ACCESS_LEVELS,
           mapper.map(plantAccessLevelService.getPlantRolesByPlantCodeAndStatus(plantCode, status),
-              PlantAccessLevelDto.class),
+              PlantAccessLevelResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     return new ResponseEntity<>(
@@ -66,11 +67,10 @@ public class PlantAccessLevelController {
 
   @PutMapping(value = PrivilegeEndpointURI.PLANT_ACCESS_LEVEL)
   public ResponseEntity<Object> updatePlantAccessLevel(
-      @RequestBody PlantAccessLevelDto plantAccessLevelDto) {
-    plantAccessLevelService.statusUpdate(plantAccessLevelDto.getPlantCode(),
-        plantAccessLevelDto.getPlantRoleId());
+      @RequestBody PlantAccessLevelRequestDto plantAccessLevelRequestDto) {
+    plantAccessLevelService.statusUpdate(plantAccessLevelRequestDto);
     return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
-        PrivilegeConstants.ADD_PLANT_ACCESS_ROLE_SUCCESS), HttpStatus.OK);
+        PrivilegeConstants.UPDATE_PLANT_ACCESS_ROLE_SUCCESS), HttpStatus.OK);
   }
 }
 
