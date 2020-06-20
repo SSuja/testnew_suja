@@ -54,17 +54,22 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   }
 
   @Transactional(readOnly = true)
-  public boolean isMaterialAcceptedValueByTestConfigureId(Long testConfigureId) {
-    return materialAcceptedValueRepository
-        .existsMaterialAcceptedValueByTestConfigureId(testConfigureId);
+  public boolean isDuplicateEntryExist(Long testConfigureId, Long rawMaterialId) {
+    return materialAcceptedValueRepository.existsByTestConfigureIdAndRawMaterialId(testConfigureId,
+        rawMaterialId);
   }
 
   @Transactional(readOnly = true)
-  public boolean isUpdatedMaterialAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId) {
-    if ((!getMaterialAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
-        && (isMaterialAcceptedValueByTestConfigureId(testConfigureId))) {
+  public boolean isUpdatedRawMaterialIdExist(Long id, Long rawMaterialId) {
+    if ((!getMaterialAcceptedValueById(id).getRawMaterial().equals(rawMaterialId))
+        && (isRawMaterialIdExist(rawMaterialId))) {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialIdExist(Long rawMaterialId) {
+    return materialAcceptedValueRepository.existsByRawMaterialId(rawMaterialId);
   }
 }

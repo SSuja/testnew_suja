@@ -12,62 +12,71 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_accepted_value")
 public class MaterialAcceptedValue {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Double minValue;
-	private Double maxValue;
-	@OneToOne
-	@JoinColumn(name = "testConfigureId", nullable = false)
-	private TestConfigure testConfigure;
-	@ManyToOne
-	@JoinColumn(name = "unitId", nullable = false)
-	private Unit unit;
-	@ManyToOne
-	@JoinColumn(name = "rawMaterialId", nullable = false)
-	private RawMaterial rawMaterial;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private Double minValue;
+  private Double maxValue;
+  @OneToOne
+  @JoinColumn(name = "testConfigureId", nullable = false)
+  private TestConfigure testConfigure;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
+  @ManyToOne
+  @JoinColumn(name = "rawMaterialId", nullable = false)
+  private RawMaterial rawMaterial;
 
-	public Double getMinValue() {
-		return minValue;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setMinValue(Double minValue) {
-		this.minValue = minValue;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public Double getMaxValue() {
-		return maxValue;
-	}
+  public Double getMinValue() {
+    return minValue;
+  }
 
-	public void setMaxValue(Double maxValue) {
-		this.maxValue = maxValue;
-	}
+  public void setMinValue(Double minValue) {
+    this.minValue = minValue;
+  }
 
-	public TestConfigure getTestConfigure() {
-		return testConfigure;
-	}
+  public Double getMaxValue() {
+    return maxValue;
+  }
 
-	public void setTestConfigure(TestConfigure testConfigure) {
-		this.testConfigure = testConfigure;
-	}
+  public void setMaxValue(Double maxValue) {
+    this.maxValue = maxValue;
+  }
 
-	public Unit getUnit() {
-		return unit;
-	}
+  public TestConfigure getTestConfigure() {
+    return testConfigure;
+  }
 
-	public void setUnit(Unit unit) {
-		this.unit = unit;
-	}
+  public void setTestConfigure(TestConfigure testConfigure) {
+    this.testConfigure = testConfigure;
+  }
 
-	public RawMaterial getRawMaterial() {
-		return rawMaterial;
-	}
+  public Unit getUnit() {
+    return unit;
+  }
 
-	public void setRawMaterial(RawMaterial rawMaterial) {
-		this.rawMaterial = rawMaterial;
-	}
+  public void setUnit(Unit unit) {
+    this.unit = unit;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public RawMaterial getRawMaterial() {
+    return rawMaterial;
+  }
+
+  public void setRawMaterial(RawMaterial rawMaterial) {
+    this.rawMaterial = rawMaterial;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 }
