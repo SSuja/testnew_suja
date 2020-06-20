@@ -46,14 +46,17 @@ public class MaterialAcceptedValueController {
   public ResponseEntity<Object> createMaterialAcceptedValue(
       @Valid @RequestBody List<MaterialAcceptedValueRequestDto> materialAcceptedValueRequestDtoList) {
     for (MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto : materialAcceptedValueRequestDtoList) {
-      if (materialAcceptedValueService.isMaterialAcceptedValueByTestConfigureId(
-          materialAcceptedValueRequestDto.getTestConfigureId())) {
-        materialAcceptedValueService.saveAcceptedValue(
-            mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
+      if (materialAcceptedValueService.isDuplicateEntryExist(
+          materialAcceptedValueRequestDto.getTestConfigureId(),
+          materialAcceptedValueRequestDto.getRawMaterialId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
+                validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
       }
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
-          validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
     }
+    materialAcceptedValueService.saveAcceptedValue(
+        mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.ADD_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
   }
@@ -102,8 +105,9 @@ public class MaterialAcceptedValueController {
       @Valid @RequestBody MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto) {
     if (materialAcceptedValueService
         .isMaterialAcceptedValueExist(materialAcceptedValueRequestDto.getId())) {
-      if (materialAcceptedValueService.isMaterialAcceptedValueByTestConfigureId(
-          materialAcceptedValueRequestDto.getTestConfigureId())) {
+      if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
+          materialAcceptedValueRequestDto.getId(),
+          materialAcceptedValueRequestDto.getRawMaterialId())) {
         materialAcceptedValueService.updateMaterialAcceptedValue(
             mapper.map(materialAcceptedValueRequestDto, MaterialAcceptedValue.class));
       }

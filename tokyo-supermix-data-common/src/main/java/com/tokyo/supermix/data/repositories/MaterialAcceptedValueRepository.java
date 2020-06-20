@@ -11,7 +11,9 @@ public interface MaterialAcceptedValueRepository
     extends JpaRepository<MaterialAcceptedValue, Long> {
   List<MaterialAcceptedValue> findByTestConfigure(TestConfigure testConfigure);
 
-  public boolean existsMaterialAcceptedValueByTestConfigureId(Long testConfigureId);
+  public boolean existsByTestConfigureIdAndRawMaterialId(Long testConfigureId, Long rawMaterialId);
 
   MaterialAcceptedValue findByTestConfigureId(Long testConfigureId);
+
+  boolean existsByRawMaterialId(Long rawMaterialId);
 }

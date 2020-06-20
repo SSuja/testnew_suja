@@ -23,7 +23,9 @@ public interface MaterialAcceptedValueService {
   public List<MaterialAcceptedValue> getMaterialAcceptedValueByTestConfigure(
       TestConfigure testConfigure);
 
-  boolean isMaterialAcceptedValueByTestConfigureId(Long testConfigureId);
+  boolean isDuplicateEntryExist(Long testConfigureId, Long rawMaterialId);
 
-  public boolean isUpdatedMaterialAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId);
+  public boolean isUpdatedRawMaterialIdExist(Long id, Long rawMaterialId);
+
+  boolean isRawMaterialIdExist(Long rawMaterialId);
 }
