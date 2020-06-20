@@ -28,8 +28,6 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId);
 
-  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample);
-
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
   public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
