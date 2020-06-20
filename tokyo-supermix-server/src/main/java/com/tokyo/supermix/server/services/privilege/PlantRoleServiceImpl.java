@@ -21,11 +21,11 @@ public class PlantRoleServiceImpl implements PlantRoleService {
   private RoleRepository roleRepository;
 
   @Transactional
-  public void savePlantRole(PlantRole plantRole) {
+  public PlantRole savePlantRole(PlantRole plantRole) {
     Plant plant = plantRepository.getOne(plantRole.getPlant().getCode());
     Role role = roleRepository.getOne(plantRole.getRole().getId());
     plantRole.setName(plant.getName().toUpperCase() + "_" + role.getName());
-    plantRoleRepository.save(plantRole);
+    return plantRoleRepository.save(plantRole);
   }
 
   @Transactional
@@ -33,12 +33,12 @@ public class PlantRoleServiceImpl implements PlantRoleService {
     return plantRoleRepository.existsByPlantCodeAndRoleId(plantCode, roleId);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<PlantRole> getPlantRolesByRoleName(String roleName) {
     return plantRoleRepository.findByRoleName(roleName);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<PlantRole> getAllPlantRole() {
     return plantRoleRepository.findAll();
   }

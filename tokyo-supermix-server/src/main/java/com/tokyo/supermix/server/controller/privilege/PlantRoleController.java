@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,15 +20,18 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.RoleService;
+import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
 import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
-
+@CrossOrigin
 @RestController
 public class PlantRoleController {
   @Autowired
   private PlantRoleService plantRoleService;
+  @Autowired
+  private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
   @Autowired
   private RoleService roleService;
   @Autowired
@@ -48,7 +52,9 @@ public class PlantRoleController {
                   privilegeValidationFailureStatusCodes.getRoleAlreadyExists()),
               HttpStatus.BAD_REQUEST);
         }
-        plantRoleService.savePlantRole(mapper.map(plantRoleDto, PlantRole.class));
+        PlantRole plantRole =
+            plantRoleService.savePlantRole(mapper.map(plantRoleDto, PlantRole.class));
+        plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRole);
         return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
             PrivilegeConstants.ADD_PLANT_ROLE_SUCCESS), HttpStatus.OK);
       }
