@@ -38,13 +38,11 @@ public class EquationServiceImpl implements EquationService {
     equationRepository.deleteById(id);
   }
 
-  public boolean isUpdatedTestConfigureIdExist(Long id, Long testConfigureId) {
-	return false;
-//    if ((!getEquationById(id).getTestConfigure().getId().equals(testConfigureId))
-//        && (configureIdExist(testConfigureId))) {
-//      return true;
-//    }
-//    return false;
+  @Transactional(readOnly = true)
+  public boolean isFormulaExists(String formula) {
+    if (equationRepository.existsByFormula(formula)) {
+      return true;
+    }
+    return false;
   }
-
 }

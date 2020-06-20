@@ -13,4 +13,6 @@ public interface EquationService {
   public Equation getEquationById(Long id);
 
   public void deleteEquation(Long id);
+
+  public boolean isFormulaExists(String formula);
 }
