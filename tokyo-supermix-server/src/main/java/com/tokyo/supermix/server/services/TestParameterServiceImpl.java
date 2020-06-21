@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
@@ -50,7 +50,7 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId,
-      Long unitId, String abbreviation, EntryLevel entryLevel) {
+      Long unitId, String abbreviation, TestParameterType entryLevel) {
     if (testParameterRepository
         .existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(testConfigureId,
             parameterId, unitId, abbreviation, entryLevel)) {
