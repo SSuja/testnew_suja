@@ -287,6 +287,9 @@ public final class EndpointURI {
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
   public static final String GET_PARAMETER_RESULT_BY_PLANT =
       PARAMETER_RESULT + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_PARAMETER_RESULTS_BY_MATERIAL_TEST_TRIAL_CODE_AND_MATERIAL_TEST_CODE =
+      PARAMETER_RESULT+SLASH+ "getParameterResultWithConfigValue" + SLASH + "{materialTestTrialCode}" + SLASH
+          + "{materialTestCode}";
   /*
    * Material Tests
    */

@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.ParameterResultService;
 import com.tokyo.supermix.server.services.PlantService;
@@ -41,6 +42,8 @@ public class ParameterResultController {
   @Autowired
   private MaterialTestTrialService materialTestTrialService;
   @Autowired
+  private MaterialTestService materialTestService;
+  @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(ParameterResultController.class);
 
@@ -48,7 +51,7 @@ public class ParameterResultController {
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<ParameterResultRequestDto> parameterResultRequestDtoList) {
     for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
-      parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
+      // parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
       parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
       parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
           .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));
@@ -130,6 +133,22 @@ public class ParameterResultController {
       logger.debug("No Parameter Result record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(
+      value = EndpointURI.GET_PARAMETER_RESULTS_BY_MATERIAL_TEST_TRIAL_CODE_AND_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getParameterResultWithConfigValue(
+      @PathVariable String materialTestTrialCode, @PathVariable String materialTestCode) {
+    if (materialTestTrialService.isMaterialTestTrialExits(materialTestTrialCode)
+        && materialTestService.isMaterialTestExists(materialTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL_CODE,
+          mapper.map(parameterResultService.getParameterResultWithConfigValue(materialTestTrialCode,
+              materialTestCode), ParameterResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT,
+          validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
 }

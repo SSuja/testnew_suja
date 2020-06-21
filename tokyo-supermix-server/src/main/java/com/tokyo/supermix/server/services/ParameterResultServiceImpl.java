@@ -67,39 +67,40 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return parameterResultRepository.existsById(id);
   }
 
-//  private double calculateTestResult(String equation, List<ParameterResult> parameterResultList) {
-//    ScriptEngineManager mgr = new ScriptEngineManager();
-//    ScriptEngine engine = mgr.getEngineByName("JavaScript");
-//    double result = 0;
-//    for (ParameterResult parameterResult : parameterResultList) {
-//      TestParameter testParameter =
-//          testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
-//      if (!(testParameter.isEquationExists())) {
-//        ParameterEquation parameterEquation =
-//            parameterEquationRepository.findByTestParameterId(testParameter.getId());
-//        List<ParameterEquationElement> parameterEquationElementList =
-//            parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
-//        for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
-//          engine.put(parameterEquationElement.getTestParameter().getAbbreviation(),
-//              parameterResult.getValue());
-//        }
-//     } 
-//      //else {
-////        engine.put(testParameter.getAbbreviation(), testParameter.getValue());
-////        if (testParameter.getParameter() != null) {
-////          if (testParameter.getEntryLevel().equals(EntryLevel.TEST)) {
-////            engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
-////          }
-////        }
-////      }
-//    }
-//    try {
-//      result = (double) engine.eval(equation);
-//    } catch (ScriptException e) {
-//      e.printStackTrace();
-//    }
-//    return result;
-//  }
+  // private double calculateTestResult(String equation, List<ParameterResult> parameterResultList)
+  // {
+  // ScriptEngineManager mgr = new ScriptEngineManager();
+  // ScriptEngine engine = mgr.getEngineByName("JavaScript");
+  // double result = 0;
+  // for (ParameterResult parameterResult : parameterResultList) {
+  // TestParameter testParameter =
+  // testParameterRepository.findById(parameterResult.getTestParameter().getId()).get();
+  // if (!(testParameter.isEquationExists())) {
+  // ParameterEquation parameterEquation =
+  // parameterEquationRepository.findByTestParameterId(testParameter.getId());
+  // List<ParameterEquationElement> parameterEquationElementList =
+  // parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
+  // for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
+  // engine.put(parameterEquationElement.getTestParameter().getAbbreviation(),
+  // parameterResult.getValue());
+  // }
+  // }
+  // //else {
+  //// engine.put(testParameter.getAbbreviation(), testParameter.getValue());
+  //// if (testParameter.getParameter() != null) {
+  //// if (testParameter.getEntryLevel().equals(EntryLevel.TEST)) {
+  //// engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
+  //// }
+  //// }
+  //// }
+  // }
+  // try {
+  // result = (double) engine.eval(equation);
+  // } catch (ScriptException e) {
+  // e.printStackTrace();
+  // }
+  // return result;
+  // }
 
   private void updateParameterResult(List<ParameterResult> parameterResultList) {
     ScriptEngineManager mgr = new ScriptEngineManager();
@@ -116,19 +117,23 @@ public class ParameterResultServiceImpl implements ParameterResultService {
             parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
         for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
           engine.put(parameterEquationElement.getTestParameter().getAbbreviation(),
-              parameterResultList.get(1).getValue());
-          System.out.println("abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"+parameterEquationElement.getTestParameter().getAbbreviation());
-          System.out.println("valueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"+parameterResultList.get(0).getValue());
-//          Double value = calculateTestResult(
-//              parameterEquationElement.getParameterEquation().getEquation().getFormula(),
-//              parameterResultList);
+              parameterResult.getValue());
+          System.out.println("abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+              + parameterEquationElement.getTestParameter().getAbbreviation());
+          System.out.println("valueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+              + parameterResultList.get(0).getValue());
+          // Double value = calculateTestResult(
+          // parameterEquationElement.getParameterEquation().getEquation().getFormula(),
+          // parameterResultList);
           try {
-            result = (double) engine.eval(parameterEquationElement.getParameterEquation().getEquation().getFormula());
+            result = (double) engine
+                .eval(parameterEquationElement.getParameterEquation().getEquation().getFormula());
           } catch (ScriptException e) {
             e.printStackTrace();
           }
           parameterResult.setValue(result);
-          System.out.println("jhfergedbghetbgebhtbgehgethtreubjhg tbtgjrf bvjr dbvje tdj " + result);
+          System.out
+              .println("jhfergedbghetbgebhtbgehgethtreubjhg tbtgjrf bvjr dbvje tdj " + result);
           parameterResultRepository.save(parameterResult);
         }
       }
@@ -154,34 +159,50 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         materialTestTrial.setResult(parameterResult.getValue());
       }
     } else {
-   
-//      if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getEquationType()
-//          .equals(EquationType.PARAMETER)) {
-        updateParameterResult(parameterResultList);
-//      } else if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation()
-//          .getEquationType().equals(EquationType.TRIAL)) {
-//        Double result = roundDoubleValue(calculateTestResult(
-//            materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula(),
-//            parameterResultList));
-//        materialTestTrial.setResult(result);
-//        materialTestTrialRepository.save(materialTestTrial);
-//      }
+
+      // if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getEquationType()
+      // .equals(EquationType.PARAMETER)) {
+      updateParameterResult(parameterResultList);
+      // } else if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation()
+      // .getEquationType().equals(EquationType.TRIAL)) {
+      // Double result = roundDoubleValue(calculateTestResult(
+      // materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula(),
+      // parameterResultList));
+      // materialTestTrial.setResult(result);
+      // materialTestTrialRepository.save(materialTestTrial);
+      // }
     }
   }
 
-  public void isTestParameterValueInConfigureLevel(ParameterResultRequestDto parameterResult) {
-    if (testParameterService.getTestParameterById(parameterResult.getTestParameterId()) != null) {
-      if (testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+  public void isTestParameterValueInConfigureLevel(ParameterResult parameterResult) {
+    if (testParameterService
+        .getTestParameterById(parameterResult.getTestParameter().getId()) != null) {
+      if (testParameterService.getTestParameterById(parameterResult.getTestParameter().getId())
           .getEntryLevel().equals(EntryLevel.CONFIGURE)) {
         parameterResult.setValue(testParameterService
-            .getTestParameterById(parameterResult.getTestParameterId()).getValue());
+            .getTestParameterById(parameterResult.getTestParameter().getId()).getValue());
       }
     }
   }
+
 
   @Transactional(readOnly = true)
   public List<ParameterResult> findParameterResultByPlantCode(String plantCode) {
     return parameterResultRepository
         .findByMaterialTestTrialMaterialTestIncomingSamplePlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<ParameterResult> getParameterResultWithConfigValue(String materialTestTrialCode,
+      String materialTestCode) {
+    List<ParameterResult> paramterResultList = parameterResultRepository
+        .findByMaterialTestTrialCodeAndMaterialTestCode(materialTestTrialCode, materialTestCode);
+    for (ParameterResult parameterResult : paramterResultList) {
+      isTestParameterValueInConfigureLevel(parameterResult);
+    }
+    return paramterResultList;
+  }
+
+
+
 }
