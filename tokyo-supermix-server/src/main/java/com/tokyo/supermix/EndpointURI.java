@@ -182,10 +182,10 @@ public final class EndpointURI {
   public static final String EQUATION = BASE_API_PATH + "equation";
   public static final String EQUATIONS = BASE_API_PATH + "equations";
   public static final String EQUATION_BY_ID = EQUATION + ID;
-  public static final String EQUATIONS_BY_EQUATION_TYPE = EQUATION + SLASH + "{equationType}";
-  public static final String EQUATION_BY_EQUATION_NAME = EQUATION + SLASH + "{equationName}";
+  public static final String EQUATIONS_BY_EQUATION_TYPE = EQUATION + SLASH +"equation-type"+SLASH+"{equationType}";
+  public static final String EQUATION_BY_EQUATION_NAME = EQUATION + SLASH +"equation-name"+SLASH+"{equationName}";
   public static final String EQUATION_BY_EQUATION_EXISTS_TRUE =
-      EQUATION + SLASH + "equationExistsTrue";
+      EQUATION + SLASH + "equation-exists-true";
   /*
    * Parameter apis
    * 
