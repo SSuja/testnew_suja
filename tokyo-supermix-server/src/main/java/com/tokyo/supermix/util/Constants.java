@@ -534,6 +534,8 @@ public class Constants {
       "Parameter Equation Element Successfully Deleted";
   public static final String UPDATE_PARAMETER_EQUATION_ELEMENT_SUCCESS =
       "Parameter Equation Element Updated Successfully";
+  
+  public static final String SIEVETEST = "SieveTest";
 
   /*
    * Encapsulate constructor to restrict modification from outside

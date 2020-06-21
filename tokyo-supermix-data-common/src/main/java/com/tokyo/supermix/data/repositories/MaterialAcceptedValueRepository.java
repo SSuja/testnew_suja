@@ -16,4 +16,7 @@ public interface MaterialAcceptedValueRepository
   MaterialAcceptedValue findByTestConfigureId(Long testConfigureId);
 
   boolean existsByRawMaterialId(Long rawMaterialId);
+
+  MaterialAcceptedValue findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
+      Long rawMaterialId);
 }

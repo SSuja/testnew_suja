@@ -319,7 +319,7 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_TRIAL_BY_CODE = MATERIAL_TEST_TRIAL + CODE;
   public static final String MATERIAL_TEST_TRIAL_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
-  public static final String AVERAGE_BY_MATERIAL_TEST_CODE =
+  public static final String MATERIAL_RESULT_BY_MATERIAL_TEST_CODE=
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
   public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
