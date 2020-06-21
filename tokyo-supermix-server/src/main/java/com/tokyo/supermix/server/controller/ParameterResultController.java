@@ -53,8 +53,6 @@ public class ParameterResultController {
     for (ParameterResultRequestDto parameterResult : parameterResultRequestDtoList) {
       // parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
       parameterResultService.saveParameterValue(mapper.map(parameterResult, ParameterResult.class));
-      parameterResultService.updateMaterialTestTrialResult(materialTestTrialService
-          .getMaterialTestTrialByCode(parameterResult.getMaterialTestTrial().getCode()));
     }
     return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED), HttpStatus.OK);
@@ -147,7 +145,22 @@ public class ParameterResultController {
               materialTestCode), ParameterResultResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT,
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
+          validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETER_RESULT_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getParameterResultByMaterialTestCode(
+      @PathVariable String materialTestCode) {
+    if (materialTestService.isMaterialTestExists(materialTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
+          mapper.map(parameterResultService.findByMaterialTestCode(materialTestCode),
+              ParameterResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Result record exist for given Material Test code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
           validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
     }
   }

@@ -290,6 +290,8 @@ public final class EndpointURI {
   public static final String GET_PARAMETER_RESULTS_BY_MATERIAL_TEST_TRIAL_CODE_AND_MATERIAL_TEST_CODE =
       PARAMETER_RESULT+SLASH+ "getParameterResultWithConfigValue" + SLASH + "{materialTestTrialCode}" + SLASH
           + "{materialTestCode}";
+  public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_CODE =
+      PARAMETER_RESULT + SLASH + "matrial-test" + SLASH + "{materialTestCode}";
   /*
    * Material Tests
    */
