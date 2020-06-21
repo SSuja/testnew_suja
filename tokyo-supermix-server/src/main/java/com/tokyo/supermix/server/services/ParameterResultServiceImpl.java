@@ -1,12 +1,21 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
+import com.tokyo.supermix.data.dto.ParameterResultDto;
+import com.tokyo.supermix.data.entities.ParameterEquation;
+import com.tokyo.supermix.data.entities.ParameterEquationElement;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
@@ -85,4 +94,44 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 	public List<ParameterResult> findByMaterialTestCode(String materialTestCode) {
 		return parameterResultRepository.findByMaterialTestCode(materialTestCode);
 	}
+
+	@Transactional(readOnly = true)
+	public List<ParameterResult> getTestParamWithEquationByTestTrial(String materialTestTrialCode) {
+		return parameterResultRepository
+				.findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(materialTestTrialCode);
+	}
+
+	// set values to equation less parameters
+//	public String setParameterResults(MaterialParameterResultDto materialParameterResultDto) {
+//		List<ParameterResult> parameterResults = new ArrayList();
+//		HashMap<Long, Double> map = new HashMap<>();
+//		for (ParameterResult parameterResult : parameterResults) {
+//			ParameterResult parameterResult = new ParameterResult();
+//			parameterResults.setMaterialTestTrial(
+//					findByMaterialTestTrialCode(materialParameterResultDto.getMaterialTestTrialCode()));
+//			parameterResults.setMaterialTest(findByMaterialTestCode(materialParameterResultDto.getMaterialTestCode()));
+//			parameterResults.setParameter(parameterResultDto.getTestParameterId());
+//			parameterResult.ssetValue(parameterResultDto.getValue());
+//		}
+//		return null;
+//	}
+
+//	public String setParameterResultWhenEquationExist(List<ParameterResult> paramResult, String materialTestTrialCode) {
+//		List<ParameterResult> paramEquationResults = getTestParamWithEquationByTestTrial(materialTestTrialCode);
+//		for (ParameterResult parameterResult : paramEquationResults) {
+//		}
+//		return null;
+//	}
+
+//	double findResult(String abbreviation, double value, String equation) {
+//		ScriptEngineManager mgr = new ScriptEngineManager();
+//		ScriptEngine engine = mgr.getEngineByName("JavaScript");
+//		 double result = 0;
+//		ParameterEquationElement parameterEquationElement = new ParameterEquationElement();
+//		for (ParameterResult parameterResult ) {
+//		engine.put(parameterEquationElement.getTestParameter().getAbbreviation(), parameterRes);
+//		result = (double) engine.eval(equation);
+//		}
+//		return result;
+//	}
 }

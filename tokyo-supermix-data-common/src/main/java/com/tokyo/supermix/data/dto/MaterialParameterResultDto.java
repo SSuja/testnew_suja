@@ -1,34 +1,33 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.ParameterResult;
 
 public class MaterialParameterResultDto {
-  private String materialTestCode;
-  private String materialTestTrialCode;
-  public List<ParameterResult> parameterResults;
+	private String materialTestCode;
+	private String materialTestTrialCode;
+	public List<ParameterResultDto> parameterResults;
 
-  public String getMaterialTestCode() {
-    return materialTestCode;
-  }
+	public String getMaterialTestCode() {
+		return materialTestCode;
+	}
 
-  public void setMaterialTestCode(String materialTestCode) {
-    this.materialTestCode = materialTestCode;
-  }
+	public void setMaterialTestCode(String materialTestCode) {
+		this.materialTestCode = materialTestCode;
+	}
 
-  public String getMaterialTestTrialCode() {
-    return materialTestTrialCode;
-  }
+	public String getMaterialTestTrialCode() {
+		return materialTestTrialCode;
+	}
 
-  public void setMaterialTestTrialCode(String materialTestTrialCode) {
-    this.materialTestTrialCode = materialTestTrialCode;
-  }
+	public void setMaterialTestTrialCode(String materialTestTrialCode) {
+		this.materialTestTrialCode = materialTestTrialCode;
+	}
 
-  public List<ParameterResult> getParameterResults() {
-    return parameterResults;
-  }
+	public List<ParameterResultDto> getParameterResults() {
+		return parameterResults;
+	}
 
-  public void setParameterResults(List<ParameterResult> parameterResults) {
-    this.parameterResults = parameterResults;
-  }
+	public void setParameterResults(List<ParameterResultDto> parameterResults) {
+		this.parameterResults = parameterResults;
+	}
 }
