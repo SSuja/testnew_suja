@@ -29,6 +29,6 @@ public interface ParameterResultService {
 
 	public void setParameterResults(MaterialParameterResultDto materialParameterResultDto);
 
-	public void setParameterResultWhenEquationExist(MaterialParameterResultDto materialParameterResultDto,
-			String materialTestTrialCode);
+//	public void setParameterResultWhenEquationExist(MaterialParameterResultDto materialParameterResultDto,
+	//		String materialTestTrialCode);
 }

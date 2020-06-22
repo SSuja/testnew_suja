@@ -55,8 +55,8 @@ public class ParameterResultController {
 
 		// parameterResultService.isTestParameterValueInConfigureLevel(parameterResult);
 		 parameterResultService.setParameterResults(materialParameterResultDto);
-		//parameterResultService.setParameterResultWhenEquationExist(materialParameterResultDto,
-			//	materialParameterResultDto.getMaterialTestTrialCode());
+//		parameterResultService.setParameterResultWhenEquationExist(materialParameterResultDto,
+//				materialParameterResultDto.getMaterialTestTrialCode());
 
 		return new ResponseEntity<Object>(
 				new BasicResponse<>(RestApiResponseStatus.OK, Constants.PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED),
