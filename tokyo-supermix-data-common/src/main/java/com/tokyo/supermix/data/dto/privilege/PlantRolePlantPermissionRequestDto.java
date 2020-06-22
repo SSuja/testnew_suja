@@ -1,17 +1,35 @@
 package com.tokyo.supermix.data.dto.privilege;
 
 public class PlantRolePlantPermissionRequestDto {
-  private Long id;
   private Boolean status;
   private Long plantPermissionId;
+  private String plantPermissionName;
   private Long plantRoleId;
+  private Long subModuleId;
+  private Long mainModuleId;
 
-  public Long getId() {
-    return id;
+  public Long getSubModuleId() {
+    return subModuleId;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setSubModuleId(Long subModuleId) {
+    this.subModuleId = subModuleId;
+  }
+
+  public Long getMainModuleId() {
+    return mainModuleId;
+  }
+
+  public void setMainModuleId(Long mainModuleId) {
+    this.mainModuleId = mainModuleId;
+  }
+
+  public String getPlantPermissionName() {
+    return plantPermissionName;
+  }
+
+  public void setPlantPermissionName(String plantPermissionName) {
+    this.plantPermissionName = plantPermissionName;
   }
 
   public Boolean getStatus() {
