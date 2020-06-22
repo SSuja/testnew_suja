@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
 import com.tokyo.supermix.data.dto.ParameterResultDto;
+import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.ParameterEquationElement;
 import com.tokyo.supermix.data.entities.ParameterResult;
@@ -121,14 +122,14 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 	// set values to equation less parameters
 	public void setParameterResults(MaterialParameterResultDto materialParameterResultDto) {
 		ArrayList<ParameterResult> parameterResultList = new ArrayList<ParameterResult>();
-		HashMap<Long, Double> map = new HashMap<>();
+		HashMap<String, Double> map = new HashMap<>();
 		for (ParameterResultDto parameterResultDto : materialParameterResultDto.parameterResults) {
 			ParameterResult parameterResult = new ParameterResult();
 			parameterResult.setMaterialTest(
 					materialTestRepository.findByCode(materialParameterResultDto.getMaterialTestCode()));
 			parameterResult.setMaterialTestTrial(
 					materialTestTrialRepository.findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
-			map.put(parameterResultDto.getTestParameterId(), parameterResultDto.getValue());
+
 			parameterResult
 					.setTestParameter(testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
 			parameterResult.setValue(parameterResultDto.getValue());
@@ -136,6 +137,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 			parameterResultRepository.save(parameterResult);
 		}
 		setParameterResultWhenEquationExist(parameterResultList, materialParameterResultDto.getMaterialTestTrialCode());
+		setParameterResultWhenEquationExist1(parameterResultList);
 
 	}
 
@@ -143,29 +145,35 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 		return parameterEquationRepository.findById(paramterEquationId).get().getEquation().getFormula();
 	}
 
-	public void setParameterResultWhenEquationExist(List<ParameterResult> parameterResultList,
-			String materialTestTrialCode,HashMap<Long, Double> map) {
-		double result = 0;
-		// setParameterResults(materialParameterResultDto);
-//		HashMap<Long, Double> map = new HashMap<>();
-		parameterResultList= getTestParamWithEquationByTestTrial(
-				materialTestTrialCode);
+	public String setParameterResultWhenEquationExist(List<ParameterResult> parameterResultList,
+			String materialTestTrialCode) {
+		String equation = "";
+		parameterResultList = getTestParamWithEquationByTestTrial(materialTestTrialCode);
 		for (ParameterResult parameterResult : parameterResultList) {
 			ParameterEquation parameterEquation = parameterEquationRepository
 					.findByTestParameterId(parameterResult.getTestParameter().getId());
+			parameterResult.setTestParameter(parameterResult.getTestParameter());
 			List<ParameterEquationElement> parameterEquationElementList = parameterEquationElementRepository
 					.findByParameterEquationId(parameterEquation.getId());
 			for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
 				if (parameterEquationElement.getParameterEquation().getEquation().getName()
 						.equalsIgnoreCase("Equation")) {
-					result = findResult(,
-							getEquation(parameterEquation.getId()));
-					System.out.println("brgvyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyye"+result);
-					System.out.println("valuryguygvsuuuuuuuuuuuuuuus" + parameterResult.getValue());
-//					// parameterResult.setValue(result);
+					equation = parameterEquationElement.getParameterEquation().getEquation().getFormula();
 				}
 			}
 		}
+		return equation;
+	}
+
+	public void setParameterResultWhenEquationExist1(List<ParameterResult> parameterResultList) {
+		double result = 0;
+		for (ParameterResult parameterResult : parameterResultList) {
+			result = findResult(parameterResultList, setParameterResultWhenEquationExist(parameterResultList,
+					parameterResult.getMaterialTestTrial().getCode()));
+
+		}
+		System.out.println("resulttttttttttttttttttttttttttttttttttttttttttttttttt" + result);
+
 	}
 
 	public String getAbbrevation(ParameterResult parameterResult) {
@@ -174,6 +182,13 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 		return testParameter.getAbbreviation();
 	}
 
+//	public List<TestParameter> getTestParameters(String materialTestCode) {
+//		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+//		List<TestParameter> testParameterList = testParameterRepository
+//				.findByTestConfigureId(materialTest.getTestConfigure().getId());
+//		return testParameterList;
+//	}
+
 	public double findResult(List<ParameterResult> parameterResultList, String equation) {
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
@@ -181,7 +196,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 		for (ParameterResult parameterResult : parameterResultList) {
 			TestParameter testParameter = testParameterRepository.findById(parameterResult.getTestParameter().getId())
 					.get();
-			engine.put(abbreviation, value);
+			engine.put(testParameter.getAbbreviation(), parameterResult.getValue());
 		}
 		try {
 			result = (double) engine.eval(equation);
