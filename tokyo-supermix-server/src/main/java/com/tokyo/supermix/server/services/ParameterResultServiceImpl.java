@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,12 @@ import com.tokyo.supermix.data.entities.ParameterEquationElement;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class ParameterResultServiceImpl implements ParameterResultService {
@@ -29,6 +35,16 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 	private TestParameterService testParameterService;
 	@Autowired
 	MaterialQualityParameterRepository materialQualityParameterRepository;
+	@Autowired
+	MaterialTestTrialRepository materialTestTrialRepository;
+	@Autowired
+	MaterialTestRepository materialTestRepository;
+	@Autowired
+	TestParameterRepository testParameterRepository;
+	@Autowired
+	ParameterEquationRepository parameterEquationRepository;
+	@Autowired
+	ParameterEquationElementRepository parameterEquationElementRepository;
 
 	@Transactional
 	public void saveParameterValue(ParameterResult parameterValue) {
@@ -102,36 +118,61 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 	}
 
 	// set values to equation less parameters
-//	public String setParameterResults(MaterialParameterResultDto materialParameterResultDto) {
-//		List<ParameterResult> parameterResults = new ArrayList();
-//		HashMap<Long, Double> map = new HashMap<>();
-//		for (ParameterResult parameterResult : parameterResults) {
-//			ParameterResult parameterResult = new ParameterResult();
-//			parameterResults.setMaterialTestTrial(
-//					findByMaterialTestTrialCode(materialParameterResultDto.getMaterialTestTrialCode()));
-//			parameterResults.setMaterialTest(findByMaterialTestCode(materialParameterResultDto.getMaterialTestCode()));
-//			parameterResults.setParameter(parameterResultDto.getTestParameterId());
-//			parameterResult.ssetValue(parameterResultDto.getValue());
-//		}
-//		return null;
-//	}
+	public void setParameterResults(MaterialParameterResultDto materialParameterResultDto) {
+		ArrayList<ParameterResult> parameterResultList = new ArrayList<ParameterResult>();
+		HashMap<Long, Double> map = new HashMap<>();
+		for (ParameterResultDto parameterResultDto : materialParameterResultDto.parameterResults) {
+			ParameterResult parameterResul = new ParameterResult();
+			parameterResul.setMaterialTest(
+					materialTestRepository.findByCode(materialParameterResultDto.getMaterialTestCode()));
+			parameterResul.setMaterialTestTrial(
+					materialTestTrialRepository.findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
+			parameterResul
+					.setTestParameter(testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
+			parameterResul.setValue(parameterResultDto.getValue());
+			parameterResultList.add(parameterResul);
+			parameterResultRepository.save(parameterResul);
+		}
+	}
 
-//	public String setParameterResultWhenEquationExist(List<ParameterResult> paramResult, String materialTestTrialCode) {
-//		List<ParameterResult> paramEquationResults = getTestParamWithEquationByTestTrial(materialTestTrialCode);
-//		for (ParameterResult parameterResult : paramEquationResults) {
-//		}
-//		return null;
-//	}
+	public void setParameterResultWhenEquationExist(MaterialParameterResultDto materialParameterResultDto,
+			String materialTestTrialCode) {
 
-//	double findResult(String abbreviation, double value, String equation) {
-//		ScriptEngineManager mgr = new ScriptEngineManager();
-//		ScriptEngine engine = mgr.getEngineByName("JavaScript");
-//		 double result = 0;
-//		ParameterEquationElement parameterEquationElement = new ParameterEquationElement();
-//		for (ParameterResult parameterResult ) {
-//		engine.put(parameterEquationElement.getTestParameter().getAbbreviation(), parameterRes);
-//		result = (double) engine.eval(equation);
-//		}
-//		return result;
-//	}
+		HashMap<Long, Double> map = new HashMap<>();
+		for (ParameterResultDto parameterResultDto : materialParameterResultDto.parameterResults) {
+
+//			for (ParameterResult parameterResult : paramEquationResults) {
+			ParameterEquation parameterEquation = parameterEquationRepository
+					.findByTestParameterId(parameterResultDto.getTestParameterId());
+			if (parameterEquation.getTestParameter().isEquationExists()) {
+				List<ParameterEquationElement> parameterEquationElementList = parameterEquationElementRepository
+						.findByParameterEquationId(parameterEquation.getId());
+				for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
+					if (parameterEquationElement.getParameterEquation().getEquation().getName()
+							.equalsIgnoreCase("Equation")) {
+						Double result = findResult(parameterEquationElement.getTestParameter().getAbbreviation(),
+								parameterResultDto.getValue(),
+								parameterEquationElement.getParameterEquation().getEquation().getFormula());
+						System.out.println("valuryguygvsuuuuuuuuuuuuuuus" + parameterResultDto.getValue());
+						// parameterResult.setValue(result);
+					}
+				}
+				// }
+			}
+		}
+		List<ParameterResult> paramEquationResults = getTestParamWithEquationByTestTrial(materialTestTrialCode);
+	}
+
+	public double findResult(String abbreviation, double value, String equation) {
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine engine = mgr.getEngineByName("JavaScript");
+		double result = 0;
+		engine.put(abbreviation, value);
+		try {
+			result = (double) engine.eval(equation);
+		} catch (ScriptException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
