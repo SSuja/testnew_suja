@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tokyo.supermix.data.dto.privilege.PlantAccessLevelRequestDto;
 import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.privilege.PlantAccessLevelRepository;
 
 @Service
@@ -41,4 +42,15 @@ public class PlantAccessLevelServiceImpl implements PlantAccessLevelService {
     plantAccessLevel.setStatus(plantAccessLevelRequestDto.isStatus());
     plantAccessLevelRepository.save(plantAccessLevel);
   }
+
+  @Override
+  public void createPlantAccessLevel(PlantRole plantRole) {
+    PlantAccessLevel plantAccessLevel =new PlantAccessLevel();
+    plantAccessLevel.setPlant(plantRole.getPlant());
+    plantAccessLevel.setPlantRole(plantRole);
+    plantAccessLevel.setStatus(true);
+    plantAccessLevelRepository.save(plantAccessLevel);
+  }
+
+  
 }

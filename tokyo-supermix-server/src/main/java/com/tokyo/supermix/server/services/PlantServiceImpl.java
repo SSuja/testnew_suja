@@ -10,48 +10,16 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
-import com.tokyo.supermix.data.entities.auth.Role;
-import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
-import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.PlantRepository;
-import com.tokyo.supermix.data.repositories.auth.RoleRepository;
-import com.tokyo.supermix.data.repositories.privilege.PlantAccessLevelRepository;
-import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
-import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
-import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
 
 @Service
 public class PlantServiceImpl implements PlantService {
   @Autowired
   private PlantRepository plantRepository;
-  @Autowired
-  private PlantRoleRepository plantRoleRepository;
-  @Autowired
-  private RoleRepository roleRepository;
-  @Autowired
-  private PlantPermissionService plantPermissionService;
-  @Autowired
-  private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
-  @Autowired
-  private PlantAccessLevelRepository plantAccessLevelRepository;
 
   @Transactional
-  public void savePlant(Plant plant) {
-    PlantRole plantRole = new PlantRole();
-    Plant plantObj = plantRepository.save(plant);
-    plantRole.setPlant(plantObj);
-    Role role = roleRepository.findById(1l).get();
-    plantRole.setRole(role);
-    plantRole.setName(plant.getName().toUpperCase() + "_" + role.getName());
-    PlantRole plantRoleObj = plantRoleRepository.save(plantRole);
-    plantPermissionService.savePlantPermission(plantObj);
-    plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);
-    PlantAccessLevel plantAccessLevel= new PlantAccessLevel();
-    plantAccessLevel.setPlant(plant);
-    plantAccessLevel.setPlantRole(plantRoleObj);
-    plantAccessLevel.setStatus(true);
-    plantAccessLevelRepository.save(plantAccessLevel);
-
+  public Plant savePlant(Plant plant) {
+    return plantRepository.save(plant);
   }
 
   @Transactional(readOnly = true)

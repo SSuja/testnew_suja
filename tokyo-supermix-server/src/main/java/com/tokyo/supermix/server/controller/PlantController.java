@@ -20,12 +20,17 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.entities.Plant;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.PlantAccessLevelService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
+import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
+import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -38,6 +43,14 @@ public class PlantController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private PlantRoleService plantRoleService;
+  @Autowired
+  private PlantPermissionService plantPermissionService;
+  @Autowired
+  private PlantAccessLevelService plantAccessLevelService;
+  @Autowired
+  private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
   private static final Logger logger = Logger.getLogger(PlantController.class);
 
   @PostMapping(value = EndpointURI.PLANT)
@@ -53,7 +66,11 @@ public class PlantController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    plantService.savePlant(mapper.map(plantDto, Plant.class));
+    Plant plant = plantService.savePlant(mapper.map(plantDto, Plant.class));
+    PlantRole plantRoleObj = plantRoleService.savePlantRole(plant.getCode(), 1L);
+    plantAccessLevelService.createPlantAccessLevel(plantRoleObj);
+    plantPermissionService.savePlantPermission(plant);
+    plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
   }
