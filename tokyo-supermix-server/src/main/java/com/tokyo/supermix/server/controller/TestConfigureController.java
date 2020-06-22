@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -17,10 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.EquationRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
@@ -30,7 +27,6 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.EquationService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
@@ -45,8 +41,6 @@ public class TestConfigureController {
   private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-  @Autowired
-  private EquationService equationService;
   @Autowired
   private Mapper mapper;
 
@@ -199,18 +193,5 @@ public class TestConfigureController {
     logger.debug("No Test Configure record exist for given Material Sub Category");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
-  @PostMapping(value = EndpointURI.UPADTE_TEST_CONFIGURE_EQUATION_BY_TEST_CONFIGURE_ID)
-  public ResponseEntity<Object> updateTestConfigureEquationByTestConfigureId(
-      @PathVariable Long testConfigureId,
-      @Valid @RequestBody EquationRequestDto equationRequestDto) {
-    if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
-          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION, testConfigureService
-        .updateTestConfigureEquationByTestConfigureId(testConfigureId, equationRequestDto),
-        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

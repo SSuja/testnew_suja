@@ -1,11 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
 import org.springframework.data.domain.Page;
-
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.EquationRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.TestType;
@@ -39,7 +36,4 @@ public interface TestConfigureService {
   public boolean isexistByTestType(TestType testType);
 
   public List<TestConfigure> findByMaterialSubCategory(Long materialSubCategoryId);
-
-  public Long updateTestConfigureEquationByTestConfigureId(Long testConfigureId,
-      EquationRequestDto equationRequestDto);
 }

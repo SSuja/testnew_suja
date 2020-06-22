@@ -122,8 +122,6 @@ public final class EndpointURI {
   public static final String TEST_CONFIGURE_SEARCH = TEST_CONFIGURE + SEARCH;
   public static final String GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY =
       TEST_CONFIGURE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
-  public static final String UPADTE_TEST_CONFIGURE_EQUATION_BY_TEST_CONFIGURE_ID =
-      TEST_CONFIGURE + SLASH + "update-equation" + SLASH + "{testConfigureId}";
   /*
    * Material State
    */
@@ -182,10 +180,14 @@ public final class EndpointURI {
   public static final String EQUATION = BASE_API_PATH + "equation";
   public static final String EQUATIONS = BASE_API_PATH + "equations";
   public static final String EQUATION_BY_ID = EQUATION + ID;
-  public static final String EQUATIONS_BY_EQUATION_TYPE = EQUATION + SLASH +"equation-type"+SLASH+"{equationType}";
-  public static final String EQUATION_BY_EQUATION_NAME = EQUATION + SLASH +"equation-name"+SLASH+"{equationName}";
+  public static final String EQUATIONS_BY_EQUATION_TYPE =
+      EQUATION + SLASH + "equation-type" + SLASH + "{equationType}";
+  public static final String EQUATION_BY_EQUATION_NAME =
+      EQUATION + SLASH + "equation-name" + SLASH + "{equationName}";
   public static final String EQUATION_BY_EQUATION_EXISTS_TRUE =
       EQUATION + SLASH + "equation-exists-true";
+  public static final String UPADTE_TEST_CONFIGURE_EQUATION =
+      EQUATION + SLASH + "update-equation" + SLASH + "{testConfigureId}";
   /*
    * Parameter apis
    * 

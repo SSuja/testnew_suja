@@ -24,4 +24,6 @@ public interface EquationService {
   public boolean isNameExists(String name);
 
   public List<Equation> getEquationsByParameterExistsTrue();
+
+  public Long updateTestConfigureEquation(Long testConfigureId, Equation equation);
 }

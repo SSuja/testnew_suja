@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,22 +8,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.EquationRequestDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestParameterDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
-import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
@@ -39,8 +34,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private TestParameterRepository testParameterRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
-  @Autowired
-  private EquationRepository equationRepository;
   @Autowired
   private Mapper mapper;
 
@@ -153,19 +146,5 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
     testConfigureDto.setTestparameters(testParameterList);
     return testConfigureDto;
-  }
-
-  @Transactional
-  public Long updateTestConfigureEquationByTestConfigureId(Long testConfigureId,
-      EquationRequestDto equationRequestDto) {
-    TestConfigure testConfigure = getTestConfigureById(testConfigureId);
-    Equation equation = new Equation();
-    equation.setFormula(equationRequestDto.getFormula());
-    equation.setEquationType(equationRequestDto.getEquationType());
-    equation.setName(equationRequestDto.getName());
-    equation.setParameterExists(equationRequestDto.isParameterExists());
-    equationRepository.save(equation);
-    testConfigure.setEquation(equation);
-    return equation.getId();
   }
 }

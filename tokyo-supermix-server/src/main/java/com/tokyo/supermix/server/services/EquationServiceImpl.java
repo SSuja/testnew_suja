@@ -8,11 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.enums.EquationType;
 import com.tokyo.supermix.data.repositories.EquationRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 
 @Service
 public class EquationServiceImpl implements EquationService {
   @Autowired
   private EquationRepository equationRepository;
+  @Autowired
+  private TestConfigureRepository testConfigureRepository;
 
   @Transactional
   public void saveEquation(Equation equation) {
@@ -65,5 +68,12 @@ public class EquationServiceImpl implements EquationService {
   @Transactional(readOnly = true)
   public List<Equation> getEquationsByParameterExistsTrue() {
     return equationRepository.findByParameterExistsTrue();
+  }
+
+  @Transactional
+  public Long updateTestConfigureEquation(Long testConfigureId, Equation equation) {
+    saveEquation(equation);
+    testConfigureRepository.findById(testConfigureId).get().setEquation(equation);
+    return equation.getId();
   }
 }
