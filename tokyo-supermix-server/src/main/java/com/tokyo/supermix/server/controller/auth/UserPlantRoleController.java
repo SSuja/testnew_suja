@@ -18,12 +18,10 @@ import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 @CrossOrigin(origins = "*")
 @RestController
 public class UserPlantRoleController {
-  
   @Autowired
   private UserPlantRoleService userPlantRoleService;
   @Autowired
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
-
 
     @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_USER)
     public ResponseEntity<Object> getRolesByUserId(@PathVariable Long userId ){

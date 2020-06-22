@@ -159,10 +159,10 @@ private void createUserRoles(List<Long> roles, User user) {
     User user = userRepository.findById(userRoleDto.getUserId()).get();
     System.out.println("user roles" + userRoleDto.getRoleIds().toString());
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-      userRoleRepository.findByUserId(userRoleDto.getUserId()).forEach(userRole->userRoleRepository.deleteById(userRole.getId()));
+//      userRoleRepository.findByUserId(userRoleDto.getUserId()).forEach(userRole->userRoleRepository.deleteById(userRole.getId()));
       createUserRoles(userRoleDto.getRoleIds(), user);
     } else {
-//      userPlantRoleRepository.findByUserId(userRoleDto.getUserId()).forEach(userRole->userRoleRepository.delete(userRole));
+      userPlantRoleRepository.findRolesByUserId(userRoleDto.getUserId()).forEach(userRole->userPlantRoleRepository.deleteById(userRole.getId()));
      createUserPlantRoles(userRoleDto.getRoleIds(), user);
     }
   }

@@ -9,9 +9,7 @@ import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
-import com.tokyo.supermix.data.dto.privilege.RolePermissionRequestDto;
-import com.tokyo.supermix.data.dto.privilege.RolePermissionResponseDto;
-import com.tokyo.supermix.data.dto.privilege.SubModuleRolePermissionDto;
+import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
@@ -21,7 +19,6 @@ import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRolePlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
-import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
 
 @Service
 public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermissionServices {
