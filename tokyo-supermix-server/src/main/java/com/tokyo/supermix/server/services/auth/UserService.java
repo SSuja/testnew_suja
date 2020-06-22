@@ -31,6 +31,4 @@ public interface UserService {
   void updateUserStatus(Long userId, Boolean status);
 
   void updateUserRoles(UserRoleDto userRoleDto);
-  
-  
 }
