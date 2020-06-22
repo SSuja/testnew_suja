@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.RolePermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModuleRolePermissionDto;
@@ -19,6 +21,7 @@ import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRolePlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
+import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
 
 @Service
 public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermissionServices {
@@ -70,47 +73,52 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return mapper.map(plantRolePlantPermissionList, PlantRolePlantPermissionDto.class);
   }
 
-  public List<RolePermissionResponseDto> getPlantRolePermissionWithModuleByRoleId(
+  public List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionWithModuleByRoleId(
       Long plantRoleId) {
-    List<RolePermissionResponseDto> PermissionResponseDtolist =
-        new ArrayList<RolePermissionResponseDto>();
+    List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
+        new ArrayList<PlantRolePlantPermissionResponseDto>();
     mainModuleRepository.findAll().forEach(main -> {
-      RolePermissionResponseDto rolePermissionResponseDto = new RolePermissionResponseDto();
-      rolePermissionResponseDto.setMainModule(main.getName());
+      PlantRolePlantPermissionResponseDto plantRolePlantPermissionResponseDto =
+          new PlantRolePlantPermissionResponseDto();
+      plantRolePlantPermissionResponseDto.setMainModule(main.getName());
       boolean mainStatus = false;
-      List<SubModuleRolePermissionDto> SubModuleRolePermissionDtoList =
-          new ArrayList<SubModuleRolePermissionDto>();
+      List<SubModulePlantRolePlantPermissionDto> subModulePlantRolePlantPermissionDtoList =
+          new ArrayList<SubModulePlantRolePlantPermissionDto>();
       List<SubModule> subModuleList = subModuleRepository.findByMainModuleId(main.getId());
       for (SubModule sub : subModuleList) {
-        SubModuleRolePermissionDto subModuleRolePermissionDto = new SubModuleRolePermissionDto();
-        subModuleRolePermissionDto.setSubModule(sub.getName());
+        SubModulePlantRolePlantPermissionDto subModulePlantRolePlantPermissionDto =
+            new SubModulePlantRolePlantPermissionDto();
+        subModulePlantRolePlantPermissionDto.setSubModule(sub.getName());
         boolean subStatus = false;
-        List<RolePermissionRequestDto> rolePermissionDtoList =
-            new ArrayList<RolePermissionRequestDto>();
-        List<PlantRolePlantPermission> PermissionList = plantRolePlantPermissionRepository
-            .findByPlantRoleIdAndPlantPermissionPermissionSubModuleId(plantRoleId, sub.getId());
-        for (PlantRolePlantPermission permission : PermissionList) {
-          RolePermissionRequestDto rolePermissionRequestDto = new RolePermissionRequestDto();
-          rolePermissionRequestDto.setPermissionId(permission.getId());
-          rolePermissionRequestDto.setRoleId(plantRoleId);
-          rolePermissionRequestDto.setStatus(permission.isStatus());
+        List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList =
+            new ArrayList<PlantRolePlantPermissionRequestDto>();
+        List<PlantRolePlantPermission> plantRolePlantPermissionList =
+            plantRolePlantPermissionRepository
+                .findByPlantRoleIdAndPlantPermissionPermissionSubModuleId(plantRoleId, sub.getId());
+        for (PlantRolePlantPermission permission : plantRolePlantPermissionList) {
+          PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
+              new PlantRolePlantPermissionRequestDto();
+          plantRolePlantPermissionRequestDto.setId(permission.getId());
+          plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
+          plantRolePlantPermissionRequestDto.setPlantRoleId(plantRoleId);
+          plantRolePlantPermissionRequestDto.setStatus(permission.isStatus());
           if (permission.isStatus()) {
             subStatus = true;
           }
-          rolePermissionDtoList.add(rolePermissionRequestDto);
+          rolePermissionDtoList.add(plantRolePlantPermissionRequestDto);
         }
-        subModuleRolePermissionDto.setStatus(subStatus);
-        subModuleRolePermissionDto.setRolePermissions(rolePermissionDtoList);
-        SubModuleRolePermissionDtoList.add(subModuleRolePermissionDto);
+        subModulePlantRolePlantPermissionDto.setStatus(subStatus);
+        subModulePlantRolePlantPermissionDto.setPlantRolePlantPermissions(rolePermissionDtoList);
+        subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
         if (subStatus) {
           mainStatus = true;
         }
       }
-      rolePermissionResponseDto.setStatus(mainStatus);
-      rolePermissionResponseDto.setSubModules(SubModuleRolePermissionDtoList);
-      PermissionResponseDtolist.add(rolePermissionResponseDto);
+      plantRolePlantPermissionResponseDto.setStatus(mainStatus);
+      plantRolePlantPermissionResponseDto.setSubModules(subModulePlantRolePlantPermissionDtoList);
+      plantRolePlantPermissionResponseDtolist.add(plantRolePlantPermissionResponseDto);
     });
-    return PermissionResponseDtolist;
+    return plantRolePlantPermissionResponseDtolist;
   }
 
   @Transactional(readOnly = true)
@@ -155,7 +163,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   public void createPlantRolePlantPermission(PlantRole plantRole) {
     List<PlantPermission> plantPermissionList =
         plantPermissionRepository.findByPlantCode(plantRole.getPlant().getCode());
-    List<PlantRolePlantPermission> plantRolePlantPermissionList = new ArrayList<PlantRolePlantPermission>();
+    List<PlantRolePlantPermission> plantRolePlantPermissionList =
+        new ArrayList<PlantRolePlantPermission>();
     plantPermissionList.forEach(plantPermission -> {
       PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
       plantRolePlantPermission.setPlantPermission(plantPermission);
