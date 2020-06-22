@@ -151,7 +151,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return plantResponseDtolist;
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
   public void createPlantRolePlantPermission(PlantRole plantRole) {
     List<PlantPermission> plantPermissionList =
         plantPermissionRepository.findByPlantCode(plantRole.getPlant().getCode());
@@ -162,7 +162,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermission.setStatus(false);
       plantRolePlantPermission.setPlantRole(plantRole);
       plantRolePlantPermissionList.add(plantRolePlantPermission);
+      System.out.println("plantroleplant permission save method --"+plantRolePlantPermission.getPlantPermission().getName());
+      plantRolePlantPermissionRepository.save(plantRolePlantPermission);
     });
-    plantRolePlantPermissionRepository.saveAll(plantRolePlantPermissionList);
   }
 }

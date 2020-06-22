@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
 public interface PlantRoleService {
-  public PlantRole savePlantRole(PlantRole plantRole);
+  public PlantRole savePlantRole(String plantCode , Long roleId);
 
   public boolean existsByPlantCodeAndRoleId(String plantCode, Long roleId);
 
