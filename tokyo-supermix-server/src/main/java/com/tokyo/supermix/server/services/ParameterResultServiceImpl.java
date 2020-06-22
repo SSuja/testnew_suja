@@ -120,7 +120,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 	// set values to equation less parameters
 	public void setParameterResults(MaterialParameterResultDto materialParameterResultDto) {
 		ArrayList<ParameterResult> parameterResultList = new ArrayList<ParameterResult>();
-		HashMap<Long, Double> map = new HashMap<>();
+		// HashMap<Long, Double> map = new HashMap<>();
 		for (ParameterResultDto parameterResultDto : materialParameterResultDto.parameterResults) {
 			ParameterResult parameterResul = new ParameterResult();
 			parameterResul.setMaterialTest(
@@ -137,27 +137,30 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 
 	public void setParameterResultWhenEquationExist(MaterialParameterResultDto materialParameterResultDto,
 			String materialTestTrialCode) {
-
+		double result = 0;
 		HashMap<Long, Double> map = new HashMap<>();
-		for (ParameterResultDto parameterResultDto : materialParameterResultDto.parameterResults) {
-
-//			for (ParameterResult parameterResult : paramEquationResults) {
-			ParameterEquation parameterEquation = parameterEquationRepository
-					.findByTestParameterId(parameterResultDto.getTestParameterId());
-			if (parameterEquation.getTestParameter().isEquationExists()) {
-				List<ParameterEquationElement> parameterEquationElementList = parameterEquationElementRepository
-						.findByParameterEquationId(parameterEquation.getId());
-				for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
-					if (parameterEquationElement.getParameterEquation().getEquation().getName()
-							.equalsIgnoreCase("Equation")) {
-						Double result = findResult(parameterEquationElement.getTestParameter().getAbbreviation(),
-								parameterResultDto.getValue(),
-								parameterEquationElement.getParameterEquation().getEquation().getFormula());
-						System.out.println("valuryguygvsuuuuuuuuuuuuuuus" + parameterResultDto.getValue());
-						// parameterResult.setValue(result);
+		List<ParameterResult> parameterResults = getTestParamWithEquationByTestTrial(
+				materialParameterResultDto.getMaterialTestTrialCode());
+		
+			for (ParameterResult parameterResult : parameterResults) {
+				ParameterEquation parameterEquation = parameterEquationRepository
+						.findByTestParameterId(parameterResult.getTestParameter().getId());
+				if (parameterEquation.getTestParameter().isEquationExists()) {
+					List<ParameterEquationElement> parameterEquationElementList = parameterEquationElementRepository
+							.findByParameterEquationId(parameterEquation.getId());
+					for (ParameterEquationElement parameterEquationElement : parameterEquationElementList) {
+						if (parameterEquationElement.getParameterEquation().getEquation().getName()
+								.equalsIgnoreCase("Equation")) {
+							if (!(parameterEquation.getTestParameter().isEquationExists())) {
+								result = findResult(parameterEquationElement.getTestParameter().getAbbreviation(),
+										parameterResult.getValue(),
+										parameterEquationElement.getParameterEquation().getEquation().getFormula());
+								System.out.println("valuryguygvsuuuuuuuuuuuuuuus" + parameterResult.getValue());
+								// parameterResult.setValue(result);
+							}
+						}
 					}
-				}
-				// }
+				
 			}
 		}
 		List<ParameterResult> paramEquationResults = getTestParamWithEquationByTestTrial(materialTestTrialCode);
