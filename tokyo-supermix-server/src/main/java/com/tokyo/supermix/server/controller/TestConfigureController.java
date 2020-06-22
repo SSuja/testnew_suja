@@ -201,22 +201,16 @@ public class TestConfigureController {
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @PutMapping(value = EndpointURI.UPADTE_TEST_CONFIGURE_EQUATION_BY_TEST_CONFIGURE_ID)
+  @PostMapping(value = EndpointURI.UPADTE_TEST_CONFIGURE_EQUATION_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> updateTestConfigureEquationByTestConfigureId(
       @PathVariable Long testConfigureId,
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
-    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
-      if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
-            validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-      testConfigureService.updateTestConfigureEquationByTestConfigureId(testConfigureId,
-          equationRequestDto);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
-          HttpStatus.OK);
+    if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION, testConfigureService
+        .updateTestConfigureEquationByTestConfigureId(testConfigureId, equationRequestDto),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

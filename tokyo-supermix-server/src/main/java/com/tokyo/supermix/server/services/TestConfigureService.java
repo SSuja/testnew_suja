@@ -40,6 +40,6 @@ public interface TestConfigureService {
 
   public List<TestConfigure> findByMaterialSubCategory(Long materialSubCategoryId);
 
-  public void updateTestConfigureEquationByTestConfigureId(Long testConfigureId,
+  public Long updateTestConfigureEquationByTestConfigureId(Long testConfigureId,
       EquationRequestDto equationRequestDto);
 }

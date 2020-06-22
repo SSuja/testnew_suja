@@ -156,14 +156,16 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional
-  public void updateTestConfigureEquationByTestConfigureId(Long testConfigureId,
+  public Long updateTestConfigureEquationByTestConfigureId(Long testConfigureId,
       EquationRequestDto equationRequestDto) {
     TestConfigure testConfigure = getTestConfigureById(testConfigureId);
-    Equation equation = equationRepository.getOne(testConfigure.getEquation().getId());
+    Equation equation = new Equation();
     equation.setFormula(equationRequestDto.getFormula());
     equation.setEquationType(equationRequestDto.getEquationType());
     equation.setName(equationRequestDto.getName());
     equation.setParameterExists(equationRequestDto.isParameterExists());
     equationRepository.save(equation);
+    testConfigure.setEquation(equation);
+    return equation.getId();
   }
 }
