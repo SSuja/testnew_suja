@@ -585,10 +585,11 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PARAMETER_ELEMENT =
       BASE_API_PATH + "mix-design-parameter-element";
   public static final String MIX_DESIGN_PARAMETER_ELEMENT_BY_ID = MIX_DESIGN_PARAMETER_ELEMENT + ID;
-  public static final String DELETE_MIX_DESIGN_PARAMETER_ELEMENT = MIX_DESIGN_PARAMETER_ELEMENT + ID;
+  public static final String DELETE_MIX_DESIGN_PARAMETER_ELEMENT =
+      MIX_DESIGN_PARAMETER_ELEMENT + ID;
   public static final String MIX_DESIGN_PARAMETER_ELEMENTS =
       BASE_API_PATH + "mix-design-parameter-elements";
-  
+
   /*
    * Parameter Equation Element apis
    */
@@ -602,6 +603,25 @@ public final class EndpointURI {
       PARAMETER_EQUATION_ELEMENT + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
       PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
+
+  /* Mix design Parameter Result */
+  public static final String MIX_DESIGN_PARAMETER_RESULT =
+      BASE_API_PATH + "mixdesign-parameter-result";
+  public static final String MIX_DESIGN_PARAMETER_RESULTS =
+      BASE_API_PATH + "mixdesign-parameter-results";
+  public static final String GET_MIX_DESIGN_PARAMETER_RESULT_BY_ID =
+      MIX_DESIGN_PARAMETER_RESULT + ID;
+  public static final String DELETE_MIX_DESIGN_PARAMETER_RESULT_BY_ID =
+      MIX_DESIGN_PARAMETER_RESULT + ID;
+  /*
+   * Mix design Parameter
+   */
+  public static final String MIX_DESIGN_PARAMETERS = BASE_API_PATH + "mix-design-parameters";
+  public static final String MIX_DESIGN_PARAMETER = BASE_API_PATH + "mix-design-parameter";
+  public static final String DELETE_MIX_DESIGN_PARAMETER = MIX_DESIGN_PARAMETER + ID;
+  public static final String GET_MIX_DESIGN_PARAMETER_BY_ID = MIX_DESIGN_PARAMETER + ID;
+  public static final String GET_MIX_DESIGN_PARAMETER_BY_EQUATION_ID =
+      CUSTOMERS + SLASH + "equation" + SLASH + "{equationId}";
 
   private EndpointURI() {}
 }

@@ -2,8 +2,8 @@ package com.tokyo.supermix.data.dto;
 
 public class MixDesignParameterResponseDto {
   private Long id;
-  private RawMaterialResponseDto rawMaterial;
-  private MixDesignParameterResponseDto mixDesignParameter;
+  private String name;
+  private EquationResponseDto equation;
 
   public Long getId() {
     return id;
@@ -13,19 +13,19 @@ public class MixDesignParameterResponseDto {
     this.id = id;
   }
 
-  public RawMaterialResponseDto getRawMaterial() {
-    return rawMaterial;
+  public String getName() {
+    return name;
   }
 
-  public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
-    this.rawMaterial = rawMaterial;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public MixDesignParameterResponseDto getMixDesignParameter() {
-    return mixDesignParameter;
+  public EquationResponseDto getEquation() {
+    return equation;
   }
 
-  public void setMixDesignParameter(MixDesignParameterResponseDto mixDesignParameter) {
-    this.mixDesignParameter = mixDesignParameter;
+  public void setEquation(EquationResponseDto equation) {
+    this.equation = equation;
   }
 }
