@@ -16,7 +16,7 @@ public interface ParameterEquationService {
 
   public void deleteParameterEquation(Long id);
 
-  public List<ParameterEquation> getParameterEquationByTestParameter(Long testParameterId);
+  public ParameterEquation getParameterEquationByTestParameter(Long testParameterId);
 
   public ParameterEquation updateParameterEquation(ParameterEquation parameterEquation);
 }
