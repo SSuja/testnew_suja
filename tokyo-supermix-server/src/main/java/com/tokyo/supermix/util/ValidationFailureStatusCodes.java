@@ -762,12 +762,8 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.parameter.alreadyExist}")
   private String parameterAlreadyExist;
 
-
-
   @Value("${parameterDto.name.null}")
   private String nameIsNull;
-
-
 
   public String getNameIsNull() {
     return nameIsNull;
@@ -1789,9 +1785,25 @@ public class ValidationFailureStatusCodes {
     return parameterEquationElementAlreadyExit;
   }
 
+  public String getMixDesignparameterResultNotExist() {
+    return mixDesignparameterResultNotExist;
+  }
+
+  public void setMixDesignparameterResultNotExist(String mixDesignparameterResultNotExist) {
+    this.mixDesignparameterResultNotExist = mixDesignparameterResultNotExist;
+  }
+
+  public void setProjectCodeIsNull(String projectCodeIsNull) {
+    this.projectCodeIsNull = projectCodeIsNull;
+  }
+
   public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
     this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
   }
+
+  // for mix design parameterResult
+  @Value("${validation.mixDesignParameterResult.notExists}")
+  private String mixDesignparameterResultNotExist;
 
   /*
    * Mix Design Parameter
@@ -1806,4 +1818,5 @@ public class ValidationFailureStatusCodes {
   public void setMixDesignParameterNotExist(String mixDesignParameterNotExist) {
     this.mixDesignParameterNotExist = mixDesignParameterNotExist;
   }
+
 }
