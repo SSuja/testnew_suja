@@ -1,7 +1,10 @@
 package com.tokyo.supermix.data.entities.auth;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
+import com.tokyo.supermix.data.enums.RoleType;
 
 @Entity
 @Table(name = "user_plant_role", schema = "tokyo-supermix")
@@ -23,8 +27,24 @@ public class UserPlantRole implements Serializable {
   @ManyToOne
   @JoinColumn(name = "plant_role_id")
   private PlantRole plantRole;
+
   public UserPlantRole() {}
-  
+
+  @Enumerated(EnumType.ORDINAL)
+  private RoleType roleType;
+
+  public RoleType getRoleType() {
+    return roleType;
+  }
+
+  public void setRoleType(RoleType roleType) {
+    this.roleType = roleType;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
   public UserPlantRole(User user, PlantRole plantRole) {
     super();
     this.user = user;
@@ -54,5 +74,4 @@ public class UserPlantRole implements Serializable {
   public void setPlantRole(PlantRole plantRole) {
     this.plantRole = plantRole;
   }
-
 }
