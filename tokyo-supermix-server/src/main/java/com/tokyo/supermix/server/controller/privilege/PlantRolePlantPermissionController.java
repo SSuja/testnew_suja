@@ -119,15 +119,9 @@ public class PlantRolePlantPermissionController {
 
   @PutMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION)
   public ResponseEntity<Object> updatePlantPrivilage(
-      @RequestBody List<PlantRolePlantPermissionRequestDto> PlantRolePlantPermissionRequestDtos) {
-    for (PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto : PlantRolePlantPermissionRequestDtos) {
-      PlantRolePlantPermission plantRolePlantPermission =
-          plantRolePlantPermissionServices.findByPlantRoleIdAndPlantPermissionId(
-              plantRolePlantPermissionRequestDto.getPlantRoleId(),
-              plantRolePlantPermissionRequestDto.getPlantPermissionId());
-      plantRolePlantPermission.setStatus(plantRolePlantPermissionRequestDto.getStatus());
-      plantRolePlantPermissionServices.savePlantRolePlantPermission(plantRolePlantPermission);
-    }
+      @RequestBody List<PlantRolePlantPermissionRequestDto> plantRolePlantPermissionRequestDtos) {
+    plantRolePlantPermissionServices.savePlantRolePlantPermission(
+        mapper.map(plantRolePlantPermissionRequestDtos, PlantRolePlantPermission.class));
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
   }
