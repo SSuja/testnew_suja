@@ -582,6 +582,16 @@ public final class EndpointURI {
   /*
    * Parameter Equation Element apis
    */
+  public static final String MIX_DESIGN_PARAMETER_ELEMENT =
+      BASE_API_PATH + "mix-design-parameter-element";
+  public static final String MIX_DESIGN_PARAMETER_ELEMENT_BY_ID = MIX_DESIGN_PARAMETER_ELEMENT + ID;
+  public static final String DELETE_MIX_DESIGN_PARAMETER_ELEMENT = MIX_DESIGN_PARAMETER_ELEMENT + ID;
+  public static final String MIX_DESIGN_PARAMETER_ELEMENTS =
+      BASE_API_PATH + "mix-design-parameter-elements";
+  
+  /*
+   * Parameter Equation Element apis
+   */
   public static final String PARAMETER_EQUATION_ELEMENT =
       BASE_API_PATH + "parameter-equation-element";
   public static final String PARAMETER_EQUATION_ELEMENT_BY_ID = PARAMETER_EQUATION_ELEMENT + ID;

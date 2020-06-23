@@ -1792,4 +1792,28 @@ public class ValidationFailureStatusCodes {
   public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
     this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
   }
+
+  /*
+   * Mix Design Parameter Element
+   */
+  @Value("${validation.mixDesignParameterElement.notExist}")
+  private String mixDesignParameterElementNotExit;
+  @Value("${validation.mixDesignParameterElement.alreadyExist}")
+  private String mixDesignParameterElementAlreadyExit;
+
+  public String getMixDesignParameterElementNotExit() {
+    return mixDesignParameterElementNotExit;
+  }
+
+  public void setMixDesignParameterElementNotExit(String mixDesignParameterElementNotExit) {
+    this.mixDesignParameterElementNotExit = mixDesignParameterElementNotExit;
+  }
+
+  public String getMixDesignParameterElementAlreadyExit() {
+    return mixDesignParameterElementAlreadyExit;
+  }
+
+  public void setMixDesignParameterElementAlreadyExit(String mixDesignParameterElementAlreadyExit) {
+    this.mixDesignParameterElementAlreadyExit = mixDesignParameterElementAlreadyExit;
+  }
 }
