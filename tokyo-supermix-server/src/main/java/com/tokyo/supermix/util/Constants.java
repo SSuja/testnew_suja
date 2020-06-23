@@ -559,7 +559,7 @@ public class Constants {
   public static final String MIX_DESIGN_PARAMETER_RESULT_DELETED =
       "Mix Design Parameter Result Successfully Deleted";
   public static final String ADD_MIX_DESIGN_PARAMETER_RESULT_SUCCESS =
-      "Mix Design Parameter Equation Element Added Successfully";
+      "Mix Design Parameter Result Added Successfully";
   public static final String MIX_DESIGN_UPDATE_PARAMETER_RESULT_SUCCESS =
       "Mix Design Parameter Result Updated Successfully";
   /*
