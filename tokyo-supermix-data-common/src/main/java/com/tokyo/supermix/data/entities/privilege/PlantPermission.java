@@ -28,7 +28,7 @@ public class PlantPermission implements Serializable {
   private String name;
   @OneToMany(mappedBy = "plantPermission")
   private Set<PlantRolePlantPermission> plantRolePlantPermission;
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "plantPermission")
   private Set<UserPlantPermission> userPlantPermissions;
   public Long getId() {
     return id;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
-import com.tokyo.supermix.data.dto.privilege.PermissionResponseDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -29,7 +29,7 @@ public class UserPlantPermissionController {
     if (userPlantPermissionService.isUserIdExist(userId)) {
       return new ResponseEntity<>(
           new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
-              mapper.map(userPlantPermissionService.getPlantRolePermissionsByUserId(userId), PermissionResponseDto.class),
+              mapper.map(userPlantPermissionService.getPlantRolePermissionsByUserId(userId), PlantRolePlantPermissionResponseDto.class),
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }

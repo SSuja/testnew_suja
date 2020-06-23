@@ -30,34 +30,33 @@ public class PlantPermissionController {
   @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSION_BY_PERMISSION_NAME)
   public ResponseEntity<Object> getPlantsFindingByPermissionName(
       @PathVariable String permissionName) {
-    if(plantPermissionService.isPermissionNameExists(permissionName)) {
-    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSION,
-        (plantPermissionService.getPlantsByPermissionName(permissionName)),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+    if (plantPermissionService.isPermissionNameExists(permissionName)) {
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSION,
+          (plantPermissionService.getPlantsByPermissionName(permissionName)),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_PERMISSION_NAME,
-        privilegeValidationFailureStatusCodes.getPlantPermissionNotExists()), HttpStatus.BAD_REQUEST);
- 
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(PrivilegeConstants.PLANT_PERMISSION_NAME,
+            privilegeValidationFailureStatusCodes.getPlantPermissionNotExists()),
+        HttpStatus.BAD_REQUEST);
+
   }
 
   @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSIONS)
   public ResponseEntity<Object> getAllPlantPermissions() {
-    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS, mapper
-        .map(plantPermissionService.getAllPlantsByPermissions(), PlantPermissionResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
-  }
-  
-  @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSION_BY_PLANT_CODE_AND_SUBMODULE_ID_AND_MAINMODULE_ID)
-  public ResponseEntity<Object> getAllPlantPermissionByPlantCode(@PathVariable String plantCode,
-      @PathVariable Long subModuleId,  @PathVariable Long mainModuleId) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS ,       
-              mapper.map(
-                 plantPermissionService.getPlantPermissionByPlantCodeAndMainModuleAndSubModule(plantCode, subModuleId, mainModuleId),
-                  PlantPermissionResponseDto.class),
-              RestApiResponseStatus.OK),
-          null, HttpStatus.OK);
-   
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+            plantPermissionService.getAllPlantsByPermissions(), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
+  @GetMapping(
+      value = PrivilegeEndpointURI.PLANT_PERMISSION_BY_PLANT_CODE_AND_SUBMODULE_ID_AND_MAINMODULE_ID)
+  public ResponseEntity<Object> getAllPlantPermissionByPlantCode(@PathVariable String plantCode,
+      @PathVariable Long subModuleId, @PathVariable Long mainModuleId) {
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+        mapper.map(plantPermissionService.getPlantPermissionByPlantCodeAndMainModuleAndSubModule(
+            plantCode, subModuleId, mainModuleId), PlantPermissionResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }
