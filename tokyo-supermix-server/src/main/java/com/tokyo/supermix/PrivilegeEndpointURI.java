@@ -133,4 +133,13 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLE_BY_PLANT_CODE_AND_STATUS =
       PLANT_ACCESS_LEVEL + SLASH + "plantCode" + SLASH
           + "{plantCode}" + SLASH + "status" + SLASH + "{status}";
+  
+  /*
+   * user  Plant Permission
+   */
+  public static final String USER_PLANT_PERMISSION =
+      BASE_API_PATH + "user-plant-permission";
+  public static final String USER_PLANT_PERMISSION_BY_USER_ID =
+      USER_PLANT_PERMISSION + SLASH + "{userId}";
+
 }
