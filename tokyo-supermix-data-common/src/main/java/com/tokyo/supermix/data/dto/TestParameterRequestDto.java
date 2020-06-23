@@ -2,7 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class TestParameterRequestDto {
   private Long id;
@@ -12,7 +12,7 @@ public class TestParameterRequestDto {
   @NotNull(message = "{testParameterDto.abbreviation.null}")
   @NotEmpty(message = "{testParameterDto.abbreviation.empty}")
   private String abbreviation;
-  private EntryLevel entryLevel;
+  private TestParameterType entryLevel;
   private Double value;
   private boolean equationExists;
   public Long getId() {
@@ -45,10 +45,10 @@ public class TestParameterRequestDto {
   public void setAbbreviation(String abbreviation) {
     this.abbreviation = abbreviation;
   }
-  public EntryLevel getEntryLevel() {
+  public TestParameterType getEntryLevel() {
     return entryLevel;
   }
-  public void setEntryLevel(EntryLevel entryLevel) {
+  public void setEntryLevel(TestParameterType entryLevel) {
     this.entryLevel = entryLevel;
   }
   public Double getValue() {
