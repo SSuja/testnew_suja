@@ -89,8 +89,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       List<SubModulePlantRolePlantPermissionDto> subModulePlantRolePlantPermissionDtoList =
           new ArrayList<SubModulePlantRolePlantPermissionDto>();
       List<SubModule> subModuleList = subModuleRepository.findByMainModuleId(main.getId());
-     boolean status = getSubModulesByPlantRoleIdAndReturnMainStatus(subModuleList, plantRoleId, main.getId(),
-          subModulePlantRolePlantPermissionDtoList, mainStatus);
+      boolean status = getSubModulesByPlantRoleIdAndReturnMainStatus(subModuleList, plantRoleId,
+          main.getId(), subModulePlantRolePlantPermissionDtoList, mainStatus);
       plantRolePlantPermissionResponseDto.setStatus(status);
       plantRolePlantPermissionResponseDto.setSubModules(subModulePlantRolePlantPermissionDtoList);
       plantRolePlantPermissionResponseDtolist.add(plantRolePlantPermissionResponseDto);
@@ -98,8 +98,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return plantRolePlantPermissionResponseDtolist;
   }
 
-  private boolean getSubModulesByPlantRoleIdAndReturnMainStatus(List<SubModule> subModuleList, Long plantRoleId,
-      Long mainModuleId,
+  private boolean getSubModulesByPlantRoleIdAndReturnMainStatus(List<SubModule> subModuleList,
+      Long plantRoleId, Long mainModuleId,
       List<SubModulePlantRolePlantPermissionDto> subModulePlantRolePlantPermissionDtoList,
       boolean mainStatus) {
     for (SubModule sub : subModuleList) {
@@ -114,14 +114,14 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       List<PlantRolePlantPermission> plantRolePlantPermissionList =
           plantRolePlantPermissionRepository
               .findByPlantRoleIdAndPlantPermissionPermissionSubModuleId(plantRoleId, sub.getId());
-      boolean status = getPlantPermissionsAndReturnSubModuleStatus(plantRolePlantPermissionList, subStatus, plantRoleId,
-          sub.getId(), mainModuleId, rolePermissionDtoList);
-     subModulePlantRolePlantPermissionDto.setStatus(status);
+      boolean status = getPlantPermissionsAndReturnSubModuleStatus(plantRolePlantPermissionList,
+          subStatus, plantRoleId, sub.getId(), mainModuleId, rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setStatus(status);
       subModulePlantRolePlantPermissionDto.setPlantRolePlantPermissions(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;
-      } 
+      }
     }
     return mainStatus;
   }
@@ -156,8 +156,19 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   }
 
   @Transactional
-  public void savePlantRolePlantPermission(PlantRolePlantPermission plantRolePlantPermission) {
-    plantRolePlantPermissionRepository.save(plantRolePlantPermission);
+  public void savePlantRolePlantPermission(
+      List<PlantRolePlantPermission> plantRolePlantPermissios) {
+    for (PlantRolePlantPermission plantRolePlantPermission : plantRolePlantPermissios) {
+      PlantRolePlantPermission plantRolePlantPermission2 = plantRolePlantPermissionRepository
+          .findByPlantRoleIdAndPlantPermissionId(plantRolePlantPermission.getPlantRole().getId(),
+              plantRolePlantPermission.getPlantPermission().getPermission().getId());
+      if (plantRolePlantPermission2 != null) {
+        plantRolePlantPermission2.setStatus(plantRolePlantPermission.isStatus());
+        plantRolePlantPermissionRepository.save(plantRolePlantPermission2);
+      } else {
+        plantRolePlantPermissionRepository.save(plantRolePlantPermission);
+      }
+    }
   }
 
   @Transactional(readOnly = true)
