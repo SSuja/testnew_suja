@@ -10,7 +10,7 @@ INSERT INTO `tokyo-supermix`.`role` (`id`, `name`) VALUES ('2', 'USER');
 -- user
 INSERT INTO `tokyo-supermix`.`user` (`id`, `email`, `password`, `user_name`, `user_type`,`employee_id`, `created_at`, `updated_at`,`is_active`) VALUES ('1', 'admin@gmail.com', '$2y$10$WYI8/0dTM5y.0VZKCEbFWuU1Y39zOx6V3oFj6EZvh6AGXp0T.VQVK', 'admin', '1','1', '2020-05-06 16:58:02', '2020-05-06 21:28:58',1);
 --user role
-INSERT INTO `tokyo-supermix`.`user_role` (`id`, `role_id`, `user_id`,`roleType`) VALUES ('1', '1', '1','0');
+INSERT INTO `tokyo-supermix`.`user_role` (`id`, `role_id`, `user_id`,`role_type`) VALUES ('1', '1', '1','0');
 
 --privillege
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('1', 'plant');
