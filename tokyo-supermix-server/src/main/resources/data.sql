@@ -1,5 +1,5 @@
 ---- plant
---INSERT INTO `tokyo-supermix`.`plant` (`code`, `address`, `name`, `phone_number`,`fax_number`) VALUES ('PR', '77, New,Nuge Road', 'Peliyagoda', '0114587452','0112-945866');
+INSERT INTO `tokyo-supermix`.`plant` (`code`, `address`, `name`, `phone_number`,`fax_number`) VALUES ('PR', '77, New,Nuge Road', 'Peliyagoda', '0114587452','0112-945866');
 ---- designation
 INSERT INTO `tokyo-supermix`.`designation` (`id`, `description`, `name`) VALUES ('1', 'Main Admin', 'Administrator');
 -- employee
