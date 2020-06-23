@@ -21,9 +21,11 @@ import com.tokyo.supermix.data.entities.auth.UserRole;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
+import com.tokyo.supermix.data.repositories.auth.RoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRoleRepository;
+import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -37,6 +39,10 @@ public class UserServiceImpl implements UserService {
   private UserRoleRepository userRoleRepository;
   @Autowired
   private UserPlantRoleRepository userPlantRoleRepository;
+  @Autowired
+  private PlantRoleRepository plantRoleRepository;
+  @Autowired
+  private RoleRepository roleRepository;
 
   @Transactional
   public UserCredentialDto saveUser(User user, List<Long> roles) {
@@ -71,21 +77,14 @@ public class UserServiceImpl implements UserService {
 
   private void createUserPlantRoles(List<Long> roles, User user) {
     List<UserPlantRole> userPlantRoles = new ArrayList<UserPlantRole>();
-    roles.forEach(roleId -> {
-      PlantRole plantrole = new PlantRole();
-      plantrole.setId(roleId);
-      userPlantRoles.add(new UserPlantRole(user, plantrole));
-    });
+    roles.forEach(
+        roleId -> userPlantRoles.add(new UserPlantRole(user, plantRoleRepository.getOne(roleId))));
     userPlantRoleRepository.saveAll(userPlantRoles);
   }
 
   private void createUserRoles(List<Long> roles, User user) {
     List<UserRole> userRoles = new ArrayList<UserRole>();
-    roles.forEach(roleId -> {
-      Role role = new Role();
-      role.setId(roleId);
-      userRoles.add(new UserRole(user, role));
-    });
+    roles.forEach(roleId -> userRoles.add(new UserRole(user, roleRepository.getOne(roleId))));
     userRoleRepository.saveAll(userRoles);
   }
 
