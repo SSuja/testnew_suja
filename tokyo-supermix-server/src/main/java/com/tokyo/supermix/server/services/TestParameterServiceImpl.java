@@ -10,14 +10,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.ParameterEquationDto;
+import com.tokyo.supermix.data.dto.ParameterEquationResponseDto;
+import com.tokyo.supermix.data.dto.PlantDto;
+import com.tokyo.supermix.data.dto.TestConfigureDto;
+import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
+import com.tokyo.supermix.data.dto.TestParameterEquationDto;
+import com.tokyo.supermix.data.dto.TestParameterResponseDto;
+import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
+import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.ParameterEquation;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class TestParameterServiceImpl implements TestParameterService {
   @Autowired
   private TestParameterRepository testParameterRepository;
+  @Autowired
+  private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private ParameterEquationRepository parameterEquationRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public void saveTestParameter(TestParameter testParameter) {
@@ -105,5 +125,49 @@ public class TestParameterServiceImpl implements TestParameterService {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public TestParameterEquationDto getTestParameterEquation(Long testConfigureId) {
+    TestParameterEquationDto testParameterEquationDto = new TestParameterEquationDto();
+    List<TestParameter> testParameterList =
+        testParameterRepository.findByTestConfigureId(testConfigureId);
+    List<TestParameterResponseDto> testParameterResponseDtoList =
+        new ArrayList<TestParameterResponseDto>();
+    testParameterList.forEach(test -> {
+      TestParameterResponseDto testParameterResponseDto = new TestParameterResponseDto();
+      testParameterResponseDto.setId(testConfigureId);
+      testParameterResponseDto.setAbbreviation(test.getAbbreviation());
+      testParameterResponseDto.setEntryLevel(test.getEntryLevel());
+      testParameterResponseDto.setParameter(test.getParameter());
+      testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
+      testParameterResponseDto.setEquationExists(test.isEquationExists());
+      testParameterResponseDto.setUnit(test.getUnit());
+      testParameterResponseDto.setValue(test.getValue());
+      testParameterResponseDtoList.add(testParameterResponseDto);
+    });
+    // List<ParameterEquation> parameterEquationList =
+    // parameterEquationRepository.findByTestParameterId(testConfigureId).get(0).getTestParameter().getId();
+    List<ParameterEquation> parameterEquationList =
+        parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);
+    List<ParameterEquationDto> parameterEquationResponseDtoList =
+        new ArrayList<ParameterEquationDto>();
+    parameterEquationList.forEach(parameter -> {
+      ParameterEquationDto parameterEquationDto = new ParameterEquationDto();
+      parameterEquationDto.setTestParameterId(parameter.getTestParameter().getId());
+      parameterEquationDto.setParameterEquation(parameter.getEquation().getFormula());
+      parameterEquationDto.setAbbreviation(parameter.getTestParameter().getAbbreviation());
+      parameterEquationResponseDtoList.add(parameterEquationDto);
+    });
+    testParameterEquationDto.setTestParameters(testParameterResponseDtoList);
+    testParameterEquationDto.setParameterEquations(parameterEquationResponseDtoList);
+    return testParameterEquationDto;
+  }
+
+  private TestConfigureResponseDto getTestConfigureDetails(Long testConfigureId) {
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    TestConfigureResponseDto testConfigureResponseDto =
+        mapper.map(testConfigure, TestConfigureResponseDto.class);
+    return testConfigureResponseDto;
   }
 }

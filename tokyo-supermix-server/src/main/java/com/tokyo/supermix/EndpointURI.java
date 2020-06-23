@@ -264,6 +264,8 @@ public final class EndpointURI {
       TEST_PARAMETER + "/test-parameters" + "/{testConfigureId}";
   public static final String QUALITY_PARAMETERS_BY_TEST_CONFIGURE_ID =
       TEST_PARAMETER + "/quality-parameters" + "/{testConfigureId}";
+  public static final String TEST_PARAMETER_BY_TEST_CONFIGURE =
+      TEST_PARAMETER + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   /*
    * ProcessSample APIs
