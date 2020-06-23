@@ -1,19 +1,28 @@
 package com.tokyo.supermix.server.controller.privilege;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
+import com.tokyo.supermix.data.dto.privilege.UserPlantPermissionRequestDto;
+import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.privilege.UserPlantPermissionRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
+import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.privilege.UserPlantPermissionService;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
+import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -22,7 +31,10 @@ public class UserPlantPermissionController {
   private Mapper mapper;
   @Autowired
   private UserPlantPermissionService userPlantPermissionService;
-  
+  @Autowired
+  PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
+  @Autowired
+  private UserPlantPermissionRepository userPlantPermissionRepository;
   @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID)
   public ResponseEntity<Object> getUserPlantPermissionByUserId(
       @PathVariable Long userId) {
@@ -33,9 +45,17 @@ public class UserPlantPermissionController {
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }
-    return null;
-//        new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
-//        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
+        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @PutMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSION)
+  public ResponseEntity<Object> updateUserPlantPrivilage(
+           @RequestBody List<UserPlantPermissionRequestDto> userPlantPermissionRequestDtos) {
+   userPlantPermissionService.saveUserPlantPermission(
+        mapper.map(userPlantPermissionRequestDtos, UserPlantPermission.class));
+return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
   }
 
 }

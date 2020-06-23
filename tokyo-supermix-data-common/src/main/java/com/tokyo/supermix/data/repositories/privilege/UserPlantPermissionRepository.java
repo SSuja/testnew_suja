@@ -10,5 +10,6 @@ public interface UserPlantPermissionRepository extends JpaRepository<UserPlantPe
   public List<UserPlantPermission> findByUserId(Long userId);
   public boolean existsByUserId(Long userId);
   public List<UserPlantPermission>findByUserIdAndPlantPermissionPermissionSubModuleId(Long userId,Long subModuleId);
-
+  public UserPlantPermission findByUserIdAndPlantPermissionId(Long userId, Long plantPermissionId);
+ 
 }

@@ -58,5 +58,8 @@ public class PrivilegeConstants {
   public static final String ADD_PLANT_ACCESS_ROLE_SUCCESS = "Successfully Added plantAccessLevel";
   public static final String UPDATE_PLANT_ACCESS_ROLE_SUCCESS = "Successfully Updated plantAccessLevel";
    
-   
+    
+ 
+  public static final String UPDATE_USER_PLANT_PERMISSION_SUCCESS = "Plant Permissions Updated Successfully"; 
+  public static final String PLANT_USER_ID = "userId";
 }

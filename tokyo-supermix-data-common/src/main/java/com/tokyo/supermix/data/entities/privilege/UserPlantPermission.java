@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.User;
 
 @Entity
-@Table(name = "user_plant_permission")
+@Table(name = "user_plant_permission", schema = "tokyo-supermix")
 public class UserPlantPermission implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
