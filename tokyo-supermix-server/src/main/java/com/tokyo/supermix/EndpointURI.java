@@ -567,7 +567,15 @@ public final class EndpointURI {
 	public static final String MIX_DESIGN_PARAMETER_RESULTS = BASE_API_PATH + "mixdesign-parameter-results";
 	public static final String GET_MIX_DESIGN_PARAMETER_RESULT_BY_ID = MIX_DESIGN_PARAMETER_RESULT + ID;
 	public static final String DELETE_MIX_DESIGN_PARAMETER_RESULT_BY_ID = MIX_DESIGN_PARAMETER_RESULT + ID;
-
+ /*
+   * Mix design Parameter
+   */
+  public static final String MIX_DESIGN_PARAMETERS = BASE_API_PATH + "mix-design-parameters";
+  public static final String MIX_DESIGN_PARAMETER = BASE_API_PATH + "mix-design-parameter";
+  public static final String DELETE_MIX_DESIGN_PARAMETER = MIX_DESIGN_PARAMETER + ID;
+  public static final String GET_MIX_DESIGN_PARAMETER_BY_ID = MIX_DESIGN_PARAMETER + ID;
+  public static final String GET_MIX_DESIGN_PARAMETER_BY_EQUATION_ID =
+      CUSTOMERS + SLASH + "equation" + SLASH + "{equationId}";
 	private EndpointURI() {
 	}
 }
