@@ -133,7 +133,7 @@ public class TestParameterServiceImpl implements TestParameterService {
         new ArrayList<TestParameterResponseDto>();
     testParameterList.forEach(test -> {
       TestParameterResponseDto testParameterResponseDto = new TestParameterResponseDto();
-      testParameterResponseDto.setId(testConfigureId);
+      testParameterResponseDto.setId(test.getId());
       testParameterResponseDto.setAbbreviation(test.getAbbreviation());
       testParameterResponseDto.setEntryLevel(test.getEntryLevel());
       testParameterResponseDto.setParameter(test.getParameter());
@@ -143,7 +143,6 @@ public class TestParameterServiceImpl implements TestParameterService {
       testParameterResponseDto.setValue(test.getValue());
       testParameterResponseDtoList.add(testParameterResponseDto);
     });
-
     List<ParameterEquation> parameterEquationList =
         parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);
     List<ParameterEquationDto> parameterEquationResponseDtoList =
