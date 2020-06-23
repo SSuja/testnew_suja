@@ -33,10 +33,11 @@ public class UserServiceImpl implements UserService {
   PasswordEncoder passwordEncoder;
   @Autowired
   private EmployeeRepository employeeRepository;
-@Autowired
+  @Autowired
   private UserRoleRepository userRoleRepository;
   @Autowired
   private UserPlantRoleRepository userPlantRoleRepository;
+
   @Transactional
   public UserCredentialDto saveUser(User user, List<Long> roles) {
     user.setUserName(user.getEmail());
@@ -48,15 +49,24 @@ public class UserServiceImpl implements UserService {
       createUserPlantRoles(roles, userObj);
     }
     if (user.getEmployee() != null) {
-      Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
-      employee.setHasUser(true);
-      employeeRepository.save(employee);
+      updateEmployee(user.getEmployee().getId());
     }
+    return createUserCredentialDto(user.getUserName(), password, user.getEmail());
+  }
+
+  private UserCredentialDto createUserCredentialDto(String userName, String password,
+      String email) {
     UserCredentialDto dto = new UserCredentialDto();
-    dto.setUserName(user.getUserName());
+    dto.setUserName(userName);
     dto.setPassword(password);
-    dto.setEmail(user.getEmail());
+    dto.setEmail(email);
     return dto;
+  }
+
+  private void updateEmployee(Long employeeId) {
+    Employee employee = employeeRepository.findById(employeeId).get();
+    employee.setHasUser(true);
+    employeeRepository.save(employee);
   }
 
   private void createUserPlantRoles(List<Long> roles, User user) {
@@ -69,7 +79,7 @@ public class UserServiceImpl implements UserService {
     userPlantRoleRepository.saveAll(userPlantRoles);
   }
 
-private void createUserRoles(List<Long> roles, User user) {
+  private void createUserRoles(List<Long> roles, User user) {
     List<UserRole> userRoles = new ArrayList<UserRole>();
     roles.forEach(roleId -> {
       Role role = new Role();
@@ -157,13 +167,14 @@ private void createUserRoles(List<Long> roles, User user) {
   @Override
   public void updateUserRoles(UserRoleDto userRoleDto) {
     User user = userRepository.findById(userRoleDto.getUserId()).get();
-    System.out.println("user roles" + userRoleDto.getRoleIds().toString());
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-//      userRoleRepository.findByUserId(userRoleDto.getUserId()).forEach(userRole->userRoleRepository.deleteById(userRole.getId()));
+      userRoleRepository.findByUserId(userRoleDto.getUserId())
+          .forEach(userRole -> userRoleRepository.deleteById(userRole.getId()));
       createUserRoles(userRoleDto.getRoleIds(), user);
     } else {
-      userPlantRoleRepository.findRolesByUserId(userRoleDto.getUserId()).forEach(userRole->userPlantRoleRepository.deleteById(userRole.getId()));
-     createUserPlantRoles(userRoleDto.getRoleIds(), user);
+      userPlantRoleRepository.findRolesByUserId(userRoleDto.getUserId())
+          .forEach(userRole -> userPlantRoleRepository.deleteById(userRole.getId()));
+      createUserPlantRoles(userRoleDto.getRoleIds(), user);
     }
   }
 }
