@@ -4,7 +4,7 @@ public class MixDesignParameterResultRequestDto {
 
 	private Long id;
 	private String mixDesignCode;
-	private Long mixDesignParameterResultId;
+	private Long mixDesignParameterId;
 	private Double value;
 
 	public Long getId() {
@@ -23,12 +23,12 @@ public class MixDesignParameterResultRequestDto {
 		this.mixDesignCode = mixDesignCode;
 	}
 
-	public Long getMixDesignParameterResultId() {
-		return mixDesignParameterResultId;
+	public Long getMixDesignParameterId() {
+		return mixDesignParameterId;
 	}
 
-	public void setMixDesignParameterResultId(Long mixDesignParameterResultId) {
-		this.mixDesignParameterResultId = mixDesignParameterResultId;
+	public void setMixDesignParameterId(Long mixDesignParameterId) {
+		this.mixDesignParameterId = mixDesignParameterId;
 	}
 
 	public Double getValue() {
