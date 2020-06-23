@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.enums.TestParameterType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_parameter")
@@ -30,7 +30,7 @@ public class TestParameter implements Serializable {
   private Unit unit;
   private String abbreviation;
   @Enumerated(EnumType.ORDINAL)
-  private EntryLevel entryLevel;
+  private TestParameterType entryLevel;
   private Double value;
   private boolean equationExists;
   public Long getId() {
@@ -63,10 +63,10 @@ public class TestParameter implements Serializable {
   public void setAbbreviation(String abbreviation) {
     this.abbreviation = abbreviation;
   }
-  public EntryLevel getEntryLevel() {
+  public TestParameterType getEntryLevel() {
     return entryLevel;
   }
-  public void setEntryLevel(EntryLevel entryLevel) {
+  public void setEntryLevel(TestParameterType entryLevel) {
     this.entryLevel = entryLevel;
   }
   public Double getValue() {

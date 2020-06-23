@@ -18,8 +18,9 @@ public class EquationServiceImpl implements EquationService {
   private TestConfigureRepository testConfigureRepository;
 
   @Transactional
-  public void saveEquation(Equation equation) {
+  public Long saveEquation(Equation equation) {
     equationRepository.save(equation);
+    return equation.getId();
   }
 
   @Transactional(readOnly = true)

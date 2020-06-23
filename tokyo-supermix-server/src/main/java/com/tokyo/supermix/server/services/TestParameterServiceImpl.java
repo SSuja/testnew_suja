@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.ParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
@@ -17,7 +19,7 @@ import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -65,7 +67,7 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId,
-      Long unitId, String abbreviation, EntryLevel entryLevel) {
+      Long unitId, String abbreviation, TestParameterType entryLevel) {
     if (testParameterRepository
         .existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(testConfigureId,
             parameterId, unitId, abbreviation, entryLevel)) {
@@ -108,12 +110,18 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public boolean isParameterIdExist(Long parameterId) {
-    return testParameterRepository.existsByParameterId(parameterId);
+    if (testParameterRepository.existsByParameterId(parameterId)) {
+      return true;
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)
   public boolean isAbbreviationExists(String abbreviation) {
-    return testParameterRepository.existsByAbbreviation(abbreviation);
+    if (testParameterRepository.existsByAbbreviation(abbreviation)) {
+      return true;
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)

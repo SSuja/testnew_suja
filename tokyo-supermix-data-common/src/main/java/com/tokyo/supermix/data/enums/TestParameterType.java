@@ -1,5 +1,5 @@
 package com.tokyo.supermix.data.enums;
 
-public enum EntryLevel {
+public enum TestParameterType {
     CONFIGURE, TEST
 }
