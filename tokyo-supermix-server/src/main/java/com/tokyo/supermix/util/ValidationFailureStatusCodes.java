@@ -1792,4 +1792,18 @@ public class ValidationFailureStatusCodes {
   public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
     this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
   }
+
+  /*
+   * Mix Design Parameter
+   */
+  @Value("${validation.mixDesignParameter.notExists}")
+  private String mixDesignParameterNotExist;
+
+  public String getMixDesignParameterNotExist() {
+    return mixDesignParameterNotExist;
+  }
+
+  public void setMixDesignParameterNotExist(String mixDesignParameterNotExist) {
+    this.mixDesignParameterNotExist = mixDesignParameterNotExist;
+  }
 }
