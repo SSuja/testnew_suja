@@ -489,8 +489,9 @@ public class Constants {
 	public static final String MIX_DESIGN_PARAMETER_RESULT = "mixDesignParameterResult";
 	public static final String MIX_DESIGN_PARAMETER_RESULTS = "mixDesignParameterResults";
 	public static final String MIX_DESIGN_PARAMETER_RESULT_ID = "mixDesignParameterResultId";
-	public static final String MIX_DESIGN_PARAMETER_RESULT_DELETED = "Parameter Result Successfully Deleted";
-	public static final String MIX_DESIGN_UPDATE_PARAMETER_RESULT_SUCCESS = "Parameter Result Updated Successfully";
+	public static final String MIX_DESIGN_PARAMETER_RESULT_DELETED = "Mix Design Parameter Result Successfully Deleted";
+	public static final String ADD_MIX_DESIGN_PARAMETER_RESULT_SUCCESS = "Mix Design Parameter Equation Element Added Successfully";
+	public static final String MIX_DESIGN_UPDATE_PARAMETER_RESULT_SUCCESS = "Mix Design Parameter Result Updated Successfully";
 
 	/*
 	 * Encapsulate constructor to restrict modification from outside

@@ -17,7 +17,7 @@ public class MixDesignParameterResultServiceImpl implements MixDesignParameterRe
 	private MixDesignParameterResultRepository mixDesignParameterResultRepository;
 
 	@Transactional
-	public void saveMixDesign(MixDesignParameterResult mixDesignParameterResult) {
+	public void saveMixDesignParameterResult(MixDesignParameterResult mixDesignParameterResult) {
 		mixDesignParameterResultRepository.save(mixDesignParameterResult);
 	}
 
@@ -36,4 +36,8 @@ public class MixDesignParameterResultServiceImpl implements MixDesignParameterRe
 		mixDesignParameterResultRepository.deleteById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public boolean isMixDesignParameterResultExists(Long id) {
+		return mixDesignParameterResultRepository.existsById(id);
+	}
 }

@@ -6,12 +6,14 @@ import com.tokyo.supermix.data.entities.MixDesignParameterResult;
 
 public interface MixDesignParameterResultService {
 
-	public void saveMixDesign(MixDesignParameterResult mixDesignParameterResult);
+	public void saveMixDesignParameterResult(MixDesignParameterResult mixDesignParameterResult);
 
 	public MixDesignParameterResult getMixDesignParamResultById(Long id);
 
 	public List<MixDesignParameterResult> getAllMixDesignParamResults();
 
 	public void deleteMixDesignParameterResult(Long id);
+
+	public boolean isMixDesignParameterResultExists(Long id);
 
 }
