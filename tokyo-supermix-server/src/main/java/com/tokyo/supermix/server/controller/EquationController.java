@@ -18,12 +18,14 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EquationRequestDto;
 import com.tokyo.supermix.data.dto.EquationResponseDto;
 import com.tokyo.supermix.data.entities.Equation;
+import com.tokyo.supermix.data.enums.EquationType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquationService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -36,6 +38,8 @@ public class EquationController {
   private Mapper mapper;
   @Autowired
   private EquationService equationService;
+  @Autowired
+  private TestConfigureService testConfigureService;
   private static final Logger logger = Logger.getLogger(EquationController.class);
 
   @PostMapping(value = EndpointURI.EQUATION)
@@ -46,10 +50,9 @@ public class EquationController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
           validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    equationService.saveEquation(mapper.map(equationRequestDto, Equation.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
+        equationService.saveEquation(mapper.map(equationRequestDto, Equation.class)),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.EQUATIONS)
@@ -103,5 +106,51 @@ public class EquationController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
         validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.EQUATIONS_BY_EQUATION_TYPE)
+  public ResponseEntity<Object> getEquationsByEquationType(
+      @PathVariable EquationType equationType) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION, mapper
+        .map(equationService.getEquationsByEquationType(equationType), EquationResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_NAME)
+  public ResponseEntity<Object> getEquationByEquationName(@PathVariable String equationName) {
+    if (equationService.isNameExists(equationName)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
+          mapper.map(equationService.getEquationsByName(equationName), EquationResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION,
+        validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_EXISTS_TRUE)
+  public ResponseEntity<Object> getEquationByEquationExistsTrue() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
+        mapper.map(equationService.getEquationsByParameterExistsTrue(), EquationResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @PostMapping(value = EndpointURI.UPADTE_TEST_CONFIGURE_EQUATION)
+  public ResponseEntity<Object> updateTestConfigureEquationByTestConfigureId(
+      @PathVariable Long testConfigureId,
+      @Valid @RequestBody EquationRequestDto equationRequestDto) {
+    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
+      if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+            validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.EQUATION,
+              equationService.updateTestConfigureEquation(testConfigureId,
+                  mapper.map(equationRequestDto, Equation.class)),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

@@ -180,6 +180,14 @@ public final class EndpointURI {
   public static final String EQUATION = BASE_API_PATH + "equation";
   public static final String EQUATIONS = BASE_API_PATH + "equations";
   public static final String EQUATION_BY_ID = EQUATION + ID;
+  public static final String EQUATIONS_BY_EQUATION_TYPE =
+      EQUATION + SLASH + "equation-type" + SLASH + "{equationType}";
+  public static final String EQUATION_BY_EQUATION_NAME =
+      EQUATION + SLASH + "equation-name" + SLASH + "{equationName}";
+  public static final String EQUATION_BY_EQUATION_EXISTS_TRUE =
+      EQUATION + SLASH + "equation-exists-true";
+  public static final String UPADTE_TEST_CONFIGURE_EQUATION =
+      EQUATION + SLASH + "update-equation" + SLASH + "{testConfigureId}";
   /*
    * Parameter apis
    * 
@@ -256,6 +264,8 @@ public final class EndpointURI {
       TEST_PARAMETER + "/test-parameters" + "/{testConfigureId}";
   public static final String QUALITY_PARAMETERS_BY_TEST_CONFIGURE_ID =
       TEST_PARAMETER + "/quality-parameters" + "/{testConfigureId}";
+  public static final String TEST_PARAMETER_BY_TEST_CONFIGURE =
+      TEST_PARAMETER + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   /*
    * ProcessSample APIs
@@ -288,8 +298,8 @@ public final class EndpointURI {
   public static final String GET_PARAMETER_RESULT_BY_PLANT =
       PARAMETER_RESULT + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_PARAMETER_RESULTS_BY_MATERIAL_TEST_TRIAL_CODE_AND_MATERIAL_TEST_CODE =
-      PARAMETER_RESULT+SLASH+ "getParameterResultWithConfigValue" + SLASH + "{materialTestTrialCode}" + SLASH
-          + "{materialTestCode}";
+      PARAMETER_RESULT + SLASH + "getParameterResultWithConfigValue" + SLASH
+          + "{materialTestTrialCode}" + SLASH + "{materialTestCode}";
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_CODE =
       PARAMETER_RESULT + SLASH + "matrial-test" + SLASH + "{materialTestCode}";
   /*
@@ -319,7 +329,7 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_TRIAL_BY_CODE = MATERIAL_TEST_TRIAL + CODE;
   public static final String MATERIAL_TEST_TRIAL_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/{materialTestCode}";
-  public static final String MATERIAL_RESULT_BY_MATERIAL_TEST_CODE=
+  public static final String MATERIAL_RESULT_BY_MATERIAL_TEST_CODE =
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
   public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
