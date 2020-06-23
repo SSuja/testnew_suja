@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignParameterElementRequestDto;
-import com.tokyo.supermix.data.dto.MixDesignParameterResponseDto;
+import com.tokyo.supermix.data.dto.MixDesignParameterElementResponseDto;
 import com.tokyo.supermix.data.entities.MixDesignParameterElement;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -57,10 +57,12 @@ public class MixDesignParameterElementController {
 
   @GetMapping(value = EndpointURI.MIX_DESIGN_PARAMETER_ELEMENTS)
   public ResponseEntity<Object> getParameterEquationElements() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PARAMETER_ELEMENTS,
-        mapper.map(mixDesignParameterElementService.getallMixDesignParameterElements(),
-            MixDesignParameterResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.MIX_DESIGN_PARAMETER_ELEMENTS,
+            mapper.map(mixDesignParameterElementService.getallMixDesignParameterElements(),
+                MixDesignParameterElementResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGN_PARAMETER_ELEMENT_BY_ID)
@@ -68,7 +70,7 @@ public class MixDesignParameterElementController {
     if (mixDesignParameterElementService.isMixDesignParameterElementExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PARAMETER_ELEMENTS,
           mapper.map(mixDesignParameterElementService.getMixDesignParameterElementById(id),
-              MixDesignParameterResponseDto.class),
+              MixDesignParameterElementResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No Mix Design Parameter Element record exist for given id");
