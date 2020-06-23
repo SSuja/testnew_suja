@@ -5,7 +5,7 @@ import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.enums.EquationType;
 
 public interface EquationService {
-  public void saveEquation(Equation equation);
+  public Long saveEquation(Equation equation);
 
   public List<Equation> getAllEquations();
 

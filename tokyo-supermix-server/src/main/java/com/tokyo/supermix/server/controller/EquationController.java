@@ -50,10 +50,9 @@ public class EquationController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
           validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    equationService.saveEquation(mapper.map(equationRequestDto, Equation.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EQUATION_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
+        equationService.saveEquation(mapper.map(equationRequestDto, Equation.class)),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.EQUATIONS)
