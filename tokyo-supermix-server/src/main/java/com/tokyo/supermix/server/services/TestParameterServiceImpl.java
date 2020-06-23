@@ -113,12 +113,18 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public boolean isParameterIdExist(Long parameterId) {
-    return testParameterRepository.existsByParameterId(parameterId);
+     if(testParameterRepository.existsByParameterId(parameterId)) {
+       return true;
+     }
+     return false;
   }
 
   @Transactional(readOnly = true)
   public boolean isAbbreviationExists(String abbreviation) {
-    return testParameterRepository.existsByAbbreviation(abbreviation);
+    if(testParameterRepository.existsByAbbreviation(abbreviation)) {
+      return true;
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)
