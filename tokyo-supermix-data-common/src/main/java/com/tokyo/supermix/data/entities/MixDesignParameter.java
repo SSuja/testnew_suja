@@ -21,6 +21,7 @@ public class MixDesignParameter implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "equationId", nullable = true)
 	private Equation equation;
+	private boolean equationExists;
 
 	public Long getId() {
 		return id;
@@ -48,5 +49,13 @@ public class MixDesignParameter implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public boolean isEquationExists() {
+		return equationExists;
+	}
+
+	public void setEquationExists(boolean equationExists) {
+		this.equationExists = equationExists;
 	}
 }
