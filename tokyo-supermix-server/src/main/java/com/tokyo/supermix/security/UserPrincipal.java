@@ -1,5 +1,4 @@
 package com.tokyo.supermix.security;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -9,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.enums.RoleType;
 import com.tokyo.supermix.data.enums.UserType;
 
 public class UserPrincipal implements UserDetails {
@@ -36,6 +36,11 @@ public class UserPrincipal implements UserDetails {
     Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
       user.getUserRoles().forEach(userrole -> {
+        if(userrole.getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
+          user.getUserPlantPermissions().forEach(userPlantPermission->{
+            authorities.add(new SimpleGrantedAuthority(userPlantPermission.getPlantPermission().getPermission().getName()));
+          });
+        }
         authorities.add(new SimpleGrantedAuthority(userrole.getRole().getName()));
         userrole.getRole().getRolePermissions().forEach(rolePermission -> {
           if (rolePermission.isStatus()) {
@@ -45,6 +50,11 @@ public class UserPrincipal implements UserDetails {
       });
     } else {
       user.getUserPlantRoles().forEach(userPlantrole -> {
+        if(userPlantrole.getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
+          user.getUserPlantPermissions().forEach(userPlantPermission->{
+            authorities.add(new SimpleGrantedAuthority(userPlantPermission.getPlantPermission().getPermission().getName()));
+          });
+        }
         authorities.add(new SimpleGrantedAuthority(userPlantrole.getPlantRole().getName()));
         userPlantrole.getPlantRole().getPlantRolePlantPermissions().forEach(plantRolePlantPermission -> {
           if (plantRolePlantPermission.isStatus()) {
@@ -108,7 +118,7 @@ public class UserPrincipal implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return true;
+    return isActive;
   }
 
   @Override

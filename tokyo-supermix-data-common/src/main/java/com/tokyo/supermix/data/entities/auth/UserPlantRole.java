@@ -49,6 +49,11 @@ public class UserPlantRole implements Serializable {
     super();
     this.user = user;
     this.plantRole = plantRole;
+    if(plantRole.getRole().getName().equalsIgnoreCase("USER")) {
+      this.roleType =RoleType.INDIVIDUAL;
+    }else {
+      this.roleType =RoleType.QROUP;
+    }
   }
 
   public Long getId() {

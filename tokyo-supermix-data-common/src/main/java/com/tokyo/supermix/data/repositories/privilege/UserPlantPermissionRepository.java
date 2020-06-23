@@ -9,5 +9,6 @@ import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 public interface UserPlantPermissionRepository extends JpaRepository<UserPlantPermission, Long>{
   public List<UserPlantPermission> findByUserId(Long userId);
   public boolean existsByUserId(Long userId);
+  public List<UserPlantPermission>findByUserIdAndPlantPermissionPermissionSubModuleId(Long userId,Long subModuleId);
 
 }

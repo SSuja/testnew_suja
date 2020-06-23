@@ -50,8 +50,7 @@ public class UserPlantPermission implements Serializable {
   public void setUser(User user) {
     this.user = user;
   }
-
-  public Boolean getStatus() {
+   public Boolean getStatus() {
     return status;
   }
 

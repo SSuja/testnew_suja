@@ -5,6 +5,7 @@ import java.util.List;
 public class UserRoleDto {
   private Long userId;
   private List<Long> roleIds;
+  private String roleType;
   public Long getUserId() {
     return userId;
   }
@@ -16,6 +17,12 @@ public class UserRoleDto {
   }
   public void setRoleIds(List<Long> roleIds) {
     this.roleIds = roleIds;
+  }
+  public String getRoleType() {
+    return roleType;
+  }
+  public void setRoleType(String roleType) {
+    this.roleType = roleType;
   }
   
 }

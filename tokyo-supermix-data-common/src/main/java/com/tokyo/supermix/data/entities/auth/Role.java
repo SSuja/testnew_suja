@@ -58,5 +58,13 @@ public class Role implements Serializable {
   public void setRolePermissions(Set<RolePermission> rolePermissions) {
     this.rolePermissions = rolePermissions;
   }
+
+  public Set<UserRole> getUserRoles() {
+    return userRoles;
+  }
+
+  public void setUserRoles(Set<UserRole> userRoles) {
+    this.userRoles = userRoles;
+  }
  
 }
