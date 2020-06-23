@@ -2,6 +2,8 @@ package com.tokyo.supermix.data.entities.auth;
 
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.enums.UserType;
 
 @Entity
@@ -28,12 +31,15 @@ public class User extends DateAudit {
   @OneToOne
   @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
+  @Enumerated(EnumType.STRING)
   private UserType userType;
   private Boolean isActive=true;
   @OneToMany(mappedBy = "user")
   private Set<UserRole> userRoles;
   @OneToMany(mappedBy = "user")
   private Set<UserPlantRole> userPlantRoles;
+  @OneToMany(mappedBy = "user")
+  private Set<UserPlantPermission> userPlantPermissions;
   public Long getId() {
     return id;
   }
@@ -104,6 +110,14 @@ public class User extends DateAudit {
 
   public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
     this.userPlantRoles = userPlantRoles;
+  }
+
+  public Set<UserPlantPermission> getUserPlantPermissions() {
+    return userPlantPermissions;
+  }
+
+  public void setUserPlantPermissions(Set<UserPlantPermission> userPlantPermissions) {
+    this.userPlantPermissions = userPlantPermissions;
   }
   
 }
