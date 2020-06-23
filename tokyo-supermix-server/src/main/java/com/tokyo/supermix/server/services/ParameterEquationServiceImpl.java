@@ -45,7 +45,7 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   }
 
   @Transactional(readOnly = true)
-  public ParameterEquation getParameterEquationByTestParameter(Long testParameterId) {
+  public List<ParameterEquation> getParameterEquationByTestParameter(Long testParameterId) {
     return parameterEquationRepository.findByTestParameterId(testParameterId);
   }
 
