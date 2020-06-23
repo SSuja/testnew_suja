@@ -68,6 +68,7 @@ public class PlantController {
     }
     Plant plant = plantService.savePlant(mapper.map(plantDto, Plant.class));
     PlantRole plantRoleObj = plantRoleService.savePlantRole(plant.getCode(), 1L);
+    plantRoleService.savePlantRole(plant.getCode(), 2L);
     plantAccessLevelService.createPlantAccessLevel(plantRoleObj);
     plantPermissionService.savePlantPermission(plant);
     plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);

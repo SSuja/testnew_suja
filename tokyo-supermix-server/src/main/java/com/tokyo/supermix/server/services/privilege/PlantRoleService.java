@@ -11,4 +11,11 @@ public interface PlantRoleService {
   public List<PlantRole> getPlantRolesByRoleName(String roleName);
 
   public List<PlantRole> getAllPlantRole();
+  
+  public List<PlantRole> getAllPlantRolesByPlantCode(String plantCode);
+
+  public boolean existsByPlantCode(String plantCode);
+
+  
+  
 }

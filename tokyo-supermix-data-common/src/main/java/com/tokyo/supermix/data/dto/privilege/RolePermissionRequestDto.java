@@ -4,6 +4,8 @@ public class RolePermissionRequestDto {
   private Long roleId;
   private Long permissionId;
   private Boolean status;
+  private Long mainModuleId;
+  private Long subModuleId;
 
   public Long getRoleId() {
     return roleId;
@@ -27,6 +29,22 @@ public class RolePermissionRequestDto {
 
   public void setStatus(Boolean status) {
     this.status = status;
+  }
+
+  public Long getMainModuleId() {
+    return mainModuleId;
+  }
+
+  public void setMainModuleId(Long mainModuleId) {
+    this.mainModuleId = mainModuleId;
+  }
+
+  public Long getSubModuleId() {
+    return subModuleId;
+  }
+
+  public void setSubModuleId(Long subModuleId) {
+    this.subModuleId = subModuleId;
   }
 
 }

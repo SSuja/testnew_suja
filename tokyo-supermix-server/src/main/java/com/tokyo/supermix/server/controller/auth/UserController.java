@@ -65,7 +65,8 @@ public class UserController {
       emailService.sendMail(userDto.getEmail(), Constants.SUBJECT_NEW_USER, message);
     }
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_USER_SUCCESS), HttpStatus.OK);
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_USER_SUCCESS),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.USERS)
@@ -113,8 +114,9 @@ public class UserController {
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
         privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @PutMapping(value = PrivilegeEndpointURI.UPDATE_USER_ROLE)
-  public ResponseEntity<Object> updateUserRole(@RequestBody UserRoleDto userRoleDto){
+  public ResponseEntity<Object> updateUserRole(@RequestBody UserRoleDto userRoleDto) {
     userService.updateUserRoles(userRoleDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_USER_SUCCESS),
