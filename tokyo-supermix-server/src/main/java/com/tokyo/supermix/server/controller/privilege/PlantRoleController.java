@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PlantRoleDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRoleResponseDto;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -21,7 +22,6 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.PlantAccessLevelService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.RoleService;
-import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
 import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
 import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
@@ -57,7 +57,7 @@ public class PlantRoleController {
               HttpStatus.BAD_REQUEST);
         }
         PlantRole plantRole =
-            plantRoleService.savePlantRole(plantRoleDto.getPlantCode(),plantRoleDto.getRoleId());
+            plantRoleService.savePlantRole(plantRoleDto.getPlantCode(), plantRoleDto.getRoleId());
         plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRole);
         plantAccessLevelService.createPlantAccessLevel(plantRole);
         return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
@@ -86,6 +86,17 @@ public class PlantRoleController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE,
         privilegeValidationFailureStatusCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLES_BY_PLANT_CODE)
+  public ResponseEntity<Object> getPlantRolesByPlantCode(@PathVariable String plantCode) {
+    if (plantRoleService.existsByPlantCode(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ROLES, mapper
+          .map(plantRoleService.getAllPlantRolesByPlantCode(plantCode), PlantRoleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_CODE,
+        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
 

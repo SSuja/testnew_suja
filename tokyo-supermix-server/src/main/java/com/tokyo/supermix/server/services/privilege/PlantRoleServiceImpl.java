@@ -46,4 +46,13 @@ public class PlantRoleServiceImpl implements PlantRoleService {
     return plantRoleRepository.findAll();
   }
 
+  @Transactional(readOnly = true)
+  public List<PlantRole> getAllPlantRolesByPlantCode(String plantCode) {
+    return plantRoleRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsByPlantCode(String plantCode) {
+    return plantRoleRepository.existsByPlantCode(plantCode);
+  }
 }
