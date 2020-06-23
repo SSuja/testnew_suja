@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.TestParameter;
@@ -173,5 +174,18 @@ public class TestParameterController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
         testParameterService.searchTestParameter(predicate, size, page), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.TEST_PARAMETER_BY_TEST_CONFIGURE)
+  public ResponseEntity<Object> getTestParameterByTestConfigure(
+      @PathVariable Long testConfigureId) {
+    if (testParameterService.isTestConfigureIdExist(testConfigureId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_PARAMETERS,
+          mapper.map(testParameterService.getTestParameterEquation(testConfigureId),
+              TestParameterEquationDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
