@@ -31,7 +31,7 @@ public class User extends DateAudit {
   @OneToOne
   @JoinColumn(name = "employee_id", nullable = false)
   private Employee employee;
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   private UserType userType;
   private Boolean isActive=true;
   @OneToMany(mappedBy = "user")
