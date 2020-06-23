@@ -59,6 +59,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     mainModuleRepository.findAll().forEach(main -> {
       RolePermissionResponseDto rolePermissionResponseDto = new RolePermissionResponseDto();
       rolePermissionResponseDto.setMainModule(main.getName());
+      rolePermissionResponseDto.setMainModuleId(main.getId());
       boolean mainStatus = false;
       List<SubModuleRolePermissionDto> SubModuleRolePermissionDtoList =
           new ArrayList<SubModuleRolePermissionDto>();
@@ -66,6 +67,8 @@ public class RolePermissionServiceImpl implements RolePermissionService {
       for (SubModule sub : subModuleList) {
         SubModuleRolePermissionDto subModuleRolePermissionDto = new SubModuleRolePermissionDto();
         subModuleRolePermissionDto.setSubModule(sub.getName());
+        subModuleRolePermissionDto.setMainModuleId(main.getId());
+        subModuleRolePermissionDto.setSubModuleId(sub.getId());
         boolean subStatus = false;
         List<RolePermissionRequestDto> rolePermissionDtoList =
             new ArrayList<RolePermissionRequestDto>();
@@ -76,6 +79,8 @@ public class RolePermissionServiceImpl implements RolePermissionService {
           rolePermissionRequestDto.setPermissionId(permission.getId());
           rolePermissionRequestDto.setRoleId(roleId);
           rolePermissionRequestDto.setStatus(permission.isStatus());
+          rolePermissionRequestDto.setMainModuleId(main.getId());
+          rolePermissionRequestDto.setSubModuleId(sub.getId());
           if (permission.isStatus()) {
             subStatus = true;
           }

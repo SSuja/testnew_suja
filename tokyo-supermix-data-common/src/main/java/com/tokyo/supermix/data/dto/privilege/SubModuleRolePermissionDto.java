@@ -3,9 +3,12 @@ package com.tokyo.supermix.data.dto.privilege;
 import java.util.List;
 
 public class SubModuleRolePermissionDto {
+  private Long subModuleId;
+  private Long mainModuleId;
   private String subModule;
   private boolean status;
   private List<RolePermissionRequestDto> rolePermissions;
+ 
 
   public String getSubModule() {
     return subModule;
@@ -30,4 +33,20 @@ public class SubModuleRolePermissionDto {
   public void setStatus(boolean status) {
     this.status = status;
   }
+
+  public Long getSubModuleId() {
+    return subModuleId;
+  }
+
+  public void setSubModuleId(Long subModuleId) {
+    this.subModuleId = subModuleId;
+  }
+
+  public Long getMainModuleId() {
+    return mainModuleId;
+  }
+
+  public void setMainModuleId(Long mainModuleId) {
+    this.mainModuleId = mainModuleId;
+  } 
 }
