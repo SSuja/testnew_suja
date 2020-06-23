@@ -492,7 +492,17 @@ public class Constants {
 	public static final String MIX_DESIGN_PARAMETER_RESULT_DELETED = "Mix Design Parameter Result Successfully Deleted";
 	public static final String ADD_MIX_DESIGN_PARAMETER_RESULT_SUCCESS = "Mix Design Parameter Equation Element Added Successfully";
 	public static final String MIX_DESIGN_UPDATE_PARAMETER_RESULT_SUCCESS = "Mix Design Parameter Result Updated Successfully";
-
+/*
+   * Constants for Mix Design parameter validation key & Success messages
+   */
+  public static final String MIX_DESIGN_PARAMETER = "mixDesignParameter";
+  public static final String MIX_DESIGN_PARAMETERS = "mixDesignParameters";
+  public static final String ADD_MIX_DESIGN_PARAMETER_SUCCESS =
+      "mixDesignParameter Added Successfully";
+  public static final String MIX_DESIGN_PARAMETER_DELETED =
+      "mixDesignParameter Successfully Deleted";
+  public static final String UPDATE_MIX_DESIGN_PARAMETER_SUCCESS =
+      "mixDesignParameter Updated Successfully";
 	/*
 	 * Encapsulate constructor to restrict modification from outside
 	 */
