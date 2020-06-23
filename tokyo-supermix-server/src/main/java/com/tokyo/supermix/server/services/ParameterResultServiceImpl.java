@@ -137,7 +137,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 			parameterResultList.add(parameterResult);
 			parameterResultRepository.save(parameterResult);
 		}
-		getvalue(materialParameterResultDto.getMaterialTestTrialCode());
+		getvalueNew(materialParameterResultDto.getMaterialTestTrialCode());
 
 	}
 
@@ -151,63 +151,64 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 //		return equation;
 //	}
 
-	public void getvalue(String materialTestTrialCode) {
-	    MaterialTestTrial materialTestTrial=materialTestTrialRepository.getOne(materialTestTrialCode);
-	    List<TestParameter> testparameters=testParameterRepository.findByTestConfigureId(materialTestTrial
-	            .getMaterialTest().getTestConfigure().getId());
-	    List<TestParameter> testParametershasEqu=testParameterRepository.findByTestConfigureIdAndEquationExistsTrue
-	            (materialTestTrial
-	            .getMaterialTest().getTestConfigure().getId());
-	    String mainEquation="";
-	    mainEquation=materialTestTrial
-	            .getMaterialTest().getTestConfigure().getEquation().getFormula();
-	    List<ParameterEquation> parameterEquations=new ArrayList<>();
-	    testParametershasEqu.forEach(testparameter ->{
-	        ParameterEquation parameterEquation=parameterEquationRepository
-	                .findByTestParameterId(testparameter.getId());
-	        parameterEquations.add(parameterEquation);
-	        
-	    
-	    List<ParameterEquationElement> parameterEquationElementlist=new ArrayList<>();
-	    String paraEq="";
-	    for(ParameterEquation parEqu:parameterEquations) {
-//	    parEquations.forEach(parEqu -> {
-	        List<ParameterEquationElement> parameterEquationElementlist1=parameterEquationElementRepository.findByParameterEquationId(parEqu.getId());
-	        parameterEquationElementlist.addAll(parameterEquationElementlist1);
-	        paraEq=parEqu.getEquation().getFormula();
-	    }
-	    HashMap<String, Double> sum = new HashMap<String, Double>();
-	    for(ParameterEquationElement paramEquationEle:parameterEquationElementlist) {
-//	        parameterEquationElementlist.forEach(paramEquationEle -> {
-	        Long testParameterId=paramEquationEle.getTestParameter().getId();
-	        paramEquationEle.getTestParameter().getValue();
-	        paramEquationEle.getTestParameter().getAbbreviation();
-	        ParameterResult parameterResult=parameterResultRepository.findByTestParameterId(testParameterId);
-	        sum.put(paramEquationEle.getTestParameter().getAbbreviation(), 
-	                parameterResult.getValue());
-	            
-	        }
-	    ParameterResult parameterResultsum=parameterResultRepository.findByTestParameterId(testparameter.getId());
-	    parameterResultsum.setValue(findResult(sum, paraEq));
-	    parameterResultRepository.save(parameterResultsum);
-	    System.out.println("PPPPP"+sum);
-	    System.out.println("****newpakee*"+findResult(sum, paraEq));
-	    });
-	    
+//	public void getvalue(String materialTestTrialCode) {
+//	    MaterialTestTrial materialTestTrial=materialTestTrialRepository.getOne(materialTestTrialCode);
+//	    List<TestParameter> testparameters=testParameterRepository.findByTestConfigureId(materialTestTrial
+//	            .getMaterialTest().getTestConfigure().getId());
+//	    List<TestParameter> testParametershasEqu=testParameterRepository.findByTestConfigureIdAndEquationExistsTrue
+//	            (materialTestTrial
+//	            .getMaterialTest().getTestConfigure().getId());
+//	    String mainEquation="";
+//	    mainEquation=materialTestTrial
+//	            .getMaterialTest().getTestConfigure().getEquation().getFormula();
+//	    List<ParameterEquation> parameterEquations=new ArrayList<>();
+//	    testParametershasEqu.forEach(testparameter ->{
+//	        ParameterEquation parameterEquation=parameterEquationRepository
+//	                .findByTestParameterId(testparameter.getId());
+//	        parameterEquations.add(parameterEquation);
+//	        
+//	    
+//	    List<ParameterEquationElement> parameterEquationElementlist=new ArrayList<>();
+//	    String paraEq="";
+//	    for(ParameterEquation parEqu:parameterEquations) {
+////	    parEquations.forEach(parEqu -> {
+//	        List<ParameterEquationElement> parameterEquationElementlist1=parameterEquationElementRepository.findByParameterEquationId(parEqu.getId());
+//	        parameterEquationElementlist.addAll(parameterEquationElementlist1);
+//	        paraEq=parEqu.getEquation().getFormula();
+//	    }
+//	    HashMap<String, Double> sum = new HashMap<String, Double>();
+//	    for(ParameterEquationElement paramEquationEle:parameterEquationElementlist) {
+////	        parameterEquationElementlist.forEach(paramEquationEle -> {
+//	        Long testParameterId=paramEquationEle.getTestParameter().getId();
+//	        paramEquationEle.getTestParameter().getValue();
+//	        paramEquationEle.getTestParameter().getAbbreviation();
+//	        ParameterResult parameterResult=parameterResultRepository.findByTestParameterId(testParameterId);
+//	        sum.put(paramEquationEle.getTestParameter().getAbbreviation(), 
+//	                parameterResult.getValue());
+//	            
+//	        }
+//	    ParameterResult parameterResultsum=parameterResultRepository.findByTestParameterId(testparameter.getId());
+//	    parameterResultsum.setValue(findResult(sum, paraEq));
+//	    parameterResultRepository.save(parameterResultsum);
+//	    System.out.println("PPPPP"+sum);
+//	    System.out.println("****newpakee*"+findResult(sum, paraEq));
+//	    });
+//	    
+//
+//	 
+//
+//	    HashMap<String, Double> main = new HashMap<String, Double>();
+//	    for(TestParameter tepa :testparameters) {
+//	        tepa.getAbbreviation();
+//	        ParameterResult parameterResultmain=parameterResultRepository.findByTestParameterId(tepa.getId());
+//	        //parameterResultmain.getValue();
+//	        main.put(tepa.getAbbreviation(),parameterResultmain.getValue());
+//	}
+//	    System.out.println("****AM***"+findResult(main, mainEquation));
+//	    materialTestTrial.setResult(findResult(main, mainEquation));
+//	    materialTestTrialRepository.save(materialTestTrial);
+//	    }
 
-	 
-
-	    HashMap<String, Double> main = new HashMap<String, Double>();
-	    for(TestParameter tepa :testparameters) {
-	        tepa.getAbbreviation();
-	        ParameterResult parameterResultmain=parameterResultRepository.findByTestParameterId(tepa.getId());
-	        //parameterResultmain.getValue();
-	        main.put(tepa.getAbbreviation(),parameterResultmain.getValue());
-	}
-	    System.out.println("****AM***"+findResult(main, mainEquation));
-	    materialTestTrial.setResult(findResult(main, mainEquation));
-	    materialTestTrialRepository.save(materialTestTrial);
-	    }
 	
 	public double findResult(HashMap<String,Double> abb, String equation){
 		ScriptEngineManager mgr = new ScriptEngineManager();
@@ -223,5 +224,57 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 		}
 		return result;
 		}
+	
+	public void getvalueNew(String materialTestTrialCode) {
+      MaterialTestTrial materialTestTrial=materialTestTrialRepository.getOne(materialTestTrialCode);
+      List<TestParameter> testparameters=testParameterRepository.findByTestConfigureId(materialTestTrial
+              .getMaterialTest().getTestConfigure().getId());
+      List<TestParameter> testParametershasEqu=testParameterRepository.findByTestConfigureIdAndEquationExistsTrue
+              (materialTestTrial
+              .getMaterialTest().getTestConfigure().getId());
+      String mainEquation="";
+      mainEquation=materialTestTrial
+              .getMaterialTest().getTestConfigure().getEquation().getFormula();
+      List<ParameterEquation> parameterEquations=new ArrayList<>();
+      testParametershasEqu.forEach(testparameter ->{
+          ParameterEquation parameterEquation=parameterEquationRepository
+                  .findByTestParameterId(testparameter.getId());
+          parameterEquations.add(parameterEquation);
+          String paraEq="";
+          List<ParameterEquationElement> parameterEquationElementlist=parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
+          paraEq=parameterEquation.getEquation().getFormula();
+
+      HashMap<String, Double> sum = new HashMap<String, Double>();
+      for(ParameterEquationElement paramEquationEle:parameterEquationElementlist) {
+//        parameterEquationElementlist.forEach(paramEquationEle -> {
+          Long testParameterId=paramEquationEle.getTestParameter().getId();
+          paramEquationEle.getTestParameter().getValue();
+          paramEquationEle.getTestParameter().getAbbreviation();
+          ParameterResult parameterResult=parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(testParameterId,materialTestTrialCode);
+          sum.put(paramEquationEle.getTestParameter().getAbbreviation(), 
+                  parameterResult.getValue());
+              
+          }
+      ParameterResult parameterResultsum=parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(testparameter.getId(),materialTestTrialCode);
+      parameterResultsum.setValue(findResult(sum, paraEq));
+      parameterResultRepository.save(parameterResultsum);
+      System.out.println("PPPPP"+sum);
+      System.out.println("****newpakee*"+findResult(sum, paraEq));
+      });
+      
+
+   
+
+      HashMap<String, Double> main = new HashMap<String, Double>();
+      for(TestParameter tepa :testparameters) {
+          tepa.getAbbreviation();
+          ParameterResult parameterResultmain=parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(tepa.getId(),materialTestTrialCode);
+          //parameterResultmain.getValue();
+          main.put(tepa.getAbbreviation(),parameterResultmain.getValue());
+  }
+      System.out.println("****AM***"+findResult(main, mainEquation));
+      materialTestTrial.setResult(findResult(main, mainEquation));
+      materialTestTrialRepository.save(materialTestTrial);
+      }
 
 }
