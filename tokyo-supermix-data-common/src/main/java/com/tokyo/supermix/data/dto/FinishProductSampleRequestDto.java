@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleRequestDto {
   private Long id;
@@ -13,6 +14,7 @@ public class FinishProductSampleRequestDto {
   @NotNull(message = "{finishProductSampleRequestDto.mixDesignCode.null}")
   @NotEmpty(message = "{finishProductSampleRequestDto.mixDesignCode.empty}")
   private String mixDesignCode;
+  private Status status;
 
   public Long getId() {
     return id;
@@ -52,5 +54,13 @@ public class FinishProductSampleRequestDto {
 
   public void setMixDesignCode(String mixDesignCode) {
     this.mixDesignCode = mixDesignCode;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
   }
 }

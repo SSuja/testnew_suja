@@ -405,6 +405,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
   public static final String FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE =
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
+      FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
   /*
    * Concrete Mixer apis
    */
