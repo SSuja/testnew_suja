@@ -56,8 +56,10 @@ public class AuthController {
             privilegeValidationFailureStatusCodes.getUserNotActive()), HttpStatus.BAD_REQUEST);
       }
     } catch (UsernameNotFoundException ex) {
-      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.EMAIL_OR_USERNAME,
-          privilegeValidationFailureStatusCodes.getEmailOrUserName()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(PrivilegeConstants.EMAIL_OR_USERNAME,
+              privilegeValidationFailureStatusCodes.getEmailOrUserName()),
+          HttpStatus.BAD_REQUEST);
     } catch (BadCredentialsException ex) {
       return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.CREDENCIALS,
           privilegeValidationFailureStatusCodes.getCredentials()), HttpStatus.BAD_REQUEST);
@@ -76,7 +78,8 @@ public class AuthController {
     }
     userService.saveUser(mapper.map(userRequestDto, User.class), userRequestDto.getRoleIds());
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_USER_SUCCESS), HttpStatus.OK);
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_USER_SUCCESS),
+        HttpStatus.OK);
   }
 
   @PutMapping(value = PrivilegeEndpointURI.CHANGE_PASSWORD)
@@ -101,9 +104,8 @@ public class AuthController {
         authService.createForgotPasswordToken(token, user);
         emailService.sendMail(userEmail, Constants.SUBJECT_FORGOT_PASSWORD,
             PrivilegeConstants.MESSAGE_OF_FORGOT_PASSWORD + token);
-        return new ResponseEntity<>(
-            new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.GENERATE_PASSWORD_SUCCESS),
-            HttpStatus.OK);
+        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+            PrivilegeConstants.GENERATE_PASSWORD_SUCCESS), HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.EMAIL,
@@ -115,8 +117,10 @@ public class AuthController {
       @RequestBody ResetPasswordDto passwordDto) {
     String result = authService.validatePasswordResetToken(token);
     if (result != null) {
-      return new ResponseEntity<>(new ValidationFailureResponse(result,
-          privilegeValidationFailureStatusCodes.getIsPasswordTokenFailed()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(result,
+              privilegeValidationFailureStatusCodes.getIsPasswordTokenFailed()),
+          HttpStatus.BAD_REQUEST);
     }
     User user = authService.getUserByPasswordResetToken(token);
     userService.changeUserPassword(user, passwordDto.getPassword());

@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.VerificationToken;
@@ -29,15 +29,16 @@ public class AuthServiceImpl implements AuthService {
   @Autowired
   VerificationTokenRepository verificationTokenRepository;
 
-  @Override
+  @Transactional(readOnly = true)
   public String generateUserToken(LoginRequestDto loginRequestDto) {
     UserDetails userDetails =
         authUserDetailsService.loadUserByUsername(loginRequestDto.getUsernameOrEmail());
-    if(userDetails != null) {
+    if (userDetails != null) {
       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
           new UsernamePasswordAuthenticationToken(userDetails, loginRequestDto.getPassword(),
               userDetails.getAuthorities());
-      if (authenticationManager.authenticate(usernamePasswordAuthenticationToken).isAuthenticated()) {
+      if (authenticationManager.authenticate(usernamePasswordAuthenticationToken)
+          .isAuthenticated()) {
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         return tokenProvider.generateToken(usernamePasswordAuthenticationToken);
       }
@@ -45,21 +46,22 @@ public class AuthServiceImpl implements AuthService {
     return null;
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public boolean checkIsValidOldPassword(User user, String currentPassword) {
     return passwordEncoder.matches(currentPassword, user.getPassword());
   }
 
-  @Override
+  @Transactional
   public void createForgotPasswordToken(String token, User user) {
     VerificationToken verificationToken = new VerificationToken(token, user);
     verificationTokenRepository.save(verificationToken);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public String validatePasswordResetToken(String token) {
     final VerificationToken passToken = verificationTokenRepository.findByToken(token);
-    return !isTokenFound(passToken) ? "tokenString" : isTokenExpired(passToken) ? "expiryDate" : null;
+    return !isTokenFound(passToken) ? "tokenString"
+        : isTokenExpired(passToken) ? "expiryDate" : null;
   }
 
   private boolean isTokenFound(VerificationToken passToken) {
@@ -70,7 +72,8 @@ public class AuthServiceImpl implements AuthService {
     final Calendar cal = Calendar.getInstance();
     return passToken.getExpiryDate().before(cal.getTime());
   }
-  @Override
+
+  @Transactional(readOnly = true)
   public User getUserByPasswordResetToken(String token) {
     return verificationTokenRepository.findByToken(token).getUser();
   }

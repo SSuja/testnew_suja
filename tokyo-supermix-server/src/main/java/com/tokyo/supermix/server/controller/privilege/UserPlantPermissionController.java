@@ -15,7 +15,6 @@ import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto
 import com.tokyo.supermix.data.dto.privilege.UserPlantPermissionRequestDto;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.mapper.Mapper;
-import com.tokyo.supermix.data.repositories.privilege.UserPlantPermissionRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -33,28 +32,27 @@ public class UserPlantPermissionController {
   private UserPlantPermissionService userPlantPermissionService;
   @Autowired
   PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
-  @Autowired
-  private UserPlantPermissionRepository userPlantPermissionRepository;
+
   @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID)
-  public ResponseEntity<Object> getUserPlantPermissionByUserId(
-      @PathVariable Long userId) {
+  public ResponseEntity<Object> getUserPlantPermissionByUserId(@PathVariable Long userId) {
     if (userPlantPermissionService.isUserIdExist(userId)) {
       return new ResponseEntity<>(
           new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
-              mapper.map(userPlantPermissionService.getPlantRolePermissionsByUserId(userId), PlantRolePlantPermissionResponseDto.class),
+              mapper.map(userPlantPermissionService.getPlantRolePermissionsByUserId(userId),
+                  PlantRolePlantPermissionResponseDto.class),
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @PutMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSION)
   public ResponseEntity<Object> updateUserPlantPrivilage(
-           @RequestBody List<UserPlantPermissionRequestDto> userPlantPermissionRequestDtos) {
-   userPlantPermissionService.saveUserPlantPermission(
+      @RequestBody List<UserPlantPermissionRequestDto> userPlantPermissionRequestDtos) {
+    userPlantPermissionService.saveUserPlantPermission(
         mapper.map(userPlantPermissionRequestDtos, UserPlantPermission.class));
-return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
   }
 

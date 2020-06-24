@@ -19,12 +19,12 @@ public class PlantRoleServiceImpl implements PlantRoleService {
   private PlantRepository plantRepository;
   @Autowired
   private RoleRepository roleRepository;
-  
+
   @Transactional
-  public PlantRole savePlantRole(String plantCode , Long roleId) {
+  public PlantRole savePlantRole(String plantCode, Long roleId) {
     Plant plant = plantRepository.getOne(plantCode);
     Role role = roleRepository.getOne(roleId);
-    PlantRole plantRole =new PlantRole();
+    PlantRole plantRole = new PlantRole();
     plantRole.setPlant(plant);
     plantRole.setRole(role);
     plantRole.setName(plant.getName().toUpperCase() + "_" + role.getName());

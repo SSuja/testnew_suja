@@ -29,7 +29,6 @@ public class UserPlantRoleServiceImpl implements UserPlantRoleService {
     return mapper.map(plantroleList, PlantRoleDto.class);
   }
 
-
   @Transactional(readOnly = true)
   public List<UserResponseDto> getUsersByPlantRoleId(Long PlantRoleId) {
     List<User> userList = new ArrayList<User>();
@@ -42,7 +41,7 @@ public class UserPlantRoleServiceImpl implements UserPlantRoleService {
 
   @Transactional(readOnly = true)
   public boolean existsByUserId(Long userId) {
-   
+
     return userPlantRoleRepository.existsByUserId(userId);
   }
 

@@ -24,12 +24,14 @@ public interface PlantRolePlantPermissionServices {
 
   public void createPlantRolePlantPermission(PlantRole plantRole);
 
-  public List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionWithModuleByRoleId(Long plantRoleId);
+  public List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionWithModuleByRoleId(
+      Long plantRoleId);
 
   public PlantRolePlantPermission findByPlantRoleIdAndPlantPermissionId(Long plantRoleId,
       Long plantPermissionId);
 
-  public void savePlantRolePlantPermission(List<PlantRolePlantPermission> plantRolePlantPermissions);
+  public void savePlantRolePlantPermission(
+      List<PlantRolePlantPermission> plantRolePlantPermissions);
 
   public boolean isPlantPermissionPlantCodeExist(String plantCode);
 

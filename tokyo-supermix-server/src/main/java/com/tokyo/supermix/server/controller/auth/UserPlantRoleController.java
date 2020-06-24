@@ -23,26 +23,28 @@ public class UserPlantRoleController {
   @Autowired
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
 
-    @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_USER)
-    public ResponseEntity<Object> getRolesByUserId(@PathVariable Long userId ){
-      if(!userPlantRoleService.existsByUserId(userId)) {
-        return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
-            privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
-      }
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE,
-          userPlantRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK),
-          HttpStatus.OK);
-    }
-    
-    @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_ROLE)
-    public ResponseEntity<Object> getUsersByPlantRoleId(@PathVariable Long plantRoleId){
-      if(userPlantRoleService.existsByPlantRoleId(plantRoleId)) {
-        return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE,
-            userPlantRoleService.getUsersByPlantRoleId(plantRoleId), RestApiResponseStatus.OK),
-            HttpStatus.OK);
-      }
+  @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_USER)
+  public ResponseEntity<Object> getRolesByUserId(@PathVariable Long userId) {
+    if (!userPlantRoleService.existsByUserId(userId)) {
       return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
           privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
     }
-    
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.ROLE,
+            userPlantRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
+
+  @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_ROLE)
+  public ResponseEntity<Object> getUsersByPlantRoleId(@PathVariable Long plantRoleId) {
+    if (userPlantRoleService.existsByPlantRoleId(plantRoleId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(PrivilegeConstants.ROLE,
+              userPlantRoleService.getUsersByPlantRoleId(plantRoleId), RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
+        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
 }

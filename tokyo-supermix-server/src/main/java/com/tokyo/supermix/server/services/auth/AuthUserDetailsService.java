@@ -25,7 +25,7 @@ public class AuthUserDetailsService implements UserDetailsService {
     return user.getIsActive() ? UserPrincipal.create(user) : null;
   }
 
-  // This method is used by JWTAuthenticationFilter
+
   @Transactional
   public UserDetails loadUserById(Long id) {
     User user = userRepository.findById(id)
