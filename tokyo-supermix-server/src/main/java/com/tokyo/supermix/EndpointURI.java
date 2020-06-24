@@ -602,8 +602,7 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TRIAL = BASE_API_PATH + "finish-product-trial";
   public static final String FINISH_PRODUCT_TRIALS = BASE_API_PATH + "finish-product-trials";
   public static final String FINISH_PRODUCT_TRIAL_BY_ID = FINISH_PRODUCT_TRIAL + ID;
-   * Finish Product Parameter Results
-   */
+  
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
       BASE_API_PATH + "finish-product-parameter-results";
 
