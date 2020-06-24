@@ -538,6 +538,10 @@ public class Constants {
   public static final String SIEVETEST = "SieveTest";
 
   /*
+   * Constants for Finish Product Parameter Result validation key & Success messages
+   */
+  public static final String FINISH_PRODUCT_PARAMETER_RESULTS = "finishProductParameterResults";
+  /*
    * Constants for Finish Product Test validation key & Success messages
    */
   public static final String FINISH_PRODUCT_TEST = "finishProductTest";
