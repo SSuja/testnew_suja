@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
@@ -28,7 +29,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     return finishProductTestRepository.findAll();
   }
 
-  @Transactional(readOnly = true)
+  @Transactional(propagation = Propagation.NEVER)
   public void deleteFinishProductTest(Long id) {
     finishProductTestRepository.deleteById(id);
   }
@@ -36,6 +37,16 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   @Transactional(readOnly = true)
   public boolean isFinishProductTestExists(Long id) {
     return finishProductTestRepository.existsById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId) {
+    return getAllFinishProductTestsByTestConfigure(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId) {
+    return finishProductTestRepository.existsByTestConfigureId(testConfigureId);
   }
 
 }

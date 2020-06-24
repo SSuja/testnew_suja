@@ -599,7 +599,8 @@ public final class EndpointURI {
   /*
    * Finish Product Parameter Results
    */
-  public static final String FINISH_PRODUCT_PARAMETER_RESULTS = BASE_API_PATH + "finish-product-parameter-results";
+  public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
+      BASE_API_PATH + "finish-product-parameter-results";
 
   /*
    * Finish Product Test
@@ -607,6 +608,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TEST = BASE_API_PATH + "finish-product-test";
   public static final String FINISH_PRODUCT_TESTS = BASE_API_PATH + "finish-product-tests";
   public static final String FINISH_PRODUCT_TEST_BY_ID = FINISH_PRODUCT_TEST + ID;
+  public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
+      FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   private EndpointURI() {}
 }
