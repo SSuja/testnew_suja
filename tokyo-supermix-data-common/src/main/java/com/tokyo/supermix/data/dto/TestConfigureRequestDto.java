@@ -22,6 +22,7 @@ public class TestConfigureRequestDto {
   private Long materialSubCategoryId;
   private Long equationId;
   private boolean equationExists;
+  private boolean bulkTrial;
 
   public Long getId() {
     return id;
@@ -117,5 +118,13 @@ public class TestConfigureRequestDto {
 
   public void setResultLabel(String resultLabel) {
     this.resultLabel = resultLabel;
+  }
+
+  public boolean isBulkTrial() {
+    return bulkTrial;
+  }
+
+  public void setBulkTrial(boolean bulkTrial) {
+    this.bulkTrial = bulkTrial;
   }
 }
