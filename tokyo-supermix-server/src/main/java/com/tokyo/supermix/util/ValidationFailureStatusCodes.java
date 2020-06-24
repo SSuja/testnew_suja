@@ -1791,6 +1791,25 @@ public class ValidationFailureStatusCodes {
 
   public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
     this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
+
+  }
+
+  /*
+   * finish product test
+   */
+  @Value("${validation.finishProductTest.notExists}")
+  private String finishProductTestNotExit;
+
+  public String getFinishProductTestNotExit() {
+    return finishProductTestNotExit;
+  }
+
+  public void setFinishProductTestNotExit(String finishProductTestNotExit) {
+    this.finishProductTestNotExit = finishProductTestNotExit;
+  }
+
+  public void setProjectCodeIsNull(String projectCodeIsNull) {
+    this.projectCodeIsNull = projectCodeIsNull;
   }
 
   /*
