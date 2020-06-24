@@ -35,7 +35,7 @@ public class UserRole implements Serializable {
     if(role.getName().equalsIgnoreCase("USER")) {
       this.roleType =RoleType.INDIVIDUAL;
     }else {
-      this.roleType =RoleType.QROUP;
+      this.roleType =RoleType.GROUP;
     }
   }
 
