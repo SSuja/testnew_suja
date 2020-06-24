@@ -600,5 +600,13 @@ public final class EndpointURI {
    * Finish Product Parameter Results
    */
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS = BASE_API_PATH + "finish-product-parameter-results";
+
+  /*
+   * Finish Product Test
+   */
+  public static final String FINISH_PRODUCT_TEST = BASE_API_PATH + "finish-product-test";
+  public static final String FINISH_PRODUCT_TESTS = BASE_API_PATH + "finish-product-tests";
+  public static final String FINISH_PRODUCT_TEST_BY_ID = FINISH_PRODUCT_TEST + ID;
+
   private EndpointURI() {}
 }

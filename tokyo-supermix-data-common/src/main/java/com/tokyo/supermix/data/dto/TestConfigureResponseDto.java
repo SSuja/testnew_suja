@@ -15,6 +15,7 @@ public class TestConfigureResponseDto {
   private EquationResponseDto equation;
   private boolean equationExists;
   private String resultLabel;
+  private boolean bulkTrial;
 
   public Long getId() {
     return id;
@@ -110,5 +111,13 @@ public class TestConfigureResponseDto {
 
   public void setEquationExists(boolean equationExists) {
     this.equationExists = equationExists;
+  }
+
+  public boolean isBulkTrial() {
+    return bulkTrial;
+  }
+
+  public void setBulkTrial(boolean bulkTrial) {
+    this.bulkTrial = bulkTrial;
   }
 }

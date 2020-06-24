@@ -541,6 +541,16 @@ public class Constants {
    * Constants for Finish Product Parameter Result validation key & Success messages
    */
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS = "finishProductParameterResults";
+  /*
+   * Constants for Finish Product Test validation key & Success messages
+   */
+  public static final String FINISH_PRODUCT_TEST = "finishProductTest";
+  public static final String FINISH_PRODUCT_TESTS = "finishProductTests";
+  public static final String FINISH_PRODUCT_TEST_ID = "finishProductTestId";
+  public static final String ADD_FINISH_PRODUCT_TEST_SUCCESS = "Finish Product Added Successfully";
+  public static final String DELETED_FINISH_PRODUCT_TEST = "Finish Product Successfully Deleted";
+  public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
+      "Finish Product Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside
