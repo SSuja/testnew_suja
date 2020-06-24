@@ -1792,4 +1792,18 @@ public class ValidationFailureStatusCodes {
   public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
     this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
   }
+
+  /*
+   * Finish Product Trial
+   */
+  @Value("${validation.finishProductTrial.notExist}")
+  private String finishProductTrialNotExit;
+
+  public String getFinishProductTrialNotExit() {
+    return finishProductTrialNotExit;
+  }
+
+  public void setFinishProductTrialNotExit(String finishProductTrialNotExit) {
+    this.finishProductTrialNotExit = finishProductTrialNotExit;
+  }
 }
