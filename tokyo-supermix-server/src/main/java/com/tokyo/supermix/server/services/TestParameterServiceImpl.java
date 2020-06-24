@@ -19,7 +19,6 @@ import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -66,14 +65,9 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameterRepository.existsByTestConfigureId(id);
   }
 
-  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, Long parameterId,
-      Long unitId, String abbreviation, TestParameterType entryLevel) {
-    if (testParameterRepository
-        .existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(testConfigureId,
-            parameterId, unitId, abbreviation, entryLevel)) {
-      return true;
-    }
-    return false;
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation) {
+    return testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
+        abbreviation);
   }
 
   @Transactional(readOnly = true)
