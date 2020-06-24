@@ -66,11 +66,8 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation) {
-    if (testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
-        abbreviation)) {
-      return true;
-    }
-    return false;
+    return testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
+        abbreviation);
   }
 
   @Transactional(readOnly = true)
