@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.EntryLevel;
 
 @Repository
 public interface TestParameterRepository
@@ -16,9 +15,7 @@ public interface TestParameterRepository
 
   public boolean existsByParameterId(Long parameterId);
 
-  public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviationAndEntryLevel(
-      Long testConfigureId, Long parameterId, Long unitId, String abbreviation,
-      EntryLevel entryLevel);
+  public boolean existsByTestConfigureIdAndAbbreviation(Long testConfigureId,String abbreviation);
 
   public boolean existsByTestConfigureIdAndParameterIdAndUnitIdAndAbbreviation(Long testConfigureId,
       Long qualityParameterId, Long unitId, String abbreviation);
