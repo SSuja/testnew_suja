@@ -234,6 +234,8 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
   public static final String GET_MIX_DESIGN_BY_PLANT =
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_MIX_DESIGN_BY_STATUS =
+      MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
   /*
    * ProcessSampleLoad Apis
    */
@@ -403,6 +405,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
   public static final String FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE =
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
+      FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
   /*
    * Concrete Mixer apis
    */
@@ -592,6 +596,24 @@ public final class EndpointURI {
       PARAMETER_EQUATION_ELEMENT + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
       PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
+  /*
+   * Finish Product Trial apis
+   */
+  public static final String FINISH_PRODUCT_TRIAL = BASE_API_PATH + "finish-product-trial";
+  public static final String FINISH_PRODUCT_TRIALS = BASE_API_PATH + "finish-product-trials";
+  public static final String FINISH_PRODUCT_TRIAL_BY_ID = FINISH_PRODUCT_TRIAL + ID;
+  
+  public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
+      BASE_API_PATH + "finish-product-parameter-results";
+
+  /*
+   * Finish Product Test
+   */
+  public static final String FINISH_PRODUCT_TEST = BASE_API_PATH + "finish-product-test";
+  public static final String FINISH_PRODUCT_TESTS = BASE_API_PATH + "finish-product-tests";
+  public static final String FINISH_PRODUCT_TEST_BY_ID = FINISH_PRODUCT_TEST + ID;
+  public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
+      FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   private EndpointURI() {}
 }

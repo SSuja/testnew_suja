@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.Status;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_design")
@@ -19,6 +20,7 @@ public class MixDesign implements Serializable {
   private Double targetSlump;
   private Double waterCementRatio;
   private Double waterBinderRatio;
+  private Status status;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
@@ -81,5 +83,13 @@ public class MixDesign implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
   }
 }

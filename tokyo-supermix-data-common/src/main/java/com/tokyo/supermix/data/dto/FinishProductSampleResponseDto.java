@@ -1,11 +1,14 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.Status;
+
 public class FinishProductSampleResponseDto {
   private Long id;
   private String workOrderNo;
   private Long finishProductCode;
   private ConcreteMixerResponseDto concreteMixer;
   private MixDesignResponseDto mixDesign;
+  private Status status;
 
   public Long getId() {
     return id;
@@ -47,5 +50,11 @@ public class FinishProductSampleResponseDto {
     this.mixDesign = mixDesign;
   }
 
+  public Status getStatus() {
+    return status;
+  }
 
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 }

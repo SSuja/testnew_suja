@@ -21,6 +21,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -178,5 +179,21 @@ public class FinishProductSampleController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_STATUS)
+  public ResponseEntity<Object> getFinishProductSampleByStatus(@PathVariable Status status) {
+    if (finishProductSampleService.isFinishProductSampleStatusExist(status)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleService.getFinishProductSampleByStatus(status),
+              FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Finish Product Sample record exist for given Status");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLES,
+              validationFailureStatusCodes.getFinishProductSampleNotExist()),
+          HttpStatus.BAD_REQUEST);
+    }
   }
 }

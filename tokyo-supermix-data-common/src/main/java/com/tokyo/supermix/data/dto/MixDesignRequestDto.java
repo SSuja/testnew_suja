@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.Status;
 
 public class MixDesignRequestDto {
   private String code;
@@ -15,6 +16,7 @@ public class MixDesignRequestDto {
   private Double waterCementRatio;
   private Double waterBinderRatio;
   private String plantCode;
+  private Status status;
 
   public String getCode() {
     return code;
@@ -72,4 +74,11 @@ public class MixDesignRequestDto {
     this.plantCode = plantCode;
   }
 
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 }
