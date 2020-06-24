@@ -1,4 +1,5 @@
 package com.tokyo.supermix.security;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -36,9 +37,12 @@ public class UserPrincipal implements UserDetails {
     Set<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
       user.getUserRoles().forEach(userrole -> {
-        if(userrole.getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
-          user.getUserPlantPermissions().forEach(userPlantPermission->{
-            authorities.add(new SimpleGrantedAuthority(userPlantPermission.getPlantPermission().getPermission().getName()));
+        if (userrole.getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
+          user.getUserPlantPermissions().forEach(userPlantPermission -> {
+            if (userPlantPermission.getStatus()) {
+              authorities.add(new SimpleGrantedAuthority(
+                  userPlantPermission.getPlantPermission().getPermission().getName()));
+            }
           });
         }
         authorities.add(new SimpleGrantedAuthority(userrole.getRole().getName()));
@@ -50,18 +54,22 @@ public class UserPrincipal implements UserDetails {
       });
     } else {
       user.getUserPlantRoles().forEach(userPlantrole -> {
-        if(userPlantrole.getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
-          user.getUserPlantPermissions().forEach(userPlantPermission->{
-            authorities.add(new SimpleGrantedAuthority(userPlantPermission.getPlantPermission().getPermission().getName()));
+        if (userPlantrole.getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
+          user.getUserPlantPermissions().forEach(userPlantPermission -> {
+            if (userPlantPermission.getStatus()) {
+              authorities.add(new SimpleGrantedAuthority(
+                  userPlantPermission.getPlantPermission().getPermission().getName()));
+            }
           });
         }
         authorities.add(new SimpleGrantedAuthority(userPlantrole.getPlantRole().getName()));
-        userPlantrole.getPlantRole().getPlantRolePlantPermissions().forEach(plantRolePlantPermission -> {
-          if (plantRolePlantPermission.isStatus()) {
-            authorities.add(new SimpleGrantedAuthority(
-                plantRolePlantPermission.getPlantPermission().getPermission().getName()));
-          }
-        });
+        userPlantrole.getPlantRole().getPlantRolePlantPermissions()
+            .forEach(plantRolePlantPermission -> {
+              if (plantRolePlantPermission.isStatus()) {
+                authorities.add(new SimpleGrantedAuthority(
+                    plantRolePlantPermission.getPlantPermission().getPermission().getName()));
+              }
+            });
       });
     }
     System.out.println("permissions " + authorities.toString());
