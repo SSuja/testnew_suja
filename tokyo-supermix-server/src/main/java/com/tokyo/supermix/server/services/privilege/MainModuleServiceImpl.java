@@ -52,19 +52,20 @@ public class MainModuleServiceImpl implements MainModuleService {
   private void setPermissiontoSubModule(MainModule main,
       List<SubModulePermissionDto> subModulePermissionDtoList) {
     subModuleRepository.findByMainModuleId(main.getId()).forEach(sub -> {
-      SubModulePermissionDto subModulePermissionDto = permissionService.getPermissionsSubModuleName(sub.getName());
+      SubModulePermissionDto subModulePermissionDto =
+          permissionService.getPermissionsSubModuleName(sub.getName());
       subModulePermissionDtoList.add(subModulePermissionDto);
     });
   }
-  
+
   @Transactional(readOnly = true)
   public MainModule findByMainModuleName(String mainModule) {
     return mainModuleRepository.findByName(mainModule);
   }
 
   @Transactional(readOnly = true)
-  public List<RolePermissionRequestDto> setRolePermissionByRole(Long roleId, List<Permission> permissionList,
-      List<RolePermissionRequestDto> rolePermissionDtoList) {
+  public List<RolePermissionRequestDto> setRolePermissionByRole(Long roleId,
+      List<Permission> permissionList, List<RolePermissionRequestDto> rolePermissionDtoList) {
     permissionList.forEach(permission -> {
       RolePermissionRequestDto rolePermissionDto = new RolePermissionRequestDto();
       rolePermissionDto.setPermissionId(permission.getId());

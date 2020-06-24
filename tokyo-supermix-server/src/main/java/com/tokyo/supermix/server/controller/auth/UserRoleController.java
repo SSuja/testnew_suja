@@ -18,27 +18,26 @@ import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 @CrossOrigin(origins = "*")
 @RestController
 public class UserRoleController {
-@Autowired
-private UserRoleService userRoleService;
-@Autowired
-private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
+  @Autowired
+  private UserRoleService userRoleService;
+  @Autowired
+  private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
 
   @GetMapping(value = PrivilegeEndpointURI.USER_ROLE_BY_USER)
-  public ResponseEntity<Object> getUserRolesByUserId(@PathVariable Long userId ){
-    if(userRoleService.existsByUserId(userId)) {
+  public ResponseEntity<Object> getUserRolesByUserId(@PathVariable Long userId) {
+    if (userRoleService.existsByUserId(userId)) {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE,
-          userRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          userRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
         privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = PrivilegeEndpointURI.USER_ROLE_BY_ROLE)
-  public ResponseEntity<Object> getUserRolesByRoleId(@PathVariable Long roleId ){
-    if(userRoleService.existsByRoleId(roleId)) {
+  public ResponseEntity<Object> getUserRolesByRoleId(@PathVariable Long roleId) {
+    if (userRoleService.existsByRoleId(roleId)) {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE,
-          userRoleService.getUsersByRoleId(roleId), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          userRoleService.getUsersByRoleId(roleId), RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
         privilegeValidationFailureStatusCodes.getRoleNotExists()), HttpStatus.BAD_REQUEST);

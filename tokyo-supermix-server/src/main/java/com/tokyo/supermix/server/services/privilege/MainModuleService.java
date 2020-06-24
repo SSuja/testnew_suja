@@ -13,6 +13,6 @@ public interface MainModuleService {
 
   public MainModule findByMainModuleName(String mainModule);
 
-  public List<RolePermissionRequestDto> setRolePermissionByRole(Long roleId, List<Permission> permissionList,
-      List<RolePermissionRequestDto> rolePermissionDtoList);
+  public List<RolePermissionRequestDto> setRolePermissionByRole(Long roleId,
+      List<Permission> permissionList, List<RolePermissionRequestDto> rolePermissionDtoList);
 }

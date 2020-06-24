@@ -37,8 +37,8 @@ public class PlantAccessLevelController {
   @PostMapping(value = PrivilegeEndpointURI.PLANT_ACCESS_LEVEL)
   public ResponseEntity<Object> createPlantAccessLevel(
       @RequestBody PlantAccessLevelRequestDto plantAccessLevelRequestDto) {
-    if (plantAccessLevelService.existsByPlantCodeAndPlantRoleId(plantAccessLevelRequestDto.getPlantCode(),
-        plantAccessLevelRequestDto.getPlantRoleId())) {
+    if (plantAccessLevelService.existsByPlantCodeAndPlantRoleId(
+        plantAccessLevelRequestDto.getPlantCode(), plantAccessLevelRequestDto.getPlantRoleId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(PrivilegeConstants.PLANT_ACCESS_LEVEL,
               privilegeValidationFailureStatusCodes.getRoleAlreadyExists()),
@@ -54,10 +54,13 @@ public class PlantAccessLevelController {
   public ResponseEntity<Object> getPlantRolesByPlantCodeAndStatus(@PathVariable String plantCode,
       @PathVariable boolean status) {
     if (plantAccessLevelService.existsByPlantCodeAndStatus(plantCode, status)) {
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ACCESS_LEVELS,
-          mapper.map(plantAccessLevelService.getPlantRolesByPlantCodeAndStatus(plantCode, status),
-              PlantAccessLevelResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(PrivilegeConstants.PLANT_ACCESS_LEVELS,
+              mapper.map(
+                  plantAccessLevelService.getPlantRolesByPlantCodeAndStatus(plantCode, status),
+                  PlantAccessLevelResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
     }
     return new ResponseEntity<>(
         new ValidationFailureResponse(PrivilegeConstants.PLANT_ACCESS_LEVEL,

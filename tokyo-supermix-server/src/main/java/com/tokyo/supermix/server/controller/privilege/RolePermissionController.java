@@ -37,9 +37,8 @@ public class RolePermissionController {
       rolePermission.setStatus(RolePermissionRequestDto.getStatus());
       RolePermissionService.saveRolePermission(rolePermission);
     }
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_ROLE_PERMISSION_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        PrivilegeConstants.UPDATE_ROLE_PERMISSION_SUCCESS), HttpStatus.OK);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.ROLE_PERMISSIONS)

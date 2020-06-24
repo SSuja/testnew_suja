@@ -14,11 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.Employee;
-import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.auth.UserRole;
-import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
@@ -146,24 +144,24 @@ public class UserServiceImpl implements UserService {
     return userRepository.existsByEmail(email);
   }
 
-  @Override
+  @Transactional
   public void changeUserPassword(User user, String newPassword) {
     saveUserPassword(user, newPassword);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public User findUserByEmail(String userEmail) {
     return userRepository.findByEmail(userEmail);
   }
 
-  @Override
+  @Transactional
   public void updateUserStatus(Long userId, Boolean status) {
     User user = userRepository.findById(userId).get();
     user.setIsActive(status);
     userRepository.save(user);
   }
 
-  @Override
+  @Transactional
   public void updateUserRoles(UserRoleDto userRoleDto) {
     User user = userRepository.findById(userRoleDto.getUserId()).get();
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {

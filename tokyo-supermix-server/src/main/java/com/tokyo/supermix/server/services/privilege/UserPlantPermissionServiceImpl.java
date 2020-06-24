@@ -97,7 +97,6 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       plantRolePlantPermissionRequestDto
           .setPlantPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
-      // plantRolePlantPermissionRequestDto.setPlantRoleId(userId);
       plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
@@ -111,12 +110,10 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
 
   @Transactional
   public void saveUserPlantPermission(List<UserPlantPermission> userPlantPermissions) {
-    System.out.println("**************" + userPlantPermissions);
     for (UserPlantPermission userPlantPermission : userPlantPermissions) {
       UserPlantPermission userPlantPermission2 = userPlantPermissionRepository
           .findByUserIdAndPlantPermissionId(userPlantPermission.getUser().getId(),
               userPlantPermission.getPlantPermission().getId());
-      System.out.println("**************" + userPlantPermission2);
       if (userPlantPermission2 != null) {
         userPlantPermission2.setStatus(userPlantPermission.getStatus());
         userPlantPermissionRepository.save(userPlantPermission2);

@@ -44,20 +44,23 @@ public class RoleController {
   @PostMapping(value = PrivilegeEndpointURI.ROLE)
   public ResponseEntity<Object> createRole(@Valid @RequestBody RoleDto roleDto) {
     if (roleService.existsByRoleName(roleDto.getName())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE,
-          privilegeValidationFailureStatusCodes.getRoleNameAlreadyExists()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(PrivilegeConstants.ROLE,
+              privilegeValidationFailureStatusCodes.getRoleNameAlreadyExists()),
+          HttpStatus.BAD_REQUEST);
     }
     roleService.createRole(mapper.map(roleDto, Role.class));
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_ROLE_SUCCESS), HttpStatus.OK);
+        new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_ROLE_SUCCESS),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.ROLES)
   public ResponseEntity<Object> getAllRoll() {
     List<RoleDto> roleDtoList = mapper.map(roleService.getAllRoles(), RoleDto.class);
     return new ResponseEntity<>(
-        new ContentResponse<>(PrivilegeConstants.ROLES, roleDtoList, RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+        new ContentResponse<>(PrivilegeConstants.ROLES, roleDtoList, RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 
   @DeleteMapping(value = PrivilegeEndpointURI.DELETE_ROLE_BY_ID)
@@ -65,7 +68,8 @@ public class RoleController {
     if (roleService.isRoleExists(id)) {
       roleService.deleteRole(id);
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ROLE_DELETED), HttpStatus.OK);
+          new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ROLE_DELETED),
+          HttpStatus.OK);
     }
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE_ID,
@@ -90,8 +94,10 @@ public class RoleController {
   public ResponseEntity<Object> updateRole(@Valid @RequestBody RoleDto roleDto) {
     if (roleService.isRoleExists(roleDto.getId())) {
       if (roleService.isUpdatedRoleExists(roleDto.getId(), roleDto.getName())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE,
-            privilegeValidationFailureStatusCodes.getRoleAlreadyExists()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(PrivilegeConstants.ROLE,
+                privilegeValidationFailureStatusCodes.getRoleAlreadyExists()),
+            HttpStatus.BAD_REQUEST);
       }
       roleService.updateRole(mapper.map(roleDto, Role.class));
       return new ResponseEntity<>(
