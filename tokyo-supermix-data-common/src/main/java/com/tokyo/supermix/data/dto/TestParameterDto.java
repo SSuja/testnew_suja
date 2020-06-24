@@ -1,12 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
-import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class TestParameterDto {
   private Long id;
   private String parameterName;
   private String abbreviation;
-  private EntryLevel entryLevel;
+  private TestParameterType entryLevel;
   private Double value;
   private UnitDto unit;
 
@@ -26,11 +26,11 @@ public class TestParameterDto {
     this.abbreviation = abbreviation;
   }
 
-  public EntryLevel getEntryLevel() {
+  public TestParameterType getEntryLevel() {
     return entryLevel;
   }
 
-  public void setEntryLevel(EntryLevel entryLevel) {
+  public void setEntryLevel(TestParameterType entryLevel) {
     this.entryLevel = entryLevel;
   }
 
