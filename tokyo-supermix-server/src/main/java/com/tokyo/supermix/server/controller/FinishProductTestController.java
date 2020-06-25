@@ -51,21 +51,18 @@ public class FinishProductTestController {
   }
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TEST)
-  public ResponseEntity<Object> saveFinishProductSampleTest(
+  public String saveFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
-    finishProductTestService
+    return finishProductTestService
         .createFinishProductTest(mapper.map(finishProductTestRequestDto, FinishProductTest.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_TEST_SUCCESS),
-        HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_ID)
-  public ResponseEntity<Object> getFinishProductSampleTestById(@PathVariable Long id) {
-    if (finishProductTestService.isFinishProductTestExists(id)) {
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
+  public ResponseEntity<Object> getFinishProductSampleTestByCode(@PathVariable String code) {
+    if (finishProductTestService.isFinishProductTestExists(code)) {
       logger.debug("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
-          mapper.map(finishProductTestService.getFinishProductTestById(id),
+          mapper.map(finishProductTestService.getFinishProductTestByCode(code),
               FinishProductTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -73,11 +70,11 @@ public class FinishProductTestController {
         validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_ID)
-  public ResponseEntity<Object> deleteFinishProductSampleTest(@PathVariable Long id) {
-    if (finishProductTestService.isFinishProductTestExists(id)) {
+  @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
+  public ResponseEntity<Object> deleteFinishProductSampleTest(@PathVariable String code) {
+    if (finishProductTestService.isFinishProductTestExists(code)) {
       logger.debug("delete by id");
-      finishProductTestService.deleteFinishProductTest(id);
+      finishProductTestService.deleteFinishProductTest(code);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETED_FINISH_PRODUCT_TEST),
           HttpStatus.OK);
@@ -89,7 +86,8 @@ public class FinishProductTestController {
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_TEST)
   public ResponseEntity<Object> updateFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
-    if ((finishProductTestService.isFinishProductTestExists(finishProductTestRequestDto.getId()))) {
+    if ((finishProductTestService
+        .isFinishProductTestExists(finishProductTestRequestDto.getCode()))) {
       finishProductTestService.createFinishProductTest(
           mapper.map(finishProductTestRequestDto, FinishProductTest.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

@@ -2,6 +2,8 @@ package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -23,6 +25,7 @@ import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
+
 
 @Service
 public class FinishProductTrialServiceImpl implements FinishProductTrialService {
@@ -46,23 +49,48 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   @Transactional(readOnly = true)
-  public FinishProductTrial getFinishProductTrialById(Long id) {
-    return finishProductTrialRepository.findById(id).get();
+  public FinishProductTrial getFinishProductTrialByCode(String code) {
+    return finishProductTrialRepository.findFinishProductTrialByCode(code);
   }
 
   @Transactional
-  public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
+  public String saveFinishProductTrial(FinishProductTrial finishProductTrial) {
+    if (finishProductTrial.getCode() == null) {
+      String prefix = finishProductTrial.getFinishProductTest().getCode();
+      List<FinishProductTrial> FinishProductTrialList =
+          finishProductTrialRepository.findByCodeContaining(prefix);
+      if (FinishProductTrialList.size() == 0) {
+        finishProductTrial.setCode(prefix + String.format("%03d", 1));
+      } else {
+        finishProductTrial
+            .setCode(prefix + String.format("%04d", maxNumberFromCode(FinishProductTrialList) + 1));
+      }
+    }
     finishProductTrialRepository.save(finishProductTrial);
+    return finishProductTrial.getCode();
+  }
+
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+
+  private Integer maxNumberFromCode(List<FinishProductTrial> finishProductTrialList) {
+    List<Integer> list = new ArrayList<Integer>();
+    finishProductTrialList.forEach(obj -> {
+      list.add(getNumberFromCode(obj.getCode()));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteFinishProductTrial(Long id) {
-    finishProductTrialRepository.deleteById(id);
+  public void deleteFinishProductTrial(String code) {
+    finishProductTrialRepository.deleteById(code);
   }
 
   @Transactional(readOnly = true)
-  public boolean isFinishProductTrialExists(Long id) {
-    return finishProductTrialRepository.existsById(id);
+  public boolean isFinishProductTrialExists(String code) {
+    return finishProductTrialRepository.existsByCode(code);
   }
 
   public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
@@ -162,5 +190,17 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       e.printStackTrace();
     }
     return result;
+  }
+
+  @Override
+  public void deleteFinishProductTrial(Long id) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public boolean isFinishProductTrialExists(Long id) {
+    // TODO Auto-generated method stub
+    return false;
   }
 }

@@ -9,6 +9,8 @@ public class FinishProductSampleResponseDto {
   private ConcreteMixerResponseDto concreteMixer;
   private MixDesignResponseDto mixDesign;
   private Status status;
+  private String createdAt;
+  private String updatedAt;
 
   public Long getId() {
     return id;
@@ -56,5 +58,21 @@ public class FinishProductSampleResponseDto {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

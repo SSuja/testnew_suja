@@ -4,18 +4,18 @@ import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestResponseDto {
 
-  private Long id;
+  private String code;
   private double result;
   private Status status;
   private FinishProductSampleResponseDto finishProductSample;
   private TestConfigureResponseDto testConfigure;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public double getResult() {
