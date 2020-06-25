@@ -151,7 +151,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.ROLES).hasAuthority(PermissionConstants.VIEW_ROLE)
         .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.CREATE_ROLE)
         .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.EDIT_ROLE)
-        .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAuthority(PermissionConstants.DELETE_ROLE) 
+        .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAuthority(PermissionConstants.DELETE_ROLE)
+         // mix design
+        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGNS).hasAuthority(PermissionConstants.VIEW_MIX_DESIGN)
+        .antMatchers(HttpMethod.POST,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.CREATE_MIX_DESIGN)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.EDIT_MIX_DESIGN)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MIX_DESIGN_BY_CODE).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN)
+        
+        // PROCESS_SAMPLE_LOAD
+        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE_LOADS).hasAuthority(PermissionConstants.VIEW_PROCESS_SAMPLE_LOAD)
+        .antMatchers(HttpMethod.POST,EndpointURI.PROCESS_SAMPLE_LOAD).hasAuthority(PermissionConstants.CREATE_PROCESS_SAMPLE_LOAD)
+        .antMatchers(HttpMethod.PUT,EndpointURI.PROCESS_SAMPLE_LOAD).hasAuthority(PermissionConstants.EDIT_PROCESS_SAMPLE_LOAD)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID).hasAuthority(PermissionConstants.DELETE_PROCESS_SAMPLE_LOAD)
 //        .anyRequest().authenticated()
         ;
         // Add our custom JWT security filter

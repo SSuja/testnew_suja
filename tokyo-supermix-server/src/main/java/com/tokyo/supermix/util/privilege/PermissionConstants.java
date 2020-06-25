@@ -92,5 +92,15 @@ public final class PermissionConstants {
   public static final String CREATE_SUPPLIER= "create_supplier";
   public static final String EDIT_SUPPLIER = "edit_supplier";
   public static final String DELETE_SUPPLIER = "delete_supplier";
+  /* mix design*/
+  public static final String VIEW_MIX_DESIGN = "view_mix_design";
+  public static final String CREATE_MIX_DESIGN= "create_mix_design";
+  public static final String EDIT_MIX_DESIGN = "edit_mix_design";
+  public static final String DELETE_MIX_DESIGN = "delete_mix_design";
+  /* mix design*/
+  public static final String VIEW_PROCESS_SAMPLE_LOAD = "view_process_sample load";
+  public static final String CREATE_PROCESS_SAMPLE_LOAD= "create_process_sample load";
+  public static final String EDIT_PROCESS_SAMPLE_LOAD = "edit_process_sample load";
+  public static final String DELETE_PROCESS_SAMPLE_LOAD = "delete_process_sample load";
  
 }
