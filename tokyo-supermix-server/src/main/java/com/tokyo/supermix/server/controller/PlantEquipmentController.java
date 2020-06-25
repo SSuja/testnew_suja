@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -46,8 +45,7 @@ public class PlantEquipmentController {
   private static final Logger logger = Logger.getLogger(PlantEquipmentController.class);
 
   // Add EquipmentPlant
-  @PostMapping(value = EndpointURI.PLANTEQUIPMENT)
-  @PreAuthorize("hasAuthority('add_plant_equipment')")
+  @PostMapping(value = EndpointURI.PLANT_EQUIPMENT)
   public ResponseEntity<Object> createEquipmentPlant(
       @Valid @RequestBody PlantEquipmentRequestDto plantequipmentRequestDto) {
     if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {
@@ -65,8 +63,7 @@ public class PlantEquipmentController {
   }
 
   // Get All EquipmentPlants
-  @GetMapping(value = EndpointURI.PLANTEQUIPMENTS)
-  @PreAuthorize("hasAuthority('get_plant_equipment')")
+  @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS)
   public ResponseEntity<Object> getAllPlantEquipments() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
         mapper.map(plantEquipmentService.getAllPlantEquipments(), PlantEquipmentResponseDto.class),
@@ -74,9 +71,8 @@ public class PlantEquipmentController {
   }
 
   // Delete EquipmentPlant
-  @DeleteMapping(value = EndpointURI.DELETE_PLANTEQUIPMENT)
-  @PreAuthorize("hasAuthority('delete_plant_equipment')")
-  public ResponseEntity<Object> deletePlantEquipment(@PathVariable String serialNo) {
+  @DeleteMapping(value = EndpointURI.DELETE_PLANT_EQUIPMENT)
+   public ResponseEntity<Object> deletePlantEquipment(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
       logger.debug("delete Planteuipment by serialNo");
       plantEquipmentService.deletePlantEquipment(serialNo);
@@ -103,8 +99,7 @@ public class PlantEquipmentController {
   }
 
   // Update EquipmentPlant
-  @PutMapping(value = EndpointURI.PLANTEQUIPMENT)
-  @PreAuthorize("hasAuthority('edit_plant_equipment')")
+  @PutMapping(value = EndpointURI.PLANT_EQUIPMENT)
   public ResponseEntity<Object> updatePlantEquipment(
       @Valid @RequestBody PlantEquipmentRequestDto plantequipmentRequestDto) {
     if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {

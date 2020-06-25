@@ -32,7 +32,23 @@ public final class PermissionConstants {
   */
   public static final String VIEW_EQUIPMENT = "view_equipment";
   public static final String CREATE_EQUIPMENT = "create_equipment";
-  public static final String EDIT_EQUIPMENT = "edit_raw_equipment";
+  public static final String EDIT_EQUIPMENT = "edit_equipment";
   public static final String DELETE_EQUIPMENT = "delete_equipment";
+  
+  /*
+ plant equipment
+  */
+  public static final String VIEW_PLANT_EQUIPMENT = "view_plant_equipment";
+  public static final String CREATE_PLANT_EQUIPMENT = "create_plant_equipment";
+  public static final String EDIT_PLANT_EQUIPMENT = "edit_plant_equipment";
+  public static final String DELETE_PLANT_EQUIPMENT = "delete_plant_equipment";
+  
+  /*
+  plant equipment
+   */
+   public static final String VIEW_PLANT_EQUIPMENT_CALIBRATION = "view_plant_equipment_calibration";
+   public static final String CREATE_PLANT_EQUIPMENT_CALIBRATION = "create_plant_equipment_calibration";
+   public static final String EDIT_PLANT_EQUIPMENT_CALIBRATION = "edit_plant_equipment_calibration";
+   public static final String DELETE_PLANT_EQUIPMENT_CALIBRATION = "delete_plant_equipment_calibration";
  
 }
