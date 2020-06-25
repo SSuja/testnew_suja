@@ -65,24 +65,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //plant
         .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAuthority(PermissionConstants.VIEW_PLANT)
         .antMatchers(HttpMethod.POST,EndpointURI.PLANT).hasAuthority(PermissionConstants.CREATE_PLANT)
-        .antMatchers(HttpMethod.PUT,EndpointURI.PLANT_BY_CODE).hasAuthority(PermissionConstants.EDIT_PLANT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.PLANT).hasAuthority(PermissionConstants.EDIT_PLANT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.PLANT_BY_CODE).hasAuthority(PermissionConstants.DELETE_PLANT)
         //congrete mixer
         .antMatchers(HttpMethod.GET,EndpointURI.CONCRETE_MIXERS).hasAuthority(PermissionConstants.VIEW_CONCRETE_MIXER)
         .antMatchers(HttpMethod.POST,EndpointURI.CONCRETE_MIXER).hasAuthority(PermissionConstants.CREATE_CONCRETE_MIXER)
         .antMatchers(HttpMethod.PUT,EndpointURI.CONCRETE_MIXER).hasAuthority(PermissionConstants.EDIT_CONCRETE_MIXER)
         .antMatchers(HttpMethod.DELETE,EndpointURI.CONCRETE_MIXER_BY_ID).hasAuthority(PermissionConstants.DELETE_CONCRETE_MIXER)
-      //designation
+        //designation
         .antMatchers(HttpMethod.GET,EndpointURI.DESIGNATIONS).hasAuthority(PermissionConstants.VIEW_DESIGNATION)
         .antMatchers(HttpMethod.POST,EndpointURI.DESIGNATION).hasAuthority(PermissionConstants.CREATE_DESIGNATION)
         .antMatchers(HttpMethod.PUT,EndpointURI.DESIGNATION).hasAuthority(PermissionConstants.EDIT_DESIGNATION)
         .antMatchers(HttpMethod.DELETE,EndpointURI.DESIGNATION_BY_ID).hasAuthority(PermissionConstants.DELETE_DESIGNATION)
-      //employee
+        //employee
         .antMatchers(HttpMethod.GET,EndpointURI.EMPLOYEES).hasAuthority(PermissionConstants.VIEW_EMPLOYEE)
         .antMatchers(HttpMethod.POST,EndpointURI.EMPLOYEE).hasAuthority(PermissionConstants.CREATE_EMPLOYEE)
         .antMatchers(HttpMethod.PUT,EndpointURI.EMPLOYEE).hasAuthority(PermissionConstants.EDIT_EMPLOYEE)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.EMPLOYEE_BY_ID).hasAuthority(PermissionConstants.DELETE_EMPLOYEE)
-        
+        .antMatchers(HttpMethod.DELETE,EndpointURI.EMPLOYEE_BY_ID).hasAuthority(PermissionConstants.DELETE_EMPLOYEE) 
         // material category
         .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORIES).hasAuthority(PermissionConstants.VIEW_MATERIAL_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_CATEGORY).hasAuthority(PermissionConstants.CREATE_MATERIAL_CATEGORY)
