@@ -3,19 +3,26 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import com.tokyo.supermix.data.enums.TestType;
 
 public class TestConfigureRequestDto {
   private Long id;
-  private Long testTypeId;
   private Long testId;
+  private TestType testType;
   private boolean coreTest;
   private String description;
   private String testProcedure;
+  private String resultLabel;
   @NotNull(message = "{testConfigureRequestDto.prefix.null}")
   @NotEmpty(message = "{testConfigureRequestDto.prefix.empty}")
   @Pattern(regexp = "^[a-zA-Z\\s]+$*",
       message = "{testConfigureRequestDto.prefix.specialcharacter}")
   private String prefix;
+  private Long materialCategoryId;
+  private Long materialSubCategoryId;
+  private Long equationId;
+  private boolean equationExists;
+  private boolean bulkTrial;
 
   public Long getId() {
     return id;
@@ -23,14 +30,6 @@ public class TestConfigureRequestDto {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public Long getTestTypeId() {
-    return testTypeId;
-  }
-
-  public void setTestTypeId(Long testTypeId) {
-    this.testTypeId = testTypeId;
   }
 
   public Long getTestId() {
@@ -53,6 +52,22 @@ public class TestConfigureRequestDto {
     return description;
   }
 
+  public Long getMaterialCategoryId() {
+    return materialCategoryId;
+  }
+
+  public void setMaterialCategoryId(Long materialCategoryId) {
+    this.materialCategoryId = materialCategoryId;
+  }
+
+  public Long getMaterialSubCategoryId() {
+    return materialSubCategoryId;
+  }
+
+  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
+    this.materialSubCategoryId = materialSubCategoryId;
+  }
+
   public void setDescription(String description) {
     this.description = description;
   }
@@ -71,5 +86,45 @@ public class TestConfigureRequestDto {
 
   public void setPrefix(String prefix) {
     this.prefix = prefix;
+  }
+
+  public TestType getTestType() {
+    return testType;
+  }
+
+  public void setTestType(TestType testType) {
+    this.testType = testType;
+  }
+
+  public Long getEquationId() {
+    return equationId;
+  }
+
+  public void setEquationId(Long equationId) {
+    this.equationId = equationId;
+  }
+
+  public boolean isEquationExists() {
+    return equationExists;
+  }
+
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
+  }
+
+  public String getResultLabel() {
+    return resultLabel;
+  }
+
+  public void setResultLabel(String resultLabel) {
+    this.resultLabel = resultLabel;
+  }
+
+  public boolean isBulkTrial() {
+    return bulkTrial;
+  }
+
+  public void setBulkTrial(boolean bulkTrial) {
+    this.bulkTrial = bulkTrial;
   }
 }

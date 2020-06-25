@@ -143,7 +143,7 @@ public class SieveTestTrialServiceImpl implements SieveTestTrialService {
         "<p>The Seive Test is <b>" + sieveTest.getStatus() + "</b> for the Sample Code is <b>"
             + incomingSample.getCode() + "</b>. This Sample arrived on " + incomingSample.getDate()
             + ". The Sample Material is <b>" + incomingSample.getRawMaterial().getName() + "</b>.");
-    materialTestService.updateIncomingSampleStatusByIncomingSample(incomingSample);
+//    materialTestService.updateIncomingSampleStatusByIncomingSample(incomingSample);
 
   }
 

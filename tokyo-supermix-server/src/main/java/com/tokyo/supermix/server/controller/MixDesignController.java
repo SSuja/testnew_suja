@@ -20,6 +20,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
 import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -46,12 +47,8 @@ public class MixDesignController {
 
   @PostMapping(value = EndpointURI.MIX_DESIGN)
   @PreAuthorize("hasAuthority('add_mix_design')")
-  public ResponseEntity<Object> saveMixDesign(
-      @Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
-    mixDesignService.saveMixDesign(mapper.map(mixDesignRequestDto, MixDesign.class));
-    return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_SUCCESS),
-        HttpStatus.OK);
+  public String saveMixDesign(@Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
+    return mixDesignService.saveMixDesign(mapper.map(mixDesignRequestDto, MixDesign.class));
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGNS)
@@ -141,6 +138,19 @@ public class MixDesignController {
       logger.debug("No MixDesign record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_STATUS)
+  public ResponseEntity<Object> getMixDesignByStatus(@PathVariable Status status) {
+    if (mixDesignService.isMixDesignStatusExist(status)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+          mapper.map(mixDesignService.getMixDesignByStatus(status), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No MixDesign record exist for given Status");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
+          validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
 }

@@ -3,11 +3,12 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.enums.Status;
 
 public interface MixDesignService {
   public List<MixDesign> getAllMixDesigns();
 
-  public MixDesign saveMixDesign(MixDesign mixDesign);
+  public String saveMixDesign(MixDesign mixDesign);
 
   public void deleteMixDesign(String code);
 
@@ -22,4 +23,8 @@ public interface MixDesignService {
       Double waterBinderRatioEqual, String plantCode, int page, int size);
 
   public List<MixDesign> getMixDesignByPlantCode(String plantCode);
+
+  public List<MixDesign> getMixDesignByStatus(Status status);
+
+  public boolean isMixDesignStatusExist(Status status);
 }

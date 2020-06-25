@@ -2,12 +2,13 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
-import com.tokyo.supermix.data.dto.report.ConcreteStrengthTestDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
@@ -31,7 +32,6 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.ConcreteTestResultRepository;
 import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -56,26 +56,25 @@ public class TestReportServiceImpl implements TestReportService {
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
-  private ConcreteTestResultRepository concreteTestResultRepository;
-  @Autowired
   private SupplierRepository supplierRepository;
 
   @Override
   public TestReportDto getMaterialTestReport(String materialTestCode) {
-    TestReportDto reportDto = new TestReportDto();
-    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
-    reportDto.setMaterialTest(materialTestDto);
-    reportDto.setEquation(equationRepository
-        .findByTestConfigureId(materialTest.getTestConfigure().getId()).getFormula());
-    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
-    reportDto
-        .setIncomingSample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
-    reportDto.setTestTrials(getMaterialTestTrialReport(materialTestCode));
-    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-    reportDto
-        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
-    return reportDto;
+	return null;
+//    TestReportDto reportDto = new TestReportDto();
+//    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+//    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+//    reportDto.setMaterialTest(materialTestDto);
+//    reportDto.setEquation(equationRepository
+//        .findByTestConfigureId(materialTest.getTestConfigure().getId()).getFormula());
+//    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+//    reportDto
+//        .setIncomingSample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+//    reportDto.setTestTrials(getMaterialTestTrialReport(materialTestCode));
+//    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+//    reportDto
+//        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+//    return reportDto;
   }
 
   private AcceptedValueDto getAcceptedCriteriaDetails(Long testConfigureId) {
@@ -151,8 +150,8 @@ public class TestReportServiceImpl implements TestReportService {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
     reportDto.setMaterialTest(materialTestDto);
-    reportDto.setEquation(equationRepository
-        .findByTestConfigureId(materialTest.getTestConfigure().getId()).getFormula());
+//    reportDto.setEquation(equationRepository
+//        .findByTestConfigureId(materialTest.getTestConfigure().getId()).getFormula());
     reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
     reportDto
         .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
@@ -207,22 +206,6 @@ public class TestReportServiceImpl implements TestReportService {
   }
 
   @Transactional(readOnly = true)
-  public List<ConcreteStrengthTestDto> getStrengthResult(String concreteTestType,
-      String concreteTestName) {
-    List<ConcreteStrengthTestDto> concreteStrengthTestDtos =
-        new ArrayList<ConcreteStrengthTestDto>();
-    concreteTestResultRepository.findByConcreteTestConcreteTestTypeTypeAndConcreteTestName(
-        concreteTestType, concreteTestName).forEach(strength -> {
-          ConcreteStrengthTestDto concreteStrengthTestDto = new ConcreteStrengthTestDto();
-          concreteStrengthTestDto = mapper.map(strength, ConcreteStrengthTestDto.class);
-          concreteStrengthTestDto
-              .setCubeCode(strength.getFinishProductSample().getFinishProductCode());
-          concreteStrengthTestDtos.add(concreteStrengthTestDto);
-        });
-    return concreteStrengthTestDtos;
-  }
-
-  @Transactional(readOnly = true)
   public TestReportDetailDto getCementDetailReport(String materialTestCode) {
     TestReportDetailDto reportDto = new TestReportDetailDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
@@ -266,7 +249,7 @@ public class TestReportServiceImpl implements TestReportService {
       incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
       incomingSampleTestDto.setAverage(test.getAverage());
       incomingSampleTestDto.setStatus(test.getStatus());
-      incomingSampleTestDto.setDate(test.getDate());
+//      incomingSampleTestDto.setDate(test.getDate());
       incomingSampleTestDto
           .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
       incomingSampleTestDtoList.add(incomingSampleTestDto);

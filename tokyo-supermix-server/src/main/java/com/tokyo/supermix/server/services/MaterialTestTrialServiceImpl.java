@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tokyo.supermix.data.entities.AdmixtureAcceptedValue;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.AdmixtureAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
@@ -31,7 +32,9 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   @Autowired
   private MaterialTestRepository materialTestRepository;
   @Autowired
-  private AdmixtureAcceptedValueRepository admixtureAcceptedValueRepository;
+  private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private TestConfigureRepository testConfigureRepository;
 
   @Transactional
   public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -70,17 +73,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
   @Transactional
   public void getAverageAndStatus(String materialTestCode) {
-    compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
-//    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-//    emailService.sendMailWithFormat(mailConstants.getMailUpdateMaterialTestStatus(),
-//        Constants.SUBJECT_NEW_MATERIAL_TEST,
-//        "<p>The Incoming Sample Code is <b>" + materialTest.getIncomingSample().getCode()
-//            + ".</b> for Material test. The test is <b>" + materialTest.getStatus()
-//            + "</b>.</p> <p>Test Details : </p><ul>" + "<li>Test Name : "
-//            + materialTest.getTestConfigure().getTest().getName() + "</li><li> Average : "
-//            + materialTest.getAverage() + "</li><li>Material : "
-//            + materialTest.getIncomingSample().getRawMaterial().getName() + "</li><li> Date : "
-//            + materialTest.getDate() + "</li></ul>");
+         compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
   }
 
   private void compareWithAverage(Double average, String materialTestCode) {
@@ -88,37 +81,21 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     Long testConfigureId = materialTest.getTestConfigure().getId();
     if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
         .getMaterialCategory().getName().equalsIgnoreCase(Constants.ADMIXTURE)) {
-      AdmixtureAcceptedValue admixtureAcceptedValue =
-          admixtureAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(testConfigureId,
+      MaterialAcceptedValue materialAcceptedValue =
+          materialAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(testConfigureId,
               materialTest.getIncomingSample().getRawMaterial().getId());
-      calculateStatus(average, admixtureAcceptedValue.getMinValue(),
-          admixtureAcceptedValue.getMaxValue(), materialTestCode);
-    } else {
+      calculateStatus(average, materialAcceptedValue.getMinValue(),
+          materialAcceptedValue.getMaxValue(), materialTestCode);
+          } else {
       calculateStatus(average,
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
           materialTestCode);
     }
   }
-
-  private void calculateStatus(Double average, Double minValue, Double maxValue,
-      String materialTestCode) {
-    if (minValue <= average && average <= maxValue) {
-      updateAverage(average, materialTestCode, Status.PASS);
-    } else {
-      updateAverage(average, materialTestCode, Status.FAIL);
-    }
-
-  }
-
-  private Double roundDoubleValue(Double value) {
-    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
-    return Double.valueOf(decimalFormat.format(value));
-  }
-
-  private Double calculateAverage(String materialTestCode) {
+   private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;
-    int trialTotal = 0;
+    int trialTotal = 0;  
     List<MaterialTestTrial> listMaterialTestTrial =
         materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
     for (MaterialTestTrial materialTestTrial : listMaterialTestTrial) {
@@ -128,12 +105,28 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     return roundDoubleValue(totalResult / trialTotal);
   }
 
+  private void calculateStatus(Double average, Double minValue, Double maxValue,
+      String materialTestCode) {
+    if (maxValue == null && minValue <= average || minValue == null && average <= maxValue) {
+      updateAverage(average, materialTestCode, Status.PASS);
+    } else if (minValue != null && minValue <= average && maxValue != null && average <= maxValue) {
+      updateAverage(average, materialTestCode, Status.PASS);
+    } else {
+      updateAverage(average, materialTestCode, Status.FAIL);
+    }
+  }
+
   @Transactional
   public MaterialTest updateAverage(Double average, String code, Status status) {
     MaterialTest materialTest = materialTestRepository.findByCode(code);
     materialTest.setAverage(roundDoubleValue(average));
     materialTest.setStatus(status);
     return materialTestRepository.save(materialTest);
+  }
+  
+  private Double roundDoubleValue(Double value) {
+    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+    return Double.valueOf(decimalFormat.format(value));
   }
 
   @Transactional(readOnly = true)

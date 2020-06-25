@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 
 @Service
@@ -85,5 +86,15 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
     return finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSampleByStatus(Status status) {
+    return finishProductSampleRepository.findByStatus(status);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isFinishProductSampleStatusExist(Status status) {
+    return finishProductSampleRepository.existsByStatus(status);
   }
 }
