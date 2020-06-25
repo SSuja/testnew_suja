@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +44,6 @@ public class CustomerController {
   private static final Logger logger = Logger.getLogger(CustomerController.class);
 
   @GetMapping(value = EndpointURI.CUSTOMERS)
-  @PreAuthorize("hasAuthority('get_customer')")
   public ResponseEntity<Object> getAllCustomers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
         mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
@@ -53,7 +51,6 @@ public class CustomerController {
   }
 
   @PostMapping(value = EndpointURI.CUSTOMER)
-  @PreAuthorize("hasAuthority('add_customer')")
   public ResponseEntity<Object> saveCustomer(
       @Valid @RequestBody CustomerRequestDto customerRequestDto) {
     if (customerService.isEmailExist(customerRequestDto.getEmail())) {
@@ -85,7 +82,6 @@ public class CustomerController {
   }
 
   @DeleteMapping(value = EndpointURI.DELETE_CUSTOMER)
-  @PreAuthorize("hasAuthority('delete_customer')")
   public ResponseEntity<Object> deleteCustomer(@PathVariable Long id) {
     if (customerService.isCustomerExist(id)) {
       logger.debug("delete customer by id");
@@ -98,7 +94,6 @@ public class CustomerController {
   }
 
   @PutMapping(value = EndpointURI.CUSTOMER)
-  @PreAuthorize("hasAuthority('edit_customer')")
   public ResponseEntity<Object> updateCustomer(
       @Valid @RequestBody CustomerRequestDto customerRequestDto) {
     if (customerService.isCustomerExist(customerRequestDto.getId())) {
