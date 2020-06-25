@@ -40,8 +40,7 @@ public final class EndpointURI {
    */
   public static final String SUPPLIER = BASE_API_PATH + "supplier";
   public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
-  public static final String GET_SUPPLIER_BY_ID = SUPPLIER + ID;
-  public static final String DELETE_SUPPLIER = SUPPLIER + ID;
+  public static final String SUPPLIER_BY_ID = SUPPLIER + ID;
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
