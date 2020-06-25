@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.security.JwtAuthenticationEntryPoint;
 import com.tokyo.supermix.security.JwtAuthenticationFilter;
 import com.tokyo.supermix.server.services.auth.AuthUserDetailsService;
@@ -143,10 +144,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.CUSTOMER).hasAuthority(PermissionConstants.EDIT_CUSTOMER)
         .antMatchers(HttpMethod.DELETE, EndpointURI.CUSTOMER_BY_ID).hasAuthority(PermissionConstants.DELETE_CUSTOMER) 
         // supplier
-        .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIERS).hasAuthority(PermissionConstants.VIEW_CUSTOMER)
-        .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.CREATE_CUSTOMER)
-        .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.EDIT_CUSTOMER)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_BY_ID).hasAuthority(PermissionConstants.DELETE_CUSTOMER); 
+        .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIERS).hasAuthority(PermissionConstants.VIEW_SUPPLIER)
+        .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.CREATE_SUPPLIER)
+        .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.EDIT_SUPPLIER)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_BY_ID).hasAuthority(PermissionConstants.DELETE_SUPPLIER); 
+        // role
+        .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.ROLES).hasAuthority(PermissionConstants.VIEW_ROLE)
+        .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.CREATE_ROLE)
+        .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.EDIT_ROLE)
+        .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAuthority(PermissionConstants.DELETE_ROLE); 
+
     // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

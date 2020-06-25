@@ -82,6 +82,11 @@ public final class PermissionConstants {
   public static final String CREATE_POUR= "create_pour";
   public static final String EDIT_POUR = "edit_pour";
   public static final String DELETE_POUR = "delete_pour";
+  /* role */
+  public static final String VIEW_ROLE = "view_role";
+  public static final String CREATE_ROLE= "create_role";
+  public static final String EDIT_ROLE = "edit_role";
+  public static final String DELETE_ROLE = "delete_role";
   /* supplier */
   public static final String VIEW_SUPPLIER = "view_supplier";
   public static final String CREATE_SUPPLIER= "create_supplier";
