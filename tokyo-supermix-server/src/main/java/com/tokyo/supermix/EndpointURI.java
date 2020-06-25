@@ -35,7 +35,6 @@ public final class EndpointURI {
    */
   public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
   public static final String SUPPLIER_CATEGORY_BY_ID = SUPPLIER_CATEGORY + ID;
-  public static final String DELETE_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + ID;
   public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
 
   /*
@@ -66,8 +65,7 @@ public final class EndpointURI {
    */
   public static final String MATERIAL_CATEGORY = BASE_API_PATH + "material-category";
   public static final String MATERIAL_CATEGORIES = BASE_API_PATH + "material-categories";
-  public static final String GET_MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
-  public static final String DELETE_MATERIAL_CATEGORY = MATERIAL_CATEGORY + ID;
+  public static final String MATERIAL_CATEGORY_BY_ID = MATERIAL_CATEGORY + ID;
   /*
    * Pour APIs
    */
@@ -83,8 +81,7 @@ public final class EndpointURI {
    */
   public static final String UNIT = BASE_API_PATH + "unit";
   public static final String UNITS = BASE_API_PATH + "units";
-  public static final String GET_UNIT_BY_ID = UNIT + ID;
-  public static final String DELETE_UNIT_BY_ID = UNIT + ID;
+  public static final String UNIT_BY_ID = UNIT + ID;
 
   /*
    * MaterialSubCategory Apis
@@ -94,8 +91,7 @@ public final class EndpointURI {
   public static final String MATERIAL_CATEGORY_ID = "/{materialCategoryId}";
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY =
       MATERIAL_SUB_CATEGORY + "/category" + MATERIAL_CATEGORY_ID;
-  public static final String GET_MATERIAL_SUB_CATEGORY_BY_ID = MATERIAL_SUB_CATEGORY + ID;
-  public static final String DELETE_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORY + ID;
+  public static final String MATERIAL_SUB_CATEGORY_BY_ID = MATERIAL_SUB_CATEGORY + ID;
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
       MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
   public static final String MATERIAL_SUB_CATEGORY_SEARCH = MATERIAL_SUB_CATEGORY + SEARCH;
@@ -165,8 +161,7 @@ public final class EndpointURI {
    */
   public static final String CUSTOMER = BASE_API_PATH + "customer";
   public static final String CUSTOMERS = BASE_API_PATH + "customers";
-  public static final String DELETE_CUSTOMER = CUSTOMER + ID;
-  public static final String GET_CUSTOMER_BY_ID = CUSTOMER + ID;
+  public static final String CUSTOMER_BY_ID = CUSTOMER + ID;
   public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
   public static final String GET_CUSTOMERS_BY_PLANT_CODE =
       CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";

@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_CATEGORY)
         .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_CATEGORY)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.MATERIAL_CATEGORY_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_CATEGORY)
         // material state
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_STATES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_STATE)
         .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
@@ -75,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SUB_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_SUB_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_SUB_CATEGORY)
         .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_SUB_CATEGORY)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_SUB_CATEGORY)   
+        .antMatchers(HttpMethod.DELETE, EndpointURI.MATERIAL_SUB_CATEGORY_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_SUB_CATEGORY)   
         // material raw materials
         .antMatchers(HttpMethod.GET,EndpointURI.RAW_MATERIALS).hasAnyAuthority(PermissionConstants.VIEW_RAW_MATERIAL)
         .antMatchers(HttpMethod.POST,EndpointURI.RAW_MATERIAL).hasAnyAuthority(PermissionConstants.CREATE_RAW_MATERIAL)
@@ -100,17 +100,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIER_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_SUPPLIER_CATEGORY)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
+        .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_CATEGORY_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
         // unit
         .antMatchers(HttpMethod.GET, EndpointURI.UNITS).hasAnyAuthority(PermissionConstants.VIEW_UNIT)
         .antMatchers(HttpMethod.POST, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.CREATE_UNIT)
         .antMatchers(HttpMethod.PUT, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.EDIT_UNIT)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_UNIT_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_UNIT) 
+        .antMatchers(HttpMethod.DELETE, EndpointURI.UNIT_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_UNIT) 
         // customer
         .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMERS).hasAnyAuthority(PermissionConstants.VIEW_CUSTOMER)
         .antMatchers(HttpMethod.POST, EndpointURI.CUSTOMER).hasAnyAuthority(PermissionConstants.CREATE_CUSTOMER)
         .antMatchers(HttpMethod.PUT, EndpointURI.CUSTOMER).hasAnyAuthority(PermissionConstants.EDIT_CUSTOMER)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_CUSTOMER).hasAnyAuthority(PermissionConstants.DELETE_CUSTOMER); 
+        .antMatchers(HttpMethod.DELETE, EndpointURI.CUSTOMER_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_CUSTOMER); 
 
     
     
