@@ -61,7 +61,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers("/api/v1/auth/**").permitAll()
         .antMatchers("/swagger-ui.html").permitAll()
-        .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT);
+        .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_STATES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_STATE)
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_STATE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_MATERIAL_STATE).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_STATE)
+        ;
+    
+    
     // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
