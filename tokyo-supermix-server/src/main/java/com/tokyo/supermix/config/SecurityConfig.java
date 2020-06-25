@@ -132,9 +132,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, EndpointURI.POUR).hasAnyAuthority(PermissionConstants.CREATE_POUR)
         .antMatchers(HttpMethod.PUT, EndpointURI.POUR).hasAnyAuthority(PermissionConstants.EDIT_POUR)
         .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_POUR).hasAnyAuthority(PermissionConstants.DELETE_POUR)
-        ;   
+          
     
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
+          
         // unit
         .antMatchers(HttpMethod.GET, EndpointURI.UNITS).hasAnyAuthority(PermissionConstants.VIEW_UNIT)
         .antMatchers(HttpMethod.POST, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.CREATE_UNIT)
