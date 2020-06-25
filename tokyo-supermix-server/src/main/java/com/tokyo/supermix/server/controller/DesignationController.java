@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.access.prepost.PreAuthorize;
-
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.DesignationDto;
 import com.tokyo.supermix.data.entities.Designation;
@@ -45,7 +42,6 @@ public class DesignationController {
 
   // get all designations
   @GetMapping(value = EndpointURI.DESIGNATIONS)
-  @PreAuthorize("hasAuthority('get_designation')")
   public ResponseEntity<Object> getAllDesignations() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATIONS,
         mapper.map(designationService.getAllDesignations(), DesignationDto.class),
@@ -53,7 +49,7 @@ public class DesignationController {
   }
 
   // get designation by id
-  @GetMapping(value = EndpointURI.GET_DESIGNATION_BY_ID)
+  @GetMapping(value = EndpointURI.DESIGNATION_BY_ID)
   public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
     if (designationService.isDesignationExist(id)) {
       logger.debug("Get Designation by id ");
@@ -68,8 +64,7 @@ public class DesignationController {
   }
 
   // delete api for designation
-  @DeleteMapping(value = EndpointURI.DELETE_DESIGNATION_BY_ID)
-  @PreAuthorize("hasAuthority('delete_designation')")
+  @DeleteMapping(value = EndpointURI.DESIGNATION_BY_ID)
   public ResponseEntity<Object> deleteDesignation(@PathVariable Long id) {
     if (designationService.isDesignationExist(id)) {
       designationService.deleteDesignation(id);
@@ -85,7 +80,6 @@ public class DesignationController {
 
   // post API for designation
   @PostMapping(value = EndpointURI.DESIGNATION)
-  @PreAuthorize("hasAuthority('add_designation')")
   public ResponseEntity<Object> createDesignation(
       @Valid @RequestBody DesignationDto designationDto) {
     if (designationService.isDesignationExist(designationDto.getName())) {
@@ -104,7 +98,6 @@ public class DesignationController {
 
   // update API for designations
   @PutMapping(value = EndpointURI.DESIGNATION)
-  @PreAuthorize("hasAuthority('edit_designation')")
   public ResponseEntity<Object> updateDesignation(
       @Valid @RequestBody DesignationDto designationDto) {
 
