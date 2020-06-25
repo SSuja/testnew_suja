@@ -17,9 +17,8 @@ public final class EndpointURI {
    * Plant apis
    */
   public static final String PLANT = BASE_API_PATH + "plant";
-  public static final String GET_PLANT_BY_CODE = PLANT + CODE;
+  public static final String PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
-  public static final String DELETE_PLANT_BY_CODE = PLANT + CODE;
   public static final String SEARCH_PLANT = PLANT + SEARCH;
 
   /*
@@ -27,8 +26,7 @@ public final class EndpointURI {
    */
   public static final String DESIGNATION = BASE_API_PATH + "designation";
   public static final String DESIGNATIONS = BASE_API_PATH + "designations";
-  public static final String GET_DESIGNATION_BY_ID = DESIGNATION + ID;
-  public static final String DELETE_DESIGNATION_BY_ID = DESIGNATION + ID;
+  public static final String DESIGNATION_BY_ID = DESIGNATION + ID;
 
   /*
    * Supplier Category apis
@@ -53,9 +51,7 @@ public final class EndpointURI {
    * Employee apis
    */
   public static final String EMPLOYEE = BASE_API_PATH + "employee";
-  public static final String DELETE_EMPLOYEE = EMPLOYEE + ID;
-  public static final String GET_EMPLOYEE_BY_ID = EMPLOYEE + ID;
-  public static final String UPDATE_EMPLOYEE = EMPLOYEE;
+  public static final String EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
   public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
@@ -405,7 +401,7 @@ public final class EndpointURI {
    */
   public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
   public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
-  public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
+  public static final String CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;

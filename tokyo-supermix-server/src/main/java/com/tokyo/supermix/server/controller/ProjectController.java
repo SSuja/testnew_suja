@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +50,6 @@ public class ProjectController {
   private static final Logger logger = Logger.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
-  @PreAuthorize("hasAuthority('add_project')")
   public ResponseEntity<Object> createProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
     if (projectService.isProjectExist(projectRequestDto.getCode())) {
@@ -74,7 +72,6 @@ public class ProjectController {
   }
 
   @GetMapping(value = EndpointURI.PROJECTS)
-  @PreAuthorize("hasAuthority('get_project')")
   public ResponseEntity<Object> getProjects() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
         mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
@@ -82,7 +79,6 @@ public class ProjectController {
   }
 
   @DeleteMapping(value = EndpointURI.PROJECT_BY_ID)
-  @PreAuthorize("hasAuthority('delete_project')")
   public ResponseEntity<Object> deleteProject(@PathVariable String code) {
     if (projectService.isProjectExist(code)) {
       logger.debug("delete project by code");
@@ -107,7 +103,6 @@ public class ProjectController {
   }
 
   @PutMapping(value = EndpointURI.PROJECT)
-  @PreAuthorize("hasAuthority('edit_project')")
   public ResponseEntity<Object> updateProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
     if (projectService.isProjectExist(projectRequestDto.getCode())) {
