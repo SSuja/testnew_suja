@@ -55,7 +55,7 @@ public class PourController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_POUR_SUCCESS), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_POUR_BY_ID)
+  @GetMapping(value = EndpointURI.POUR_BY_ID)
   public ResponseEntity<Object> getPourById(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
       logger.debug("get pour By Id");
@@ -76,7 +76,7 @@ public class PourController {
         HttpStatus.OK);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_POUR)
+  @DeleteMapping(value = EndpointURI.POUR_BY_ID)
     public ResponseEntity<Object> deletePour(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
       logger.debug("get pour By Id");

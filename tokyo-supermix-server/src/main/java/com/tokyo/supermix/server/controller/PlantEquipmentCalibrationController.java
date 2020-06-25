@@ -78,7 +78,7 @@ public class PlantEquipmentCalibrationController {
   }
 
   // get PlantEquipmentCalibration by id
-  @GetMapping(value = EndpointURI.GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID)
+  @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_BY_ID)
   public ResponseEntity<Object> getPlantEquipmentCalibrationById(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
       logger.debug("Get PlantEquipmentCalibration by id ");
@@ -97,7 +97,7 @@ public class PlantEquipmentCalibrationController {
   }
 
   // DELETE API for PlantEquipmentCalibration
-  @DeleteMapping(value = EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION)
+  @DeleteMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_BY_ID)
   public ResponseEntity<Object> deletePlantEquipmentCalibration(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
       plantEquipmentCalibrationService.deletePlantEquipmentCalibration(id);

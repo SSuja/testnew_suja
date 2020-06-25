@@ -67,8 +67,7 @@ public final class EndpointURI {
    */
   public static final String POUR = BASE_API_PATH + "pour";
   public static final String POURS = BASE_API_PATH + "pours";
-  public static final String GET_POUR_BY_ID = POUR + ID;
-  public static final String DELETE_POUR = POUR + ID;
+  public static final String POUR_BY_ID = POUR + ID;
   public static final String POUR_SEARCH = POUR + SEARCH;
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
@@ -134,9 +133,8 @@ public final class EndpointURI {
       BASE_API_PATH + "plant-equipment-calibration";
   public static final String EQUIPMENT_PLANT_CALIBRATIONS =
       BASE_API_PATH + "plant-equipment-calibrations";
-  public static final String GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID =
+  public static final String EQUIPMENT_PLANT_CALIBRATION_BY_ID =
       EQUIPMENT_PLANT_CALIBRATION + ID;
-  public static final String DELETE_EQUIPMENT_PLANT_CALIBRATION = EQUIPMENT_PLANT_CALIBRATION + ID;
   public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
       EQUIPMENT_PLANT_CALIBRATION + SEARCH;
   public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
@@ -147,8 +145,7 @@ public final class EndpointURI {
    */
   public static final String PLANT_EQUIPMENT = BASE_API_PATH + "plantequipment";
   public static final String PLANT_EQUIPMENTS = BASE_API_PATH + "plantequipments";
-  public static final String DELETE_PLANT_EQUIPMENT = PLANT_EQUIPMENT + SERIALNO;
-  public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANT_EQUIPMENT + SERIALNO;
+  public static final String PLANTEQUIPMENT_BY_SERIALNO = PLANT_EQUIPMENT + SERIALNO;
   public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH;
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
       PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
