@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,20 +41,19 @@ public class ParameterEquationController {
 
   @PostMapping(value = EndpointURI.PARAMETER_EQUATION)
   public ResponseEntity<Object> createParameterEquation(
-      @RequestBody List<ParameterEquationRequestDto> parameterEquationRequestDtoList) {
-    for (ParameterEquationRequestDto parameterEquationRequestDto : parameterEquationRequestDtoList) {
-      if (parameterEquationService.isEquationIdAndTestParameterId(
-          parameterEquationRequestDto.getEquation().getId(),
-          parameterEquationRequestDto.getTestParameter().getId())) {
-        logger.debug("Row is already exists: createParameterEquation(), isDuplicateRowExists: {}");
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
-                validationFailureStatusCodes.getParameterEquationAlreadyExit()),
-            HttpStatus.BAD_REQUEST);
-      }
-    }
-    parameterEquationService.saveParameterEquation(
-        mapper.map(parameterEquationRequestDtoList, ParameterEquation.class));
+      @RequestBody ParameterEquationRequestDto parameterEquationRequestDto) {
+    // if (parameterEquationService.isEquationIdAndTestParameterId(
+    // parameterEquationRequestDto.getEquation().getId(),
+    // parameterEquationRequestDto.getTestParameter().getId())) {
+    // logger.debug("Row is already exists: createParameterEquation(), isDuplicateRowExists: {}");
+    // return new ResponseEntity<>(
+    // new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
+    // validationFailureStatusCodes.getParameterEquationAlreadyExit()),
+    // HttpStatus.BAD_REQUEST);
+    // }
+
+    parameterEquationService
+        .saveParameterEquation(mapper.map(parameterEquationRequestDto, ParameterEquation.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_EQUATION_SUCCESS),
         HttpStatus.OK);
