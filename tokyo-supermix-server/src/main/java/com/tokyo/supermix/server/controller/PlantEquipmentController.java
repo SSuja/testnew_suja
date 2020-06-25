@@ -71,7 +71,7 @@ public class PlantEquipmentController {
   }
 
   // Delete EquipmentPlant
-  @DeleteMapping(value = EndpointURI.DELETE_PLANT_EQUIPMENT)
+  @DeleteMapping(value = EndpointURI.PLANTEQUIPMENT_BY_SERIALNO)
    public ResponseEntity<Object> deletePlantEquipment(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
       logger.debug("delete Planteuipment by serialNo");
@@ -85,7 +85,7 @@ public class PlantEquipmentController {
   }
 
   // Get By SerialNo
-  @GetMapping(value = EndpointURI.GET_PLANTEQUIPMENT_BY_SERIALNO)
+  @GetMapping(value = EndpointURI.PLANTEQUIPMENT_BY_SERIALNO)
   public ResponseEntity<Object> getPlantEquipmentByserialNo(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
       logger.debug("Get PlantEquipment by PlantEquipment Serial number");

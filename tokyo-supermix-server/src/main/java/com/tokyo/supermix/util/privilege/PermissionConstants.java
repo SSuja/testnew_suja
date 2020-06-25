@@ -21,7 +21,6 @@ public final class PermissionConstants {
  public static final String CREATE_EMPLOYEE = "create_employee";
  public static final String EDIT_EMPLOYEE = "edit_employee";
  public static final String DELETE_EMPLOYEE = "delete_employee";
-  
   /*  material category  */
   public static final String VIEW_MATERIAL_CATEGORY = "view_material_category";
   public static final String CREATE_MATERIAL_CATEGORY = "create_material_category";
@@ -37,34 +36,22 @@ public final class PermissionConstants {
   public static final String CREATE_MATERIAL_SUB_CATEGORY = "create_material_sub_category";
   public static final String EDIT_MATERIAL_SUB_CATEGORY = "edit_material_sub_category";
   public static final String DELETE_MATERIAL_SUB_CATEGORY = "delete_material_sub_category";
-  
-  /*
-  raw_material
-  */
+  /* raw_material */
   public static final String VIEW_RAW_MATERIAL = "view_raw_material";
   public static final String CREATE_RAW_MATERIAL = "create_raw_material";
   public static final String EDIT_RAW_MATERIAL = "edit_raw_material";
   public static final String DELETE_RAW_MATERIAL = "delete_raw_material";
-  
-  /*
-  equipment
-  */
+  /* equipment */
   public static final String VIEW_EQUIPMENT = "view_equipment";
   public static final String CREATE_EQUIPMENT = "create_equipment";
   public static final String EDIT_EQUIPMENT = "edit_equipment";
   public static final String DELETE_EQUIPMENT = "delete_equipment";
-  
-  /*
- plant equipment
-  */
+  /* plant equipment */
   public static final String VIEW_PLANT_EQUIPMENT = "view_plant_equipment";
   public static final String CREATE_PLANT_EQUIPMENT = "create_plant_equipment";
   public static final String EDIT_PLANT_EQUIPMENT = "edit_plant_equipment";
   public static final String DELETE_PLANT_EQUIPMENT = "delete_plant_equipment";
-  
-  /*
-  plant equipment
-   */
+  /*  plant equipment calibration  */
    public static final String VIEW_PLANT_EQUIPMENT_CALIBRATION = "view_plant_equipment_calibration";
    public static final String CREATE_PLANT_EQUIPMENT_CALIBRATION = "create_plant_equipment_calibration";
    public static final String EDIT_PLANT_EQUIPMENT_CALIBRATION = "edit_plant_equipment_calibration";
@@ -95,7 +82,5 @@ public final class PermissionConstants {
   public static final String CREATE_POUR= "create_pour";
   public static final String EDIT_POUR = "edit_pour";
   public static final String DELETE_POUR = "delete_pour";
-  
- 
  
 }

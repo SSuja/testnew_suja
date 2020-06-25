@@ -51,10 +51,9 @@ public class SupplierCategoryController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_SUPPLIER_CATEGORY_SUCCESS),
         HttpStatus.OK);
-
   }
 
-  @DeleteMapping(EndpointURI.DELETE_SUPPLIER_CATEGORY)
+  @DeleteMapping(EndpointURI.SUPPLIER_CATEGORY_BY_ID)
   public ResponseEntity<Object> deleteSupplierCategory(@PathVariable Long id) {
     if (supplierCategoryService.isSupplierCategoryExist(id)) {
       supplierCategoryService.deleteSupplierCategory(id);
