@@ -3,10 +3,19 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestRequestDto {
+  private String code;
   private double result;
   private Status status;
   private Long finishProductSampleId;
   private Long testConfigureId;
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
 
   public double getResult() {
     return result;
