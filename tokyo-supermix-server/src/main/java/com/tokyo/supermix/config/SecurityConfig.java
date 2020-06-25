@@ -3,6 +3,7 @@ package com.tokyo.supermix.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,9 +15,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.security.JwtAuthenticationEntryPoint;
 import com.tokyo.supermix.security.JwtAuthenticationFilter;
 import com.tokyo.supermix.server.services.auth.AuthUserDetailsService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 
 @Configuration
@@ -56,7 +59,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.cors().and().csrf().disable().exceptionHandling()
         .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-        .antMatchers("/api/v1/auth/**").permitAll().antMatchers("/swagger-ui.html").permitAll();
+        .antMatchers("/api/v1/auth/**").permitAll().antMatchers("/swagger-ui.html").permitAll()
+        .antMatchers(HttpMethod.GET, EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT)
+        // material category
+        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_STATES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_STATE)
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_STATE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_MATERIAL_STATE).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_STATE);
+    
+    
     // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

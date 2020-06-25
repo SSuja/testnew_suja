@@ -42,8 +42,6 @@ public class MaterialStateController {
   private static final Logger logger = Logger.getLogger(MaterialStateController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_STATE)
-  @PreAuthorize("hasAuthority('add_material_state')")
-
   public ResponseEntity<Object> createMaterialState(
       @Valid @RequestBody MaterialStateDto materialStateDto) {
     if (materialStateService.isMaterialStateExist(materialStateDto.getMaterialState())) {
@@ -58,7 +56,6 @@ public class MaterialStateController {
   }
 
   @GetMapping(value = EndpointURI.MATERIAL_STATES)
-  @PreAuthorize("hasAuthority('get_material_state')")
   public ResponseEntity<Object> getAllMaterialStates() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_STATE,
         mapper.map(materialStateService.getAllMaterialStates(), MaterialStateDto.class),
@@ -78,8 +75,7 @@ public class MaterialStateController {
   }
 
   @PutMapping(value = EndpointURI.MATERIAL_STATE)
-  @PreAuthorize("hasAuthority('edit_material_state')")
-  public ResponseEntity<Object> updateMaterialState(
+   public ResponseEntity<Object> updateMaterialState(
       @Valid @RequestBody MaterialStateDto materialStateDto) {
     if (materialStateService.isMaterialStateExist(materialStateDto.getId())) {
       if (materialStateService.isUpdatedMaterialStateExist(materialStateDto.getId(),
@@ -100,8 +96,7 @@ public class MaterialStateController {
   }
 
   @DeleteMapping(EndpointURI.DELETE_MATERIAL_STATE)
-  @PreAuthorize("hasAuthority('delete_material_state')")
-  public ResponseEntity<Object> deleteMaterialState(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteMaterialState(@PathVariable Long id) {
     if (materialStateService.isMaterialStateExist(id)) {
       materialStateService.deleteMaterialState(id);
       return new ResponseEntity<>(

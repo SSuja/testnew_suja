@@ -24,7 +24,6 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @CrossOrigin(origins = "*")
@@ -40,7 +39,6 @@ public class MaterialCategoryController {
 
   // Add Material Category
   @PostMapping(value = EndpointURI.MATERIAL_CATEGORY)
-  @PreAuthorize("hasAuthority('add_material_category')")
   public ResponseEntity<Object> createMaterialCategory(
       @Valid @RequestBody MaterialCategoryDto materialCategoryDto) {
     if (materialCategoryService.isNameExist(materialCategoryDto.getName())) {
@@ -59,7 +57,6 @@ public class MaterialCategoryController {
 
   // Get All Material Category
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORIES)
-  @PreAuthorize("hasAuthority('get_material_category')")
   public ResponseEntity<Object> getAllMaterialCategory() {
     logger.debug("get all material categories");
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORIES,
@@ -83,7 +80,6 @@ public class MaterialCategoryController {
 
   // Delete Material Category
   @DeleteMapping(value = EndpointURI.DELETE_MATERIAL_CATEGORY)
-  @PreAuthorize("hasAuthority('delete_material_category')")
   public ResponseEntity<Object> deleteMaterialCategory(@PathVariable Long id) {
     if (materialCategoryService.isMaterialCategoryExist(id)) {
       logger.debug("delete material by id");
@@ -98,7 +94,6 @@ public class MaterialCategoryController {
 
   // Update Material Category
   @PutMapping(value = EndpointURI.MATERIAL_CATEGORY)
-  @PreAuthorize("hasAuthority('edit_material_category')")
   public ResponseEntity<Object> updateMaterialCategory(
       @Valid @RequestBody MaterialCategoryDto materialCategoryDto) {
     if (materialCategoryService.isMaterialCategoryExist(materialCategoryDto.getId())) {
