@@ -81,9 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.EMPLOYEE).hasAnyAuthority(PermissionConstants.CREATE_EMPLOYEE)
         .antMatchers(HttpMethod.PUT,EndpointURI.EMPLOYEE).hasAnyAuthority(PermissionConstants.EDIT_EMPLOYEE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.EMPLOYEE_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_EMPLOYEE)
-        .anyRequest().authenticated();
-        .antMatchers("/api/v1/auth/**").permitAll().antMatchers("/swagger-ui.html").permitAll()
-        .antMatchers(HttpMethod.GET, EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT)
+        
         // material category
         .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_CATEGORY)
