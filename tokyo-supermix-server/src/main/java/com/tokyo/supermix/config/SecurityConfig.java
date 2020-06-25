@@ -91,19 +91,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.PLANT_EQUIPMENT).hasAnyAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.PUT,EndpointURI.PLANT_EQUIPMENT).hasAnyAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_PLANT_EQUIPMENT).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT)
-     // material equipment plant
+        // material equipment plant
         .antMatchers(HttpMethod.GET,EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS).hasAnyAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.POST,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.PUT,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT_CALIBRATION)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT_CALIBRATION)
-       
-       ;
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT_CALIBRATION)         
         // supplier category
         .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIER_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_SUPPLIER_CATEGORY)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY);   
- 
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)
+        // project
+        .antMatchers(HttpMethod.GET, EndpointURI.PROJECTS).hasAnyAuthority(PermissionConstants.VIEW_PROJECT)
+        .antMatchers(HttpMethod.POST, EndpointURI.PROJECT).hasAnyAuthority(PermissionConstants.CREATE_PROJECT)
+        .antMatchers(HttpMethod.PUT, EndpointURI.PROJECT).hasAnyAuthority(PermissionConstants.EDIT_PROJECT)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.PROJECT_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_PROJECT)
+        // pour
+        .antMatchers(HttpMethod.GET, EndpointURI.POURS).hasAnyAuthority(PermissionConstants.VIEW_POUR)
+        .antMatchers(HttpMethod.POST, EndpointURI.POUR).hasAnyAuthority(PermissionConstants.CREATE_POUR)
+        .antMatchers(HttpMethod.PUT, EndpointURI.POUR).hasAnyAuthority(PermissionConstants.EDIT_POUR)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_POUR).hasAnyAuthority(PermissionConstants.DELETE_POUR)
+        ;   
+    
     
     
     // .anyRequest().authenticated();
