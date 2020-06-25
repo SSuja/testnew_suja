@@ -596,6 +596,9 @@ public final class EndpointURI {
       PARAMETER_EQUATION_ELEMENT + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
       PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_TEST_PARAMETER =
+      PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "test-parameter" + SLASH
+          + "{testParameterId}";
   /*
    * Finish Product Trial apis
    */

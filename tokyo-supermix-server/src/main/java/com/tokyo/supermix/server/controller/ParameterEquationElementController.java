@@ -163,4 +163,21 @@ public class ParameterEquationElementController {
           validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
     }
   }
+
+  @GetMapping(value = EndpointURI.PARAMETER_EQUATION_ELEMENT_BY_TEST_PARAMETER)
+  public ResponseEntity<Object> getByTestParameter(@PathVariable Long testParameterId) {
+    if (testParameterService.isTestParameterExist(testParameterId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.PARAMETER_EQUATION_ELEMENT,
+              mapper.map(parameterEquationElementService.getByTestParameter(testParameterId),
+                  ParameterEquationElementResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Equation Element record exist for given Test Parameter id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
+          validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }

@@ -60,4 +60,10 @@ public class ParameterEquationElementServiceImpl implements ParameterEquationEle
   public List<ParameterEquationElement> getByParameterEquationId(Long parameterEquationId) {
     return parameterEquationElementRepository.findByParameterEquationId(parameterEquationId);
   }
+
+  @Transactional(readOnly = true)
+  public List<ParameterEquationElement> getByTestParameter(Long testParameterId) {
+    return parameterEquationElementRepository
+        .findByParameterEquationTestParameterId(testParameterId);
+  }
 }
