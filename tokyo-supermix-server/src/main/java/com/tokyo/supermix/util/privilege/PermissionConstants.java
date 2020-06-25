@@ -71,7 +71,6 @@ public final class PermissionConstants {
   public static final String CREATE_CUSTOMER= "create_customer";
   public static final String EDIT_CUSTOMER = "edit_customer";
   public static final String DELETE_CUSTOMER = "delete_customer";
-  
   /* project */
   public static final String VIEW_PROJECT = "view_project";
   public static final String CREATE_PROJECT= "create_project";
@@ -102,5 +101,21 @@ public final class PermissionConstants {
   public static final String CREATE_PROCESS_SAMPLE_LOAD= "create_process_sample load";
   public static final String EDIT_PROCESS_SAMPLE_LOAD = "edit_process_sample load";
   public static final String DELETE_PROCESS_SAMPLE_LOAD = "delete_process_sample load";
+  /* Incoming Sample */
+  public static final String VIEW_INCOMING_SAMPLE = "view_incoming_sample";
+  public static final String CREATE_INCOMING_SAMPLE= "create_incoming_sample";
+  public static final String EDIT_INCOMING_SAMPLE = "edit_incoming_sample";
+  public static final String DELETE_INCOMING_SAMPLE = "delete_incoming_sample";
+  /* user */
+  public static final String VIEW_USER = "view_user";
+  public static final String CREATE_USER= "create_user";
+  public static final String EDIT_USER_STATUS = "edit_user_status";
+  public static final String EDIT_USER_ROLE = "edit_user_role";
+  public static final String DELETE_USER = "delete_user";
+  /* finish product */
+  public static final String VIEW_FINISH_PRODUCT = "view_finish_product_sample";
+  public static final String CREATE_FINISH_PRODUCT= "create_finish_product_sample";
+  public static final String EDIT_FINISH_PRODUCT = "edit_finish_product_sample";
+  public static final String DELETE_FINISH_PRODUCT = "delete_finish_product_sample";
  
 }
