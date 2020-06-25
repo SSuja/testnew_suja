@@ -70,9 +70,9 @@ public class PlantRoleController {
         privilegeValidationFailureStatusCodes.getRoleNotExists()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE)
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLES)
   public ResponseEntity<Object> getPlantRoles() {
-    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSION,
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ROLES,
         mapper.map(plantRoleService.getAllPlantRole(), PlantRoleDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
@@ -80,7 +80,7 @@ public class PlantRoleController {
   @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_BY_ROLE_NAME)
   public ResponseEntity<Object> getPlantRolesByRoleName(@PathVariable String roleName) {
     if (roleService.existsByRoleName(roleName)) {
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSION,
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_ROLES,
           mapper.map(plantRoleService.getPlantRolesByRoleName(roleName), PlantRoleDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }

@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //plant
         .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAuthority(PermissionConstants.VIEW_PLANT)
         .antMatchers(HttpMethod.POST,EndpointURI.PLANT).hasAuthority(PermissionConstants.CREATE_PLANT)
-        .antMatchers(HttpMethod.PUT,EndpointURI.PLANT_BY_CODE).hasAuthority(PermissionConstants.EDIT_PLANT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.PLANT).hasAuthority(PermissionConstants.EDIT_PLANT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.PLANT_BY_CODE).hasAuthority(PermissionConstants.DELETE_PLANT)
         //congrete mixer
         .antMatchers(HttpMethod.GET,EndpointURI.CONCRETE_MIXERS).hasAuthority(PermissionConstants.VIEW_CONCRETE_MIXER)
@@ -92,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_STATES).hasAuthority(PermissionConstants.VIEW_MATERIAL_STATE)
         .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
         .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_STATE).hasAuthority(PermissionConstants.EDIT_MATERIAL_STATE)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_MATERIAL_STATE).hasAuthority(PermissionConstants.DELETE_MATERIAL_STATE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_STATE_BY_ID).hasAuthority(PermissionConstants.DELETE_MATERIAL_STATE)
         // material sub category
         .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SUB_CATEGORIES).hasAuthority(PermissionConstants.VIEW_MATERIAL_SUB_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_SUB_CATEGORY).hasAuthority(PermissionConstants.CREATE_MATERIAL_SUB_CATEGORY)
@@ -153,10 +153,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.CREATE_ROLE)
         .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.EDIT_ROLE)
         .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAuthority(PermissionConstants.DELETE_ROLE) 
-
-    ;
-    // Add our custom JWT security filter
-    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-    http.headers().cacheControl();
+//        .anyRequest().authenticated()
+        ;
+        // Add our custom JWT security filter
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.headers().cacheControl();
   }
 }
