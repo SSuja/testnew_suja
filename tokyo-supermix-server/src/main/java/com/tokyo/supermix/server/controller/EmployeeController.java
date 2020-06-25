@@ -1,13 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EmployeeRequestDto;
@@ -48,7 +45,6 @@ public class EmployeeController {
 
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
-  @PreAuthorize("hasAuthority('add_employee')")
   public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
     if (employeeService.isEmailExist(employeeDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
@@ -62,8 +58,7 @@ public class EmployeeController {
   }
 
   // Delete Employee
-  @DeleteMapping(value = EndpointURI.DELETE_EMPLOYEE)
-  @PreAuthorize("hasAuthority('delete_employee')")
+  @DeleteMapping(value = EndpointURI.EMPLOYEE_BY_ID)
   public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
     if (employeeService.isEmployeeExist(id)) {
       logger.debug("delete employee by id");
@@ -76,7 +71,7 @@ public class EmployeeController {
   }
 
   // Get Employee By Id
-  @GetMapping(value = EndpointURI.GET_EMPLOYEE_BY_ID)
+  @GetMapping(value = EndpointURI.EMPLOYEE_BY_ID)
   public ResponseEntity<Object> getEmployeeById(@PathVariable Long id) {
     if (employeeService.isEmployeeExist(id)) {
       logger.debug("Get Employee By Id");
@@ -89,8 +84,7 @@ public class EmployeeController {
   }
 
   // Update Employee
-  @PutMapping(value = EndpointURI.UPDATE_EMPLOYEE)
-  @PreAuthorize("hasAuthority('edit_employee')")
+  @PutMapping(value = EndpointURI.EMPLOYEE)
   public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
     if (employeeService.isEmployeeExist(employeeDto.getId())) {
       if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
@@ -109,7 +103,6 @@ public class EmployeeController {
 
   /* Get All Employees */
   @GetMapping(value = EndpointURI.EMPLOYEES)
-  @PreAuthorize("hasAuthority('get_employee')")
   public ResponseEntity<Object> getAllEmployees() {
     logger.debug("get all employee");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,

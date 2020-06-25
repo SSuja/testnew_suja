@@ -61,8 +61,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers("/api/v1/auth/**").permitAll()
         .antMatchers("/swagger-ui.html").permitAll()
-        .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT);
-    // .anyRequest().authenticated();
+        //plant
+        .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT)
+        .antMatchers(HttpMethod.POST,EndpointURI.PLANT).hasAnyAuthority(PermissionConstants.CREATE_PLANT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.PLANT_BY_CODE).hasAnyAuthority(PermissionConstants.EDIT_PLANT)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.PLANT_BY_CODE).hasAnyAuthority(PermissionConstants.DELETE_PLANT)
+        //congrete mixer
+        .antMatchers(HttpMethod.GET,EndpointURI.CONCRETE_MIXERS).hasAnyAuthority(PermissionConstants.VIEW_CONCRETE_MIXER)
+        .antMatchers(HttpMethod.POST,EndpointURI.CONCRETE_MIXER).hasAnyAuthority(PermissionConstants.CREATE_CONCRETE_MIXER)
+        .antMatchers(HttpMethod.PUT,EndpointURI.CONCRETE_MIXER).hasAnyAuthority(PermissionConstants.EDIT_CONCRETE_MIXER)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.CONCRETE_MIXER_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_CONCRETE_MIXER)
+      //designation
+        .antMatchers(HttpMethod.GET,EndpointURI.DESIGNATIONS).hasAnyAuthority(PermissionConstants.VIEW_DESIGNATION)
+        .antMatchers(HttpMethod.POST,EndpointURI.DESIGNATION).hasAnyAuthority(PermissionConstants.CREATE_DESIGNATION)
+        .antMatchers(HttpMethod.PUT,EndpointURI.DESIGNATION).hasAnyAuthority(PermissionConstants.EDIT_DESIGNATION)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DESIGNATION_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_DESIGNATION)
+      //employee
+        .antMatchers(HttpMethod.GET,EndpointURI.EMPLOYEES).hasAnyAuthority(PermissionConstants.VIEW_EMPLOYEE)
+        .antMatchers(HttpMethod.POST,EndpointURI.EMPLOYEE).hasAnyAuthority(PermissionConstants.CREATE_EMPLOYEE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.EMPLOYEE).hasAnyAuthority(PermissionConstants.EDIT_EMPLOYEE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.EMPLOYEE_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_EMPLOYEE)
+        .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     http.headers().cacheControl();
