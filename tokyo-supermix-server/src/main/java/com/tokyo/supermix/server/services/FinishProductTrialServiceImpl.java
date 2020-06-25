@@ -11,10 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
@@ -32,6 +35,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   private FinishProductTestRepository finishProductTestRepository;
   @Autowired
   private TestParameterRepository testParameterRepository;
+  @Autowired
+  FinishProductSampleRepository finishProductSampleRepository;
+  @Autowired
+  private FinishProductParameterResultRepository finishProductParameterResultRepository;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -59,15 +66,29 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
+    saveFinishProductTrial(finishProductTrial);
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.getOne(finishProductTrial.getFinishProductTest().getId());
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishProductTest.getFinishProductSample().getId()).get();
     if (finishProductTrial.getTestParameter() != null) {
       FinishProductParameterResult finishProductParameterResult =
           new FinishProductParameterResult();
-      finishProductParameterResult.setFinishProductSample(
-          finishProductTrial.getFinishProductTest().getFinishProductSample());
+      finishProductParameterResult.setFinishProductSample(finishProductSample);
       finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
-      finishProductParameterResult.setResult(averageStrength(finishProductTrial));
-    }
+      if (finishProductTest.getTestConfigure().getTest().getName().equalsIgnoreCase("slump")) {
+        finishProductParameterResult.setResult(finishProductTrial.getValue());
+      } else {
 
+      }
+      finishProductParameterResultRepository.save(finishProductParameterResult);
+      finishProductTest.setResult(finishProductParameterResult.getResult());
+      finishProductTestRepository.save(finishProductTest);
+
+    } else {
+      finishProductTest.setResult(finishProductTrial.getValue());
+      finishProductTestRepository.save(finishProductTrial.getFinishProductTest());
+    }
   }
 
   public String getEquation(Long finidhProductTestId) {
@@ -75,34 +96,35 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         .getFormula();
   }
 
-  // public void calculateSlumpGradeRatio(FinishProductTrial finishProductTrial, double slump) {
-  // HashMap<String, Double> map = new HashMap<>();
-  // FinishProductTest finishProductTest = finishProductTestRepository
-  // .findById(finishProductTrial.getFinishProductTest().getId()).get();
-  // List<TestParameter> testParameterList = testParameterRepository.findByTestConfigureId(
-  // finishProductTrial.getFinishProductTest().getTestConfigure().getId());
-  //
-  // for (TestParameter testParameter : testParameterList) {
-  //
-  // }
-  // return ftinishProductTest;
-  //
-  // }
-
   public double averageStrength(FinishProductTrial finishProductTrial) {
     FinishProductTest finishProductTest = finishProductTestRepository
         .findById(finishProductTrial.getFinishProductTest().getId()).get();
     List<FinishProductTrial> finishProductTrialList = finishProductTrialRepository
         .findByFinishProductTestId(finishProductTrial.getFinishProductTest().getId());
-    double sumOfStrength = 0;
-    double count = 0;
-    if (finishProductTest.getTestConfigure().getDays() != 0) {
-      for (FinishProductTrial finishProductTrial1 : finishProductTrialList) {
-        sumOfStrength = sumOfStrength + finishProductTrial1.getValue();
-        count++;
+    double strengthResult = 0;
+    double trialNo = 0;
+    for (FinishProductTrial finishProductTrial1 : finishProductTrialList) {
+      if (finishProductTest.getTestConfigure().getDays() != 0) {
+        strengthResult = strengthResult + finishProductTrial1.getValue();
+        trialNo++;
+      } else {
       }
     }
-    return (sumOfStrength / count);
+    return (strengthResult / trialNo);
+
+  }
+
+  public void calculateSlumpGradeRatio(FinishProductTrial finishProductTrial, double slump) {
+    HashMap<String, Double> map = new HashMap<>();
+    FinishProductTest finishProductTest = finishProductTestRepository
+        .findById(finishProductTrial.getFinishProductTest().getId()).get();
+    List<TestParameter> testParameterList = testParameterRepository.findByTestConfigureId(
+        finishProductTrial.getFinishProductTest().getTestConfigure().getId());
+
+    for (TestParameter testParameter : testParameterList) {
+
+    }
+
   }
 
   private Double roundDoubleValue(Double value) {
@@ -141,12 +163,4 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
     return result;
   }
-
-  @Override
-  public void updateFinishProductResult(FinishProductTest finishProductTest) {
-    // TODO Auto-generated method stub
-    
-  }
-
-
 }

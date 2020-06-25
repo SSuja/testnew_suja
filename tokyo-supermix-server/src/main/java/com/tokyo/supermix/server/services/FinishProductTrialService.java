@@ -16,5 +16,5 @@ public interface FinishProductTrialService {
 
   public boolean isFinishProductTrialExists(Long id);
   
-  public void updateFinishProductResult(FinishProductTest finishProductTest);
+  public void updateFinishProductResult(FinishProductTrial finishProductTrial);
 }
