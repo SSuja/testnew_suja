@@ -95,7 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS).hasAnyAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.POST,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.PUT,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT_CALIBRATION)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT_CALIBRATION)         
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT_CALIBRATION)
         // supplier category
         .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIER_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_SUPPLIER_CATEGORY)
@@ -113,6 +113,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_POUR).hasAnyAuthority(PermissionConstants.DELETE_POUR)
         ;   
     
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
+        // unit
+        .antMatchers(HttpMethod.GET, EndpointURI.UNITS).hasAnyAuthority(PermissionConstants.VIEW_UNIT)
+        .antMatchers(HttpMethod.POST, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.CREATE_UNIT)
+        .antMatchers(HttpMethod.PUT, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.EDIT_UNIT)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_UNIT_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_UNIT) 
+        // customer
+        .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMERS).hasAnyAuthority(PermissionConstants.VIEW_CUSTOMER)
+        .antMatchers(HttpMethod.POST, EndpointURI.CUSTOMER).hasAnyAuthority(PermissionConstants.CREATE_CUSTOMER)
+        .antMatchers(HttpMethod.PUT, EndpointURI.CUSTOMER).hasAnyAuthority(PermissionConstants.EDIT_CUSTOMER)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_CUSTOMER).hasAnyAuthority(PermissionConstants.DELETE_CUSTOMER); 
+
     
     
     // .anyRequest().authenticated();

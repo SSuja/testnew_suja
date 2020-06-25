@@ -58,16 +58,16 @@ public final class PermissionConstants {
   public static final String CREATE_SUPPLIER_CATEGORY = "create_supplier_category";
   public static final String EDIT_SUPPLIER_CATEGORY = "edit_supplier_category";
   public static final String DELETE_SUPPLIER_CATEGORY = "delete_supplier_category";
-  /*  project  */
-  public static final String VIEW_PROJECT = "view_project";
-  public static final String CREATE_PROJECT = "create_project";
-  public static final String EDIT_PROJECT = "edit_project";
-  public static final String DELETE_PROJECT = "delete_project";
-  /*  pour  */
-  public static final String VIEW_POUR = "view_pour";
-  public static final String CREATE_POUR = "create_pour";
-  public static final String EDIT_POUR = "edit_pour";
-  public static final String DELETE_POUR = "delete_pour";
+  /* unit */
+  public static final String VIEW_UNIT = "view_unit";
+  public static final String CREATE_UNIT= "create_unit";
+  public static final String EDIT_UNIT = "edit_unit";
+  public static final String DELETE_UNIT = "delete_unit";
+  /* customer */
+  public static final String VIEW_CUSTOMER = "view_customer";
+  public static final String CREATE_CUSTOMER= "create_customer";
+  public static final String EDIT_CUSTOMER = "edit_customer";
+  public static final String DELETE_CUSTOMER = "delete_customer";
   
  
  
