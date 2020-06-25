@@ -71,6 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
         .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_STATE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_MATERIAL_STATE).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_STATE)
+        // material sub category
+        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SUB_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_SUB_CATEGORY)
+        .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_SUB_CATEGORY)
+        .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_SUB_CATEGORY)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_SUB_CATEGORY)   
         // material raw materials
         .antMatchers(HttpMethod.GET,EndpointURI.RAW_MATERIALS).hasAnyAuthority(PermissionConstants.VIEW_RAW_MATERIAL)
         .antMatchers(HttpMethod.POST,EndpointURI.RAW_MATERIAL).hasAnyAuthority(PermissionConstants.CREATE_RAW_MATERIAL)
@@ -93,6 +98,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT_CALIBRATION)
        
        ;
+        // supplier category
+        .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIER_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_SUPPLIER_CATEGORY)
+        .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_SUPPLIER_CATEGORY)
+        .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_SUPPLIER_CATEGORY)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY);   
+ 
     
     
     // .anyRequest().authenticated();

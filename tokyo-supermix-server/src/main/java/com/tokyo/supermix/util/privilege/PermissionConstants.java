@@ -11,13 +11,16 @@ public final class PermissionConstants {
   public static final String CREATE_MATERIAL_CATEGORY = "create_material_category";
   public static final String EDIT_MATERIAL_CATEGORY = "edit_material_category";
   public static final String DELETE_MATERIAL_CATEGORY = "delete_material_category";
-  /*
-  material_state
-  */
+  /*  material_state    */
   public static final String VIEW_MATERIAL_STATE = "view_material_state";
   public static final String CREATE_MATERIAL_STATE = "create_material_state";
   public static final String EDIT_MATERIAL_STATE = "edit_material_state";
   public static final String DELETE_MATERIAL_STATE = "delete_material_state";
+  /*  material sub category  */
+  public static final String VIEW_MATERIAL_SUB_CATEGORY = "view_material_sub_category";
+  public static final String CREATE_MATERIAL_SUB_CATEGORY = "create_material_sub_category";
+  public static final String EDIT_MATERIAL_SUB_CATEGORY = "edit_material_sub_category";
+  public static final String DELETE_MATERIAL_SUB_CATEGORY = "delete_material_sub_category";
   
   /*
   raw_material
@@ -50,5 +53,12 @@ public final class PermissionConstants {
    public static final String CREATE_PLANT_EQUIPMENT_CALIBRATION = "create_plant_equipment_calibration";
    public static final String EDIT_PLANT_EQUIPMENT_CALIBRATION = "edit_plant_equipment_calibration";
    public static final String DELETE_PLANT_EQUIPMENT_CALIBRATION = "delete_plant_equipment_calibration";
+  /*  supplier category  */
+  public static final String VIEW_SUPPLIER_CATEGORY = "view_supplier_category";
+  public static final String CREATE_SUPPLIER_CATEGORY = "create_supplier_category";
+  public static final String EDIT_SUPPLIER_CATEGORY = "edit_supplier_category";
+  public static final String DELETE_SUPPLIER_CATEGORY = "delete_supplier_category";
+  
+ 
  
 }
