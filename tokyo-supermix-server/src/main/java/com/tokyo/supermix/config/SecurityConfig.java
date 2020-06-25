@@ -112,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.PLANT_EQUIPMENT).hasAnyAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.PUT,EndpointURI.PLANT_EQUIPMENT).hasAnyAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_PLANT_EQUIPMENT).hasAnyAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT)
-        // material equipment plant
+        // material equipment plant calibrarion
         .antMatchers(HttpMethod.GET,EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS).hasAnyAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.POST,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.PUT,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAnyAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT_CALIBRATION)
@@ -131,8 +131,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.POURS).hasAnyAuthority(PermissionConstants.VIEW_POUR)
         .antMatchers(HttpMethod.POST, EndpointURI.POUR).hasAnyAuthority(PermissionConstants.CREATE_POUR)
         .antMatchers(HttpMethod.PUT, EndpointURI.POUR).hasAnyAuthority(PermissionConstants.EDIT_POUR)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_POUR).hasAnyAuthority(PermissionConstants.DELETE_POUR)
-         // unit
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_POUR).hasAnyAuthority(PermissionConstants.DELETE_POUR)          
+        // unit
         .antMatchers(HttpMethod.GET, EndpointURI.UNITS).hasAnyAuthority(PermissionConstants.VIEW_UNIT)
         .antMatchers(HttpMethod.POST, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.CREATE_UNIT)
         .antMatchers(HttpMethod.PUT, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.EDIT_UNIT)

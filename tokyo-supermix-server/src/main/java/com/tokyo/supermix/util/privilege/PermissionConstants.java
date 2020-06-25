@@ -84,6 +84,7 @@ public final class PermissionConstants {
   public static final String CREATE_CUSTOMER= "create_customer";
   public static final String EDIT_CUSTOMER = "edit_customer";
   public static final String DELETE_CUSTOMER = "delete_customer";
+  
   /* project */
   public static final String VIEW_PROJECT = "view_project";
   public static final String CREATE_PROJECT= "create_project";
