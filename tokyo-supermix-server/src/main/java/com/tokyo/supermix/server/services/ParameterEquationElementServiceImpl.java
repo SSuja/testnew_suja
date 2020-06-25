@@ -13,12 +13,6 @@ public class ParameterEquationElementServiceImpl implements ParameterEquationEle
   @Autowired
   private ParameterEquationElementRepository parameterEquationElementRepository;
 
-  @Transactional
-  public List<ParameterEquationElement> saveParameterEquationElement(
-      List<ParameterEquationElement> parameterEquationElement) {
-    return parameterEquationElementRepository.saveAll(parameterEquationElement);
-  }
-
   @Transactional(readOnly = true)
   public boolean isDuplicateEntryExist(Long parameterEquationId, Long testParameterId) {
     return parameterEquationElementRepository
@@ -43,12 +37,6 @@ public class ParameterEquationElementServiceImpl implements ParameterEquationEle
   @Transactional(propagation = Propagation.NEVER)
   public void deleteParameterEquationElement(Long id) {
     parameterEquationElementRepository.deleteById(id);
-  }
-
-  @Transactional
-  public ParameterEquationElement updateParameterEquationElement(
-      ParameterEquationElement parameterEquationElement) {
-    return parameterEquationElementRepository.save(parameterEquationElement);
   }
 
   @Transactional(readOnly = true)

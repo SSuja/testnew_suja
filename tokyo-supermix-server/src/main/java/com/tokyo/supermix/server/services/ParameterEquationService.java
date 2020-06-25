@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 
 public interface ParameterEquationService {
-  public List<ParameterEquation> saveParameterEquation(List<ParameterEquation> parameterEquation);
+  public void saveParameterEquation(ParameterEquation parameterEquation);
 
   public boolean isEquationIdAndTestParameterId(Long equationId, Long testParameterId);
 
