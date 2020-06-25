@@ -83,7 +83,7 @@ public class PlantController {
   }
 
   // get plant by id
-  @GetMapping(value = EndpointURI.GET_PLANT_BY_CODE)
+  @GetMapping(value = EndpointURI.PLANT_BY_CODE)
   public ResponseEntity<Object> getPlantByCode(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       logger.debug("Get plant by plantCode ");
@@ -111,7 +111,7 @@ public class PlantController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_PLANT_BY_CODE)
+  @DeleteMapping(value = EndpointURI.PLANT_BY_CODE)
   public ResponseEntity<Object> deletePlant(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       plantService.deletePlant(code);

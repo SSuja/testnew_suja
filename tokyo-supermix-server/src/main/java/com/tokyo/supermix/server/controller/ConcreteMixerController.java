@@ -30,30 +30,21 @@ import com.tokyo.supermix.server.services.ConcreteMixerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
-
-
 @RestController
 @CrossOrigin(origins = "*")
 public class ConcreteMixerController {
-
   @Autowired
   private ConcreteMixerService concreteMixerService;
-
   @Autowired
   private PlantService plantService;
-
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
   private static final Logger logger = Logger.getLogger(ConcreteMixerController.class);
 
   // create concrete mixer api
   @PostMapping(value = EndpointURI.CONCRETE_MIXER)
-  @PreAuthorize("hasAuthority('add_concrete_mixer')")
   public ResponseEntity<Object> createConcreteMixer(
       @Valid @RequestBody List<ConcreteMixerRequestDto> concreteMixerDtoList) {
     for (ConcreteMixerRequestDto concreteMixerDto : concreteMixerDtoList) {
@@ -80,7 +71,6 @@ public class ConcreteMixerController {
 
   // get all concrete mixer api
   @GetMapping(value = EndpointURI.CONCRETE_MIXERS)
-  @PreAuthorize("hasAuthority('get_concrete_mixer')")
   public ResponseEntity<Object> getAllConcreteMixers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_MIXERS,
         mapper.map(concreteMixerService.getAllConcreteMixers(), ConcreteMixerResponseDto.class),
@@ -88,8 +78,7 @@ public class ConcreteMixerController {
   }
 
   // delete concrete mixer api
-  @DeleteMapping(value = EndpointURI.GET_CONCRETE_MIXER_BY_ID)
-  @PreAuthorize("hasAuthority('delete_concrete_mixer')")
+  @DeleteMapping(value = EndpointURI.CONCRETE_MIXER_BY_ID)
   public ResponseEntity<Object> deleteConcreteMixer(@PathVariable Long id) {
     if (concreteMixerService.isConcreteMixerExist(id)) {
       concreteMixerService.deleteConcreteMixer(id);
@@ -103,7 +92,7 @@ public class ConcreteMixerController {
   }
 
   // get concrete mixer by id api
-  @GetMapping(value = EndpointURI.GET_CONCRETE_MIXER_BY_ID)
+  @GetMapping(value = EndpointURI.CONCRETE_MIXER_BY_ID)
   public ResponseEntity<Object> getConcreteMixerById(@PathVariable Long id) {
     if (concreteMixerService.isConcreteMixerExist(id)) {
       logger.debug("Id found");
@@ -118,7 +107,6 @@ public class ConcreteMixerController {
 
   // update concrete mixer api
   @PutMapping(value = EndpointURI.CONCRETE_MIXER)
-  @PreAuthorize("hasAuthority('edit_concrete_mixer')")
   public ResponseEntity<Object> updateConcreteMixer(
       @Valid @RequestBody ConcreteMixerRequestDto concreteMixerDto) {
     if (concreteMixerService.isConcreteMixerExist(concreteMixerDto.getId())) {
