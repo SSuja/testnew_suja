@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,8 +47,7 @@ public class PlantEquipmentCalibrationController {
 
   // post API for PlantEquipmentCalibration
   @PostMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
-  @PreAuthorize("hasAuthority('add_plant_equipment_calibration')")
-  public ResponseEntity<Object> createPlantEquipmentCalibration(
+   public ResponseEntity<Object> createPlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
@@ -70,7 +68,6 @@ public class PlantEquipmentCalibrationController {
 
   // get all PlantEquipmentCalibration
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS)
-  @PreAuthorize("hasAuthority('get_plant_equipment_calibration')")
   public ResponseEntity<Object> getAllPlantEquipmentCalibrations() {
     return new ResponseEntity<Object>(
         new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
@@ -101,7 +98,6 @@ public class PlantEquipmentCalibrationController {
 
   // DELETE API for PlantEquipmentCalibration
   @DeleteMapping(value = EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION)
-  @PreAuthorize("hasAuthority('delete_plant_equipment_calibration')")
   public ResponseEntity<Object> deletePlantEquipmentCalibration(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
       plantEquipmentCalibrationService.deletePlantEquipmentCalibration(id);
@@ -117,8 +113,7 @@ public class PlantEquipmentCalibrationController {
 
   // update API for PlantEquipmentCalibration
   @PutMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
-  @PreAuthorize("hasAuthority('edit_plant_equipment_calibration')")
-  public ResponseEntity<Object> updatePlantEquipmentCalibration(
+   public ResponseEntity<Object> updatePlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {

@@ -149,13 +149,13 @@ public final class EndpointURI {
    * PlantEquipment
    * 
    */
-  public static final String PLANTEQUIPMENT = BASE_API_PATH + "plantequipment";
-  public static final String PLANTEQUIPMENTS = BASE_API_PATH + "plantequipments";
-  public static final String DELETE_PLANTEQUIPMENT = PLANTEQUIPMENT + SERIALNO;
-  public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANTEQUIPMENT + SERIALNO;
-  public static final String PLANTEQUIPMENT_SEARCH = PLANTEQUIPMENT + SEARCH;
+  public static final String PLANT_EQUIPMENT = BASE_API_PATH + "plantequipment";
+  public static final String PLANT_EQUIPMENTS = BASE_API_PATH + "plantequipments";
+  public static final String DELETE_PLANT_EQUIPMENT = PLANT_EQUIPMENT + SERIALNO;
+  public static final String GET_PLANTEQUIPMENT_BY_SERIALNO = PLANT_EQUIPMENT + SERIALNO;
+  public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH;
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
-      PLANTEQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
+      PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
   /*
    * Customer apis
    */
