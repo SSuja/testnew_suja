@@ -14,4 +14,8 @@ public interface FinishProductTestService {
   public void deleteFinishProductTest(Long id);
 
   boolean isFinishProductTestExists(Long id);
+
+  List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId);
+
+  boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId);
 }

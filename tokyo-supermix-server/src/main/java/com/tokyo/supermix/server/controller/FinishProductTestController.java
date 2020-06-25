@@ -99,4 +99,18 @@ public class FinishProductTestController {
         validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
   }
 
+  @GetMapping(value = EndpointURI.GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE)
+  public ResponseEntity<Object> getFinishProductSampleTestByTestConfigure(
+      @PathVariable Long testConfigureId) {
+    if (finishProductTestService.isFinishProductTestExistsByTestConfigure(testConfigureId)) {
+      logger.debug("Get By Id");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
+          mapper.map(
+              finishProductTestService.getAllFinishProductTestsByTestConfigure(testConfigureId),
+              FinishProductTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
