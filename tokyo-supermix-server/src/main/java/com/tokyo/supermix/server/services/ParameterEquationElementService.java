@@ -24,4 +24,6 @@ public interface ParameterEquationElementService {
 
   public List<ParameterEquationElement> getByParameterEquationId(Long parameterEquationId);
 
+  public List<ParameterEquationElement> getByTestParameter(Long testParameterId);
+
 }
