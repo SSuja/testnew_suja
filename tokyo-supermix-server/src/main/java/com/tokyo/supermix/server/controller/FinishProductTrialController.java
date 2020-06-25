@@ -50,17 +50,9 @@ public class FinishProductTrialController {
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
   public String saveFinishProductTrial(
       @Valid @RequestBody FinishProductTrialRequestDto finishProductTrialRequestDto) {
-
-//    finishProductTrialService
-//        .saveFinishProductTrial(mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
-    finishProductTrialService.updateFinishProductResult(
-        mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_TRIAL_SUCCESS),
-        HttpStatus.OK);
-
     return finishProductTrialService
         .saveFinishProductTrial(mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
+
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)

@@ -4,16 +4,11 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 
 public interface FinishProductTrialService {
-
   public List<FinishProductTrial> getAllFinishProductTrials();
 
   public FinishProductTrial getFinishProductTrialByCode(String code);
 
   public String saveFinishProductTrial(FinishProductTrial finishProductTrial);
-
-  public void deleteFinishProductTrial(Long id);
-
-  public boolean isFinishProductTrialExists(Long id);
   
   public void updateFinishProductResult(FinishProductTrial finishProductTrial);
 

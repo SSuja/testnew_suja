@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.FinishProductTrialDto;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
@@ -96,64 +98,106 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
     saveFinishProductTrial(finishProductTrial);
     FinishProductTest finishProductTest =
-        finishProductTestRepository.getOne(finishProductTrial.getFinishProductTest().getId());
+        finishProductTestRepository.getOne(finishProductTrial.getFinishProductTest().getCode());
     FinishProductSample finishProductSample = finishProductSampleRepository
         .findById(finishProductTest.getFinishProductSample().getId()).get();
+    FinishProductParameterResult finishProductParameterResult = new FinishProductParameterResult();
     if (finishProductTrial.getTestParameter() != null) {
-      FinishProductParameterResult finishProductParameterResult =
-          new FinishProductParameterResult();
-      finishProductParameterResult.setFinishProductSample(finishProductSample);
-      finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
-      if (finishProductTest.getTestConfigure().getTest().getName().equalsIgnoreCase("slump")) {
-        finishProductParameterResult.setResult(finishProductTrial.getValue());
-      } else {
 
+       finishProductParameterResult.setFinishProductSample(finishProductSample);
+       finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
+      if (finishProductTest.getTestConfigure().getDays() == null) {
+         finishProductParameterResult.setResult(finishProductTrial.getValue());
+        finishProductTest.setStatus(Status.PROCESS);
+        finishProductSample.setStatus(
+            getSlumpTestStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
+                finishProductTrial.getValue()));
+        finishProductSampleRepository.save(finishProductSample);
+         calculateGradeRatio(finishProductTrial, finishProductParameterResult.getResult(),
+         getTargetSlump(finishProductSample.getMixDesign().getCode()));
+      } else {
+        finishProductParameterResult
+            .setResult(roundDoubleValue(averageStrength(finishProductTest.getCode())));
+        finishProductTest.setStatus(Status.COMPLETED);
       }
-      finishProductParameterResultRepository.save(finishProductParameterResult);
-      finishProductTest.setResult(finishProductParameterResult.getResult());
+       finishProductParameterResultRepository.save(finishProductParameterResult);
+       finishProductTest.setResult(finishProductParameterResult.getResult());
       finishProductTestRepository.save(finishProductTest);
 
     } else {
       finishProductTest.setResult(finishProductTrial.getValue());
       finishProductTestRepository.save(finishProductTrial.getFinishProductTest());
+      calculateGradeRatio(finishProductTrial, finishProductParameterResult.getResult(),
+          getTargetSlump(finishProductSample.getMixDesign().getCode()));
     }
   }
 
-  public String getEquation(Long finidhProductTestId) {
-    return finishProductTestRepository.getOne(finidhProductTestId).getTestConfigure().getEquation()
-        .getFormula();
+  public String getEquation(String finidhProductTestCode) {
+    return finishProductTestRepository.getOne(finidhProductTestCode).getTestConfigure()
+        .getEquation().getFormula();
   }
 
-  public double averageStrength(FinishProductTrial finishProductTrial) {
-    FinishProductTest finishProductTest = finishProductTestRepository
-        .findById(finishProductTrial.getFinishProductTest().getId()).get();
-    List<FinishProductTrial> finishProductTrialList = finishProductTrialRepository
-        .findByFinishProductTestId(finishProductTrial.getFinishProductTest().getId());
+  public double averageStrength(String finidhProductTestCode) {
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finidhProductTestCode).get();
+    List<FinishProductTrial> finishProductTrialList =
+        finishProductTrialRepository.findByFinishProductTestCode(finidhProductTestCode);
     double strengthResult = 0;
     double trialNo = 0;
-    for (FinishProductTrial finishProductTrial1 : finishProductTrialList) {
+    for (FinishProductTrial finishProductTrial : finishProductTrialList) {
       if (finishProductTest.getTestConfigure().getDays() != 0) {
-        strengthResult = strengthResult + finishProductTrial1.getValue();
-        trialNo++;
-      } else {
+        {
+          if (finishProductTrial.getTestParameter().getParameter().getDays() == finishProductTest
+              .getTestConfigure().getDays()) {
+            strengthResult = strengthResult + finishProductTrial.getValue();
+            trialNo++;
+          }
+        }
       }
     }
-    return (strengthResult / trialNo);
-
+    System.out.println("agggggggggggggggggggggg" + trialNo);
+    System.out.println("summmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm" + strengthResult);
+    System.out.println("tgbyrhhhhhhhhhhhhhhhhhhhhhhhhhhhht" + (strengthResult / trialNo));
+    return roundDoubleValue(strengthResult / trialNo);
   }
 
-  public void calculateSlumpGradeRatio(FinishProductTrial finishProductTrial, double slump) {
+  public void calculateGradeRatio(FinishProductTrial finishProductTrial, double resultValue,
+      double targetValue) {
     HashMap<String, Double> map = new HashMap<>();
     FinishProductTest finishProductTest = finishProductTestRepository
-        .findById(finishProductTrial.getFinishProductTest().getId()).get();
+        .findById(finishProductTrial.getFinishProductTest().getCode()).get();
+    ArrayList<FinishProductTrialDto> finishProductTrialDtoList =
+        new ArrayList<FinishProductTrialDto>();
     List<TestParameter> testParameterList = testParameterRepository.findByTestConfigureId(
         finishProductTrial.getFinishProductTest().getTestConfigure().getId());
-
     for (TestParameter testParameter : testParameterList) {
-
+      FinishProductTrialDto finishProductTrialDto = new FinishProductTrialDto();
+      finishProductTrialDto.setAbb(testParameter.getAbbreviation());
+      finishProductTrialDto.setValue(resultValue);
+      finishProductTrialDto.setValue(targetValue);
+      finishProductTrialDtoList.add(finishProductTrialDto);
+      map.put(finishProductTrialDto.getAbb(), finishProductTrialDto.getValue());
     }
-
+    double value = findResult(map, finishProductTest.getTestConfigure().getEquation().getFormula());
+    System.out.println("valueeeeeeeeeeeeeeeeeeeeee" + value);
   }
+
+  // public double calculateGradeRatio(Long finishProductTestId, double resultValue) {
+  // FinishProductTest finishProductTest =
+  // finishProductTestRepository.findById(finishProductTestId).get();
+  // double gradeRatio = 0;
+  // if (finishProductTest.getTestConfigure().getDays() != 0) {
+  // gradeRatio =
+  // (getTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getCode())
+  // / resultValue);
+  // } else {
+  // gradeRatio =
+  // (getTargetSlump(finishProductTest.getFinishProductSample().getMixDesign().getCode())
+  // / resultValue);
+  // }
+  // System.out.println("ratioooooooooooooo" + gradeRatio);
+  // return roundDoubleValue(gradeRatio);
+  // }
 
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
@@ -177,12 +221,12 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
   }
 
-  private double findResult(HashMap<String, Double> abbrevation, String equation) {
+  public double findResult(HashMap<String, Double> abb, String equation) {
     ScriptEngineManager mgr = new ScriptEngineManager();
     ScriptEngine engine = mgr.getEngineByName("JavaScript");
     double result = 0;
-    for (String i : abbrevation.keySet()) {
-      engine.put(i, abbrevation.get(i));
+    for (String i : abb.keySet()) {
+      engine.put(i, abb.get(i));
     }
     try {
       result = (double) engine.eval(equation);
@@ -192,15 +236,4 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return result;
   }
 
-  @Override
-  public void deleteFinishProductTrial(Long id) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public boolean isFinishProductTrialExists(Long id) {
-    // TODO Auto-generated method stub
-    return false;
-  }
 }
