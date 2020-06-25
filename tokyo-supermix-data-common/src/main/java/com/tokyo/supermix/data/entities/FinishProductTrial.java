@@ -20,7 +20,7 @@ public class FinishProductTrial implements Serializable {
   private Date date;
   private Double value;
   @ManyToOne
-  @JoinColumn(name = "finishProductTestId", nullable = false)
+  @JoinColumn(name = "finishProductTestCode", nullable = false)
   private FinishProductTest finishProductTest;
   @ManyToOne
   @JoinColumn(name = "testParameterId", nullable = true)

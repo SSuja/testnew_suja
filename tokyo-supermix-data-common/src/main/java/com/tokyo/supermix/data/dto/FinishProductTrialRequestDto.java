@@ -9,7 +9,7 @@ public class FinishProductTrialRequestDto {
   private Long testSampleNo;
   private Date date;
   private Double value;
-  private Long finishProductTestId;
+  private Long finishProductTestCode;
   private Long testParameterId;
 
   public String getCode() {
@@ -60,12 +60,12 @@ public class FinishProductTrialRequestDto {
     this.value = value;
   }
 
-  public Long getFinishProductTestId() {
-    return finishProductTestId;
+  public Long getFinishProductTestCode() {
+    return finishProductTestCode;
   }
 
-  public void setFinishProductTestId(Long finishProductTestId) {
-    this.finishProductTestId = finishProductTestId;
+  public void setFinishProductTestCode(Long finishProductTestCode) {
+    this.finishProductTestCode = finishProductTestCode;
   }
 
   public Long getTestParameterId() {
