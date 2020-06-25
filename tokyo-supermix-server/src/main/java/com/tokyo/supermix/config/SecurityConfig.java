@@ -152,6 +152,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.CREATE_ROLE)
         .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.EDIT_ROLE)
         .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAuthority(PermissionConstants.DELETE_ROLE) 
+        // user
+        .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.USERS).hasAuthority(PermissionConstants.VIEW_USER)
+        .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.USER).hasAuthority(PermissionConstants.CREATE_USER)
+        .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.UPDATE_USER_STATUS_BY_ID).hasAuthority(PermissionConstants.EDIT_USER_STATUS)
+        .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.UPDATE_USER_ROLE).hasAuthority(PermissionConstants.EDIT_USER_ROLE)
+        .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.USER_BY_ID).hasAuthority(PermissionConstants.DELETE_USER) 
 
     ;
     // Add our custom JWT security filter
