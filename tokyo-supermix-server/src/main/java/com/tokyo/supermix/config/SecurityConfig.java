@@ -152,13 +152,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.CREATE_ROLE)
         .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.ROLE).hasAuthority(PermissionConstants.EDIT_ROLE)
         .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAuthority(PermissionConstants.DELETE_ROLE) 
+         // user
+        .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.USERS).hasAuthority(PermissionConstants.VIEW_USER)
+        .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.USER).hasAuthority(PermissionConstants.CREATE_USER)
+        .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.UPDATE_USER_STATUS_BY_ID).hasAuthority(PermissionConstants.EDIT_USER_STATUS)
+        .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.UPDATE_USER_ROLE).hasAuthority(PermissionConstants.EDIT_USER_ROLE)
+        .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.USER_BY_ID).hasAuthority(PermissionConstants.DELETE_USER) 
         //Incoming sample
         .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLES).hasAuthority(PermissionConstants.VIEW_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.POST, EndpointURI.INCOMING_SAMPLE).hasAuthority(PermissionConstants.CREATE_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.PUT, EndpointURI.INCOMING_SAMPLE).hasAuthority(PermissionConstants.EDIT_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.DELETE, EndpointURI.INCOMING_SAMPLE_BY_CODE).hasAuthority(PermissionConstants.DELETE_INCOMING_SAMPLE) 
-        //       
-        //        .anyRequest().authenticated()
+       // finished product sample
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLES).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT)
+        .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT) 
+        //.anyRequest().authenticated()
         ;
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

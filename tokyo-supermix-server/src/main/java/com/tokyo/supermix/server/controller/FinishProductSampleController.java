@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +44,6 @@ public class FinishProductSampleController {
   private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
-  @PreAuthorize("hasAuthority('add_finish_product_sample')")
   public ResponseEntity<Object> createFinishProductSample(
       @Valid @RequestBody FinishProductSampleRequestDto finishProductSampleRequestDto) {
     if (finishProductSampleService
@@ -65,7 +63,6 @@ public class FinishProductSampleController {
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLES)
-  @PreAuthorize("hasAuthority('get_finish_product_sample')")
   public ResponseEntity<Object> getAllFinishProductSamples() {
     logger.debug("get all finish product samples");
     return new ResponseEntity<>(
@@ -90,7 +87,6 @@ public class FinishProductSampleController {
   }
 
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
-  @PreAuthorize("hasAuthority('delete_finish_product_sample')")
   public ResponseEntity<Object> deleteFinishProductSample(@PathVariable Long id) {
     if (finishProductSampleService.isFinishProductSampleExist(id)) {
       logger.debug("delete Finish Product Sample by id");
@@ -104,7 +100,6 @@ public class FinishProductSampleController {
   }
 
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
-  @PreAuthorize("hasAuthority('edit_finish_product_sample')")
   public ResponseEntity<Object> updateFinishProductSample(
       @Valid @RequestBody FinishProductSampleRequestDto finishProductSampleRequestDto) {
     if (finishProductSampleService
