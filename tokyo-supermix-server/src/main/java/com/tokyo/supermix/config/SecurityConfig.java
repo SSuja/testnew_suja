@@ -159,7 +159,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.UPDATE_USER_ROLE).hasAuthority(PermissionConstants.EDIT_USER_ROLE)
         .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.USER_BY_ID).hasAuthority(PermissionConstants.DELETE_USER) 
 
-   
+        // finished product sample
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLES).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT)
+        .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT) 
+
         //.anyRequest().authenticated()
         ;
         // Add our custom JWT security filter

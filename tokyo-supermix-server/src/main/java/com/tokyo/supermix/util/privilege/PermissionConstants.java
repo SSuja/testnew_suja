@@ -98,5 +98,10 @@ public final class PermissionConstants {
   public static final String EDIT_USER_STATUS = "edit_user_status";
   public static final String EDIT_USER_ROLE = "edit_user_role";
   public static final String DELETE_USER = "delete_user";
+  /* finish product */
+  public static final String VIEW_FINISH_PRODUCT = "view_finish_product_sample";
+  public static final String CREATE_FINISH_PRODUCT= "create_finish_product_sample";
+  public static final String EDIT_FINISH_PRODUCT = "edit_finish_product_sample";
+  public static final String DELETE_FINISH_PRODUCT = "delete_finish_product_sample";
  
 }
