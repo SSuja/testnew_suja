@@ -59,9 +59,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http.cors().and().csrf().disable().exceptionHandling()
         .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-        .antMatchers("/api/v1/auth/**").permitAll()
-        .antMatchers("/swagger-ui.html").permitAll()
-        .antMatchers(HttpMethod.GET,EndpointURI.PLANTS).hasAnyAuthority(PermissionConstants.VIEW_PLANT);
+        .antMatchers("/api/v1/auth/**").permitAll().antMatchers("/swagger-ui.html").permitAll()
+        .antMatchers(HttpMethod.GET, EndpointURI.PLANTS)
+        .hasAnyAuthority(PermissionConstants.VIEW_PLANT)
+        // material category
+        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORIES)
+        .hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_CATEGORY)
+        .hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_CATEGORY)
+        .hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_CATEGORY)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_CATEGORY)
+        .hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_CATEGORY);
     // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
