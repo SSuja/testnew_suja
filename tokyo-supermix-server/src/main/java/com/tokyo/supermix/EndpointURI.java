@@ -597,8 +597,12 @@ public final class EndpointURI {
   public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
       PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
   /*
-   * Finish Product Parameter Results
+   * Finish Product Trial apis
    */
+  public static final String FINISH_PRODUCT_TRIAL = BASE_API_PATH + "finish-product-trial";
+  public static final String FINISH_PRODUCT_TRIALS = BASE_API_PATH + "finish-product-trials";
+  public static final String FINISH_PRODUCT_TRIAL_BY_ID = FINISH_PRODUCT_TRIAL + ID;
+  
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
       BASE_API_PATH + "finish-product-parameter-results";
 

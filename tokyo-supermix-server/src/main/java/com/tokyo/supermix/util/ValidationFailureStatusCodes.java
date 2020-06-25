@@ -1811,4 +1811,18 @@ public class ValidationFailureStatusCodes {
   public void setProjectCodeIsNull(String projectCodeIsNull) {
     this.projectCodeIsNull = projectCodeIsNull;
   }
+
+  /*
+   * Finish Product Trial
+   */
+  @Value("${validation.finishProductTrial.notExist}")
+  private String finishProductTrialNotExit;
+
+  public String getFinishProductTrialNotExit() {
+    return finishProductTrialNotExit;
+  }
+
+  public void setFinishProductTrialNotExit(String finishProductTrialNotExit) {
+    this.finishProductTrialNotExit = finishProductTrialNotExit;
+  }
 }
