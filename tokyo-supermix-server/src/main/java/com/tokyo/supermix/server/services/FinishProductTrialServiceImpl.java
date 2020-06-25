@@ -67,6 +67,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       }
     }
     finishProductTrialRepository.save(finishProductTrial);
+    updateFinishProductResult(finishProductTrial);
     return finishProductTrial.getCode();
   }
 
@@ -94,7 +95,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
-    saveFinishProductTrial(finishProductTrial);
     FinishProductTest finishProductTest =
         finishProductTestRepository.getOne(finishProductTrial.getFinishProductTest().getCode());
     FinishProductSample finishProductSample = finishProductSampleRepository
