@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +45,6 @@ public class IncomingSampleController {
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
-  @PreAuthorize("hasAuthority('get_incoming_sample')")
   public ResponseEntity<Object> getIncomingSamples() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
         mapper.map(incomingSampleService.getAllIncomingSamples(), IncomingSampleResponseDto.class),
@@ -65,7 +63,6 @@ public class IncomingSampleController {
   }
 
   @PostMapping(value = EndpointURI.INCOMING_SAMPLE)
-  @PreAuthorize("hasAuthority('add_incoming_sample')")
   public ResponseEntity<Object> createIncomingSample(
       @Valid @RequestBody IncomingSampleRequestDto incomingSampleRequestDto) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleRequestDto.getCode())) {
@@ -84,7 +81,6 @@ public class IncomingSampleController {
   }
 
   @PutMapping(value = EndpointURI.INCOMING_SAMPLE)
-  @PreAuthorize("hasAuthority('edit_incoming_sample')")
   public ResponseEntity<Object> updateIncomingSample(
       @Valid @RequestBody IncomingSampleRequestDto incomingSampleRequestDto) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleRequestDto.getCode())) {
@@ -99,7 +95,6 @@ public class IncomingSampleController {
   }
 
   @DeleteMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE)
-  @PreAuthorize("hasAuthority('delete_incoming_sample')")
   public ResponseEntity<Object> deleteIncomingSampleByCode(@PathVariable String code) {
     if (incomingSampleService.isIncomingSampleExist(code)) {
       incomingSampleService.deleteIncomingSample(code);

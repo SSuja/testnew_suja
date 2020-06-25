@@ -71,7 +71,6 @@ public final class PermissionConstants {
   public static final String CREATE_CUSTOMER= "create_customer";
   public static final String EDIT_CUSTOMER = "edit_customer";
   public static final String DELETE_CUSTOMER = "delete_customer";
-  
   /* project */
   public static final String VIEW_PROJECT = "view_project";
   public static final String CREATE_PROJECT= "create_project";
@@ -92,5 +91,9 @@ public final class PermissionConstants {
   public static final String CREATE_SUPPLIER= "create_supplier";
   public static final String EDIT_SUPPLIER = "edit_supplier";
   public static final String DELETE_SUPPLIER = "delete_supplier";
- 
+  /* Incoming Sample */
+  public static final String VIEW_INCOMING_SAMPLE = "view_incoming_sample";
+  public static final String CREATE_INCOMING_SAMPLE= "create_incoming_sample";
+  public static final String EDIT_INCOMING_SAMPLE = "edit_incoming_sample";
+  public static final String DELETE_INCOMING_SAMPLE = "delete_incoming_sample";
 }
