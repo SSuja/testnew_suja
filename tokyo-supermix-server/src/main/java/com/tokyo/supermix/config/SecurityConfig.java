@@ -16,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.security.JwtAuthenticationEntryPoint;
 import com.tokyo.supermix.security.JwtAuthenticationFilter;
 import com.tokyo.supermix.server.services.auth.AuthUserDetailsService;
@@ -141,7 +142,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMERS).hasAnyAuthority(PermissionConstants.VIEW_CUSTOMER)
         .antMatchers(HttpMethod.POST, EndpointURI.CUSTOMER).hasAnyAuthority(PermissionConstants.CREATE_CUSTOMER)
         .antMatchers(HttpMethod.PUT, EndpointURI.CUSTOMER).hasAnyAuthority(PermissionConstants.EDIT_CUSTOMER)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.CUSTOMER_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_CUSTOMER); 
+        .antMatchers(HttpMethod.DELETE, EndpointURI.CUSTOMER_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_CUSTOMER) 
+        // role
+        .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.ROLES).hasAnyAuthority(PermissionConstants.VIEW_ROLE)
+        .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.ROLE).hasAnyAuthority(PermissionConstants.CREATE_ROLE)
+        .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.ROLE).hasAnyAuthority(PermissionConstants.EDIT_ROLE)
+        .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.ROLE_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_ROLE); 
+
     // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -29,18 +29,13 @@ import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 @RestController
 @CrossOrigin(origins = "*")
 public class RoleController {
-
   @Autowired
   private RoleService roleService;
-
   @Autowired
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
   private static final Logger logger = Logger.getLogger(RoleController.class);
-
   @PostMapping(value = PrivilegeEndpointURI.ROLE)
   public ResponseEntity<Object> createRole(@Valid @RequestBody RoleDto roleDto) {
     if (roleService.existsByRoleName(roleDto.getName())) {
@@ -63,7 +58,7 @@ public class RoleController {
         null, HttpStatus.OK);
   }
 
-  @DeleteMapping(value = PrivilegeEndpointURI.DELETE_ROLE_BY_ID)
+  @DeleteMapping(value = PrivilegeEndpointURI.ROLE_BY_ID)
   public ResponseEntity<Object> deleteRole(@PathVariable Long id) {
     if (roleService.isRoleExists(id)) {
       roleService.deleteRole(id);
@@ -77,7 +72,7 @@ public class RoleController {
   }
 
 
-  @GetMapping(value = PrivilegeEndpointURI.GET_ROLE_BY_ID)
+  @GetMapping(value = PrivilegeEndpointURI.ROLE_BY_ID)
   public ResponseEntity<Object> getRoleById(@PathVariable Long id) {
     if (roleService.isRoleExists(id)) {
       return new ResponseEntity<>(
