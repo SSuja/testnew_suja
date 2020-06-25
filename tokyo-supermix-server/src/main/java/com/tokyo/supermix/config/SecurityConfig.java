@@ -66,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_CATEGORY)
         .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_CATEGORY)
         .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_CATEGORY)
+        // material state
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_STATES).hasAnyAuthority(PermissionConstants.VIEW_MATERIAL_STATE)
         .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
         .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_STATE).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_STATE)
@@ -76,6 +77,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_MATERIAL_SUB_CATEGORY)
         .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_MATERIAL_SUB_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_MATERIAL_SUB_CATEGORY);
         
+        // material raw materials
+        .antMatchers(HttpMethod.GET,EndpointURI.RAW_MATERIALS).hasAnyAuthority(PermissionConstants.VIEW_RAW_MATERIAL)
+        .antMatchers(HttpMethod.POST,EndpointURI.RAW_MATERIAL).hasAnyAuthority(PermissionConstants.CREATE_RAW_MATERIAL)
+        .antMatchers(HttpMethod.PUT,EndpointURI.RAW_MATERIAL).hasAnyAuthority(PermissionConstants.EDIT_RAW_MATERIAL)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_RAW_MATERIAL).hasAnyAuthority(PermissionConstants.DELETE_RAW_MATERIAL)
+     // material equipment
+        .antMatchers(HttpMethod.GET,EndpointURI.EQUIPMENTS).hasAnyAuthority(PermissionConstants.VIEW_EQUIPMENT)
+        .antMatchers(HttpMethod.POST,EndpointURI.EQUIPMENT).hasAnyAuthority(PermissionConstants.CREATE_EQUIPMENT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.EQUIPMENT).hasAnyAuthority(PermissionConstants.EDIT_EQUIPMENT)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT).hasAnyAuthority(PermissionConstants.DELETE_EQUIPMENT);
+       ;
+    
+    
     // .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

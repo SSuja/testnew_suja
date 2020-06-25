@@ -21,4 +21,21 @@ public final class PermissionConstants {
   public static final String CREATE_MATERIAL_SUB_CATEGORY = "create_material_sub_category";
   public static final String EDIT_MATERIAL_SUB_CATEGORY = "edit_material_sub_category";
   public static final String DELETE_MATERIAL_SUB_CATEGORY = "delete_material_sub_category";
+  
+  /*
+  raw_material
+  */
+  public static final String VIEW_RAW_MATERIAL = "view_raw_material";
+  public static final String CREATE_RAW_MATERIAL = "create_raw_material";
+  public static final String EDIT_RAW_MATERIAL = "edit_raw_material";
+  public static final String DELETE_RAW_MATERIAL = "delete_raw_material";
+  
+  /*
+  equipment
+  */
+  public static final String VIEW_EQUIPMENT = "view_equipment";
+  public static final String CREATE_EQUIPMENT = "create_equipment";
+  public static final String EDIT_EQUIPMENT = "edit_raw_equipment";
+  public static final String DELETE_EQUIPMENT = "delete_equipment";
+ 
 }
