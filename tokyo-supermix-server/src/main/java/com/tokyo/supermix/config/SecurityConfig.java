@@ -90,8 +90,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIER_CATEGORIES).hasAnyAuthority(PermissionConstants.VIEW_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.CREATE_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.EDIT_SUPPLIER_CATEGORY)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY);   
- 
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_SUPPLIER_CATEGORY).hasAnyAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
+        // unit
+        .antMatchers(HttpMethod.GET, EndpointURI.UNITS).hasAnyAuthority(PermissionConstants.VIEW_UNIT)
+        .antMatchers(HttpMethod.POST, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.CREATE_UNIT)
+        .antMatchers(HttpMethod.PUT, EndpointURI.UNIT).hasAnyAuthority(PermissionConstants.EDIT_UNIT)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.DELETE_UNIT_BY_ID).hasAnyAuthority(PermissionConstants.DELETE_UNIT);   
+
     
     
     // .anyRequest().authenticated();

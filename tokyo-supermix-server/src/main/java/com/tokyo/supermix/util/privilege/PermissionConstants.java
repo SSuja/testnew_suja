@@ -42,6 +42,11 @@ public final class PermissionConstants {
   public static final String CREATE_SUPPLIER_CATEGORY = "create_supplier_category";
   public static final String EDIT_SUPPLIER_CATEGORY = "edit_supplier_category";
   public static final String DELETE_SUPPLIER_CATEGORY = "delete_supplier_category";
+  /* unit */
+  public static final String VIEW_UNIT = "view_unit";
+  public static final String CREATE_UNIT= "create_unit";
+  public static final String EDIT_UNIT = "edit_unit";
+  public static final String DELETE_UNIT = "delete_unit";
   
  
  
