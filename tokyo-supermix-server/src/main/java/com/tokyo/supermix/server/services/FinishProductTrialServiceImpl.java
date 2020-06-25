@@ -104,24 +104,24 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     FinishProductParameterResult finishProductParameterResult = new FinishProductParameterResult();
     if (finishProductTrial.getTestParameter() != null) {
 
-       finishProductParameterResult.setFinishProductSample(finishProductSample);
-       finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
+      finishProductParameterResult.setFinishProductSample(finishProductSample);
+      finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
       if (finishProductTest.getTestConfigure().getDays() == null) {
-         finishProductParameterResult.setResult(finishProductTrial.getValue());
+        finishProductParameterResult.setResult(finishProductTrial.getValue());
         finishProductTest.setStatus(Status.PROCESS);
         finishProductSample.setStatus(
             getSlumpTestStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
                 finishProductTrial.getValue()));
         finishProductSampleRepository.save(finishProductSample);
-         calculateGradeRatio(finishProductTrial, finishProductParameterResult.getResult(),
-         getTargetSlump(finishProductSample.getMixDesign().getCode()));
+        calculateGradeRatio(finishProductTrial, finishProductParameterResult.getResult(),
+            getTargetSlump(finishProductSample.getMixDesign().getCode()));
       } else {
         finishProductParameterResult
             .setResult(roundDoubleValue(averageStrength(finishProductTest.getCode())));
         finishProductTest.setStatus(Status.COMPLETED);
       }
-       finishProductParameterResultRepository.save(finishProductParameterResult);
-       finishProductTest.setResult(finishProductParameterResult.getResult());
+      finishProductParameterResultRepository.save(finishProductParameterResult);
+      finishProductTest.setResult(finishProductParameterResult.getResult());
       finishProductTestRepository.save(finishProductTest);
 
     } else {
