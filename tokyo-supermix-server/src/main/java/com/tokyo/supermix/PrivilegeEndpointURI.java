@@ -92,6 +92,7 @@ public final class PrivilegeEndpointURI {
    * plant Role
    */
   public static final String PLANT_ROLE = BASE_API_PATH + "plant-role";
+  public static final String PLANT_ROLES = BASE_API_PATH + "plant-roles";
   public static final String PLANT_ROLE_BY_ROLE_NAME =
       PLANT_ROLE + SLASH + "role-name" + SLASH + "{roleName}";
   public static final String PLANT_ROLES_BY_PLANT_CODE = PLANT_ROLE + SLASH + "{plantCode}";

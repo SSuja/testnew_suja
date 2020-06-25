@@ -91,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_STATES).hasAuthority(PermissionConstants.VIEW_MATERIAL_STATE)
         .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_STATE).hasAuthority(PermissionConstants.CREATE_MATERIAL_STATE)
         .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_STATE).hasAuthority(PermissionConstants.EDIT_MATERIAL_STATE)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_MATERIAL_STATE).hasAuthority(PermissionConstants.DELETE_MATERIAL_STATE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_STATE_BY_ID).hasAuthority(PermissionConstants.DELETE_MATERIAL_STATE)
         // material sub category
         .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SUB_CATEGORIES).hasAuthority(PermissionConstants.VIEW_MATERIAL_SUB_CATEGORY)
         .antMatchers(HttpMethod.POST, EndpointURI.MATERIAL_SUB_CATEGORY).hasAuthority(PermissionConstants.CREATE_MATERIAL_SUB_CATEGORY)
@@ -159,9 +159,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,PrivilegeEndpointURI.UPDATE_USER_ROLE).hasAuthority(PermissionConstants.EDIT_USER_ROLE)
         .antMatchers(HttpMethod.DELETE,PrivilegeEndpointURI.USER_BY_ID).hasAuthority(PermissionConstants.DELETE_USER) 
 
-    ;
-    // Add our custom JWT security filter
-    http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-    http.headers().cacheControl();
+   
+        //.anyRequest().authenticated()
+        ;
+        // Add our custom JWT security filter
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.headers().cacheControl();
   }
 }

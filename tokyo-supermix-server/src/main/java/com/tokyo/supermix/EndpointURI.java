@@ -115,8 +115,7 @@ public final class EndpointURI {
    */
   public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
   public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
-  public static final String GET_MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
-  public static final String DELETE_MATERIAL_STATE = MATERIAL_STATE + ID;
+  public static final String MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
   /*
    * Raw Material apis
    */

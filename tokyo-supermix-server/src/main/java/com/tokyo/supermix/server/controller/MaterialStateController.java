@@ -24,7 +24,6 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialStateService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @RestController
@@ -62,7 +61,7 @@ public class MaterialStateController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_MATERIAL_STATE_BY_ID)
+  @GetMapping(value = EndpointURI.MATERIAL_STATE_BY_ID)
   public ResponseEntity<Object> getMaterialStateById(@PathVariable Long id) {
     if (materialStateService.isMaterialStateExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_STATE,
@@ -75,7 +74,7 @@ public class MaterialStateController {
   }
 
   @PutMapping(value = EndpointURI.MATERIAL_STATE)
-   public ResponseEntity<Object> updateMaterialState(
+  public ResponseEntity<Object> updateMaterialState(
       @Valid @RequestBody MaterialStateDto materialStateDto) {
     if (materialStateService.isMaterialStateExist(materialStateDto.getId())) {
       if (materialStateService.isUpdatedMaterialStateExist(materialStateDto.getId(),
@@ -95,8 +94,8 @@ public class MaterialStateController {
         validationFailureStatusCodes.getMaterialStateNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(EndpointURI.DELETE_MATERIAL_STATE)
-    public ResponseEntity<Object> deleteMaterialState(@PathVariable Long id) {
+  @DeleteMapping(EndpointURI.MATERIAL_STATE_BY_ID)
+  public ResponseEntity<Object> deleteMaterialState(@PathVariable Long id) {
     if (materialStateService.isMaterialStateExist(id)) {
       materialStateService.deleteMaterialState(id);
       return new ResponseEntity<>(
