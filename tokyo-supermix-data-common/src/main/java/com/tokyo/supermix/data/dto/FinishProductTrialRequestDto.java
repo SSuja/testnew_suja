@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 
 public class FinishProductTrialRequestDto {
+  private String code;
   private Long trialNo;
   private String testSample;
   private Long testSampleNo;
@@ -10,6 +11,14 @@ public class FinishProductTrialRequestDto {
   private Double value;
   private Long finishProductTestCode;
   private Long testParameterId;
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
+  }
 
   public Long getTrialNo() {
     return trialNo;
