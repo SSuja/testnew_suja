@@ -41,7 +41,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
 
   @Transactional(readOnly = true)
   public List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId) {
-    return getAllFinishProductTestsByTestConfigure(testConfigureId);
+    return finishProductTestRepository.findByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
