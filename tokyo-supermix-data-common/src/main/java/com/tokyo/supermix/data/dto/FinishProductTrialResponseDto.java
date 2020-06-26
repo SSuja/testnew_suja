@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 
 public class FinishProductTrialResponseDto {
-  private Long id;
+  private String code;
   private Long trialNo;
   private String testSample;
   private Long testSampleNo;
@@ -12,12 +12,12 @@ public class FinishProductTrialResponseDto {
   private FinishProductTestResponseDto finishProductTest;
   private TestParameterResponseDto testParameter;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Long getTrialNo() {

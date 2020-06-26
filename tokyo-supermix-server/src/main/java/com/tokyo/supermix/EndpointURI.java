@@ -222,14 +222,7 @@ public final class EndpointURI {
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
-  /*
-   * ProcessSampleLoad Apis
-   */
-  public static final String PROCESS_SAMPLE_LOAD = BASE_API_PATH + "process-sample-load";
-  public static final String PROCESS_SAMPLE_LOADS = BASE_API_PATH + "process-sample-loads";
-  public static final String PROCESS_SAMPLE_LOAD_BY_ID = PROCESS_SAMPLE_LOAD + ID;
-  public static final String PROCESS_SAMPLE_LOADS_BY_PLANT_CODE =
-      PROCESS_SAMPLE_LOADS + SLASH + "plant" + SLASH + "{plantCode}";
+
   /*
    * User
    */
@@ -323,18 +316,6 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
-   * sieve-test-trial
-   * 
-   */
-  public static final String SIEVE_TEST_TRIAL = BASE_API_PATH + "sieve-test-trial";
-  public static final String SIEVE_TEST_TRIALS = BASE_API_PATH + "sieve-test-trials";
-  public static final String SIEVE_TEST_TRIAL_BY_ID = SIEVE_TEST_TRIAL + ID;
-  public static final String SIEVE_TEST_TRIAL_BY_SIEVE_TEST_CODE =
-      SIEVE_TEST_TRIAL + SLASH + "sieve-test" + SLASH + "{sieveTestCode}";
-  public static final String GET_SIEVE_TEST_TRIAL_BY_PLANT =
-      SIEVE_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
-
-  /*
    * Sieve Size
    */
   public static final String SIEVE_SIZE = BASE_API_PATH + "sieve-size";
@@ -352,30 +333,13 @@ public final class EndpointURI {
   public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
   public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
   public static final String SIEVE_ACCEPTED_VALUE_SEARCH = SIEVE_ACCEPTED_VALUE + SEARCH;
-  /*
-   * SieveTest
-   * 
-   */
-  public static final String SIEVE_TEST = BASE_API_PATH + "sieve-test";
-  public static final String SIEVE_TESTS = BASE_API_PATH + "sieve-tests";
-  public static final String SIEVE_TEST_BY_CODE = SIEVE_TEST + CODE;
-  public static final String SEARCH_SIEVE_TEST = SIEVE_TEST + SEARCH;
+
   /*
    * Test
    */
   public static final String TEST = BASE_API_PATH + "test";
   public static final String TESTS = BASE_API_PATH + "tests";
   public static final String TEST_BY_ID = TEST + ID;
-
-  /*
-   * FinenessModulus
-   * 
-   */
-  public static final String FINENESS_MODULUS = BASE_API_PATH + "fineness-modulus";
-  public static final String FINENESS_MODULUS_BY_ID = FINENESS_MODULUS + ID;
-  public static final String FINENESS_MODULUS_BY_MATERIALSUBCATEGORY =
-      FINENESS_MODULUS + "/materialSubCategory" + "/{materialSubCategoryId}";
-  public static final String SEARCH_FINENESS_MODULUS = FINENESS_MODULUS + SEARCH;
 
   /*
    * FinishProductSample
@@ -470,17 +434,6 @@ public final class EndpointURI {
   public static final String ROLES = BASE_API_PATH + "roles";
   public static final String GET_ROLE_BY_ID = ROLE + ID;
   public static final String DELETE_ROLE_BY_ID = ROLE + ID;
-
-  /*
-   * AdmixtureAcceptedValue Apis
-   */
-  public static final String ADMIXTURE_ACCEPTED_VALUE = BASE_API_PATH + "admixture-accepted-value";
-  public static final String ADMIXTURE_ACCEPTED_VALUES =
-      BASE_API_PATH + "admixture-accepted-values";
-  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_ID = ADMIXTURE_ACCEPTED_VALUE + ID;
-  public static final String ADMIXTURE_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
-      ADMIXTURE_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
-  public static final String SEARCH_ADMIXTURE_ACCEPTED_VALUE = ADMIXTURE_ACCEPTED_VALUE + SEARCH;
 
   /*
    * MaterialAcceptedValue Apis
@@ -581,22 +534,29 @@ public final class EndpointURI {
       PARAMETER_EQUATION_ELEMENT + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   public static final String PARAMETER_EQUATION_ELEMENT_BY_PARAMETER_EQUATION_ID =
       PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "{parameterEquationId}";
+  public static final String PARAMETER_EQUATION_ELEMENT_BY_TEST_PARAMETER =
+      PARAMETER_EQUATION_ELEMENT + SLASH + "parameter-equation" + SLASH + "test-parameter" + SLASH
+          + "{testParameterId}";
   /*
    * Finish Product Trial apis
    */
   public static final String FINISH_PRODUCT_TRIAL = BASE_API_PATH + "finish-product-trial";
   public static final String FINISH_PRODUCT_TRIALS = BASE_API_PATH + "finish-product-trials";
-  public static final String FINISH_PRODUCT_TRIAL_BY_ID = FINISH_PRODUCT_TRIAL + ID;
-  
+  public static final String FINISH_PRODUCT_TRIAL_BY_CODE = FINISH_PRODUCT_TRIAL + CODE;
+
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
       BASE_API_PATH + "finish-product-parameter-results";
-
+  public static final String FINISH_PRODUCT_PARAMETER_RESULT =
+      BASE_API_PATH + "finish-product-parameter-result";
+  public static final String FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE =
+      FINISH_PRODUCT_PARAMETER_RESULT + SLASH + "finish-product-sample" + SLASH
+          + "{finishProductSampleId}";
   /*
    * Finish Product Test
    */
   public static final String FINISH_PRODUCT_TEST = BASE_API_PATH + "finish-product-test";
   public static final String FINISH_PRODUCT_TESTS = BASE_API_PATH + "finish-product-tests";
-  public static final String FINISH_PRODUCT_TEST_BY_ID = FINISH_PRODUCT_TEST + ID;
+  public static final String FINISH_PRODUCT_TEST_BY_CODE = FINISH_PRODUCT_TEST + CODE;
   public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
       FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
