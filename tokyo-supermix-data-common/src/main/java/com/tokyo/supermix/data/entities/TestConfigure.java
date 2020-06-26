@@ -2,12 +2,15 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.enums.TestType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_configure")
@@ -20,12 +23,24 @@ public class TestConfigure implements Serializable {
   private String description;
   private String testProcedure;
   private String prefix;
-  @ManyToOne
-  @JoinColumn(name = "testTypeId", nullable = false)
+  private String resultLabel;
+  @Enumerated(EnumType.ORDINAL)
   private TestType testType;
+  private boolean equationExists;
+  @ManyToOne
+  @JoinColumn(name = "equationId", nullable = true)
+  private Equation equation;
   @ManyToOne
   @JoinColumn(name = "testId", nullable = false)
   private Test test;
+  @ManyToOne
+  @JoinColumn(name = "materialCategoryId", nullable = false)
+  private MaterialCategory materialCategory;
+  @ManyToOne
+  @JoinColumn(name = "materialSubCategoryId", nullable = true)
+  private MaterialSubCategory materialSubCategory;
+  private Long days;
+  private boolean bulkTrial;
 
   public Long getId() {
     return id;
@@ -35,12 +50,20 @@ public class TestConfigure implements Serializable {
     this.id = id;
   }
 
-  public TestType getTestType() {
-    return testType;
+  public MaterialCategory getMaterialCategory() {
+    return materialCategory;
   }
 
-  public void setTestType(TestType testType) {
-    this.testType = testType;
+  public void setMaterialCategory(MaterialCategory materialCategory) {
+    this.materialCategory = materialCategory;
+  }
+
+  public MaterialSubCategory getMaterialSubCategory() {
+    return materialSubCategory;
+  }
+
+  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+    this.materialSubCategory = materialSubCategory;
   }
 
   public boolean isCoreTest() {
@@ -87,4 +110,51 @@ public class TestConfigure implements Serializable {
     return serialVersionUID;
   }
 
+  public TestType getTestType() {
+    return testType;
+  }
+
+  public void setTestType(TestType testType) {
+    this.testType = testType;
+  }
+
+  public boolean isEquationExists() {
+    return equationExists;
+  }
+
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
+  }
+
+  public Equation getEquation() {
+    return equation;
+  }
+
+  public void setEquation(Equation equation) {
+    this.equation = equation;
+  }
+
+  public String getResultLabel() {
+    return resultLabel;
+  }
+
+  public void setResultLabel(String resultLabel) {
+    this.resultLabel = resultLabel;
+  }
+
+  public Long getDays() {
+    return days;
+  }
+
+  public void setDays(Long days) {
+    this.days = days;
+  }
+
+  public boolean isBulkTrial() {
+    return bulkTrial;
+  }
+
+  public void setBulkTrial(boolean bulkTrial) {
+    this.bulkTrial = bulkTrial;
+  }
 }

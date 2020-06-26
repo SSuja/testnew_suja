@@ -11,6 +11,15 @@ public class MaterialTestTrialRequestDto {
   @NotNull(message = "{materialTestTrialRequestDto.materialTestCode.null}")
   @NotEmpty(message = "{materialTestTrialRequestDto.materialTestCode.empty}")
   private String materialTestCode;
+  private Long sieveSizeId;
+
+  public Long getSieveSizeId() {
+    return sieveSizeId;
+  }
+
+  public void setSieveSizeId(Long sieveSizeId) {
+    this.sieveSizeId = sieveSizeId;
+  }
 
   public String getMaterialTestCode() {
     return materialTestCode;

@@ -19,6 +19,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
 import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -136,6 +137,19 @@ public class MixDesignController {
       logger.debug("No MixDesign record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_STATUS)
+  public ResponseEntity<Object> getMixDesignByStatus(@PathVariable Status status) {
+    if (mixDesignService.isMixDesignStatusExist(status)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+          mapper.map(mixDesignService.getMixDesignByStatus(status), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No MixDesign record exist for given Status");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
+          validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
 }

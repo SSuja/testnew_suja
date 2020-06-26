@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Parameter;
+import com.tokyo.supermix.data.enums.ParameterType;
 
 public interface ParameterService {
   public List<Parameter> getAllParameters();
@@ -22,4 +23,9 @@ public interface ParameterService {
 
   public Page<Parameter> searchParameter(Predicate predicate, int page, int size);
 
+  public List<Parameter> getParameterByParameterType(ParameterType parameterType);
+  
+  public boolean isParameterTypeExists(ParameterType parameterType);
+  
+  public List<Parameter> getAllParametersByDecending();
 }

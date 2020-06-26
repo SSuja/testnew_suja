@@ -52,11 +52,6 @@ public class ProjectController {
   @PostMapping(value = EndpointURI.PROJECT)
   public ResponseEntity<Object> createProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
-    if (projectService.isProjectExist(projectRequestDto.getCode())) {
-      logger.debug("projectCode  is already exists: createProject(), isCodeExist: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_CODE,
-          validationFailureStatusCodes.getProjectAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     if (projectService.isNameExist(projectRequestDto.getName())) {
       logger.debug("name is already exists: createProject(), isNameExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_NAME,

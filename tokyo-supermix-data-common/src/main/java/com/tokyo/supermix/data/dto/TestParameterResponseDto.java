@@ -1,36 +1,18 @@
 package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.entities.Parameter;
-import com.tokyo.supermix.data.entities.QualityParameter;
 import com.tokyo.supermix.data.entities.Unit;
-import com.tokyo.supermix.data.enums.EntryLevel;
+import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class TestParameterResponseDto {
   private Long id;
   private TestConfigureResponseDto testConfigure;
   private Parameter parameter;
-  private QualityParameter qualityParameter;
   private String abbreviation;
-  private EntryLevel entryLevel;
+  private TestParameterType entryLevel;
   private Double value;
-
-  public Parameter getParameter() {
-    return parameter;
-  }
-
-  public void setParameter(Parameter parameter) {
-    this.parameter = parameter;
-  }
-
-  public Unit getUnit() {
-    return Unit;
-  }
-
-  public void setUnit(Unit unit) {
-    Unit = unit;
-  }
-
-  private Unit Unit;
+  private Unit unit;
+  private boolean equationExists;
 
   public Long getId() {
     return id;
@@ -48,6 +30,14 @@ public class TestParameterResponseDto {
     this.testConfigure = testConfigure;
   }
 
+  public Parameter getParameter() {
+    return parameter;
+  }
+
+  public void setParameter(Parameter parameter) {
+    this.parameter = parameter;
+  }
+
   public String getAbbreviation() {
     return abbreviation;
   }
@@ -56,11 +46,11 @@ public class TestParameterResponseDto {
     this.abbreviation = abbreviation;
   }
 
-  public EntryLevel getEntryLevel() {
+  public TestParameterType getEntryLevel() {
     return entryLevel;
   }
 
-  public void setEntryLevel(EntryLevel entryLevel) {
+  public void setEntryLevel(TestParameterType entryLevel) {
     this.entryLevel = entryLevel;
   }
 
@@ -72,11 +62,19 @@ public class TestParameterResponseDto {
     this.value = value;
   }
 
-  public QualityParameter getQualityParameter() {
-    return qualityParameter;
+  public Unit getUnit() {
+    return unit;
   }
 
-  public void setQualityParameter(QualityParameter qualityParameter) {
-    this.qualityParameter = qualityParameter;
+  public void setUnit(Unit unit) {
+    this.unit = unit;
+  }
+
+  public boolean isEquationExists() {
+    return equationExists;
+  }
+
+  public void setEquationExists(boolean equationExists) {
+    this.equationExists = equationExists;
   }
 }

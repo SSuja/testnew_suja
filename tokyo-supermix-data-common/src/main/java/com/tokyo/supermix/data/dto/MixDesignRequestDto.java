@@ -1,12 +1,11 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.Status;
 
 public class MixDesignRequestDto {
-  @NotEmpty(message = "{mixDesignRequestDto.code.empty}")
-  @NotNull(message = "{mixDesignRequestDto.code.null}")
   private String code;
   @NotNull(message = "{mixDesignRequestDto.targetGrade.null}")
   private Double targetGrade;
@@ -17,6 +16,7 @@ public class MixDesignRequestDto {
   private Double waterCementRatio;
   private Double waterBinderRatio;
   private String plantCode;
+  private Status status;
 
   public String getCode() {
     return code;
@@ -74,4 +74,11 @@ public class MixDesignRequestDto {
     this.plantCode = plantCode;
   }
 
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 }

@@ -1,6 +1,10 @@
 package com.tokyo.supermix.server.services;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,10 +12,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QMixDesign;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.util.Constants;
 
 @Service
 public class MixDesignServiceImpl implements MixDesignService {
@@ -24,8 +31,34 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Transactional
-  public MixDesign saveMixDesign(MixDesign mixDesign) {
-    return mixDesignRepository.save(mixDesign);
+  public String saveMixDesign(MixDesign mixDesign) {
+    if (mixDesign.getCode() == null) {
+      DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+      String formattedGrade = decimalFormat.format(mixDesign.getTargetGrade());
+      String codePrefix = mixDesign.getPlant().getCode() + "-" + "G" + formattedGrade + "-";
+      List<MixDesign> mixDesignList = mixDesignRepository.findByCodeContaining(codePrefix);
+      if (mixDesignList.size() == 0) {
+        mixDesign.setCode(codePrefix + String.format("%03d", 1));
+      } else {
+        mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
+      }
+    }
+    mixDesignRepository.save(mixDesign);
+    return mixDesign.getCode();
+  }
+
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+
+  private Integer maxNumberFromCode(List<MixDesign> mixDesignList) {
+    List<Integer> list = new ArrayList<Integer>();
+    mixDesignList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -126,5 +159,15 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional(readOnly = true)
   public List<MixDesign> getMixDesignByPlantCode(String plantCode) {
     return mixDesignRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getMixDesignByStatus(Status status) {
+    return mixDesignRepository.findByStatus(status);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMixDesignStatusExist(Status status) {
+    return mixDesignRepository.existsByStatus(status);
   }
 }

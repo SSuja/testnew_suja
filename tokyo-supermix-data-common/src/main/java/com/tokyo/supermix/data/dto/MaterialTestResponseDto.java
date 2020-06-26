@@ -1,11 +1,9 @@
 package com.tokyo.supermix.data.dto;
 
-import java.sql.Date;
-
 public class MaterialTestResponseDto {
-
   private String code;
-  private Date date;
+  private String createdAt;
+  private String updatedAt;
   private Long noOfTrial;
   private Double average;
   private String status;
@@ -21,14 +19,6 @@ public class MaterialTestResponseDto {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
   }
 
   public Long getNoOfTrial() {
@@ -95,4 +85,19 @@ public TestConfigureResponseDto getTestConfigure() {
     this.materialState = materialState;
   }
 
+public String getCreatedAt() {
+	return createdAt;
+}
+
+public void setCreatedAt(String createdAt) {
+	this.createdAt = createdAt;
+}
+
+public String getUpdatedAt() {
+	return updatedAt;
+}
+
+public void setUpdatedAt(String updatedAt) {
+	this.updatedAt = updatedAt;
+}
 }

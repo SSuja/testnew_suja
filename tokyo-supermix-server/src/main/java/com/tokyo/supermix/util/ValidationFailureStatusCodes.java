@@ -762,30 +762,12 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.parameter.alreadyExist}")
   private String parameterAlreadyExist;
 
-  // @Value("${parameterDto.abbreviation.null}")
-  // private String abbreviationIsNull;
 
-  @Value("${parameterDto.abbreviation.empty}")
-  private String abbreviationIsempty;
 
   @Value("${parameterDto.name.null}")
   private String nameIsNull;
 
-  // public String getAbbreviationIsNull() {
-  // return abbreviationIsNull;
-  // }
-  //
-  // public void setAbbreviationIsNull(String abbreviationIsNull) {
-  // this.abbreviationIsNull = abbreviationIsNull;
-  // }
 
-  public String getAbbreviationIsempty() {
-    return abbreviationIsempty;
-  }
-
-  public void setAbbreviationIsempty(String abbreviationIsempty) {
-    this.abbreviationIsempty = abbreviationIsempty;
-  }
 
   public String getNameIsNull() {
     return nameIsNull;
@@ -870,32 +852,6 @@ public class ValidationFailureStatusCodes {
 
   public void setPourNotExist(String pourNotExist) {
     PourNotExist = pourNotExist;
-  }
-
-  // For TestTypes
-  @Value("${validation.testType.notExists}")
-  private String testTypeNotExist;
-  @Value("${validation.testType.alreadyExists}")
-  private String testTypealreadyExists;
-  @Value("${testTypeDto.type.null}")
-  private String testTypeIsNull;
-  @Value("${testTypeDto.type.empty}")
-  private String testTypeIsEmpty;
-
-  public String getTestTypeNotExist() {
-    return testTypeNotExist;
-  }
-
-  public void setTestTypeNotExist(String testTypeNotExist) {
-    this.testTypeNotExist = testTypeNotExist;
-  }
-
-  public String getTestTypealreadyExists() {
-    return testTypealreadyExists;
-  }
-
-  public void setTestTypealreadyExists(String testTypealreadyExists) {
-    this.testTypealreadyExists = testTypealreadyExists;
   }
 
   // For MixDesign
@@ -984,28 +940,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.project.notExists}")
   private String projectNotExist;
 
-  // for concreteTest
-  @Value("${validation.concreteTest.alreadyExists}")
-  private String concreteTestAlreadyExists;
-
-  @Value("${validation.concreteTest.notExists}")
-  private String concreteTestNotExist;
-
-  public String getConcreteTestAlreadyExists() {
-    return concreteTestAlreadyExists;
-  }
-
-  public void setConcreteTestAlreadyExists(String concreteTestAlreadyExists) {
-    this.concreteTestAlreadyExists = concreteTestAlreadyExists;
-  }
-
-  public String getConcreteTestNotExist() {
-    return concreteTestNotExist;
-  }
-
-  public void setConcreteTestNotExist(String concreteTestNotExist) {
-    this.concreteTestNotExist = concreteTestNotExist;
-  }
   // for mixDesignProportion
 
   @Value("${validation.mixDesignProportion.notExist}")
@@ -1171,29 +1105,6 @@ public class ValidationFailureStatusCodes {
     this.processSampleNotExist = processSampleNotExist;
   }
 
-  // for ConcreteStrengthTest
-  @Value("${validation.concreteStrengthTest.notExists}")
-  private String concreteStrengthTestNotExist;
-  @Value("${validation.concreteStrengthTestConcreteAge.notValid}")
-  private String concreteStrengthTestConcreteAgeNotValid;
-
-  public String getConcreteStrengthTestConcreteAgeNotValid() {
-    return concreteStrengthTestConcreteAgeNotValid;
-  }
-
-  public void setConcreteStrengthTestConcreteAgeNotValid(
-      String concreteStrengthTestConcreteAgeNotValid) {
-    this.concreteStrengthTestConcreteAgeNotValid = concreteStrengthTestConcreteAgeNotValid;
-  }
-
-  public String getConcreteStrengthTestNotExist() {
-    return concreteStrengthTestNotExist;
-  }
-
-  public void setConcreteStrengthTestNotExist(String concreteStrengthTestNotExist) {
-    this.concreteStrengthTestNotExist = concreteStrengthTestNotExist;
-  }
-
   // for finish product
   @Value("${validation.finishProduct.notExist}")
   private String finishProductNotExist;
@@ -1212,22 +1123,6 @@ public class ValidationFailureStatusCodes {
 
   @Value("${finishProductRequestDto.projectCode.null}")
   private String projectCodeIsNull;
-
-  public String getTestTypeIsNull() {
-    return testTypeIsNull;
-  }
-
-  public void setTestTypeIsNull(String testTypeIsNull) {
-    this.testTypeIsNull = testTypeIsNull;
-  }
-
-  public String getTestTypeIsEmpty() {
-    return testTypeIsEmpty;
-  }
-
-  public void setTestTypeIsEmpty(String testTypeIsEmpty) {
-    this.testTypeIsEmpty = testTypeIsEmpty;
-  }
 
   public String getQuantityIsNull() {
     return quantityIsNull;
@@ -1307,33 +1202,6 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.project.alreadyExist}")
   private String projectAlreadyExist;
-  /*
-   * Equation Parameter
-   */
-  @Value("${validation.equationParameter.notExists}")
-  private String equationParameterNotExist;
-  @Value("${validation.equationParameter.alreadyExist}")
-  private String equationParameterAlreadyExist;
-
-  public void setProjectCodeIsNull(String projectCodeIsNull) {
-    this.projectCodeIsNull = projectCodeIsNull;
-  }
-
-  public String getEquationParameterAlreadyExist() {
-    return equationParameterAlreadyExist;
-  }
-
-  public void setEquationParameterAlreadyExist(String equationParameterAlreadyExist) {
-    this.equationParameterAlreadyExist = equationParameterAlreadyExist;
-  }
-
-  public String getEquationParameterNotExist() {
-    return equationParameterNotExist;
-  }
-
-  public void setEquationParameterNotExist(String equationParameterNotExist) {
-    this.equationParameterNotExist = equationParameterNotExist;
-  }
 
   @Value("${validation.admixtureAcceptedValue.notExists}")
   private String admixtureAcceptedValueNotExist;
@@ -1544,27 +1412,6 @@ public class ValidationFailureStatusCodes {
     this.finenessModulusNotExist = finenessModulusNotExist;
   }
 
-  @Value("${validation.concreteTestElement.alreadyExist}")
-  private String concreteTestElementAlreadyExist;
-  @Value("${validation.concreteTestElement.notExists}")
-  private String concreteTestElementNotExist;
-
-  public String getConcreteTestElementAlreadyExist() {
-    return concreteTestElementAlreadyExist;
-  }
-
-  public void setConcreteTestElementAlreadyExist(String concreteTestElementAlreadyExist) {
-    this.concreteTestElementAlreadyExist = concreteTestElementAlreadyExist;
-  }
-
-  public String getConcreteTestElementNotExist() {
-    return concreteTestElementNotExist;
-  }
-
-  public void setConcreteTestElementNotExist(String concreteTestElementNotExist) {
-    this.concreteTestElementNotExist = concreteTestElementNotExist;
-  }
-
   // for finishProductSample
   @Value("${validation.finishProductSample.notExists}")
   private String finishProductSampleNotExist;
@@ -1646,28 +1493,6 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.finishProductSampleIssue.notExists}")
   private String finishProductSampleIssueNotExists;
 
-  // for cubeTestFinding
-  @Value("${validation.cubeTestFinding.notExists}")
-  private String cubeTestFindingNotExist;
-  @Value("${validation.cubeTestFinding.ageValid}")
-  private String cubeTestFindingAgeValid;
-
-  public String getCubeTestFindingNotExist() {
-    return cubeTestFindingNotExist;
-  }
-
-  public void setCubeTestFindingNotExist(String cubeTestFindingNotExist) {
-    this.cubeTestFindingNotExist = cubeTestFindingNotExist;
-  }
-
-  public String getCubeTestFindingAgeValid() {
-    return cubeTestFindingAgeValid;
-  }
-
-  public void setCubeTestFindingAgeValid(String cubeTestFindingAgeValid) {
-    this.cubeTestFindingAgeValid = cubeTestFindingAgeValid;
-  }
-
   @Value("${validation.finishProductSampleIssue.alreadyExist}")
   private String finishProductSampleIssueAlreadyExist;
 
@@ -1732,6 +1557,9 @@ public class ValidationFailureStatusCodes {
     this.qualityParameterAlreadyExist = qualityParameterAlreadyExist;
   }
 
+  /*
+   * Quality parameter
+   */
   @Value("${validation.materialQualityParameter.notExists}")
   private String materialQualityParameterNotExist;
   @Value("${validation.materialQualityParameter.alreadyExist}")
@@ -1752,80 +1580,10 @@ public class ValidationFailureStatusCodes {
   public void setMaterialQualityParameterAlreadyExist(String materialQualityParameterAlreadyExist) {
     this.materialQualityParameterAlreadyExist = materialQualityParameterAlreadyExist;
   }
-  /*
-   * 
-   */
-
-  @Value("${validation.concreteTestType.notExists}")
-  private String concreteTestTypeNotExist;
-  @Value("${validation.concreteTestType.alreadyExist}")
-  private String concreteTestTypeAlreadyExist;
-
-  public String getConcreteTestTypeNotExist() {
-    return concreteTestTypeNotExist;
-  }
-
-  public void setConcreteTestTypeNotExist(String concreteTestTypeNotExist) {
-    this.concreteTestTypeNotExist = concreteTestTypeNotExist;
-  }
-
-  public String getConcreteTestTypeAlreadyExist() {
-    return concreteTestTypeAlreadyExist;
-  }
-
-  public void setConcreteTestTypeAlreadyExist(String concreteTestTypeAlreadyExist) {
-    this.concreteTestTypeAlreadyExist = concreteTestTypeAlreadyExist;
-  }
 
   /*
-   * 
+   * Test parameter
    */
-  @Value("${validation.concreteTestResult.notExists}")
-  private String concreteTestResultNotExist;
-
-  public String getConcreteTestResultNotExist() {
-    return concreteTestResultNotExist;
-  }
-
-  public void setConcreteTestResultNotExist(String concreteTestResultNotExist) {
-    this.concreteTestResultNotExist = concreteTestResultNotExist;
-  }
-
-  /*
-   * 
-   */
-  @Value("${validation.concreteTestStatus.notExists}")
-  private String concreteTestStatusNotExist;
-
-  @Value("${validation.concreteTestStatus.alreadyExist}")
-  private String concreteTestStatusAlreadyExist;
-  @Value("${validation.concreteStatus.statusNotCompleted}")
-  private String concreteStatusStatusNotCompleted;
-
-  public String getConcreteStatusStatusNotCompleted() {
-    return concreteStatusStatusNotCompleted;
-  }
-
-  public void setConcreteStatusStatusNotCompleted(String concreteStatusStatusNotCompleted) {
-    this.concreteStatusStatusNotCompleted = concreteStatusStatusNotCompleted;
-  }
-
-  public String getConcreteTestStatusNotExist() {
-    return concreteTestStatusNotExist;
-  }
-
-  public void setConcreteTestStatusNotExist(String concreteTestStatusNotExist) {
-    this.concreteTestStatusNotExist = concreteTestStatusNotExist;
-  }
-
-  public String getConcreteTestStatusAlreadyExist() {
-    return concreteTestStatusAlreadyExist;
-  }
-
-  public void setConcreteTestStatusAlreadyExist(String concreteTestStatusAlreadyExist) {
-    this.concreteTestStatusAlreadyExist = concreteTestStatusAlreadyExist;
-  }
-
   @Value("${testParameterDto.abbreviation.null}")
   private String abbreviationIsNull;
 
@@ -1835,6 +1593,87 @@ public class ValidationFailureStatusCodes {
 
   public void setAbbreviationIsNull(String abbreviationIsNull) {
     this.abbreviationIsNull = abbreviationIsNull;
+  }
+
+  /*
+   * Parameter Equation
+   */
+  @Value("${validation.parameterEquation.notExist}")
+  private String parameterEquationNotExit;
+  @Value("${validation.parameterEquation.alreadyExist}")
+  private String parameterEquationAlreadyExit;
+
+  public String getParameterEquationNotExit() {
+    return parameterEquationNotExit;
+  }
+
+  public void setParameterEquationNotExit(String parameterEquationNotExit) {
+    this.parameterEquationNotExit = parameterEquationNotExit;
+  }
+
+  public String getParameterEquationAlreadyExit() {
+    return parameterEquationAlreadyExit;
+  }
+
+  public void setParameterEquationAlreadyExit(String parameterEquationAlreadyExit) {
+    this.parameterEquationAlreadyExit = parameterEquationAlreadyExit;
+  }
+
+  /*
+   * Parameter Equation Element
+   */
+  @Value("${validation.parameterEquationElement.notExist}")
+  private String parameterEquationElementNotExit;
+  @Value("${validation.parameterEquationElement.alreadyExist}")
+  private String parameterEquationElementAlreadyExit;
+
+  public String getParameterEquationElementNotExit() {
+    return parameterEquationElementNotExit;
+  }
+
+  public void setParameterEquationElementNotExit(String parameterEquationElementNotExit) {
+    this.parameterEquationElementNotExit = parameterEquationElementNotExit;
+  }
+
+  public String getParameterEquationElementAlreadyExit() {
+    return parameterEquationElementAlreadyExit;
+  }
+
+  public void setParameterEquationElementAlreadyExit(String parameterEquationElementAlreadyExit) {
+    this.parameterEquationElementAlreadyExit = parameterEquationElementAlreadyExit;
+
+  }
+
+  /*
+   * finish product test
+   */
+  @Value("${validation.finishProductTest.notExists}")
+  private String finishProductTestNotExit;
+
+  public String getFinishProductTestNotExit() {
+    return finishProductTestNotExit;
+  }
+
+  public void setFinishProductTestNotExit(String finishProductTestNotExit) {
+    this.finishProductTestNotExit = finishProductTestNotExit;
+  }
+
+  public void setProjectCodeIsNull(String projectCodeIsNull) {
+    this.projectCodeIsNull = projectCodeIsNull;
+  }
+
+  /*
+   * Finish Product Trial
+   */
+  @Value("${validation.finishProductTrial.notExist}")
+  private String finishProductTrialNotExit;
+
+  public String getFinishProductTrialNotExit() {
+    return finishProductTrialNotExit;
+  }
+
+  public void setFinishProductTrialNotExit(String finishProductTrialNotExit) {
+    this.finishProductTrialNotExit = finishProductTrialNotExit;
   }
 }
 
