@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.ParameterEquationEleDto;
+import com.tokyo.supermix.data.dto.ParameterEquationElementDto;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.ParameterEquationElement;
-import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
@@ -22,6 +24,8 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   TestParameterRepository testParameterRepository;
   @Autowired
   ParameterEquationElementRepository parameterEquationElementRepository;
+  @Autowired
+  EquationRepository equationRepository;
 
   @Transactional
   public void saveParameterEquation(ParameterEquation parameterEquation) {
@@ -64,17 +68,22 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
     return parameterEquationRepository.save(parameterEquation);
   }
 
-
-  public void updateParameterEquationElements(ParameterEquation parameterEquation) {
+  @Transactional
+  public void saveParameterEquationAndElement(ParameterEquationEleDto parameterEquationEleDto) {
     ArrayList<ParameterEquationElement> parameterEquationElementList =
         new ArrayList<ParameterEquationElement>();
-    parameterEquation = parameterEquationRepository.findById(parameterEquation.getId()).get();
-    List<TestParameter> testParameterList = testParameterRepository
-        .findByTestConfigureId(parameterEquation.getTestParameter().getTestConfigure().getId());
-    for (TestParameter testParameter : testParameterList) {
+    ParameterEquation parameterEquation = new ParameterEquation();
+    parameterEquation
+        .setEquation(equationRepository.findById(parameterEquationEleDto.getEquationId()).get());
+    parameterEquation.setTestParameter(
+        testParameterRepository.findById(parameterEquationEleDto.getTestParameterId()).get());
+    saveParameterEquation(parameterEquation);
+    for (ParameterEquationElementDto parameterEquationElementDto : parameterEquationEleDto
+        .getParameterEquationElements()) {
       ParameterEquationElement parameterEquationElement = new ParameterEquationElement();
       parameterEquationElement.setParameterEquation(parameterEquation);
-      parameterEquationElement.setTestParameter(testParameter);
+      parameterEquationElement.setTestParameter(
+          testParameterRepository.findById(parameterEquationElementDto.getTestParameterId()).get());
       parameterEquationElementList.add(parameterEquationElement);
       parameterEquationElementRepository.save(parameterEquationElement);
     }

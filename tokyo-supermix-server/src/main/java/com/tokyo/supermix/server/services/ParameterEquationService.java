@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.ParameterEquationEleDto;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 
 public interface ParameterEquationService {
@@ -19,4 +20,6 @@ public interface ParameterEquationService {
   public ParameterEquation getParameterEquationByTestParameter(Long testParameterId);
 
   public ParameterEquation updateParameterEquation(ParameterEquation parameterEquation);
+
+  public void saveParameterEquationAndElement(ParameterEquationEleDto parameterEquationEleDto);
 }
