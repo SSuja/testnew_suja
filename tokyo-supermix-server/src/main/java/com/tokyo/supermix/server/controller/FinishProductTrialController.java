@@ -60,7 +60,7 @@ public class FinishProductTrialController {
       logger.debug("Get Finish Product Trial By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
           mapper.map(finishProductTrialService.getFinishProductTrialByCode(code),
-              FinishProductTrial.class),
+              FinishProductTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
@@ -86,7 +86,7 @@ public class FinishProductTrialController {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
               mapper.map(finishProductTrialService.getFinishProductTrialsByFinishProductTestCode(
-                  finishProductTestCode), FinishProductTrial.class),
+                  finishProductTestCode), FinishProductTrialResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
