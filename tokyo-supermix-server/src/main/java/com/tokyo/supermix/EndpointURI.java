@@ -223,13 +223,7 @@ public final class EndpointURI {
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
 
-  /*
-   * User
-   */
-  public static final String USER = BASE_API_PATH + "user";
-  public static final String USERS = BASE_API_PATH + "users";
-  public static final String USER_BY_ID = USER + ID;
-
+ 
   /*
    * Test Parameter APIs
    * 
@@ -416,24 +410,8 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
 
-  /*
-   * Authentication
-   * 
-   */
-  public static final String AUTH = BASE_API_PATH + "auth/";
-  public static final String SIGNIN = AUTH + "sign-in";
-  public static final String SIGNUP = AUTH + "sign-up";
-  public static final String CHANGE_PASSWORD = AUTH + "change-password";
-  public static final String FORGOT_PASSWORD = AUTH + "forgot-password";
-  public static final String RESET_PASSWORD = AUTH + "reset-password";
+ 
 
-  /*
-   * Role apis
-   */
-  public static final String ROLE = BASE_API_PATH + "role";
-  public static final String ROLES = BASE_API_PATH + "roles";
-  public static final String GET_ROLE_BY_ID = ROLE + ID;
-  public static final String DELETE_ROLE_BY_ID = ROLE + ID;
 
   /*
    * MaterialAcceptedValue Apis
@@ -488,22 +466,7 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "test-name" + SLASH + "{testName}";
 
-  /*
-   * role Permission
-   */
-  public static final String PRIVILEGE = BASE_API_PATH + "privilege";
-  public static final String PERMISSION = BASE_API_PATH + "permission";
-  public static final String PERMISSIONS = BASE_API_PATH + "permissions";
-  public static final String ROUTE = "route";
-  public static final String ROUTE_PRIVILEGES = PRIVILEGE + SLASH + ROUTE + SLASH + "{roleId}";
-  public static final String ROUTE_PERMISSIONS = PERMISSIONS + SLASH + ROUTE;
-  public static final String PRIVILEGES = PRIVILEGE + SLASH + "{roleId}";
-  public static final String STATUS_PRIVILEGES = PRIVILEGE + SLASH + "/status/" + "{status}";
-  public static final String SUBROUTE = "sub-route" + SLASH + "{subRouteName}";
-  public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
-  public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
-  public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
-
+  
   /*
    * File Export
    */
