@@ -15,5 +15,6 @@ public interface RolePermissionService {
   public List<RolePermission> getRolePermissionByStatus(boolean status);
 
   public List<RolePermissionResponseDto> getRolePermissionWithModuleByRoleId(Long roleId);
-
+  
+  public boolean isPermissionExists(Long roleId, String permissionName);
 }

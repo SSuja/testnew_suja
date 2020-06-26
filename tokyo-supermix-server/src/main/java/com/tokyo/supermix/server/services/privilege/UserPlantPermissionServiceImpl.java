@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
@@ -122,6 +123,19 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       }
     }
 
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantResponseDto> getByPlantRoleIdAndPermissionNameAndStatus(Long userId,
+      String PermissionnName, Boolean status) {
+    List<UserPlantPermission> userPlantPermissionList = userPlantPermissionRepository
+        .findByUserIdAndPlantPermissionPermissionNameAndStatus(userId, PermissionnName, status);
+    List<PlantResponseDto> plantResponseDtolist = new ArrayList<PlantResponseDto>();
+    userPlantPermissionList.forEach(userPlantPermission -> {
+      plantResponseDtolist.add(
+          mapper.map(userPlantPermission.getPlantPermission().getPlant(), PlantResponseDto.class));
+    });
+    return plantResponseDtolist;
   }
 
 }
