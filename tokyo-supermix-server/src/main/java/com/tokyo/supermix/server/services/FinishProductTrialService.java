@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.enums.Status;
 
 public interface FinishProductTrialService {
   public List<FinishProductTrial> getAllFinishProductTrials();
@@ -20,5 +21,7 @@ public interface FinishProductTrialService {
       String finishProductTestCode);
 
   public boolean isFinishProductTestExists(String finishProductTestCode);
+
+  public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode);
 }
 

@@ -563,6 +563,7 @@ public class Constants {
   public static final String DELETED_FINISH_PRODUCT_TEST = "Finish Product Successfully Deleted";
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
+  public static final String FINISH_PRODUCT_TEST_STATUS= "finishProductTestStatus";
 
   /*
    * Encapsulate constructor to restrict modification from outside
