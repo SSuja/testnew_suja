@@ -170,6 +170,16 @@ public final class PermissionConstants {
   public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
   public static final String EDIT_ACCEPTED_VALUE= "edit_accepted_value";
   public static final String DELETE_ACCEPTED_VALUE = "delete_accepted_value";
+  /* Material test */
+  public static final String VIEW_MATERIAL_TEST = "view_material_test";
+  public static final String CREATE_MATERIAL_TEST= "create_material_test";
+  public static final String EDIT_MATERIAL_TEST= "edit_material_test";
+  public static final String DELETE_MATERIAL_TEST = "delete_material_test";
+  /* Material test  trail*/
+  public static final String VIEW_MATERIAL_TEST_TRIAL = "view_material_test_trial";
+  public static final String CREATE_MATERIAL_TEST_TRIAL= "create_material_test_trial";
+  public static final String EDIT_MATERIAL_TEST_TRIAL= "edit_material_test_trial";
+  public static final String DELETE_MATERIAL_TEST_TRIAL = "delete_material_test_trial";
   
   
 }

@@ -222,11 +222,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_COUNT)
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT) 
         // Accepted value
-        .antMatchers(HttpMethod.POST,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.VIEW_ACCEPTED_VALUE)
-        .antMatchers(HttpMethod.GET,EndpointURI.ACCEPTED_VALUES).hasAuthority(PermissionConstants.CREATE_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.GET,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.VIEW_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.POST,EndpointURI.ACCEPTED_VALUES).hasAuthority(PermissionConstants.CREATE_ACCEPTED_VALUE)
         .antMatchers(HttpMethod.PUT,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.EDIT_ACCEPTED_VALUE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.ACCEPTED_VALUE_BY_ID).hasAuthority(PermissionConstants.DELETE_ACCEPTED_VALUE) 
-        
+        // Material test
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.VIEW_MATERIAL_TEST)
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_TESTS).hasAuthority(PermissionConstants.CREATE_MATERIAL_TEST)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_TESTS_BY_CODE).hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST) 
+        // Material test trail
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.CREATE_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST_TRIALS).hasAuthority(PermissionConstants.VIEW_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_TESTS_BY_CODE).hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST_TRIAL) 
+      
+       
         
         //.anyRequest().authenticated()
         ;
