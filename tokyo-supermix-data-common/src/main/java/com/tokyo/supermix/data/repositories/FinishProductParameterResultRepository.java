@@ -9,4 +9,5 @@ public interface FinishProductParameterResultRepository
   List<FinishProductParameterResult> findByTestParameterIdAndFinishProductSampleId(
       Long testParameterId, Long finishProductTestId);
 
+  List<FinishProductParameterResult> findByFinishProductSampleId(Long finishProductSampleId);
 }
