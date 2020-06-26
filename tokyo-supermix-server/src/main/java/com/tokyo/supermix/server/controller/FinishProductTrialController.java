@@ -95,9 +95,9 @@ public class FinishProductTrialController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE)
   public ResponseEntity<Object> updateFinishProductStatusByFinishProductTestCode(
       @PathVariable String finishProductTestCode) {
-    return new ResponseEntity<>(new ContentResponse<>(
-        Constants.FINISH_PRODUCT_TEST_STATUS, finishProductTrialService
-            .upadateFinishProductStatusByFinishProductCode(finishProductTestCode),
+    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST_STATUS,
+        finishProductTrialService
+        .upadateFinishProductStatusByFinishProductCode(finishProductTestCode),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
