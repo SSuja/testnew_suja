@@ -180,6 +180,18 @@ public final class PermissionConstants {
   public static final String CREATE_MATERIAL_TEST_TRIAL= "create_material_test_trial";
   public static final String EDIT_MATERIAL_TEST_TRIAL= "edit_material_test_trial";
   public static final String DELETE_MATERIAL_TEST_TRIAL = "delete_material_test_trial";
+  /* sieve size */
+  public static final String VIEW_SIEVE_SIZE = "view_sieve_size";
+  public static final String CREATE_SIEVE_SIZE= "create_sieve_size";
+  public static final String EDIT_SIEVE_SIZE= "edit_sieve_size";
+  public static final String DELETE_SIEVE_SIZE = "delete_sieve_size";
+  /* finish product sample issue */
+  public static final String VIEW_FINISH_PRODUCT_SAMPLE_ISSUE = "view_finish_product_sample_issue";
+  public static final String CREATE_FINISH_PRODUCT_SAMPLE_ISSUE= "create_finish_product_sample_issue";
+  public static final String EDIT_FINISH_PRODUCT_SAMPLE_ISSUE= "edit_finish_product_sample_issue";
+  public static final String DELETE_FINISH_PRODUCT_SAMPLE_ISSUE = "delete_finish_product_sample_issue";
+  
+  
   
   
 }
