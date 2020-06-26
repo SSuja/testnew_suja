@@ -206,6 +206,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.SIEVE_ACCEPTED_VALUE).hasAuthority(PermissionConstants.CREATE_SIEVE_ACCEPTED_VALUE)
         .antMatchers(HttpMethod.PUT,EndpointURI.SIEVE_ACCEPTED_VALUE).hasAuthority(PermissionConstants.EDIT_SIEVE_ACCEPTED_VALUE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.SIEVE_ACCEPTED_VALUE_BY_ID).hasAuthority(PermissionConstants.DELETE_SIEVE_ACCEPTED_VALUE)
+        // Test
+        .antMatchers(HttpMethod.GET,EndpointURI.TEST_CONFIGURES).hasAuthority(PermissionConstants.VIEW_TEST_CONFIGURE)
+        .antMatchers(HttpMethod.POST,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.CREATE_TEST_CONFIGURE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.EDIT_TEST_CONFIGURE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_CONFIGURE_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST_CONFIGURE) 
+        // Test Parameter
+        .antMatchers(HttpMethod.GET,EndpointURI.TEST_PARAMETERS).hasAuthority(PermissionConstants.VIEW_TEST_PARAMETER)
+        .antMatchers(HttpMethod.POST,EndpointURI.TEST_PARAMETER).hasAuthority(PermissionConstants.CREATE_TEST_PARAMETER)
+        .antMatchers(HttpMethod.PUT,EndpointURI.TEST_PARAMETER).hasAuthority(PermissionConstants.EDIT_TEST_PARAMETER)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST_PARAMETER) 
+        // Incoming sample count
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT) 
         
         
         //.anyRequest().authenticated()

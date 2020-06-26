@@ -150,4 +150,21 @@ public final class PermissionConstants {
   public static final String CREATE_SIEVE_ACCEPTED_VALUE= "create_sieve_accepted_value";
   public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
   public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
+  /* test */
+  public static final String VIEW_TEST_CONFIGURE = "view_test_configuration";
+  public static final String CREATE_TEST_CONFIGURE= "create_test_configuration";
+  public static final String EDIT_TEST_CONFIGURE = "edit_test_configuration";
+  public static final String DELETE_TEST_CONFIGURE = "delete_test_configuration";
+  /* test parameter */
+  public static final String VIEW_TEST_PARAMETER = "view_test_parameter";
+  public static final String CREATE_TEST_PARAMETER= "create_test_parameter";
+  public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
+  public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
+  /* incoming sample count */
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_COUNT = "material_sub_category_samples_count";
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
+  
+  
 }
