@@ -179,15 +179,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.TEST).hasAuthority(PermissionConstants.EDIT_TEST)
         .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST) 
         //Role Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS).hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
-        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION).hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
+       .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS).hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
+       .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION).hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
         //User Plant Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID).hasAuthority(PermissionConstants.VIEW_USER_PLANT_PERMISSION_BY_USER)
-        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
+       .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID).hasAuthority(PermissionConstants.VIEW_USER_PLANT_PERMISSION_BY_USER)
+       .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
         //Plant Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
-       
-        
+       .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
+        //Parameter
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETERS).hasAuthority(PermissionConstants.VIEW_PARAMETER) 
+        .antMatchers(HttpMethod.POST,EndpointURI.PARAMETER).hasAuthority(PermissionConstants.CREATE_PARAMETER) 
+        .antMatchers(HttpMethod.PUT,EndpointURI.PARAMETER).hasAuthority(PermissionConstants.EDIT_PARAMETER) 
+        .antMatchers(HttpMethod.DELETE,EndpointURI.PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_PARAMETER) 
         
         //.anyRequest().authenticated()
         ;

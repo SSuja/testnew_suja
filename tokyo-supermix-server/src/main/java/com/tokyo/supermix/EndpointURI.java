@@ -180,8 +180,7 @@ public final class EndpointURI {
    */
   public static final String PARAMETER = BASE_API_PATH + "parameter";
   public static final String PARAMETERS = BASE_API_PATH + "parameters";
-  public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
-  public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
+  public static final String PARAMETER_BY_ID = PARAMETER + ID;
   public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
