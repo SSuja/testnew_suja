@@ -230,7 +230,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository.existsByFinishProductTestCode(finishProductTestCode);
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode) {
     FinishProductTest finishProductTest = finishProductTestRepository.getOne(finishProductTestCode);
     finishProductTest.setResult(20);
