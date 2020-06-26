@@ -83,7 +83,7 @@ public class ParameterResultController {
 				validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
 	}
 
-	@DeleteMapping(value = EndpointURI.DELETE_PARAMETER_RESULT_BY_ID)
+	@DeleteMapping(value = EndpointURI.PARAMETER_RESULT_BY_ID)
 	public ResponseEntity<Object> deleteParameterResult(@PathVariable Long id) {
 		if (parameterResultService.isParameterResultExist(id)) {
 			parameterResultService.deleteParameterResult(id);

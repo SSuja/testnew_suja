@@ -130,4 +130,24 @@ public final class PermissionConstants {
   public static final String DELETE_TEST = "delete_test";
   /* Plant Permission */
   public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
+  /* equation */
+  public static final String VIEW_EQUATION = "view_equation";
+  public static final String CREATE_EQUATION= "create_equation";
+  public static final String EDIT_EQUATION = "edit_equation";
+  public static final String DELETE_EQUATION = "delete_equation";
+  /* parameter result */
+  public static final String VIEW_PARAMETER_RESULT = "view_parameter_result";
+  public static final String CREATE_PARAMETER_RESULT= "create_parameter_result";
+  public static final String EDIT_PARAMETER_RESULT = "edit_parameter_result";
+  public static final String DELETE_PARAMETER_RESULT = "delete_parameter_result";
+  /* material accepted value */
+  public static final String VIEW_MATERIAL_ACCEPTED_VALUE = "view_material_accepted_value";
+  public static final String CREATE_MATERIAL_ACCEPTED_VALUE= "create_material_accepted_value";
+  public static final String EDIT_MATERIAL_ACCEPTED_VALUE = "edit_material_accepted_value";
+  public static final String DELETE_MATERIAL_ACCEPTED_VALUE = "delete_material_accepted_value";
+  /* material accepted value */
+  public static final String VIEW_SIEVE_ACCEPTED_VALUE = "view_sieve_accepted_value";
+  public static final String CREATE_SIEVE_ACCEPTED_VALUE= "create_sieve_accepted_value";
+  public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
 }
