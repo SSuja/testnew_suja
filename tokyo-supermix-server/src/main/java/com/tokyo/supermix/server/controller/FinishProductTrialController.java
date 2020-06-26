@@ -34,7 +34,6 @@ public class FinishProductTrialController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private FinishProductTrialService finishProductTrialService;
-  @Autowired
   private static final Logger logger = Logger.getLogger(FinishProductTrialController.class);
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIALS)
