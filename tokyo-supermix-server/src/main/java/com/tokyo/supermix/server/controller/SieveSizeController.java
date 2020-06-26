@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +45,6 @@ public class SieveSizeController {
   private static final Logger logger = Logger.getLogger(SieveSizeController.class);
 
   @PostMapping(value = EndpointURI.SIEVE_SIZE)
-  @PreAuthorize("hasAuthority('add_sieve_size')")
   public ResponseEntity<Object> createSieveSize(
       @Valid @RequestBody List<SieveSizeRequestDto> sieveSizeRequestDtoList) {
     for (SieveSizeRequestDto sieveSizeRequestDto : sieveSizeRequestDtoList) {
@@ -71,7 +69,6 @@ public class SieveSizeController {
   }
 
   @GetMapping(value = EndpointURI.SIEVE_SIZES)
-  @PreAuthorize("hasAuthority('get_sieve_size')")
   public ResponseEntity<Object> getSieveSizes() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_SIZES,
         mapper.map(sieveSizeService.getAllSieveSizes(), SieveSizeResponseDto.class),
@@ -91,7 +88,6 @@ public class SieveSizeController {
   }
 
   @PutMapping(value = EndpointURI.SIEVE_SIZE)
-  @PreAuthorize("hasAuthority('edit_sieve_size')")
   public ResponseEntity<Object> updateSieveSize(
       @Valid @RequestBody SieveSizeRequestDto sieveSizeRequestDto) {
     if (sieveSizeService.isSieveSizeExist(sieveSizeRequestDto.getId())) {
@@ -119,7 +115,6 @@ public class SieveSizeController {
   }
 
   @DeleteMapping(EndpointURI.SIEVE_SIZE_BY_ID)
-  @PreAuthorize("hasAuthority('delete_sieve_size')")
   public ResponseEntity<Object> deleteSieveSize(@PathVariable Long id) {
     if (sieveSizeService.isSieveSizeExist(id)) {
       sieveSizeService.deleteSieveSize(id);

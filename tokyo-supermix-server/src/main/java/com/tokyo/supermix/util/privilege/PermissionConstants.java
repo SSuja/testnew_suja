@@ -135,4 +135,68 @@ public final class PermissionConstants {
   public static final String CREATE_PARAMETER= "create_parameter";
   public static final String EDIT_PARAMETER = "edit_parameter";
   public static final String DELETE_PARAMETER = "delete_parameter";
+  /* equation */
+  public static final String VIEW_EQUATION = "view_equation";
+  public static final String CREATE_EQUATION= "create_equation";
+  public static final String EDIT_EQUATION = "edit_equation";
+  public static final String DELETE_EQUATION = "delete_equation";
+  /* parameter result */
+  public static final String VIEW_PARAMETER_RESULT = "view_parameter_result";
+  public static final String CREATE_PARAMETER_RESULT= "create_parameter_result";
+  public static final String EDIT_PARAMETER_RESULT = "edit_parameter_result";
+  public static final String DELETE_PARAMETER_RESULT = "delete_parameter_result";
+  /* material accepted value */
+  public static final String VIEW_MATERIAL_ACCEPTED_VALUE = "view_material_accepted_value";
+  public static final String CREATE_MATERIAL_ACCEPTED_VALUE= "create_material_accepted_value";
+  public static final String EDIT_MATERIAL_ACCEPTED_VALUE = "edit_material_accepted_value";
+  public static final String DELETE_MATERIAL_ACCEPTED_VALUE = "delete_material_accepted_value";
+  /* material accepted value */
+  public static final String VIEW_SIEVE_ACCEPTED_VALUE = "view_sieve_accepted_value";
+  public static final String CREATE_SIEVE_ACCEPTED_VALUE= "create_sieve_accepted_value";
+  public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
+  /* test */
+  public static final String VIEW_TEST_CONFIGURE = "view_test_configuration";
+  public static final String CREATE_TEST_CONFIGURE= "create_test_configuration";
+  public static final String EDIT_TEST_CONFIGURE = "edit_test_configuration";
+  public static final String DELETE_TEST_CONFIGURE = "delete_test_configuration";
+  /* test parameter */
+  public static final String VIEW_TEST_PARAMETER = "view_test_parameter";
+  public static final String CREATE_TEST_PARAMETER= "create_test_parameter";
+  public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
+  public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
+  /* incoming sample count */
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_COUNT = "material_sub_category_samples_count";
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
+  /* Accepted value */
+  public static final String VIEW_ACCEPTED_VALUE = "view_accepted_value";
+  public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
+  public static final String EDIT_ACCEPTED_VALUE= "edit_accepted_value";
+  public static final String DELETE_ACCEPTED_VALUE = "delete_accepted_value";
+  /* Material test */
+  public static final String VIEW_MATERIAL_TEST = "view_material_test";
+  public static final String CREATE_MATERIAL_TEST= "create_material_test";
+  public static final String EDIT_MATERIAL_TEST= "edit_material_test";
+  public static final String DELETE_MATERIAL_TEST = "delete_material_test";
+  /* Material test  trail*/
+  public static final String VIEW_MATERIAL_TEST_TRIAL = "view_material_test_trial";
+  public static final String CREATE_MATERIAL_TEST_TRIAL= "create_material_test_trial";
+  public static final String EDIT_MATERIAL_TEST_TRIAL= "edit_material_test_trial";
+  public static final String DELETE_MATERIAL_TEST_TRIAL = "delete_material_test_trial";
+  /* sieve size */
+  public static final String VIEW_SIEVE_SIZE = "view_sieve_size";
+  public static final String CREATE_SIEVE_SIZE= "create_sieve_size";
+  public static final String EDIT_SIEVE_SIZE= "edit_sieve_size";
+  public static final String DELETE_SIEVE_SIZE = "delete_sieve_size";
+  /* finish product sample issue */
+  public static final String VIEW_FINISH_PRODUCT_SAMPLE_ISSUE = "view_finish_product_sample_issue";
+  public static final String CREATE_FINISH_PRODUCT_SAMPLE_ISSUE= "create_finish_product_sample_issue";
+  public static final String EDIT_FINISH_PRODUCT_SAMPLE_ISSUE= "edit_finish_product_sample_issue";
+  public static final String DELETE_FINISH_PRODUCT_SAMPLE_ISSUE = "delete_finish_product_sample_issue";
+  
+  
+  
+  
 }
