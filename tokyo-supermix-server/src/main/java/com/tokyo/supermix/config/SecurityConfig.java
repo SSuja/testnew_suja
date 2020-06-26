@@ -156,15 +156,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGNS).hasAuthority(PermissionConstants.VIEW_MIX_DESIGN)
         .antMatchers(HttpMethod.POST,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.CREATE_MIX_DESIGN)
         .antMatchers(HttpMethod.PUT,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.EDIT_MIX_DESIGN)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.MIX_DESIGN_BY_CODE).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN)
-        
-        // PROCESS_SAMPLE_LOAD
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MIX_DESIGN_BY_CODE).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN) 
+        // Process Sample Load
         .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE_LOADS).hasAuthority(PermissionConstants.VIEW_PROCESS_SAMPLE_LOAD)
         .antMatchers(HttpMethod.POST,EndpointURI.PROCESS_SAMPLE_LOAD).hasAuthority(PermissionConstants.CREATE_PROCESS_SAMPLE_LOAD)
         .antMatchers(HttpMethod.PUT,EndpointURI.PROCESS_SAMPLE_LOAD).hasAuthority(PermissionConstants.EDIT_PROCESS_SAMPLE_LOAD)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID).hasAuthority(PermissionConstants.DELETE_PROCESS_SAMPLE_LOAD)
-//        .anyRequest().authenticated()
-         
+        .antMatchers(HttpMethod.DELETE,EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID).hasAuthority(PermissionConstants.DELETE_PROCESS_SAMPLE_LOAD)         
          // user
         .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.USERS).hasAuthority(PermissionConstants.VIEW_USER)
         .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.USER).hasAuthority(PermissionConstants.CREATE_USER)
@@ -181,6 +178,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT)
         .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT) 
+        // Test
+        .antMatchers(HttpMethod.GET,EndpointURI.TESTS).hasAuthority(PermissionConstants.VIEW_TEST)
+        .antMatchers(HttpMethod.POST,EndpointURI.TEST).hasAuthority(PermissionConstants.CREATE_TEST)
+        .antMatchers(HttpMethod.PUT,EndpointURI.TEST).hasAuthority(PermissionConstants.EDIT_TEST)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST) 
+        //Role Permission
+        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS).hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
+        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION).hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
+        //User Plant Permission
+        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID).hasAuthority(PermissionConstants.VIEW_USER_PLANT_PERMISSION_BY_USER)
+        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
         //.anyRequest().authenticated()
         ;
         // Add our custom JWT security filter

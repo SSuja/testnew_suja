@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +42,6 @@ public class TestController {
 
   // Create Test API
   @PostMapping(value = EndpointURI.TEST)
-  @PreAuthorize("hasAuthority('add_test')")
   public ResponseEntity<Object> createTest(@Valid @RequestBody TestDto testDto) {
     if (testService.isTestExist(testDto.getName())) {
       logger.debug("Test already exists: createTest(), test: {}");
@@ -57,7 +55,6 @@ public class TestController {
 
   // Get all Test API
   @GetMapping(value = EndpointURI.TESTS)
-  @PreAuthorize("hasAuthority('get_test')")
   public ResponseEntity<Object> getAllTests() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
         mapper.map(testService.getAllTests(), TestDto.class), RestApiResponseStatus.OK), null,
@@ -65,8 +62,7 @@ public class TestController {
   }
 
   // Delete Test API
-  @DeleteMapping(value = EndpointURI.GET_TEST_BY_ID)
-  @PreAuthorize("hasAuthority('delete_test')")
+  @DeleteMapping(value = EndpointURI.TEST_BY_ID)
   public ResponseEntity<Object> deleteTest(@PathVariable Long id) {
     if (testService.isTestExist(id)) {
       testService.deleteTest(id);
@@ -80,7 +76,7 @@ public class TestController {
   }
 
   // Get Test by Id API
-  @GetMapping(value = EndpointURI.GET_TEST_BY_ID)
+  @GetMapping(value = EndpointURI.TEST_BY_ID)
   public ResponseEntity<Object> getTestById(@PathVariable Long id) {
     if (testService.isTestExist(id)) {
       logger.debug("Id found");
@@ -96,7 +92,6 @@ public class TestController {
 
   // Update Test API
   @PutMapping(value = EndpointURI.TEST)
-  @PreAuthorize("hasAuthority('edit_test')")
   public ResponseEntity<Object> updateTest(@Valid @RequestBody TestDto testDto) {
     if (testService.isTestExist(testDto.getId())) {
       if (testService.isUpdatedTestExist(testDto.getId(), testDto.getName())) {

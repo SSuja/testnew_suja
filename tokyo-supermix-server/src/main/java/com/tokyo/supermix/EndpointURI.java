@@ -365,8 +365,7 @@ public final class EndpointURI {
    */
   public static final String TEST = BASE_API_PATH + "test";
   public static final String TESTS = BASE_API_PATH + "tests";
-  public static final String GET_TEST_BY_ID = TEST + ID;
-  public static final String DELETE_TEST = TEST + ID;
+  public static final String TEST_BY_ID = TEST + ID;
 
   /*
    * FinenessModulus

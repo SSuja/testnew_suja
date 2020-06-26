@@ -86,6 +86,18 @@ public final class PermissionConstants {
   public static final String CREATE_ROLE= "create_role";
   public static final String EDIT_ROLE = "edit_role";
   public static final String DELETE_ROLE = "delete_role";
+  /* user */
+  public static final String VIEW_USER = "view_user";
+  public static final String CREATE_USER= "create_user";
+  public static final String EDIT_USER_STATUS = "edit_user_status";
+  public static final String EDIT_USER_ROLE = "edit_user_role";
+  public static final String DELETE_USER = "delete_user";
+  /* Role Permission */
+  public static final String VIEW_ROLE_PERMISSION_BY_ROLE = "view_role_permission_by_role";
+  public static final String EDIT_ROLE_PERMISSION = "edit_role_permission";
+  /* User Plant Permission */
+  public static final String VIEW_USER_PLANT_PERMISSION_BY_USER = "view_user_plant_permission_by_user";
+  public static final String EDIT_USER_PLANT_PERMISSION = "edit_user_plant_permission";
   /* supplier */
   public static final String VIEW_SUPPLIER = "view_supplier";
   public static final String CREATE_SUPPLIER= "create_supplier";
@@ -96,7 +108,7 @@ public final class PermissionConstants {
   public static final String CREATE_MIX_DESIGN= "create_mix_design";
   public static final String EDIT_MIX_DESIGN = "edit_mix_design";
   public static final String DELETE_MIX_DESIGN = "delete_mix_design";
-  /* mix design*/
+  /* process sample load*/
   public static final String VIEW_PROCESS_SAMPLE_LOAD = "view_process_sample load";
   public static final String CREATE_PROCESS_SAMPLE_LOAD= "create_process_sample load";
   public static final String EDIT_PROCESS_SAMPLE_LOAD = "edit_process_sample load";
@@ -106,16 +118,14 @@ public final class PermissionConstants {
   public static final String CREATE_INCOMING_SAMPLE= "create_incoming_sample";
   public static final String EDIT_INCOMING_SAMPLE = "edit_incoming_sample";
   public static final String DELETE_INCOMING_SAMPLE = "delete_incoming_sample";
-  /* user */
-  public static final String VIEW_USER = "view_user";
-  public static final String CREATE_USER= "create_user";
-  public static final String EDIT_USER_STATUS = "edit_user_status";
-  public static final String EDIT_USER_ROLE = "edit_user_role";
-  public static final String DELETE_USER = "delete_user";
   /* finish product */
   public static final String VIEW_FINISH_PRODUCT = "view_finish_product_sample";
   public static final String CREATE_FINISH_PRODUCT= "create_finish_product_sample";
   public static final String EDIT_FINISH_PRODUCT = "edit_finish_product_sample";
   public static final String DELETE_FINISH_PRODUCT = "delete_finish_product_sample";
- 
+  /* test */
+  public static final String VIEW_TEST = "view_test";
+  public static final String CREATE_TEST= "create_test";
+  public static final String EDIT_TEST = "edit_test";
+  public static final String DELETE_TEST = "delete_test";
 }
