@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
 import com.tokyo.supermix.data.dto.ParameterResultDto;
-import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.ParameterEquationElement;

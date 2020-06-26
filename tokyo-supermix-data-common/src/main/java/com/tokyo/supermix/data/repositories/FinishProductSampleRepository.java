@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.enums.Status;
 
 @Repository
 public interface FinishProductSampleRepository extends JpaRepository<FinishProductSample, Long>,
@@ -20,4 +21,8 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   List<FinishProductSample> findByConcreteMixerId(Long id);
 
   List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
+
+  List<FinishProductSample> findByStatus(Status status);
+
+  boolean existsByStatus(Status status);
 }

@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.ParameterEquationEleDto;
 import com.tokyo.supermix.data.dto.ParameterEquationRequestDto;
 import com.tokyo.supermix.data.dto.ParameterEquationResponseDto;
 import com.tokyo.supermix.data.entities.ParameterEquation;
@@ -42,20 +42,15 @@ public class ParameterEquationController {
 
   @PostMapping(value = EndpointURI.PARAMETER_EQUATION)
   public ResponseEntity<Object> createParameterEquation(
-      @RequestBody List<ParameterEquationRequestDto> parameterEquationRequestDtoList) {
-    for (ParameterEquationRequestDto parameterEquationRequestDto : parameterEquationRequestDtoList) {
-      if (parameterEquationService.isEquationIdAndTestParameterId(
-          parameterEquationRequestDto.getEquation().getId(),
-          parameterEquationRequestDto.getTestParameter().getId())) {
-        logger.debug("Row is already exists: createParameterEquation(), isDuplicateRowExists: {}");
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
-                validationFailureStatusCodes.getParameterEquationAlreadyExit()),
-            HttpStatus.BAD_REQUEST);
-      }
+      @RequestBody ParameterEquationEleDto parameterEquationEleDto) {
+    if (parameterEquationService.isEquationIdAndTestParameterId(
+        parameterEquationEleDto.getEquationId(), parameterEquationEleDto.getTestParameterId())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
+              validationFailureStatusCodes.getParameterEquationAlreadyExit()),
+          HttpStatus.BAD_REQUEST);
     }
-    parameterEquationService.saveParameterEquation(
-        mapper.map(parameterEquationRequestDtoList, ParameterEquation.class));
+    parameterEquationService.saveParameterEquationAndElement(parameterEquationEleDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PARAMETER_EQUATION_SUCCESS),
         HttpStatus.OK);

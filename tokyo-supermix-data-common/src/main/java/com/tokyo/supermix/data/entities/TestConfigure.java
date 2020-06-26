@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import com.tokyo.supermix.data.enums.TestType;
 
 @Entity
@@ -40,6 +39,8 @@ public class TestConfigure implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = true)
   private MaterialSubCategory materialSubCategory;
+  private Long days;
+  private boolean bulkTrial;
 
   public Long getId() {
     return id;
@@ -139,5 +140,21 @@ public class TestConfigure implements Serializable {
 
   public void setResultLabel(String resultLabel) {
     this.resultLabel = resultLabel;
+  }
+
+  public Long getDays() {
+    return days;
+  }
+
+  public void setDays(Long days) {
+    this.days = days;
+  }
+
+  public boolean isBulkTrial() {
+    return bulkTrial;
+  }
+
+  public void setBulkTrial(boolean bulkTrial) {
+    this.bulkTrial = bulkTrial;
   }
 }
