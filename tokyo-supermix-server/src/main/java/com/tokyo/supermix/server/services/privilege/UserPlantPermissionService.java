@@ -13,6 +13,6 @@ public interface UserPlantPermissionService {
 
   public void saveUserPlantPermission(List<UserPlantPermission> userPlantPermissions);
 
-  public List<PlantResponseDto> getByPlantRoleIdAndPermissionNameAndStatus(Long userId,
+  public List<PlantResponseDto> getByUserIdAndPermissionNameAndStatus(Long userId,
       String PermissionnName, Boolean status);
 }

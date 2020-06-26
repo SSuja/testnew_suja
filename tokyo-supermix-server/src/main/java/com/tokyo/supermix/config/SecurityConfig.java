@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.security.JwtAuthenticationEntryPoint;
 import com.tokyo.supermix.security.JwtAuthenticationFilter;
 import com.tokyo.supermix.server.services.auth.AuthUserDetailsService;

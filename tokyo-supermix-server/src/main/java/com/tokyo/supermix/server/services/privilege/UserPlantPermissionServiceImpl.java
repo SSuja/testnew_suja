@@ -126,7 +126,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
   }
 
   @Transactional(readOnly = true)
-  public List<PlantResponseDto> getByPlantRoleIdAndPermissionNameAndStatus(Long userId,
+  public List<PlantResponseDto> getByUserIdAndPermissionNameAndStatus(Long userId,
       String PermissionnName, Boolean status) {
     List<UserPlantPermission> userPlantPermissionList = userPlantPermissionRepository
         .findByUserIdAndPlantPermissionPermissionNameAndStatus(userId, PermissionnName, status);

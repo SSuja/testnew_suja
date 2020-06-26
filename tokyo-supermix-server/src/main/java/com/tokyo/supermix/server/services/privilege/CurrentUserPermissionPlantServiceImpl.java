@@ -9,13 +9,16 @@ import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRoleRepository;
-import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 
 @Service
 public class CurrentUserPermissionPlantServiceImpl implements CurrentUserPermissionPlantService {
   @Autowired
   PlantRolePlantPermissionServices plantRolePlantPermissionServices;
+  @Autowired
+  private RolePermissionService rolePermissionService;
+  @Autowired
+  private UserPlantPermissionService userPlantPermissionService;
   @Autowired
   private PlantRepository plantRepository;
   @Autowired
@@ -28,24 +31,28 @@ public class CurrentUserPermissionPlantServiceImpl implements CurrentUserPermiss
       String permissionName) {
     List<String> permissionPlantCodes = new ArrayList<String>();
     if (currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
-      currentUser.getRoles().forEach(roleId->{
-        // if(userRoleRepository.findByRoleIdAndUserId(plantRole,currentUser.getId()).getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name()))
-        // {
-        //
-        // }
-         if(userRoleRepository.findByRoleIdAndUserId(roleId,currentUser.getId()).getRoleType().name().equalsIgnoreCase(RoleType.GROUP.name()))
-         {
-           
-         }
+      currentUser.getRoles().forEach(roleId -> {
+        if (userRoleRepository.findByRoleIdAndUserId(roleId, currentUser.getId()).getRoleType()
+            .name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
+          userPlantPermissionService
+              .getByUserIdAndPermissionNameAndStatus(currentUser.getId(), permissionName, true)
+              .forEach(plant -> permissionPlantCodes.add(plant.getCode()));
+        }
+        if (userRoleRepository.findByRoleIdAndUserId(roleId, currentUser.getId()).getRoleType()
+            .name().equalsIgnoreCase(RoleType.GROUP.name())
+            && rolePermissionService.isPermissionExists(roleId, permissionName)) {
+          plantRepository.findAll().forEach(plant -> permissionPlantCodes.add(plant.getCode()));
+        }
       });
-      plantRepository.findAll().forEach(plant -> permissionPlantCodes.add(plant.getCode()));
       return permissionPlantCodes;
     } else {
       currentUser.getPlantRoles().forEach(plantRoleId -> {
-        // if(userPlantRoleRepository.findByPlantRoleIdAndUserId(plantRoleId,currentUser.getId()).getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name()))
-        // {
-        //
-        // }
+        if (userPlantRoleRepository.findByPlantRoleIdAndUserId(plantRoleId, currentUser.getId())
+            .getRoleType().name().equalsIgnoreCase(RoleType.INDIVIDUAL.name())) {
+          userPlantPermissionService
+              .getByUserIdAndPermissionNameAndStatus(currentUser.getId(), permissionName, true)
+              .forEach(plant -> permissionPlantCodes.add(plant.getCode()));
+        }
         if (userPlantRoleRepository.findByPlantRoleIdAndUserId(plantRoleId, currentUser.getId())
             .getRoleType().name().equalsIgnoreCase(RoleType.GROUP.name())) {
           plantRolePlantPermissionServices
@@ -56,5 +63,4 @@ public class CurrentUserPermissionPlantServiceImpl implements CurrentUserPermiss
       return permissionPlantCodes;
     }
   }
-
 }
