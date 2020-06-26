@@ -25,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -103,10 +105,10 @@ public class EmployeeController {
 
   /* Get All Employees */
   @GetMapping(value = EndpointURI.EMPLOYEES)
-  public ResponseEntity<Object> getAllEmployees() {
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser) {
     logger.debug("get all employee");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-        mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
+        mapper.map(employeeService.getAllEmployees(currentUser), EmployeeResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
