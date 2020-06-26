@@ -246,6 +246,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE)
         .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_SAMPLE_ISSUE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE) 
+        // quality parameter
+        .antMatchers(HttpMethod.POST,EndpointURI.QUALITY_PARAMETER).hasAuthority(PermissionConstants.CREATE_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.GET,EndpointURI.QUALITY_PARAMETERS).hasAuthority(PermissionConstants.VIEW_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.PUT,EndpointURI.QUALITY_PARAMETER).hasAuthority(PermissionConstants.EDIT_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.QUALITY_PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_QUALITY_PARAMETER) 
      
        
         

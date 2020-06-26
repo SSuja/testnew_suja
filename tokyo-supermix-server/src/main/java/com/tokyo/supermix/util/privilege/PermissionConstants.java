@@ -190,6 +190,11 @@ public final class PermissionConstants {
   public static final String CREATE_FINISH_PRODUCT_SAMPLE_ISSUE= "create_finish_product_sample_issue";
   public static final String EDIT_FINISH_PRODUCT_SAMPLE_ISSUE= "edit_finish_product_sample_issue";
   public static final String DELETE_FINISH_PRODUCT_SAMPLE_ISSUE = "delete_finish_product_sample_issue";
+  /* sieve size */
+  public static final String VIEW_QUALITY_PARAMETER = "view_quality_parameter";
+  public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
+  public static final String EDIT_QUALITY_PARAMETER= "edit_quality_parameter";
+  public static final String DELETE_QUALITY_PARAMETER = "delete_quality_parameter";
   
   
   
