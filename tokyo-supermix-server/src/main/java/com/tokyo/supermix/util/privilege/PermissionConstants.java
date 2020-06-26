@@ -130,6 +130,11 @@ public final class PermissionConstants {
   public static final String DELETE_TEST = "delete_test";
   /* Plant Permission */
   public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
+  /* Parameter */
+  public static final String VIEW_PARAMETER = "view_parameter";
+  public static final String CREATE_PARAMETER= "create_parameter";
+  public static final String EDIT_PARAMETER = "edit_parameter";
+  public static final String DELETE_PARAMETER = "delete_parameter";
   /* equation */
   public static final String VIEW_EQUATION = "view_equation";
   public static final String CREATE_EQUATION= "create_equation";
@@ -185,6 +190,38 @@ public final class PermissionConstants {
   public static final String CREATE_FINISH_PRODUCT_TEST= "create_finish_product_test";
   public static final String EDIT_FINISH_PRODUCT_TEST = "edit_finish_product_test";
   public static final String DELETE_FINISH_PRODUCT_TEST = "delete_finish_product_test";
+  /* Accepted value */
+  public static final String VIEW_ACCEPTED_VALUE = "view_accepted_value";
+  public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
+  public static final String EDIT_ACCEPTED_VALUE= "edit_accepted_value";
+  public static final String DELETE_ACCEPTED_VALUE = "delete_accepted_value";
+  /* Material test */
+  public static final String VIEW_MATERIAL_TEST = "view_material_test";
+  public static final String CREATE_MATERIAL_TEST= "create_material_test";
+  public static final String EDIT_MATERIAL_TEST= "edit_material_test";
+  public static final String DELETE_MATERIAL_TEST = "delete_material_test";
+  /* Material test  trail*/
+  public static final String VIEW_MATERIAL_TEST_TRIAL = "view_material_test_trial";
+  public static final String CREATE_MATERIAL_TEST_TRIAL= "create_material_test_trial";
+  public static final String EDIT_MATERIAL_TEST_TRIAL= "edit_material_test_trial";
+  public static final String DELETE_MATERIAL_TEST_TRIAL = "delete_material_test_trial";
+  /* sieve size */
+  public static final String VIEW_SIEVE_SIZE = "view_sieve_size";
+  public static final String CREATE_SIEVE_SIZE= "create_sieve_size";
+  public static final String EDIT_SIEVE_SIZE= "edit_sieve_size";
+  public static final String DELETE_SIEVE_SIZE = "delete_sieve_size";
+  /* finish product sample issue */
+  public static final String VIEW_FINISH_PRODUCT_SAMPLE_ISSUE = "view_finish_product_sample_issue";
+  public static final String CREATE_FINISH_PRODUCT_SAMPLE_ISSUE= "create_finish_product_sample_issue";
+  public static final String EDIT_FINISH_PRODUCT_SAMPLE_ISSUE= "edit_finish_product_sample_issue";
+  public static final String DELETE_FINISH_PRODUCT_SAMPLE_ISSUE = "delete_finish_product_sample_issue";
+  /* sieve size */
+  public static final String VIEW_QUALITY_PARAMETER = "view_quality_parameter";
+  public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
+  public static final String EDIT_QUALITY_PARAMETER= "edit_quality_parameter";
+  public static final String DELETE_QUALITY_PARAMETER = "delete_quality_parameter";
+  
+  
   
   
 }

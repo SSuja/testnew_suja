@@ -179,14 +179,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.TEST).hasAuthority(PermissionConstants.EDIT_TEST)
         .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST) 
         //Role Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS).hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
-        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION).hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
+       .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS).hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
+       .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION).hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
         //User Plant Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID).hasAuthority(PermissionConstants.VIEW_USER_PLANT_PERMISSION_BY_USER)
-        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
+       .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID).hasAuthority(PermissionConstants.VIEW_USER_PLANT_PERMISSION_BY_USER)
+       .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
         //Plant Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
-        // equation
+       .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
+        //Parameter
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETERS).hasAuthority(PermissionConstants.VIEW_PARAMETER) 
+        .antMatchers(HttpMethod.POST,EndpointURI.PARAMETER).hasAuthority(PermissionConstants.CREATE_PARAMETER) 
+        .antMatchers(HttpMethod.PUT,EndpointURI.PARAMETER).hasAuthority(PermissionConstants.EDIT_PARAMETER) 
+        .antMatchers(HttpMethod.DELETE,EndpointURI.PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_PARAMETER) 
+       // equation
         .antMatchers(HttpMethod.GET,EndpointURI.EQUATIONS).hasAuthority(PermissionConstants.VIEW_EQUATION)
         .antMatchers(HttpMethod.POST,EndpointURI.EQUATION).hasAuthority(PermissionConstants.CREATE_EQUATION)
         .antMatchers(HttpMethod.PUT,EndpointURI.EQUATION).hasAuthority(PermissionConstants.EDIT_EQUATION)
@@ -241,6 +246,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TEST)
         .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST ).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TEST)
         .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST_BY_CODE).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TEST)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT) 
+        // Accepted value
+        .antMatchers(HttpMethod.GET,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.VIEW_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.POST,EndpointURI.ACCEPTED_VALUES).hasAuthority(PermissionConstants.CREATE_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.EDIT_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.ACCEPTED_VALUE_BY_ID).hasAuthority(PermissionConstants.DELETE_ACCEPTED_VALUE) 
+        // Material test
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.VIEW_MATERIAL_TEST)
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_TESTS).hasAuthority(PermissionConstants.CREATE_MATERIAL_TEST)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_TESTS_BY_CODE).hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST) 
+        // Material test trail
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.CREATE_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST_TRIALS).hasAuthority(PermissionConstants.VIEW_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_TESTS_BY_CODE).hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST_TRIAL) 
+        // sieve size
+        .antMatchers(HttpMethod.POST,EndpointURI.SIEVE_SIZE).hasAuthority(PermissionConstants.CREATE_SIEVE_SIZE)
+        .antMatchers(HttpMethod.GET,EndpointURI.SIEVE_SIZES).hasAuthority(PermissionConstants.VIEW_SIEVE_SIZE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.SIEVE_SIZE).hasAuthority(PermissionConstants.EDIT_SIEVE_SIZE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.SIEVE_SIZE_BY_ID).hasAuthority(PermissionConstants.DELETE_SIEVE_SIZE) 
+        // finish product sample issue
+        .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE) 
+        // quality parameter
+        .antMatchers(HttpMethod.POST,EndpointURI.QUALITY_PARAMETER).hasAuthority(PermissionConstants.CREATE_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.GET,EndpointURI.QUALITY_PARAMETERS).hasAuthority(PermissionConstants.VIEW_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.PUT,EndpointURI.QUALITY_PARAMETER).hasAuthority(PermissionConstants.EDIT_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.QUALITY_PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_QUALITY_PARAMETER) 
+     
+        
+       
         
         //.anyRequest().authenticated()
         ;
