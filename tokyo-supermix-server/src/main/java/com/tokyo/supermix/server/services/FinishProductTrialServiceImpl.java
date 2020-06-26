@@ -61,7 +61,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 				finishProductTrial.setCode(prefix + String.format("%03d", 1));
 			} else {
 				finishProductTrial
-						.setCode(prefix + String.format("%04d", maxNumberFromCode(FinishProductTrialList) + 1));
+						.setCode(prefix + String.format("%03d", maxNumberFromCode(FinishProductTrialList) + 1));
 			}
 		}
 		finishProductTrialRepository.save(finishProductTrial);
