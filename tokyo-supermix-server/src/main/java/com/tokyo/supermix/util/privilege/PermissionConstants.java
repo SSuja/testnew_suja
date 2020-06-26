@@ -220,7 +220,9 @@ public final class PermissionConstants {
   public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
   public static final String EDIT_QUALITY_PARAMETER= "edit_quality_parameter";
   public static final String DELETE_QUALITY_PARAMETER = "delete_quality_parameter";
-  
+  /* file export */
+  public static final String VIEW_EXPORT_MIXDESIGN = "view_export_mixdesign";
+  public static final String CREATE_UPLOAD_MIXDESIGN= "create_upload_mixdesign";
   
   
   
