@@ -101,8 +101,7 @@ public final class EndpointURI {
    */
   public static final String TEST_CONFIGURE = BASE_API_PATH + "test-configure";
   public static final String TEST_CONFIGURES = BASE_API_PATH + "test-configures";
-  public static final String GET_TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
-  public static final String DELETE_TEST_CONFIGURE = TEST_CONFIGURE + ID;
+  public static final String TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testType}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =

@@ -130,4 +130,9 @@ public final class PermissionConstants {
   public static final String DELETE_TEST = "delete_test";
   /* Plant Permission */
   public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
+  /* test */
+  public static final String VIEW_TEST_CONFIGURE = "view_test_configuration";
+  public static final String CREATE_TEST_CONFIGURE= "create_test_configuration";
+  public static final String EDIT_TEST_CONFIGURE = "edit_test_configuration";
+  public static final String DELETE_TEST_CONFIGURE = "delete_test_configuration";
 }

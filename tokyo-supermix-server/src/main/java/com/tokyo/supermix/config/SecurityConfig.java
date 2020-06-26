@@ -186,7 +186,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
         //Plant Permission
         .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
-       
+        // Test
+        .antMatchers(HttpMethod.GET,EndpointURI.TEST_CONFIGURES).hasAuthority(PermissionConstants.VIEW_TEST)
+        .antMatchers(HttpMethod.POST,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.CREATE_TEST)
+        .antMatchers(HttpMethod.PUT,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.EDIT_TEST)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_CONFIGURE_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST) 
+     
         
         
         //.anyRequest().authenticated()
