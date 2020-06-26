@@ -157,11 +157,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.CREATE_MIX_DESIGN)
         .antMatchers(HttpMethod.PUT,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.EDIT_MIX_DESIGN)
         .antMatchers(HttpMethod.DELETE,EndpointURI.MIX_DESIGN_BY_CODE).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN) 
-        // Process Sample Load
-        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE_LOADS).hasAuthority(PermissionConstants.VIEW_PROCESS_SAMPLE_LOAD)
-        .antMatchers(HttpMethod.POST,EndpointURI.PROCESS_SAMPLE_LOAD).hasAuthority(PermissionConstants.CREATE_PROCESS_SAMPLE_LOAD)
-        .antMatchers(HttpMethod.PUT,EndpointURI.PROCESS_SAMPLE_LOAD).hasAuthority(PermissionConstants.EDIT_PROCESS_SAMPLE_LOAD)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID).hasAuthority(PermissionConstants.DELETE_PROCESS_SAMPLE_LOAD)         
          // user
         .antMatchers(HttpMethod.GET,PrivilegeEndpointURI.USERS).hasAuthority(PermissionConstants.VIEW_USER)
         .antMatchers(HttpMethod.POST,PrivilegeEndpointURI.USER).hasAuthority(PermissionConstants.CREATE_USER)
