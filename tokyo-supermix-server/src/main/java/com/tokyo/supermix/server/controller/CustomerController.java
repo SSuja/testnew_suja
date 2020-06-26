@@ -64,7 +64,7 @@ public class CustomerController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_CUSTOMER_BY_ID)
+  @GetMapping(value = EndpointURI.CUSTOMER_BY_ID)
   public ResponseEntity<Object> getCustomerById(@PathVariable Long id) {
     if (customerService.isCustomerExist(id)) {
       logger.debug("Get Customer By Id");
@@ -76,7 +76,7 @@ public class CustomerController {
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_CUSTOMER)
+  @DeleteMapping(value = EndpointURI.CUSTOMER_BY_ID)
   public ResponseEntity<Object> deleteCustomer(@PathVariable Long id) {
     if (customerService.isCustomerExist(id)) {
       logger.debug("delete customer by id");

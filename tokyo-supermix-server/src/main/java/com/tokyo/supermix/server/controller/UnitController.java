@@ -56,7 +56,7 @@ public class UnitController {
         HttpStatus.OK);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_UNIT_BY_ID)
+  @DeleteMapping(value = EndpointURI.UNIT_BY_ID)
   public ResponseEntity<Object> deleteUnit(@PathVariable Long id) {
     if (unitService.isUnitExist(id)) {
       unitService.deleteUnit(id);
@@ -68,7 +68,7 @@ public class UnitController {
         validationFailureStatusCodes.getUnitNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_UNIT_BY_ID)
+  @GetMapping(value = EndpointURI.UNIT_BY_ID)
   public ResponseEntity<Object> getUnitById(@PathVariable Long id) {
     if (unitService.isUnitExist(id)) {
       logger.debug("Id found");

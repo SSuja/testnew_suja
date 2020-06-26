@@ -54,7 +54,7 @@ public class MaterialSubCategoryController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_MATERIAL_SUB_CATEGORY_BY_ID)
+  @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_BY_ID)
   public ResponseEntity<Object> getMaterialSubCategoryById(@PathVariable Long id) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(id)) {
       return new ResponseEntity<>(
@@ -69,7 +69,7 @@ public class MaterialSubCategoryController {
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_MATERIAL_SUB_CATEGORY)
+  @DeleteMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_BY_ID)
   public ResponseEntity<Object> deleteMaterialSubCategoryById(@PathVariable Long id) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(id)) {
       materialSubCategoryService.deleteMaterialSubCategory(id);;

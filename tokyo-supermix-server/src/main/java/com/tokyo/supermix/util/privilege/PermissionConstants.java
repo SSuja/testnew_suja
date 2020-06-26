@@ -21,7 +21,6 @@ public final class PermissionConstants {
  public static final String CREATE_EMPLOYEE = "create_employee";
  public static final String EDIT_EMPLOYEE = "edit_employee";
  public static final String DELETE_EMPLOYEE = "delete_employee";
-  
   /*  material category  */
   public static final String VIEW_MATERIAL_CATEGORY = "view_material_category";
   public static final String CREATE_MATERIAL_CATEGORY = "create_material_category";
@@ -37,34 +36,22 @@ public final class PermissionConstants {
   public static final String CREATE_MATERIAL_SUB_CATEGORY = "create_material_sub_category";
   public static final String EDIT_MATERIAL_SUB_CATEGORY = "edit_material_sub_category";
   public static final String DELETE_MATERIAL_SUB_CATEGORY = "delete_material_sub_category";
-  
-  /*
-  raw_material
-  */
+  /* raw_material */
   public static final String VIEW_RAW_MATERIAL = "view_raw_material";
   public static final String CREATE_RAW_MATERIAL = "create_raw_material";
   public static final String EDIT_RAW_MATERIAL = "edit_raw_material";
   public static final String DELETE_RAW_MATERIAL = "delete_raw_material";
-  
-  /*
-  equipment
-  */
+  /* equipment */
   public static final String VIEW_EQUIPMENT = "view_equipment";
   public static final String CREATE_EQUIPMENT = "create_equipment";
   public static final String EDIT_EQUIPMENT = "edit_equipment";
   public static final String DELETE_EQUIPMENT = "delete_equipment";
-  
-  /*
- plant equipment
-  */
+  /* plant equipment */
   public static final String VIEW_PLANT_EQUIPMENT = "view_plant_equipment";
   public static final String CREATE_PLANT_EQUIPMENT = "create_plant_equipment";
   public static final String EDIT_PLANT_EQUIPMENT = "edit_plant_equipment";
   public static final String DELETE_PLANT_EQUIPMENT = "delete_plant_equipment";
-  
-  /*
-  plant equipment
-   */
+  /*  plant equipment calibration  */
    public static final String VIEW_PLANT_EQUIPMENT_CALIBRATION = "view_plant_equipment_calibration";
    public static final String CREATE_PLANT_EQUIPMENT_CALIBRATION = "create_plant_equipment_calibration";
    public static final String EDIT_PLANT_EQUIPMENT_CALIBRATION = "edit_plant_equipment_calibration";
@@ -84,7 +71,63 @@ public final class PermissionConstants {
   public static final String CREATE_CUSTOMER= "create_customer";
   public static final String EDIT_CUSTOMER = "edit_customer";
   public static final String DELETE_CUSTOMER = "delete_customer";
-  
- 
- 
+  /* project */
+  public static final String VIEW_PROJECT = "view_project";
+  public static final String CREATE_PROJECT= "create_project";
+  public static final String EDIT_PROJECT = "edit_project";
+  public static final String DELETE_PROJECT = "delete_project";
+  /* pour */
+  public static final String VIEW_POUR = "view_pour";
+  public static final String CREATE_POUR= "create_pour";
+  public static final String EDIT_POUR = "edit_pour";
+  public static final String DELETE_POUR = "delete_pour";
+  /* role */
+  public static final String VIEW_ROLE = "view_role";
+  public static final String CREATE_ROLE= "create_role";
+  public static final String EDIT_ROLE = "edit_role";
+  public static final String DELETE_ROLE = "delete_role";
+  /* user */
+  public static final String VIEW_USER = "view_user";
+  public static final String CREATE_USER= "create_user";
+  public static final String EDIT_USER_STATUS = "edit_user_status";
+  public static final String EDIT_USER_ROLE = "edit_user_role";
+  public static final String DELETE_USER = "delete_user";
+  /* Role Permission */
+  public static final String VIEW_ROLE_PERMISSION_BY_ROLE = "view_role_permission_by_role";
+  public static final String EDIT_ROLE_PERMISSION = "edit_role_permission";
+  /* User Plant Permission */
+  public static final String VIEW_USER_PLANT_PERMISSION_BY_USER = "view_user_plant_permission_by_user";
+  public static final String EDIT_USER_PLANT_PERMISSION = "edit_user_plant_permission";
+  /* supplier */
+  public static final String VIEW_SUPPLIER = "view_supplier";
+  public static final String CREATE_SUPPLIER= "create_supplier";
+  public static final String EDIT_SUPPLIER = "edit_supplier";
+  public static final String DELETE_SUPPLIER = "delete_supplier";
+  /* mix design*/
+  public static final String VIEW_MIX_DESIGN = "view_mix_design";
+  public static final String CREATE_MIX_DESIGN= "create_mix_design";
+  public static final String EDIT_MIX_DESIGN = "edit_mix_design";
+  public static final String DELETE_MIX_DESIGN = "delete_mix_design";
+  /* process sample load*/
+  public static final String VIEW_PROCESS_SAMPLE_LOAD = "view_process_sample load";
+  public static final String CREATE_PROCESS_SAMPLE_LOAD= "create_process_sample load";
+  public static final String EDIT_PROCESS_SAMPLE_LOAD = "edit_process_sample load";
+  public static final String DELETE_PROCESS_SAMPLE_LOAD = "delete_process_sample load";
+  /* Incoming Sample */
+  public static final String VIEW_INCOMING_SAMPLE = "view_incoming_sample";
+  public static final String CREATE_INCOMING_SAMPLE= "create_incoming_sample";
+  public static final String EDIT_INCOMING_SAMPLE = "edit_incoming_sample";
+  public static final String DELETE_INCOMING_SAMPLE = "delete_incoming_sample";
+  /* finish product */
+  public static final String VIEW_FINISH_PRODUCT = "view_finish_product_sample";
+  public static final String CREATE_FINISH_PRODUCT= "create_finish_product_sample";
+  public static final String EDIT_FINISH_PRODUCT = "edit_finish_product_sample";
+  public static final String DELETE_FINISH_PRODUCT = "delete_finish_product_sample";
+  /* test */
+  public static final String VIEW_TEST = "view_test";
+  public static final String CREATE_TEST= "create_test";
+  public static final String EDIT_TEST = "edit_test";
+  public static final String DELETE_TEST = "delete_test";
+  /* Plant Permission */
+  public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
 }

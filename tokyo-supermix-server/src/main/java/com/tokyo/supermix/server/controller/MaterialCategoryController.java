@@ -65,7 +65,7 @@ public class MaterialCategoryController {
   }
 
   // Get Material_Category By Id
-  @GetMapping(value = EndpointURI.GET_MATERIAL_CATEGORY_BY_ID)
+  @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_ID)
   public ResponseEntity<Object> getMaterialCategoryById(@PathVariable Long id) {
     if (materialCategoryService.isMaterialCategoryExist(id)) {
       logger.debug("Get Material Category By Id");
@@ -79,7 +79,7 @@ public class MaterialCategoryController {
   }
 
   // Delete Material Category
-  @DeleteMapping(value = EndpointURI.DELETE_MATERIAL_CATEGORY)
+  @DeleteMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_ID)
   public ResponseEntity<Object> deleteMaterialCategory(@PathVariable Long id) {
     if (materialCategoryService.isMaterialCategoryExist(id)) {
       logger.debug("delete material by id");

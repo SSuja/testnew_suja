@@ -4,7 +4,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +39,7 @@ public class ProcessSampleLoadController {
   private PlantService plantService;
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_LOADS)
- // @PreAuthorize("hasAuthority('get_process_sample_load')")
-  public ResponseEntity<Object> getProcessSampleLoads() {
+   public ResponseEntity<Object> getProcessSampleLoads() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLE_LOADS,
         mapper.map(processSampleLoadService.getAllProcessSampleLoads(),
             ProcessSampleLoadResponseDto.class),
@@ -49,8 +47,7 @@ public class ProcessSampleLoadController {
   }
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD)
- // @PreAuthorize("hasAuthority('add_process_sample_load')")
-  public ResponseEntity<Object> createProcessSampleLoad(
+   public ResponseEntity<Object> createProcessSampleLoad(
       @Valid @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
     processSampleLoadService
         .saveProcessSampleLoad(mapper.map(processSampleLoadRequestDto, ProcessSampleLoad.class));
@@ -73,8 +70,7 @@ public class ProcessSampleLoadController {
   }
 
   @PutMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD)
- // @PreAuthorize("hasAuthority('edit_process_sample_load')")
-  public ResponseEntity<Object> updateProcessSampleLoad(
+   public ResponseEntity<Object> updateProcessSampleLoad(
       @Valid @RequestBody ProcessSampleLoadRequestDto processSampleLoadRequestDto) {
     if (processSampleLoadService.isProcessSampleLoadExist(processSampleLoadRequestDto.getId())) {
       processSampleLoadService
@@ -87,7 +83,6 @@ public class ProcessSampleLoadController {
   }
 
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_LOAD_BY_ID)
- // @PreAuthorize("hasAuthority('delete_process_sample_load')")
   public ResponseEntity<Object> deleteProcessSampleLoadById(@PathVariable Long id) {
     if (processSampleLoadService.isProcessSampleLoadExist(id)) {
       processSampleLoadService.deleteProcessSampleLoad(id);

@@ -27,8 +27,7 @@ public final class PrivilegeEndpointURI {
    */
   public static final String ROLE = BASE_API_PATH + "role";
   public static final String ROLES = BASE_API_PATH + "roles";
-  public static final String GET_ROLE_BY_ID = ROLE + ID;
-  public static final String DELETE_ROLE_BY_ID = ROLE + ID;
+  public static final String ROLE_BY_ID = ROLE + ID;
 
   /*
    * User
@@ -93,6 +92,7 @@ public final class PrivilegeEndpointURI {
    * plant Role
    */
   public static final String PLANT_ROLE = BASE_API_PATH + "plant-role";
+  public static final String PLANT_ROLES = BASE_API_PATH + "plant-roles";
   public static final String PLANT_ROLE_BY_ROLE_NAME =
       PLANT_ROLE + SLASH + "role-name" + SLASH + "{roleName}";
   public static final String PLANT_ROLES_BY_PLANT_CODE = PLANT_ROLE + SLASH + "{plantCode}";
