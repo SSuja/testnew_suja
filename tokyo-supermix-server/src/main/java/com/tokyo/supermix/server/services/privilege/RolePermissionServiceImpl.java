@@ -100,4 +100,12 @@ public class RolePermissionServiceImpl implements RolePermissionService {
     });
     return PermissionResponseDtolist;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPermissionExists(Long roleId, String permissionName) {
+    if(rolePermissionRepository.existsByRoleIdAndPermissionName(roleId, permissionName)) {
+      return true;
+    }
+    return false;
+  }
 }
