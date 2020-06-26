@@ -135,4 +135,9 @@ public final class PermissionConstants {
   public static final String CREATE_TEST_CONFIGURE= "create_test_configuration";
   public static final String EDIT_TEST_CONFIGURE = "edit_test_configuration";
   public static final String DELETE_TEST_CONFIGURE = "delete_test_configuration";
+  /* test parameter */
+  public static final String VIEW_TEST_PARAMETER = "view_test_parameter";
+  public static final String CREATE_TEST_PARAMETER= "create_test_parameter";
+  public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
+  public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
 }

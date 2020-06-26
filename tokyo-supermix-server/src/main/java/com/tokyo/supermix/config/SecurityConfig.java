@@ -187,10 +187,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Plant Permission
         .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
         // Test
-        .antMatchers(HttpMethod.GET,EndpointURI.TEST_CONFIGURES).hasAuthority(PermissionConstants.VIEW_TEST)
-        .antMatchers(HttpMethod.POST,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.CREATE_TEST)
-        .antMatchers(HttpMethod.PUT,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.EDIT_TEST)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_CONFIGURE_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST) 
+        .antMatchers(HttpMethod.GET,EndpointURI.TEST_CONFIGURES).hasAuthority(PermissionConstants.VIEW_TEST_CONFIGURE)
+        .antMatchers(HttpMethod.POST,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.CREATE_TEST_CONFIGURE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.EDIT_TEST_CONFIGURE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_CONFIGURE_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST_CONFIGURE) 
+        // Test Parameter
+        .antMatchers(HttpMethod.GET,EndpointURI.TEST_PARAMETERS).hasAuthority(PermissionConstants.VIEW_TEST_PARAMETER)
+        .antMatchers(HttpMethod.POST,EndpointURI.TEST_PARAMETER).hasAuthority(PermissionConstants.CREATE_TEST_PARAMETER)
+        .antMatchers(HttpMethod.PUT,EndpointURI.TEST_PARAMETER).hasAuthority(PermissionConstants.EDIT_TEST_PARAMETER)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST_PARAMETER) 
      
         
         
