@@ -186,6 +186,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION).hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
         //Plant Permission
         .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS).hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
+        // equation
+        .antMatchers(HttpMethod.GET,EndpointURI.EQUATIONS).hasAuthority(PermissionConstants.VIEW_EQUATION)
+        .antMatchers(HttpMethod.POST,EndpointURI.EQUATION).hasAuthority(PermissionConstants.CREATE_EQUATION)
+        .antMatchers(HttpMethod.PUT,EndpointURI.EQUATION).hasAuthority(PermissionConstants.EDIT_EQUATION)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.EQUATION_BY_ID).hasAuthority(PermissionConstants.DELETE_EQUATION)
+        // parameter result
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETER_RESULTS).hasAuthority(PermissionConstants.VIEW_PARAMETER_RESULT)
+        .antMatchers(HttpMethod.POST,EndpointURI.PARAMETER_RESULT).hasAuthority(PermissionConstants.CREATE_PARAMETER_RESULT)
+        .antMatchers(HttpMethod.PUT,EndpointURI.PARAMETER_RESULT).hasAuthority(PermissionConstants.EDIT_PARAMETER_RESULT)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.PARAMETER_RESULT_BY_ID).hasAuthority(PermissionConstants.DELETE_PARAMETER_RESULT)
+     // material accepted value
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_ACCEPTED_VALUES).hasAuthority(PermissionConstants.VIEW_MATERIAL_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_ACCEPTED_VALUE).hasAuthority(PermissionConstants.CREATE_MATERIAL_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_ACCEPTED_VALUE).hasAuthority(PermissionConstants.EDIT_MATERIAL_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_ID).hasAuthority(PermissionConstants.DELETE_MATERIAL_ACCEPTED_VALUE)
+     // sieve accepted value
+        .antMatchers(HttpMethod.GET,EndpointURI.SIEVE_ACCEPTED_VALUES).hasAuthority(PermissionConstants.VIEW_SIEVE_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.POST,EndpointURI.SIEVE_ACCEPTED_VALUE).hasAuthority(PermissionConstants.CREATE_SIEVE_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.SIEVE_ACCEPTED_VALUE).hasAuthority(PermissionConstants.EDIT_SIEVE_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.SIEVE_ACCEPTED_VALUE_BY_ID).hasAuthority(PermissionConstants.DELETE_SIEVE_ACCEPTED_VALUE)
         // Test
         .antMatchers(HttpMethod.GET,EndpointURI.TEST_CONFIGURES).hasAuthority(PermissionConstants.VIEW_TEST_CONFIGURE)
         .antMatchers(HttpMethod.POST,EndpointURI.TEST_CONFIGURE).hasAuthority(PermissionConstants.CREATE_TEST_CONFIGURE)
