@@ -215,6 +215,11 @@ public final class PermissionConstants {
   public static final String CREATE_FINISH_PRODUCT_SAMPLE_ISSUE= "create_finish_product_sample_issue";
   public static final String EDIT_FINISH_PRODUCT_SAMPLE_ISSUE= "edit_finish_product_sample_issue";
   public static final String DELETE_FINISH_PRODUCT_SAMPLE_ISSUE = "delete_finish_product_sample_issue";
+  /* finish product trail */
+  public static final String VIEW_FINISH_PRODUCT_TRAIL = "view_finish_product_trail";
+  public static final String CREATE_FINISH_PRODUCT_TRAIL= "create_finish_product_trail";
+  public static final String EDIT_FINISH_PRODUCT_TRAIL = "edit_finish_product_trail";
+  public static final String DELETE_FINISH_PRODUCT_TRAIL = "delete_finish_product_trail";
   /* sieve size */
   public static final String VIEW_QUALITY_PARAMETER = "view_quality_parameter";
   public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
