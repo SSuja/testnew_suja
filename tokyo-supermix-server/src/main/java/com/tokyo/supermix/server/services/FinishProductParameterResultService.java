@@ -5,4 +5,6 @@ import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 
 public interface FinishProductParameterResultService {
   public List<FinishProductParameterResult> getallFinishProductParameterResults();
+
+  public List<FinishProductParameterResult> getByFinishProductSampleId(Long finishProductSampleId);
 }
