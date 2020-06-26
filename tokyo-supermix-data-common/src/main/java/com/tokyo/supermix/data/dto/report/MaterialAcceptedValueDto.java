@@ -1,9 +1,10 @@
 package com.tokyo.supermix.data.dto.report;
 
-public class AcceptedValueDto {
+public class MaterialAcceptedValueDto {
   private Double minValue;
   private Double maxValue;
   private String testName;
+  private String rawMaterialName;
   private String unit;
 
   public Double getMinValue() {
@@ -28,6 +29,14 @@ public class AcceptedValueDto {
 
   public void setTestName(String testName) {
     this.testName = testName;
+  }
+
+  public String getRawMaterialName() {
+    return rawMaterialName;
+  }
+
+  public void setRawMaterialName(String rawMaterialName) {
+    this.rawMaterialName = rawMaterialName;
   }
 
   public String getUnit() {
