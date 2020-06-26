@@ -170,6 +170,26 @@ public final class PermissionConstants {
   public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
   public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
   public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
+  /* test parameter */
+  public static final String VIEW_PARAMETER_EQUATION = "view_parameter_equation";
+  public static final String CREATE_PARAMETER_EQUATION= "create_parameter_equation";
+  public static final String EDIT_PARAMETER_EQUATION = "edit_parameter_equation";
+  public static final String DELETE_PARAMETER_EQUATION = "delete_parameter_equation";
+  /* process sample */
+  public static final String VIEW_PROCESS_SAMPLE = "view_process_sample";
+  public static final String CREATE_PROCESS_SAMPLE= "create_process_sample";
+  public static final String EDIT_PROCESS_SAMPLE = "edit_process_sample";
+  public static final String DELETE_PROCESS_SAMPLE = "delete_process_sample";
+  /* process sample */
+  public static final String VIEW_MIX_DESIGN_PROPORTION = "view_mix_design_proportion";
+  public static final String CREATE_MIX_DESIGN_PROPORTION= "create_mix_design_proportion";
+  public static final String EDIT_MIX_DESIGN_PROPORTION = "edit_mix_design_proportion";
+  public static final String DELETE_MIX_DESIGN_PROPORTION = "delete_mix_design_proportion";
+  /* finish product test */
+  public static final String VIEW_FINISH_PRODUCT_TEST = "view_finish_product_test";
+  public static final String CREATE_FINISH_PRODUCT_TEST= "create_finish_product_test";
+  public static final String EDIT_FINISH_PRODUCT_TEST = "edit_finish_product_test";
+  public static final String DELETE_FINISH_PRODUCT_TEST = "delete_finish_product_test";
   /* Accepted value */
   public static final String VIEW_ACCEPTED_VALUE = "view_accepted_value";
   public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
@@ -200,6 +220,15 @@ public final class PermissionConstants {
   public static final String CREATE_FINISH_PRODUCT_TRAIL= "create_finish_product_trail";
   public static final String EDIT_FINISH_PRODUCT_TRAIL = "edit_finish_product_trail";
   public static final String DELETE_FINISH_PRODUCT_TRAIL = "delete_finish_product_trail";
+  /* sieve size */
+  public static final String VIEW_QUALITY_PARAMETER = "view_quality_parameter";
+  public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
+  public static final String EDIT_QUALITY_PARAMETER= "edit_quality_parameter";
+  public static final String DELETE_QUALITY_PARAMETER = "delete_quality_parameter";
+  /* file export */
+  public static final String VIEW_EXPORT_MIXDESIGN = "view_export_mixdesign";
+  public static final String CREATE_UPLOAD_MIXDESIGN= "create_upload_mixdesign";
+  
   
   
 }

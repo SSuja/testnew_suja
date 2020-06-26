@@ -225,6 +225,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_COUNT)
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT)
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT)
+        // Parameter Equation
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETER_EQUATIONS).hasAuthority(PermissionConstants.VIEW_PARAMETER_EQUATION)
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETER_EQUATION).hasAuthority(PermissionConstants.CREATE_PARAMETER_EQUATION)
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETER_EQUATION).hasAuthority(PermissionConstants.EDIT_PARAMETER_EQUATION)
+        .antMatchers(HttpMethod.GET,EndpointURI.PARAMETER_EQUATION_BY_ID).hasAuthority(PermissionConstants.DELETE_PARAMETER_EQUATION)
+        // process-sample
+        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLES).hasAuthority(PermissionConstants.VIEW_PROCESS_SAMPLE)
+        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE).hasAuthority(PermissionConstants.CREATE_PROCESS_SAMPLE)
+        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE).hasAuthority(PermissionConstants.EDIT_PROCESS_SAMPLE)
+        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE_BY_CODE).hasAuthority(PermissionConstants.DELETE_PROCESS_SAMPLE) 
+        // mix design proportions
+        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGN_PROPORTIONS).hasAuthority(PermissionConstants.VIEW_MIX_DESIGN_PROPORTION)
+        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGN_PROPORTION).hasAuthority(PermissionConstants.CREATE_MIX_DESIGN_PROPORTION)
+        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGN_PROPORTION).hasAuthority(PermissionConstants.EDIT_MIX_DESIGN_PROPORTION)
+        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGN_PROPORTION_BY_ID).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN_PROPORTION) 
+        // mix design proportions
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TESTS).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TEST)
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TEST)
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST ).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TEST)
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST_BY_CODE).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TEST)
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT) 
         // Accepted value
         .antMatchers(HttpMethod.GET,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.VIEW_ACCEPTED_VALUE)
@@ -256,6 +277,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TRIALS).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE)
         .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_TRIAL).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_SAMPLE_ISSUE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE) 
+        // quality parameter
+        .antMatchers(HttpMethod.POST,EndpointURI.QUALITY_PARAMETER).hasAuthority(PermissionConstants.CREATE_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.GET,EndpointURI.QUALITY_PARAMETERS).hasAuthority(PermissionConstants.VIEW_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.PUT,EndpointURI.QUALITY_PARAMETER).hasAuthority(PermissionConstants.EDIT_QUALITY_PARAMETER)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.QUALITY_PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_QUALITY_PARAMETER)        
+        // file export
+        .antMatchers(HttpMethod.POST,EndpointURI.UPLOAD_MIXDESIGN).hasAuthority(PermissionConstants.CREATE_UPLOAD_MIXDESIGN)
+        .antMatchers(HttpMethod.GET,EndpointURI.EXPORT_MIXDESIGN).hasAuthority(PermissionConstants.VIEW_EXPORT_MIXDESIGN)
        
         //.anyRequest().authenticated()
         ;
