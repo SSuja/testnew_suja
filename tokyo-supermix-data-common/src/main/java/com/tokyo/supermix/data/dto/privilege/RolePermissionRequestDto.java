@@ -6,6 +6,7 @@ public class RolePermissionRequestDto {
   private Boolean status;
   private Long mainModuleId;
   private Long subModuleId;
+  private String permissionName;
 
   public Long getRoleId() {
     return roleId;
@@ -47,4 +48,11 @@ public class RolePermissionRequestDto {
     this.subModuleId = subModuleId;
   }
 
+  public String getPermissionName() {
+    return permissionName;
+  }
+
+  public void setPermissionName(String permissionName) {
+    this.permissionName = permissionName;
+  }
 }

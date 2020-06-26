@@ -201,6 +201,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT)
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_COUNT)
         .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT) 
+        // Accepted value
+        .antMatchers(HttpMethod.POST,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.VIEW_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.GET,EndpointURI.ACCEPTED_VALUES).hasAuthority(PermissionConstants.CREATE_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.ACCEPTED_VALUE).hasAuthority(PermissionConstants.EDIT_ACCEPTED_VALUE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.ACCEPTED_VALUE_BY_ID).hasAuthority(PermissionConstants.DELETE_ACCEPTED_VALUE) 
         
         
         //.anyRequest().authenticated()

@@ -145,6 +145,11 @@ public final class PermissionConstants {
   public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
   public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
   public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
+  /* Accepted value */
+  public static final String VIEW_ACCEPTED_VALUE = "view_accepted_value";
+  public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
+  public static final String EDIT_ACCEPTED_VALUE= "edit_accepted_value";
+  public static final String DELETE_ACCEPTED_VALUE = "delete_accepted_value";
   
   
 }
