@@ -140,4 +140,11 @@ public final class PermissionConstants {
   public static final String CREATE_TEST_PARAMETER= "create_test_parameter";
   public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
   public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
+  /* incoming sample count */
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_COUNT = "material_sub_category_samples_count";
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
+  
+  
 }

@@ -196,7 +196,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST,EndpointURI.TEST_PARAMETER).hasAuthority(PermissionConstants.CREATE_TEST_PARAMETER)
         .antMatchers(HttpMethod.PUT,EndpointURI.TEST_PARAMETER).hasAuthority(PermissionConstants.EDIT_TEST_PARAMETER)
         .antMatchers(HttpMethod.DELETE,EndpointURI.TEST_PARAMETER_BY_ID).hasAuthority(PermissionConstants.DELETE_TEST_PARAMETER) 
-     
+        // Incoming sample count
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_COUNT)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT).hasAuthority(PermissionConstants.MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT) 
         
         
         //.anyRequest().authenticated()
