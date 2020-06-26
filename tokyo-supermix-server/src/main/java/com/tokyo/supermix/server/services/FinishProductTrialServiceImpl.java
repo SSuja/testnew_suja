@@ -233,7 +233,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode) {
     FinishProductTest finishProductTest = finishProductTestRepository.getOne(finishProductTestCode);
-    finishProductTest.setResult(20);
+    finishProductTest.setStatus(Status.COMPLETED);
     finishProductTestRepository.save(finishProductTest);
     return finishProductTest.getStatus();
   }
