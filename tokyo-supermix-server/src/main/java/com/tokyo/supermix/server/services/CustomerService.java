@@ -4,11 +4,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Customer;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface CustomerService {
   public void saveCustomer(Customer customer);
 
-  public List<Customer> getAllCustomers();
+  public List<Customer> getAllCustomers(UserPrincipal currentUser);
 
   public boolean isEmailExist(String email);
 

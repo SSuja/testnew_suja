@@ -11,15 +11,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
   @Autowired
   private CustomerRepository customerRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
-  public List<Customer> getAllCustomers() {
-    return customerRepository.findAll();
+  public List<Customer> getAllCustomers(UserPrincipal currentUser) {
+    return customerRepository.findByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER));
   }
 
   @Transactional
@@ -39,7 +45,6 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional(readOnly = true)
   public Customer getCustomerById(Long id) {
-
     return customerRepository.findById(id).get();
   }
 
