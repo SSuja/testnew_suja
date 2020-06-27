@@ -542,7 +542,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
       FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH + "{finishProductTestCode}";
-
+  public static final String FINISH_PRODUCT_TRIAL_BY_PLANT = FINISH_PRODUCT_TRIAL + PLANT_WISE;
   
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
       BASE_API_PATH + "finish-product-parameter-results";

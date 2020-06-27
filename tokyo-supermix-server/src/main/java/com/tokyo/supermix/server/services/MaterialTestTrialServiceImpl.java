@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;

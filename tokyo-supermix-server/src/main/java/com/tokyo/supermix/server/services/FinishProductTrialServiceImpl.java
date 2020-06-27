@@ -20,7 +20,10 @@ import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class FinishProductTrialServiceImpl implements FinishProductTrialService {
@@ -36,6 +39,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   FinishProductParameterResultRepository finishProductParameterResultRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Autowired
   TestConfigureRepository testConfigureRepository;
@@ -202,5 +207,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     finishProductTest.setStatus(Status.COMPLETED);
     finishProductTestRepository.save(finishProductTest);
     return finishProductTest.getStatus();
+  }
+
+  @Override
+  public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser) {
+    return finishProductTrialRepository
+       .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
+            currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+                PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
   }
 }
