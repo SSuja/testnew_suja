@@ -222,7 +222,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.MIX_DESIGN_PROPORTION).hasAuthority(PermissionConstants.EDIT_MIX_DESIGN_PROPORTION)
         .antMatchers(HttpMethod.DELETE,EndpointURI.MIX_DESIGN_PROPORTION_BY_ID).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN_PROPORTION) 
         // mix design proportions
-        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TESTS).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TEST)
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_TEST_BY_PLANT).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TEST)
         .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_TEST).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TEST)
         .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_TEST ).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TEST)
         .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_TEST_BY_CODE).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TEST)
@@ -249,7 +249,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE,EndpointURI.SIEVE_SIZE_BY_ID).hasAuthority(PermissionConstants.DELETE_SIEVE_SIZE) 
         // finish product sample issue
         .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE)
-        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE)
         .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_SAMPLE_ISSUE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE) 
         // finish product trail

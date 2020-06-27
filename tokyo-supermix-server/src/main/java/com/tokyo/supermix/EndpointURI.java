@@ -394,6 +394,8 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH;
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT_CODE =
       FINISH_PRODUCT_SAMPLE_ISSUES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT =
+      FINISH_PRODUCT_SAMPLE_ISSUE+PLANT_WISE;
   /*
    * incoming samples count APIs
    */
@@ -554,6 +556,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TEST_BY_CODE = FINISH_PRODUCT_TEST + CODE;
   public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
       FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String FINISH_PRODUCT_TEST_BY_PLANT =
+      FINISH_PRODUCT_TEST +PLANT_WISE;
 
   private EndpointURI() {}
 }
