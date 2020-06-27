@@ -167,6 +167,8 @@ public final class EndpointURI {
       CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
       TEST_CONFIGURE + SLASH + "testDetails" + ID;
+  public static final String CUSTOMER_BY_PLANT =
+      CUSTOMER + SLASH + PLANT_WISE;
   /*
    * Equation APIs
    */
@@ -216,6 +218,8 @@ public final class EndpointURI {
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
+  public static final String INCOMING_SAMPLE_BY_PLANT =
+      INCOMING_SAMPLE + SLASH + PLANT_WISE;
   /*
    * Mix design apis
    * 

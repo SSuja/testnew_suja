@@ -3,7 +3,6 @@ package com.tokyo.supermix.data.repositories;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-
 import com.tokyo.supermix.data.entities.Customer;
 
 public interface CustomerRepository
@@ -13,4 +12,6 @@ public interface CustomerRepository
   boolean existsByName(String name);
 
   List<Customer> findByPlantCode(String plantCode);
+
+  List<Customer> findByPlantCodeIn(List<String> plantCodes);
 }

@@ -25,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.CustomerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -43,6 +45,13 @@ public class CustomerController {
   private PlantService plantService;
   private static final Logger logger = Logger.getLogger(CustomerController.class);
 
+  @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
+  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(customerService.getAllCustomersByCurrentUser(currentUser), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
   @GetMapping(value = EndpointURI.CUSTOMERS)
   public ResponseEntity<Object> getAllCustomers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
