@@ -46,7 +46,6 @@ public class MaterialTestTrialController {
 
   // get all MaterialTestTrial
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIALS)
-  // @PreAuthorize("hasAuthority('get_material_test_trial')")
   public ResponseEntity<Object> getAllMaterialTestTrial() {
     return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
         mapper.map(materialTestTrialService.getAllMaterialTestTrial(),
@@ -56,8 +55,7 @@ public class MaterialTestTrialController {
 
   // post MaterialTestTrial
   @PostMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
-  // @PreAuthorize("hasAuthority('add_material_test_trial')")
-  public String createMaterialTestTrial(
+   public String createMaterialTestTrial(
       @Valid @RequestBody MaterialTestTrialRequestDto materialTestTrialRequestDto) {
     return materialTestTrialService
         .saveMaterialTestTrial(mapper.map(materialTestTrialRequestDto, MaterialTestTrial.class));

@@ -26,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.ConcreteMixerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -76,7 +78,12 @@ public class ConcreteMixerController {
         mapper.map(concreteMixerService.getAllConcreteMixers(), ConcreteMixerResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
+  @GetMapping(value = EndpointURI.CONCRETE_MIXER_BY_PLANT)
+  public ResponseEntity<Object> getAllConcreteMixersByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_MIXERS,
+        mapper.map(concreteMixerService.getAllConcreteMixersByPlant(currentUser), ConcreteMixerResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
   // delete concrete mixer api
   @DeleteMapping(value = EndpointURI.CONCRETE_MIXER_BY_ID)
   public ResponseEntity<Object> deleteConcreteMixer(@PathVariable Long id) {

@@ -78,18 +78,17 @@ public class ParameterResultController {
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_PARAMETER_RESULT_BY_ID)
-  public ResponseEntity<Object> deleteParameterResult(@PathVariable Long id) {
-    if (parameterResultService.isParameterResultExist(id)) {
-      parameterResultService.deleteParameterResult(id);
-      return new ResponseEntity<Object>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.PARAMETER_RESULT_DELETED),
-          HttpStatus.OK);
-    }
-    logger.debug("Invalid Id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
-        validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
-  }
+	@DeleteMapping(value = EndpointURI.PARAMETER_RESULT_BY_ID)
+	public ResponseEntity<Object> deleteParameterResult(@PathVariable Long id) {
+		if (parameterResultService.isParameterResultExist(id)) {
+			parameterResultService.deleteParameterResult(id);
+			return new ResponseEntity<Object>(
+					new BasicResponse<>(RestApiResponseStatus.OK, Constants.PARAMETER_RESULT_DELETED), HttpStatus.OK);
+		}
+		logger.debug("Invalid Id");
+		return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
+				validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
+	}
 
   @PutMapping(value = EndpointURI.PARAMETER_RESULT)
   public ResponseEntity<Object> UpdateParameterResult(

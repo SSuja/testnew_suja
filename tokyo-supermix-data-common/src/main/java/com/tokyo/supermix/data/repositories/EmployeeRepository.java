@@ -11,6 +11,6 @@ import com.tokyo.supermix.data.entities.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, QuerydslPredicateExecutor<Employee> {
 	boolean existsByEmail(String mail);
-	
 	List<Employee> findByPlantCode(String plantCode);
+	List<Employee> findByPlantCodeIn(List<String> plantCodes);
 }

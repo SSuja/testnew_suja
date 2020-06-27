@@ -1,22 +1,22 @@
 package com.tokyo.supermix.util.privilege;
 
 public final class PermissionConstants {
-//  plant
+  //  plant
   public static final String VIEW_PLANT = "view_plant";
   public static final String CREATE_PLANT = "create_plant";
   public static final String EDIT_PLANT = "edit_plant";
   public static final String DELETE_PLANT = "delete_plant";
-// congrete mixer
+  // congrete mixer
   public static final String VIEW_CONCRETE_MIXER = "view_concrete_mixer";
   public static final String CREATE_CONCRETE_MIXER = "create_concrete_mixer";
   public static final String EDIT_CONCRETE_MIXER = "edit_concrete_mixer";
   public static final String DELETE_CONCRETE_MIXER = "delete_concrete_mixer";
-//designation
+ //designation
  public static final String VIEW_DESIGNATION = "view_designation";
  public static final String CREATE_DESIGNATION = "create_designation";
  public static final String EDIT_DESIGNATION = "edit_designation";
  public static final String DELETE_DESIGNATION = "delete_designation";
-// employee
+ // employee
  public static final String VIEW_EMPLOYEE = "view_employee";
  public static final String CREATE_EMPLOYEE = "create_employee";
  public static final String EDIT_EMPLOYEE = "edit_employee";
@@ -130,4 +130,105 @@ public final class PermissionConstants {
   public static final String DELETE_TEST = "delete_test";
   /* Plant Permission */
   public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
+  /* Parameter */
+  public static final String VIEW_PARAMETER = "view_parameter";
+  public static final String CREATE_PARAMETER= "create_parameter";
+  public static final String EDIT_PARAMETER = "edit_parameter";
+  public static final String DELETE_PARAMETER = "delete_parameter";
+  /* equation */
+  public static final String VIEW_EQUATION = "view_equation";
+  public static final String CREATE_EQUATION= "create_equation";
+  public static final String EDIT_EQUATION = "edit_equation";
+  public static final String DELETE_EQUATION = "delete_equation";
+  /* parameter result */
+  public static final String VIEW_PARAMETER_RESULT = "view_parameter_result";
+  public static final String CREATE_PARAMETER_RESULT= "create_parameter_result";
+  public static final String EDIT_PARAMETER_RESULT = "edit_parameter_result";
+  public static final String DELETE_PARAMETER_RESULT = "delete_parameter_result";
+  /* material accepted value */
+  public static final String VIEW_MATERIAL_ACCEPTED_VALUE = "view_material_accepted_value";
+  public static final String CREATE_MATERIAL_ACCEPTED_VALUE= "create_material_accepted_value";
+  public static final String EDIT_MATERIAL_ACCEPTED_VALUE = "edit_material_accepted_value";
+  public static final String DELETE_MATERIAL_ACCEPTED_VALUE = "delete_material_accepted_value";
+  /* material accepted value */
+  public static final String VIEW_SIEVE_ACCEPTED_VALUE = "view_sieve_accepted_value";
+  public static final String CREATE_SIEVE_ACCEPTED_VALUE= "create_sieve_accepted_value";
+  public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
+  public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
+  /* test */
+  public static final String VIEW_TEST_CONFIGURE = "view_test_configuration";
+  public static final String CREATE_TEST_CONFIGURE= "create_test_configuration";
+  public static final String EDIT_TEST_CONFIGURE = "edit_test_configuration";
+  public static final String DELETE_TEST_CONFIGURE = "delete_test_configuration";
+  /* test parameter */
+  public static final String VIEW_TEST_PARAMETER = "view_test_parameter";
+  public static final String CREATE_TEST_PARAMETER= "create_test_parameter";
+  public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
+  public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
+  /* incoming sample count */
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_COUNT = "material_sub_category_samples_count";
+  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
+  public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
+  /* test parameter */
+  public static final String VIEW_PARAMETER_EQUATION = "view_parameter_equation";
+  public static final String CREATE_PARAMETER_EQUATION= "create_parameter_equation";
+  public static final String EDIT_PARAMETER_EQUATION = "edit_parameter_equation";
+  public static final String DELETE_PARAMETER_EQUATION = "delete_parameter_equation";
+  /* process sample */
+  public static final String VIEW_PROCESS_SAMPLE = "view_process_sample";
+  public static final String CREATE_PROCESS_SAMPLE= "create_process_sample";
+  public static final String EDIT_PROCESS_SAMPLE = "edit_process_sample";
+  public static final String DELETE_PROCESS_SAMPLE = "delete_process_sample";
+  /* process sample */
+  public static final String VIEW_MIX_DESIGN_PROPORTION = "view_mix_design_proportion";
+  public static final String CREATE_MIX_DESIGN_PROPORTION= "create_mix_design_proportion";
+  public static final String EDIT_MIX_DESIGN_PROPORTION = "edit_mix_design_proportion";
+  public static final String DELETE_MIX_DESIGN_PROPORTION = "delete_mix_design_proportion";
+  /* finish product test */
+  public static final String VIEW_FINISH_PRODUCT_TEST = "view_finish_product_test";
+  public static final String CREATE_FINISH_PRODUCT_TEST= "create_finish_product_test";
+  public static final String EDIT_FINISH_PRODUCT_TEST = "edit_finish_product_test";
+  public static final String DELETE_FINISH_PRODUCT_TEST = "delete_finish_product_test";
+  /* Accepted value */
+  public static final String VIEW_ACCEPTED_VALUE = "view_accepted_value";
+  public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
+  public static final String EDIT_ACCEPTED_VALUE= "edit_accepted_value";
+  public static final String DELETE_ACCEPTED_VALUE = "delete_accepted_value";
+  /* Material test */
+  public static final String VIEW_MATERIAL_TEST = "view_material_test";
+  public static final String CREATE_MATERIAL_TEST= "create_material_test";
+  public static final String EDIT_MATERIAL_TEST= "edit_material_test";
+  public static final String DELETE_MATERIAL_TEST = "delete_material_test";
+  /* Material test  trail*/
+  public static final String VIEW_MATERIAL_TEST_TRIAL = "view_material_test_trial";
+  public static final String CREATE_MATERIAL_TEST_TRIAL= "create_material_test_trial";
+  public static final String EDIT_MATERIAL_TEST_TRIAL= "edit_material_test_trial";
+  public static final String DELETE_MATERIAL_TEST_TRIAL = "delete_material_test_trial";
+  /* sieve size */
+  public static final String VIEW_SIEVE_SIZE = "view_sieve_size";
+  public static final String CREATE_SIEVE_SIZE= "create_sieve_size";
+  public static final String EDIT_SIEVE_SIZE= "edit_sieve_size";
+  public static final String DELETE_SIEVE_SIZE = "delete_sieve_size";
+  /* finish product sample issue */
+  public static final String VIEW_FINISH_PRODUCT_SAMPLE_ISSUE = "view_finish_product_sample_issue";
+  public static final String CREATE_FINISH_PRODUCT_SAMPLE_ISSUE= "create_finish_product_sample_issue";
+  public static final String EDIT_FINISH_PRODUCT_SAMPLE_ISSUE= "edit_finish_product_sample_issue";
+  public static final String DELETE_FINISH_PRODUCT_SAMPLE_ISSUE = "delete_finish_product_sample_issue";
+  /* finish product trail */
+  public static final String VIEW_FINISH_PRODUCT_TRAIL = "view_finish_product_trail";
+  public static final String CREATE_FINISH_PRODUCT_TRAIL= "create_finish_product_trail";
+  public static final String EDIT_FINISH_PRODUCT_TRAIL = "edit_finish_product_trail";
+  public static final String DELETE_FINISH_PRODUCT_TRAIL = "delete_finish_product_trail";
+  /* sieve size */
+  public static final String VIEW_QUALITY_PARAMETER = "view_quality_parameter";
+  public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
+  public static final String EDIT_QUALITY_PARAMETER= "edit_quality_parameter";
+  public static final String DELETE_QUALITY_PARAMETER = "delete_quality_parameter";
+  /* file export */
+  public static final String VIEW_EXPORT_MIXDESIGN = "view_export_mixdesign";
+  public static final String CREATE_UPLOAD_MIXDESIGN= "create_upload_mixdesign";
+  
+  
+  
 }

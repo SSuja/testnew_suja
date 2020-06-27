@@ -13,6 +13,7 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
+  private static final String PLANT_WISE = "/plant";
   /*
    * Plant apis
    */
@@ -55,6 +56,7 @@ public final class EndpointURI {
   public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + SLASH + PLANT_WISE;
   /*
    * Material Category APIs
    */
@@ -70,6 +72,8 @@ public final class EndpointURI {
   public static final String POUR_SEARCH = POUR + SEARCH;
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String POUR_BY_PLANT =
+      POUR  + PLANT_WISE;
   /*
    * Unit apis
    */
@@ -101,8 +105,7 @@ public final class EndpointURI {
    */
   public static final String TEST_CONFIGURE = BASE_API_PATH + "test-configure";
   public static final String TEST_CONFIGURES = BASE_API_PATH + "test-configures";
-  public static final String GET_TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
-  public static final String DELETE_TEST_CONFIGURE = TEST_CONFIGURE + ID;
+  public static final String TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testType}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =
@@ -139,6 +142,8 @@ public final class EndpointURI {
       EQUIPMENT_PLANT_CALIBRATION + SEARCH;
   public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
       EQUIPMENT_PLANT_CALIBRATIONS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT =
+      EQUIPMENT_PLANT_CALIBRATION  + PLANT_WISE;
   /*
    * PlantEquipment
    * 
@@ -149,6 +154,8 @@ public final class EndpointURI {
   public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH;
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
       PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String PLANT_EQUIPMENTS_BY_PLANT =
+      PLANT_EQUIPMENT + PLANT_WISE ;
   /*
    * Customer apis
    */
@@ -160,6 +167,8 @@ public final class EndpointURI {
       CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
       TEST_CONFIGURE + SLASH + "testDetails" + ID;
+  public static final String CUSTOMER_BY_PLANT =
+      CUSTOMER + SLASH + PLANT_WISE;
   /*
    * Equation APIs
    */
@@ -180,8 +189,7 @@ public final class EndpointURI {
    */
   public static final String PARAMETER = BASE_API_PATH + "parameter";
   public static final String PARAMETERS = BASE_API_PATH + "parameters";
-  public static final String GET_PARAMETER_BY_ID = PARAMETER + ID;
-  public static final String DELETE_PARAMETER_BY_ID = PARAMETER + ID;
+  public static final String PARAMETER_BY_ID = PARAMETER + ID;
   public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
@@ -195,6 +203,8 @@ public final class EndpointURI {
   public static final String SEARCH_PROJECT = PROJECT + SEARCH;
   public static final String GET_PROJECTS_BY_PLANT_CODE =
       PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String PROJECTS_BY_PLANT =
+      PROJECTS + PLANT_WISE;
   /*
    * IncomingSample Apis
    */
@@ -210,6 +220,8 @@ public final class EndpointURI {
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
+  public static final String INCOMING_SAMPLE_BY_PLANT =
+      INCOMING_SAMPLE  + PLANT_WISE;
   /*
    * Mix design apis
    * 
@@ -220,16 +232,12 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
   public static final String GET_MIX_DESIGN_BY_PLANT =
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MIX_DESIGN_BY_PLANT =
+      MIX_DESIGN  +PLANT_WISE ;
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
 
-  /*
-   * User
-   */
-  public static final String USER = BASE_API_PATH + "user";
-  public static final String USERS = BASE_API_PATH + "users";
-  public static final String USER_BY_ID = USER + ID;
-
+ 
   /*
    * Test Parameter APIs
    * 
@@ -257,6 +265,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
   public static final String PROCESS_SAMPLES_BY_PLANT_CODE =
       PROCESS_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String PROCESS_SAMPLE_BY_PLANT =
+      PROCESS_SAMPLE + SLASH + PLANT_WISE;
 
   /*
    * Mix design proportion apis
@@ -273,7 +283,7 @@ public final class EndpointURI {
   public static final String PARAMETER_RESULT = BASE_API_PATH + "parameter-result";
   public static final String PARAMETER_RESULTS = BASE_API_PATH + "parameter-results";
   public static final String GET_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
-  public static final String DELETE_PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
+  public static final String PARAMETER_RESULT_BY_ID = PARAMETER_RESULT + ID;
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_TRIAL_CODE =
       PARAMETER_RESULT + "/matrial-test-trial" + "/{materialTestTrialCode}";
   public static final String GET_PARAMETER_RESULT_BY_PLANT =
@@ -299,6 +309,9 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
+  
+  public static final String MATERIAL_TEST_BY_PLANT =
+      MATERIAL_TEST + PLANT_WISE ;
   public static final String MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE =
       MATERIAL_TESTS + "/test-configure" + "/testType" + SLASH + "{testType}";
   /*
@@ -359,12 +372,14 @@ public final class EndpointURI {
   /*
    * Concrete Mixer apis
    */
-  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
   public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
+  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
   public static final String CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
+  public static final String CONCRETE_MIXER_BY_PLANT =
+      CONCRETE_MIXER + SLASH + PLANT_WISE;
 
   /*
    * finish product sample issue apis
@@ -416,24 +431,8 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
 
-  /*
-   * Authentication
-   * 
-   */
-  public static final String AUTH = BASE_API_PATH + "auth/";
-  public static final String SIGNIN = AUTH + "sign-in";
-  public static final String SIGNUP = AUTH + "sign-up";
-  public static final String CHANGE_PASSWORD = AUTH + "change-password";
-  public static final String FORGOT_PASSWORD = AUTH + "forgot-password";
-  public static final String RESET_PASSWORD = AUTH + "reset-password";
+ 
 
-  /*
-   * Role apis
-   */
-  public static final String ROLE = BASE_API_PATH + "role";
-  public static final String ROLES = BASE_API_PATH + "roles";
-  public static final String GET_ROLE_BY_ID = ROLE + ID;
-  public static final String DELETE_ROLE_BY_ID = ROLE + ID;
 
   /*
    * MaterialAcceptedValue Apis
@@ -493,22 +492,7 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "test-name" + SLASH + "{testName}";
 
-  /*
-   * role Permission
-   */
-  public static final String PRIVILEGE = BASE_API_PATH + "privilege";
-  public static final String PERMISSION = BASE_API_PATH + "permission";
-  public static final String PERMISSIONS = BASE_API_PATH + "permissions";
-  public static final String ROUTE = "route";
-  public static final String ROUTE_PRIVILEGES = PRIVILEGE + SLASH + ROUTE + SLASH + "{roleId}";
-  public static final String ROUTE_PERMISSIONS = PERMISSIONS + SLASH + ROUTE;
-  public static final String PRIVILEGES = PRIVILEGE + SLASH + "{roleId}";
-  public static final String STATUS_PRIVILEGES = PRIVILEGE + SLASH + "/status/" + "{status}";
-  public static final String SUBROUTE = "sub-route" + SLASH + "{subRouteName}";
-  public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
-  public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
-  public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
-
+  
   /*
    * File Export
    */

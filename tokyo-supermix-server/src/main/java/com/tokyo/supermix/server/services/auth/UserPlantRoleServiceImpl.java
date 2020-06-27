@@ -23,7 +23,7 @@ public class UserPlantRoleServiceImpl implements UserPlantRoleService {
   public List<PlantRoleDto> getRolesByUserId(Long userId) {
     List<PlantRole> plantroleList = new ArrayList<PlantRole>();
 
-    userPlantRoleRepository.findRolesByUserId(userId).forEach(roles -> {
+    userPlantRoleRepository.findByUserId(userId).forEach(roles -> {
       plantroleList.add(roles.getPlantRole());
     });
     return mapper.map(plantroleList, PlantRoleDto.class);
@@ -33,7 +33,7 @@ public class UserPlantRoleServiceImpl implements UserPlantRoleService {
   public List<UserResponseDto> getUsersByPlantRoleId(Long PlantRoleId) {
     List<User> userList = new ArrayList<User>();
 
-    userPlantRoleRepository.findUsersByPlantRoleId(PlantRoleId).forEach(users -> {
+    userPlantRoleRepository.findByPlantRoleId(PlantRoleId).forEach(users -> {
       userList.add(users.getUser());
     });
     return mapper.map(userList, UserResponseDto.class);

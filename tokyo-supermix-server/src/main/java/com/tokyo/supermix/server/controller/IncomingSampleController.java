@@ -26,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -48,6 +50,13 @@ public class IncomingSampleController {
   public ResponseEntity<Object> getIncomingSamples() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
         mapper.map(incomingSampleService.getAllIncomingSamples(), IncomingSampleResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+  
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
+  public ResponseEntity<Object> getIncomingSamplesByUserPermission(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+        mapper.map(incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser), IncomingSampleResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 

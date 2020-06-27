@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.PlantService;
@@ -51,14 +52,12 @@ public class MaterialTestController {
 
   // create material tests
   @PostMapping(value = EndpointURI.MATERIAL_TEST)
-  // @PreAuthorize("hasAuthority('add_material_test')")
   public String createMaterialTest(@Valid @RequestBody MaterialTestRequestDto materialTestDto) {
     return materialTestService.saveMaterialTest(mapper.map(materialTestDto, MaterialTest.class));
   }
 
   // get all material tests
   @GetMapping(value = EndpointURI.MATERIAL_TESTS)
-  // @PreAuthorize("hasAuthority('get_material_test')")
   public ResponseEntity<Object> getAllMaterialTests() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
         mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
@@ -81,7 +80,6 @@ public class MaterialTestController {
 
   // delete material test by id
   @DeleteMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
-  // @PreAuthorize("hasAuthority('delete_material_test')")
   public ResponseEntity<Object> deleteMaterialTest(@PathVariable String code) {
     if (materialTestService.isMaterialTestExists(code)) {
       MaterialTest materialTest = materialTestService.getMaterialTestByCode(code);
@@ -103,7 +101,6 @@ public class MaterialTestController {
 
   // update material test
   @PutMapping(value = EndpointURI.MATERIAL_TEST)
-  // @PreAuthorize("hasAuthority('edit_material_test')")
   public ResponseEntity<Object> updateMaterialTest(
       @Valid @RequestBody MaterialTestRequestDto materialTestDto) {
     if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
@@ -180,4 +177,12 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+//get all material tests
+ @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
+ public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser) {
+   return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+       mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser), MaterialTestResponseDto.class),
+       RestApiResponseStatus.OK), null, HttpStatus.OK);
+ }
 }

@@ -10,4 +10,6 @@ public interface RolePermissionRepository extends JpaRepository<RolePermission, 
   List<RolePermission> findByStatus(boolean status);
 
   List<RolePermission> findByRoleIdAndPermissionSubModuleId(Long roleId, Long subModuleId);
+
+  boolean existsByRoleIdAndPermissionName(Long roleId, String permissionName);
 }

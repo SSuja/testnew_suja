@@ -25,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -109,7 +111,14 @@ public class EmployeeController {
         mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
+  @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser) {
+    logger.debug("get all employee");
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+        mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
   public ResponseEntity<Object> getEmployeeSearch(
       @QuerydslPredicate(root = Employee.class) Predicate predicate,

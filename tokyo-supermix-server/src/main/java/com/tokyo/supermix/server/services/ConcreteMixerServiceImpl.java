@@ -11,11 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.ConcreteMixer;
 import com.tokyo.supermix.data.repositories.ConcreteMixerRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class ConcreteMixerServiceImpl implements ConcreteMixerService {
   @Autowired
   private ConcreteMixerRepository concreteMixerRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
   public void saveConcreteMixer(ConcreteMixer concreteMixer) {
@@ -67,6 +72,11 @@ public class ConcreteMixerServiceImpl implements ConcreteMixerService {
   public Page<ConcreteMixer> searchConcreteMixer(Predicate predicate, int page, int size) {
     return concreteMixerRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+  }
+  @Transactional(readOnly = true)
+  public List<ConcreteMixer> getAllConcreteMixersByPlant(UserPrincipal currentUser) {
+    return concreteMixerRepository.findByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CONCRETE_MIXER));
   }
 
 }

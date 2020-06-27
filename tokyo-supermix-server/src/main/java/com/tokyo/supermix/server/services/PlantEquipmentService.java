@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipment;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface PlantEquipmentService {
 
@@ -20,4 +21,6 @@ public interface PlantEquipmentService {
   public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size);
 
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode);
+  
+  public List<PlantEquipment> getAllPlantEquipmentByPlant(UserPrincipal currentUser);
 }

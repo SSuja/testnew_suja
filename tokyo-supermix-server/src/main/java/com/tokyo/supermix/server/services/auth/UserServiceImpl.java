@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService {
           .forEach(userRole -> userRoleRepository.deleteById(userRole.getId()));
       createUserRoles(userRoleDto.getRoleIds(), user);
     } else {
-      userPlantRoleRepository.findRolesByUserId(userRoleDto.getUserId())
+      userPlantRoleRepository.findByUserId(userRoleDto.getUserId())
           .forEach(userRole -> userPlantRoleRepository.deleteById(userRole.getId()));
       createUserPlantRoles(userRoleDto.getRoleIds(), user);
     }

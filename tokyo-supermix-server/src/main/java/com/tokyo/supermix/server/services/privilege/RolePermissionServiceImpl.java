@@ -77,6 +77,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
         for (RolePermission permission : PermissionList) {
           RolePermissionRequestDto rolePermissionRequestDto = new RolePermissionRequestDto();
           rolePermissionRequestDto.setPermissionId(permission.getId());
+          rolePermissionRequestDto.setPermissionName(permission.getPermission().getName());
           rolePermissionRequestDto.setRoleId(roleId);
           rolePermissionRequestDto.setStatus(permission.isStatus());
           rolePermissionRequestDto.setMainModuleId(main.getId());
@@ -98,5 +99,13 @@ public class RolePermissionServiceImpl implements RolePermissionService {
       PermissionResponseDtolist.add(rolePermissionResponseDto);
     });
     return PermissionResponseDtolist;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPermissionExists(Long roleId, String permissionName) {
+    if(rolePermissionRepository.existsByRoleIdAndPermissionName(roleId, permissionName)) {
+      return true;
+    }
+    return false;
   }
 }
