@@ -16,6 +16,15 @@ public class TestConfigureResponseDto {
   private boolean equationExists;
   private String resultLabel;
   private boolean bulkTrial;
+  private Long days;
+
+  public Long getDays() {
+    return days;
+  }
+
+  public void setDays(Long days) {
+    this.days = days;
+  }
 
   public Long getId() {
     return id;

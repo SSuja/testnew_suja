@@ -430,6 +430,8 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_MATERIAL =
+      MATERIAL_QUALITY_PARAMETER + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
 
   /*
    * Authentication
@@ -566,8 +568,9 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TRIALS_BY_FINISH_PRODUCT_TEST_CODE =
       FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
-      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH + "{finishProductTestCode}";
-  
+      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH
+          + "{finishProductTestCode}";
+
 
 
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
