@@ -214,6 +214,8 @@ public final class EndpointURI {
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
+  public static final String INCOMING_SAMPLE_BY_PLANT =
+      INCOMING_SAMPLE + SLASH + PLANT_WISE;
   /*
    * Mix design apis
    * 
