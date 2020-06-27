@@ -3,22 +3,28 @@ package com.tokyo.supermix.server.services;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
-import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
+import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
@@ -38,6 +44,10 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  TestParameterRepository testParameterRepository;
+  @Autowired
+  ParameterResultRepository parameterResultRepository;
 
   @Transactional
   public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -120,6 +130,43 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
           materialTestCode);
     }
+  }
+  public void sieveavg(String materialTestCode) {
+    Double result=0.0;
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    Long testConfigureId = materialTest.getTestConfigure().getId();
+    TestParameter testParameter=testParameterRepository.findByTestConfigureIdAndAndTrialResult(testConfigureId, "sum");
+//    ParameterResult parameterResult=new ParameterResult();
+        Double trailparsum=0.0;
+    
+      List<ParameterResult> parameterResultlist = parameterResultRepository
+          .findByTestParameterIdAndMaterialTestCode(testParameter.getId(),materialTest.getCode());
+      for(int i=0;i<parameterResultlist.size();i++) {
+      //for(ParameterResult sumparameterResult :parameterResultlist) {
+        if(parameterResultlist.get(i).getMaterialTestTrial().getSieveSize().getSize()!=0.0){
+          trailparsum=trailparsum+parameterResultlist.get(i).getValue();
+        }
+        
+      }
+      HashMap<String, Double> sievemain = new HashMap<String, Double>();
+      sievemain.put(testParameter.getAbbreviation(), trailparsum);
+      result=findResult(sievemain,materialTest.getTestConfigure().getEquation().getFormula());
+      materialTest.setAverage(result);
+      compareWithAverage(result, materialTest.getCode());
+  }
+  public double findResult(HashMap<String, Double> abb, String equation) {
+    ScriptEngineManager mgr = new ScriptEngineManager();
+    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+    double result = 0.0;
+    for (String i : abb.keySet()) {
+      engine.put(i, abb.get(i));
+    }
+    try {
+      result = (double) engine.eval(equation);
+    } catch (ScriptException e) {
+      e.printStackTrace();
+    }
+    return result;
   }
    private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;

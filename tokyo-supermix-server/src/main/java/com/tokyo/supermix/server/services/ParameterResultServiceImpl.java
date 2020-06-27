@@ -12,13 +12,17 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
 import com.tokyo.supermix.data.dto.ParameterResultDto;
+import com.tokyo.supermix.data.entities.FormulaParameter;
+import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.ParameterEquationElement;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.SieveSize;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.EquationName;
 import com.tokyo.supermix.data.enums.TestParameterType;
+import com.tokyo.supermix.data.repositories.FormulaParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
@@ -52,6 +56,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   MaterialTestTrialService materialTestTrialService;
   @Autowired
   SieveSizeRepository sieveSizeRepository;
+  @Autowired
+  FormulaParameterRepository formulaParameterRepository;
 
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
@@ -161,7 +167,9 @@ public class ParameterResultServiceImpl implements ParameterResultService {
           .getMaterialTestByCode(materialParameterResultDto.getMaterialTestCode());
       MaterialTestTrial materialTestTrial = new MaterialTestTrial();
       materialTestTrial.setMaterialTest(materialTest);
-
+//      materialParameterResultDto.parameterResults.forEach(par ->{
+//        par.getTestParameterId().
+//      });
       if (materialParameterResultDto.getSieveSizeId() != null) {
         SieveSize sieveSize =
             sieveSizeRepository.getOne(materialParameterResultDto.getSieveSizeId());
@@ -233,7 +241,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
             materialTestTrial.getMaterialTest().getTestConfigure().getId());
     String mainEquation = "";
 
-    if (!(materialTestTrial.getMaterialTest().getTestConfigure().getEquation() == null)) {
+//    if (!(materialTestTrial.getMaterialTest().getTestConfigure().getEquation() == null)) {
+      if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getEquationName().equals(EquationName.EQUATION)) {
       mainEquation =
           materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula();
     }
@@ -264,7 +273,21 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     }
     HashMap<String, Double> main = new HashMap<String, Double>();
     for (TestParameter tepa : testparameters) {
-      tepa.getAbbreviation();
+//      Double trailparsum=0.0;
+//      if(tepa.getTrialResult().equalsIgnoreCase("sum")) {
+//        List<ParameterResult> parameterResultlist = parameterResultRepository
+//            .findByTestParameterIdAndMaterialTestCode(tepa.getId(), materialTestTrial.getMaterialTest().getCode());
+//        for(ParameterResult sumparameterResult :parameterResultlist) {
+//          trailparsum=trailparsum+sumparameterResult.getValue();
+//        }
+//        FormulaParameter formulaParameter=new FormulaParameter();
+//        formulaParameter.setFormula(tepa.getTrialResult());
+//        formulaParameter.setResults(trailparsum);
+//        formulaParameter.setMaterialTestCode(materialTestTrial.getMaterialTest().getCode());
+//        formulaParameter.setTestParameterId(tepa.getId());
+//        formulaParameterRepository.save(formulaParameter);
+        
+            tepa.getAbbreviation();
       ParameterResult parameterResultmain = parameterResultRepository
           .findByTestParameterIdAndMaterialTestTrialCode(tepa.getId(), materialTestTrialCode);
       main.put(tepa.getAbbreviation(), parameterResultmain.getValue());
@@ -273,6 +296,9 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     if (!mainEquation.isEmpty()) {
       materialTestTrial.setResult(findResult(main, mainEquation));
       materialTestTrialRepository.save(materialTestTrial);
+    }
+    else {
+      
     }
 
   }
