@@ -21,6 +21,7 @@ public class Equation implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String formula;
+	@Enumerated(EnumType.ORDINAL)
 	private EquationName name;
 	@Enumerated(EnumType.ORDINAL)
 	private EquationType equationType;

@@ -237,7 +237,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     String mainEquation = "";
 
 //    if (!(materialTestTrial.getMaterialTest().getTestConfigure().getEquation() == null)) {
-      if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getEquationName().equals(EquationName.EQUATION)) {
+      if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getName().equals(EquationName.EQUATION)) {
       mainEquation =
           materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula();
     }

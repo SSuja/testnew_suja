@@ -18,6 +18,7 @@ import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TrailResult;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -135,7 +136,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     Double result=0.0;
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     Long testConfigureId = materialTest.getTestConfigure().getId();
-    TestParameter testParameter=testParameterRepository.findByTestConfigureIdAndAndTrialResult(testConfigureId, "sum");
+    TestParameter testParameter=testParameterRepository.findByTestConfigureIdAndTrailResult(testConfigureId,TrailResult.SUM);
 //    ParameterResult parameterResult=new ParameterResult();
         Double trailparsum=0.0;
     
