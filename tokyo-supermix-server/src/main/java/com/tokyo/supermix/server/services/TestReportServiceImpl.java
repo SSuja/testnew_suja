@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
+import com.tokyo.supermix.data.dto.CubeTestReportDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
@@ -21,6 +23,9 @@ import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.dto.report.TestTrialDto;
 import com.tokyo.supermix.data.dto.report.TrailValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -30,6 +35,9 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -55,6 +63,12 @@ public class TestReportServiceImpl implements TestReportService {
   private SupplierRepository supplierRepository;
   @Autowired
   MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  FinishProductSampleIssueRepository finishProductSampleIssueRepository;
+  @Autowired
+  FinishProductTestRepository finishProductTestRepository;
+  @Autowired
+  FinishProductTrialRepository finishProductTrialRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
@@ -298,5 +312,42 @@ public class TestReportServiceImpl implements TestReportService {
     incomingSampleDeliveryReportDto.setSupplierReportDtos(
         getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
+  }
+
+  // Concrete test report
+  public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode) {
+    ConcreteTestReportDto concreteTestReportDto = new ConcreteTestReportDto();
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository
+        .findByFinishProductSampleId(finishProductTest.getFinishProductSample().getId());
+    concreteTestReportDto
+        .setCustomerName(finishProductSampleIssue.getProject().getCustomer().getName());
+    concreteTestReportDto.setProjectName(finishProductSampleIssue.getProject().getName());
+    concreteTestReportDto.setTargetGrade(
+        finishProductSampleIssue.getFinishProductSample().getMixDesign().getTargetGrade());
+    concreteTestReportDto.setTargetSlump(
+        finishProductSampleIssue.getFinishProductSample().getMixDesign().getTargetSlump());
+    concreteTestReportDto.setDateOfCasting(
+        finishProductSampleIssue.getFinishProductSample().getCreatedAt().toString());
+    concreteTestReportDto.setDateOfTesting(
+        finishProductSampleIssue.getFinishProductSample().getUpdatedAt().toString());
+    concreteTestReportDto.setAgeOfCubeTest(finishProductTest.getTestConfigure().getDays());
+    concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
+    concreteTestReportDto.setStrengthGradeRatio(finishProductTest.getResult());
+    return concreteTestReportDto;
+  }
+
+  public List<CubeTestReportDto> getCubeTestRepots(String finishProductTestCode) {
+    List<FinishProductTrial> finishProductTrialList =
+        finishProductTrialRepository.findByFinishProductTestCode(finishProductTestCode);
+    ArrayList<CubeTestReportDto> cubeTestReportDtoList = new ArrayList<CubeTestReportDto>();
+    for (FinishProductTrial finishProductTrial : finishProductTrialList) {
+      CubeTestReportDto cubeTestReportDto = new CubeTestReportDto();
+      cubeTestReportDto.setCubeNo(finishProductTrial.getTrialNo());
+      cubeTestReportDto.setStrengthValue(finishProductTrial.getValue());
+      cubeTestReportDtoList.add(cubeTestReportDto);
+    }
+    return cubeTestReportDtoList;
   }
 }
