@@ -13,7 +13,9 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
   boolean existsByCode(String code);
 
   FinishProductTest findFinishProductTestByCode(String code);
-  
+
   List<FinishProductTest> findByCodeContaining(String code);
 
+  boolean existsByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
+      Long testConfigureId);
 }
