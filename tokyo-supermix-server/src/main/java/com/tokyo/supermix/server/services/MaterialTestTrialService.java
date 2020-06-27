@@ -24,4 +24,6 @@ public interface MaterialTestTrialService {
   public void getAverageAndStatus(String materialTestCode);
 
   List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode);
+  
+  public void sieveavg(String materialTestCode);
 }

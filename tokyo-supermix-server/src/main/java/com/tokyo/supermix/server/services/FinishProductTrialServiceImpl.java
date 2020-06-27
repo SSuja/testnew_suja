@@ -134,8 +134,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductTestRepository.save(finishProductTest);
 
       } else {
-        finishProductTest.setResult(slumpGradeRatio(finishProductTrial.getValue(),
-            finishProductSample.getMixDesign().getCode()));
+        finishProductTest.setResult(roundDoubleValue(slumpGradeRatio(finishProductTrial.getValue(),
+            finishProductSample.getMixDesign().getCode())));
         finishProductTestRepository.save(finishProductTest);
 
       }
