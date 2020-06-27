@@ -264,7 +264,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // file export
         .antMatchers(HttpMethod.POST,EndpointURI.UPLOAD_MIXDESIGN).hasAuthority(PermissionConstants.CREATE_UPLOAD_MIXDESIGN)
         .antMatchers(HttpMethod.GET,EndpointURI.EXPORT_MIXDESIGN).hasAuthority(PermissionConstants.VIEW_EXPORT_MIXDESIGN)
- 
+        // test Report
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST_REPORT_DETAIL).hasAuthority(PermissionConstants.MATERIAL_TEST_REPOR)
+        .antMatchers(HttpMethod.GET,EndpointURI.CEMENT_REPORT_DETAIL).hasAuthority(PermissionConstants.CEMENT_REPORT)
+        .antMatchers(HttpMethod.GET,EndpointURI.ADMIXTURE_REPORT_DETAIL).hasAuthority(PermissionConstants.ADMIXTURE_REPORT)
+        .antMatchers(HttpMethod.GET,EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT).hasAuthority(PermissionConstants.INCOMING_SAMPLE_SUMMARY_REPORT)
+        .antMatchers(HttpMethod.GET,EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT).hasAuthority(PermissionConstants.INCOMING_SAMPLE_DELIVERY_REPORT)
+        
         
         
         //Role Permission
