@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.TrailResult;
 
 public class TestConfigureDto {
   private Long id;
@@ -19,7 +20,7 @@ public class TestConfigureDto {
   private List<TestParameterDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
   private boolean equationExists;
-
+ 
   public Long getId() {
     return id;
   }

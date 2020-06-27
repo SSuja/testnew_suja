@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class MaterialTestTrialRequestDto {
-  private String code;
+  //private String code;
   @NotNull(message = "{materialTestTrialRequestDto.trialNo.null}")
   private Long trialNo;
   private Double result;
@@ -29,13 +29,13 @@ public class MaterialTestTrialRequestDto {
     this.materialTestCode = materialTestCode;
   }
 
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
+//  public String getCode() {
+//    return code;
+//  }
+//
+//  public void setCode(String code) {
+//    this.code = code;
+//  }
 
   public Long getTrialNo() {
     return trialNo;

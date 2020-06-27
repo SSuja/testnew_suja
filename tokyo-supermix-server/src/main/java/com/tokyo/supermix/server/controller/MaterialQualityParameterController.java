@@ -129,4 +129,23 @@ public class MaterialQualityParameterController {
             validationFailureStatusCodes.getMaterialQualityParameterNotExist()),
         HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETER_BY_MATERIAL)
+  public ResponseEntity<Object> getQualityParameterByMaterials(@PathVariable Long rawMaterialId) {
+    if (materialQualityParameterService.isMaterialIdExists(rawMaterialId)) {
+      logger.debug("No Material Quality Parameter record exist for given id");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER_ID,
+              validationFailureStatusCodes.getMaterialQualityParameterNotExist()),
+          HttpStatus.BAD_REQUEST);
+
+    }
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.MATERIAL_QUALITY_PARAMETER,
+            mapper.map(
+                materialQualityParameterService.getMaterialQualityParameterById(rawMaterialId),
+                MaterialQualityParameterResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
 }

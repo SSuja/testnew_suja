@@ -57,16 +57,6 @@ public class EquationServiceImpl implements EquationService {
   }
 
   @Transactional(readOnly = true)
-  public List<Equation> getEquationsByName(String name) {
-    return equationRepository.findByName(name);
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isNameExists(String name) {
-    return equationRepository.existsByName(name);
-  }
-
-  @Transactional(readOnly = true)
   public List<Equation> getEquationsByParameterExistsTrue() {
     return equationRepository.findByParameterExistsTrue();
   }

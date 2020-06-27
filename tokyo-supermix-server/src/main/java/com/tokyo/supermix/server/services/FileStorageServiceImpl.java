@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Unit;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
@@ -36,13 +40,21 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
+    Path path = Paths.get("C://Users/MixDesign");
+    try {
+      Files.createDirectories(path);
+    } catch (IOException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
+    }
+
     try {
       // import the csv file to the Import folder.
       InputStream inputStream = null;
       OutputStream outputStream = null;
       if (file.getSize() > 0) {
         inputStream = file.getInputStream();
-        outputStream = new FileOutputStream("D:/Import" + file.getOriginalFilename());
+        outputStream = new FileOutputStream(path + file.getOriginalFilename());
         int readBytes = 0;
         byte[] buffer = new byte[8192];
         while ((readBytes = inputStream.read(buffer, 0, 8192)) != -1) {
@@ -58,7 +70,8 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importMixDesgin(MultipartFile file) {
-    String csvFilename = "D:/Import" + file.getOriginalFilename();
+    Path path = Paths.get("C://Users/MixDesign");
+    String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
     try {
@@ -85,17 +98,18 @@ public class FileStorageServiceImpl implements FileStorageService {
           Plant plant = new Plant();
           plant.setCode((row[6]));
           mixDesign.setPlant(plant);
+          mixDesign.setStatus(Status.valueOf(row[7]));
           mixDesignRepository.save(mixDesign);
         }
 
         if (mixDesignRepository.findByCode(mixDesign.getCode()) != null) {
           MixDesignProportion mixDesignProportion = new MixDesignProportion();
-          RawMaterial rawMaterial = rawMaterialRepository.findByName(row[7]);
+          RawMaterial rawMaterial = rawMaterialRepository.findByName(row[8]);
           rawMaterial.setId(rawMaterial.getId());
           mixDesignProportion.setRawMaterial(rawMaterial);
           mixDesignProportion.setMixDesign(mixDesign);
-          mixDesignProportion.setQuantity(Long.valueOf(row[8]));
-          Unit unit = unitRepository.findByUnit(row[9]);
+          mixDesignProportion.setQuantity(Long.valueOf(row[9]));
+          Unit unit = unitRepository.findByUnit(row[10]);
           mixDesignProportion.setUnit(unit);
           mixDesignProportionRepository.save(mixDesignProportion);
         }

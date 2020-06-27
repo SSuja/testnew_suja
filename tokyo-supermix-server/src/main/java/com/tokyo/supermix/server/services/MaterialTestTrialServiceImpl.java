@@ -1,7 +1,13 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -9,13 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
-import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TrailResult;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
+import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
@@ -35,10 +45,39 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  TestParameterRepository testParameterRepository;
+  @Autowired
+  ParameterResultRepository parameterResultRepository;
 
   @Transactional
-  public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
-    return materialTestTrialRepository.save(materialTestTrial);
+  public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
+    String codePrefix = materialTestTrial.getMaterialTest().getCode();
+       //String subPrefix=codePrefix + "-";
+       String subPrefix = codePrefix + "-T-";
+//       String code=subPrefix + String.format("%04d", 1);
+       List<MaterialTestTrial> materialTestTrialList = materialTestTrialRepository.findByCodeContaining(subPrefix);
+       if (materialTestTrialList.size() == 0) {
+         materialTestTrial.setCode(subPrefix + String.format("%04d", 1));
+       } else {
+         materialTestTrial
+             .setCode(subPrefix + String.format("%04d",maxNumberFromCode(materialTestTrialList) + 1));
+       }
+  
+   materialTestTrialRepository.save(materialTestTrial);
+   return materialTestTrial.getCode();
+  }
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+  private Integer maxNumberFromCode(List<MaterialTestTrial> materialTestTrialList) {
+    List<Integer> list = new ArrayList<Integer>();
+    materialTestTrialList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)
@@ -92,6 +131,43 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
           materialTestCode);
     }
+  }
+  public void sieveavg(String materialTestCode) {
+    Double result=0.0;
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    Long testConfigureId = materialTest.getTestConfigure().getId();
+    TestParameter testParameter=testParameterRepository.findByTestConfigureIdAndTrailResult(testConfigureId,TrailResult.SUM);
+//    ParameterResult parameterResult=new ParameterResult();
+        Double trailparsum=0.0;
+    
+      List<ParameterResult> parameterResultlist = parameterResultRepository
+          .findByTestParameterIdAndMaterialTestCode(testParameter.getId(),materialTest.getCode());
+      for(int i=0;i<parameterResultlist.size();i++) {
+      //for(ParameterResult sumparameterResult :parameterResultlist) {
+        if(parameterResultlist.get(i).getMaterialTestTrial().getSieveSize().getSize()!=0.0){
+          trailparsum=trailparsum+parameterResultlist.get(i).getValue();
+        }
+        
+      }
+      HashMap<String, Double> sievemain = new HashMap<String, Double>();
+      sievemain.put(testParameter.getAbbreviation(), trailparsum);
+      result=findResult(sievemain,materialTest.getTestConfigure().getEquation().getFormula());
+      materialTest.setAverage(result);
+      compareWithAverage(result, materialTest.getCode());
+  }
+  public double findResult(HashMap<String, Double> abb, String equation) {
+    ScriptEngineManager mgr = new ScriptEngineManager();
+    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+    double result = 0.0;
+    for (String i : abb.keySet()) {
+      engine.put(i, abb.get(i));
+    }
+    try {
+      result = (double) engine.eval(equation);
+    } catch (ScriptException e) {
+      e.printStackTrace();
+    }
+    return result;
   }
    private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;
