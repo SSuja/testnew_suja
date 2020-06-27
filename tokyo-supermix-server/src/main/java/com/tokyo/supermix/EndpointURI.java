@@ -56,6 +56,7 @@ public final class EndpointURI {
   public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + SLASH + PLANT_WISE;
   /*
    * Material Category APIs
    */
@@ -71,6 +72,8 @@ public final class EndpointURI {
   public static final String POUR_SEARCH = POUR + SEARCH;
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String POUR_BY_PLANT =
+      POUR + SLASH + PLANT_WISE;
   /*
    * Unit apis
    */
@@ -221,6 +224,8 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
   public static final String GET_MIX_DESIGN_BY_PLANT =
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MIX_DESIGN_BY_PLANT =
+      MIX_DESIGN + SLASH +PLANT_WISE ;
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
 

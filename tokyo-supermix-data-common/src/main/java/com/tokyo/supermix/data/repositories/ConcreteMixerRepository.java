@@ -8,6 +8,6 @@ import com.tokyo.supermix.data.entities.ConcreteMixer;
 public interface ConcreteMixerRepository
     extends JpaRepository<ConcreteMixer, Long>, QuerydslPredicateExecutor<ConcreteMixer> {
   List<ConcreteMixer> findByPlantCode(String plantCode);
-
+  List<ConcreteMixer> findByPlantCodeIn(List<String> plantCodes);
   boolean existsByNameAndPlantCode(String name, String plantCode);
 }

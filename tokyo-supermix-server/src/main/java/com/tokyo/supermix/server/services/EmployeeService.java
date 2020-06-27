@@ -21,7 +21,9 @@ public interface EmployeeService {
 
 	public boolean isUpdatedEmployeeEmailExist(Long id, String email);
 
-	public List<Employee> getAllEmployees(UserPrincipal currentUser);
+	public List<Employee> getAllEmployees();
+	
+	public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser) ;
 
 	public Page<Employee> searchEmployee(Predicate predicate, int size, int page);
 

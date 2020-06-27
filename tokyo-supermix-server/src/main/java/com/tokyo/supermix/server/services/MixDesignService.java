@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MixDesignService {
   public List<MixDesign> getAllMixDesigns();
@@ -27,4 +28,6 @@ public interface MixDesignService {
   public List<MixDesign> getMixDesignByStatus(Status status);
 
   public boolean isMixDesignStatusExist(Status status);
+  
+  public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser);
 }

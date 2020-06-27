@@ -18,12 +18,17 @@ import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QMixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MixDesignServiceImpl implements MixDesignService {
   @Autowired
   public MixDesignRepository mixDesignRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesigns() {
@@ -169,5 +174,11 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional(readOnly = true)
   public boolean isMixDesignStatusExist(Status status) {
     return mixDesignRepository.existsByStatus(status);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser) {
+    return mixDesignRepository.findByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN));
   }
 }
