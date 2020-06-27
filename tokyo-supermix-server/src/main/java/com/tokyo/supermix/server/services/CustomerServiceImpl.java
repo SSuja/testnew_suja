@@ -23,7 +23,7 @@ public class CustomerServiceImpl implements CustomerService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
-  public List<Customer> getAllCustomers(UserPrincipal currentUser) {
+  public List<Customer> getAllCustomersByCurrentUser(UserPrincipal currentUser) {
     return customerRepository.findByPlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER));
   }
@@ -82,5 +82,10 @@ public class CustomerServiceImpl implements CustomerService {
   @Transactional(readOnly = true)
   public List<Customer> getCustomerByPlantCode(String plantCode) {
     return customerRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Customer> getAllCustomers() {
+    return customerRepository.findAll();
   }
 }

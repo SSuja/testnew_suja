@@ -45,10 +45,17 @@ public class CustomerController {
   private PlantService plantService;
   private static final Logger logger = Logger.getLogger(CustomerController.class);
 
-  @GetMapping(value = EndpointURI.CUSTOMERS)
-  public ResponseEntity<Object> getAllCustomers(@CurrentUser UserPrincipal currentUser) {
+  @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
+  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(customerService.getAllCustomers(currentUser), CustomerResponseDto.class),
+        mapper.map(customerService.getAllCustomersByCurrentUser(currentUser), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @GetMapping(value = EndpointURI.CUSTOMERS)
+  public ResponseEntity<Object> getAllCustomers() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

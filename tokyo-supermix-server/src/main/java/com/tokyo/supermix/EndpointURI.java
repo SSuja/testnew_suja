@@ -160,6 +160,8 @@ public final class EndpointURI {
       CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
       TEST_CONFIGURE + SLASH + "testDetails" + ID;
+  public static final String CUSTOMER_BY_PLANT =
+      CUSTOMER + SLASH + PLANT_WISE;
   /*
    * Equation APIs
    */
