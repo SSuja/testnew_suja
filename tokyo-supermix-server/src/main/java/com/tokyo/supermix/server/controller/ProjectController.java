@@ -25,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
@@ -70,6 +72,13 @@ public class ProjectController {
   public ResponseEntity<Object> getProjects() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
         mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+  
+  @GetMapping(value = EndpointURI.PROJECTS_BY_PLANT)
+  public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+        mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 

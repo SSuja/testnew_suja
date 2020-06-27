@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.dto.ProcessSampleRequestDto;
 import com.tokyo.supermix.data.dto.ProcessSampleResponseDto;
 import com.tokyo.supermix.data.entities.ProcessSample;
@@ -25,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProcessSampleService;
 import com.tokyo.supermix.util.Constants;
@@ -65,7 +68,14 @@ public class ProcessSampleController {
         mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
+  
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT)
+  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
   public ResponseEntity<Object> deleteProcessSample(@PathVariable String code) {
     if (processSampleService.isProcessSampleExist(code)) {

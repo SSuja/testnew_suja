@@ -15,6 +15,9 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class IncomingSampleServiceImpl implements IncomingSampleService {
@@ -22,6 +25,8 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
   RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
   public void createIncomingSample(IncomingSample incomingSample) {
@@ -109,5 +114,12 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode) {
     return incomingSampleRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser) {
+    return incomingSampleRepository.findByPlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_INCOMING_SAMPLE));
   }
 }
