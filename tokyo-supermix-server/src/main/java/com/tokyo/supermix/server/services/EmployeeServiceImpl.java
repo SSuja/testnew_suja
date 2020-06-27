@@ -48,7 +48,12 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Transactional()
-  public List<Employee> getAllEmployees(UserPrincipal currentUser) {
+  public List<Employee> getAllEmployees() {
+    return employeeRepository.findAll();
+  }
+  
+  @Transactional()
+  public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser) {
     return employeeRepository.findByPlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE));
   }
