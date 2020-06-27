@@ -137,7 +137,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.UNIT).hasAuthority(PermissionConstants.EDIT_UNIT)
         .antMatchers(HttpMethod.DELETE, EndpointURI.UNIT_BY_ID).hasAuthority(PermissionConstants.DELETE_UNIT) 
         // customer
-        .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMERS).hasAuthority(PermissionConstants.VIEW_CUSTOMER)
+        .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMER_BY_PLANT).hasAuthority(PermissionConstants.VIEW_CUSTOMER)
         .antMatchers(HttpMethod.POST, EndpointURI.CUSTOMER).hasAuthority(PermissionConstants.CREATE_CUSTOMER)
         .antMatchers(HttpMethod.PUT, EndpointURI.CUSTOMER).hasAuthority(PermissionConstants.EDIT_CUSTOMER)
         .antMatchers(HttpMethod.DELETE, EndpointURI.CUSTOMER_BY_ID).hasAuthority(PermissionConstants.DELETE_CUSTOMER) 
@@ -212,7 +212,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.PARAMETER_EQUATION).hasAuthority(PermissionConstants.EDIT_PARAMETER_EQUATION)
         .antMatchers(HttpMethod.DELETE,EndpointURI.PARAMETER_EQUATION_BY_ID).hasAuthority(PermissionConstants.DELETE_PARAMETER_EQUATION)
         // process-sample
-        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLES).hasAuthority(PermissionConstants.VIEW_PROCESS_SAMPLE)
+        .antMatchers(HttpMethod.GET,EndpointURI.PROCESS_SAMPLE_BY_PLANT).hasAuthority(PermissionConstants.VIEW_PROCESS_SAMPLE)
         .antMatchers(HttpMethod.POST,EndpointURI.PROCESS_SAMPLE).hasAuthority(PermissionConstants.CREATE_PROCESS_SAMPLE)
         .antMatchers(HttpMethod.PUT,EndpointURI.PROCESS_SAMPLE).hasAuthority(PermissionConstants.EDIT_PROCESS_SAMPLE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.PROCESS_SAMPLE_BY_CODE).hasAuthority(PermissionConstants.DELETE_PROCESS_SAMPLE) 
