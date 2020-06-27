@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductTestService {
 
@@ -18,4 +19,8 @@ public interface FinishProductTestService {
   List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId);
 
   boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId);
+
+  boolean isDuplicateEntry(Long finishProductSampleId, Long testConfigureId);
+
+  public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);
 }

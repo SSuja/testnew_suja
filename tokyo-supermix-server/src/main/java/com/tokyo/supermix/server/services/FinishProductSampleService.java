@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductSampleService {
   public boolean isFinishProductCodeExist(Long code);
@@ -14,6 +15,8 @@ public interface FinishProductSampleService {
 
   public List<FinishProductSample> getAllFinishProductSamples();
 
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser);
+  
   boolean isFinishProductSampleExist(Long id);
 
   public FinishProductSample getFinishProductSampleById(Long id);

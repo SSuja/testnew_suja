@@ -40,4 +40,6 @@ public interface MaterialTestRepository
       Status status, String testName);
 
   List<MaterialTest> findByTestConfigureTestType(TestType testType);
+
+  List<MaterialTest> findByIncomingSamplePlantCodeIn(List<String> plantCodes);
 }

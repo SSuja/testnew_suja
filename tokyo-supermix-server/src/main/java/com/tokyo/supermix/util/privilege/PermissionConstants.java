@@ -119,10 +119,10 @@ public final class PermissionConstants {
   public static final String EDIT_INCOMING_SAMPLE = "edit_incoming_sample";
   public static final String DELETE_INCOMING_SAMPLE = "delete_incoming_sample";
   /* finish product */
-  public static final String VIEW_FINISH_PRODUCT = "view_finish_product_sample";
-  public static final String CREATE_FINISH_PRODUCT= "create_finish_product_sample";
-  public static final String EDIT_FINISH_PRODUCT = "edit_finish_product_sample";
-  public static final String DELETE_FINISH_PRODUCT = "delete_finish_product_sample";
+  public static final String VIEW_FINISH_PRODUCT_SAMPLE = "view_finish_product_sample";
+  public static final String CREATE_FINISH_PRODUCT_SAMPLE= "create_finish_product_sample";
+  public static final String EDIT_FINISH_PRODUCT_SAMPLE = "edit_finish_product_sample";
+  public static final String DELETE_FINISH_PRODUCT_SAMPLE = "delete_finish_product_sample";
   /* test */
   public static final String VIEW_TEST = "view_test";
   public static final String CREATE_TEST= "create_test";

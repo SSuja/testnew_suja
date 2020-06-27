@@ -69,9 +69,16 @@ public class ProjectController {
   }
 
   @GetMapping(value = EndpointURI.PROJECTS)
+  public ResponseEntity<Object> getProjects() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+        mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+  
+  @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-        mapper.map(projectService.getAllProjects(currentUser), ProjectResponseDto.class),
+        mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 

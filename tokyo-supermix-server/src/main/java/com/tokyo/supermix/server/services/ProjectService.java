@@ -13,7 +13,9 @@ public interface ProjectService {
 
 	public boolean isNameExist(String name);
 
-	public List<Project> getAllProjects(UserPrincipal currentUser);
+	public List<Project> getAllProjects();
+	
+	public List<Project> getAllProjectsByPlant(UserPrincipal currentUser);
 
 	public boolean isProjectExist(String code);
 

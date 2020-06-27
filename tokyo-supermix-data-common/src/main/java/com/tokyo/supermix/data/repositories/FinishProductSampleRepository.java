@@ -25,4 +25,6 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   List<FinishProductSample> findByStatus(Status status);
 
   boolean existsByStatus(Status status);
+  
+  List<FinishProductSample> findByMixDesignPlantCodeIn(List<String> plantCodes);
 }

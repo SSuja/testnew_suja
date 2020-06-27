@@ -22,6 +22,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductTestService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -51,10 +53,20 @@ public class FinishProductTestController {
   }
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TEST)
-  public String saveFinishProductSampleTest(
+  public ResponseEntity<Object> saveFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
-    return finishProductTestService
-        .createFinishProductTest(mapper.map(finishProductTestRequestDto, FinishProductTest.class));
+    if (finishProductTestService.isDuplicateEntry(
+        finishProductTestRequestDto.getFinishProductSampleId(),
+        finishProductTestRequestDto.getTestConfigureId())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+              validationFailureStatusCodes.getFinishProductTestAlreadyExists()),
+          HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
+        finishProductTestService.createFinishProductTest(
+            mapper.map(finishProductTestRequestDto, FinishProductTest.class)),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
@@ -110,5 +122,15 @@ public class FinishProductTestController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_PLANT)
+  public ResponseEntity<Object> getAllFinishProductSampleTestsByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.FINISH_PRODUCT_TESTS,
+            mapper.map(finishProductTestService.getAllFinishProductTestByPlant(currentUser),
+                FinishProductTestResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }

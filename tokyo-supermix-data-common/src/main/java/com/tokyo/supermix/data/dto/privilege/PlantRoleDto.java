@@ -4,6 +4,7 @@ public class PlantRoleDto {
   private Long id;
   private String plantCode;
   private Long roleId;
+  private String roleName;
   private String name;
   public Long getId() {
     return id;
@@ -29,6 +30,14 @@ public class PlantRoleDto {
     this.roleId = roleId;
   }
 
+  public String getRoleName() {
+    return roleName;
+  }
+
+  public void setRoleName(String roleName) {
+    this.roleName = roleName;
+  }
+
   public String getName() {
     return name;
   }
@@ -36,5 +45,6 @@ public class PlantRoleDto {
   public void setName(String name) {
     this.name = name;
   }
+
 
 }
