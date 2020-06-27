@@ -10,62 +10,63 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.tokyo.supermix.data.enums.EquationName;
 import com.tokyo.supermix.data.enums.EquationType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "equation")
 public class Equation implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  private String formula;
-  private String name;
-  @Enumerated(EnumType.ORDINAL)
-  private EquationType equationType;
-  private boolean parameterExists;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private String formula;
+	private EquationName name;
+	@Enumerated(EnumType.ORDINAL)
+	private EquationType equationType;
+	private boolean parameterExists;
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public String getFormula() {
-    return formula;
-  }
+	public String getFormula() {
+		return formula;
+	}
 
-  public void setFormula(String formula) {
-    this.formula = formula;
-  }
+	public void setFormula(String formula) {
+		this.formula = formula;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public EquationName getName() {
+		return name;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public void setName(EquationName name) {
+		this.name = name;
+	}
 
-  public EquationType getEquationType() {
-    return equationType;
-  }
+	public EquationType getEquationType() {
+		return equationType;
+	}
 
-  public void setEquationType(EquationType equationType) {
-    this.equationType = equationType;
-  }
+	public void setEquationType(EquationType equationType) {
+		this.equationType = equationType;
+	}
 
-  public boolean isParameterExists() {
-    return parameterExists;
-  }
+	public boolean isParameterExists() {
+		return parameterExists;
+	}
 
-  public void setParameterExists(boolean parameterExists) {
-    this.parameterExists = parameterExists;
-  }
+	public void setParameterExists(boolean parameterExists) {
+		this.parameterExists = parameterExists;
+	}
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }
