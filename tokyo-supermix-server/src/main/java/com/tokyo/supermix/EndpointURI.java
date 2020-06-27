@@ -436,6 +436,8 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_MATERIAL =
+      MATERIAL_QUALITY_PARAMETER + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
 
  
 
@@ -499,6 +501,24 @@ public final class EndpointURI {
           + SLASH + "test-name" + SLASH + "{testName}";
 
   
+  public static final String CONCRETE_TEST_REPORT =
+      BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
+  /*
+   * role Permission
+   */
+  public static final String PRIVILEGE = BASE_API_PATH + "privilege";
+  public static final String PERMISSION = BASE_API_PATH + "permission";
+  public static final String PERMISSIONS = BASE_API_PATH + "permissions";
+  public static final String ROUTE = "route";
+  public static final String ROUTE_PRIVILEGES = PRIVILEGE + SLASH + ROUTE + SLASH + "{roleId}";
+  public static final String ROUTE_PERMISSIONS = PERMISSIONS + SLASH + ROUTE;
+  public static final String PRIVILEGES = PRIVILEGE + SLASH + "{roleId}";
+  public static final String STATUS_PRIVILEGES = PRIVILEGE + SLASH + "/status/" + "{status}";
+  public static final String SUBROUTE = "sub-route" + SLASH + "{subRouteName}";
+  public static final String PERMISSION_BY_SUBROUTE = PERMISSION + SLASH + SUBROUTE;
+  public static final String MAIN_ROUTES = BASE_API_PATH + "main-routes";
+  public static final String SUB_ROUTES_BY_MAIN_ROUTE = PERMISSION + SLASH + "{mainRoute}";
+
   /*
    * File Export
    */
@@ -542,8 +562,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
       FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH + "{finishProductTestCode}";
-  public static final String FINISH_PRODUCT_TRIAL_BY_PLANT = FINISH_PRODUCT_TRIAL + PLANT_WISE;
-  
+  public static final String FINISH_PRODUCT_TRIAL_BY_PLANT = FINISH_PRODUCT_TRIAL + PLANT_WISE;  
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
       BASE_API_PATH + "finish-product-parameter-results";
   public static final String FINISH_PRODUCT_PARAMETER_RESULT =

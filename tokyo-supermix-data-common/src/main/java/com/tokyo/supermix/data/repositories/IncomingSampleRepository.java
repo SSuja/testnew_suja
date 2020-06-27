@@ -17,8 +17,8 @@ public interface IncomingSampleRepository
 
   boolean existsByStatus(Status status);
 
-  List<IncomingSample> findByStatusAndRawMaterialIdAndDate(Status status, Long RawMaterialId,
-      Date date);
+  List<IncomingSample> findByStatusAndRawMaterialIdAndDateAndPlantCodeIn(Status status, Long RawMaterialId,
+      Date date, List<String> permissionPlantCodeByCurrentUser);
 
   List<IncomingSample> findByRawMaterialIdAndDate(Long RawMaterialId, Date date);
 
@@ -34,5 +34,17 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByCodeContaining(String code);
 
-  List<IncomingSample> findByPlantCodeIn(List<String> plantCodes);
+  List<IncomingSample> findByRawMaterialIdAndDateAndPlantCodeIn(Long id, Date date,
+      List<String> permissionPlantCodeByCurrentUser);
+
+  List<IncomingSample> findByStatusAndRawMaterialIdAndDate(Status new1, Long id,
+      Date sqlDate);
+
+  List<IncomingSample> findByPlantCodeIn(List<String> permissionPlantCodeByCurrentUser);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndStatusAndPlantCodeIn(
+      Long materialSubCategoryId, Date sqlDate, Status new1, List<String> plantCodes);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCodeIn(
+      Long materialSubCategoryId, Date sqlDate, List<String> plantCodes);
 }

@@ -19,10 +19,6 @@ public interface EquationService {
 
   public List<Equation> getEquationsByEquationType(EquationType equationType);
 
-  public List<Equation> getEquationsByName(String name);
-
-  public boolean isNameExists(String name);
-
   public List<Equation> getEquationsByParameterExistsTrue();
 
   public Long updateTestConfigureEquation(Long testConfigureId, Equation equation);
