@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.ConcreteMixer;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface ConcreteMixerService {
   public void saveConcreteMixer(ConcreteMixer concreteMixer);
@@ -23,4 +24,5 @@ public interface ConcreteMixerService {
   public boolean isNameNull(String name);
 
   public Page<ConcreteMixer> searchConcreteMixer(Predicate predicate, int page, int size);
+  public List<ConcreteMixer> getAllConcreteMixersByPlant(UserPrincipal currentUser);
 }

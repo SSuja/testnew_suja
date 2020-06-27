@@ -105,13 +105,20 @@ public class EmployeeController {
 
   /* Get All Employees */
   @GetMapping(value = EndpointURI.EMPLOYEES)
+  public ResponseEntity<Object> getAllEmployees() {
+    logger.debug("get all employee");
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+        mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
   public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser) {
     logger.debug("get all employee");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-        mapper.map(employeeService.getAllEmployees(currentUser), EmployeeResponseDto.class),
+        mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
+  
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
   public ResponseEntity<Object> getEmployeeSearch(
       @QuerydslPredicate(root = Employee.class) Predicate predicate,
