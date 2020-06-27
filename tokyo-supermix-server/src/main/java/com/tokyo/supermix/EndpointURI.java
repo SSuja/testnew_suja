@@ -507,7 +507,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "test-name" + SLASH + "{testName}";
-
+  public static final String CONCRETE_TEST_REPORT =
+      BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
   /*
    * role Permission
    */
@@ -566,8 +567,9 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TRIALS_BY_FINISH_PRODUCT_TEST_CODE =
       FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
-      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH + "{finishProductTestCode}";
-  
+      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH
+          + "{finishProductTestCode}";
+
 
 
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
