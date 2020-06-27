@@ -11,13 +11,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class FinishProductSampleIssueServiceImpl implements FinishProductSampleIssueService {
 
   @Autowired
   public FinishProductSampleIssueRepository finishProductSampleIssueRepository;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
     return finishProductSampleIssueRepository.findAll();
@@ -54,5 +59,12 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode) {
     return finishProductSampleIssueRepository
         .findByFinishProductSampleMixDesignPlantCode(plantCode);
+  }
+
+  @Override
+  public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(
+      UserPrincipal currentUser) {
+    return finishProductSampleIssueRepository.findByProjectPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
   }
 }

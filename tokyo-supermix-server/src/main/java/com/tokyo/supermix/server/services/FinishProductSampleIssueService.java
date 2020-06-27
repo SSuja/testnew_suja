@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductSampleIssueService {
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssues();
@@ -20,4 +21,6 @@ public interface FinishProductSampleIssueService {
       int size, int page);
 
   public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode);
+  
+  public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(UserPrincipal currentUser);
 }
