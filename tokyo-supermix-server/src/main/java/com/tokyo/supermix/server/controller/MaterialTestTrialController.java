@@ -24,6 +24,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -52,7 +54,13 @@ public class MaterialTestTrialController {
             MaterialTestTrialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_PLANT)
+  public ResponseEntity<Object> getAllMaterialTestTrialByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+        mapper.map(materialTestTrialService.getAllMaterialTestTrialByplant(currentUser),
+            MaterialTestTrialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
   // post MaterialTestTrial
   @PostMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
    public String createMaterialTestTrial(
@@ -140,13 +148,19 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    if (!materialTest.getTestConfigure().getTest().getName()
-        .equalsIgnoreCase(Constants.SIEVETEST)) {
+    if (!materialTest.getTestConfigure().isBulkTrial()){
+//        .getTest().getName()
+//        .equalsIgnoreCase(Constants.SIEVETEST)) {
       materialTestTrialService.getAverageAndStatus(materialTestCode);
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+    else 
+      materialTestTrialService.sieveavg(materialTestCode);
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
+    
+//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+//        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

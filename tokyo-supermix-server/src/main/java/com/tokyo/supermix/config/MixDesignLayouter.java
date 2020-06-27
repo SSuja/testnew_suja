@@ -26,6 +26,7 @@ public class MixDesignLayouter {
     worksheet.setColumnWidth(6, 5000);
     worksheet.setColumnWidth(7, 5000);
     worksheet.setColumnWidth(8, 5000);
+    worksheet.setColumnWidth(9, 5000);
     // Build the title and date headers
     buildTitle(worksheet, startRowIndex, startColIndex);
     // Build the column headers
@@ -58,7 +59,7 @@ public class MixDesignLayouter {
     cellTitle.setCellValue("MixDesign & MixDesign Proportion Details");
     cellTitle.setCellStyle(cellStyleTitle);
     // Create merged region for the report title
-    worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
+    worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 10));
 
     // Create date header
     HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -121,20 +122,24 @@ public class MixDesignLayouter {
     cell6.setCellStyle(headerCellStyle);
 
     HSSFCell cell7 = rowHeader.createCell(startColIndex + 6);
-    cell7.setCellValue("Plant Code");
+    cell7.setCellValue("Plant");
     cell7.setCellStyle(headerCellStyle);
 
     HSSFCell cell8 = rowHeader.createCell(startColIndex + 7);
-    cell8.setCellValue("Raw Material Id");
+    cell8.setCellValue("Status");
     cell8.setCellStyle(headerCellStyle);
 
     HSSFCell cell9 = rowHeader.createCell(startColIndex + 8);
-    cell9.setCellValue("Quanity");
+    cell9.setCellValue("Raw Material");
     cell9.setCellStyle(headerCellStyle);
 
     HSSFCell cell10 = rowHeader.createCell(startColIndex + 9);
-    cell10.setCellValue("Unit Id");
+    cell10.setCellValue("Quanity");
     cell10.setCellStyle(headerCellStyle);
+
+    HSSFCell cell11 = rowHeader.createCell(startColIndex + 10);
+    cell11.setCellValue("Unit");
+    cell11.setCellStyle(headerCellStyle);
 
   }
 }

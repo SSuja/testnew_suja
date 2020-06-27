@@ -11,9 +11,5 @@ public interface EquationRepository extends JpaRepository<Equation, Long> {
 
   List<Equation> findByEquationType(EquationType equationType);
 
-  List<Equation> findByName(String name);
-
   List<Equation> findByParameterExistsTrue();
-
-  boolean existsByName(String name);
 }

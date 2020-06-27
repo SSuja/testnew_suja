@@ -22,7 +22,6 @@ public class UserPlantRoleServiceImpl implements UserPlantRoleService {
   @Transactional(readOnly = true)
   public List<PlantRoleDto> getRolesByUserId(Long userId) {
     List<PlantRole> plantroleList = new ArrayList<PlantRole>();
-
     userPlantRoleRepository.findByUserId(userId).forEach(roles -> {
       plantroleList.add(roles.getPlantRole());
     });
