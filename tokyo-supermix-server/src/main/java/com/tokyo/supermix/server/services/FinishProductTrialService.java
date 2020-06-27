@@ -2,17 +2,26 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.enums.Status;
 
 public interface FinishProductTrialService {
-
   public List<FinishProductTrial> getAllFinishProductTrials();
 
-  public FinishProductTrial getFinishProductTrialById(Long id);
+  public FinishProductTrial getFinishProductTrialByCode(String code);
 
-  public void saveFinishProductTrial(FinishProductTrial finishProductTrial);
+  public String saveFinishProductTrial(FinishProductTrial finishProductTrial);
 
-  public void deleteFinishProductTrial(Long id);
+  public void updateFinishProductResult(FinishProductTrial finishProductTrial);
 
-  public boolean isFinishProductTrialExists(Long id);
+  public void deleteFinishProductTrial(String code);
 
+  public boolean isFinishProductTrialExists(String code);
+
+  public List<FinishProductTrial> getFinishProductTrialsByFinishProductTestCode(
+      String finishProductTestCode);
+
+  public boolean isFinishProductTestExists(String finishProductTestCode);
+
+  public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode);
 }
+

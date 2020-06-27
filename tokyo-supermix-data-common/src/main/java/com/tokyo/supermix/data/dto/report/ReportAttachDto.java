@@ -1,6 +1,5 @@
 package com.tokyo.supermix.data.dto.report;
 
-import java.io.File;
 import org.springframework.web.multipart.MultipartFile;
 
 public class ReportAttachDto {
@@ -12,5 +11,5 @@ public class ReportAttachDto {
 
   public void setFile(MultipartFile file) {
     this.file = file;
-  }  
+  }
 }

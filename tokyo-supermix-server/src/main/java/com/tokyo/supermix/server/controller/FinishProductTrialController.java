@@ -34,7 +34,6 @@ public class FinishProductTrialController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private FinishProductTrialService finishProductTrialService;
-  @Autowired
   private static final Logger logger = Logger.getLogger(FinishProductTrialController.class);
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIALS)
@@ -48,36 +47,57 @@ public class FinishProductTrialController {
   }
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
-  public ResponseEntity<Object> saveFinishProductTrial(
+  public String saveFinishProductTrial(
       @Valid @RequestBody FinishProductTrialRequestDto finishProductTrialRequestDto) {
-    finishProductTrialService
+    return finishProductTrialService
         .saveFinishProductTrial(mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_TRIAL_SUCCESS),
-        HttpStatus.OK);
+
   }
 
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
-  public ResponseEntity<Object> getFinishProductTrialById(@PathVariable Long id) {
-    if (finishProductTrialService.isFinishProductTrialExists(id)) {
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
+  public ResponseEntity<Object> getFinishProductTrialByCode(@PathVariable String code) {
+    if (finishProductTrialService.isFinishProductTrialExists(code)) {
       logger.debug("Get Finish Product Trial By Id");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL, mapper
-          .map(finishProductTrialService.getFinishProductTrialById(id), FinishProductTrial.class),
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
+          mapper.map(finishProductTrialService.getFinishProductTrialByCode(code),
+              FinishProductTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
         validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
-  public ResponseEntity<Object> deleteFinishProductTrial(@PathVariable Long id) {
-    if (finishProductTrialService.isFinishProductTrialExists(id)) {
+  @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
+  public ResponseEntity<Object> deleteFinishProductTrial(@PathVariable String code) {
+    if (finishProductTrialService.isFinishProductTrialExists(code)) {
       logger.debug("delete finishProductTrial by id");
-      finishProductTrialService.deleteFinishProductTrial(id);
+      finishProductTrialService.deleteFinishProductTrial(code);
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.DELETE_FINISH_PRODUCT_TRIAL_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIALS_BY_FINISH_PRODUCT_TEST_CODE)
+  public ResponseEntity<Object> getFinishProductTrialsByFinishProductTestCode(
+      @PathVariable String finishProductTestCode) {
+    if (finishProductTrialService.isFinishProductTestExists(finishProductTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
+          mapper.map(finishProductTrialService.getFinishProductTrialsByFinishProductTestCode(
+              finishProductTestCode), FinishProductTrialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
+        validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE)
+  public ResponseEntity<Object> updateFinishProductStatusByFinishProductTestCode(
+      @PathVariable String finishProductTestCode) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST_STATUS,
+        finishProductTrialService
+        .upadateFinishProductStatusByFinishProductCode(finishProductTestCode),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

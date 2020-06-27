@@ -1649,6 +1649,16 @@ public class ValidationFailureStatusCodes {
    */
   @Value("${validation.finishProductTest.notExists}")
   private String finishProductTestNotExit;
+  @Value("${validation.finishProductTest.alreadyExists}")
+  private String finishProductTestAlreadyExists;
+
+  public String getFinishProductTestAlreadyExists() {
+    return finishProductTestAlreadyExists;
+  }
+
+  public void setFinishProductTestAlreadyExists(String finishProductTestAlreadyExists) {
+    this.finishProductTestAlreadyExists = finishProductTestAlreadyExists;
+  }
 
   public String getFinishProductTestNotExit() {
     return finishProductTestNotExit;
