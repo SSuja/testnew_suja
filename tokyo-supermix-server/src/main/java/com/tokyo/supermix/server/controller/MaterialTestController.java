@@ -162,7 +162,7 @@ public class MaterialTestController {
 		}
 	}
 
-	@GetMapping(value = EndpointURI.GET_MATERIAL_TEST_BY_PLANT)
+	@GetMapping(value = EndpointURI.GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE)
 	public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable Long testConfigureId) {
 		if (materialTestService.isMaterialTestByTestConfigureExists(testConfigureId)) {
 			return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
