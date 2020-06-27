@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
 import com.tokyo.supermix.data.dto.ParameterResultDto;
-import com.tokyo.supermix.data.entities.FormulaParameter;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterEquation;
@@ -22,7 +21,6 @@ import com.tokyo.supermix.data.entities.SieveSize;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.EquationName;
 import com.tokyo.supermix.data.enums.TestParameterType;
-import com.tokyo.supermix.data.repositories.FormulaParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
@@ -56,9 +54,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   MaterialTestTrialService materialTestTrialService;
   @Autowired
   SieveSizeRepository sieveSizeRepository;
-  @Autowired
-  FormulaParameterRepository formulaParameterRepository;
-
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
     parameterResultRepository.save(parameterValue);

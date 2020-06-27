@@ -51,10 +51,20 @@ public class FinishProductTestController {
   }
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TEST)
-  public String saveFinishProductSampleTest(
+  public ResponseEntity<Object> saveFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
-    return finishProductTestService
-        .createFinishProductTest(mapper.map(finishProductTestRequestDto, FinishProductTest.class));
+    if (finishProductTestService.isDuplicateEntry(
+        finishProductTestRequestDto.getFinishProductSampleId(),
+        finishProductTestRequestDto.getTestConfigureId())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+              validationFailureStatusCodes.getFinishProductTestAlreadyExists()),
+          HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
+        finishProductTestService.createFinishProductTest(
+            mapper.map(finishProductTestRequestDto, FinishProductTest.class)),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
