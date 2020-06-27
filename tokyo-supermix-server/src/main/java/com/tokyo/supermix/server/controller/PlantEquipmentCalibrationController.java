@@ -156,7 +156,7 @@ public class PlantEquipmentCalibrationController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
   
-  @GetMapping(value = EndpointURI.GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
+  @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
   public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(@CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<Object>(
         new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,

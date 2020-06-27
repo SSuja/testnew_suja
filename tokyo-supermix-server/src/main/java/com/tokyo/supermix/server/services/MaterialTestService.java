@@ -3,10 +3,10 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.BooleanBuilder;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MaterialTestService {
 
@@ -37,5 +37,6 @@ public interface MaterialTestService {
   List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 
   public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType);
+  public List<MaterialTest> getAllMaterialTestByPlant(UserPrincipal currentUser);
 
 }

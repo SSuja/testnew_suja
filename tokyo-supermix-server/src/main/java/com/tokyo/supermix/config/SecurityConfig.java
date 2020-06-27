@@ -107,12 +107,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.EQUIPMENT).hasAuthority(PermissionConstants.EDIT_EQUIPMENT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.DELETE_EQUIPMENT).hasAuthority(PermissionConstants.DELETE_EQUIPMENT)
         // material equipment plant
-        .antMatchers(HttpMethod.GET,EndpointURI.PLANT_EQUIPMENTS).hasAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT)
+        .antMatchers(HttpMethod.GET,EndpointURI.PLANT_EQUIPMENTS_BY_PLANT).hasAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.POST,EndpointURI.PLANT_EQUIPMENT).hasAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.PUT,EndpointURI.PLANT_EQUIPMENT).hasAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.PLANTEQUIPMENT_BY_SERIALNO).hasAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT)
         // material equipment plant calibrarion
-        .antMatchers(HttpMethod.GET,EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS).hasAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION)
+        .antMatchers(HttpMethod.GET,EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT).hasAuthority(PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.POST,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAuthority(PermissionConstants.CREATE_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.PUT,EndpointURI.EQUIPMENT_PLANT_CALIBRATION).hasAuthority(PermissionConstants.EDIT_PLANT_EQUIPMENT_CALIBRATION)
         .antMatchers(HttpMethod.DELETE,EndpointURI.EQUIPMENT_PLANT_CALIBRATION_BY_ID).hasAuthority(PermissionConstants.DELETE_PLANT_EQUIPMENT_CALIBRATION)
@@ -122,12 +122,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER_CATEGORY).hasAuthority(PermissionConstants.EDIT_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_CATEGORY_BY_ID).hasAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
         // project
-        .antMatchers(HttpMethod.GET, EndpointURI.PROJECTS).hasAuthority(PermissionConstants.VIEW_PROJECT)
+        .antMatchers(HttpMethod.GET, EndpointURI.PROJECTS_BY_PLANT).hasAuthority(PermissionConstants.VIEW_PROJECT)
         .antMatchers(HttpMethod.POST, EndpointURI.PROJECT).hasAuthority(PermissionConstants.CREATE_PROJECT)
         .antMatchers(HttpMethod.PUT, EndpointURI.PROJECT).hasAuthority(PermissionConstants.EDIT_PROJECT)
         .antMatchers(HttpMethod.DELETE, EndpointURI.PROJECT_BY_ID).hasAuthority(PermissionConstants.DELETE_PROJECT)
         // pour
-        .antMatchers(HttpMethod.GET, EndpointURI.POURS).hasAuthority(PermissionConstants.VIEW_POUR)
+        .antMatchers(HttpMethod.GET, EndpointURI.POUR_BY_PLANT).hasAuthority(PermissionConstants.VIEW_POUR)
         .antMatchers(HttpMethod.POST, EndpointURI.POUR).hasAuthority(PermissionConstants.CREATE_POUR)
         .antMatchers(HttpMethod.PUT, EndpointURI.POUR).hasAuthority(PermissionConstants.EDIT_POUR)
         .antMatchers(HttpMethod.DELETE, EndpointURI.POUR_BY_ID).hasAuthority(PermissionConstants.DELETE_POUR)          
@@ -147,12 +147,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.EDIT_SUPPLIER)
         .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_BY_ID).hasAuthority(PermissionConstants.DELETE_SUPPLIER) 
          // mix design
-        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGNS).hasAuthority(PermissionConstants.VIEW_MIX_DESIGN)
+        .antMatchers(HttpMethod.GET,EndpointURI.MIX_DESIGN_BY_PLANT).hasAuthority(PermissionConstants.VIEW_MIX_DESIGN)
         .antMatchers(HttpMethod.POST,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.CREATE_MIX_DESIGN)
         .antMatchers(HttpMethod.PUT,EndpointURI.MIX_DESIGN).hasAuthority(PermissionConstants.EDIT_MIX_DESIGN)
         .antMatchers(HttpMethod.DELETE,EndpointURI.MIX_DESIGN_BY_CODE).hasAuthority(PermissionConstants.DELETE_MIX_DESIGN) 
         //Incoming sample
-        .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLES).hasAuthority(PermissionConstants.VIEW_INCOMING_SAMPLE)
+        .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLE_BY_PLANT).hasAuthority(PermissionConstants.VIEW_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.POST, EndpointURI.INCOMING_SAMPLE).hasAuthority(PermissionConstants.CREATE_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.PUT, EndpointURI.INCOMING_SAMPLE).hasAuthority(PermissionConstants.EDIT_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.DELETE, EndpointURI.INCOMING_SAMPLE_BY_CODE).hasAuthority(PermissionConstants.DELETE_INCOMING_SAMPLE) 

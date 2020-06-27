@@ -26,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.PlantService;
@@ -175,4 +177,12 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+//get all material tests
+ @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
+ public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser) {
+   return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+       mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser), MaterialTestResponseDto.class),
+       RestApiResponseStatus.OK), null, HttpStatus.OK);
+ }
 }

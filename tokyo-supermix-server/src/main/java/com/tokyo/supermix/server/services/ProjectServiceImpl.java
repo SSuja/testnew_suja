@@ -31,7 +31,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	     
 	@Transactional(readOnly = true)
-	public List<Project> getAllProjects(UserPrincipal currentUser) {
+	public List<Project> getAllProjectsByPlant(UserPrincipal currentUser) {
 	  return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
           .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT));
 	}
@@ -95,4 +95,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> getProjectByPlantCode(String plantCode) {
 		return projectRepository.findByPlantCode(plantCode);
 	}
+
+
+  @Transactional(readOnly = true)
+  public List<Project> getAllProjects() {
+    return projectRepository.findAll();
+  }
+
+
+  
 }
