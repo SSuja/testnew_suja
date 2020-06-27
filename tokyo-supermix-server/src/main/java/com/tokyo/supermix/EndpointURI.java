@@ -142,6 +142,8 @@ public final class EndpointURI {
       EQUIPMENT_PLANT_CALIBRATION + SEARCH;
   public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
       EQUIPMENT_PLANT_CALIBRATIONS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT =
+      EQUIPMENT_PLANT_CALIBRATION + SLASH + PLANT_WISE;
   /*
    * PlantEquipment
    * 
@@ -152,6 +154,8 @@ public final class EndpointURI {
   public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH;
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
       PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String PLANT_EQUIPMENTS_BY_PLANT =
+      PLANT_EQUIPMENT + SLASH + PLANT_WISE ;
   /*
    * Customer apis
    */

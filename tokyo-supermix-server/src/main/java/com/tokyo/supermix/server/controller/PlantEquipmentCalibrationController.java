@@ -26,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantEquipmentCalibrationService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -152,5 +154,15 @@ public class PlantEquipmentCalibrationController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
+  public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<Object>(
+        new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
+            mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibrationsByPlant(currentUser),
+                PlantEquipmentCalibrationResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 }
