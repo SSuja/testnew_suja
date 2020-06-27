@@ -18,4 +18,6 @@ public interface FinishProductTestService {
   List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId);
 
   boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId);
+
+  boolean isDuplicateEntry(Long finishProductSampleId, Long testConfigureId);
 }

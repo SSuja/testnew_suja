@@ -474,6 +474,11 @@ public final class EndpointURI {
       + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
   public static final String CEMENT_REPORT_DETAIL =
       TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
+  public static final String ADMIXTURE_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + "admixture" + SLASH + MATERIAL_TEST_CODE;
+  /*
+   * Finish Product Sample
+   */
   public static final String FINISH_PRODUCT_SAMPLE_ID =
       "finish-product" + SLASH + "{finishProductSampleId}";
   public static final String FINISH_PRODUCT_RESULT_REPORT =
@@ -481,9 +486,9 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_RESULTS = "all-results";
   public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT =
       TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
-  public static final String INCOMING_SAMPLE_REPORT_DETAIL =
-      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}";
-  public static final String INCOMING_SAMPLE_REPORT_DETAILS =
+  public static final String INCOMING_SAMPLE_SUMMARY_REPORT =
+      BASE_API_PATH + SLASH + "incoming-sample-summary-report" + SLASH + "{incomingSampleCode}";
+  public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "test-name" + SLASH + "{testName}";
 
@@ -527,6 +532,12 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TRIAL = BASE_API_PATH + "finish-product-trial";
   public static final String FINISH_PRODUCT_TRIALS = BASE_API_PATH + "finish-product-trials";
   public static final String FINISH_PRODUCT_TRIAL_BY_CODE = FINISH_PRODUCT_TRIAL + CODE;
+  public static final String FINISH_PRODUCT_TRIALS_BY_FINISH_PRODUCT_TEST_CODE =
+      FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
+  public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
+      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH + "{finishProductTestCode}";
+  
+
 
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
       BASE_API_PATH + "finish-product-parameter-results";

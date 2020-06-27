@@ -79,4 +79,13 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   public boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId) {
     return finishProductTestRepository.existsByTestConfigureId(testConfigureId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isDuplicateEntry(Long finishProductSampleId, Long testConfigureId) {
+    if (finishProductTestRepository
+        .existsByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId)) {
+      return true;
+    }
+    return false;
+  }
 }
