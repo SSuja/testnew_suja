@@ -47,6 +47,7 @@ public final class EndpointURI {
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String SUPPLIER_BY_PLANT = SUPPLIER  + PLANT_WISE;
   /*
    * Employee apis
    */
@@ -56,7 +57,7 @@ public final class EndpointURI {
   public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + SLASH + PLANT_WISE;
+  public static final String EMPLOYEE_BY_PLANT = EMPLOYEE  + PLANT_WISE;
   /*
    * Material Category APIs
    */
@@ -308,6 +309,8 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
   public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String MATERIAL_TEST_TRIAL_BY_PLANT =
+      MATERIAL_TEST_TRIAL + PLANT_WISE;
 
   /*
    * Sieve Size
@@ -350,6 +353,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
+  public static final String FINISH_PRODUCT_SAMPLE_BY_PLANT = FINISH_PRODUCT_SAMPLE  + PLANT_WISE;
   /*
    * Concrete Mixer apis
    */
@@ -360,7 +364,7 @@ public final class EndpointURI {
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
   public static final String CONCRETE_MIXER_BY_PLANT =
-      CONCRETE_MIXER + SLASH + PLANT_WISE;
+      CONCRETE_MIXER  + PLANT_WISE;
 
   /*
    * finish product sample issue apis

@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.PLANT).hasAuthority(PermissionConstants.EDIT_PLANT)
         .antMatchers(HttpMethod.DELETE,EndpointURI.PLANT_BY_CODE).hasAuthority(PermissionConstants.DELETE_PLANT)
         //congrete mixer
-        .antMatchers(HttpMethod.GET,EndpointURI.CONCRETE_MIXERS).hasAuthority(PermissionConstants.VIEW_CONCRETE_MIXER)
+        .antMatchers(HttpMethod.GET,EndpointURI.CONCRETE_MIXER_BY_PLANT).hasAuthority(PermissionConstants.VIEW_CONCRETE_MIXER)
         .antMatchers(HttpMethod.POST,EndpointURI.CONCRETE_MIXER).hasAuthority(PermissionConstants.CREATE_CONCRETE_MIXER)
         .antMatchers(HttpMethod.PUT,EndpointURI.CONCRETE_MIXER).hasAuthority(PermissionConstants.EDIT_CONCRETE_MIXER)
         .antMatchers(HttpMethod.DELETE,EndpointURI.CONCRETE_MIXER_BY_ID).hasAuthority(PermissionConstants.DELETE_CONCRETE_MIXER)
@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT,EndpointURI.DESIGNATION).hasAuthority(PermissionConstants.EDIT_DESIGNATION)
         .antMatchers(HttpMethod.DELETE,EndpointURI.DESIGNATION_BY_ID).hasAuthority(PermissionConstants.DELETE_DESIGNATION)
         //employee
-        .antMatchers(HttpMethod.GET,EndpointURI.EMPLOYEES).hasAuthority(PermissionConstants.VIEW_EMPLOYEE)
+        .antMatchers(HttpMethod.GET,EndpointURI.EMPLOYEE_BY_PLANT).hasAuthority(PermissionConstants.VIEW_EMPLOYEE)
         .antMatchers(HttpMethod.POST,EndpointURI.EMPLOYEE).hasAuthority(PermissionConstants.CREATE_EMPLOYEE)
         .antMatchers(HttpMethod.PUT,EndpointURI.EMPLOYEE).hasAuthority(PermissionConstants.EDIT_EMPLOYEE)
         .antMatchers(HttpMethod.DELETE,EndpointURI.EMPLOYEE_BY_ID).hasAuthority(PermissionConstants.DELETE_EMPLOYEE) 
@@ -142,7 +142,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.CUSTOMER).hasAuthority(PermissionConstants.EDIT_CUSTOMER)
         .antMatchers(HttpMethod.DELETE, EndpointURI.CUSTOMER_BY_ID).hasAuthority(PermissionConstants.DELETE_CUSTOMER) 
         // supplier
-        .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIERS).hasAuthority(PermissionConstants.VIEW_SUPPLIER)
+        .antMatchers(HttpMethod.GET, EndpointURI.SUPPLIER_BY_PLANT).hasAuthority(PermissionConstants.VIEW_SUPPLIER)
         .antMatchers(HttpMethod.POST, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.CREATE_SUPPLIER)
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER).hasAuthority(PermissionConstants.EDIT_SUPPLIER)
         .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_BY_ID).hasAuthority(PermissionConstants.DELETE_SUPPLIER) 
@@ -157,10 +157,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.INCOMING_SAMPLE).hasAuthority(PermissionConstants.EDIT_INCOMING_SAMPLE)
         .antMatchers(HttpMethod.DELETE, EndpointURI.INCOMING_SAMPLE_BY_CODE).hasAuthority(PermissionConstants.DELETE_INCOMING_SAMPLE) 
        // finished product sample
-        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLES).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT)
-        .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT)
-        .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT)
-        .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT) 
+        .antMatchers(HttpMethod.GET,EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT).hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE)
+        .antMatchers(HttpMethod.POST,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_SAMPLE)
+        .antMatchers(HttpMethod.PUT,EndpointURI.FINISH_PRODUCT_SAMPLE).hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_SAMPLE)
+        .antMatchers(HttpMethod.DELETE,EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID).hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE) 
         // Test
         .antMatchers(HttpMethod.GET,EndpointURI.TESTS).hasAuthority(PermissionConstants.VIEW_TEST)
         .antMatchers(HttpMethod.POST,EndpointURI.TEST).hasAuthority(PermissionConstants.CREATE_TEST)

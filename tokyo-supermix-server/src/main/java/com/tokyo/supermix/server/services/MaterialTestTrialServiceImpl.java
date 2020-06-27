@@ -9,15 +9,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
-import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
@@ -35,6 +37,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
   public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -73,7 +77,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
   @Transactional
   public void getAverageAndStatus(String materialTestCode) {
-         compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
+    compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
   }
 
   private void compareWithAverage(Double average, String materialTestCode) {
@@ -86,16 +90,16 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
               materialTest.getIncomingSample().getRawMaterial().getId());
       calculateStatus(average, materialAcceptedValue.getMinValue(),
           materialAcceptedValue.getMaxValue(), materialTestCode);
-          } else {
+    } else {
       calculateStatus(average,
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
           materialTestCode);
     }
   }
-   private Double calculateAverage(String materialTestCode) {
+  private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;
-    int trialTotal = 0;  
+    int trialTotal = 0;
     List<MaterialTestTrial> listMaterialTestTrial =
         materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
     for (MaterialTestTrial materialTestTrial : listMaterialTestTrial) {
@@ -123,7 +127,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     materialTest.setStatus(status);
     return materialTestRepository.save(materialTest);
   }
-  
+
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
     return Double.valueOf(decimalFormat.format(value));
@@ -132,5 +136,12 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   @Transactional(readOnly = true)
   public List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode) {
     return materialTestTrialRepository.findByMaterialTestIncomingSamplePlantCode(plantCode);
+  }
+
+  @Override
+  public List<MaterialTestTrial> getAllMaterialTestTrialByplant(UserPrincipal currentUser) {
+    return materialTestTrialRepository.findByMaterialTestIncomingSamplePlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
   }
 }
