@@ -13,6 +13,7 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
+  private static final String PLANT_WISE = "/plant";
   /*
    * Plant apis
    */
@@ -351,12 +352,14 @@ public final class EndpointURI {
   /*
    * Concrete Mixer apis
    */
-  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
   public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
+  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
   public static final String CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
   public static final String CONCRETE_MIXER_BY_PLANT_CODE =
       CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
+  public static final String CONCRETE_MIXER_BY_PLANT =
+      CONCRETE_MIXER + SLASH + PLANT_WISE;
 
   /*
    * finish product sample issue apis
