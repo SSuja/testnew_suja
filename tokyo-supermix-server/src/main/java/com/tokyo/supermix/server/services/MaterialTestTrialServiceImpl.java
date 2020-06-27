@@ -1,11 +1,14 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
@@ -41,8 +44,33 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
-  public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
-    return materialTestTrialRepository.save(materialTestTrial);
+  public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
+    String codePrefix = materialTestTrial.getMaterialTest().getCode();
+       //String subPrefix=codePrefix + "-";
+       String subPrefix = codePrefix + "-T-";
+//       String code=subPrefix + String.format("%04d", 1);
+       List<MaterialTestTrial> materialTestTrialList = materialTestTrialRepository.findByCodeContaining(subPrefix);
+       if (materialTestTrialList.size() == 0) {
+         materialTestTrial.setCode(subPrefix + String.format("%04d", 1));
+       } else {
+         materialTestTrial
+             .setCode(subPrefix + String.format("%04d",maxNumberFromCode(materialTestTrialList) + 1));
+       }
+  
+   materialTestTrialRepository.save(materialTestTrial);
+   return materialTestTrial.getCode();
+  }
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+  private Integer maxNumberFromCode(List<MaterialTestTrial> materialTestTrialList) {
+    List<Integer> list = new ArrayList<Integer>();
+    materialTestTrialList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)

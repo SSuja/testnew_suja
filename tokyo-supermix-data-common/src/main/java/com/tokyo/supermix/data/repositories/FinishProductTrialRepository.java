@@ -9,7 +9,9 @@ public interface FinishProductTrialRepository extends JpaRepository<FinishProduc
 
   FinishProductTrial findFinishProductTrialByCode(String code);
 
-  List<FinishProductTrial> findByFinishProductTestCode(String finsishproductTestCode);
+  List<FinishProductTrial> findByFinishProductTestCode(String finishProductTestCode);
 
   List<FinishProductTrial> findByCodeContaining(String code);
+
+  boolean existsByFinishProductTestCode(String finishProductTestCode);
 }

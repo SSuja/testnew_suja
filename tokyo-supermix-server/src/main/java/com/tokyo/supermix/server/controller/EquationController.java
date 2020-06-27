@@ -44,10 +44,6 @@ public class EquationController {
   @PostMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> createEquation(
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
-    if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
-          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
         equationService.saveEquation(mapper.map(equationRequestDto, Equation.class)),
         RestApiResponseStatus.OK), HttpStatus.OK);
@@ -134,10 +130,6 @@ public class EquationController {
       @PathVariable Long testConfigureId,
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureId)) {
-      if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
-            validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.EQUATION,
               equationService.updateTestConfigureEquation(testConfigureId,

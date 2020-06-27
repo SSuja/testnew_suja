@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 
 public interface MaterialTestTrialRepository extends JpaRepository<MaterialTestTrial, String> {
@@ -14,6 +15,6 @@ public interface MaterialTestTrialRepository extends JpaRepository<MaterialTestT
   MaterialTestTrial findByCode(String code);
 
   List<MaterialTestTrial> findByMaterialTestIncomingSamplePlantCode(String plantCode);
-
   List<MaterialTestTrial> findByMaterialTestIncomingSamplePlantCodeIn(List<String> plantCodes);
+  List<MaterialTestTrial> findByCodeContaining(String code);
 }

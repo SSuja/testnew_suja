@@ -122,7 +122,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.PUT, EndpointURI.SUPPLIER_CATEGORY).hasAuthority(PermissionConstants.EDIT_SUPPLIER_CATEGORY)
         .antMatchers(HttpMethod.DELETE, EndpointURI.SUPPLIER_CATEGORY_BY_ID).hasAuthority(PermissionConstants.DELETE_SUPPLIER_CATEGORY)   
         // project
-        .antMatchers(HttpMethod.GET, EndpointURI.PROJECTS_BY_PLANT).hasAuthority(PermissionConstants.VIEW_PROJECT)
+        .antMatchers(HttpMethod.GET, EndpointURI.PROJECT_BY_PLANT).hasAuthority(PermissionConstants.VIEW_PROJECT)
         .antMatchers(HttpMethod.POST, EndpointURI.PROJECT).hasAuthority(PermissionConstants.CREATE_PROJECT)
         .antMatchers(HttpMethod.PUT, EndpointURI.PROJECT).hasAuthority(PermissionConstants.EDIT_PROJECT)
         .antMatchers(HttpMethod.DELETE, EndpointURI.PROJECT_BY_ID).hasAuthority(PermissionConstants.DELETE_PROJECT)
@@ -239,7 +239,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_TESTS_BY_CODE).hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST) 
         // Material test trail
         .antMatchers(HttpMethod.POST,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.CREATE_MATERIAL_TEST_TRIAL)
-        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST_TRIALS).hasAuthority(PermissionConstants.VIEW_MATERIAL_TEST_TRIAL)
+        .antMatchers(HttpMethod.GET,EndpointURI.MATERIAL_TEST_BY_PLANT).hasAuthority(PermissionConstants.VIEW_MATERIAL_TEST_TRIAL)
         .antMatchers(HttpMethod.PUT,EndpointURI.MATERIAL_TEST).hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST_TRIAL)
         .antMatchers(HttpMethod.DELETE,EndpointURI.MATERIAL_TESTS_BY_CODE).hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST_TRIAL) 
         // sieve size

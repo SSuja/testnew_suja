@@ -5,7 +5,7 @@ import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MaterialTestTrialService {
-  public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial);
+  public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial);
 
   public List<MaterialTestTrial> getAllMaterialTestTrial();
   

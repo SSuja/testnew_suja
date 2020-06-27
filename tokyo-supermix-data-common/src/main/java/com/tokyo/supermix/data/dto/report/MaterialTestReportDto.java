@@ -1,49 +1,48 @@
 package com.tokyo.supermix.data.dto.report;
 
-import java.sql.Date;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
 
-public class MaterialTestReportDto {
+public class MaterialTestReportDto extends DateAudit {
+  private static final long serialVersionUID = 1L;
   private String code;
-  private Date date;
-  private Double avarage;
-  private Long noOfTrial;
   private Double average;
+  private Long noOfTrial;
   private Status status;
+
   public String getCode() {
     return code;
   }
+
   public void setCode(String code) {
     this.code = code;
   }
-  public Date getDate() {
-    return date;
-  }
-  public void setDate(Date date) {
-    this.date = date;
-  }
-  public Double getAvarage() {
-    return avarage;
-  }
-  public void setAvarage(Double avarage) {
-    this.avarage = avarage;
-  }
-  public Long getNoOfTrial() {
-    return noOfTrial;
-  }
-  public void setNoOfTrial(Long noOfTrial) {
-    this.noOfTrial = noOfTrial;
-  }
+
   public Double getAverage() {
     return average;
   }
+
   public void setAverage(Double average) {
     this.average = average;
   }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
+  }
+
   public Status getStatus() {
     return status;
   }
+
   public void setStatus(Status status) {
     this.status = status;
-  }  
+  }
 }

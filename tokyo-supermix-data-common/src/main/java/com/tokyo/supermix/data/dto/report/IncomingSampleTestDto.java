@@ -8,7 +8,7 @@ public class IncomingSampleTestDto {
   private Status status;
   private Double average;
   private Date date;
-   private AcceptedValueDto acceptanceCriteria;
+  private AcceptedValueDto acceptanceCriteria;
 
   public String getTestName() {
     return testName;
