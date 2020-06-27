@@ -6,13 +6,14 @@ import org.springframework.data.domain.Page;
 
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Project;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface ProjectService {
 	public void saveProject(Project project);
 
 	public boolean isNameExist(String name);
 
-	public List<Project> getAllProjects();
+	public List<Project> getAllProjects(UserPrincipal currentUser);
 
 	public boolean isProjectExist(String code);
 

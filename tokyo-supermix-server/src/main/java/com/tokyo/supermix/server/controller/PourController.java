@@ -25,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.PourService;
 import com.tokyo.supermix.util.Constants;
@@ -123,5 +125,14 @@ public class PourController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.POUR_BY_PLANT)
+  public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser) {
+    logger.debug("gat all pour");
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.POUR,
+            mapper.map(pourService.getAllPourByPlant(currentUser), PourDtoResponse.class), RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 }
