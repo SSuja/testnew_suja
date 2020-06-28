@@ -69,12 +69,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public boolean isConcreteMixerExist(Long id) {
-    return finishProductSampleRepository.existsByConcreteMixerId(id);
+    return finishProductSampleRepository.existsByEquipmentId(id);
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSampleByConcreteMixerId(Long id) {
-    return finishProductSampleRepository.findByConcreteMixerId(id);
+  public List<FinishProductSample> getFinishProductSampleByEquipmentId(Long id) {
+    return finishProductSampleRepository.findByEquipmentId(id);
   }
 
   @Transactional(readOnly = true)
