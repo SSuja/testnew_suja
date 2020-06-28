@@ -494,6 +494,8 @@ public final class EndpointURI {
       TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
   public static final String ADMIXTURE_REPORT_DETAIL =
       TEST_REPORT_DETAIL + SLASH + "admixture" + SLASH + MATERIAL_TEST_CODE;
+  public static final String SIEVE_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + "sieve" + SLASH + MATERIAL_TEST_CODE;
   /*
    * Finish Product Sample
    */

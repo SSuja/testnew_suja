@@ -16,6 +16,8 @@ import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
 import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
+import com.tokyo.supermix.data.dto.report.SieveSizeDto;
+import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.SupplierReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.dto.report.TestTrialDto;
@@ -35,6 +37,7 @@ import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.SieveAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 
 @Service
@@ -55,6 +58,8 @@ public class TestReportServiceImpl implements TestReportService {
   private SupplierRepository supplierRepository;
   @Autowired
   MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private SieveAcceptedValueRepository sieveAcceptedValueRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
@@ -298,5 +303,34 @@ public class TestReportServiceImpl implements TestReportService {
     incomingSampleDeliveryReportDto.setSupplierReportDtos(
         getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
+  }
+
+  // Sieve Test Report
+  @Transactional(readOnly = true)
+  public SieveTestReportDto getSieveTestReport(String materialTestCode) {
+    SieveTestReportDto sieveTestReportDto = new SieveTestReportDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+    sieveTestReportDto.setMaterialTest(materialTestDto);
+    sieveTestReportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    sieveTestReportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    sieveTestReportDto
+        .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    sieveTestReportDto
+        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    sieveTestReportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    sieveTestReportDto.setSieveSizes(
+        getSieveSizeDto(materialTest.getTestConfigure().getMaterialSubCategory().getId()));
+    return sieveTestReportDto;
+  }
+
+  private List<SieveSizeDto> getSieveSizeDto(Long materialSubCategoryId) {
+    List<SieveSizeDto> sieveSizeDto = new ArrayList<SieveSizeDto>();
+    sieveAcceptedValueRepository.findBySieveSizeMaterialSubCategoryId(materialSubCategoryId)
+        .forEach(sieve -> {
+          sieveSizeDto.add(mapper.map(sieve, SieveSizeDto.class));
+        });
+    return sieveSizeDto;
   }
 }

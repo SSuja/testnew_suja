@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
+import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -100,4 +101,17 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+  @GetMapping(value = EndpointURI.SIEVE_REPORT_DETAIL)
+  public ResponseEntity<Object> getSieveReportDetails(@PathVariable String materialTestCode) {
+    if (materialTestService.isMaterialTestExists(materialTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+          mapper.map(testReportService.getSieveTestReport(materialTestCode),
+              SieveTestReportDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
+        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
 }
