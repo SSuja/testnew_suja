@@ -328,6 +328,8 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
   public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE =
+      MATERIAL_TEST_TRIAL + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   /*
    * Sieve Size
@@ -511,7 +513,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "test-name" + SLASH + "{testName}";
-
+  public static final String CONCRETE_TEST_REPORT =
+      BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
   /*
    * role Permission
    */
@@ -590,6 +593,10 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TEST_BY_CODE = FINISH_PRODUCT_TEST + CODE;
   public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
       FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_TESTCONFIGURE =
+      FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}"
+          + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+
 
   private EndpointURI() {}
 }

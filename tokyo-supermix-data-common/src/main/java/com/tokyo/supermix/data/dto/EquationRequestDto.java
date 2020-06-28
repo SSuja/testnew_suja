@@ -11,8 +11,6 @@ public class EquationRequestDto {
 	@NotNull(message = "{equationDto.formula.null}")
 	@NotEmpty(message = "{equationDto.formula.empty}")
 	private String formula;
-	@NotNull(message = "{equationDto.name.null}")
-	@NotEmpty(message = "{equationDto.name.empty}")
 	private EquationName name;
 	private EquationType equationType;
 	private boolean parameterExists;

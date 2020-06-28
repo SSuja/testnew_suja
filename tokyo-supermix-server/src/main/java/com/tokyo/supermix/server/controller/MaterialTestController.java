@@ -1,11 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
@@ -163,6 +164,19 @@ public class MaterialTestController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE)
+  public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable Long testConfigureId) {
+    if (materialTestService.isMaterialTestByTestConfigureExists(testConfigureId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+          mapper.map(materialTestService.getMaterialTestByTestConfigureId(testConfigureId),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+
   }
 
   // get material test by TestConfigureTestType
