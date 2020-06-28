@@ -53,6 +53,8 @@ public final class PrivilegeEndpointURI {
   public static final String USER_PLANT_ROLE = BASE_API_PATH + "user-plant-role";
   public static final String USER_PLANT_ROLE_BY_USER = USER_PLANT_ROLE + SLASH + "user" + SLASH + "{userId}";
   public static final String USER_PLANT_ROLE_BY_ROLE = USER_PLANT_ROLE + SLASH + "plant-role" + SLASH + "{plantRoleId}";
+  public static final String USER_PLANT_ROLE_BY_ROLE_BY_USERTYPE = USER_PLANT_ROLE + SLASH + "plant-role" + SLASH +
+      "{plantRoleId}"+SLASH+"user-type"+SLASH+"{userType}";
   /*
    * Permission
    */
