@@ -9,8 +9,8 @@ public class FinishProductSampleRequestDto {
   private String workOrderNo;
   @NotNull(message = "{finishProductSampleRequestDto.finishProductCode.null}")
   private Long finishProductCode;
-  @NotNull(message = "{finishProductSampleRequestDto.concreteMixerId.null}")
-  private Long concreteMixerId;
+  @NotNull(message = "{finishProductSampleRequestDto.equipmentId.null}")
+  private Long equipmentId;
   @NotNull(message = "{finishProductSampleRequestDto.mixDesignCode.null}")
   @NotEmpty(message = "{finishProductSampleRequestDto.mixDesignCode.empty}")
   private String mixDesignCode;
@@ -40,12 +40,12 @@ public class FinishProductSampleRequestDto {
     this.finishProductCode = finishProductCode;
   }
 
-  public Long getConcreteMixerId() {
-    return concreteMixerId;
+  public Long getEquipmentId() {
+    return equipmentId;
   }
 
-  public void setConcreteMixerId(Long concreteMixerId) {
-    this.concreteMixerId = concreteMixerId;
+  public void setEquipmentId(Long equipmentId) {
+    this.equipmentId = equipmentId;
   }
 
   public String getMixDesignCode() {

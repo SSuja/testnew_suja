@@ -88,4 +88,11 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTest> getFinishProductTestByFinishProductSampleIdAndTestConfigureId(
+      Long finishProductSampleId, Long testConfigureId) {
+    return finishProductTestRepository
+        .findByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId);
+  }
 }

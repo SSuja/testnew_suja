@@ -327,6 +327,8 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
   public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE =
+      MATERIAL_TEST_TRIAL + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   /*
    * Sieve Size
@@ -369,17 +371,6 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
-  /*
-   * Concrete Mixer apis
-   */
-  public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
-  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
-  public static final String CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
-  public static final String CONCRETE_MIXER_BY_PLANT_CODE =
-      CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
-  public static final String CONCRETE_MIXER_BY_PLANT =
-      CONCRETE_MIXER + SLASH + PLANT_WISE;
 
   /*
    * finish product sample issue apis
@@ -430,6 +421,8 @@ public final class EndpointURI {
   public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
   public static final String MATERIAL_QUALITY_PARAMETERS =
       BASE_API_PATH + "material-quality-parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_MATERIAL =
+      MATERIAL_QUALITY_PARAMETER + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
 
  
 
@@ -476,6 +469,8 @@ public final class EndpointURI {
       TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
   public static final String ADMIXTURE_REPORT_DETAIL =
       TEST_REPORT_DETAIL + SLASH + "admixture" + SLASH + MATERIAL_TEST_CODE;
+  public static final String SIEVE_REPORT_DETAIL =
+      TEST_REPORT_DETAIL + SLASH + "sieve" + SLASH + MATERIAL_TEST_CODE;
   /*
    * Finish Product Sample
    */
@@ -491,6 +486,10 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
       BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "test-name" + SLASH + "{testName}";
+  public static final String CONCRETE_TEST_REPORT =
+      BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
+  public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
+      BASE_API_PATH + "material-test-trials-wise" + SLASH + "{materialTestCode}";
 
   
   /*
@@ -535,8 +534,9 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TRIALS_BY_FINISH_PRODUCT_TEST_CODE =
       FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
-      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH + "{finishProductTestCode}";
-  
+      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test-status" + SLASH
+          + "{finishProductTestCode}";
+
 
 
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS =
@@ -554,6 +554,10 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TEST_BY_CODE = FINISH_PRODUCT_TEST + CODE;
   public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
       FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_TESTCONFIGURE =
+      FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleId}"
+          + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+
 
   private EndpointURI() {}
 }

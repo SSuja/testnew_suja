@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.enums.TestParameterType;
+import com.tokyo.supermix.data.enums.TrailResult;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_parameter")
@@ -33,6 +34,8 @@ public class TestParameter implements Serializable {
   private TestParameterType entryLevel;
   private Double value;
   private boolean equationExists;
+  @Enumerated(EnumType.ORDINAL)
+  private TrailResult trailResult;
   public Long getId() {
     return id;
   }
