@@ -107,17 +107,6 @@ public class EquationController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_NAME)
-  public ResponseEntity<Object> getEquationByEquationName(@PathVariable String equationName) {
-    if (equationService.isNameExists(equationName)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
-          mapper.map(equationService.getEquationsByName(equationName), EquationResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION,
-        validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
   @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_EXISTS_TRUE)
   public ResponseEntity<Object> getEquationByEquationExistsTrue() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,

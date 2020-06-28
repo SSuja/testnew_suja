@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.entities.Unit;
 import com.tokyo.supermix.data.enums.TestParameterType;
+import com.tokyo.supermix.data.enums.TrailResult;
 
 public class TestParameterResponseDto {
   private Long id;
@@ -13,6 +14,15 @@ public class TestParameterResponseDto {
   private Double value;
   private Unit unit;
   private boolean equationExists;
+  private TrailResult trailResult;
+
+  public TrailResult getTrailResult() {
+    return trailResult;
+  }
+
+  public void setTrailResult(TrailResult trailResult) {
+    this.trailResult = trailResult;
+  }
 
   public Long getId() {
     return id;

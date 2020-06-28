@@ -75,7 +75,7 @@ public class ProjectController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
   
-  @GetMapping(value = EndpointURI.PROJECTS_BY_PLANT)
+  @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
         mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),

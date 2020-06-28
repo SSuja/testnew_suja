@@ -14,6 +14,9 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class SupplierServiceImpl implements SupplierService {
@@ -21,15 +24,18 @@ public class SupplierServiceImpl implements SupplierService {
   private SupplierRepository supplierRepository;
   @Autowired
   private SupplierCategoryRepository supplierCategoryRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
   public List<Supplier> getSuppliers() {
-    List<Supplier> suppliers = supplierRepository.findAll();
-    for (Supplier supplier : suppliers) {
-      supplier.setSupplierCategories(
-          supplierRepository.findById(supplier.getId()).get().getSupplierCategories());
-    }
-    return suppliers;
+    return supplierRepository.findAll();
+  }
+
+  @Override
+  public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser) {
+    return supplierRepository.findByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER));
   }
 
   @Transactional

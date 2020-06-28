@@ -16,4 +16,9 @@ public interface MaterialQualityParameterService {
   public void deleteMaterialQualityParameter(Long id);
 
   public MaterialQualityParameter getMaterialQualityParameterById(Long id);
+
+  public List<MaterialQualityParameter> getAllMaterialQualityParameterByMaterial(
+      Long rawMaterialId);
+
+  public boolean isMaterialIdExists(Long rawMaterialId);
 }

@@ -19,11 +19,14 @@ import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.auth.UserService;
 import com.tokyo.supermix.util.Constants;
@@ -74,6 +77,27 @@ public class UserController {
     return new ResponseEntity<>(
         new ContentResponse<>(PrivilegeConstants.USER,
             mapper.map(userService.getAllUsers(), UserResponseDto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+  @GetMapping(value = PrivilegeEndpointURI.USER_BY_PLANT_BY_USERTYPE)
+  public ResponseEntity<Object> getAllUsersByUserTypeByPlant(@PathVariable UserType userType, @CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.USER,
+            mapper.map(userService.getAllUsersByUserTypeByplant(currentUser, userType), UserResponseDto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+  @GetMapping(value = PrivilegeEndpointURI.USER_BY_USERTYPE)
+  public ResponseEntity<Object> getAllUsersByUserType(@PathVariable UserType userType) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.USER,
+            mapper.map(userService.getAllUsersByUserType(userType), UserResponseDto.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+  @GetMapping(value = PrivilegeEndpointURI.USER_BY_PLANT)
+  public ResponseEntity<Object> getAllUsersByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.USER,
+            mapper.map(userService.getAllUsersByPlant(currentUser), UserResponseDto.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
 

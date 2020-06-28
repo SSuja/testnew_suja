@@ -24,6 +24,9 @@ import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -41,6 +44,8 @@ public class UserServiceImpl implements UserService {
   private PlantRoleRepository plantRoleRepository;
   @Autowired
   private RoleRepository roleRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
   public UserCredentialDto saveUser(User user, List<Long> roles) {
@@ -173,5 +178,22 @@ public class UserServiceImpl implements UserService {
           .forEach(userRole -> userPlantRoleRepository.deleteById(userRole.getId()));
       createUserPlantRoles(userRoleDto.getRoleIds(), user);
     }
+  }
+
+  @Override
+  public List<User> getAllUsersByPlant(UserPrincipal currentUser) {
+    return userRepository.findByEmployeePlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER));
+  }
+
+  @Override
+  public List<User> getAllUsersByUserTypeByplant(UserPrincipal currentUser, UserType userType) {
+    return userRepository.findByUserTypeAndEmployeePlantCodeIn(userType, currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER));
+  }
+
+  @Override
+  public List<User> getAllUsersByUserType(UserType userType) {
+    return userRepository.findByUserType(userType);
   }
 }

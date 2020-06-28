@@ -26,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -69,6 +71,18 @@ public class FinishProductSampleController {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
             mapper.map(finishProductSampleService.getAllFinishProductSamples(),
+                FinishProductSampleResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT)
+  public ResponseEntity<Object> getAllFinishProductSamplesByPlant(
+      @CurrentUser UserPrincipal currentUser) {
+    logger.debug("get all finish product samples by plant");
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+            mapper.map(finishProductSampleService.getAllFinishProductSamplesByPlant(currentUser),
                 FinishProductSampleResponseDto.class),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);

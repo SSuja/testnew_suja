@@ -15,5 +15,6 @@ public interface MaterialTestTrialRepository extends JpaRepository<MaterialTestT
   MaterialTestTrial findByCode(String code);
 
   List<MaterialTestTrial> findByMaterialTestIncomingSamplePlantCode(String plantCode);
+  List<MaterialTestTrial> findByMaterialTestIncomingSamplePlantCodeIn(List<String> plantCodes);
   List<MaterialTestTrial> findByCodeContaining(String code);
 }
