@@ -73,7 +73,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionSubModuleDto.setSubModule(sub.getName());
       plantPermissionSubModuleDto.setSubModuleId(sub.getId());
       plantPermissionSubModuleDto.setMainModuleId(mainModuleId);
-      plantPermissionSubModuleDto.setPlantRolePlantPermissions(
+      plantPermissionSubModuleDto.setPlantPermissions(
           getPlantPermissionsBySubModuleId(sub.getId(), mainModuleId));
       SubModuleRolePermissionDtoList.add(plantPermissionSubModuleDto);
     }
@@ -86,11 +86,11 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
         new ArrayList<PlantRolePlantPermissionRequestDto>();
     List<PlantPermission> plantPermissions =
         plantPermissionRepository.findByPermissionSubModuleId(subModuleId);
-    for (PlantPermission permission : plantPermissions) {
+    for (PlantPermission plantPermission : plantPermissions) {
       PlantRolePlantPermissionRequestDto plantPermissionResponseDto =
           new PlantRolePlantPermissionRequestDto();
-      plantPermissionResponseDto.setPlantPermissionName(permission.getPermission().getName());
-      plantPermissionResponseDto.setPlantPermissionId(permission.getId());
+      plantPermissionResponseDto.setPlantPermissionName(plantPermission.getName());
+      plantPermissionResponseDto.setPlantPermissionId(plantPermission.getId());
       plantPermissionResponseDto.setMainModuleId(mainModuleId);
       plantPermissionResponseDto.setSubModuleId(subModuleId);
       plantPermissionResponseDtos.add(plantPermissionResponseDto);

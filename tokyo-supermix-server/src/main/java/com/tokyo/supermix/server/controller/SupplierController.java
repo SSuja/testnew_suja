@@ -25,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
@@ -53,7 +55,12 @@ public class SupplierController {
         mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
+  @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
+  public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+        mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
   @PostMapping(value = EndpointURI.SUPPLIER)
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
     if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {

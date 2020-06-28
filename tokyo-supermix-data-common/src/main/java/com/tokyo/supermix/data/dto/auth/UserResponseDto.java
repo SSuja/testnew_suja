@@ -5,6 +5,7 @@ import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 public class UserResponseDto {
   private Long id;
   private String userName;
+  private String userType;
   private EmployeeResponseDto employee;
 
   public Long getId() {
@@ -29,6 +30,14 @@ public class UserResponseDto {
 
   public void setEmployee(EmployeeResponseDto employee) {
     this.employee = employee;
+  }
+
+  public String getUserType() {
+    return userType;
+  }
+
+  public void setUserType(String userType) {
+    this.userType = userType;
   }
 
 }

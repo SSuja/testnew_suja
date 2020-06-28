@@ -11,6 +11,8 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSamplesCountService;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
@@ -30,13 +32,13 @@ public class IncomingSamplesCountController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
 
   @GetMapping(value = EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY)
-  public ResponseEntity<Object> getincomingSampleCountByMaterialSubCategory(
-      @PathVariable String materialSubCategoryName) {
+  public ResponseEntity<Object> getIncomingSampleCountByMaterialSubCategory(
+      @PathVariable String materialSubCategoryName,@CurrentUser UserPrincipal currentUser) {
     if (materialSubCategoryService.isMaterialSubCategoryNameExist(materialSubCategoryName)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
           incomingSamplesCountService.getmaterialSampleCountByMaterialSubCategory(
               materialSubCategoryService.getMaterialSubCategoryByName(materialSubCategoryName)
-                  .getId()),
+                  .getId(), currentUser),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
@@ -45,11 +47,11 @@ public class IncomingSamplesCountController {
 
   @GetMapping(value = EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY)
   public ResponseEntity<Object> getincomingSampleCountByMaterialCategory(
-      @PathVariable String materialCategoryName) {
+      @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser) {
     if (materialCategoryService.isNameExist(materialCategoryName)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
           incomingSamplesCountService.getmaterialSampleCountByMaterialCategory(
-              materialCategoryService.getMaterialCategoryByName(materialCategoryName).getId()),
+              materialCategoryService.getMaterialCategoryByName(materialCategoryName).getId(), currentUser),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(
@@ -60,11 +62,11 @@ public class IncomingSamplesCountController {
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT)
   public ResponseEntity<Object> getCountByMaterialSubCategory(
-      @PathVariable String materialSubCategoryName) {
+      @PathVariable String materialSubCategoryName, @CurrentUser UserPrincipal currentUser) {
     if (materialSubCategoryService.isMaterialSubCategoryNameExist(materialSubCategoryName)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
           incomingSamplesCountService.getCountByMaterialSubCategory(materialSubCategoryService
-              .getMaterialSubCategoryByName(materialSubCategoryName).getId()),
+              .getMaterialSubCategoryByName(materialSubCategoryName).getId(), currentUser),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
@@ -73,11 +75,11 @@ public class IncomingSamplesCountController {
 
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT)
   public ResponseEntity<Object> getCountByMaterialCategory(
-      @PathVariable String materialCategoryName) {
+      @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser) {
     if (materialCategoryService.isNameExist(materialCategoryName)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SAMPLE_COUNTS,
           incomingSamplesCountService.getCountByMaterialCategory(
-              materialCategoryService.getMaterialCategoryByName(materialCategoryName).getId()),
+              materialCategoryService.getMaterialCategoryByName(materialCategoryName).getId(), currentUser),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(

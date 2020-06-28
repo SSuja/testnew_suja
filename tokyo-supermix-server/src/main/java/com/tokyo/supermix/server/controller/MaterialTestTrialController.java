@@ -24,6 +24,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -52,7 +54,13 @@ public class MaterialTestTrialController {
             MaterialTestTrialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_PLANT)
+  public ResponseEntity<Object> getAllMaterialTestTrialByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+        mapper.map(materialTestTrialService.getAllMaterialTestTrialByplant(currentUser),
+            MaterialTestTrialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
   // post MaterialTestTrial
   @PostMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
    public String createMaterialTestTrial(

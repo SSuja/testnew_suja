@@ -4,9 +4,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface SupplierService {
   public List<Supplier> getSuppliers();
+  
+  public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser);
 
   public void createSupplier(Supplier supplier, List<Long> supplierCategoryIds);
 

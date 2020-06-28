@@ -119,10 +119,10 @@ public final class PermissionConstants {
   public static final String EDIT_INCOMING_SAMPLE = "edit_incoming_sample";
   public static final String DELETE_INCOMING_SAMPLE = "delete_incoming_sample";
   /* finish product */
-  public static final String VIEW_FINISH_PRODUCT = "view_finish_product_sample";
-  public static final String CREATE_FINISH_PRODUCT= "create_finish_product_sample";
-  public static final String EDIT_FINISH_PRODUCT = "edit_finish_product_sample";
-  public static final String DELETE_FINISH_PRODUCT = "delete_finish_product_sample";
+  public static final String VIEW_FINISH_PRODUCT_SAMPLE = "view_finish_product_sample";
+  public static final String CREATE_FINISH_PRODUCT_SAMPLE= "create_finish_product_sample";
+  public static final String EDIT_FINISH_PRODUCT_SAMPLE = "edit_finish_product_sample";
+  public static final String DELETE_FINISH_PRODUCT_SAMPLE = "delete_finish_product_sample";
   /* test */
   public static final String VIEW_TEST = "view_test";
   public static final String CREATE_TEST= "create_test";
@@ -166,11 +166,8 @@ public final class PermissionConstants {
   public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
   public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
   /* incoming sample count */
-  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_COUNT = "material_sub_category_samples_count";
-  public static final String MATERIAL_SUB_CATEGORY_SAMPLES_STATUS_COUNT = "material_sub_category_samples_status_count";
-  public static final String MATERIAL_CATEGORY_SAMPLES_COUNT = "material_category_samples_count";
-  public static final String MATERIAL_CATEGORY_SAMPLES_STATUS_COUNT = "material_category_samples_status_count";
-  /* test parameter */
+  public static final String DASHBOARD_MATERIAL_COUNT_STATUS = "material_status_total_count_dashboard";
+   /* test parameter */
   public static final String VIEW_PARAMETER_EQUATION = "view_parameter_equation";
   public static final String CREATE_PARAMETER_EQUATION= "create_parameter_equation";
   public static final String EDIT_PARAMETER_EQUATION = "edit_parameter_equation";
@@ -228,6 +225,12 @@ public final class PermissionConstants {
   /* file export */
   public static final String VIEW_EXPORT_MIXDESIGN = "view_export_mixdesign";
   public static final String CREATE_UPLOAD_MIXDESIGN= "create_upload_mixdesign";
+  /* report */
+  public static final String MATERIAL_TEST_REPORT = "material_test_report";
+  public static final String CEMENT_REPORT= "cement_report";
+  public static final String ADMIXTURE_REPORT = "admixture_report";
+  public static final String INCOMING_SAMPLE_SUMMARY_REPORT= "incoming_sample_summary_report";
+  public static final String INCOMING_SAMPLE_DELIVERY_REPORT = "incoming_sample_delivery_report";
   
   
   

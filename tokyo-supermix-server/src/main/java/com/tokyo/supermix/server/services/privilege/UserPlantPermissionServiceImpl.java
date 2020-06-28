@@ -79,7 +79,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       boolean status = getPlantPermissionsAndReturnSubModuleStatus(userPlantPermissionList,
           subStatus, userId, sub.getId(), mainModuleId, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status);
-      subModulePlantRolePlantPermissionDto.setPlantRolePlantPermissions(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setPlantPermissions(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;
@@ -122,7 +122,6 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
         userPlantPermissionRepository.save(userPlantPermission);
       }
     }
-
   }
 
   @Transactional(readOnly = true)
