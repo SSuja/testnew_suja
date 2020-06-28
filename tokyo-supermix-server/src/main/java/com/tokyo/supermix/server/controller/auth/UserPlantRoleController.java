@@ -30,7 +30,7 @@ public class UserPlantRoleController {
           privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>(
-        new ContentResponse<>(PrivilegeConstants.ROLE,
+        new ContentResponse<>(PrivilegeConstants.ROLES,
             userPlantRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
@@ -39,12 +39,12 @@ public class UserPlantRoleController {
   public ResponseEntity<Object> getUsersByPlantRoleId(@PathVariable Long plantRoleId) {
     if (userPlantRoleService.existsByPlantRoleId(plantRoleId)) {
       return new ResponseEntity<>(
-          new ContentResponse<>(PrivilegeConstants.ROLE,
+          new ContentResponse<>(PrivilegeConstants.USERS,
               userPlantRoleService.getUsersByPlantRoleId(plantRoleId), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
-        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE,
+        privilegeValidationFailureStatusCodes.getRoleNotExists()), HttpStatus.BAD_REQUEST);
   }
 
 }
