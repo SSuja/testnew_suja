@@ -4,10 +4,21 @@ import java.util.List;
 import com.tokyo.supermix.data.dto.PlantDto;
 
 public class SieveTestReportDto {
+  private String testName;
   private PlantDto plant;
   private IncomingSampleReportDto incomingsample;
-  private List<SieveTestTrialDto> sieveTestTrials;
-  private SieveTestDto sieveTest;
+  private MaterialTestReportDto materialTest;
+  private List<TrailValueDto> trailValues;
+  private AcceptedValueDto acceptanceCriteria;
+  private List<SieveSizeDto> sieveSizes;
+
+  public String getTestName() {
+    return testName;
+  }
+
+  public void setTestName(String testName) {
+    this.testName = testName;
+  }
 
   public PlantDto getPlant() {
     return plant;
@@ -25,20 +36,35 @@ public class SieveTestReportDto {
     this.incomingsample = incomingsample;
   }
 
-  public List<SieveTestTrialDto> getSieveTestTrials() {
-    return sieveTestTrials;
+  public MaterialTestReportDto getMaterialTest() {
+    return materialTest;
   }
 
-  public void setSieveTestTrials(List<SieveTestTrialDto> sieveTestTrials) {
-    this.sieveTestTrials = sieveTestTrials;
+  public void setMaterialTest(MaterialTestReportDto materialTest) {
+    this.materialTest = materialTest;
   }
 
-  public SieveTestDto getSieveTest() {
-    return sieveTest;
+  public List<TrailValueDto> getTrailValues() {
+    return trailValues;
   }
 
-  public void setSieveTest(SieveTestDto sieveTest) {
-    this.sieveTest = sieveTest;
+  public void setTrailValues(List<TrailValueDto> trailValues) {
+    this.trailValues = trailValues;
   }
 
+  public AcceptedValueDto getAcceptanceCriteria() {
+    return acceptanceCriteria;
+  }
+
+  public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
+    this.acceptanceCriteria = acceptanceCriteria;
+  }
+
+  public List<SieveSizeDto> getSieveSizes() {
+    return sieveSizes;
+  }
+
+  public void setSieveSizes(List<SieveSizeDto> sieveSizes) {
+    this.sieveSizes = sieveSizes;
+  }
 }
