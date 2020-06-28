@@ -373,15 +373,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
-  /*
-   * Concrete Mixer apis
-   */
-  public static final String CONCRETE_MIXER = BASE_API_PATH + "concrete-mixer";
-  public static final String CONCRETE_MIXERS = BASE_API_PATH + "concrete-mixers";
-  public static final String GET_CONCRETE_MIXER_BY_ID = CONCRETE_MIXER + ID;
-  public static final String CONCRETE_MIXER_BY_PLANT_CODE =
-      CONCRETE_MIXER + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String CONCRETE_MIXER_SEARCH = CONCRETE_MIXER + SEARCH;
+
 
   /*
    * finish product sample issue apis

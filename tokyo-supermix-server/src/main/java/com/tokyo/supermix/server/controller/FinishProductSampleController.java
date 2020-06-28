@@ -155,7 +155,7 @@ public class FinishProductSampleController {
               FinishProductSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_MIXER_ID,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
         validationFailureStatusCodes.getConcreteMixerNotExist()), HttpStatus.BAD_REQUEST);
   }
 
