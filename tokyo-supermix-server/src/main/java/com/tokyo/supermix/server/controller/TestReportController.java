@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
+import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
@@ -128,5 +129,14 @@ public class TestReportController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
         validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY)
+  public ResponseEntity<Object> getMaterialTestTrials(@PathVariable String materialTestCode) {
+
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+        mapper.map(testReportService.getMaterialTestTrailByMaterialTestCode(materialTestCode),
+            MaterialTestTrialResultDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
