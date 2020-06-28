@@ -37,5 +37,6 @@ public interface MaterialTestService {
   List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 
   public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType);
+  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample);
 
 }

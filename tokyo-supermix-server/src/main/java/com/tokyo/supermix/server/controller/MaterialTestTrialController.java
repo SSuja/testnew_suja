@@ -24,6 +24,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -43,6 +44,8 @@ public class MaterialTestTrialController {
   private static final Logger logger = Logger.getLogger(MaterialTestTrialController.class);
   @Autowired
   private MaterialTestRepository materialTestRepository;
+  @Autowired
+  private MaterialTestService materialTestService;
 
   // get all MaterialTestTrial
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIALS)
@@ -146,15 +149,20 @@ public class MaterialTestTrialController {
 //        .getTest().getName()
 //        .equalsIgnoreCase(Constants.SIEVETEST)) {
       materialTestTrialService.getAverageAndStatus(materialTestCode);
+     // materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
     }
-    else 
+    else {
       materialTestTrialService.sieveavg(materialTestCode);
+     // materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
     
 //    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
 //        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
-}
+
+//    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+//        Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);}
+}}

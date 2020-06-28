@@ -210,6 +210,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
           parameterResultRepository.save(parameterResult);
         }
       } else {
+        System.out.println("*******MatrialTest********");
         ParameterResult parameterResult = new ParameterResult();
         parameterResult.setMaterialTest(
             materialTestRepository.findByCode(materialParameterResultDto.getMaterialTestCode()));
@@ -231,6 +232,16 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     MaterialTestTrial materialTestTrial = materialTestTrialRepository.getOne(materialTestTrialCode);
     List<TestParameter> testparameters = testParameterRepository
         .findByTestConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId());
+    
+//    if(!materialTestTrial.getMaterialTest().getTestConfigure().isEquationExists()) {
+//      testparameters.forEach(tes->{
+//      ParameterResult parameterResultsum =
+//          parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
+//              tes.getId(), materialTestTrialCode);
+//      materialTestTrial.setResult(parameterResultsum.getValue());
+//      materialTestTrialRepository.save(materialTestTrial);});
+//    }else {
+    
     List<TestParameter> testParametershasEqu =
         testParameterRepository.findByTestConfigureIdAndEquationExistsTrue(
             materialTestTrial.getMaterialTest().getTestConfigure().getId());
@@ -292,10 +303,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
       materialTestTrial.setResult(findResult(main, mainEquation));
       materialTestTrialRepository.save(materialTestTrial);
     }
-    else {
-      
     }
-
-  }
+//  }
 
 }
