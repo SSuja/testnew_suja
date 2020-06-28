@@ -1,6 +1,9 @@
 package com.tokyo.supermix.config;
 
 import java.util.List;
+
+import javax.persistence.EnumType;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -81,18 +84,24 @@ public class MixDesignFillManager {
 
       // Retrieve the id value
       HSSFCell cell8 = row.createCell(startColIndex + 7);
-      cell8.setCellValue(list.get(i - 1).getRawMaterial().getName());
+      EnumType.ORDINAL.toString();
+      cell8.setCellValue(String.valueOf(list.get(i-1).getMixDesign().getStatus()));
       cell8.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell9 = row.createCell(startColIndex + 8);
-      cell9.setCellValue(list.get(i - 1).getQuantity());
+      cell9.setCellValue(list.get(i - 1).getRawMaterial().getName());
       cell9.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell10 = row.createCell(startColIndex + 9);
-      cell10.setCellValue(list.get(i - 1).getUnit().getUnit());
+      cell10.setCellValue(list.get(i - 1).getQuantity());
       cell10.setCellStyle(bodyCellStyle);
+
+      // Retrieve the id value
+      HSSFCell cell11 = row.createCell(startColIndex + 10);
+      cell11.setCellValue(list.get(i - 1).getUnit().getUnit());
+      cell11.setCellStyle(bodyCellStyle);
     }
   }
 }

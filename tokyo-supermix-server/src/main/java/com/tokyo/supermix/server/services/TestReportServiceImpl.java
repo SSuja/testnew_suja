@@ -6,7 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
+import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
+import com.tokyo.supermix.data.dto.CubeTestReportDto;
+import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
@@ -16,11 +19,16 @@ import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
 import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
+import com.tokyo.supermix.data.dto.report.SieveSizeDto;
+import com.tokyo.supermix.data.dto.report.SieveTestReportDto;
 import com.tokyo.supermix.data.dto.report.SupplierReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.dto.report.TestTrialDto;
 import com.tokyo.supermix.data.dto.report.TrailValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -30,11 +38,15 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.SieveAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 
 @Service
@@ -55,6 +67,14 @@ public class TestReportServiceImpl implements TestReportService {
   private SupplierRepository supplierRepository;
   @Autowired
   MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private SieveAcceptedValueRepository sieveAcceptedValueRepository;
+  @Autowired
+  FinishProductSampleIssueRepository finishProductSampleIssueRepository;
+  @Autowired
+  FinishProductTestRepository finishProductTestRepository;
+  @Autowired
+  FinishProductTrialRepository finishProductTrialRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
@@ -299,4 +319,105 @@ public class TestReportServiceImpl implements TestReportService {
         getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
   }
+
+  // Sieve Test Report
+  @Transactional(readOnly = true)
+  public SieveTestReportDto getSieveTestReport(String materialTestCode) {
+    SieveTestReportDto sieveTestReportDto = new SieveTestReportDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
+    sieveTestReportDto.setMaterialTest(materialTestDto);
+    sieveTestReportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    sieveTestReportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    sieveTestReportDto
+        .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    sieveTestReportDto
+        .setAcceptanceCriteria(getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    sieveTestReportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    sieveTestReportDto.setSieveSizes(
+        getSieveSizeDto(materialTest.getTestConfigure().getMaterialSubCategory().getId()));
+    return sieveTestReportDto;
+  }
+
+  private List<SieveSizeDto> getSieveSizeDto(Long materialSubCategoryId) {
+    List<SieveSizeDto> sieveSizeDto = new ArrayList<SieveSizeDto>();
+    sieveAcceptedValueRepository.findBySieveSizeMaterialSubCategoryId(materialSubCategoryId)
+        .forEach(sieve -> {
+          sieveSizeDto.add(mapper.map(sieve, SieveSizeDto.class));
+        });
+    return sieveSizeDto;
+  }
+  // Concrete test report
+  public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode) {
+    ConcreteTestReportDto concreteTestReportDto = new ConcreteTestReportDto();
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository
+        .findByFinishProductSampleId(finishProductTest.getFinishProductSample().getId());
+    concreteTestReportDto
+        .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode().toString());
+    concreteTestReportDto
+        .setCustomerName(finishProductSampleIssue.getProject().getCustomer().getName());
+    concreteTestReportDto.setProjectName(finishProductSampleIssue.getProject().getName());
+    concreteTestReportDto.setTargetGrade(
+        finishProductSampleIssue.getFinishProductSample().getMixDesign().getTargetGrade());
+    concreteTestReportDto.setTargetSlump(
+        finishProductSampleIssue.getFinishProductSample().getMixDesign().getTargetSlump());
+    concreteTestReportDto.setDateOfCasting(
+        finishProductSampleIssue.getFinishProductSample().getCreatedAt().toString());
+    concreteTestReportDto.setDateOfTesting(
+        finishProductSampleIssue.getFinishProductSample().getUpdatedAt().toString());
+    concreteTestReportDto.setAgeOfCubeTest(finishProductTest.getTestConfigure().getDays());
+    concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
+    concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
+    return concreteTestReportDto;
+  }
+
+  public List<CubeTestReportDto> getCubeTestRepots(String finishProductTestCode) {
+    List<FinishProductTrial> finishProductTrialList =
+        finishProductTrialRepository.findByFinishProductTestCode(finishProductTestCode);
+    ArrayList<CubeTestReportDto> cubeTestReportDtoList = new ArrayList<CubeTestReportDto>();
+    for (FinishProductTrial finishProductTrial : finishProductTrialList) {
+      CubeTestReportDto cubeTestReportDto = new CubeTestReportDto();
+      cubeTestReportDto.setCubeNo(finishProductTrial.getTrialNo());
+      cubeTestReportDto.setStrengthValue(finishProductTrial.getValue());
+      cubeTestReportDtoList.add(cubeTestReportDto);
+    }
+    return cubeTestReportDtoList;
+  }
+
+  @Override
+  public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
+      String materialTestCode) {
+    List<MaterialTestTrial> materialTestTrialList =
+        materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
+    ArrayList<MaterialTestTrialResultDto> materialTestTrialResultDtoList =
+        new ArrayList<MaterialTestTrialResultDto>();
+    for (MaterialTestTrial materialTestTrial : materialTestTrialList) {
+      MaterialTestTrialResultDto materialTestTrialResultDto = new MaterialTestTrialResultDto();
+      materialTestTrialResultDto.setTrialNo(materialTestTrial.getCode());
+      materialTestTrialResultDto
+          .setAbbrevationAndValues(getAbbAndValueByMaterialTestCode(materialTestTrial.getCode()));
+      materialTestTrialResultDtoList.add(materialTestTrialResultDto);
+
+    }
+    return materialTestTrialResultDtoList;
+  }
+
+  public List<AbbrevationAndValueDto> getAbbAndValueByMaterialTestCode(
+      String materialTestTrialCode) {
+    List<ParameterResult> parameterResultList =
+        parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
+    ArrayList<AbbrevationAndValueDto> abbrevationAndValueDtoList =
+        new ArrayList<AbbrevationAndValueDto>();
+    for (ParameterResult parameterResult : parameterResultList) {
+      AbbrevationAndValueDto abbrevationAndValueDto = new AbbrevationAndValueDto();
+      abbrevationAndValueDto.setAbbrivation(parameterResult.getTestParameter().getAbbreviation());
+      abbrevationAndValueDto.setValue(parameterResult.getValue());
+      abbrevationAndValueDtoList.add(abbrevationAndValueDto);
+    }
+    return abbrevationAndValueDtoList;
+  }
+
 }

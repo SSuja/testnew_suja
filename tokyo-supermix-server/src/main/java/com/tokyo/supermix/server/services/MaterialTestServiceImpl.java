@@ -92,8 +92,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId) {
-    return materialTestRepository.findByTestConfigure(testConfigureId);
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId) {
+    return materialTestRepository.findByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -103,7 +103,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
-    return materialTestRepository.existsByTestConfigure(testConfigureId);
+    return materialTestRepository.existsByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
