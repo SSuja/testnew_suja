@@ -25,6 +25,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional()
   public void saveFinishProductSample(FinishProductSample finishProductSample) {
+    finishProductSample.setStatus(Status.NEW);
     finishProductSampleRepository.save(finishProductSample);
   }
 

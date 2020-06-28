@@ -6,9 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.CubeTestReportDto;
+import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
@@ -352,4 +353,38 @@ public class TestReportServiceImpl implements TestReportService {
     }
     return cubeTestReportDtoList;
   }
+
+  @Override
+  public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
+      String materialTestCode) {
+    List<MaterialTestTrial> materialTestTrialList =
+        materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
+    ArrayList<MaterialTestTrialResultDto> materialTestTrialResultDtoList =
+        new ArrayList<MaterialTestTrialResultDto>();
+    for (MaterialTestTrial materialTestTrial : materialTestTrialList) {
+      MaterialTestTrialResultDto materialTestTrialResultDto = new MaterialTestTrialResultDto();
+      materialTestTrialResultDto.setTrialNo(materialTestTrial.getCode());
+      materialTestTrialResultDto
+          .setAbbrevationAndValues(getAbbAndValueByMaterialTestCode(materialTestTrial.getCode()));
+      materialTestTrialResultDtoList.add(materialTestTrialResultDto);
+
+    }
+    return materialTestTrialResultDtoList;
+  }
+
+  public List<AbbrevationAndValueDto> getAbbAndValueByMaterialTestCode(
+      String materialTestTrialCode) {
+    List<ParameterResult> parameterResultList =
+        parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
+    ArrayList<AbbrevationAndValueDto> abbrevationAndValueDtoList =
+        new ArrayList<AbbrevationAndValueDto>();
+    for (ParameterResult parameterResult : parameterResultList) {
+      AbbrevationAndValueDto abbrevationAndValueDto = new AbbrevationAndValueDto();
+      abbrevationAndValueDto.setAbbrivation(parameterResult.getTestParameter().getAbbreviation());
+      abbrevationAndValueDto.setValue(parameterResult.getValue());
+      abbrevationAndValueDtoList.add(abbrevationAndValueDto);
+    }
+    return abbrevationAndValueDtoList;
+  }
+
 }

@@ -513,6 +513,9 @@ public final class EndpointURI {
           + SLASH + "test-name" + SLASH + "{testName}";
   public static final String CONCRETE_TEST_REPORT =
       BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
+  public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
+      BASE_API_PATH + "material-test-trials-wise" + SLASH + "{materialTestCode}";
+
   /*
    * role Permission
    */
