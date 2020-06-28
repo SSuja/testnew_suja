@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.EquipmentType;
 
 public class EquipmentDto {
   private Long id;
@@ -9,6 +10,7 @@ public class EquipmentDto {
   @NotNull(message = "{equipmentDto.name.null}")
   @NotEmpty(message = "{equipmentDto.name.empty}")
   private String name;
+  private EquipmentType equipmentType;
 
   public Long getId() {
     return id;
@@ -32,5 +34,13 @@ public class EquipmentDto {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public EquipmentType getEquipmentType() {
+    return equipmentType;
+  }
+
+  public void setEquipmentType(EquipmentType equipmentType) {
+    this.equipmentType = equipmentType;
   }
 }
