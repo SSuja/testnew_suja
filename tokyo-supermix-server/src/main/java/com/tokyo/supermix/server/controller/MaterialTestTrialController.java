@@ -149,7 +149,7 @@ public class MaterialTestTrialController {
 //        .getTest().getName()
 //        .equalsIgnoreCase(Constants.SIEVETEST)) {
       materialTestTrialService.getAverageAndStatus(materialTestCode);
-     // materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
+      materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
     }
