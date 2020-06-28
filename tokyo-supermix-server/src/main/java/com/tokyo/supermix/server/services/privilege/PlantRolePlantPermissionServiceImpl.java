@@ -117,7 +117,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       boolean status = getPlantPermissionsAndReturnSubModuleStatus(plantRolePlantPermissionList,
           subStatus, plantRoleId, sub.getId(), mainModuleId, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status);
-      subModulePlantRolePlantPermissionDto.setPlantRolePlantPermissions(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setPlantPermissions(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;
@@ -130,17 +130,17 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       List<PlantRolePlantPermission> plantRolePlantPermissionList, boolean subStatus,
       Long plantRoleId, Long subModuleId, Long mainModuleId,
       List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList) {
-    for (PlantRolePlantPermission permission : plantRolePlantPermissionList) {
+    for (PlantRolePlantPermission plantRolePlantpermission : plantRolePlantPermissionList) {
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
       plantRolePlantPermissionRequestDto
-          .setPlantPermissionName(permission.getPlantPermission().getPermission().getName());
-      plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
+          .setPlantPermissionName(plantRolePlantpermission.getPlantPermission().getName());
+      plantRolePlantPermissionRequestDto.setPlantPermissionId(plantRolePlantpermission.getPlantPermission().getId());
       plantRolePlantPermissionRequestDto.setPlantRoleId(plantRoleId);
-      plantRolePlantPermissionRequestDto.setStatus(permission.isStatus());
+      plantRolePlantPermissionRequestDto.setStatus(plantRolePlantpermission.isStatus());
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
-      if (permission.isStatus()) {
+      if (plantRolePlantpermission.isStatus()) {
         subStatus = true;
       }
       rolePermissionDtoList.add(plantRolePlantPermissionRequestDto);
