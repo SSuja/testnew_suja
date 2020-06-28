@@ -4,7 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 
 public interface MaterialTestTrialService {
-  public MaterialTestTrial saveMaterialTestTrial(MaterialTestTrial materialTestTrial);
+  public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial);
 
   public List<MaterialTestTrial> getAllMaterialTestTrial();
 
@@ -21,4 +21,6 @@ public interface MaterialTestTrialService {
   public void getAverageAndStatus(String materialTestCode);
 
   List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode);
+  
+  public void sieveavg(String materialTestCode);
 }

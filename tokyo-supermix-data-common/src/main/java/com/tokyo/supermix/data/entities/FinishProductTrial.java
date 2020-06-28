@@ -3,8 +3,6 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,26 +13,25 @@ import javax.persistence.Table;
 public class FinishProductTrial implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private String code;
   private Long trialNo;
   private String testSample;
   private Long testSampleNo;
   private Date date;
   private Double value;
   @ManyToOne
-  @JoinColumn(name = "finishProductSampleId", nullable = false)
-  private FinishProductSample finishProductSample;
+  @JoinColumn(name = "finishProductTestCode", nullable = false)
+  private FinishProductTest finishProductTest;
   @ManyToOne
   @JoinColumn(name = "testParameterId", nullable = true)
   private TestParameter testParameter;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public Long getTrialNo() {
@@ -77,12 +74,12 @@ public class FinishProductTrial implements Serializable {
     this.value = value;
   }
 
-  public FinishProductSample getFinishProductSample() {
-    return finishProductSample;
+  public FinishProductTest getFinishProductTest() {
+    return finishProductTest;
   }
 
-  public void setFinishProductSample(FinishProductSample finishProductSample) {
-    this.finishProductSample = finishProductSample;
+  public void setFinishProductTest(FinishProductTest finishProductTest) {
+    this.finishProductTest = finishProductTest;
   }
 
   public TestParameter getTestParameter() {

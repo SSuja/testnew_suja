@@ -46,10 +46,6 @@ public class EquationController {
   @PreAuthorize("hasAuthority('add_equation')")
   public ResponseEntity<Object> createEquation(
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
-    if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
-          validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
         equationService.saveEquation(mapper.map(equationRequestDto, Equation.class)),
         RestApiResponseStatus.OK), HttpStatus.OK);
@@ -116,17 +112,6 @@ public class EquationController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_NAME)
-  public ResponseEntity<Object> getEquationByEquationName(@PathVariable String equationName) {
-    if (equationService.isNameExists(equationName)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
-          mapper.map(equationService.getEquationsByName(equationName), EquationResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION,
-        validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
   @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_EXISTS_TRUE)
   public ResponseEntity<Object> getEquationByEquationExistsTrue() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
@@ -139,10 +124,6 @@ public class EquationController {
       @PathVariable Long testConfigureId,
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureId)) {
-      if (equationService.isFormulaExists(equationRequestDto.getFormula())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
-            validationFailureStatusCodes.getEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.EQUATION,
               equationService.updateTestConfigureEquation(testConfigureId,

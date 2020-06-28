@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
 import com.tokyo.supermix.data.enums.Status;
@@ -19,7 +18,6 @@ import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
-import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 
 @Service
@@ -92,8 +90,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId) {
-    return materialTestRepository.findByTestConfigure(testConfigureId);
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId) {
+    return materialTestRepository.findByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -103,8 +101,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
-    return materialTestRepository.existsByTestConfigure(testConfigureId);
+    return materialTestRepository.existsByTestConfigureId(testConfigureId);
   }
+
   @Transactional(readOnly = true)
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode) {
     return materialTestRepository.findByIncomingSampleCode(incomingSampleCode);

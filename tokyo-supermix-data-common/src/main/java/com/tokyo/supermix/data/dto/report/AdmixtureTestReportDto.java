@@ -3,14 +3,15 @@ package com.tokyo.supermix.data.dto.report;
 import java.util.List;
 import com.tokyo.supermix.data.dto.PlantDto;
 
-public class SieveTestReportDto {
+public class AdmixtureTestReportDto {
   private String testName;
+  private String equation;
   private PlantDto plant;
   private IncomingSampleReportDto incomingsample;
   private MaterialTestReportDto materialTest;
+  private List<TestTrialDto> testTrials;
   private List<TrailValueDto> trailValues;
-  private AcceptedValueDto acceptanceCriteria;
-  private List<SieveSizeDto> sieveSizes;
+  private MaterialAcceptedValueDto materialAcceptedValueDto;
 
   public String getTestName() {
     return testName;
@@ -18,6 +19,14 @@ public class SieveTestReportDto {
 
   public void setTestName(String testName) {
     this.testName = testName;
+  }
+
+  public String getEquation() {
+    return equation;
+  }
+
+  public void setEquation(String equation) {
+    this.equation = equation;
   }
 
   public PlantDto getPlant() {
@@ -44,6 +53,14 @@ public class SieveTestReportDto {
     this.materialTest = materialTest;
   }
 
+  public List<TestTrialDto> getTestTrials() {
+    return testTrials;
+  }
+
+  public void setTestTrials(List<TestTrialDto> testTrials) {
+    this.testTrials = testTrials;
+  }
+
   public List<TrailValueDto> getTrailValues() {
     return trailValues;
   }
@@ -52,19 +69,11 @@ public class SieveTestReportDto {
     this.trailValues = trailValues;
   }
 
-  public AcceptedValueDto getAcceptanceCriteria() {
-    return acceptanceCriteria;
+  public MaterialAcceptedValueDto getMaterialAcceptedValueDto() {
+    return materialAcceptedValueDto;
   }
 
-  public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
-    this.acceptanceCriteria = acceptanceCriteria;
-  }
-
-  public List<SieveSizeDto> getSieveSizes() {
-    return sieveSizes;
-  }
-
-  public void setSieveSizes(List<SieveSizeDto> sieveSizes) {
-    this.sieveSizes = sieveSizes;
+  public void setMaterialAcceptedValueDto(MaterialAcceptedValueDto materialAcceptedValueDto) {
+    this.materialAcceptedValueDto = materialAcceptedValueDto;
   }
 }

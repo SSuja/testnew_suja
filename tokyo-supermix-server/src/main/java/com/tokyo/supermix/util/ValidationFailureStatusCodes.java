@@ -1799,6 +1799,16 @@ public class ValidationFailureStatusCodes {
    */
   @Value("${validation.finishProductTest.notExists}")
   private String finishProductTestNotExit;
+  @Value("${validation.finishProductTest.alreadyExists}")
+  private String finishProductTestAlreadyExists;
+
+  public String getFinishProductTestAlreadyExists() {
+    return finishProductTestAlreadyExists;
+  }
+
+  public void setFinishProductTestAlreadyExists(String finishProductTestAlreadyExists) {
+    this.finishProductTestAlreadyExists = finishProductTestAlreadyExists;
+  }
 
   public String getFinishProductTestNotExit() {
     return finishProductTestNotExit;
@@ -1810,5 +1820,19 @@ public class ValidationFailureStatusCodes {
 
   public void setProjectCodeIsNull(String projectCodeIsNull) {
     this.projectCodeIsNull = projectCodeIsNull;
+  }
+
+  /*
+   * Finish Product Trial
+   */
+  @Value("${validation.finishProductTrial.notExist}")
+  private String finishProductTrialNotExit;
+
+  public String getFinishProductTrialNotExit() {
+    return finishProductTrialNotExit;
+  }
+
+  public void setFinishProductTrialNotExit(String finishProductTrialNotExit) {
+    this.finishProductTrialNotExit = finishProductTrialNotExit;
   }
 }

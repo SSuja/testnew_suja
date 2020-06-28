@@ -538,7 +538,19 @@ public class Constants {
   public static final String SIEVETEST = "SieveTest";
 
   /*
-   * Constants for Finish Product Parameter Result validation key & Success messages
+   * Constants for Finish Product Trial validation key & Success messages
+   */
+  public static final String FINISH_PRODUCT_TRIAL = "finishProductTrial";
+  public static final String FINISH_PRODUCT_TRIALS = "finishProductTrials";
+  public static final String FINISH_PRODUCT_TRIAL_ID = "finishProductTrialId";
+  public static final String ADD_FINISH_PRODUCT_TRIAL_SUCCESS =
+      "Finish Produt Trial Added Successfully";
+  public static final String DELETE_FINISH_PRODUCT_TRIAL_SUCCESS =
+      "Finish Product Trial Sucessfully Deleted";
+  public static final String UPDATE_FINISH_PRODUCT_TRIAL_SUCCESS =
+      "Finish Product Trial Updated Successfully";
+  /*
+   *  Constants for Finish Product Parameter Result validation key & Success messages
    */
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS = "finishProductParameterResults";
   /*
@@ -551,6 +563,7 @@ public class Constants {
   public static final String DELETED_FINISH_PRODUCT_TEST = "Finish Product Successfully Deleted";
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
+  public static final String FINISH_PRODUCT_TEST_STATUS= "finishProductTestStatus";
 
   /*
    * Encapsulate constructor to restrict modification from outside

@@ -14,4 +14,7 @@ public interface ParameterEquationElementRepository
   public List<ParameterEquationElement> findByTestParameterId(Long testParameterId);
 
   public List<ParameterEquationElement> findByParameterEquationId(Long parameterEquationId);
+
+  public List<ParameterEquationElement> findByParameterEquationTestParameterId(
+      Long testParameterId);
 }
