@@ -322,6 +322,8 @@ public class TestReportServiceImpl implements TestReportService {
     FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository
         .findByFinishProductSampleId(finishProductTest.getFinishProductSample().getId());
     concreteTestReportDto
+        .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode().toString());
+    concreteTestReportDto
         .setCustomerName(finishProductSampleIssue.getProject().getCustomer().getName());
     concreteTestReportDto.setProjectName(finishProductSampleIssue.getProject().getName());
     concreteTestReportDto.setTargetGrade(
@@ -334,7 +336,7 @@ public class TestReportServiceImpl implements TestReportService {
         finishProductSampleIssue.getFinishProductSample().getUpdatedAt().toString());
     concreteTestReportDto.setAgeOfCubeTest(finishProductTest.getTestConfigure().getDays());
     concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
-    concreteTestReportDto.setStrengthGradeRatio(finishProductTest.getResult());
+    concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
     return concreteTestReportDto;
   }
 
