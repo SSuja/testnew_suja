@@ -201,14 +201,11 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   public void createPlantRolePlantPermission(PlantRole plantRole) {
     List<PlantPermission> plantPermissionList =
         plantPermissionRepository.findByPlantCode(plantRole.getPlant().getCode());
-    List<PlantRolePlantPermission> plantRolePlantPermissionList =
-        new ArrayList<PlantRolePlantPermission>();
     plantPermissionList.forEach(plantPermission -> {
       PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
       plantRolePlantPermission.setPlantPermission(plantPermission);
       plantRolePlantPermission.setStatus(false);
       plantRolePlantPermission.setPlantRole(plantRole);
-      plantRolePlantPermissionList.add(plantRolePlantPermission);
       System.out.println("plantroleplant permission save method --"
           + plantRolePlantPermission.getPlantPermission().getName());
       plantRolePlantPermissionRepository.save(plantRolePlantPermission);

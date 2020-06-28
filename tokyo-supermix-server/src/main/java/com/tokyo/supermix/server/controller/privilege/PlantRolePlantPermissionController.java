@@ -29,7 +29,6 @@ import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 @CrossOrigin(origins = "*")
 @RestController
 public class PlantRolePlantPermissionController {
-
   @Autowired
   private Mapper mapper;
   @Autowired

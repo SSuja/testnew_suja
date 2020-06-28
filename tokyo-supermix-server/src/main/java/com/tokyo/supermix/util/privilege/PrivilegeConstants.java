@@ -17,6 +17,7 @@ public class PrivilegeConstants {
    */
   public static final String USER_NAME = "username";
   public static final String USER = "user";
+  public static final String USERS = "users";
   public static final String USER_ID = "id";
   public static final String ADD_USER_SUCCESS = "User Added Successfully";
   public static final String UPDATE_USER_SUCCESS = "User Updated Successfully";

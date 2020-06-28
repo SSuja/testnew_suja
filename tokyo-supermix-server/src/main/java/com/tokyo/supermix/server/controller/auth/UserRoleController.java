@@ -24,7 +24,7 @@ public class UserRoleController {
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
 
   @GetMapping(value = PrivilegeEndpointURI.USER_ROLE_BY_USER)
-  public ResponseEntity<Object> getUserRolesByUserId(@PathVariable Long userId) {
+  public ResponseEntity<Object> getRolesByUserId(@PathVariable Long userId) {
     if (userRoleService.existsByUserId(userId)) {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE,
           userRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK), HttpStatus.OK);
@@ -34,9 +34,9 @@ public class UserRoleController {
   }
 
   @GetMapping(value = PrivilegeEndpointURI.USER_ROLE_BY_ROLE)
-  public ResponseEntity<Object> getUserRolesByRoleId(@PathVariable Long roleId) {
+  public ResponseEntity<Object> getUsersByRoleId(@PathVariable Long roleId) {
     if (userRoleService.existsByRoleId(roleId)) {
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.ROLE,
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USERS,
           userRoleService.getUsersByRoleId(roleId), RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
