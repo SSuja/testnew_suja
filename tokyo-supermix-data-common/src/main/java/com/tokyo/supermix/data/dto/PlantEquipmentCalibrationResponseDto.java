@@ -2,141 +2,87 @@ package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.enums.CalibrationType;
+import com.tokyo.supermix.data.enums.Status;
 
 public class PlantEquipmentCalibrationResponseDto {
   private Long id;
   private Date calibratedDate;
   private Date dueDate;
-  private String calibrationType;
-  private Long userId;
-  private String userUsername;
+  private CalibrationType calibrationType;
   private String description;
-  private String plantEquipmentSerialNo;
-  private String status;
-  private Long supplierId;
-  private String supplierName;
-  private String plantEquipmentEquipmentName;
-  private Employee employee;
+  private Status status;
   private String accuracy;
   private Long noOfDays;
-
-  public Long getNoOfDays() {
-    return noOfDays;
-  }
-
-  public void setNoOfDays(Long noOfDays) {
-    this.noOfDays = noOfDays;
-  }
-
-  public Employee getEmployee() {
-    return employee;
-  }
-
-  public void setEmployee(Employee employee) {
-    this.employee = employee;
-  }
-
-  public String getplantEquipmentEquipmentName() {
-    return plantEquipmentEquipmentName;
-  }
-
-  public void setplantEquipmentEquipmentName(String plantEquipmentEquipmentName) {
-    this.plantEquipmentEquipmentName = plantEquipmentEquipmentName;
-  }
-
+  private Supplier supplier;
+  private Employee employee;
+  private PlantEquipmentResponseDto plantEquipment;
   public Long getId() {
     return id;
   }
-
+  public Employee getEmployee() {
+    return employee;
+  }
+  public void setEmployee(Employee employee) {
+    this.employee = employee;
+  }
   public void setId(Long id) {
     this.id = id;
   }
-
   public Date getCalibratedDate() {
     return calibratedDate;
   }
-
   public void setCalibratedDate(Date calibratedDate) {
     this.calibratedDate = calibratedDate;
   }
-
   public Date getDueDate() {
     return dueDate;
   }
-
   public void setDueDate(Date dueDate) {
     this.dueDate = dueDate;
   }
-
-  public String getcalibrationType() {
+  public CalibrationType getCalibrationType() {
     return calibrationType;
   }
-
-  public void setcalibrationType(String calibrationType) {
+  public void setCalibrationType(CalibrationType calibrationType) {
     this.calibrationType = calibrationType;
   }
-
-  public Long getuserId() {
-    return userId;
-  }
-
-  public void setuserId(Long userId) {
-    this.userId = userId;
-  }
-
   public String getDescription() {
     return description;
   }
-
   public void setDescription(String description) {
     this.description = description;
   }
-
-  public String getPlantEquipmentSerialNo() {
-    return plantEquipmentSerialNo;
-  }
-
-  public void setPlantEquipmentSerialNo(String plantEquipmentSerialNo) {
-    this.plantEquipmentSerialNo = plantEquipmentSerialNo;
-  }
-
-  public Long getSupplierId() {
-    return supplierId;
-  }
-
-  public void setSupplierId(Long supplierId) {
-    this.supplierId = supplierId;
-  }
-
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
-
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
-
-  public String getSupplierName() {
-    return supplierName;
-  }
-
-  public void setSupplierName(String supplierName) {
-    this.supplierName = supplierName;
-  }
-
-  public String getUserUsername() {
-    return userUsername;
-  }
-
-  public void setUserUsername(String userUsername) {
-    this.userUsername = userUsername;
-  }
-
   public String getAccuracy() {
     return accuracy;
   }
-
   public void setAccuracy(String accuracy) {
     this.accuracy = accuracy;
   }
+  public Long getNoOfDays() {
+    return noOfDays;
+  }
+  public void setNoOfDays(Long noOfDays) {
+    this.noOfDays = noOfDays;
+  }
+  public Supplier getSupplier() {
+    return supplier;
+  }
+  public void setSupplier(Supplier supplier) {
+    this.supplier = supplier;
+  }
+  public PlantEquipmentResponseDto getPlantEquipment() {
+    return plantEquipment;
+  }
+  public void setPlantEquipment(PlantEquipmentResponseDto plantEquipment) {
+    this.plantEquipment = plantEquipment;
+  }
+ 
 }

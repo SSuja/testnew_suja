@@ -106,7 +106,6 @@ public class TestReportController {
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-
   @GetMapping(value = EndpointURI.SIEVE_REPORT_DETAIL)
   public ResponseEntity<Object> getSieveReportDetails(@PathVariable String materialTestCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
@@ -117,7 +116,6 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
-
 
   @GetMapping(value = EndpointURI.CONCRETE_TEST_REPORT)
   public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode) {
@@ -138,5 +136,4 @@ public class TestReportController {
             MaterialTestTrialResultDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-
 }
