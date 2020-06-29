@@ -14,4 +14,7 @@ public interface EmailRecipientService {
 
   public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId, RecipientType recipientType);
 
+	public boolean isEmailRecipientExist(Long id);
+
+	public void deleteEmailRecipient(Long id);
 }

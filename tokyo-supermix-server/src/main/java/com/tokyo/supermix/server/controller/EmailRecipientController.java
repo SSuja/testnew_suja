@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,17 +35,6 @@ public class EmailRecipientController {
 	private ValidationFailureStatusCodes validationFailureStatusCodes;
 	private static final Logger logger = Logger.getLogger(EmailRecipientController.class);
 
-	@PostMapping(value = EndpointURI.EMAIL_RECIPIENT)
-	public ResponseEntity<Object> createEmailRecipient(@RequestBody EmailRecipientDto emailRecipientDto) {
-		if (emailRecipientService.isDuplicateDataExists(emailRecipientDto)) {
-			  logger.debug("email is already exists: createEmailRecipient(), isEmailRecipientExist: {}");
-			return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_RECIPIENT,
-					validationFailureStatusCodes.getEmailRecipientAlreadyExist()), HttpStatus.BAD_REQUEST);
-		}
-		emailRecipientService.createEmailRecipient(emailRecipientDto);
-		return new ResponseEntity<>(
-				new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_RECIPIENT_SUCCESS), HttpStatus.OK);
-	}
 	
 	 @GetMapping(value = EndpointURI.EMAIL_RECIPIENTS)
 	  public ResponseEntity<Object> getAllEmailRecipient(@PathVariable Long emailGroupId, 
@@ -53,4 +43,33 @@ public class EmailRecipientController {
 	        mapper.map(emailRecipientService.getEmailRecipient(emailGroupId, recipientType), EmailRecipientRequestDto.class),
 	        RestApiResponseStatus.OK), null, HttpStatus.OK);
 	  }
+  
+
+  @PostMapping(value = EndpointURI.EMAIL_RECIPIENT)
+  public ResponseEntity<Object> createEmailRecipient(
+      @RequestBody EmailRecipientDto emailRecipientDto) {
+    if (emailRecipientService.isDuplicateDataExists(emailRecipientDto)) {
+      logger.debug("email is already exists: createEmailRecipient(), isEmailRecipientExist: {}");
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.EMAIL_RECIPIENT,
+              validationFailureStatusCodes.getEmailRecipientAlreadyExist()),
+          HttpStatus.BAD_REQUEST);
+    }
+    emailRecipientService.createEmailRecipient(emailRecipientDto);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_RECIPIENT_SUCCESS),
+        HttpStatus.OK);
+  }
+
+  @DeleteMapping(value = EndpointURI.EMAIL_RECIPIENT_BY_ID)
+  public ResponseEntity<Object> deleteEmailRecipient(@PathVariable Long id) {
+    if (emailRecipientService.isEmailRecipientExist(id)) {
+      logger.debug("delete email recipient by id");
+      emailRecipientService.deleteEmailRecipient(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.EMAIL_RECIPIENT_DELETED), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_RECIPIENT_ID,
+        validationFailureStatusCodes.getEmailRecipientnotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
