@@ -10,4 +10,8 @@ public interface EmailRecipientService {
 	public boolean isDuplicateDataExists(EmailRecipientDto emailRecipientDto);
 
 	public List<String> getEmailById(Long emailGroupId);
+
+	public boolean isEmailRecipientExist(Long id);
+
+	public void deleteEmailRecipient(Long id);
 }

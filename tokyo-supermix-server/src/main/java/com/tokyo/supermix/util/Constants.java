@@ -534,6 +534,8 @@ public class Constants {
   
   public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
   public static final String EMAIL_RECIPIENT = "emailRecipient";
+  public static final String EMAIL_RECIPIENT_DELETED = "Email Recipient Successfully Deleted";
+  public static final String EMAIL_RECIPIENT_ID = "emailRecipientId";
   /*
    * Encapsulate constructor to restrict modification from outside
    */

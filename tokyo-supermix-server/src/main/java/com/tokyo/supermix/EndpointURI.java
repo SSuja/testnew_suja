@@ -585,6 +585,7 @@ public final class EndpointURI {
    * Employee apis
    */
   public static final String EMAIL_RECIPIENT = BASE_API_PATH + "email-recipient";
+  public static final String EMAIL_RECIPIENT_BY_ID = EMAIL_RECIPIENT + ID;
 
   private EndpointURI() {}
 }
