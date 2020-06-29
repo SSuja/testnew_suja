@@ -1,5 +1,8 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.EmailRecipientDto;
 import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
+import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailRecipientRepository;
+import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 
 @Service
 public class EmailRecipientServiceImpl implements EmailRecipientService {
@@ -16,6 +21,8 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 	private EmailRecipientRepository emailRecipientRepository;
 	@Autowired
 	private Mapper mapper;
+	@Autowired
+	UserPlantRoleRepository userPlantRoleRepository;
 
 	@Transactional
 	public boolean createEmailRecipient(EmailRecipientDto emailRecipientDto) {
@@ -58,4 +65,26 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 		}
 		return false;
 	}
+
+	@Transactional(readOnly = true)
+	public List<String> getEmailById(Long emailGroupId) {
+
+		List<EmailRecipient> emailRecipientList = emailRecipientRepository.findByEmailGroupId(emailGroupId);
+		List<String> emaillist = new ArrayList<String>();
+		emailRecipientList.forEach(emailRecipient -> {
+			if (emailRecipient.getPlantRole() != null) {
+				List<UserPlantRole> userPlantRoleList = userPlantRoleRepository
+						.findByPlantRoleId(emailRecipient.getPlantRole().getId());
+				userPlantRoleList.forEach(userPlantRole -> {
+
+					emaillist.add(userPlantRole.getUser().getEmployee().getEmail());
+				});
+			}
+			if (emailRecipient.getUser() != null) {
+				emaillist.add(emailRecipient.getUser().getEmployee().getEmail());
+			}
+		});
+		return emaillist;
+	}
+
 }

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EmailRecipientDto;
-import com.tokyo.supermix.data.entities.EmailRecipient;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
