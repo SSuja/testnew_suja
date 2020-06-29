@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
+import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
@@ -30,7 +31,7 @@ public class UserPlantRoleController {
           privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>(
-        new ContentResponse<>(PrivilegeConstants.ROLE,
+        new ContentResponse<>(PrivilegeConstants.ROLES,
             userPlantRoleService.getRolesByUserId(userId), RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
@@ -39,12 +40,22 @@ public class UserPlantRoleController {
   public ResponseEntity<Object> getUsersByPlantRoleId(@PathVariable Long plantRoleId) {
     if (userPlantRoleService.existsByPlantRoleId(plantRoleId)) {
       return new ResponseEntity<>(
-          new ContentResponse<>(PrivilegeConstants.ROLE,
+          new ContentResponse<>(PrivilegeConstants.USERS,
               userPlantRoleService.getUsersByPlantRoleId(plantRoleId), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
         privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
-
+  @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_ROLE_BY_USERTYPE)
+  public ResponseEntity<Object> getUsersByPlantRoleIdAndUserType(@PathVariable Long plantRoleId,@PathVariable UserType userType) {
+    if (userPlantRoleService.existsByPlantRoleId(plantRoleId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(PrivilegeConstants.USERS,
+              userPlantRoleService.getUsersByUserTypeAndPlantRoleId(userType, plantRoleId), RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
+        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
