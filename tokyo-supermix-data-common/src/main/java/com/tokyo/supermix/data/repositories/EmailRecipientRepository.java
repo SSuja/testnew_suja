@@ -6,5 +6,7 @@ import com.tokyo.supermix.data.entities.EmailRecipient;
 
 @Repository
 public interface EmailRecipientRepository extends JpaRepository<EmailRecipient, Long> {
+  boolean existsByEmailGroupIdAndPlantRoleId(Long emailGroupId, Long plantRoleId);
 
+  boolean existsByEmailGroupIdAndUserId(Long emailGroupId, Long userId);
 }

@@ -531,7 +531,9 @@ public class Constants {
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
   public static final String FINISH_PRODUCT_TEST_STATUS= "finishProductTestStatus";
-
+  
+  public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Employee Recipient Added Successfully";
+  public static final String EMAIL_RECIPIENT = "emailRecipient";
   /*
    * Encapsulate constructor to restrict modification from outside
    */

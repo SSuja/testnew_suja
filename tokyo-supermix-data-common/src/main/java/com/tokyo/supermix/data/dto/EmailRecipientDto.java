@@ -1,10 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
+
 public class EmailRecipientDto {
   private Long id;
   private Long emailGroupId;
-  private Long plantRoleId;
-  private Long userId;
+  private List<Long> plantRoleId;
+  private List<Long> userId;
 
   public Long getId() {
     return id;
@@ -22,19 +24,19 @@ public class EmailRecipientDto {
     this.emailGroupId = emailGroupId;
   }
 
-  public Long getPlantRoleId() {
+  public List<Long> getPlantRoleId() {
     return plantRoleId;
   }
 
-  public void setPlantRoleId(Long plantRoleId) {
+  public void setPlantRoleId(List<Long> plantRoleId) {
     this.plantRoleId = plantRoleId;
   }
 
-  public Long getUserId() {
+  public List<Long> getUserId() {
     return userId;
   }
 
-  public void setUserId(Long userId) {
+  public void setUserId(List<Long> userId) {
     this.userId = userId;
   }
 }

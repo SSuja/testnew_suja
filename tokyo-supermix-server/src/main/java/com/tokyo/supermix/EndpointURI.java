@@ -580,6 +580,11 @@ public final class EndpointURI {
       FINISH_PRODUCT_TESTS + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String FINISH_PRODUCT_TEST_BY_PLANT =
       FINISH_PRODUCT_TEST +PLANT_WISE;
+  
+  /*
+   * Employee apis
+   */
+  public static final String EMAIL_RECIPIENT = BASE_API_PATH + "email-recipient";
 
   private EndpointURI() {}
 }

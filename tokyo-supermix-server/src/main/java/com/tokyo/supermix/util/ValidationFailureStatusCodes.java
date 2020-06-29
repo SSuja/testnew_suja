@@ -1685,5 +1685,26 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductTrialNotExit(String finishProductTrialNotExit) {
     this.finishProductTrialNotExit = finishProductTrialNotExit;
   }
+  @Value("${validation.emailRecipient.alreadyExist}")
+  private String emailRecipientAlreadyExist;
+  
+  @Value("${validation.emailRecipient.notExist}")
+  private String emailRecipientnotExist;
+
+public String getEmailRecipientAlreadyExist() {
+	return emailRecipientAlreadyExist;
+}
+
+public void setEmailRecipientAlreadyExist(String emailRecipientAlreadyExist) {
+	this.emailRecipientAlreadyExist = emailRecipientAlreadyExist;
+}
+
+public String getEmailRecipientnotExist() {
+	return emailRecipientnotExist;
+}
+
+public void setEmailRecipientnotExist(String emailRecipientnotExist) {
+	this.emailRecipientnotExist = emailRecipientnotExist;
+}
 }
 
