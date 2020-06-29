@@ -1,21 +1,17 @@
 package com.tokyo.supermix.data.dto;
 
 public class AbbrevationAndValueDto {
-  private String abbrivation;
+  private String materialTrialCode;
   private double value;
-
-  public String getAbbrivation() {
-    return abbrivation;
+  public String getMaterialTrialCode() {
+    return materialTrialCode;
   }
-
-  public void setAbbrivation(String abbrivation) {
-    this.abbrivation = abbrivation;
+  public void setMaterialTrialCode(String materialTrialCode) {
+    this.materialTrialCode = materialTrialCode;
   }
-
   public double getValue() {
     return value;
   }
-
   public void setValue(double value) {
     this.value = value;
   }
