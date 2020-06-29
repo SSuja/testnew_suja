@@ -19,6 +19,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
 import com.tokyo.supermix.data.dto.ParameterResultRequestDto;
 import com.tokyo.supermix.data.dto.ParameterResultResponseDto;
+import com.tokyo.supermix.data.dto.SieveTestResultsDto;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -157,6 +158,21 @@ public class ParameterResultController {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
           mapper.map(parameterResultService.findByMaterialTestCode(materialTestCode),
               ParameterResultResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Result record exist for given Material Test code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
+          validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+  @GetMapping(value = EndpointURI.SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getSieveTestParameterResultByMaterialTestCode(
+      @PathVariable String materialTestCode) {
+    if (materialTestService.isMaterialTestExists(materialTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
+         mapper.map(parameterResultService.getSieveTestResultsByMaterialTestCode(materialTestCode),SieveTestResultsDto.class),
+         // mapper.map(parameterResultService.findByMaterialTestCode(materialTestCode),
+            //  ParameterResultResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       logger.debug("No Parameter Result record exist for given Material Test code");
