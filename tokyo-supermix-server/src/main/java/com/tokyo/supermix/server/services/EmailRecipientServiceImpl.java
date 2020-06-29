@@ -2,15 +2,14 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.tokyo.supermix.data.dto.EmailRecipientDto;
 import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
+import com.tokyo.supermix.data.enums.RecipientType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailRecipientRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
@@ -86,5 +85,14 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 		});
 		return emaillist;
 	}
+
+  @Transactional(readOnly = true)
+  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId, RecipientType recipientType) {
+    
+    List<EmailRecipient> emailRecipientList = emailRecipientRepository.findByEmailGroupIdAndRecipientType(emailGroupId, recipientType);
+          return mapper.map(emailRecipientList, EmailRecipientRequestDto.class);
+   
+    
+  }
 
 }

@@ -30,7 +30,7 @@ public class EmailRecipient {
   @JoinColumn(name = "userId", nullable = true)
   private User user;
   @Enumerated(EnumType.ORDINAL)
-  private RecipientType RecipientType;
+  private RecipientType recipientType;
 
   public Long getId() {
     return id;
@@ -69,10 +69,12 @@ public class EmailRecipient {
   }
 
   public RecipientType getRecipientType() {
-    return RecipientType;
+    return recipientType;
   }
 
   public void setRecipientType(RecipientType recipientType) {
-    RecipientType = recipientType;
+    this.recipientType = recipientType;
   }
+
+ 
 }
