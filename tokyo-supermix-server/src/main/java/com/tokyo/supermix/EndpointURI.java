@@ -294,6 +294,9 @@ public final class EndpointURI {
           + "{materialTestTrialCode}" + SLASH + "{materialTestCode}";
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_CODE =
       PARAMETER_RESULT + SLASH + "matrial-test" + SLASH + "{materialTestCode}";
+  public static final String SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE =
+      PARAMETER_RESULT + SLASH + "matrial-test" + SLASH +"sieve-test" + SLASH + "{materialTestCode}";
+  
   /*
    * Material Tests
    */
@@ -374,7 +377,6 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
-
   /*
    * finish product sample issue apis
    * 
@@ -496,7 +498,6 @@ public final class EndpointURI {
       BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
   public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-trials-wise" + SLASH + "{materialTestCode}";
-
   /*
    * File Export
    */

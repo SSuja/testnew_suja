@@ -100,7 +100,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     return finishProductTestRepository
         .findByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId);
       }
-        @Transactional(readOnly = true)
+  
+  @Transactional(readOnly = true)
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
     return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST));

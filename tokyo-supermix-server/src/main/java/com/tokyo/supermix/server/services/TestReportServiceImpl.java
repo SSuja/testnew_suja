@@ -387,33 +387,38 @@ public class TestReportServiceImpl implements TestReportService {
     return cubeTestReportDtoList;
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
       String materialTestCode) {
     List<MaterialTestTrial> materialTestTrialList =
         materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
+    List<ParameterResult> parameterResultList = parameterResultRepository
+        .findByMaterialTestTrialCode(materialTestTrialList.get(0).getCode());
     ArrayList<MaterialTestTrialResultDto> materialTestTrialResultDtoList =
         new ArrayList<MaterialTestTrialResultDto>();
-    for (MaterialTestTrial materialTestTrial : materialTestTrialList) {
+    for (ParameterResult parameterResult : parameterResultList) {
       MaterialTestTrialResultDto materialTestTrialResultDto = new MaterialTestTrialResultDto();
-      materialTestTrialResultDto.setTrialNo(materialTestTrial.getCode());
       materialTestTrialResultDto
-          .setAbbrevationAndValues(getAbbAndValueByMaterialTestCode(materialTestTrial.getCode()));
+          .setAbbrevation(parameterResult.getTestParameter().getAbbreviation());
+      materialTestTrialResultDto.setAbbrevationAndValues(getAbbAndValueByMaterialTestCode(
+          parameterResult.getMaterialTest().getCode(), parameterResult.getTestParameter().getId()));    
       materialTestTrialResultDtoList.add(materialTestTrialResultDto);
-
     }
     return materialTestTrialResultDtoList;
   }
 
-  public List<AbbrevationAndValueDto> getAbbAndValueByMaterialTestCode(
-      String materialTestTrialCode) {
-    List<ParameterResult> parameterResultList =
-        parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
+  public List<AbbrevationAndValueDto> getAbbAndValueByMaterialTestCode(String materialTestCode,
+      Long testParameterId) {
+    List<MaterialTestTrial> materialTestTrialList =
+        materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
     ArrayList<AbbrevationAndValueDto> abbrevationAndValueDtoList =
         new ArrayList<AbbrevationAndValueDto>();
-    for (ParameterResult parameterResult : parameterResultList) {
+    for (MaterialTestTrial materialTestTrial : materialTestTrialList) {
       AbbrevationAndValueDto abbrevationAndValueDto = new AbbrevationAndValueDto();
-      abbrevationAndValueDto.setAbbrivation(parameterResult.getTestParameter().getAbbreviation());
+      abbrevationAndValueDto.setMaterialTrialCode(materialTestTrial.getCode());
+      ParameterResult parameterResult =
+          parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(testParameterId,
+              materialTestTrial.getCode());
       abbrevationAndValueDto.setValue(parameterResult.getValue());
       abbrevationAndValueDtoList.add(abbrevationAndValueDto);
     }
