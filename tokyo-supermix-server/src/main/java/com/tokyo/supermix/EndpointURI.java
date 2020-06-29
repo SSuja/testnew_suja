@@ -297,6 +297,9 @@ public final class EndpointURI {
           + "{materialTestTrialCode}" + SLASH + "{materialTestCode}";
   public static final String PARAMETER_RESULT_BY_MATERIAL_TEST_CODE =
       PARAMETER_RESULT + SLASH + "matrial-test" + SLASH + "{materialTestCode}";
+  public static final String SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE =
+      PARAMETER_RESULT + SLASH + "matrial-test" + SLASH +"sieve-test" + SLASH + "{materialTestCode}";
+  
   /*
    * Material Tests
    */

@@ -129,6 +129,16 @@ public class TestReportController {
         validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
   }
 
+
+//  @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY)
+//  public ResponseEntity<Object> getMaterialTestTrials(@PathVariable String materialTestCode) {
+//
+//    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+//        mapper.map(testReportService.getMaterialTestTrailByMaterialTestCode(materialTestCode),
+//            MaterialTestTrialResultDto.class),
+//        RestApiResponseStatus.OK), HttpStatus.OK);
+//  }
+
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getMaterialTestTrials(@PathVariable String materialTestCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
