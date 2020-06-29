@@ -1,6 +1,8 @@
 package com.tokyo.supermix.data.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
+import com.tokyo.supermix.data.enums.RecipientType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "email_recipient")
@@ -26,6 +29,8 @@ public class EmailRecipient {
   @ManyToOne
   @JoinColumn(name = "userId", nullable = true)
   private User user;
+  @Enumerated(EnumType.ORDINAL)
+  private RecipientType RecipientType;
 
   public Long getId() {
     return id;
@@ -61,5 +66,13 @@ public class EmailRecipient {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public RecipientType getRecipientType() {
+    return RecipientType;
+  }
+
+  public void setRecipientType(RecipientType recipientType) {
+    RecipientType = recipientType;
   }
 }
