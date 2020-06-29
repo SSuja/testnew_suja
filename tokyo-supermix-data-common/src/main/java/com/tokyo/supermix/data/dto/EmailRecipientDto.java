@@ -1,12 +1,14 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
+import com.tokyo.supermix.data.enums.RecipientType;
 
 public class EmailRecipientDto {
   private Long id;
   private Long emailGroupId;
   private List<Long> plantRoleId;
   private List<Long> userId;
+  private RecipientType recipientType;
 
   public Long getId() {
     return id;
@@ -38,5 +40,13 @@ public class EmailRecipientDto {
 
   public void setUserId(List<Long> userId) {
     this.userId = userId;
+  }
+
+  public RecipientType getRecipientType() {
+    return recipientType;
+  }
+
+  public void setRecipientType(RecipientType recipientType) {
+    this.recipientType = recipientType;
   }
 }
