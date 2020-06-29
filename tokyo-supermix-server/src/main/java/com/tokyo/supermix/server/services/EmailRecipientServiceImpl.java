@@ -31,6 +31,7 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 				EmailRecipientRequestDto emailRecipientRequestDto = new EmailRecipientRequestDto();
 				emailRecipientRequestDto.setPlantRoleId(plantRoleId);
 				emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
+				emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
 				emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
 			}
 		}
@@ -39,6 +40,7 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 				EmailRecipientRequestDto emailRecipientRequestDto = new EmailRecipientRequestDto();
 				emailRecipientRequestDto.setUserId(userId);
 				emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
+				emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
 				emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
 			}
 		}
@@ -54,7 +56,6 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 				}
 			}
 		}
-
 		if (emailRecipientDto.getUserId() != null) {
 			for (Long userId : emailRecipientDto.getUserId()) {
 				if (emailRecipientRepository.existsByEmailGroupIdAndUserId(emailRecipientDto.getEmailGroupId(),
@@ -68,7 +69,6 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 
 	@Transactional(readOnly = true)
 	public List<String> getEmailById(Long emailGroupId) {
-
 		List<EmailRecipient> emailRecipientList = emailRecipientRepository.findByEmailGroupId(emailGroupId);
 		List<String> emaillist = new ArrayList<String>();
 		emailRecipientList.forEach(emailRecipient -> {
@@ -86,5 +86,4 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
 		});
 		return emaillist;
 	}
-
 }
