@@ -34,7 +34,4 @@ public interface SupplierService {
   public Page<Supplier> searchSupplier(Predicate predicate, int page, int size);
 
   public List<Supplier> getSupplierByPlantCode(String plantCode);
-
-  public List<Long> supplierCategoriesIds(List<Long> suppilerCategoryIds, Long id);
-
 }

@@ -108,16 +108,4 @@ public class SupplierServiceImpl implements SupplierService {
   public List<Supplier> getSupplierByPlantCode(String plantCode) {
     return supplierRepository.findByPlantCode(plantCode);
   }
-
-  public List<Long> supplierCategoriesIds(List<Long> suppilerCategoryIds, Long id) {
-    List<Long> CategoriesIds = new ArrayList<>();
-    List<SupplierCategory> supplierCategories =
-        supplierRepository.findById(id).get().getSupplierCategories();
-    for (SupplierCategory supplierCategory : supplierCategories) {
-      CategoriesIds.add(supplierCategory.getId());
-    }
-    suppilerCategoryIds.removeAll(CategoriesIds);
-    CategoriesIds.addAll(suppilerCategoryIds);
-    return CategoriesIds;
-  }
 }
