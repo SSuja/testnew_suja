@@ -10,4 +10,6 @@ public interface ProcessSampleRepository
   ProcessSample findProcessSampleByCode(String code);
 
   List<ProcessSample> findByIncomingSamplePlantCode(String plantCode);
+
+  List<ProcessSample> findByIncomingSamplePlantCodeIn(List<String> plantCodes);
 }

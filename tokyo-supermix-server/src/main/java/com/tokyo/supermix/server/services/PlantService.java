@@ -6,7 +6,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
 
 public interface PlantService {
-  public void savePlant(Plant plant);
+  public Plant savePlant(Plant plant);
 
   public boolean isPlantNameExist(String plant);
 

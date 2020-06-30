@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
@@ -51,7 +52,6 @@ public class ProjectController {
   private static final Logger logger = Logger.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
-  @PreAuthorize("hasAuthority('add_project')")
   public ResponseEntity<Object> createProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
     if (projectService.isNameExist(projectRequestDto.getName())) {
@@ -69,15 +69,20 @@ public class ProjectController {
   }
 
   @GetMapping(value = EndpointURI.PROJECTS)
-  @PreAuthorize("hasAuthority('get_project')")
   public ResponseEntity<Object> getProjects() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
         mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+  
+  @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
+  public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+        mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 
   @DeleteMapping(value = EndpointURI.PROJECT_BY_ID)
-  @PreAuthorize("hasAuthority('delete_project')")
   public ResponseEntity<Object> deleteProject(@PathVariable String code) {
     if (projectService.isProjectExist(code)) {
       logger.debug("delete project by code");
@@ -102,7 +107,6 @@ public class ProjectController {
   }
 
   @PutMapping(value = EndpointURI.PROJECT)
-  @PreAuthorize("hasAuthority('edit_project')")
   public ResponseEntity<Object> updateProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
     if (projectService.isProjectExist(projectRequestDto.getCode())) {

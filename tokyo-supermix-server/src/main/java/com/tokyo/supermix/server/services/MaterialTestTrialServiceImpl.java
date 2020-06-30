@@ -26,8 +26,11 @@ import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
@@ -45,6 +48,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   TestParameterRepository testParameterRepository;
   @Autowired
@@ -113,7 +118,7 @@ MaterialTestService materialTestService;
 
   @Transactional
   public void getAverageAndStatus(String materialTestCode) {
-         compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
+    compareWithAverage(calculateAverage(materialTestCode), materialTestCode);
   }
 
   private void compareWithAverage(Double average, String materialTestCode) {
@@ -126,7 +131,7 @@ MaterialTestService materialTestService;
               materialTest.getIncomingSample().getRawMaterial().getId());
       calculateStatus(average, materialAcceptedValue.getMinValue(),
           materialAcceptedValue.getMaxValue(), materialTestCode);
-          } else {
+    } else {
       calculateStatus(average,
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMinValue(),
           acceptedValueRepository.findByTestConfigureId(testConfigureId).getMaxValue(),
@@ -173,7 +178,7 @@ MaterialTestService materialTestService;
   }
    private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;
-    int trialTotal = 0;  
+    int trialTotal = 0;
     List<MaterialTestTrial> listMaterialTestTrial =
         materialTestTrialRepository.findByMaterialTestCode(materialTestCode);
     for (MaterialTestTrial materialTestTrial : listMaterialTestTrial) {
@@ -201,7 +206,7 @@ MaterialTestService materialTestService;
     materialTest.setStatus(status);
     return materialTestRepository.save(materialTest);
   }
-  
+
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
     return Double.valueOf(decimalFormat.format(value));
@@ -210,5 +215,12 @@ MaterialTestService materialTestService;
   @Transactional(readOnly = true)
   public List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode) {
     return materialTestTrialRepository.findByMaterialTestIncomingSamplePlantCode(plantCode);
+  }
+
+  @Override
+  public List<MaterialTestTrial> getAllMaterialTestTrialByplant(UserPrincipal currentUser) {
+    return materialTestTrialRepository.findByMaterialTestIncomingSamplePlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
   }
 }

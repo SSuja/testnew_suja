@@ -24,7 +24,6 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquipmentService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @CrossOrigin(origins = "*")
@@ -40,7 +39,6 @@ public class EquipmentController {
 
   // Add Equipment
   @PostMapping(value = EndpointURI.EQUIPMENT)
-  @PreAuthorize("hasAuthority('add_equipment')")
   public ResponseEntity<Object> createEquipment(@Valid @RequestBody EquipmentDto equipmentDto) {
     if (equipmentService.isNameExist(equipmentDto.getName())) {
       logger.debug("name is already exists: createEquipment(), isNameExist: {}");
@@ -55,7 +53,6 @@ public class EquipmentController {
 
   // Get All Equipments
   @GetMapping(value = EndpointURI.EQUIPMENTS)
-  @PreAuthorize("hasAuthority('get_equipment')")
   public ResponseEntity<Object> getAllEquipments() {
     logger.debug("get all equipments");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENTS,
@@ -78,7 +75,6 @@ public class EquipmentController {
 
   // Delete Equipment
   @DeleteMapping(value = EndpointURI.DELETE_EQUIPMENT)
-  @PreAuthorize("hasAuthority('delete_equipment')")
   public ResponseEntity<Object> deleteEquipment(@PathVariable Long id) {
     if (equipmentService.isEquipmentExist(id)) {
       logger.debug("delete equipment by id");
@@ -93,7 +89,6 @@ public class EquipmentController {
 
   // Update Equipment
   @PutMapping(value = EndpointURI.EQUIPMENT)
-  @PreAuthorize("hasAuthority('edit_equipment')")
   public ResponseEntity<Object> updateEquipment(@Valid @RequestBody EquipmentDto equipmentDto) {
     if (equipmentService.isEquipmentExist(equipmentDto.getId())) {
       if (equipmentService.isUpdatedNameExist(equipmentDto.getId(), equipmentDto.getName())) {

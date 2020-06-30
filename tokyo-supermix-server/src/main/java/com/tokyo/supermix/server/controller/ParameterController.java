@@ -63,7 +63,7 @@ public class ParameterController {
         HttpStatus.OK);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_PARAMETER_BY_ID)
+  @DeleteMapping(value = EndpointURI.PARAMETER_BY_ID)
   @PreAuthorize("hasAuthority('delete_parameter')")
   public ResponseEntity<Object> deleteParameter(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
@@ -77,7 +77,7 @@ public class ParameterController {
         validationFailureStatusCodes.getParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_PARAMETER_BY_ID)
+  @GetMapping(value = EndpointURI.PARAMETER_BY_ID)
   public ResponseEntity<Object> getByParameterId(@PathVariable Long id) {
     if (parameterService.isParameterExist(id)) {
       logger.debug("Get Parameter by id ");

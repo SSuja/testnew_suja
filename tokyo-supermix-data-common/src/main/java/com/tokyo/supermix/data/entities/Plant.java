@@ -1,17 +1,19 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
+import com.tokyo.supermix.data.entities.privilege.PlantPermission;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant")
 public class Plant implements Serializable {
-
   private static final long serialVersionUID = 1L;
-
   @Id
   private String code;
   private String name;
@@ -19,6 +21,20 @@ public class Plant implements Serializable {
   private String phoneNumber;
   private String description;
   private String faxNumber;
+  @OneToMany(mappedBy = "plant")
+  Set<PlantRole> plantRole;
+  @OneToMany(mappedBy = "plant")
+  Set<PlantAccessLevel> plantAccessLevel;
+  @OneToMany(mappedBy = "plant")
+  Set<PlantPermission> plantPermission;
+
+  public Set<PlantRole> getPlantRole() {
+    return plantRole;
+  }
+
+  public void setPlantRole(Set<PlantRole> plantRole) {
+    this.plantRole = plantRole;
+  }
 
   public String getCode() {
     return code;
@@ -72,4 +88,19 @@ public class Plant implements Serializable {
     this.faxNumber = faxNumber;
   }
 
+  public Set<PlantPermission> getPlantPermission() {
+    return plantPermission;
+  }
+
+  public void setPlantPermission(Set<PlantPermission> plantPermission) {
+    this.plantPermission = plantPermission;
+  }
+
+  public Set<PlantAccessLevel> getPlantAccessLevel() {
+    return plantAccessLevel;
+  }
+
+  public void setPlantAccessLevel(Set<PlantAccessLevel> plantAccessLevel) {
+    this.plantAccessLevel = plantAccessLevel;
+  }
 }

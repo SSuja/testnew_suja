@@ -12,6 +12,9 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.repositories.ProcessSampleRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class ProcessSampleServiceImpl implements ProcessSampleService {
@@ -19,12 +22,14 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   private ProcessSampleRepository processSampleRepository;
   @Autowired
   private IncomingSampleService incomingSampleService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
   public List<ProcessSample> getAllProcessSamples() {
     return processSampleRepository.findAll();
   }
-
+  
   @Transactional
   public void saveProcessSample(ProcessSample processSample) {
     IncomingSample incomingSample =
@@ -57,5 +62,12 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   @Transactional(readOnly = true)
   public List<ProcessSample> getProcessSampleByPlantCode(String plantCode) {
     return processSampleRepository.findByIncomingSamplePlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<ProcessSample> getAllProcessSamplesByCurrentUser(UserPrincipal currentUser) {
+    return processSampleRepository.findByIncomingSamplePlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROCESS_SAMPLE));
+
   }
 }

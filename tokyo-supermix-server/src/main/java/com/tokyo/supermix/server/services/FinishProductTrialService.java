@@ -3,9 +3,12 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductTrialService {
   public List<FinishProductTrial> getAllFinishProductTrials();
+  
+  public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser);
 
   public FinishProductTrial getFinishProductTrialByCode(String code);
 

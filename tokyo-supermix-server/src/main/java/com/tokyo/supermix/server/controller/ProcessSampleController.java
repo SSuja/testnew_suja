@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.dto.ProcessSampleRequestDto;
 import com.tokyo.supermix.data.dto.ProcessSampleResponseDto;
 import com.tokyo.supermix.data.entities.ProcessSample;
@@ -26,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProcessSampleService;
 import com.tokyo.supermix.util.Constants;
@@ -46,7 +48,6 @@ public class ProcessSampleController {
   private static final Logger logger = Logger.getLogger(ProcessSampleController.class);
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
-  @PreAuthorize("hasAuthority('add_process_sample')")
   public ResponseEntity<Object> createProcessSample(
       @Valid @RequestBody ProcessSampleRequestDto processSampleRequestDto) {
     if (processSampleService.isProcessSampleExist(processSampleRequestDto.getCode())) {
@@ -62,15 +63,20 @@ public class ProcessSampleController {
   }
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLES)
-  @PreAuthorize("hasAuthority('get_process_sample')")
   public ResponseEntity<Object> getProcessSamples() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
         mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
+  
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT)
+  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
-  @PreAuthorize("hasAuthority('delete_process_sample')")
   public ResponseEntity<Object> deleteProcessSample(@PathVariable String code) {
     if (processSampleService.isProcessSampleExist(code)) {
       logger.debug("delete ProcessSample by code");
@@ -96,7 +102,6 @@ public class ProcessSampleController {
   }
 
   @PutMapping(value = EndpointURI.PROCESS_SAMPLE)
-  @PreAuthorize("hasAuthority('edit_process_sample')")
   public ResponseEntity<Object> updateProcessSample(
       @Valid @RequestBody ProcessSampleRequestDto processSampleRequestDto) {
     if (processSampleService.isProcessSampleExist(processSampleRequestDto.getCode())) {
@@ -122,8 +127,9 @@ public class ProcessSampleController {
   @GetMapping(value = EndpointURI.PROCESS_SAMPLES_BY_PLANT_CODE)
   public ResponseEntity<Object> getProcessSampleByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES, mapper
-          .map(processSampleService.getProcessSampleByPlantCode(plantCode), ProcessSampleResponseDto.class),
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
+          mapper.map(processSampleService.getProcessSampleByPlantCode(plantCode),
+              ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No ProcessSample record exist for given plantCode");

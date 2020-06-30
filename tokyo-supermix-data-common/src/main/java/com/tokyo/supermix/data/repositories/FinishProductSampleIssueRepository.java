@@ -10,5 +10,6 @@ public interface FinishProductSampleIssueRepository
 	FinishProductSampleIssue findByFinishProductSampleId(Long finishProductSampleId);
 
 	List<FinishProductSampleIssue> findByFinishProductSampleMixDesignPlantCode(String plantCode);
+	List<FinishProductSampleIssue> findByProjectPlantCodeIn(List<String>plantCodes);
 
 }

@@ -7,6 +7,7 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MaterialTestService {
 
@@ -37,6 +38,7 @@ public interface MaterialTestService {
   List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 
   public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType);
+  public List<MaterialTest> getAllMaterialTestByPlant(UserPrincipal currentUser);
   public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample);
 
 }

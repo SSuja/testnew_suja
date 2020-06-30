@@ -20,16 +20,8 @@ public class Constants {
   public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
   public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-  // Authentication
-  public static final String PASSWORD = "passWord";
-  public static final String EMAIL_OR_USERNAME = "emailOrUserName";
-  public static final String CREDENCIALS = "credentials";
-  public static final String UPDATE_PASSWORD_SUCCESS = "User Password Updated Successfully";
-  public static final String GENERATE_PASSWORD_SUCCESS =
-      "Random Password token Generate and mailed Successfully";
-  public static final String MESSAGE_OF_FORGOT_PASSWORD = "This the token for Reset your Password ";
   public static final String SUBJECT_REPORT = "Notification : Test Report";
-  public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
+  public static final String BODY_FOR_REPORT ="Here you can find the Test Details Report";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
@@ -264,15 +256,7 @@ public class Constants {
   public static final String TEST_PARAMETER_DELETED = "Test Parameter Successfully Deleted";
   public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test Parameter Updated Successfully";
   public static final String ABBREVIATION = "abbreviation";
-  /*
-   * Constants for User validation key & Success messages
-   */
-  public static final String USER_NAME = "username";
-  public static final String USER = "user";
-  public static final String USER_ID = "id";
-  public static final String ADD_USER_SUCCESS = "User Added Successfully";
-  public static final String UPDATE_USER_SUCCESS = "User Updated Successfully";
-  public static final String DELETE_USER_SCCESS = "User Successfully Deleted";
+  
   /*
    * Constants for Process Sample validation key & Success messages
    */
@@ -436,13 +420,6 @@ public class Constants {
   public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
 
-  public static final String ROLE = "role";
-  public static final String ROLES = "roles";
-  public static final String ROLE_ID = "roleId";
-  public static final String ADD_ROLE_SUCCESS = "Role Added Successfully";
-  public static final String ROLE_DELETED = "Role Successfully Deleted";
-  public static final String ROLE_UPDATED_SUCCESS = "Role Updated Successfully";
-
   /*
    * Constants for Mix Design validation key & Success messages
    */
@@ -486,16 +463,6 @@ public class Constants {
   public static final String TEST_REPORT = "testReport";
   public static final String TEST_DETAIL_REPORT = "testDetailReport";
   public static final String CONCRETE_TYPE = "concreteType";
-
-  /*
-   * Constants for privilege
-   */
-  public static final String UPDATE_PRIVILEGE_SUCCESS = "Privileges Updated Successfully";
-  public static final String PRIVILEGES = "privileges";
-  public static final String PERMISSIONS = "permissions";
-  public static final String MAIN_ROUTES = "mainRoutes";
-  public static final String SUB_ROUTES = "subRoutes";
-
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
 

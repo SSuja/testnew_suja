@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.PourService;
 import com.tokyo.supermix.util.Constants;
@@ -45,7 +46,6 @@ public class PourController {
   private static final Logger logger = Logger.getLogger(PourController.class);
 
   @PostMapping(value = EndpointURI.POUR)
-  @PreAuthorize("hasAuthority('add_pour')")
   public ResponseEntity<Object> createPour(@Valid @RequestBody PourDtoRequest pourDtoRequest) {
     if (pourService.isPourNameExistBYProject(pourDtoRequest.getName(),
         pourDtoRequest.getProjectCode())) {
@@ -57,7 +57,7 @@ public class PourController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_POUR_SUCCESS), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_POUR_BY_ID)
+  @GetMapping(value = EndpointURI.POUR_BY_ID)
   public ResponseEntity<Object> getPourById(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
       logger.debug("get pour By Id");
@@ -70,7 +70,6 @@ public class PourController {
   }
 
   @GetMapping(value = EndpointURI.POURS)
-  @PreAuthorize("hasAuthority('get_pour')")
   public ResponseEntity<Object> getAllPour() {
     logger.debug("gat all pour");
     return new ResponseEntity<>(
@@ -79,9 +78,8 @@ public class PourController {
         HttpStatus.OK);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_POUR)
-  @PreAuthorize("hasAuthority('delete_pour')")
-  public ResponseEntity<Object> deletePour(@PathVariable Long id) {
+  @DeleteMapping(value = EndpointURI.POUR_BY_ID)
+    public ResponseEntity<Object> deletePour(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
       logger.debug("get pour By Id");
       pourService.deletePour(id);
@@ -93,7 +91,6 @@ public class PourController {
   }
 
   @PutMapping(value = EndpointURI.POUR)
-  @PreAuthorize("hasAuthority('edit_pour')")
   public ResponseEntity<Object> updatePour(@Valid @RequestBody PourDtoRequest pourDtoRequest) {
     if (pourService.isPourExit(pourDtoRequest.getId())) {
       if (pourService.isUpdatedPourExists(pourDtoRequest.getId(), pourDtoRequest.getName(),
@@ -128,5 +125,14 @@ public class PourController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.POUR_BY_PLANT)
+  public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser) {
+    logger.debug("gat all pour");
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.POUR,
+            mapper.map(pourService.getAllPourByPlant(currentUser), PourDtoResponse.class), RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 }
