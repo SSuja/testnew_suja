@@ -9,6 +9,8 @@ public interface EmailRecipientService {
   public boolean createEmailRecipient(EmailRecipientDto emailRecipientDto);
 
   public boolean isDuplicateDataExists(EmailRecipientDto emailRecipientDto);
+  
+  public List<String> getEmailsByEmailGroupNameAndPlantCode(String emailGroupName, String plantCode);
 
   public List<String> getEmailsByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode);
 

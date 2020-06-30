@@ -33,18 +33,20 @@ public class EmailNotification {
   private FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   private EmailRecipientService emailRecipientService;
-
-
-  @Scheduled(cron = "0 0 8 * * ?")
+  @Autowired
+  private MixDesignRepository mixDesignRepository;
+  
+  
+  @Scheduled(cron = "0 0 9 * * ?")
   public void alertForEquipmentCalibration() {
     final LocalDateTime today = LocalDateTime.now();
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
       if (noOfDays == 30 || noOfDays == 15) {
-        emailService.sendMail(mailConstants.getMailEquipmentCalibration(),
-            Constants.SUBJECT_EQUIPMENT_CALIBRATION,
-            "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
+        List<String>  equipmentCalibrationEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_NAME, calibration.getPlantEquipment().getPlant().getCode());    
+        emailService.sendMail(equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
+            Constants.SUBJECT_EQUIPMENT_CALIBRATION, "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
                 + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
                 + calibration.getPlantEquipment().getPlant().getName());
       }
