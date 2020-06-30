@@ -3,7 +3,7 @@ package com.tokyo.supermix.notification;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,6 +13,7 @@ import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
@@ -31,17 +32,19 @@ public class EmailNotification {
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MixDesignRepository mixDesignRepository;
+  @Autowired
+  private EmailRecipientService emailRecipientService;
 
-  @Scheduled(cron = "0 0 8 * * ?")
+  @Scheduled(cron = "0 0 9 * * ?")
   public void alertForEquipmentCalibration() {
     final LocalDateTime today = LocalDateTime.now();
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
       if (noOfDays == 30 || noOfDays == 15) {
-        emailService.sendMail(mailConstants.getMailEquipmentCalibration(),
-            Constants.SUBJECT_EQUIPMENT_CALIBRATION,
-            "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
+        List<String>  equipmentCalibrationEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_NAME, calibration.getPlantEquipment().getPlant().getCode());    
+        emailService.sendMail(equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
+            Constants.SUBJECT_EQUIPMENT_CALIBRATION, "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
                 + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
                 + calibration.getPlantEquipment().getPlant().getName());
       }

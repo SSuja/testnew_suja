@@ -540,6 +540,7 @@ public class Constants {
   
   
   public static final String EMAIL_QROUPS = "emailGroups";
+  public static final String EMAIL_GROUP_NAME = "Plant Equipment Calibration Group";
   /*
    * Encapsulate constructor to restrict modification from outside
    */
