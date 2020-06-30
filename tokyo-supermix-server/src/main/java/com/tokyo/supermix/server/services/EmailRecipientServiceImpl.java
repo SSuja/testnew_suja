@@ -111,4 +111,6 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   public void deleteEmailRecipient(Long id) {
     emailRecipientRepository.deleteById(id);
   }
+
+  
 }

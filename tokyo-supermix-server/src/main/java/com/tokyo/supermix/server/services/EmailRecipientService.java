@@ -10,12 +10,12 @@ public interface EmailRecipientService {
 
   public boolean isDuplicateDataExists(EmailRecipientDto emailRecipientDto);
 
-  public List<String> getEmailById(Long emailGroupId);
+  public List<String> getEmailsByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode);
 
-	public List<String> getEmailsByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode);
-  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId, RecipientType recipientType);
+  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId,
+      RecipientType recipientType);
 
-	public boolean isEmailRecipientExist(Long id);
+  public boolean isEmailRecipientExist(Long id);
 
-	public void deleteEmailRecipient(Long id);
+  public void deleteEmailRecipient(Long id);
 }
