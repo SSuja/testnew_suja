@@ -1,8 +1,13 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class ParameterResultRequestDto {
   private Long id;
   private MaterialTestTrialRequestDto materialTestTrial;
+  @NotNull(message = "{parameterResultDto.value.null}")
+  @NotEmpty(message = "{parameterResultDto.value.empty}")
   private Double value;
   private Long testParameterId;
   private String materialTestCode;
