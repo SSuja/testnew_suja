@@ -545,8 +545,8 @@ public final class EndpointURI {
   public static final String PARAMETER_EQUATIONS = BASE_API_PATH + "parameter-equations";
   public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
       PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
-  public static final String PARAMETER_EQUATION_BY_EQUATION_ID =
-      PARAMETER_EQUATION + SLASH + "equation" + SLASH + "{equationId}";
+  public static final String PARAMETER_EQUATION_BY_TEST_CONFIGURE_ID =
+      PARAMETER_EQUATION + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   /*
    * Parameter Equation Element apis

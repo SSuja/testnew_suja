@@ -90,7 +90,7 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   }
   
   @Transactional(readOnly = true)
-  public List<ParameterEquation> findByEquation(Long equationId) {
-    return parameterEquationRepository.findByEquationId(equationId);
+  public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId) {
+    return parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);
   }
 }
