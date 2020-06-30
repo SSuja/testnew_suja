@@ -5,25 +5,27 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class UnitDto {
-  private Long id;
-  @NotNull(message = "{unitDto.unit.null}")
-  @NotEmpty(message = "{unitDto.unit.empty}")
-  @Pattern(regexp = "^[a-zA-Z0-9\\\\s%]+$", message = "{unitDto.unit.specialCharacter}")
-  private String unit;
 
-  public Long getId() {
-    return id;
-  }
+	private Long id;
+	@NotNull(message = "{unitDto.unit.null}")
+	@NotEmpty(message = "{unitDto.unit.empty}")
+	@Pattern(regexp = "^[a-zA-Z0-9\\\\s%-]+$", message = "{unitDto.unit.specialCharacter}")
+	private String unit;
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public String getUnit() {
-    return unit;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setUnit(String unit) {
-    this.unit = unit;
-  }
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 }
