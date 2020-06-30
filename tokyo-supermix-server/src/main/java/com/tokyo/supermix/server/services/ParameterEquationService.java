@@ -23,5 +23,6 @@ public interface ParameterEquationService {
 
   public void saveParameterEquationAndElement(ParameterEquationEleDto parameterEquationEleDto);
 
-  public List<ParameterEquation> findByEquation(Long equationId);
+  public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId);
+
 }
