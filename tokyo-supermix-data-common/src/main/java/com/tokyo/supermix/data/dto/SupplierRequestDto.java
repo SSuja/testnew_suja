@@ -1,9 +1,9 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 public class SupplierRequestDto {
   private Long id;
@@ -14,8 +14,6 @@ public class SupplierRequestDto {
   private String address;
   @NotNull(message = "{supplierRequestDto.phoneNumber.null}")
   @NotEmpty(message = "{supplierRequestDto.phoneNumber.empty}")
-  @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
-      message = "{supplierRequestDto.phoneNumber.specialCharacter}")
   private String phoneNumber;
   private String email;
   @NotNull(message = "{supplierRequestDto.plantCode.null}")
