@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class PlantDto {
   @NotNull(message = "{plantDto.id.null}")
@@ -10,6 +11,8 @@ public class PlantDto {
   @NotEmpty(message = "{plantDto.name.empty}")
   private String name;
   private String address;
+  @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
+      message = "{plantDto.phoneNumber.specialCharacter}")
   private String phoneNumber;
   private String description;
   private String faxNumber;
