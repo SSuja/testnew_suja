@@ -30,7 +30,7 @@ public class EmailRecipient {
   @JoinColumn(name = "userId", nullable = true)
   private User user;
   @Enumerated(EnumType.ORDINAL)
-  private RecipientType RecipientType;
+  private RecipientType recipientType;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;

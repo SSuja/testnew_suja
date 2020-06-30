@@ -42,7 +42,7 @@ public class EmailNotification {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
       if (noOfDays == 30 || noOfDays == 15) {
-        List<String>  equipmentCalibrationEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_NAME, calibration.getPlantEquipment().getPlant().getCode());    
+        List<String>  equipmentCalibrationEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION, calibration.getPlantEquipment().getPlant().getCode());    
         emailService.sendMail(equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
             Constants.SUBJECT_EQUIPMENT_CALIBRATION, "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
                 + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
