@@ -33,8 +33,7 @@ public class EmailNotification {
   private FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   private EmailRecipientService emailRecipientService;
-  @Autowired
-  private MixDesignRepository mixDesignRepository;
+  
   
   
   @Scheduled(cron = "0 0 9 * * ?")
@@ -98,7 +97,7 @@ public class EmailNotification {
         String mailBody = "The work order no is " + finishProductSample.getWorkOrderNo()
             + ", created on " + finishProductSample.getDate() + "."  + " reached "+noOfDays + "days "+
              " Please test" +noOfDays+" days strength.";
-        List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupIdAndPlantCode(4L,
+        List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode("Mixdesign Group",
             finishProductSample.getMixDesign().getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MIX_DESIGN, mailBody);

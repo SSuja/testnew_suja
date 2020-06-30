@@ -12,7 +12,7 @@ public interface EmailRecipientService {
   
   public List<String> getEmailsByEmailGroupNameAndPlantCode(String emailGroupName, String plantCode);
 
-  public List<String> getEmailsByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode);
+  
 
   public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId,
       RecipientType recipientType);
