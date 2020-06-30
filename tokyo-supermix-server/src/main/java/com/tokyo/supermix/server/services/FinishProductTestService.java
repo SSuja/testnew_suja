@@ -21,6 +21,9 @@ public interface FinishProductTestService {
   boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId);
 
   boolean isDuplicateEntry(Long finishProductSampleId, Long testConfigureId);
+  
+  List<FinishProductTest> getFinishProductTestByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
+      Long testConfigureId);
 
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);
 }

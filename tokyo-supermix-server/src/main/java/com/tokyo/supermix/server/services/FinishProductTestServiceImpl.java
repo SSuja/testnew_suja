@@ -95,6 +95,13 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
+  public List<FinishProductTest> getFinishProductTestByFinishProductSampleIdAndTestConfigureId(
+      Long finishProductSampleId, Long testConfigureId) {
+    return finishProductTestRepository
+        .findByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId);
+      }
+  
+  @Transactional(readOnly = true)
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
     return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST));

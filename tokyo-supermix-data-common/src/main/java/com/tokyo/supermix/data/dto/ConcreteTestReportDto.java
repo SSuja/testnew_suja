@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.util.List;
 
 public class ConcreteTestReportDto {
-
+  private String reportNo;
   private String projectName;
   private String customerName;
   private double targetGrade;
@@ -11,8 +11,16 @@ public class ConcreteTestReportDto {
   private String dateOfTesting;
   private String dateOfCasting;
   private Long ageOfCubeTest;
-  private double strengthGradeRatio;
+  private double averageStrength;
   private List<CubeTestReportDto> CubeTestReports;
+
+  public String getReportNo() {
+    return reportNo;
+  }
+
+  public void setReportNo(String reportNo) {
+    this.reportNo = reportNo;
+  }
 
   public String getProjectName() {
     return projectName;
@@ -70,19 +78,19 @@ public class ConcreteTestReportDto {
     this.ageOfCubeTest = ageOfCubeTest;
   }
 
+  public double getAverageStrength() {
+    return averageStrength;
+  }
+
+  public void setAverageStrength(double averageStrength) {
+    this.averageStrength = averageStrength;
+  }
+
   public List<CubeTestReportDto> getCubeTestReports() {
     return CubeTestReports;
   }
 
   public void setCubeTestReports(List<CubeTestReportDto> cubeTestReports) {
     CubeTestReports = cubeTestReports;
-  }
-
-  public double getStrengthGradeRatio() {
-    return strengthGradeRatio;
-  }
-
-  public void setStrengthGradeRatio(double strengthGradeRatio) {
-    this.strengthGradeRatio = strengthGradeRatio;
   }
 }

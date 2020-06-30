@@ -158,14 +158,13 @@ public class FinishProductSampleController {
       @PathVariable Long concreteMixerId) {
     if (finishProductSampleService.isConcreteMixerExist(concreteMixerId)) {
       logger.debug("Get Finish Product Sample By Concrete Mixer Id");
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-              mapper.map(finishProductSampleService.getFinishProductSampleByConcreteMixerId(
-                  concreteMixerId), FinishProductSampleResponseDto.class),
-              RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(
+              finishProductSampleService.getFinishProductSampleByEquipmentId(concreteMixerId),
+              FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CONCRETE_MIXER_ID,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
         validationFailureStatusCodes.getConcreteMixerNotExist()), HttpStatus.BAD_REQUEST);
   }
 
