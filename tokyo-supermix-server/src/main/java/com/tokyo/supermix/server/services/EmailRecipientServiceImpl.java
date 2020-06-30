@@ -67,9 +67,9 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   }
 
   @Transactional(readOnly = true)
-  public List<String> getEmailById(Long emailGroupId) {
+  public List<String> getEmailsByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode) {
     List<EmailRecipient> emailRecipientList =
-        emailRecipientRepository.findByEmailGroupId(emailGroupId);
+        emailRecipientRepository.findByEmailGroupIdAndPlantCode(emailGroupId, plantCode);
     List<String> emaillist = new ArrayList<String>();
     emailRecipientList.forEach(emailRecipient -> {
       if (emailRecipient.getPlantRole() != null) {
@@ -78,10 +78,12 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         userPlantRoleList.forEach(userPlantRole -> {
 
           emaillist.add(userPlantRole.getUser().getEmployee().getEmail());
+          System.out.println("email 1 "+emaillist.toString());
         });
       }
       if (emailRecipient.getUser() != null) {
         emaillist.add(emailRecipient.getUser().getEmployee().getEmail());
+        System.out.println("email 2 "+emaillist.toString());
       }
     });
     return emaillist;

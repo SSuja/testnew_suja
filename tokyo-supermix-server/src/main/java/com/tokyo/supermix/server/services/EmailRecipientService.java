@@ -9,7 +9,7 @@ public interface EmailRecipientService {
 
 	public boolean isDuplicateDataExists(EmailRecipientDto emailRecipientDto);
 
-	public List<String> getEmailById(Long emailGroupId);
+	public List<String> getEmailsByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode);
 
 	public boolean isEmailRecipientExist(Long id);
 

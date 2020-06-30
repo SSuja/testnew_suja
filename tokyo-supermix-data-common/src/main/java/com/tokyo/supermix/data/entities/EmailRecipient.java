@@ -31,6 +31,9 @@ public class EmailRecipient {
   private User user;
   @Enumerated(EnumType.ORDINAL)
   private RecipientType RecipientType;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = false)
+  private Plant plant;
 
   public Long getId() {
     return id;
@@ -74,5 +77,13 @@ public class EmailRecipient {
 
   public void setRecipientType(RecipientType recipientType) {
     RecipientType = recipientType;
+  }
+
+  public Plant getPlant() {
+    return plant;
+  }
+
+  public void setPlant(Plant plant) {
+    this.plant = plant;
   }
 }

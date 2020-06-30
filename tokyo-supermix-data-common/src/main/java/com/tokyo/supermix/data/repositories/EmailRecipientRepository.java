@@ -11,7 +11,7 @@ public interface EmailRecipientRepository extends JpaRepository<EmailRecipient, 
 
   boolean existsByEmailGroupIdAndUserId(Long emailGroupId, Long userId);
 
-  List<EmailRecipient> findByEmailGroupId(Long emailGroupId);
-
   List<EmailRecipient> findByPlantRoleId(Long plantRoleId);
+
+  List<EmailRecipient> findByEmailGroupIdAndPlantCode(Long emailGroupId, String plantCode);
 }
