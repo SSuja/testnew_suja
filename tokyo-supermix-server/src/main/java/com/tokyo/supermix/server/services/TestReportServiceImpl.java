@@ -348,7 +348,6 @@ public class TestReportServiceImpl implements TestReportService {
         });
     return sieveSizeDto;
   }
-
   // Concrete test report
   public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode) {
     ConcreteTestReportDto concreteTestReportDto = new ConcreteTestReportDto();

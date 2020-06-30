@@ -12,11 +12,16 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class FinishProductSampleServiceImpl implements FinishProductSampleService {
   @Autowired
   FinishProductSampleRepository finishProductSampleRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
   public boolean isFinishProductCodeExist(Long code) {
@@ -97,5 +102,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public boolean isFinishProductSampleStatusExist(Status status) {
     return finishProductSampleRepository.existsByStatus(status);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser) {
+    return finishProductSampleRepository.findByMixDesignPlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
   }
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +19,17 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.entities.Plant;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.PlantAccessLevelService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
+import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
+import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -34,17 +38,21 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class PlantController {
   @Autowired
   PlantService plantService;
-
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
+  @Autowired
+  private PlantRoleService plantRoleService;
+  @Autowired
+  private PlantPermissionService plantPermissionService;
+  @Autowired
+  private PlantAccessLevelService plantAccessLevelService;
+  @Autowired
+  private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
   private static final Logger logger = Logger.getLogger(PlantController.class);
 
   @PostMapping(value = EndpointURI.PLANT)
-  @PreAuthorize("hasAuthority('add_plant')")
   public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantNameExist(plantDto.getName())) {
       logger.debug("PlantName already exists: createPlant(), plantName: {}");
@@ -56,13 +64,17 @@ public class PlantController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    plantService.savePlant(mapper.map(plantDto, Plant.class));
+    Plant plant = plantService.savePlant(mapper.map(plantDto, Plant.class));
+    PlantRole plantRoleObj = plantRoleService.savePlantRole(plant.getCode(), 1L);
+    plantRoleService.savePlantRole(plant.getCode(), 2L);
+    plantAccessLevelService.createPlantAccessLevel(plantRoleObj);
+    plantPermissionService.savePlantPermission(plant);
+    plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
   }
 
- @GetMapping(value = EndpointURI.PLANTS)
-@PreAuthorize("hasAuthority('get_plant')")
+  @GetMapping(value = EndpointURI.PLANTS)
   public ResponseEntity<Object> getAllPlants() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.PLANTS,
@@ -71,7 +83,7 @@ public class PlantController {
   }
 
   // get plant by id
-  @GetMapping(value = EndpointURI.GET_PLANT_BY_CODE)
+  @GetMapping(value = EndpointURI.PLANT_BY_CODE)
   public ResponseEntity<Object> getPlantByCode(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       logger.debug("Get plant by plantCode ");
@@ -84,7 +96,6 @@ public class PlantController {
   }
 
   @PutMapping(value = EndpointURI.PLANT)
-  @PreAuthorize("hasAuthority('edit_plant')")
   public ResponseEntity<Object> updatePlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantExist(plantDto.getCode())) {
       if (plantService.isUpdatedPlantNameExist(plantDto.getCode(), plantDto.getName())) {
@@ -100,8 +111,7 @@ public class PlantController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_PLANT_BY_CODE)
-  @PreAuthorize("hasAuthority('delete_plant')")
+  @DeleteMapping(value = EndpointURI.PLANT_BY_CODE)
   public ResponseEntity<Object> deletePlant(@PathVariable String code) {
     if (plantService.isPlantExist(code)) {
       plantService.deletePlant(code);

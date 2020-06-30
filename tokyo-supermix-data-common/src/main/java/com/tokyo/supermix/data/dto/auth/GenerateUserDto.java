@@ -1,9 +1,13 @@
 package com.tokyo.supermix.data.dto.auth;
 
+import java.util.List;
+import com.tokyo.supermix.data.enums.UserType;
+
 public class GenerateUserDto {
   private Long employeeId;
   private String email;
-  private Long roleId;
+  private List<Long> roleIds;
+  private UserType userType;
   public Long getEmployeeId() {
     return employeeId;
   }
@@ -16,11 +20,18 @@ public class GenerateUserDto {
   public void setEmail(String email) {
     this.email = email;
   }
-  public Long getRoleId() {
-    return roleId;
+  
+  public List<Long> getRoleIds() {
+    return roleIds;
   }
-  public void setRoleId(Long roleId) {
-    this.roleId = roleId;
+  public void setRoleIds(List<Long> roleIds) {
+    this.roleIds = roleIds;
+  }
+  public UserType getUserType() {
+    return userType;
+  }
+  public void setUserType(UserType userType) {
+    this.userType = userType;
   }
   
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantEquipmentCalibrationService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -48,8 +49,7 @@ public class PlantEquipmentCalibrationController {
 
   // post API for PlantEquipmentCalibration
   @PostMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
-  @PreAuthorize("hasAuthority('add_plant_equipment_calibration')")
-  public ResponseEntity<Object> createPlantEquipmentCalibration(
+   public ResponseEntity<Object> createPlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
@@ -70,7 +70,6 @@ public class PlantEquipmentCalibrationController {
 
   // get all PlantEquipmentCalibration
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS)
-  @PreAuthorize("hasAuthority('get_plant_equipment_calibration')")
   public ResponseEntity<Object> getAllPlantEquipmentCalibrations() {
     return new ResponseEntity<Object>(
         new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
@@ -81,7 +80,7 @@ public class PlantEquipmentCalibrationController {
   }
 
   // get PlantEquipmentCalibration by id
-  @GetMapping(value = EndpointURI.GET_EQUIPMENT_PLANT_CALIBRATION_BY_ID)
+  @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_BY_ID)
   public ResponseEntity<Object> getPlantEquipmentCalibrationById(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
       logger.debug("Get PlantEquipmentCalibration by id ");
@@ -100,8 +99,7 @@ public class PlantEquipmentCalibrationController {
   }
 
   // DELETE API for PlantEquipmentCalibration
-  @DeleteMapping(value = EndpointURI.DELETE_EQUIPMENT_PLANT_CALIBRATION)
-  @PreAuthorize("hasAuthority('delete_plant_equipment_calibration')")
+  @DeleteMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_BY_ID)
   public ResponseEntity<Object> deletePlantEquipmentCalibration(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
       plantEquipmentCalibrationService.deletePlantEquipmentCalibration(id);
@@ -117,8 +115,7 @@ public class PlantEquipmentCalibrationController {
 
   // update API for PlantEquipmentCalibration
   @PutMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
-  @PreAuthorize("hasAuthority('edit_plant_equipment_calibration')")
-  public ResponseEntity<Object> updatePlantEquipmentCalibration(
+   public ResponseEntity<Object> updatePlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
@@ -157,5 +154,15 @@ public class PlantEquipmentCalibrationController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
+  public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<Object>(
+        new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
+            mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibrationsByPlant(currentUser),
+                PlantEquipmentCalibrationResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 }

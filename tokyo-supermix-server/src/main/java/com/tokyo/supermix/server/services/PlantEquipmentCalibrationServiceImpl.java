@@ -12,12 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalibrationService {
 
 	@Autowired
 	private PlantEquipmentCalibrationRepository plantEquipmentCalibrationRepository;
+	@Autowired
+	  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+
 
 	@Transactional
 	public PlantEquipmentCalibration savePlantEquipmentCalibration(
@@ -59,4 +65,11 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
 	public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationsByPlantCode(String plantCode) {
 		return plantEquipmentCalibrationRepository.findByPlantEquipmentPlantCode(plantCode);
 	}
+
+  @Override
+  public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibrationsByPlant(
+      UserPrincipal currentUser) {
+    return plantEquipmentCalibrationRepository.findByPlantEquipmentPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION));
+  }
 }

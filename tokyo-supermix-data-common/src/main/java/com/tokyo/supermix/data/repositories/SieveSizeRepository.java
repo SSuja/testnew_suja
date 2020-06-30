@@ -11,7 +11,7 @@ public interface SieveSizeRepository
     extends JpaRepository<SieveSize, Long>, QuerydslPredicateExecutor<SieveSize> {
   List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
-  List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId, Sort sort);
+//  List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId, Sort sort);
 
   boolean existsBySizeAndMaterialSubCategoryId(Double size, Long materialSubCategoryId);
 

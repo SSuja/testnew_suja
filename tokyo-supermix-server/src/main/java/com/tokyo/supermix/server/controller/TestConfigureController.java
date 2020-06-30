@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +46,6 @@ public class TestConfigureController {
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
-  @PreAuthorize("hasAuthority('add_test_configure')")
   public ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isexistByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(
@@ -63,14 +61,13 @@ public class TestConfigureController {
   }
 
   @GetMapping(value = EndpointURI.TEST_CONFIGURES)
-  @PreAuthorize("hasAuthority('get_test_configure')")
   public ResponseEntity<Object> getAllTestConfigures() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
         mapper.map(testConfigureService.getAllTestConfigures(), TestConfigureResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_ID)
+  @GetMapping(value = EndpointURI.TEST_CONFIGURE_BY_ID)
   public ResponseEntity<Object> getTestById(@PathVariable Long id) {
     if (testConfigureService.isTestConfigureExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
@@ -83,7 +80,6 @@ public class TestConfigureController {
   }
 
   @PutMapping(value = EndpointURI.TEST_CONFIGURE)
-  @PreAuthorize("hasAuthority('edit_test_configure')")
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
@@ -106,8 +102,7 @@ public class TestConfigureController {
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(EndpointURI.DELETE_TEST_CONFIGURE)
-  @PreAuthorize("hasAuthority('delete_test_configure')")
+  @DeleteMapping(EndpointURI.TEST_CONFIGURE_BY_ID)
   public ResponseEntity<Object> deleteTestConfigure(@PathVariable Long id) {
     if (testConfigureService.isTestConfigureExist(id)) {
       testConfigureService.deleteTestConfigure(id);

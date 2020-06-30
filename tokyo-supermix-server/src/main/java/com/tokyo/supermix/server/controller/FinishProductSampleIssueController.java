@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -34,7 +35,6 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 @RestController
 @CrossOrigin(origins = "*")
 public class FinishProductSampleIssueController {
-
   @Autowired
   FinishProductSampleIssueService finishProductSampleIssueService;
   @Autowired
@@ -46,7 +46,6 @@ public class FinishProductSampleIssueController {
   private static final Logger logger = Logger.getLogger(FinishProductSampleIssueController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
-  @PreAuthorize("hasAuthority('add_finish_product_sample_issue')")
   public ResponseEntity<Object> saveFinishProductSampleIssue(
       @Valid @RequestBody FinishProductSampleIssueRequestDto finishProductSampleIssueRequestDto) {
     finishProductSampleIssueService.saveFinishProductSampleIssue(
@@ -57,7 +56,6 @@ public class FinishProductSampleIssueController {
 
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES)
-  @PreAuthorize("hasAuthority('get_finish_product_sample_issue')")
   public ResponseEntity<Object> getAllFinishProductSampleIssues() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
@@ -68,7 +66,6 @@ public class FinishProductSampleIssueController {
   }
 
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID)
-  @PreAuthorize("hasAuthority('delete_finish_product_sample_issue')")
   public ResponseEntity<Object> deleteFinishProductSampleIssue(@PathVariable Long id) {
     if (finishProductSampleIssueService.isIdExists(id)) {
       finishProductSampleIssueService.deleteFinishProductSampleIssue(id);
@@ -102,7 +99,6 @@ public class FinishProductSampleIssueController {
 
 
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
-  @PreAuthorize("hasAuthority('edit_finish_product_sample_issue')")
   public ResponseEntity<Object> updateFinishProductSampleIssue(
       @Valid @RequestBody FinishProductSampleIssueRequestDto finishProductSampleIssueRequestDto) {
     if (finishProductSampleIssueService.isIdExists(finishProductSampleIssueRequestDto.getId())) {
@@ -141,4 +137,14 @@ public class FinishProductSampleIssueController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-}
+  
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT)
+  public ResponseEntity<Object> getAllFinishProductSampleIssuesByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
+            mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(currentUser),
+                FinishProductSampleIssueResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+  }

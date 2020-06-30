@@ -20,7 +20,10 @@ import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.MailConstants;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MaterialTestServiceImpl implements MaterialTestService {
@@ -34,6 +37,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -152,6 +157,11 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.findByTestConfigureTestType(testType);
   }
 
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getAllMaterialTestByPlant(UserPrincipal currentUser) {
+    return materialTestRepository.findByIncomingSamplePlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
+  }
   public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
     Integer count = 0;
     String bodyMessage = "";
@@ -196,11 +206,11 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String bodyMessage) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
-//    emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
-//        Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
-//        "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
-//            + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
-//            + incomingSample.getDate() + "</b>. The Sample Material is <b>"
-//            + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
+    // emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+    // Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+    // "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
+    // + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
+    // + incomingSample.getDate() + "</b>. The Sample Material is <b>"
+    // + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
   }
 }

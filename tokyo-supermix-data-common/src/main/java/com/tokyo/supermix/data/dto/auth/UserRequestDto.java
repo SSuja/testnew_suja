@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto.auth;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +14,7 @@ public class UserRequestDto {
   private String password;
   private Long employeeId;
   private String email;
-  private Long roleId;
+  private List<Long> roleIds;
   
   public Long getId() {
     return id;
@@ -55,12 +56,12 @@ public class UserRequestDto {
     this.email = email;
   }
 
-  public Long getRoleId() {
-    return roleId;
+  public List<Long> getRoleIds() {
+    return roleIds;
   }
 
-  public void setRoleId(Long roleId) {
-    this.roleId = roleId;
+  public void setRoleIds(List<Long> roleIds) {
+    this.roleIds = roleIds;
   }
 
 }
