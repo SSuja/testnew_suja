@@ -22,6 +22,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.EquationService;
 import com.tokyo.supermix.server.services.ParameterEquationService;
 import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
@@ -34,6 +35,8 @@ public class ParameterEquationController {
   private ParameterEquationService parameterEquationService;
   @Autowired
   private TestParameterService testParameterService;
+  @Autowired
+  private EquationService equationService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -124,5 +127,19 @@ public class ParameterEquationController {
     logger.debug("No Parameter Equation record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_EQUATION_ID,
         validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETER_EQUATION_BY_EQUATION_ID)
+  public ResponseEntity<Object> getParameterEquationByEquation(@PathVariable Long equationId) {
+    if (equationService.isEquationExist(equationId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER_EQUATION,
+          mapper.map(parameterEquationService.findByEquation(equationId),
+              ParameterEquationResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Equation record exist for given equation id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
+          validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

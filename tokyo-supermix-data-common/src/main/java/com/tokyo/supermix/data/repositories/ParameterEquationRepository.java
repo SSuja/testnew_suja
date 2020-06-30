@@ -12,4 +12,6 @@ public interface ParameterEquationRepository extends JpaRepository<ParameterEqua
   public List<ParameterEquation> findByTestParameterTestConfigureId(Long testConfigureId);
 
   ParameterEquation findByTestParameterId(Long testParameterId);
+
+  public List<ParameterEquation> findByEquationId(Long equationId);
 }
