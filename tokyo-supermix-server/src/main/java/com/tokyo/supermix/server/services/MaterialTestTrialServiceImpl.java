@@ -54,7 +54,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   TestParameterRepository testParameterRepository;
   @Autowired
   ParameterResultRepository parameterResultRepository;
-
+@Autowired
+MaterialTestService materialTestService;
   @Transactional
   public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
     String codePrefix = materialTestTrial.getMaterialTest().getCode();
@@ -159,6 +160,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
       result=findResult(sievemain,materialTest.getTestConfigure().getEquation().getFormula());
       materialTest.setAverage(result);
       compareWithAverage(result, materialTest.getCode());
+      materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
   }
   public double findResult(HashMap<String, Double> abb, String equation) {
     ScriptEngineManager mgr = new ScriptEngineManager();
