@@ -9,6 +9,7 @@ public class CustomerRequestDto {
   @NotNull(message = "{customerDto.name.null}")
   @NotEmpty(message = "{customerDto.name.empty}")
   private String name;
+  @NotNull(message = "{customerDto.phoneNumber.null}")
   @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
       message = "{customerDto.phoneNumber.specialCharacter}")
   private String phoneNumber;
