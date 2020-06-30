@@ -42,6 +42,12 @@ public class TestParameter implements Serializable {
   public void setId(Long id) {
     this.id = id;
   }
+  public TrailResult getTrailResult() {
+    return trailResult;
+  }
+  public void setTrailResult(TrailResult trailResult) {
+    this.trailResult = trailResult;
+  }
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
