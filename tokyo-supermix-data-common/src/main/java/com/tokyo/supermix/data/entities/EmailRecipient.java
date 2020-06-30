@@ -72,11 +72,11 @@ public class EmailRecipient {
   }
 
   public RecipientType getRecipientType() {
-    return RecipientType;
+    return recipientType;
   }
 
   public void setRecipientType(RecipientType recipientType) {
-    RecipientType = recipientType;
+    this.recipientType = recipientType;
   }
 
   public Plant getPlant() {

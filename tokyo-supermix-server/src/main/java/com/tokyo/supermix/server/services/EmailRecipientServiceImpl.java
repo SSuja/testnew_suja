@@ -10,6 +10,7 @@ import com.tokyo.supermix.data.dto.EmailRecipientDto;
 import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
+import com.tokyo.supermix.data.enums.RecipientType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailRecipientRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
@@ -32,6 +33,8 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
         emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
         emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
+
+
       }
     }
     if (emailRecipientDto.getUserId() != null) {
@@ -92,6 +95,16 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   @Transactional(readOnly = true)
   public boolean isEmailRecipientExist(Long id) {
     return emailRecipientRepository.existsById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId,
+      RecipientType recipientType) {
+
+    List<EmailRecipient> emailRecipientList =
+        emailRecipientRepository.findByEmailGroupIdAndRecipientType(emailGroupId, recipientType);
+    return mapper.map(emailRecipientList, EmailRecipientRequestDto.class);
+
   }
 
   @Transactional(propagation = Propagation.NEVER)
