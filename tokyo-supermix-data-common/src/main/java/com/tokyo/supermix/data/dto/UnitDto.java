@@ -9,7 +9,7 @@ public class UnitDto {
 	private Long id;
 	@NotNull(message = "{unitDto.unit.null}")
 	@NotEmpty(message = "{unitDto.unit.empty}")
-	@Pattern(regexp = "^[a-zA-Z0-9\\\\s%]+$", message = "{unitDto.unit.specialCharacter}")
+	@Pattern(regexp = "^[a-zA-Z0-9\\\\s%-]+$", message = "{unitDto.unit.specialCharacter}")
 	private String unit;
 
 	public Long getId() {
