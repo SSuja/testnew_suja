@@ -16,9 +16,9 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   List<FinishProductSample> findByMixDesignCode(String mixDesignCode);
 
-  boolean existsByConcreteMixerId(Long id);
+  boolean existsByEquipmentId(Long id);
 
-  List<FinishProductSample> findByConcreteMixerId(Long id);
+  List<FinishProductSample> findByEquipmentId(Long id);
 
   List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
 

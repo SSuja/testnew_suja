@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
@@ -95,8 +97,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigure(Long testConfigureId) {
-    return materialTestRepository.findByTestConfigure(testConfigureId);
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId) {
+    return materialTestRepository.findByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -106,8 +108,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
-    return materialTestRepository.existsByTestConfigure(testConfigureId);
+    return materialTestRepository.existsByTestConfigureId(testConfigureId);
   }
+
   @Transactional(readOnly = true)
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode) {
     return materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
@@ -158,5 +161,56 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public List<MaterialTest> getAllMaterialTestByPlant(UserPrincipal currentUser) {
     return materialTestRepository.findByIncomingSamplePlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
+  }
+  public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
+    Integer count = 0;
+    String bodyMessage = "";
+    Integer failCount = 0;
+    List<TestConfigure> testConfigureList =
+        testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(
+            incomingSample.getRawMaterial().getMaterialSubCategory().getId());
+    // .findByTestTypeAndCoreTest(
+    // testTypeRepository.findTestTypeByMaterialSubCategoryId(
+    // incomingSample.getRawMaterial().getMaterialSubCategory().getId()), true);
+    List<MaterialTest> materialTestList =
+        materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
+    for (TestConfigure testConfigure : testConfigureList) {
+      for (MaterialTest materialTest : materialTestList) {
+        if (testConfigure.getTest().getName()
+            .equalsIgnoreCase(materialTest.getTestConfigure().getTest().getName())
+            && materialTest.getTestConfigure().isCoreTest()
+            && materialTest.getStatus().equals(Status.PASS)) {
+          count++;
+        }
+      }
+      if (materialTestRepository.countByIncomingSampleCodeAndStatusAndTestConfigureTestName(
+          incomingSample.getCode(), Status.FAIL, testConfigure.getTest().getName()) >= 2) {
+        failCount++;
+      }
+    }
+    calculateTest(count, failCount, testConfigureList.size(), incomingSample, bodyMessage);
+  }
+
+  private void calculateTest(Integer count, Integer failCount, Integer testSize,
+      IncomingSample incomingSample, String bodyMessage) {
+    if (count == testSize) {
+      updateStatusSample(Status.PASS, incomingSample, bodyMessage);
+    } else if (failCount == 1) {
+      updateStatusSample(Status.FAIL, incomingSample, bodyMessage);
+    } else {
+      updateStatusSample(Status.PROCESS, incomingSample, bodyMessage);
+    }
+  }
+
+  private void updateStatusSample(Status status, IncomingSample incomingSample,
+      String bodyMessage) {
+    incomingSample.setStatus(status);
+    incomingSampleRepository.save(incomingSample);
+    // emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
+    // Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+    // "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
+    // + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
+    // + incomingSample.getDate() + "</b>. The Sample Material is <b>"
+    // + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
   }
 }

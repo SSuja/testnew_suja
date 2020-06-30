@@ -1,7 +1,5 @@
 package com.tokyo.supermix.data.dto;
 
-
-
 public class PlantEquipmentResponseDto {
 
   private String serialNo;

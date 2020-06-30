@@ -44,8 +44,8 @@ public class UserPlantRoleController {
               userPlantRoleService.getUsersByPlantRoleId(plantRoleId), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
-        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE,
+        privilegeValidationFailureStatusCodes.getRoleNotExists()), HttpStatus.BAD_REQUEST);
   }
   @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_ROLE_BY_ROLE_BY_USERTYPE)
   public ResponseEntity<Object> getUsersByPlantRoleIdAndUserType(@PathVariable Long plantRoleId,@PathVariable UserType userType) {

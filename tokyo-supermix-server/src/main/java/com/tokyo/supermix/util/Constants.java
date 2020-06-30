@@ -410,16 +410,6 @@ public class Constants {
       "Finished Product Sample Successfully Deleted";
   public static final String UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS =
       "Finished Product Sample Updated Successfully";
-  /*
-   * Constants for Concrete Mixer validation key & Success messages
-   */
-  public static final String CONCRETE_MIXER_ID = "ConcreteMixerId";
-  public static final String CONCRETE_MIXER_NAME = "ConcreteMixerName";
-  public static final String ADD_CONCRETE_MIXER_SUCCESS = "Concrete Mixer Added Successfully";
-  public static final String CONCRETE_MIXER_DELETED = "Concrete Mixer Successfully Deleted";
-  public static final String UPDATE_CONCRETE_MIXER_SUCCESS = "Concrete Mixer updated Successfully";
-  public static final String CONCRETE_MIXER = "concreteMixer";
-  public static final String CONCRETE_MIXERS = "concreteMixers";
 
   /*
    * Constants for Test validation key & Success messages
