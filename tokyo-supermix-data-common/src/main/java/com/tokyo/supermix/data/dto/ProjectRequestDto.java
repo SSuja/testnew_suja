@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class ProjectRequestDto {
 	private String code;
@@ -11,6 +12,8 @@ public class ProjectRequestDto {
 	private String name;
 	@NotNull(message = "{projectRequestDto.contactNumber.null}")
 	@NotEmpty(message = "{projectRequestDto.contactNumber.empty}")
+	  @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
+      message = "{projectRequestDto.phoneNumber.specialCharacter}")
 	private String contactNumber;
 	private String contactPerson;
 	private Date startDate;

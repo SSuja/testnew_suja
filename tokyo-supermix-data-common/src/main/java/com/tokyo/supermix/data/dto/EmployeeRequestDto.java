@@ -17,6 +17,8 @@ public class EmployeeRequestDto {
   @NotNull(message = "{employeeDto.email.null}")
   @NotEmpty(message = "{employeeDto.email.empty}")
   private String email;
+  @Pattern(regexp = "^\\+(?:[0-9] ?){6,14}[0-9]$",
+      message = "{employeeDto.phoneNumber.specialCharacter}")
   private String phoneNumber;
   private String address;
   private String plantCode;
