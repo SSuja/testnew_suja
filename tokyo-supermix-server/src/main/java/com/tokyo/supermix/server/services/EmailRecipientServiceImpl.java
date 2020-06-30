@@ -33,6 +33,8 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
         emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
         emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
+
+
       }
     }
     if (emailRecipientDto.getUserId() != null) {
@@ -94,12 +96,13 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   }
 
   @Transactional(readOnly = true)
-  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId, RecipientType recipientType) {
-    
-    List<EmailRecipient> emailRecipientList = emailRecipientRepository.findByEmailGroupIdAndRecipientType(emailGroupId, recipientType);
-          return mapper.map(emailRecipientList, EmailRecipientRequestDto.class);
-   
-    
+  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId,
+      RecipientType recipientType) {
+
+    List<EmailRecipient> emailRecipientList =
+        emailRecipientRepository.findByEmailGroupIdAndRecipientType(emailGroupId, recipientType);
+    return mapper.map(emailRecipientList, EmailRecipientRequestDto.class);
+
   }
 
   @Transactional(propagation = Propagation.NEVER)
