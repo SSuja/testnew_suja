@@ -32,6 +32,7 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         emailRecipientRequestDto.setPlantRoleId(plantRoleId);
         emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
         emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
+        emailRecipientRequestDto.setPlantCode(emailRecipientDto.getPlantCode());
         emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
 
 
@@ -43,6 +44,7 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         emailRecipientRequestDto.setUserId(userId);
         emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
         emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
+        emailRecipientRequestDto.setPlantCode(emailRecipientDto.getPlantCode());
         emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
       }
     }
@@ -108,4 +110,8 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   public void deleteEmailRecipient(Long id) {
     emailRecipientRepository.deleteById(id);
   }
+
+ 
+
+  
 }

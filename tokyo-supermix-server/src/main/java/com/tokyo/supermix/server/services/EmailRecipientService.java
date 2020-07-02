@@ -12,6 +12,8 @@ public interface EmailRecipientService {
   
   public List<String> getEmailsByEmailGroupNameAndPlantCode(String emailGroupName, String plantCode);
 
+  
+
   public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId,
       RecipientType recipientType);
 
