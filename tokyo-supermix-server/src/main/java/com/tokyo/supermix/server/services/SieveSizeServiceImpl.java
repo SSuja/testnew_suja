@@ -71,10 +71,9 @@ public class SieveSizeServiceImpl implements SieveSizeService {
     return sieveSize;
   }
 
-  public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
-//    return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId,
-//        Sort.by(Sort.Direction.DESC, "size"));
-        return null;
+  public List<SieveSize> findByMaterialSubCategory(Long materialSubCategoryId) {
+    return sieveSizeRepository
+        .findByMaterialSubCategoryIdOrderByMaterialSubCategoryDesc(materialSubCategoryId);
   }
 
   @Transactional(readOnly = true)
@@ -83,7 +82,7 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   }
 
   public boolean isDuplicateEntryExist(Long materialSubCategoryId, Double size) {
-    if ((!findByMaterialSubCategoryId(materialSubCategoryId).equals(size))
+    if ((!findByMaterialSubCategory(materialSubCategoryId).equals(size))
         && (isSizeAndMaterialSubCategoryIdExist(size, materialSubCategoryId))) {
       return true;
     }

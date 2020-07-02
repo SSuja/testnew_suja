@@ -132,7 +132,7 @@ public class SieveSizeController {
       @PathVariable Long materialSubCategoryId) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY_ID,
-          mapper.map(sieveSizeService.findByMaterialSubCategoryId(materialSubCategoryId),
+          mapper.map(sieveSizeService.findByMaterialSubCategory(materialSubCategoryId),
               SieveSizeResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
