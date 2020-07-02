@@ -22,6 +22,7 @@ import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -39,6 +40,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailRecipientService emailRecipientService;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -206,11 +209,13 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String bodyMessage) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
-    // emailService.sendMailWithFormat(mailConstants.getMailUpdateIncomingSampleStatus(),
-    // Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
-    // "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
-    // + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
-    // + incomingSample.getDate() + "</b>. The Sample Material is <b>"
-    // + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
+    List<String>  incomingSampleEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_INCOMING_SAMPLE_STATUS, incomingSample.getPlant().getCode());    
+    
+     emailService.sendMailWithFormat(incomingSampleEmailList.toArray(new String[incomingSampleEmailList.size()]),
+     Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
+     "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
+     + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
+     + incomingSample.getDate() + "</b>. The Sample Material is <b>"
+     + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
   }
 }
