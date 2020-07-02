@@ -536,6 +536,7 @@ public class Constants {
   
   /* email notification days */
   public static final String ADD_EMAIL_NOTIFICATION_DAYS = "Email Notification Days Added Successfully";
+  public static final String UPDATE_EMAIL_NOTIFICATION_DAYS = "Email Notification Days Updated Successfully";
   public static final String EMAIL_NOTIFICATION_DAYS = "EmailNotificationDays";
   public static final String EMAIL_NOTIFICATION_DAY = "EmailNotificationDay";
   

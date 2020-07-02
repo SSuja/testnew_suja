@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
@@ -59,4 +60,18 @@ public class EmailNotificationDaysController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
+  @PutMapping(value = EndpointURI.EMAIL_NOTIFICATION)
+  public ResponseEntity<Object> editAllEmailNotificationDays(@RequestBody
+      NotificationDaysRequestDto notificationDaysRequestDto) {
+    if (emailNotificationDaysService.isDuplicateExists(notificationDaysRequestDto.getEmailGroupId(),
+        notificationDaysRequestDto.getDays())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_NOTIFICATION_DAY,
+          validationFailureStatusCodes.getEmailNotificationDaysAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    emailNotificationDaysService
+    .createEmailNotification(mapper.map(notificationDaysRequestDto,NotificationDays.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_NOTIFICATION_DAYS),
+        HttpStatus.OK);
+  }
 }
