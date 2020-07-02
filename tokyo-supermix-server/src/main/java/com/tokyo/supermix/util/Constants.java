@@ -529,9 +529,15 @@ public class Constants {
   public static final String EMAIL_RECIPIENT_ID = "emailRecipientId";
   
   
-  public static final String EMAIL_QROUPS = "emailGroups";
+  public static final String EMAIL_GROUPS = "emailGroups";
   public static final String EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION = "Plant Equipment Calibration Group";
   public static final String EMAIL_GROUP_INCOMING_SAMPLE_STATUS = "Incoming Sample Group";
+  
+  /* email notification days */
+  public static final String ADD_EMAIL_NOTIFICATION_DAYS = "Email Notification Days Added Successfully";
+  public static final String EMAIL_NOTIFICATION_DAYS = "EmailNotificationDays";
+  public static final String EMAIL_NOTIFICATION_DAY = "EmailNotificationDay";
+  
   /*
    * Encapsulate constructor to restrict modification from outside
    */

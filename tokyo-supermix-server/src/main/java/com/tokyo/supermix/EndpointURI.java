@@ -573,7 +573,14 @@ public final class EndpointURI {
   public static final String EMAIL_RECIPIENT_BY_ID = EMAIL_RECIPIENT + ID;
   
   
-  public static final String EMAIL_QROUPS = BASE_API_PATH + "email-groups";
+  public static final String EMAIL_GROUPS = BASE_API_PATH + "email-groups";
+  public static final String EMAIL_GROUP_BY_SHEDULE = EMAIL_GROUPS +SLASH+ "email-group-schedule" + SLASH + "{schedule}";
+  
+  /*
+   * email group notification days APIs
+   */
+  public static final String EMAIL_NOTIFICATION = BASE_API_PATH + "email-notification-day";
+  public static final String EMAIL_NOTIFICATIONS = BASE_API_PATH + "email-notification-days";
 
   private EndpointURI() {}
 }

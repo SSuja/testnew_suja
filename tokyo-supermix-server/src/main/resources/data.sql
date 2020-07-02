@@ -290,9 +290,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('173', 'edit_equation_element', '43');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('174', 'delete_equation_element', '43');
 
-INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`) VALUES ('1', 'Reporting Group');
-INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`) VALUES ('2', 'Calibration Group');
-INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`) VALUES ('3', 'Incoming Sample Group');
+INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`,  `schedule`) VALUES ('1', 'Reporting Group',0);
+INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('2', 'Calibration Group',1);
+INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('3', 'Incoming Sample Group',0);
+
 
 INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`status`)VALUES
 (1,1,1,1),(2,1,2,1),(3,1,3,1),(4,1,4,1),(5,1,5,1),(6,1,6,1),(7,1,7,1),(8,1,8,1),(9,1,9,1),(10,1,10,1),
