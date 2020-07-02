@@ -126,7 +126,7 @@ public class EmailNotification {
        }}
       
       if(Day1!=null && Day2 !=null) {
-      if (noOfDays == 7 || noOfDays == 28) {
+      if (noOfDays == Day1 || noOfDays == Day2) {
         sendMixDesignEmail(finishProductSample, noOfDays);
       }
       }
