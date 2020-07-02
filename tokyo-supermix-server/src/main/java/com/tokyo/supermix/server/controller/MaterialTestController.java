@@ -164,6 +164,19 @@ public class MaterialTestController {
     }
   }
 
+  @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE)
+  public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable Long testConfigureId) {
+    if (materialTestService.isMaterialTestByTestConfigureExists(testConfigureId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+          mapper.map(materialTestService.getMaterialTestByTestConfigureId(testConfigureId),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+
+  }
+
   // get material test by TestConfigureTestType
   @GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE)
   public ResponseEntity<Object> getMaterialTestByTestConfigureTestType(
