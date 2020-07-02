@@ -1706,5 +1706,27 @@ public String getEmailRecipientnotExist() {
 public void setEmailRecipientnotExist(String emailRecipientnotExist) {
 	this.emailRecipientnotExist = emailRecipientnotExist;
 }
+
+@Value("${validation.emailNotificationDays.alreadyExist}")
+private String emailNotificationDaysAlreadyExist;
+
+@Value("${validation.emailNotificationDays.notExist}")
+private String emailNotificationDaysNotExist;
+
+public String getEmailNotificationDaysAlreadyExist() {
+  return emailNotificationDaysAlreadyExist;
+}
+
+public void setEmailNotificationDaysAlreadyExist(String emailNotificationDaysAlreadyExist) {
+  this.emailNotificationDaysAlreadyExist = emailNotificationDaysAlreadyExist;
+}
+
+public String getEmailNotificationDaysNotExist() {
+  return emailNotificationDaysNotExist;
+}
+
+public void setEmailNotificationDaysNotExist(String emailNotificationDaysNotExist) {
+  this.emailNotificationDaysNotExist = emailNotificationDaysNotExist;
+}
 }
 

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.entities.EmailGroup;
@@ -23,11 +24,17 @@ public class EmailGroupController {
   @Autowired
   private EmailGroupService emailGroupService;
   
-  @GetMapping(value = EndpointURI.EMAIL_QROUPS)
+  @GetMapping(value = EndpointURI.EMAIL_GROUPS)
   public ResponseEntity<Object> getAllEmailGroups() {
-       return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_QROUPS,
+       return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
         mapper.map(emailGroupService.getAllEmailGroups(), EmailGroup.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
-
+  
+  @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_SHEDULE)
+  public ResponseEntity<Object> getAllEmailGroupsBySchedule(@PathVariable Boolean schedule) {
+       return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
+        mapper.map(emailGroupService.getAllEmailGroupsBySchedule(schedule), EmailGroup.class), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 }

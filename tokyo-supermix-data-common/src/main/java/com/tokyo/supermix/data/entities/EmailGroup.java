@@ -13,7 +13,9 @@ public class EmailGroup {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
+  private boolean schedule;
   private static final long serialVersionUID = 1L;
+
   public Long getId() {
     return id;
   }
@@ -32,5 +34,13 @@ public class EmailGroup {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isSchedule() {
+    return schedule;
+  }
+
+  public void setSchedule(boolean schedule) {
+    this.schedule = schedule;
   }
 }
