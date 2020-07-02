@@ -168,10 +168,10 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('93', 'delete_sieve_accepted_value', '23');
 
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('24', 'test_configuration', '9');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('94', 'create_test', '24');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('95', 'create_accepted_value', '24');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('96', 'create_test_parameter', '24');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('97', 'create_equation', '24');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('94', 'create_manage_test', '24');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('95', 'create_manage_accepted_value', '24');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('96', 'create_manage_test_parameter', '24');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('97', 'create_manage_equation', '24');
 
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('25', 'manage_test', '10');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('98', 'view_manage_test', '25');
