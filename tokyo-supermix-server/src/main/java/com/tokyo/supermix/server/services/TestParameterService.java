@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.TestParameterType;
 
 public interface TestParameterService {
   public void saveTestParameter(TestParameter testParameter);

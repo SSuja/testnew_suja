@@ -521,7 +521,16 @@ public class Constants {
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
   public static final String FINISH_PRODUCT_TEST_STATUS= "finishProductTestStatus";
-
+  
+  public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
+  public static final String EMAIL_RECIPIENT = "emailRecipient";
+  public static final String EMAIL_RECIPIENTS = "emailRecipients";
+  public static final String EMAIL_RECIPIENT_DELETED = "Email Recipient Successfully Deleted";
+  public static final String EMAIL_RECIPIENT_ID = "emailRecipientId";
+  
+  
+  public static final String EMAIL_QROUPS = "emailGroups";
+  public static final String EMAIL_GROUP_NAME = "Plant Equipment Calibration Group";
   /*
    * Encapsulate constructor to restrict modification from outside
    */

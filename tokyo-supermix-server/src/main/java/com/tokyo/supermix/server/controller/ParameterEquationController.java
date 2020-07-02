@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.ParameterEquationService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -38,6 +39,8 @@ public class ParameterEquationController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private TestConfigureService testConfigureService;
   private static final Logger logger = Logger.getLogger(ParameterEquationController.class);
 
   @PostMapping(value = EndpointURI.PARAMETER_EQUATION)
@@ -124,5 +127,19 @@ public class ParameterEquationController {
     logger.debug("No Parameter Equation record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_EQUATION_ID,
         validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETER_EQUATION_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getParameterEquationByTestConfigureId(@PathVariable Long testConfigureId) {
+    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER_EQUATION,
+          mapper.map(parameterEquationService.getParameterEquationsByTestConfigureId(testConfigureId),
+              ParameterEquationResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Equation record exist for given testconfigureid");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+          validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

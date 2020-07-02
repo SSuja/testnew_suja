@@ -22,4 +22,7 @@ public interface ParameterEquationService {
   public ParameterEquation updateParameterEquation(ParameterEquation parameterEquation);
 
   public void saveParameterEquationAndElement(ParameterEquationEleDto parameterEquationEleDto);
+
+  public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId);
+
 }

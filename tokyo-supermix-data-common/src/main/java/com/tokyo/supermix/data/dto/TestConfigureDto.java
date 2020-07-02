@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.enums.TestType;
-import com.tokyo.supermix.data.enums.TrailResult;
 
 public class TestConfigureDto {
   private Long id;

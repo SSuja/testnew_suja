@@ -514,6 +514,8 @@ public final class EndpointURI {
   public static final String PARAMETER_EQUATIONS = BASE_API_PATH + "parameter-equations";
   public static final String PARAMETER_EQUATION_BY_TEST_PARAMETER_ID =
       PARAMETER_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+  public static final String PARAMETER_EQUATION_BY_TEST_CONFIGURE_ID =
+      PARAMETER_EQUATION + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   /*
    * Parameter Equation Element apis
@@ -564,6 +566,16 @@ public final class EndpointURI {
 
   public static final String FINISH_PRODUCT_TEST_BY_PLANT =
       FINISH_PRODUCT_TEST +PLANT_WISE;
+  
+  /*
+   * Employee apis
+   */
+  public static final String EMAIL_RECIPIENT = BASE_API_PATH + "email-recipient";
+  public static final String EMAIL_RECIPIENTS = BASE_API_PATH + "email-recipient"+SLASH+"{emailGroupId}" +SLASH+"{recipientType}";
+  public static final String EMAIL_RECIPIENT_BY_ID = EMAIL_RECIPIENT + ID;
+  
+  
+  public static final String EMAIL_QROUPS = BASE_API_PATH + "email-groups";
 
   private EndpointURI() {}
 }
