@@ -1,9 +1,15 @@
 package com.tokyo.supermix.server.services;
 
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.NotificationDaysResponseDto;
+import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.NotificationDays;
 import com.tokyo.supermix.data.repositories.EmailNotificationDaysRepository;
 
@@ -17,8 +23,24 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   }
 
   @Transactional(readOnly = true)
-  public List<NotificationDays> getAllEmailNotificationDays() {
-    return emailNotificationDaysRepository.findAll();
+  public List<NotificationDaysResponseDto> getAllEmailNotificationDays() {
+    List<NotificationDays> notificationDaysList =  emailNotificationDaysRepository.findAll();
+    Set<EmailGroup> em=new HashSet<>();
+    for(NotificationDays notificationDay: notificationDaysList) {
+     em.add(notificationDay.getEmailGroup());
+    }
+    List<NotificationDaysResponseDto> notificationDays = new ArrayList<NotificationDaysResponseDto>();
+    NotificationDaysResponseDto notificationDaysResponseDto= new NotificationDaysResponseDto();
+    List<Double> days=new ArrayList<>();
+    em.forEach(email ->{
+            emailNotificationDaysRepository.findByEmailGroupId(email.getId()).forEach(day ->{
+              days.add(day.getDays());          
+            });;
+            notificationDaysResponseDto.setEmailGroupName(email.getName());
+    });
+    notificationDaysResponseDto.setDays(days);
+    notificationDays.add(notificationDaysResponseDto);
+    return notificationDays;
   }
 
   @Transactional(readOnly = true)
@@ -27,5 +49,10 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public List<NotificationDays> getByEmailGroupName(String emailGroupName) {
+    return emailNotificationDaysRepository.getByEmailGroupName(emailGroupName);
   }
 }
