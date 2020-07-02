@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -46,13 +47,15 @@ public class MixDesignController {
   private static final Logger logger = Logger.getLogger(MixDesignController.class);
 
   @PostMapping(value = EndpointURI.MIX_DESIGN)
-  @PreAuthorize("hasAuthority('add_mix_design')")
-  public String saveMixDesign(@Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
-    return mixDesignService.saveMixDesign(mapper.map(mixDesignRequestDto, MixDesign.class));
+  public ResponseEntity<Object> saveMixDesign(
+      @Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
+    mixDesignService.saveMixDesign(mapper.map(mixDesignRequestDto, MixDesign.class));
+    return new ResponseEntity<Object>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_SUCCESS),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGNS)
-  @PreAuthorize("hasAuthority('get_mix_design')")
   public ResponseEntity<Object> getAllMixDesigns() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
         mapper.map(mixDesignService.getAllMixDesigns(), MixDesignResponseDto.class),
@@ -60,7 +63,6 @@ public class MixDesignController {
   }
 
   @DeleteMapping(value = EndpointURI.MIX_DESIGN_BY_CODE)
-  @PreAuthorize("hasAuthority('delete_mix_design')")
   public ResponseEntity<Object> deleteMixDesign(@PathVariable String code) {
     if (mixDesignService.isCodeExist(code)) {
       mixDesignService.deleteMixDesign(code);
@@ -87,7 +89,6 @@ public class MixDesignController {
   }
 
   @PutMapping(value = EndpointURI.MIX_DESIGN)
-  @PreAuthorize("hasAuthority('edit_mix_design')")
   public ResponseEntity<Object> updateMixDesign(
       @Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
     if (mixDesignService.isCodeExist(mixDesignRequestDto.getCode())) {
@@ -152,5 +153,11 @@ public class MixDesignController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+  @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
+  public ResponseEntity<Object> getAllMixDesignsByPlant(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+        mapper.map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

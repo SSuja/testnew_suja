@@ -30,7 +30,6 @@ import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -46,7 +45,6 @@ public class MaterialSubCategoryController {
   private static final Logger logger = Logger.getLogger(MaterialSubCategoryController.class);
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
-  @PreAuthorize("hasAuthority('get_material_sub_category')")
   public ResponseEntity<Object> getMaterialSubCategory() {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
@@ -56,7 +54,7 @@ public class MaterialSubCategoryController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_MATERIAL_SUB_CATEGORY_BY_ID)
+  @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_BY_ID)
   public ResponseEntity<Object> getMaterialSubCategoryById(@PathVariable Long id) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(id)) {
       return new ResponseEntity<>(
@@ -71,8 +69,7 @@ public class MaterialSubCategoryController {
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_MATERIAL_SUB_CATEGORY)
-  @PreAuthorize("hasAuthority('delete_material_sub_category')")
+  @DeleteMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_BY_ID)
   public ResponseEntity<Object> deleteMaterialSubCategoryById(@PathVariable Long id) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(id)) {
       materialSubCategoryService.deleteMaterialSubCategory(id);;
@@ -85,7 +82,6 @@ public class MaterialSubCategoryController {
   }
 
   @PostMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY)
-  @PreAuthorize("hasAuthority('add_material_sub_category')")
   public ResponseEntity<Object> createMaterialSubCategory(
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
     if (materialSubCategoryService
@@ -104,7 +100,6 @@ public class MaterialSubCategoryController {
   }
 
   @PutMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY)
-  @PreAuthorize("hasAuthority('edit_material_sub_category')")
   public ResponseEntity<Object> updateMaterialSubCategory(
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
     if (materialSubCategoryService

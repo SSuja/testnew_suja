@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class FinishProductTestServiceImpl implements FinishProductTestService {
@@ -18,6 +21,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private FinishProductTestRepository finishProductTestRepository;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -94,5 +99,11 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       Long finishProductSampleId, Long testConfigureId) {
     return finishProductTestRepository
         .findByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId);
+      }
+  
+  @Transactional(readOnly = true)
+  public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
+    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
   }
 }

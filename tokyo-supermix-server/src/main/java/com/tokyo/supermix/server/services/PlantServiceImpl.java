@@ -18,8 +18,8 @@ public class PlantServiceImpl implements PlantService {
   private PlantRepository plantRepository;
 
   @Transactional
-  public void savePlant(Plant plant) {
-    plantRepository.save(plant);
+  public Plant savePlant(Plant plant) {
+    return plantRepository.save(plant);
   }
 
   @Transactional(readOnly = true)

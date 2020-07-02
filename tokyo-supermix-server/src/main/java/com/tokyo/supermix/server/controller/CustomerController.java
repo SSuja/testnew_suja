@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +25,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.CustomerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -44,8 +45,14 @@ public class CustomerController {
   private PlantService plantService;
   private static final Logger logger = Logger.getLogger(CustomerController.class);
 
+  @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
+  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(customerService.getAllCustomersByCurrentUser(currentUser), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
   @GetMapping(value = EndpointURI.CUSTOMERS)
-  @PreAuthorize("hasAuthority('get_customer')")
   public ResponseEntity<Object> getAllCustomers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
         mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
@@ -53,7 +60,6 @@ public class CustomerController {
   }
 
   @PostMapping(value = EndpointURI.CUSTOMER)
-  @PreAuthorize("hasAuthority('add_customer')")
   public ResponseEntity<Object> saveCustomer(
       @Valid @RequestBody CustomerRequestDto customerRequestDto) {
     if (customerService.isNameExist(customerRequestDto.getName())) {
@@ -67,7 +73,7 @@ public class CustomerController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_CUSTOMER_BY_ID)
+  @GetMapping(value = EndpointURI.CUSTOMER_BY_ID)
   public ResponseEntity<Object> getCustomerById(@PathVariable Long id) {
     if (customerService.isCustomerExist(id)) {
       logger.debug("Get Customer By Id");
@@ -79,8 +85,7 @@ public class CustomerController {
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.DELETE_CUSTOMER)
-  @PreAuthorize("hasAuthority('delete_customer')")
+  @DeleteMapping(value = EndpointURI.CUSTOMER_BY_ID)
   public ResponseEntity<Object> deleteCustomer(@PathVariable Long id) {
     if (customerService.isCustomerExist(id)) {
       logger.debug("delete customer by id");
@@ -93,7 +98,6 @@ public class CustomerController {
   }
 
   @PutMapping(value = EndpointURI.CUSTOMER)
-  @PreAuthorize("hasAuthority('edit_customer')")
   public ResponseEntity<Object> updateCustomer(
       @Valid @RequestBody CustomerRequestDto customerRequestDto) {
     if (customerService.isCustomerExist(customerRequestDto.getId())) {

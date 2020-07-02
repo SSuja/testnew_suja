@@ -28,7 +28,6 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.RawMaterialService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 
 @RestController
@@ -46,7 +45,6 @@ public class RawMaterialController {
   private static final Logger logger = Logger.getLogger(RawMaterialController.class);
 
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
-  @PreAuthorize("hasAuthority('add_raw_material')")
   public ResponseEntity<Object> createRawMaterial(
       @Valid @RequestBody RawMaterialRequestDto rawMaterialRequestDto) {
     if (rawMaterialService.isRawMaterialNameExist(rawMaterialRequestDto.getName())) {
@@ -61,8 +59,7 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
-  @PreAuthorize("hasAuthority('get_raw_material')")
-  public ResponseEntity<Object> getAllRawMaterials() {
+   public ResponseEntity<Object> getAllRawMaterials() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
         mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -81,8 +78,7 @@ public class RawMaterialController {
   }
 
   @PutMapping(value = EndpointURI.RAW_MATERIAL)
-  @PreAuthorize("hasAuthority('edit_raw_material')")
-  public ResponseEntity<Object> updateRawMaterial(
+   public ResponseEntity<Object> updateRawMaterial(
       @Valid @RequestBody RawMaterialRequestDto rawMaterialRequestDto) {
     if (rawMaterialService.isRawMaterialExist(rawMaterialRequestDto.getId())) {
       if (rawMaterialService.isUpdatedNameExist(rawMaterialRequestDto.getId(),
@@ -101,7 +97,6 @@ public class RawMaterialController {
   }
 
   @DeleteMapping(EndpointURI.DELETE_RAW_MATERIAL)
-  @PreAuthorize("hasAuthority('delete_raw_material')")
   public ResponseEntity<Object> deleteRawMaterial(@PathVariable Long id) {
     if (rawMaterialService.isRawMaterialExist(id)) {
       rawMaterialService.deleteRawMaterial(id);
