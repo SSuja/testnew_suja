@@ -52,10 +52,10 @@ public class EmailNotificationDaysController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.EMAIL_NOTIFICATIONS)
-  public ResponseEntity<Object> getAllEmailNotificationDays() {
+  @GetMapping(value = EndpointURI.EMAIL_NOTIFICATIONS_BY_GROUP)
+  public ResponseEntity<Object> getAllEmailNotificationDaysByGroup() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_NOTIFICATION_DAYS,
-        mapper.map(emailNotificationDaysService.getAllEmailNotificationDays(),
+        mapper.map(emailNotificationDaysService.getAllEmailNotificationDaysByGroup(),
             NotificationDaysResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
@@ -73,5 +73,13 @@ public class EmailNotificationDaysController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_NOTIFICATION_DAYS),
         HttpStatus.OK);
+  }
+  
+  @GetMapping(value = EndpointURI.EMAIL_NOTIFICATIONS)
+  public ResponseEntity<Object> getAllEmailNotificationDays() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_NOTIFICATION_DAYS,
+        mapper.map(emailNotificationDaysService.getAllEmailNotificationDays(),
+            NotificationDays.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

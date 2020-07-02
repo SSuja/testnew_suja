@@ -8,9 +8,11 @@ public interface EmailNotificationDaysService {
 
   public void createEmailNotification(NotificationDays notificationDays);
 
-  public List<NotificationDaysResponseDto> getAllEmailNotificationDays();
+  public List<NotificationDays> getAllEmailNotificationDays();
 
   public boolean isDuplicateExists(Long emailGroupId, Double days);
   
   public List<NotificationDays> getByEmailGroupName(String emailGroupName);
+
+  public  List<NotificationDaysResponseDto> getAllEmailNotificationDaysByGroup();
 }

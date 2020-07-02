@@ -22,7 +22,7 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   }
 
   @Transactional(readOnly = true)
-  public List<NotificationDaysResponseDto> getAllEmailNotificationDays() {
+  public List<NotificationDaysResponseDto> getAllEmailNotificationDaysByGroup() {
     List<NotificationDays> notificationDaysList =  emailNotificationDaysRepository.findAll();
     Set<EmailGroup> em=new HashSet<>();
     for(NotificationDays notificationDay: notificationDaysList) {
@@ -53,5 +53,10 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   @Transactional(readOnly = true)
   public List<NotificationDays> getByEmailGroupName(String emailGroupName) {
     return emailNotificationDaysRepository.getByEmailGroupName(emailGroupName);
+  }
+
+  @Transactional(readOnly = true)
+  public List<NotificationDays> getAllEmailNotificationDays() {
+    return emailNotificationDaysRepository.findAll();
   }
 }
