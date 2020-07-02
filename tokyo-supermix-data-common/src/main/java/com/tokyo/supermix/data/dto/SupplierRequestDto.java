@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 

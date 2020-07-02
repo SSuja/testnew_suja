@@ -88,4 +88,9 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
       parameterEquationElementRepository.save(parameterEquationElement);
     }
   }
+  
+  @Transactional(readOnly = true)
+  public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId) {
+    return parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);
+  }
 }
