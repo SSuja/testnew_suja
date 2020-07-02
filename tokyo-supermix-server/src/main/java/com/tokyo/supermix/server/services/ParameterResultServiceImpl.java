@@ -215,14 +215,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
                 .findByCode(materialParameterResultDto.getMaterialTestCode()));
             parameterResult.setMaterialTestTrial(materialTestTrialRepository
                 .findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
-
-
-
             parameterResult.setTestParameter(
                 testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
-
-
-
             parameterResult.setValue(parameterResultDto.getValue());
             parameterResultList.add(parameterResult);
             parameterResultRepository.save(parameterResult);
@@ -234,14 +228,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
               materialTestRepository.findByCode(materialParameterResultDto.getMaterialTestCode()));
           parameterResult.setMaterialTestTrial(materialTestTrialRepository
               .findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
-
-
-
           parameterResult.setTestParameter(
               testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
-
-
-
           parameterResult.setValue(parameterResultDto.getValue());
           parameterResultList.add(parameterResult);
           parameterResultRepository.save(parameterResult);
@@ -257,9 +245,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 
         parameterResult.setTestParameter(
             testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
-
-
-
         parameterResult.setValue(parameterResultDto.getValue());
         parameterResultList.add(parameterResult);
         parameterResultRepository.save(parameterResult);
