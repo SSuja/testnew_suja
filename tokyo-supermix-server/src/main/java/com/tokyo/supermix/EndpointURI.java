@@ -571,11 +571,21 @@ public final class EndpointURI {
    * Employee apis
    */
   public static final String EMAIL_RECIPIENT = BASE_API_PATH + "email-recipient";
-  public static final String EMAIL_RECIPIENTS = BASE_API_PATH + "email-recipient"+SLASH+"{emailGroupId}" +SLASH+"{recipientType}";
+  public static final String EMAIL_RECIPIENTS = BASE_API_PATH + "email-recipients";
+  public static final String EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE = EMAIL_RECIPIENT +SLASH+"{emailGroupId}" +SLASH + "recipientType"+SLASH+"{recipientType}";  
   public static final String EMAIL_RECIPIENT_BY_ID = EMAIL_RECIPIENT + ID;
   
   
-  public static final String EMAIL_QROUPS = BASE_API_PATH + "email-groups";
+  public static final String EMAIL_GROUPS = BASE_API_PATH + "email-groups";
+  public static final String EMAIL_GROUP_BY_SHEDULE = EMAIL_GROUPS +SLASH+ "email-group-schedule" + SLASH + "{schedule}";
+  
+  /*
+   * email group notification days APIs
+   */
+  public static final String EMAIL_NOTIFICATION = BASE_API_PATH + "email-notification-day";
+  public static final String EMAIL_NOTIFICATIONS = BASE_API_PATH + "email-notification-days";
+  public static final String EMAIL_NOTIFICATIONS_BY_GROUP =EMAIL_NOTIFICATION + SLASH + "group" ;
+  public static final String EMAIL_NOTIFICATION_BY_ID = EMAIL_NOTIFICATION + SLASH + ID;
 
   private EndpointURI() {}
 }

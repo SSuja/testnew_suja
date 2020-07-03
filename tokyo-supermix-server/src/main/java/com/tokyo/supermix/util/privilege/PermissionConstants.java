@@ -158,7 +158,6 @@ public final class PermissionConstants {
 	   public static final String EDIT_PLANT_EQUIPMENT_CALIBRATION = "edit_plant_equipment_calibration";
 	   public static final String DELETE_PLANT_EQUIPMENT_CALIBRATION = "delete_plant_equipment_calibration";
 	   /* Role Permission */
-	  public static final String VIEW_ROLE_PERMISSION_BY_ROLE = "view_role_permission_by_role";
 	  public static final String EDIT_ROLE_PERMISSION = "edit_role_permission";
 	  /* User Plant Permission */
 	  public static final String VIEW_USER_PLANT_PERMISSION_BY_USER = "view_user_plant_permission_by_user";

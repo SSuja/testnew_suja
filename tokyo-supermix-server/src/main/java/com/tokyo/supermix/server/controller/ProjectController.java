@@ -27,20 +27,14 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
-import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class ProjectController {
-  @Autowired
-  private EmailService emailService;
-  @Autowired
-  private MailConstants mailConstants;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -60,9 +54,6 @@ public class ProjectController {
           validationFailureStatusCodes.getProjectAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     projectService.saveProject(mapper.map(projectRequestDto, Project.class));
-    String message = "We have got new project . The project name is " + projectRequestDto.getName();
-    emailService.sendMail(mailConstants.getMailNewProject(), Constants.SUBJECT_NEW_PROJECT,
-        message);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PROJECT_SUCCESS),
         HttpStatus.OK);

@@ -9,7 +9,6 @@ import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 
 @Service
 public class EmailGroupServiceImpl implements EmailGroupService {
-
   @Autowired
   private EmailGroupRepository emailGroupRepository;
 
@@ -18,4 +17,8 @@ public class EmailGroupServiceImpl implements EmailGroupService {
     return emailGroupRepository.findAll();
   }
 
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsBySchedule(Boolean schedule) {
+    return emailGroupRepository.findBySchedule(schedule);
+  }
 }
