@@ -59,4 +59,5 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   public List<NotificationDays> getAllEmailNotificationDays() {
     return emailNotificationDaysRepository.findAll();
   }
+
 }

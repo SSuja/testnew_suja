@@ -44,6 +44,13 @@ public class EmailNotificationDaysController {
                 validationFailureStatusCodes.getEmailNotificationDaysAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
+      if (emailNotificationDaysService.isMoreThanTwoDaysAdded(
+          notificationDaysRequestDto.getEmailGroupId(), notificationDaysRequestDto.getDays())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.EMAIL_NOTIFICATION_DAY_EXCEED,
+                validationFailureStatusCodes.getEmailNotificationDaysAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       emailNotificationDaysService
           .createEmailNotification(mapper.map(notificationDaysRequestDto, NotificationDays.class));
     }

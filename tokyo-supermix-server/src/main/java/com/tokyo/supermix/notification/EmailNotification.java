@@ -3,7 +3,6 @@ package com.tokyo.supermix.notification;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -49,42 +48,15 @@ public class EmailNotification {
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
-      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroupName(Constants.EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION);
-      Double Day1 = null;
-      Double Day2 = null;
-      Day1 = notificationDaysList.get(0).getDays();
-      Day2 = notificationDaysList.get(1).getDays();      
-      if(Day1!=null && Day2 == null) {
-        if (noOfDays == Day1) {
+      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroupName(Constants.EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION);     
+      notificationDaysList.forEach(notificationday -> {
+        if (noOfDays == notificationday.getDays()) {
           sendEquipmentMail(calibration);
-       }}
+        }
+      });
       
-    if(Day1!=null && Day2 !=null) {
-      if (noOfDays == Day1 || noOfDays == Day2) {
-        sendEquipmentMail(calibration);
-     }}
     });
   }
-
-  // @Scheduled(cron = "0 0 8 * * ?")
-  // public void notifyTheExpiryDateForAdmixure() {
-  // final LocalDateTime today = LocalDateTime.now();
-  // processSampleLoadRepository.findAll().forEach(processsampleLoad -> {
-  // if (processsampleLoad.getProcessSample().getIncomingSample().getRawMaterial()
-  // .getMaterialSubCategory().getMaterialCategory().getName()
-  // .equalsIgnoreCase(Constants.ADMIXTURE)) {
-  // long noOfDays = ChronoUnit.DAYS.between(today.toLocalDate(),
-  // processsampleLoad.getExpiryDate().toLocalDate());
-  // if (noOfDays == 30 || noOfDays == 15) {
-  // emailService.sendMail(mailConstants.getMailAdmixureExpiry(),
-  // Constants.SUBJECT_ADMIXTURE_EXPIRY,
-  // "Please check the Stock. The material is " + processsampleLoad.getProcessSample()
-  // .getIncomingSample().getRawMaterial().getName() + ". Expiry date is "
-  // + processsampleLoad.getExpiryDate());
-  // }
-  // }
-  // });
-  // }
 
   private void sendEquipmentMail(PlantEquipmentCalibration calibration ) {
     List<String>  equipmentCalibrationEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION, calibration.getPlantEquipment().getPlant().getCode()); 
@@ -116,20 +88,12 @@ public class EmailNotification {
       long noOfDays =
           ChronoUnit.DAYS.between(finishProductSample.getDate().toLocalDate(), today.toLocalDate());
       List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroupName(Constants.EMAIL_GROUP_MIX_DESIGN);
-      Double Day1 = null;
-      Double Day2 = null;
-      Day1 = notificationDaysList.get(0).getDays();
-      Day2 = notificationDaysList.get(1).getDays();      
-      if(Day1!=null && Day2 == null) {
-        if (noOfDays == Day1) {
+      notificationDaysList.forEach(notificationday -> {
+        if (noOfDays == notificationday.getDays()) {
           sendMixDesignEmail(finishProductSample, noOfDays);
-       }}
+        }
+      });
       
-      if(Day1!=null && Day2 !=null) {
-      if (noOfDays == Day1 || noOfDays == Day2) {
-        sendMixDesignEmail(finishProductSample, noOfDays);
-      }
-      }
     });
   }
 

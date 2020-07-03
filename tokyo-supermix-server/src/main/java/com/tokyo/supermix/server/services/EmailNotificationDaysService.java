@@ -15,4 +15,5 @@ public interface EmailNotificationDaysService {
   public List<NotificationDays> getByEmailGroupName(String emailGroupName);
 
   public  List<NotificationDaysResponseDto> getAllEmailNotificationDaysByGroup();
+
 }
