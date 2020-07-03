@@ -22,16 +22,10 @@ import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
-import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MaterialTestServiceImpl implements MaterialTestService {
-  @Autowired
-  private EmailService emailService;
-  @Autowired
-  private MailConstants mailConstants;
   @Autowired
   private MaterialTestRepository materialTestRepository;
   @Autowired
@@ -165,6 +159,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.findByIncomingSamplePlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
   }
+
   public void updateIncomingSampleStatusByIncomingSample(IncomingSample incomingSample) {
     Integer count = 0;
     String bodyMessage = "";
@@ -172,9 +167,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     List<TestConfigure> testConfigureList =
         testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(
             incomingSample.getRawMaterial().getMaterialSubCategory().getId());
-    // .findByTestTypeAndCoreTest(
-    // testTypeRepository.findTestTypeByMaterialSubCategoryId(
-    // incomingSample.getRawMaterial().getMaterialSubCategory().getId()), true);
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
     for (TestConfigure testConfigure : testConfigureList) {
@@ -209,13 +201,5 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String bodyMessage) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
-    List<String>  incomingSampleEmailList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_INCOMING_SAMPLE_STATUS, incomingSample.getPlant().getCode());    
-    
-     emailService.sendMailWithFormat(incomingSampleEmailList.toArray(new String[incomingSampleEmailList.size()]),
-     Constants.SUBJECT_INCOMING_SAMPLE_RESULT,
-     "<p>The Incoming Sample is <b>" + status + "</b> The Sample Code is <b>"
-     + incomingSample.getCode() + "</b>. This Sample arrived on <b>"
-     + incomingSample.getDate() + "</b>. The Sample Material is <b>"
-     + incomingSample.getRawMaterial().getName() + "</b>.</p><ul>" + bodyMessage + "</ul>");
   }
 }

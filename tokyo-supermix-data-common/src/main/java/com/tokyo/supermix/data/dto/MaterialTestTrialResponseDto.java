@@ -1,12 +1,10 @@
 package com.tokyo.supermix.data.dto;
 
-import com.tokyo.supermix.data.entities.MaterialTest;
-
 public class MaterialTestTrialResponseDto {
   private String code;
   private Long trialNo;
   private Double result;
-  private MaterialTest materialTest;
+  private MaterialTestResponseDto materialTest;
   private String createdAt;
   private SieveSizeResponseDto sieveSize;
 
@@ -42,11 +40,11 @@ public class MaterialTestTrialResponseDto {
     this.result = result;
   }
 
-  public MaterialTest getMaterialTest() {
+  public MaterialTestResponseDto getMaterialTest() {
     return materialTest;
   }
 
-  public void setMaterialTest(MaterialTest materialTest) {
+  public void setMaterialTest(MaterialTestResponseDto materialTest) {
     this.materialTest = materialTest;
   }
 
