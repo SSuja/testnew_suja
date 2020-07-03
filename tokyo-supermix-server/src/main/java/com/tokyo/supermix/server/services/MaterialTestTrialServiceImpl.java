@@ -24,20 +24,14 @@ import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
-import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.MailConstants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
-  @Autowired
-  private EmailService emailService;
-  @Autowired
-  private MailConstants mailConstants;
   @Autowired
   private MaterialTestTrialRepository materialTestTrialRepository;
   @Autowired
@@ -47,36 +41,35 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
-  private TestConfigureRepository testConfigureRepository;
-  @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   TestParameterRepository testParameterRepository;
   @Autowired
   ParameterResultRepository parameterResultRepository;
-@Autowired
-MaterialTestService materialTestService;
+  @Autowired
+  MaterialTestService materialTestService;
+
   @Transactional
   public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
     String codePrefix = materialTestTrial.getMaterialTest().getCode();
-       //String subPrefix=codePrefix + "-";
-       String subPrefix = codePrefix + "-T-";
-//       String code=subPrefix + String.format("%04d", 1);
-       List<MaterialTestTrial> materialTestTrialList = materialTestTrialRepository.findByCodeContaining(subPrefix);
-       if (materialTestTrialList.size() == 0) {
-         materialTestTrial.setCode(subPrefix + String.format("%04d", 1));
-       } else {
-         materialTestTrial
-             .setCode(subPrefix + String.format("%04d",maxNumberFromCode(materialTestTrialList) + 1));
-       }
-  
-   materialTestTrialRepository.save(materialTestTrial);
-   return materialTestTrial.getCode();
+    String subPrefix = codePrefix + "-T-";
+    List<MaterialTestTrial> materialTestTrialList =
+        materialTestTrialRepository.findByCodeContaining(subPrefix);
+    if (materialTestTrialList.size() == 0) {
+      materialTestTrial.setCode(subPrefix + String.format("%04d", 1));
+    } else {
+      materialTestTrial
+          .setCode(subPrefix + String.format("%04d", maxNumberFromCode(materialTestTrialList) + 1));
+    }
+    materialTestTrialRepository.save(materialTestTrial);
+    return materialTestTrial.getCode();
   }
+
   private Integer getNumberFromCode(String code) {
     String numberOnly = code.replaceAll("[^0-9]", "");
     return Integer.parseInt(numberOnly);
   }
+
   private Integer maxNumberFromCode(List<MaterialTestTrial> materialTestTrialList) {
     List<Integer> list = new ArrayList<Integer>();
     materialTestTrialList.forEach(obj -> {
@@ -138,30 +131,32 @@ MaterialTestService materialTestService;
           materialTestCode);
     }
   }
+
   public void sieveavg(String materialTestCode) {
-    Double result=0.0;
+    Double result = 0.0;
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     Long testConfigureId = materialTest.getTestConfigure().getId();
-    TestParameter testParameter=testParameterRepository.findByTestConfigureIdAndTrailResult(testConfigureId,TrailResult.SUM);
-//    ParameterResult parameterResult=new ParameterResult();
-        Double trailparsum=0.0;
-    
-      List<ParameterResult> parameterResultlist = parameterResultRepository
-          .findByTestParameterIdAndMaterialTestCode(testParameter.getId(),materialTest.getCode());
-      for(int i=0;i<parameterResultlist.size();i++) {
-      //for(ParameterResult sumparameterResult :parameterResultlist) {
-        if(parameterResultlist.get(i).getMaterialTestTrial().getSieveSize().getSize()!=0.0){
-          trailparsum=trailparsum+parameterResultlist.get(i).getValue();
-        }
-        
+    TestParameter testParameter = testParameterRepository
+        .findByTestConfigureIdAndTrailResult(testConfigureId, TrailResult.SUM);
+    Double trailparsum = 0.0;
+
+    List<ParameterResult> parameterResultlist = parameterResultRepository
+        .findByTestParameterIdAndMaterialTestCode(testParameter.getId(), materialTest.getCode());
+    for (int i = 0; i < parameterResultlist.size(); i++) {
+      if (parameterResultlist.get(i).getMaterialTestTrial().getSieveSize().getSize() != 0.0) {
+        trailparsum = trailparsum + parameterResultlist.get(i).getValue();
       }
-      HashMap<String, Double> sievemain = new HashMap<String, Double>();
-      sievemain.put(testParameter.getAbbreviation(), trailparsum);
-      result=findResult(sievemain,materialTest.getTestConfigure().getEquation().getFormula());
-      materialTest.setAverage(result);
-      compareWithAverage(result, materialTest.getCode());
-      materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
+
+    }
+    HashMap<String, Double> sievemain = new HashMap<String, Double>();
+    sievemain.put(testParameter.getAbbreviation(), trailparsum);
+    result = findResult(sievemain, materialTest.getTestConfigure().getEquation().getFormula());
+    materialTest.setAverage(result);
+    compareWithAverage(result, materialTest.getCode());
+    materialTestService
+        .updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
   }
+
   public double findResult(HashMap<String, Double> abb, String equation) {
     ScriptEngineManager mgr = new ScriptEngineManager();
     ScriptEngine engine = mgr.getEngineByName("JavaScript");
@@ -176,7 +171,8 @@ MaterialTestService materialTestService;
     }
     return result;
   }
-   private Double calculateAverage(String materialTestCode) {
+
+  private Double calculateAverage(String materialTestCode) {
     Double totalResult = 0.0;
     int trialTotal = 0;
     List<MaterialTestTrial> listMaterialTestTrial =
