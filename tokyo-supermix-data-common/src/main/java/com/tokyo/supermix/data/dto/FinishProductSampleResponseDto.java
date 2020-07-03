@@ -6,7 +6,7 @@ public class FinishProductSampleResponseDto {
   private Long id;
   private String workOrderNo;
   private Long finishProductCode;
-  private EquipmentDto equipmentDto;
+  private EquipmentDto equipment;
   private MixDesignResponseDto mixDesign;
   private Status status;
   private String createdAt;
@@ -36,12 +36,12 @@ public class FinishProductSampleResponseDto {
     this.finishProductCode = finishProductCode;
   }
 
-  public EquipmentDto getEquipmentDto() {
-    return equipmentDto;
+  public EquipmentDto getEquipment() {
+    return equipment;
   }
 
-  public void setEquipmentDto(EquipmentDto equipmentDto) {
-    this.equipmentDto = equipmentDto;
+  public void setEquipment(EquipmentDto equipment) {
+    this.equipment = equipment;
   }
 
   public MixDesignResponseDto getMixDesign() {
