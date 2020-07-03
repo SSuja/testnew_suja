@@ -25,8 +25,6 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.security.CurrentUser;
-import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
@@ -47,12 +45,8 @@ public class MixDesignController {
   private static final Logger logger = Logger.getLogger(MixDesignController.class);
 
   @PostMapping(value = EndpointURI.MIX_DESIGN)
-  public ResponseEntity<Object> saveMixDesign(
-      @Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
-    mixDesignService.saveMixDesign(mapper.map(mixDesignRequestDto, MixDesign.class));
-    return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_SUCCESS),
-        HttpStatus.OK);
+  public String saveMixDesign(@Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
+    return mixDesignService.saveMixDesign(mapper.map(mixDesignRequestDto, MixDesign.class));
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGNS)
@@ -153,11 +147,5 @@ public class MixDesignController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
-  }
-  @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
-  public ResponseEntity<Object> getAllMixDesignsByPlant(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-        mapper.map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
