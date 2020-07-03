@@ -539,7 +539,8 @@ public class Constants {
   public static final String UPDATE_EMAIL_NOTIFICATION_DAYS = "Email Notification Days Updated Successfully";
   public static final String EMAIL_NOTIFICATION_DAYS = "EmailNotificationDays";
   public static final String EMAIL_NOTIFICATION_DAY = "EmailNotificationDay";
-  
+  public static final String EMAIL_NOTIFICATION_DAY_DELETED = "Email Notification Days Successfully Deleted";
+  public static final String EMAIL_NOTIFICATION_DAY_ID = "emailNotificationDayId";
   /*
    * Encapsulate constructor to restrict modification from outside
    */

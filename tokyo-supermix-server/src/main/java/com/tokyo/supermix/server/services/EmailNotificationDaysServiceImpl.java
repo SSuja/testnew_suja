@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.NotificationDaysResponseDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
@@ -60,4 +61,13 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
     return emailNotificationDaysRepository.findAll();
   }
 
+  @Transactional(readOnly = true)
+  public boolean isEmailNotificationDaysExist(Long id) {
+    return emailNotificationDaysRepository.existsById(id);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteEmailNotificationDays(Long id) {
+    emailNotificationDaysRepository.deleteById(id);
+  }
 }

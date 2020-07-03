@@ -16,4 +16,8 @@ public interface EmailNotificationDaysService {
 
   public  List<NotificationDaysResponseDto> getAllEmailNotificationDaysByGroup();
 
+  public boolean isEmailNotificationDaysExist(Long id);
+
+  public void deleteEmailNotificationDays(Long id);
+
 }

@@ -584,6 +584,7 @@ public final class EndpointURI {
   public static final String EMAIL_NOTIFICATION = BASE_API_PATH + "email-notification-day";
   public static final String EMAIL_NOTIFICATIONS = BASE_API_PATH + "email-notification-days";
   public static final String EMAIL_NOTIFICATIONS_BY_GROUP =EMAIL_NOTIFICATION + SLASH + "group" ;
+  public static final String EMAIL_NOTIFICATION_BY_ID = EMAIL_NOTIFICATION + SLASH + ID;
 
   private EndpointURI() {}
 }

@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -81,5 +83,16 @@ public class EmailNotificationDaysController {
         mapper.map(emailNotificationDaysService.getAllEmailNotificationDays(),
             NotificationDays.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @DeleteMapping(value = EndpointURI.EMAIL_NOTIFICATION_BY_ID)
+  public ResponseEntity<Object> deleteEmailNotificationDays(@PathVariable Long id) {
+    if (emailNotificationDaysService.isEmailNotificationDaysExist(id)) {
+      emailNotificationDaysService.deleteEmailNotificationDays(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.EMAIL_NOTIFICATION_DAY_DELETED), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_NOTIFICATION_DAY_ID,
+        validationFailureStatusCodes.getEmailNotificationDaysNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
