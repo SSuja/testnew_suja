@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.EmailRecipientDto;
 import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
+import com.tokyo.supermix.data.dto.EmailRecipientResponseDto;
 import com.tokyo.supermix.data.enums.RecipientType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -35,28 +35,34 @@ public class EmailRecipientController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   private static final Logger logger = Logger.getLogger(EmailRecipientController.class);
 
-
-  @GetMapping(value = EndpointURI.EMAIL_RECIPIENTS)
-  public ResponseEntity<Object> getAllEmailRecipient(@PathVariable Long emailGroupId,
+  @GetMapping(value = EndpointURI.EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE)
+  public ResponseEntity<Object> getAllEmailRecipientByRecipientType(@PathVariable Long emailGroupId,
       @PathVariable RecipientType recipientType) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_RECIPIENTS,
-        mapper.map(emailRecipientService.getEmailRecipient(emailGroupId, recipientType),
-            EmailRecipientRequestDto.class),
+        mapper.map(emailRecipientService.getEmailRecipientByRecipient(emailGroupId, recipientType),
+            EmailRecipientResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @GetMapping(value = EndpointURI.EMAIL_RECIPIENTS)
+  public ResponseEntity<Object> getAllEmailRecipient() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_RECIPIENTS,
+        mapper.map(emailRecipientService.getEmailRecipient(),
+            EmailRecipientResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-
   @PostMapping(value = EndpointURI.EMAIL_RECIPIENT)
   public ResponseEntity<Object> createEmailRecipient(
-      @RequestBody EmailRecipientDto emailRecipientDto) {
-    if (emailRecipientService.isDuplicateDataExists(emailRecipientDto)) {
+      @RequestBody EmailRecipientRequestDto emailRecipientRequestDto) {
+    if (emailRecipientService.isDuplicateDataExists(emailRecipientRequestDto)) {
       logger.debug("email is already exists: createEmailRecipient(), isEmailRecipientExist: {}");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.EMAIL_RECIPIENT,
               validationFailureStatusCodes.getEmailRecipientAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
-    emailRecipientService.createEmailRecipient(emailRecipientDto);
+    emailRecipientService.createEmailRecipient(emailRecipientRequestDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_RECIPIENT_SUCCESS),
         HttpStatus.OK);

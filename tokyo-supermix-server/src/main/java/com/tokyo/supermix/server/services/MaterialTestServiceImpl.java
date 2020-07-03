@@ -34,6 +34,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailRecipientService emailRecipientService;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {

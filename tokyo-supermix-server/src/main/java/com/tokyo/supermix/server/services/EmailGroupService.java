@@ -6,4 +6,5 @@ import com.tokyo.supermix.data.entities.EmailGroup;
 public interface EmailGroupService {
   public List<EmailGroup> getAllEmailGroups();
 
+  public List<EmailGroup> getAllEmailGroupsBySchedule(Boolean schedule );
 }
