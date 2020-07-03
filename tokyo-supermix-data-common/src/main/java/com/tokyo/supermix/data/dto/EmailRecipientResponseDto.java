@@ -6,6 +6,8 @@ public class EmailRecipientResponseDto {
   private Long id;
   private Long plantRoleId;
   private Long userId;
+  private String userName;
+  private String plantRoleName;
   private Long emailGroupId;
   private RecipientType recipientType;
   private String plantCode;
@@ -57,6 +59,20 @@ public class EmailRecipientResponseDto {
   public void setPlantCode(String plantCode) {
     this.plantCode = plantCode;
   }
-  
-  
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getPlantRoleName() {
+    return plantRoleName;
+  }
+
+  public void setPlantRoleName(String plantRoleName) {
+    this.plantRoleName = plantRoleName;
+  }  
 }
