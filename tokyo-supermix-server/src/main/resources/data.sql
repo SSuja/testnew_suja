@@ -25,6 +25,7 @@ INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('11', 'sample'
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('12', 'mix_design');
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('13', 'result_and_report');
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('14', 'plant_equipment_calibration');
+INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('15', 'privilege');
 
 
 --privilege model
@@ -273,6 +274,12 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('161', 'create_parameter_equation', '41');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('162', 'edit_parameter_equation', '41');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('163', 'delete_parameter_equation', '41');
+
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('42, 'privilege', '15');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('164', 'edit_role_permission', '42');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('165', 'view_user_plant_permission_by_user', '42');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('166', 'edit_user_plant_permission', '42');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('167', 'view_plant_permission', '42');
 
 
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`,  `schedule`) VALUES ('1', 'Reporting Group',0);
