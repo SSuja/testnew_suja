@@ -423,8 +423,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        .hasAuthority(PermissionConstants.INCOMING_SAMPLE_DELIVERY_REPORT)
 
         // Role Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS)
-        .hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION)
         .hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
         // User Plant Permission
