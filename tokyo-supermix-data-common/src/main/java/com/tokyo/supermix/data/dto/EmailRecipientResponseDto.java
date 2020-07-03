@@ -1,13 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
-import java.util.List;
 import com.tokyo.supermix.data.enums.RecipientType;
 
-public class EmailRecipientDto {
+public class EmailRecipientResponseDto {
   private Long id;
+  private Long plantRoleId;
+  private Long userId;
   private Long emailGroupId;
-  private List<Long> plantRoleId;
-  private List<Long> userId;
   private RecipientType recipientType;
   private String plantCode;
 
@@ -19,28 +18,28 @@ public class EmailRecipientDto {
     this.id = id;
   }
 
+  public Long getPlantRoleId() {
+    return plantRoleId;
+  }
+
+  public void setPlantRoleId(Long plantRoleId) {
+    this.plantRoleId = plantRoleId;
+  }
+
+  public Long getUserId() {
+    return userId;
+  }
+
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
+
   public Long getEmailGroupId() {
     return emailGroupId;
   }
 
   public void setEmailGroupId(Long emailGroupId) {
     this.emailGroupId = emailGroupId;
-  }
-
-  public List<Long> getPlantRoleId() {
-    return plantRoleId;
-  }
-
-  public void setPlantRoleId(List<Long> plantRoleId) {
-    this.plantRoleId = plantRoleId;
-  }
-
-  public List<Long> getUserId() {
-    return userId;
-  }
-
-  public void setUserId(List<Long> userId) {
-    this.userId = userId;
   }
 
   public RecipientType getRecipientType() {
@@ -58,4 +57,6 @@ public class EmailRecipientDto {
   public void setPlantCode(String plantCode) {
     this.plantCode = plantCode;
   }
+  
+  
 }

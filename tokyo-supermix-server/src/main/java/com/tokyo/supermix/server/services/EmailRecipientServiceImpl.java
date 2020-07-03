@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.dto.EmailRecipientDto;
 import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
+import com.tokyo.supermix.data.dto.EmailRecipientResponseDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.enums.RecipientType;
@@ -25,45 +25,43 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   UserPlantRoleRepository userPlantRoleRepository;
 
   @Transactional
-  public boolean createEmailRecipient(EmailRecipientDto emailRecipientDto) {
-    if (emailRecipientDto.getPlantRoleId() != null) {
-      for (Long plantRoleId : emailRecipientDto.getPlantRoleId()) {
-        EmailRecipientRequestDto emailRecipientRequestDto = new EmailRecipientRequestDto();
-        emailRecipientRequestDto.setPlantRoleId(plantRoleId);
-        emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
-        emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
-        emailRecipientRequestDto.setPlantCode(emailRecipientDto.getPlantCode());
-        emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
-
-
+  public boolean createEmailRecipient(EmailRecipientRequestDto emailRecipientRequestDto) {
+    if (emailRecipientRequestDto.getPlantRoleId() != null) {
+      for (Long plantRoleId : emailRecipientRequestDto.getPlantRoleId()) {
+        EmailRecipientResponseDto emailRecipientRequestDtoObj = new EmailRecipientResponseDto();
+        emailRecipientRequestDtoObj.setPlantRoleId(plantRoleId);
+        emailRecipientRequestDtoObj.setEmailGroupId(emailRecipientRequestDto.getEmailGroupId());
+        emailRecipientRequestDtoObj.setRecipientType(emailRecipientRequestDto.getRecipientType());
+        emailRecipientRequestDtoObj.setPlantCode(emailRecipientRequestDto.getPlantCode());
+        emailRecipientRepository.save(mapper.map(emailRecipientRequestDtoObj, EmailRecipient.class));
       }
     }
-    if (emailRecipientDto.getUserId() != null) {
-      for (Long userId : emailRecipientDto.getUserId()) {
-        EmailRecipientRequestDto emailRecipientRequestDto = new EmailRecipientRequestDto();
-        emailRecipientRequestDto.setUserId(userId);
-        emailRecipientRequestDto.setEmailGroupId(emailRecipientDto.getEmailGroupId());
-        emailRecipientRequestDto.setRecipientType(emailRecipientDto.getRecipientType());
-        emailRecipientRequestDto.setPlantCode(emailRecipientDto.getPlantCode());
-        emailRecipientRepository.save(mapper.map(emailRecipientRequestDto, EmailRecipient.class));
+    if (emailRecipientRequestDto.getUserId() != null) {
+      for (Long userId : emailRecipientRequestDto.getUserId()) {
+        EmailRecipientResponseDto emailRecipientRequestDtoObj = new EmailRecipientResponseDto();
+        emailRecipientRequestDtoObj.setUserId(userId);
+        emailRecipientRequestDtoObj.setEmailGroupId(emailRecipientRequestDto.getEmailGroupId());
+        emailRecipientRequestDtoObj.setRecipientType(emailRecipientRequestDto.getRecipientType());
+        emailRecipientRequestDtoObj.setPlantCode(emailRecipientRequestDto.getPlantCode());
+        emailRecipientRepository.save(mapper.map(emailRecipientRequestDtoObj, EmailRecipient.class));
       }
     }
     return false;
   }
 
-  public boolean isDuplicateDataExists(EmailRecipientDto emailRecipientDto) {
-    if (emailRecipientDto.getPlantRoleId() != null) {
-      for (Long plantRoleId : emailRecipientDto.getPlantRoleId()) {
+  public boolean isDuplicateDataExists(EmailRecipientRequestDto emailRecipientRequestDto) {
+    if (emailRecipientRequestDto.getPlantRoleId() != null) {
+      for (Long plantRoleId : emailRecipientRequestDto.getPlantRoleId()) {
         if (emailRecipientRepository
-            .existsByEmailGroupIdAndPlantRoleId(emailRecipientDto.getEmailGroupId(), plantRoleId)) {
+            .existsByEmailGroupIdAndPlantRoleId(emailRecipientRequestDto.getEmailGroupId(), plantRoleId)) {
           return true;
         }
       }
     }
-    if (emailRecipientDto.getUserId() != null) {
-      for (Long userId : emailRecipientDto.getUserId()) {
+    if (emailRecipientRequestDto.getUserId() != null) {
+      for (Long userId : emailRecipientRequestDto.getUserId()) {
         if (emailRecipientRepository
-            .existsByEmailGroupIdAndUserId(emailRecipientDto.getEmailGroupId(), userId)) {
+            .existsByEmailGroupIdAndUserId(emailRecipientRequestDto.getEmailGroupId(), userId)) {
           return true;
         }
       }
@@ -98,12 +96,11 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   }
 
   @Transactional(readOnly = true)
-  public List<EmailRecipientRequestDto> getEmailRecipient(Long emailGroupId,
+  public List<EmailRecipientResponseDto> getEmailRecipientByRecipient(Long emailGroupId,
       RecipientType recipientType) {
-
     List<EmailRecipient> emailRecipientList =
         emailRecipientRepository.findByEmailGroupIdAndRecipientType(emailGroupId, recipientType);
-    return mapper.map(emailRecipientList, EmailRecipientRequestDto.class);
+    return mapper.map(emailRecipientList, EmailRecipientResponseDto.class);
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -111,7 +108,8 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
     emailRecipientRepository.deleteById(id);
   }
 
- 
-
-  
+  @Transactional(readOnly = true)
+  public List<EmailRecipient> getEmailRecipient() {
+    return emailRecipientRepository.findAll();
+  }
 }
