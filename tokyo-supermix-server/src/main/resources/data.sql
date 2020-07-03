@@ -275,13 +275,38 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('162', 'edit_parameter_equation', '41');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('163', 'delete_parameter_equation', '41');
 
-INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('42, 'privilege', '15');
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('42', 'privilege', '15');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('164', 'edit_role_permission', '42');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('165', 'view_user_plant_permission_by_user', '42');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('166', 'edit_user_plant_permission', '42');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('167', 'view_plant_permission', '42');
 
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('43', 'finish_product_test', '12');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('168', 'create_finish_product_test', '43');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('169', 'view_finish_product_test', '43');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('170', 'edit_finish_product_test', '43');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('171', 'delete_finish_product_test', '43');
 
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('44', 'material_test_trial', '9');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('172', 'create_material_test_trial', '44');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('173', 'view_material_test_trial', '44');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('174', 'edit_material_test_trial', '44');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('175', 'delete_material_test_trial', '44');
+
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('45', 'finish_product_trail', '12');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('176', 'create_finish_product_trail', '45');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('177', 'view_finish_product_trail', '45');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('178', 'edit_finish_product_trail', '45');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('179', 'delete_finish_product_trail', '45');
+
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('46', 'report', '13');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('180', 'material_test_report', '46');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('181', 'cement_report', '46');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('182', 'incoming_sample_summary_report', '46');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('183', 'incoming_sample_delivery_report', '46');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('184', 'admixture_report', '46');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('185', 'material_status_total_count_dashboard', '46');
+	
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`,  `schedule`) VALUES ('1', 'Reporting Group',0);
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('2', 'Calibration Group',1);
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('3', 'Incoming Sample Group',0);
@@ -300,4 +325,6 @@ INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`
 (114,1,114,1),(115,1,115,1),(116,1,116,1),(117,1,117,1),(118,1,118,1),(119,1,119,1),(120,1,120,1),(121,1,121,1),(122,1,122,1),(123,1,123,1),(124,1,124,1),(125,1,125,1),
 (126,1,126,1),(127,1,127,1),(128,1,128,1),(129,1,129,1),(130,1,130,1),(131,1,131,1),(132,1,132,1),(133,1,133,1),(134,1,134,1),(135,1,135,1),(136,1,136,1),(137,1,137,1),(138,1,138,1),(139,1,139,1),(140,1,140,1),
 (141,1,141,1),(142,1,142,1),(143,1,143,1),(144,1,144,1),(145,1,145,1),(146,1,146,1),(147,1,147,1),(148,1,148,1),(149,1,149,1),(150,1,150,1),(151,1,151,1),(152,1,152,1),(153,1,153,1),(154,1,154,1),(155,1,155,1),
-(156,1,156,1),(157,1,157,1),(158,1,158,1),(159,1,159,1),(160,1,160,1),(161,1,161,1),(162,1,162,1),(163,1,163,1);
+(156,1,156,1),(157,1,157,1),(158,1,158,1),(159,1,159,1),(160,1,160,1),(161,1,161,1),(162,1,162,1),(163,1,163,1),(164,1,164,1),(165,1,165,1),(166,1,166,1),(167,1,167,1),(168,1,168,1),(169,1,169,1),(170,1,170,1),
+(171,1,171,1),(172,1,172,1),(173,1,173,1),(174,1,174,1),(175,1,175,1),(176,1,176,1),(177,1,177,1),(178,1,178,1),(179,1,179,1),(180,1,180,1),
+(181,1,181,1),(182,1,182,1),(183,1,183,1),(184,1,184,1),(185,1,185,1);

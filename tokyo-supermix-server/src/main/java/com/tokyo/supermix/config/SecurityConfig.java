@@ -389,13 +389,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE)
         // finish product trail
         .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_TRIAL)
-        .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TRAIL)
         .antMatchers(HttpMethod.GET, EndpointURI.FINISH_PRODUCT_TRIAL_BY_PLANT)
-        .hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TRAIL)
         .antMatchers(HttpMethod.PUT, EndpointURI.FINISH_PRODUCT_TRIAL)
-        .hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TRAIL)
         .antMatchers(HttpMethod.DELETE, EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
-        .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE)
+        .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TRAIL)
         // quality parameter
         .antMatchers(HttpMethod.POST, EndpointURI.QUALITY_PARAMETER)
         .hasAuthority(PermissionConstants.CREATE_QUALITY_PARAMETER)
@@ -423,9 +423,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.INCOMING_SAMPLE_DELIVERY_REPORT)
 
         // Role Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLE_PERMISSION_MODULE_STATUS)
-        .hasAuthority(PermissionConstants.VIEW_ROLE_PERMISSION_BY_ROLE)
-        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION)
+         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION)
         .hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
         // User Plant Permission
         .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID)
