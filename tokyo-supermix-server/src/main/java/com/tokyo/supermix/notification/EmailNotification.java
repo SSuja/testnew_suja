@@ -26,8 +26,6 @@ public class EmailNotification {
   @Autowired
   private EmailService emailService;
   @Autowired
-  private MailConstants mailConstants;
-  @Autowired
   private PlantEquipmentCalibrationRepository plantEquipmentCalibrationRepository;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
@@ -40,9 +38,7 @@ public class EmailNotification {
   @Autowired
   private EmailNotificationDaysService emailNotificationDaysService;
   
-  
-  
-  @Scheduled(cron = "0 0 9 * * ?")
+  @Scheduled(cron = "${mail.notificationtime.plantEquipment}")
   public void alertForEquipmentCalibration() {
     final LocalDateTime today = LocalDateTime.now();
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
@@ -53,8 +49,7 @@ public class EmailNotification {
         if (noOfDays == notificationday.getDays()) {
           sendEquipmentMail(calibration);
         }
-      });
-      
+      });   
     });
   }
 
@@ -66,22 +61,22 @@ public class EmailNotification {
             + calibration.getPlantEquipment().getPlant().getName());
   }
 
-  @Scheduled(cron = "0 0 5 * * ?")
-  public void notifyTheIncomingSamplePerDay() {
-    final LocalDateTime today = LocalDateTime.now();
-    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
-    rawMaterialRepository.findAll().forEach(material -> {
-      int noOfSamples = incomingSampleRepository
-          .findByStatusAndRawMaterialIdAndDate(Status.NEW, material.getId(), sqlDate).size();
-      if (noOfSamples > 0) {
-        emailService.sendMail(mailConstants.getMailIncomingSamplePerDay(),
-            Constants.SUBJECT_INCOMING_SAMPLES_PER_DAY, "Today " + noOfSamples
-                + " Samples Arrived for the Raw Material : " + material.getName());
-      }
-    });
-  }
+//  @Scheduled(cron = "0 0 5 * * ?")
+//  public void notifyTheIncomingSamplePerDay() {
+//    final LocalDateTime today = LocalDateTime.now();
+//    java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
+//    rawMaterialRepository.findAll().forEach(material -> {
+//      int noOfSamples = incomingSampleRepository
+//          .findByStatusAndRawMaterialIdAndDate(Status.NEW, material.getId(), sqlDate).size();
+//      if (noOfSamples > 0) {
+//        emailService.sendMail(mailConstants.getMailIncomingSamplePerDay(),
+//            Constants.SUBJECT_INCOMING_SAMPLES_PER_DAY, "Today " + noOfSamples
+//                + " Samples Arrived for the Raw Material : " + material.getName());
+//      }
+//    });
+//  }
 
-  @Scheduled(cron = "0 45 8 * * ?")
+  @Scheduled(cron = "${mail.notificationtime.strengthTestMixDesign}")
   public void notifyStrengthTestForMixdesign() {
     final LocalDateTime today = LocalDateTime.now();
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
@@ -108,30 +103,30 @@ emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList
     
   }
 
-  @Scheduled(cron = "0 0 8 * * ?")
-  public void notifyPendingIncomingSample() {
-    final LocalDateTime today = LocalDateTime.now();
-    final LocalDateTime incomingDate = today.minusDays(3L);
-    System.out.println(incomingDate);
-    java.sql.Date sqlDate = java.sql.Date.valueOf(incomingDate.toLocalDate());
-    rawMaterialRepository.findAll().forEach(material -> {
-      incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(), sqlDate)
-          .forEach(incomingSample -> {
-            if (incomingSample.getStatus().equals(Status.NEW)) {
-              emailService.sendMail(mailConstants.getMailPendingIncomingSample(),
-                  Constants.SUBJECT_PENDING_SAMPLES,
-                  "This incoming " + material.getName() + " sample didn't start the test from "
-                      + incomingSample.getDate() + " .the sample code is "
-                      + incomingSample.getCode());
-            }
-            if (incomingSample.getStatus().equals(Status.PROCESS)) {
-              emailService.sendMail(mailConstants.getMailPendingIncomingSample(),
-                  Constants.SUBJECT_PENDING_SAMPLES,
-                  "This incoming " + material.getName() + " sample didn't complete the test from "
-                      + new SimpleDateFormat(incomingSample.getDate().toString())
-                      + " .the sample code is " + incomingSample.getCode());
-            }
-          });
-    });
-  }
+//  @Scheduled(cron = "0 0 8 * * ?")
+//  public void notifyPendingIncomingSample() {
+//    final LocalDateTime today = LocalDateTime.now();
+//    final LocalDateTime incomingDate = today.minusDays(3L);
+//    System.out.println(incomingDate);
+//    java.sql.Date sqlDate = java.sql.Date.valueOf(incomingDate.toLocalDate());
+//    rawMaterialRepository.findAll().forEach(material -> {
+//      incomingSampleRepository.findByRawMaterialIdAndDate(material.getId(), sqlDate)
+//          .forEach(incomingSample -> {
+//            if (incomingSample.getStatus().equals(Status.NEW)) {
+//              emailService.sendMail(mailConstants.getMailPendingIncomingSample(),
+//                  Constants.SUBJECT_PENDING_SAMPLES,
+//                  "This incoming " + material.getName() + " sample didn't start the test from "
+//                      + incomingSample.getDate() + " .the sample code is "
+//                      + incomingSample.getCode());
+//            }
+//            if (incomingSample.getStatus().equals(Status.PROCESS)) {
+//              emailService.sendMail(mailConstants.getMailPendingIncomingSample(),
+//                  Constants.SUBJECT_PENDING_SAMPLES,
+//                  "This incoming " + material.getName() + " sample didn't complete the test from "
+//                      + new SimpleDateFormat(incomingSample.getDate().toString())
+//                      + " .the sample code is " + incomingSample.getCode());
+//            }
+//          });
+//    });
+//  }
 }

@@ -42,6 +42,11 @@ public class MailConstants {
     private String[] mailNewSeiveTest;
 	@Value("${mail.notify.report}")
     private String[] mailReportUser;
+	@Value("${mail.notificationtime.plantEquipment}")
+    private String plantEquipmentTime;
+	@Value("${mail.notificationtime.strengthTestMixDesign}")
+    private String strengthTestMixDesign;
+	
 	public String getAdmin() {
 		return admin;
 	}
@@ -133,5 +138,10 @@ public class MailConstants {
     public void setMailReportUser(String[] mailReportUser) {
       this.mailReportUser = mailReportUser;
     }
-   	
+    public String getPlantEquipmentTime() {
+      return plantEquipmentTime;
+    }
+    public void setPlantEquipmentTime(String plantEquipmentTime) {
+      this.plantEquipmentTime = plantEquipmentTime;
+    }    
 }
