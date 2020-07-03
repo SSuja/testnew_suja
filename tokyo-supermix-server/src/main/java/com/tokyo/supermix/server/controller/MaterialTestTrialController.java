@@ -57,16 +57,19 @@ public class MaterialTestTrialController {
             MaterialTestTrialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_PLANT)
-  public ResponseEntity<Object> getAllMaterialTestTrialByPlant(@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getAllMaterialTestTrialByPlant(
+      @CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
         mapper.map(materialTestTrialService.getAllMaterialTestTrialByplant(currentUser),
             MaterialTestTrialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+
   // post MaterialTestTrial
   @PostMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
-   public String createMaterialTestTrial(
+  public String createMaterialTestTrial(
       @Valid @RequestBody MaterialTestTrialRequestDto materialTestTrialRequestDto) {
     return materialTestTrialService
         .saveMaterialTestTrial(mapper.map(materialTestTrialRequestDto, MaterialTestTrial.class));
@@ -121,16 +124,11 @@ public class MaterialTestTrialController {
   @PutMapping(value = EndpointURI.MATERIAL_TEST_TRIAL)
   public ResponseEntity<Object> updateMaterialTestTrial(
       @Valid @RequestBody MaterialTestTrialRequestDto materialTestTrialRequestDto) {
-    // if (materialTestTrialService.isMaterialTestTrialExits(materialTestTrialRequestDto.getCode()))
-    // {
     materialTestTrialService
         .saveMaterialTestTrial(mapper.map(materialTestTrialRequestDto, MaterialTestTrial.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_MATERIAL_TEST_TRIAL_SUCCESS),
         HttpStatus.OK);
-    // }
-    // return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-    // validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_TRIAL_BY_PLANT)
@@ -151,24 +149,16 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    if (!materialTest.getTestConfigure().isBulkTrial()){
-//        .getTest().getName()
-//        .equalsIgnoreCase(Constants.SIEVETEST)) {
+    if (!materialTest.getTestConfigure().isBulkTrial()) {
       materialTestTrialService.getAverageAndStatus(materialTestCode);
-      materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
+      materialTestService
+          .updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
+    } else {
+      materialTestTrialService.sieveavg(materialTestCode);
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
     }
-    else {
-      materialTestTrialService.sieveavg(materialTestCode);
-     // materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
-    
-//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-//        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-//    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-//        Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);}
-}}
+}
