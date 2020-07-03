@@ -72,9 +72,7 @@ public class SieveSizeServiceImpl implements SieveSizeService {
   }
 
   public List<SieveSize> findByMaterialSubCategoryId(Long materialSubCategoryId) {
-//    return sieveSizeRepository.findByMaterialSubCategoryId(materialSubCategoryId,
-//        Sort.by(Sort.Direction.DESC, "size"));
-        return null;
+    return sieveSizeRepository.findByMaterialSubCategoryIdOrderBySizeDesc(materialSubCategoryId);
   }
 
   @Transactional(readOnly = true)
