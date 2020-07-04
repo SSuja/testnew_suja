@@ -11,22 +11,6 @@ public class PlantEquipmentResponseDto {
   private PlantDto plant;
   private Long equipmentId;
 
-  public PlantDto getPlant() {
-    return plant;
-  }
-
-  public void setPlant(PlantDto plant) {
-    this.plant = plant;
-  }
-
-  public Long getEquipmentId() {
-    return equipmentId;
-  }
-
-  public void setEquipmentId(Long equipmentId) {
-    this.equipmentId = equipmentId;
-  }
-
   public String getSerialNo() {
     return serialNo;
   }
@@ -75,4 +59,19 @@ public class PlantEquipmentResponseDto {
     this.equipmentName = equipmentName;
   }
 
+  public PlantDto getPlant() {
+    return plant;
+  }
+
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
+  }
+
+  public Long getEquipmentId() {
+    return equipmentId;
+  }
+
+  public void setEquipmentId(Long equipmentId) {
+    this.equipmentId = equipmentId;
+  }
 }

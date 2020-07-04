@@ -15,7 +15,7 @@ public class TestConfigureRequestDto {
   private String resultLabel;
   @NotNull(message = "{testConfigureRequestDto.prefix.null}")
   @NotEmpty(message = "{testConfigureRequestDto.prefix.empty}")
-  @Pattern(regexp = "^[a-zA-Z\\s]+$*",
+  @Pattern(regexp = "^[a-zA-Z0-9\\s-]+$*",
       message = "{testConfigureRequestDto.prefix.specialcharacter}")
   private String prefix;
   private Long materialCategoryId;
