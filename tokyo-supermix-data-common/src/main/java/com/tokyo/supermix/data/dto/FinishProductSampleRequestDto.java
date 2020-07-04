@@ -8,7 +8,7 @@ public class FinishProductSampleRequestDto {
   private Long id;
   private String workOrderNo;
   @NotNull(message = "{finishProductSampleRequestDto.finishProductCode.null}")
-  private Long finishProductCode;
+  private String finishProductCode;
   @NotNull(message = "{finishProductSampleRequestDto.equipmentId.null}")
   private Long equipmentId;
   @NotNull(message = "{finishProductSampleRequestDto.mixDesignCode.null}")
@@ -32,11 +32,11 @@ public class FinishProductSampleRequestDto {
     this.workOrderNo = workOrderNo;
   }
 
-  public Long getFinishProductCode() {
+  public String getFinishProductCode() {
     return finishProductCode;
   }
 
-  public void setFinishProductCode(Long finishProductCode) {
+  public void setFinishProductCode(String finishProductCode) {
     this.finishProductCode = finishProductCode;
   }
 

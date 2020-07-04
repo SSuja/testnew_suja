@@ -88,11 +88,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return parameterResultRepository.findByMaterialTestTrialCode(materialTestTrialCode);
   }
 
-  // private Double roundDoubleValue(Double value) {
-  // DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
-  // return Double.valueOf(decimalFormat.format(value));
-  // }
-
   public void isTestParameterValueInConfigLevel(ParameterResult parameterResult) {
     if (testParameterService
         .getTestParameterById(parameterResult.getTestParameter().getId()) != null) {
@@ -131,7 +126,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         .findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(materialTestTrialCode);
   }
 
-  // set values to equation less parameters
   public String getEquation(Long paramterEquationId) {
     return parameterEquationRepository.findById(paramterEquationId).get().getEquation()
         .getFormula();
@@ -175,9 +169,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
           .getMaterialTestByCode(materialParameterResultDto.getMaterialTestCode());
       MaterialTestTrial materialTestTrial = new MaterialTestTrial();
       materialTestTrial.setMaterialTest(materialTest);
-      // materialParameterResultDto.parameterResults.forEach(par ->{
-      // par.getTestParameterId().
-      // });
       if (materialParameterResultDto.getSieveSizeId() != null) {
         SieveSize sieveSize =
             sieveSizeRepository.getOne(materialParameterResultDto.getSieveSizeId());
@@ -241,8 +232,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         parameterResult.setMaterialTestTrial(materialTestTrialRepository
             .findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
 
-
-
         parameterResult.setTestParameter(
             testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
         parameterResult.setValue(parameterResultDto.getValue());
@@ -257,9 +246,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     MaterialTestTrial materialTestTrial = materialTestTrialRepository.getOne(materialTestTrialCode);
     List<TestParameter> testparameters = testParameterRepository
         .findByTestConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId());
-    // List<TestParameter> testParametershasEqu =
-    // testParameterRepository.findByTestConfigureIdAndEquationExistsTrue(
-    // materialTestTrial.getMaterialTest().getTestConfigure().getId());
     String mainEquation = "";
     if (!materialTestTrial.getMaterialTest().getTestConfigure().isEquationExists()) {
       testparameters.forEach(tes -> {
@@ -272,28 +258,17 @@ public class ParameterResultServiceImpl implements ParameterResultService {
       List<TestParameter> testParametershasEqu =
           testParameterRepository.findByTestConfigureIdAndEquationExistsTrue(
               materialTestTrial.getMaterialTest().getTestConfigure().getId());
-
-
-      // if (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getName().) {
-      // mainEquation =
-      // materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula();
-      // }
       if (!(materialTestTrial.getMaterialTest().getTestConfigure().getEquation() == null)) {
         mainEquation =
             materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula();
       }
-      // List<ParameterEquation> parameterEquations = new ArrayList<>();
       for (TestParameter testparameter : testParametershasEqu) {
         ParameterEquation parameterEquation =
             parameterEquationRepository.findByTestParameterId(testparameter.getId());
-        // parameterEquations.add(parameterEquation);
         String paraEq = "";
         List<ParameterEquationElement> parameterEquationElementlist =
             parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
         paraEq = parameterEquation.getEquation().getFormula();
-
-
-
         HashMap<String, Double> sum = new HashMap<String, Double>();
         for (ParameterEquationElement paramEquationEle : parameterEquationElementlist) {
           Long testParameterId = paramEquationEle.getTestParameter().getId();
@@ -318,7 +293,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
             .findByTestParameterIdAndMaterialTestTrialCode(tepa.getId(), materialTestTrialCode);
         main.put(tepa.getAbbreviation(), parameterResultmain.getValue());
       }
-      // System.out.println("****AM***" + findResult(main, mainEquation));
       if (!mainEquation.isEmpty()) {
         materialTestTrial.setResult(findResult(main, mainEquation));
         materialTestTrialRepository.save(materialTestTrial);
@@ -326,7 +300,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     }
   }
 
-  // }
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
     return Double.valueOf(decimalFormat.format(value));
@@ -336,10 +309,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     List<MaterialTestTrial> materialTestTriallist =
         materialTestTrialService.getMaterialTestTrialByMaterialTestCode(materialTestCode);
     List<SieveTestResultsDto> sieveTestResultsDtolist = new ArrayList<>();
-
-    for (MaterialTestTrial materialTestTrial : materialTestTriallist) {
+    materialTestTriallist.forEach(materialTestTrial -> {
       SieveTestResultsDto sieveTestResultsDto = new SieveTestResultsDto();
-
       sieveTestResultsDto.setSieveSize(materialTestTrial.getSieveSize().getSize());
       List<ParameterResult> ParameterResultlist =
           parameterResultRepository.findByMaterialTestTrialCode(materialTestTrial.getCode());
@@ -353,8 +324,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
       }
       sieveTestResultsDto.setSieveParameters(SieveParameterResultDtolist);
       sieveTestResultsDtolist.add(sieveTestResultsDto);
-    }
+    });
     return sieveTestResultsDtolist;
   }
-
 }

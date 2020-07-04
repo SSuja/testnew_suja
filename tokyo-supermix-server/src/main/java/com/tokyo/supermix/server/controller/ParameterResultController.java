@@ -79,17 +79,18 @@ public class ParameterResultController {
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-	@DeleteMapping(value = EndpointURI.PARAMETER_RESULT_BY_ID)
-	public ResponseEntity<Object> deleteParameterResult(@PathVariable Long id) {
-		if (parameterResultService.isParameterResultExist(id)) {
-			parameterResultService.deleteParameterResult(id);
-			return new ResponseEntity<Object>(
-					new BasicResponse<>(RestApiResponseStatus.OK, Constants.PARAMETER_RESULT_DELETED), HttpStatus.OK);
-		}
-		logger.debug("Invalid Id");
-		return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
-				validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
-	}
+  @DeleteMapping(value = EndpointURI.PARAMETER_RESULT_BY_ID)
+  public ResponseEntity<Object> deleteParameterResult(@PathVariable Long id) {
+    if (parameterResultService.isParameterResultExist(id)) {
+      parameterResultService.deleteParameterResult(id);
+      return new ResponseEntity<Object>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.PARAMETER_RESULT_DELETED),
+          HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
+        validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
+  }
 
   @PutMapping(value = EndpointURI.PARAMETER_RESULT)
   public ResponseEntity<Object> UpdateParameterResult(
@@ -164,14 +165,14 @@ public class ParameterResultController {
           validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
+
   @GetMapping(value = EndpointURI.SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getSieveTestParameterResultByMaterialTestCode(
       @PathVariable String materialTestCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
-         mapper.map(parameterResultService.getSieveTestResultsByMaterialTestCode(materialTestCode),SieveTestResultsDto.class),
-         // mapper.map(parameterResultService.findByMaterialTestCode(materialTestCode),
-            //  ParameterResultResponseDto.class),
+          mapper.map(parameterResultService.getSieveTestResultsByMaterialTestCode(materialTestCode),
+              SieveTestResultsDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       logger.debug("No Parameter Result record exist for given Material Test code");

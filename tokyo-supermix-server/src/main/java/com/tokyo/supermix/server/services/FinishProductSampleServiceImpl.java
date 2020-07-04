@@ -24,7 +24,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
-  public boolean isFinishProductCodeExist(Long code) {
+  public boolean isFinishProductCodeExist(String code) {
     return finishProductSampleRepository.existsByFinishProductCode(code);
   }
 
@@ -54,7 +54,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     finishProductSampleRepository.deleteById(id);
   }
 
-  public boolean isUpdatedFinishProductCodeExist(Long id, Long code) {
+  public boolean isUpdatedFinishProductCodeExist(Long id, String code) {
     if ((!getFinishProductSampleById(id).getFinishProductCode().equals(code))
         && (isFinishProductCodeExist(code))) {
       return true;

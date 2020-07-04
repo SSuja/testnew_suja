@@ -10,7 +10,7 @@ import com.tokyo.supermix.data.enums.Status;
 @Repository
 public interface FinishProductSampleRepository extends JpaRepository<FinishProductSample, Long>,
     QuerydslPredicateExecutor<FinishProductSample> {
-  boolean existsByFinishProductCode(Long code);
+  boolean existsByFinishProductCode(String code);
 
   boolean existsByMixDesignCode(String code);
 
@@ -25,6 +25,6 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   List<FinishProductSample> findByStatus(Status status);
 
   boolean existsByStatus(Status status);
-  
+
   List<FinishProductSample> findByMixDesignPlantCodeIn(List<String> plantCodes);
 }
