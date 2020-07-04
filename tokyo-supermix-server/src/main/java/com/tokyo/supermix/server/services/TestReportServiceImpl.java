@@ -348,6 +348,7 @@ public class TestReportServiceImpl implements TestReportService {
         });
     return sieveSizeDto;
   }
+
   // Concrete test report
   public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode) {
     ConcreteTestReportDto concreteTestReportDto = new ConcreteTestReportDto();
@@ -355,8 +356,14 @@ public class TestReportServiceImpl implements TestReportService {
         finishProductTestRepository.findById(finishProductTestCode).get();
     FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository
         .findByFinishProductSampleId(finishProductTest.getFinishProductSample().getId());
+    concreteTestReportDto.setAddress(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
+    concreteTestReportDto.setPlantName(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getName());
+    concreteTestReportDto.setFaxNumber(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
     concreteTestReportDto
-        .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode().toString());
+        .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
     concreteTestReportDto
         .setCustomerName(finishProductSampleIssue.getProject().getCustomer().getName());
     concreteTestReportDto.setProjectName(finishProductSampleIssue.getProject().getName());
@@ -401,7 +408,7 @@ public class TestReportServiceImpl implements TestReportService {
       materialTestTrialResultDto
           .setAbbrevation(parameterResult.getTestParameter().getAbbreviation());
       materialTestTrialResultDto.setAbbrevationAndValues(getAbbAndValueByMaterialTestCode(
-          parameterResult.getMaterialTest().getCode(), parameterResult.getTestParameter().getId()));    
+          parameterResult.getMaterialTest().getCode(), parameterResult.getTestParameter().getId()));
       materialTestTrialResultDtoList.add(materialTestTrialResultDto);
     }
     return materialTestTrialResultDtoList;
