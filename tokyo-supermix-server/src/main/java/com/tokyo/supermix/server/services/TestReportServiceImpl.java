@@ -235,7 +235,7 @@ public class TestReportServiceImpl implements TestReportService {
       IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
       incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
       incomingSampleTestDto.setAverage(test.getAverage());
-      incomingSampleTestDto.setStatus(test.getIncomingSample().getStatus().name());
+      incomingSampleTestDto.setStatus(test.getStatus().name());
       incomingSampleTestDto
           .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
       incomingSampleTestDtoList.add(incomingSampleTestDto);
@@ -252,7 +252,7 @@ public class TestReportServiceImpl implements TestReportService {
           IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
           incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
           incomingSampleTestDto.setAverage(test.getAverage());
-          incomingSampleTestDto.setStatus(test.getIncomingSample().getStatus().name());
+          incomingSampleTestDto.setStatus(test.getStatus().name());
           incomingSampleTestDto
               .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
           incomingSampleTestDtoList.add(incomingSampleTestDto);
