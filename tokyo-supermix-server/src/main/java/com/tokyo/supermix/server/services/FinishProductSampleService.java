@@ -9,21 +9,21 @@ import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductSampleService {
-  public boolean isFinishProductCodeExist(Long code);
+  public boolean isFinishProductCodeExist(String code);
 
   public void saveFinishProductSample(FinishProductSample finishProductSample);
 
   public List<FinishProductSample> getAllFinishProductSamples();
 
   public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser);
-  
+
   boolean isFinishProductSampleExist(Long id);
 
   public FinishProductSample getFinishProductSampleById(Long id);
 
   public void deleteFinishProductSample(Long id);
 
-  public boolean isUpdatedFinishProductCodeExist(Long id, Long code);
+  public boolean isUpdatedFinishProductCodeExist(Long id, String code);
 
   boolean isMixDesignCodeExist(String code);
 

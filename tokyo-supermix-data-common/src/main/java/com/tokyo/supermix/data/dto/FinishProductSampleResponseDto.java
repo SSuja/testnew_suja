@@ -5,7 +5,7 @@ import com.tokyo.supermix.data.enums.Status;
 public class FinishProductSampleResponseDto {
   private Long id;
   private String workOrderNo;
-  private Long finishProductCode;
+  private String finishProductCode;
   private EquipmentDto equipment;
   private MixDesignResponseDto mixDesign;
   private Status status;
@@ -28,11 +28,11 @@ public class FinishProductSampleResponseDto {
     this.workOrderNo = workOrderNo;
   }
 
-  public Long getFinishProductCode() {
+  public String getFinishProductCode() {
     return finishProductCode;
   }
 
-  public void setFinishProductCode(Long finishProductCode) {
+  public void setFinishProductCode(String finishProductCode) {
     this.finishProductCode = finishProductCode;
   }
 
