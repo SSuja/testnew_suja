@@ -2,7 +2,6 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -236,7 +235,7 @@ public class TestReportServiceImpl implements TestReportService {
       IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
       incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
       incomingSampleTestDto.setAverage(test.getAverage());
-      incomingSampleTestDto.setStatus(test.getStatus());
+      incomingSampleTestDto.setStatus(String.valueOf(test.getIncomingSample().getStatus()));
       incomingSampleTestDto
           .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
       incomingSampleTestDtoList.add(incomingSampleTestDto);
@@ -253,7 +252,7 @@ public class TestReportServiceImpl implements TestReportService {
           IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
           incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
           incomingSampleTestDto.setAverage(test.getAverage());
-          incomingSampleTestDto.setStatus(test.getStatus());
+          incomingSampleTestDto.setStatus(String.valueOf(test.getIncomingSample().getStatus()));
           incomingSampleTestDto
               .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
           incomingSampleTestDtoList.add(incomingSampleTestDto);

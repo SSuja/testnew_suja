@@ -1,11 +1,10 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.sql.Date;
-import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleTestDto {
   private String testName;
-  private Status status;
+  private String status;
   private Double average;
   private Date date;
   private AcceptedValueDto acceptanceCriteria;
@@ -18,11 +17,11 @@ public class IncomingSampleTestDto {
     this.testName = testName;
   }
 
-  public Status getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(Status status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 
