@@ -1,17 +1,20 @@
 package com.tokyo.supermix.server.services;
 
 import java.io.FileNotFoundException;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class EmailService {
@@ -51,13 +54,14 @@ public class EmailService {
   }
 
   public void sendEmailWithAttachment(String[] toAddress, String subject, String message,
-      MultipartFile attachment) throws MessagingException, FileNotFoundException {
+      byte[] byteArray,String filename) throws MessagingException, FileNotFoundException {
     MimeMessagePreparator preparator = new MimeMessagePreparator() {
       public void prepare(MimeMessage mimeMessage) throws Exception {
         mimeMessage.setRecipients(Message.RecipientType.TO, convertStringArraytoString(toAddress));
         mimeMessage.setSubject(subject);
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        helper.addAttachment("report", attachment);
+        final InputStreamSource attachment = new ByteArrayResource(byteArray);
+        helper.addAttachment(filename, attachment);
         helper.setText("<html><body>" + message + "</body></html>", true);
       }
     };
