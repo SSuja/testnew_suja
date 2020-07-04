@@ -8,15 +8,15 @@ public class PlantEquipmentResponseDto {
   private String description;
   private String plantName;
   private String equipmentName;
-  private String plantCode;
+  private PlantDto plant;
   private Long equipmentId;
 
-  public String getPlantCode() {
-    return plantCode;
+  public PlantDto getPlant() {
+    return plant;
   }
 
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
   }
 
   public Long getEquipmentId() {
