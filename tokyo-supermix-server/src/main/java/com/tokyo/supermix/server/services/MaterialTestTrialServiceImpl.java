@@ -57,9 +57,11 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
         materialTestTrialRepository.findByCodeContaining(subPrefix);
     if (materialTestTrialList.size() == 0) {
       materialTestTrial.setCode(subPrefix + String.format("%04d", 1));
+      materialTestTrial.setTrialNo(1l);
     } else {
       materialTestTrial
           .setCode(subPrefix + String.format("%04d", maxNumberFromCode(materialTestTrialList) + 1));
+      materialTestTrial.setTrialNo(maxNumberFromCode(materialTestTrialList).longValue() + 1l);
     }
     materialTestTrialRepository.save(materialTestTrial);
     return materialTestTrial.getCode();
