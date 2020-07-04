@@ -406,10 +406,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.QUALITY_PARAMETER_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_QUALITY_PARAMETER)
         // file export
-        .antMatchers(HttpMethod.POST, EndpointURI.UPLOAD_MIXDESIGN)
-        .hasAuthority(PermissionConstants.CREATE_UPLOAD_MIXDESIGN)
-        .antMatchers(HttpMethod.GET, EndpointURI.EXPORT_MIXDESIGN)
-        .hasAuthority(PermissionConstants.VIEW_EXPORT_MIXDESIGN)
+//        .antMatchers(HttpMethod.POST, EndpointURI.UPLOAD_MIXDESIGN)
+//        .hasAuthority(PermissionConstants.CREATE_UPLOAD_MIXDESIGN)
+//        .antMatchers(HttpMethod.GET, EndpointURI.EXPORT_MIXDESIGN)
+//        .hasAuthority(PermissionConstants.VIEW_EXPORT_MIXDESIGN)
         // test Report
 //        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
 //        .hasAuthority(PermissionConstants.MATERIAL_TEST_REPORT)
