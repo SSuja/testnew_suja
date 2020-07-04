@@ -190,15 +190,17 @@ public class TestReportServiceImpl implements TestReportService {
     admixtureTestReportDto
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     admixtureTestReportDto.setMaterialAcceptedValueDto(
-        getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId()));
+        getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId(),
+            materialTest.getIncomingSample().getRawMaterial().getId()));
     admixtureTestReportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
     return admixtureTestReportDto;
   }
 
-  private MaterialAcceptedValueDto getMaterialAcceptedValueDto(Long testConfigureId) {
+  private MaterialAcceptedValueDto getMaterialAcceptedValueDto(Long testConfigureId,
+      Long rawMaterialId) {
     MaterialAcceptedValueDto materialAcceptedValueDto = new MaterialAcceptedValueDto();
-    MaterialAcceptedValue materialAcceptedValue =
-        materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
+    MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
+        .findByTestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
     materialAcceptedValueDto
         .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
     materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
