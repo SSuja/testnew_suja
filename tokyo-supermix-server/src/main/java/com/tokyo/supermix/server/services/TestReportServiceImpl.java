@@ -2,7 +2,6 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -190,15 +189,17 @@ public class TestReportServiceImpl implements TestReportService {
     admixtureTestReportDto
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     admixtureTestReportDto.setMaterialAcceptedValueDto(
-        getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId()));
+        getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId(),
+            materialTest.getIncomingSample().getRawMaterial().getId()));
     admixtureTestReportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
     return admixtureTestReportDto;
   }
 
-  private MaterialAcceptedValueDto getMaterialAcceptedValueDto(Long testConfigureId) {
+  private MaterialAcceptedValueDto getMaterialAcceptedValueDto(Long testConfigureId,
+      Long rawMaterialId) {
     MaterialAcceptedValueDto materialAcceptedValueDto = new MaterialAcceptedValueDto();
-    MaterialAcceptedValue materialAcceptedValue =
-        materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
+    MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
+        .findByTestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
     materialAcceptedValueDto
         .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
     materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
@@ -234,7 +235,7 @@ public class TestReportServiceImpl implements TestReportService {
       IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
       incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
       incomingSampleTestDto.setAverage(test.getAverage());
-      incomingSampleTestDto.setStatus(test.getStatus());
+      incomingSampleTestDto.setStatus(test.getIncomingSample().getStatus().name());
       incomingSampleTestDto
           .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
       incomingSampleTestDtoList.add(incomingSampleTestDto);
@@ -251,7 +252,7 @@ public class TestReportServiceImpl implements TestReportService {
           IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
           incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
           incomingSampleTestDto.setAverage(test.getAverage());
-          incomingSampleTestDto.setStatus(test.getStatus());
+          incomingSampleTestDto.setStatus(test.getIncomingSample().getStatus().name());
           incomingSampleTestDto
               .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
           incomingSampleTestDtoList.add(incomingSampleTestDto);
