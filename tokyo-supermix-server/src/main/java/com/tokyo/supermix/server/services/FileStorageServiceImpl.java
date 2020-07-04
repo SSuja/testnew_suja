@@ -40,7 +40,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
-    Path path = Paths.get("C://Users/MixDesign");
+    Path path = Paths.get("/tokyo-supermix-server/Upload");
     try {
       Files.createDirectories(path);
     } catch (IOException e1) {
@@ -70,7 +70,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importMixDesgin(MultipartFile file) {
-    Path path = Paths.get("C://Users/MixDesign");
+    Path path = Paths.get("/tokyo-supermix-server/Upload");
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
@@ -84,7 +84,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     try {
       row = csvReader.readNext();
       row = csvReader.readNext();
-
+      
       // Import the data to DB
       while ((row = csvReader.readNext()) != null) {
         MixDesign mixDesign = new MixDesign();
