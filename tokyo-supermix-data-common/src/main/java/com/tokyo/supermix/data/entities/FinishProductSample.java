@@ -20,7 +20,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String workOrderNo;
-	private Long finishProductCode;
+	private String finishProductCode;
 	private Date date;
 	@ManyToOne
 	@JoinColumn(name = "equipmentId", nullable = false)
@@ -62,11 +62,11 @@ public class FinishProductSample extends DateAudit implements Serializable {
 		this.mixDesign = mixDesign;
 	}
 
-	public Long getFinishProductCode() {
+	public String getFinishProductCode() {
 		return finishProductCode;
 	}
 
-	public void setFinishProductCode(Long finishProductCode) {
+	public void setFinishProductCode(String finishProductCode) {
 		this.finishProductCode = finishProductCode;
 	}
 
