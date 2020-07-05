@@ -10,18 +10,11 @@ public class Constants {
   public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
-  public static final String SUBJECT_NEW_PROJECT = "Notification : New Project";
-  public static final String SUBJECT_NEW_FINISH_PRODUCT = "Notification : New Finish Product";
-  public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST =
-      "Notifiation : Congrete Strength Test";
-  public static final String SUBJECT_NEW_CONGRETE_TEST = "Notification : New Concrete Test";
-  public static final String SUBJECT_INCOMING_SAMPLE_RESULT =
-      "Notification : Information for Incoming Sample Test Status";
-  public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
-  public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-  public static final String SUBJECT_REPORT = "Notification : Test Report";
+  public static final String SUBJECT_REPORT ="Delivery Details Report Of Incoming Sample";
   public static final String BODY_FOR_REPORT ="Here you can find the Test Details Report";
+  public static final String DELIVERY_REPORT ="delivery-report.pdf";
+  public static final String SUMMARY_REPORT ="summary-report.pdf";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
