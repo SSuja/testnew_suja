@@ -147,5 +147,7 @@ public final class PrivilegeEndpointURI {
       BASE_API_PATH + "user-plant-permission";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID =
       USER_PLANT_PERMISSION + SLASH + "{userId}";
+  public static final String USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
+      USER_PLANT_PERMISSION + SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
 
 }

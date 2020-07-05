@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.UserPlantPermissionRequestDto;
+import com.tokyo.supermix.data.dto.privilege.UserPrivilegeDto;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -55,5 +56,22 @@ public class UserPlantPermissionController {
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
   }
+
+  @GetMapping(
+      value = PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS)
+  public ResponseEntity<Object> getUserPlantPermissionByUserIdAndPlantCodeStatus(
+      @PathVariable Long userId, @PathVariable String plantCode, @PathVariable Boolean status) {
+    if (userPlantPermissionService.isUserIdExist(userId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+              mapper.map(userPlantPermissionService.getByUserIdAndPermissionAndStatus(userId, plantCode, status),
+                  UserPrivilegeDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
+        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
 
 }

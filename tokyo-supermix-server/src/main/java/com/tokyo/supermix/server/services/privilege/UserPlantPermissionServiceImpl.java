@@ -9,6 +9,7 @@ import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
+import com.tokyo.supermix.data.dto.privilege.UserPrivilegeDto;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
@@ -135,6 +136,24 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
           mapper.map(userPlantPermission.getPlantPermission().getPlant(), PlantResponseDto.class));
     });
     return plantResponseDtolist;
+  }
+
+  @Transactional(readOnly = true)
+  public List<UserPrivilegeDto> getByUserIdAndPermissionAndStatus(Long userId, String plantCode,
+      Boolean status) {
+
+    List<UserPlantPermission> userPlantPermissionList = userPlantPermissionRepository
+        .findByUserIdAndPlantPermissionPlantCodeAndStatus(userId, plantCode, true);
+    List<UserPrivilegeDto> userPrivilegeDtolist = new ArrayList<UserPrivilegeDto>();
+    userPlantPermissionList.forEach(userPlantPermission->{
+      UserPrivilegeDto userPrivilegeDto = new UserPrivilegeDto();
+      
+      userPrivilegeDto.setPermissionId(userPlantPermission.getPlantPermission().getId());
+      userPrivilegeDto.setPermissionName(userPlantPermission.getPlantPermission().getPermission().getName());
+      userPrivilegeDto.setStatus(userPlantPermission.getStatus());
+      userPrivilegeDtolist.add(userPrivilegeDto);
+    });
+    return userPrivilegeDtolist;
   }
 
 }
