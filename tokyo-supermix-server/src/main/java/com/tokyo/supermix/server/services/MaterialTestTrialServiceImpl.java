@@ -199,13 +199,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 		materialTest.setAverage(roundDoubleValue(average));
 		materialTest.setStatus(status);
 		materialTestRepository.save(materialTest);
-		try {
-			generateReportService.generatePdfDeliveryDetailReport(materialTest.getIncomingSample().getCode(),
-					materialTest.getTestConfigure().getTest().getName());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-		}
 		return materialTest;
 	}
 

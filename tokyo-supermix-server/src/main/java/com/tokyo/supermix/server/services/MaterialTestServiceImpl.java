@@ -202,11 +202,13 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String bodyMessage) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
-    try {
-		generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
-	} catch (Exception e) {
-		System.out.println(e.getMessage());
-		e.printStackTrace();
-	} 
+    if(!status.equals(Status.PROCESS)) {
+    	try {
+    		generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
+    	} catch (Exception e) {
+    		System.out.println(e.getMessage());
+    		e.printStackTrace();
+    	} 
+    }
   }
 }

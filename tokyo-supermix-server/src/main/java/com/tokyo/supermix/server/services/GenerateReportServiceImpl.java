@@ -31,7 +31,7 @@ public class GenerateReportServiceImpl implements GenerateReportService {
   private EmailRecipientService emailRecipientService;
  
 	@Override
-	public String generatePdfSummaryDetailReport(String incomingSampleCode)
+	public void generatePdfSummaryDetailReport(String incomingSampleCode)
 			throws FileNotFoundException, JRException, MessagingException {
 		IncomingSampleDeliveryReportDto deliveryReport = testReportService
 				.getIncomingSampleSummaryReport(incomingSampleCode);
@@ -48,7 +48,6 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		        "Incoming Sample Group", deliveryReport.getPlant().getCode());
 		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]), Constants.SUBJECT_REPORT,
 				Constants.BODY_FOR_REPORT, fileByte, Constants.SUMMARY_REPORT);
-		return "Report Send Successfully!!";
 	}
 	
 	private byte[] generateReportPdf(String tempPath, Map<String, Object> params)
@@ -59,7 +58,7 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 	}
 	
 	@Override
-	public String generatePdfDeliveryDetailReport(String incomingSampleCode, String testName)
+	public void generatePdfDeliveryDetailReport(String incomingSampleCode, String testName)
 			throws FileNotFoundException, JRException, MessagingException {
 		IncomingSampleDeliveryReportDto deliveryReport = testReportService
 				.getIncomingSampleDeliveryReports(incomingSampleCode, testName);
@@ -76,6 +75,5 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		        "Incoming Sample Group", deliveryReport.getPlant().getCode());
 		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]), Constants.SUBJECT_REPORT,
 				Constants.BODY_FOR_REPORT, fileByte,Constants.DELIVERY_REPORT );
-		return "Report Send Successfully!!";
 	}
 }
