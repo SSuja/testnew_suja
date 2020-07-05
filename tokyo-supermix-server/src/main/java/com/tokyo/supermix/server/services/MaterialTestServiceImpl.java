@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -35,8 +37,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
-  private EmailRecipientService emailRecipientService;
-
+  private GenerateReportService generateReportService;
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
     if (materialTest.getCode() == null) {
@@ -201,5 +202,11 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String bodyMessage) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
+    try {
+		generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+		e.printStackTrace();
+	} 
   }
 }
