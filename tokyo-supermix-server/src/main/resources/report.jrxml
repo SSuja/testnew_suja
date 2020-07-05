@@ -29,7 +29,7 @@
 		<band height="63">
 			<image>
 				<reportElement x="19" y="-1" width="66" height="63" uuid="4a56ecb6-250d-4fbf-b441-aee94cd97964"/>
-				<imageExpression><![CDATA["download.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["download.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="190" y="35" width="320" height="20" forecolor="#434473" uuid="1d17dc69-1d01-4604-a971-795a87ac12f1"/>
