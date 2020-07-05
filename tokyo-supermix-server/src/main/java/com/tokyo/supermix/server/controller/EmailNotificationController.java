@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.io.FileNotFoundException;
-
 import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

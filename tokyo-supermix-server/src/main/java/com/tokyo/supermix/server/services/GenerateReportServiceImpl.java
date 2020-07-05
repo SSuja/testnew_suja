@@ -23,11 +23,13 @@ import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class GenerateReportServiceImpl implements GenerateReportService {
-	@Autowired
-	private TestReportService testReportService;
-	@Autowired
-	private EmailService emailService;
-
+  @Autowired
+  private TestReportService testReportService;
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private EmailRecipientService emailRecipientService;
+ 
 	@Override
 	public String generatePdfSummaryDetailReport(String incomingSampleCode)
 			throws FileNotFoundException, JRException, MessagingException {
@@ -42,12 +44,13 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		params.put("datasource1", deliveryReports);
 		params.put("datasource2", incomingSampleTestDtos);
 		byte[] fileByte = generateReportPdf(tempPath, params);
-		List<String> reciepients = new ArrayList<String>();
-		reciepients.add("jjananthan93@gmail.com");
-		emailService.sendEmailWithAttachment(reciepients.toArray(new String[reciepients.size()]), Constants.SUBJECT_REPORT,
+		List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(
+		        "Incoming Sample Group", deliveryReport.getPlant().getCode());
+		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]), Constants.SUBJECT_REPORT,
 				Constants.BODY_FOR_REPORT, fileByte, Constants.SUMMARY_REPORT);
 		return "Report Send Successfully!!";
 	}
+	
 	private byte[] generateReportPdf(String tempPath, Map<String, Object> params)
 			throws FileNotFoundException, JRException, MessagingException {
 		JasperReport jasperReport = JasperCompileManager.compileReport(tempPath);
@@ -69,9 +72,9 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		params.put("datasource1", deliveryReports);
 		params.put("datasource2", incomingSampleTestDtos);
 		byte[] fileByte = generateReportPdf(tempPath, params);
-		List<String> reciepients = new ArrayList<String>();
-		reciepients.add("jjananthan93@gmail.com");
-		emailService.sendEmailWithAttachment(reciepients.toArray(new String[reciepients.size()]), Constants.SUBJECT_REPORT,
+		List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(
+		        "Incoming Sample Group", deliveryReport.getPlant().getCode());
+		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]), Constants.SUBJECT_REPORT,
 				Constants.BODY_FOR_REPORT, fileByte,Constants.DELIVERY_REPORT );
 		return "Report Send Successfully!!";
 	}
