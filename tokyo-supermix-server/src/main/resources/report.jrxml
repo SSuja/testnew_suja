@@ -8,6 +8,7 @@
 		<field name="supplierReportDtos.name" class="java.lang.String"/>
 		<field name="incomingsample.rawMaterialName" class="java.lang.String"/>
 		<field name="incomingsample.materialSubCategory" class="java.lang.String"/>
+		<field name="incomingsample.status" class="java.lang.String"/>
 		<field name="plant.address" class="java.lang.String"/>
 		<field name="plant.phoneNumber" class="java.lang.String"/>
 	</subDataset>
@@ -95,7 +96,7 @@
 							<textElement textAlignment="Left">
 								<font size="12"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$F{incomingsample.code}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$F{incomingsample.status}]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="419" y="62" width="111" height="20" uuid="832fa6a4-d41c-489a-a43a-21f3510836ea">
