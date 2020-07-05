@@ -22,37 +22,46 @@ import net.sf.jasperreports.engine.JasperReport;
 
 @Service
 public class GenerateReportServiceImpl implements GenerateReportService {
-	@Autowired
-	private TestReportService testReportService;
-	@Autowired
-	private EmailService emailService;
+  @Autowired
+  private TestReportService testReportService;
+  @Autowired
+  private EmailService emailService;
+  @Autowired
+  private EmailRecipientService emailRecipientService;
+ 
 
-	@Override
-	public String generatePdfSummaryDetailReport(String incomingSampleCode)
-			throws FileNotFoundException, JRException, MessagingException {
-		IncomingSampleDeliveryReportDto deliveryReport = testReportService
-				.getIncomingSampleSummaryReport(incomingSampleCode);
-		List<IncomingSampleDeliveryReportDto> deliveryReports = new ArrayList<IncomingSampleDeliveryReportDto>();
-		deliveryReports.add(deliveryReport);
-		List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
-		System.out.println("size -------------- " + incomingSampleTestDtos.size());
-		File file = ResourceUtils.getFile("classpath:summary_report.jrxml");
-		String tempPath = file.getAbsolutePath();
-		Map<String, Object> params = new HashMap<>();
-		params.put("datasource1", deliveryReports);
-		params.put("datasource2", incomingSampleTestDtos);
-		byte[] fileByte = generateReportPdf(tempPath, params);
-		List<String> reciepients = new ArrayList<String>();
-		reciepients.add("");
-		emailService.sendEmailWithAttachment(reciepients.toArray(new String[reciepients.size()]), "Summary Details Report Of Incoming Sample",
-				"sucessfully generate pdf", fileByte, "summary-report.pdf");
-		return "Report Send Successfully!!";
-	}
-	private byte[] generateReportPdf(String tempPath, Map<String, Object> params)
-			throws FileNotFoundException, JRException, MessagingException {
-		JasperReport jasperReport = JasperCompileManager.compileReport(tempPath);
-		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
-//		JasperExportManager.exportReportToPdfFile(jasperPrint, "summary_report.pdf");
-		return JasperExportManager.exportReportToPdf(jasperPrint);
-	}
+  @Override
+  public String generatePdfSummaryDetailReport(String incomingSampleCode)
+      throws FileNotFoundException, JRException, MessagingException {
+    IncomingSampleDeliveryReportDto deliveryReport =
+        testReportService.getIncomingSampleSummaryReport(incomingSampleCode);
+    List<IncomingSampleDeliveryReportDto> deliveryReports =
+        new ArrayList<IncomingSampleDeliveryReportDto>();
+    deliveryReports.add(deliveryReport);
+    List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
+    System.out.println("size -------------- " + incomingSampleTestDtos.size());
+    File file = ResourceUtils.getFile("classpath:summary_report.jrxml");
+    String tempPath = file.getAbsolutePath();
+    Map<String, Object> params = new HashMap<>();
+    params.put("datasource1", deliveryReports);
+    params.put("datasource2", incomingSampleTestDtos);
+    byte[] fileByte = generateReportPdf(tempPath, params);
+      
+    List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(
+        "Incoming Sample Group", deliveryReport.getPlant().getCode());
+        emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
+        "Summary Details Report Of Incoming Sample", "sucessfully generate pdf", fileByte,
+        "summary-report.pdf");
+    return "Report Send Successfully!!";
+  }
+
+  private byte[] generateReportPdf(String tempPath, Map<String, Object> params)
+      throws FileNotFoundException, JRException, MessagingException {
+    JasperReport jasperReport = JasperCompileManager.compileReport(tempPath);
+    JasperPrint jasperPrint =
+        JasperFillManager.fillReport(jasperReport, params, new JREmptyDataSource());
+    // JasperExportManager.exportReportToPdfFile(jasperPrint, "summary_report.pdf");
+    return JasperExportManager.exportReportToPdf(jasperPrint);
+  }
+
 }
