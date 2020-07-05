@@ -73,7 +73,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionSubModuleDto.setSubModule(sub.getName());
       plantPermissionSubModuleDto.setSubModuleId(sub.getId());
       plantPermissionSubModuleDto.setMainModuleId(mainModuleId);
-      plantPermissionSubModuleDto.setPlantPermissions(
+      plantPermissionSubModuleDto.setPrivilages(
           getPlantPermissionsBySubModuleId(sub.getId(), mainModuleId));
       SubModuleRolePermissionDtoList.add(plantPermissionSubModuleDto);
     }

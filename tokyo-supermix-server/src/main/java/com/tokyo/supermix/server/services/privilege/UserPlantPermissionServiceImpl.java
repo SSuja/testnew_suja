@@ -79,7 +79,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       boolean status = getPlantPermissionsAndReturnSubModuleStatus(userPlantPermissionList,
           subStatus, userId, sub.getId(), mainModuleId, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status);
-      subModulePlantRolePlantPermissionDto.setPlantPermissions(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setPrivilages(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;

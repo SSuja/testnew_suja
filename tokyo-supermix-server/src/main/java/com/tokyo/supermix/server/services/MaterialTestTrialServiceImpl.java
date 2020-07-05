@@ -48,8 +48,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 	ParameterResultRepository parameterResultRepository;
 	@Autowired
 	MaterialTestService materialTestService;
-	@Autowired
-	private GenerateReportService generateReportService;
 
 	@Transactional
 	public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {

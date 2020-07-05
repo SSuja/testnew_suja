@@ -7,7 +7,7 @@ public class SubModulePlantRolePlantPermissionDto {
   private Long mainModuleId;
   private String subModule;
   private boolean status;
-  private List<PlantRolePlantPermissionRequestDto> plantPermissions;
+  private List<PlantRolePlantPermissionRequestDto> privilages;
 
 
   public Long getSubModuleId() {
@@ -42,12 +42,11 @@ public class SubModulePlantRolePlantPermissionDto {
     this.status = status;
   }
 
-  public List<PlantRolePlantPermissionRequestDto> getPlantPermissions() {
-    return plantPermissions;
+  public List<PlantRolePlantPermissionRequestDto> getPrivilages() {
+    return privilages;
   }
 
-  public void setPlantPermissions(List<PlantRolePlantPermissionRequestDto> plantPermissions) {
-    this.plantPermissions = plantPermissions;
+  public void setPrivilages(List<PlantRolePlantPermissionRequestDto> privilages) {
+    this.privilages = privilages;
   }
-
 }

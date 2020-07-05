@@ -7,8 +7,8 @@ public class SubModuleRolePermissionDto {
   private Long mainModuleId;
   private String subModule;
   private boolean status;
-  private List<RolePermissionRequestDto> rolePermissions;
- 
+  private List<RolePermissionRequestDto> privilages;
+
 
   public String getSubModule() {
     return subModule;
@@ -18,12 +18,12 @@ public class SubModuleRolePermissionDto {
     this.subModule = subModule;
   }
 
-  public List<RolePermissionRequestDto> getRolePermissions() {
-    return rolePermissions;
+  public List<RolePermissionRequestDto> getPrivilages() {
+    return privilages;
   }
 
-  public void setRolePermissions(List<RolePermissionRequestDto> rolePermissions) {
-    this.rolePermissions = rolePermissions;
+  public void setPrivilages(List<RolePermissionRequestDto> privilages) {
+    this.privilages = privilages;
   }
 
   public boolean isStatus() {
@@ -48,5 +48,5 @@ public class SubModuleRolePermissionDto {
 
   public void setMainModuleId(Long mainModuleId) {
     this.mainModuleId = mainModuleId;
-  } 
+  }
 }

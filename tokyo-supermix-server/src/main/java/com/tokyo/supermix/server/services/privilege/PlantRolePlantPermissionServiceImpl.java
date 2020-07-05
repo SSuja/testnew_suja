@@ -117,7 +117,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       boolean status = getPlantPermissionsAndReturnSubModuleStatus(plantRolePlantPermissionList,
           subStatus, plantRoleId, sub.getId(), mainModuleId, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status);
-      subModulePlantRolePlantPermissionDto.setPlantPermissions(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setPrivilages(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;
