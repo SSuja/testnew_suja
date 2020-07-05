@@ -24,7 +24,6 @@ import com.tokyo.supermix.data.entities.SieveSize;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.EquationName;
 import com.tokyo.supermix.data.enums.TestParameterType;
-import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
