@@ -117,7 +117,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       boolean status = getPlantPermissionsAndReturnSubModuleStatus(plantRolePlantPermissionList,
           subStatus, plantRoleId, sub.getId(), mainModuleId, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status);
-      subModulePlantRolePlantPermissionDto.setPrivilages(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setPlantPermissions(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;
@@ -134,7 +134,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
       plantRolePlantPermissionRequestDto
-          .setPlantPermissionName(plantRolePlantpermission.getPlantPermission().getName());
+          .setPlantPermissionName(plantRolePlantpermission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(plantRolePlantpermission.getPlantPermission().getId());
       plantRolePlantPermissionRequestDto.setPlantRoleId(plantRoleId);
       plantRolePlantPermissionRequestDto.setStatus(plantRolePlantpermission.isStatus());

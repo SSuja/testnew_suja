@@ -88,7 +88,7 @@ public class RolePermissionServiceImpl implements RolePermissionService {
           rolePermissionDtoList.add(rolePermissionRequestDto);
         }
         subModuleRolePermissionDto.setStatus(subStatus);
-        subModuleRolePermissionDto.setPrivilages(rolePermissionDtoList);
+        subModuleRolePermissionDto.setRolePermissions(rolePermissionDtoList);
         SubModuleRolePermissionDtoList.add(subModuleRolePermissionDto);
         if (subStatus) {
           mainStatus = true;
