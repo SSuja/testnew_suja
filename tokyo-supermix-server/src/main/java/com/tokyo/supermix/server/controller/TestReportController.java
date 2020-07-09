@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
@@ -105,6 +106,7 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = EndpointURI.SIEVE_REPORT_DETAIL)
   public ResponseEntity<Object> getSieveReportDetails(@PathVariable String materialTestCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
@@ -115,6 +117,7 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = EndpointURI.CONCRETE_TEST_REPORT)
   public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode) {
     if (finishProductTestService.isFinishProductTestExists(finishProductTestCode)) {
@@ -132,6 +135,13 @@ public class TestReportController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
         mapper.map(testReportService.getMaterialTestTrailByMaterialTestCode(materialTestCode),
             MaterialTestTrialResultDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.CONCRETE_STRENGTHS)
+  public ResponseEntity<Object> getConcreteResults() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH,
+        mapper.map(testReportService.getConcreteStrengths(), ConcreteStrengthDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
+import com.tokyo.supermix.data.dto.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
+import com.tokyo.supermix.data.dto.CubeAndResult;
 import com.tokyo.supermix.data.dto.CubeTestReportDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
@@ -34,6 +36,7 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -47,6 +50,7 @@ import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.SieveAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 
 @Service
 public class TestReportServiceImpl implements TestReportService {
@@ -74,6 +78,8 @@ public class TestReportServiceImpl implements TestReportService {
   FinishProductTestRepository finishProductTestRepository;
   @Autowired
   FinishProductTrialRepository finishProductTrialRepository;
+  @Autowired
+  TestConfigureRepository testConfigureRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
@@ -433,4 +439,28 @@ public class TestReportServiceImpl implements TestReportService {
     return abbrevationAndValueDtoList;
   }
 
+  public List<ConcreteStrengthDto> getConcreteStrengths() {
+    ArrayList<ConcreteStrengthDto> averageStrengthList = new ArrayList<ConcreteStrengthDto>();
+    List<TestConfigure> testConfigureList = testConfigureRepository.findByDaysNotNull();
+    for (TestConfigure testConfigure : testConfigureList) {
+      ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
+      averageStrength.setTestName(testConfigure.getTest().getName());
+      averageStrength.setCubeAndResult(getCubeResults(testConfigure.getTest().getName()));
+      averageStrengthList.add(averageStrength);
+    }
+    return averageStrengthList;
+  }
+
+  public List<CubeAndResult> getCubeResults(String testName) {
+    ArrayList<CubeAndResult> cubeAndResultList = new ArrayList<CubeAndResult>();
+    List<FinishProductTest> finishProductTestList =
+        finishProductTestRepository.findByTestConfigureTestName(testName);
+    for (FinishProductTest finishProductTest : finishProductTestList) {
+      CubeAndResult cubeAndResult = new CubeAndResult();
+      cubeAndResult.setCube(finishProductTest.getFinishProductSample().getFinishProductCode());
+      cubeAndResult.setResult(finishProductTest.getResult());
+      cubeAndResultList.add(cubeAndResult);
+    }
+    return cubeAndResultList;
+  }
 }

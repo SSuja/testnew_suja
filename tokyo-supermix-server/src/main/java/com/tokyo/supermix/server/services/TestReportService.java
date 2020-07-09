@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+
+import com.tokyo.supermix.data.dto.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
@@ -27,4 +29,6 @@ public interface TestReportService {
 
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
       String materialTestCode);
+
+  public List<ConcreteStrengthDto> getConcreteStrengths();
 }
