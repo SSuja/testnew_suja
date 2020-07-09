@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.NotificationDays;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
+import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
@@ -47,7 +48,7 @@ public class EmailNotification {
 
   private void sendEquipmentMail(PlantEquipmentCalibration calibration) {
     List<String> equipmentCalibrationEmailList = emailRecipientService
-        .getEmailsByEmailGroupNameAndPlantCode(Constants.EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION,
+        .getEmailsByEmailNotificationAndPlantCode(EmailNotifications.CALIBRATION_GROUP,
             calibration.getPlantEquipment().getPlant().getCode());
     emailService.sendMail(
         equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
@@ -78,8 +79,8 @@ public class EmailNotification {
     String mailBody = "The work order no is " + finishProductSample.getWorkOrderNo()
         + ", created on " + finishProductSample.getDate() + "." + " reached " + noOfDays + "days "
         + " Please test" + noOfDays + " days strength.";
-    List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(
-        "Mixdesign Group", finishProductSample.getMixDesign().getPlant().getCode());
+    List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+    		EmailNotifications.MIX_DESIGN_GROUP, finishProductSample.getMixDesign().getPlant().getCode());
     emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
         Constants.SUBJECT_MIX_DESIGN, mailBody);
   }

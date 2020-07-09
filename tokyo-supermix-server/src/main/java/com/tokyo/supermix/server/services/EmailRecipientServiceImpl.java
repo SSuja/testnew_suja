@@ -10,6 +10,7 @@ import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
 import com.tokyo.supermix.data.dto.EmailRecipientResponseDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
+import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.data.enums.RecipientType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailRecipientRepository;
@@ -70,10 +71,10 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   }
 
   @Transactional(readOnly = true)
-  public List<String> getEmailsByEmailGroupNameAndPlantCode(String emailGroupName,
+  public List<String> getEmailsByEmailNotificationAndPlantCode(EmailNotifications emailNotifications,
       String plantCode) {
     List<EmailRecipient> emailRecipientList =
-        emailRecipientRepository.findByEmailGroupNameAndPlantCode(emailGroupName, plantCode);
+        emailRecipientRepository.findByEmailGroupEmailNotificationsAndPlantCode(emailNotifications, plantCode);
     List<String> emaillist = new ArrayList<String>();
     emailRecipientList.forEach(emailRecipient -> {
       if (emailRecipient.getPlantRole() != null) {
