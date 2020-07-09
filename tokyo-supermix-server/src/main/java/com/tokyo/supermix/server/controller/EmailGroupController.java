@@ -53,7 +53,7 @@ public class EmailGroupController {
 
 	@PostMapping(value = EndpointURI.EMAIL_GROUP)
 	public ResponseEntity<Object> createGroup(@Valid @RequestBody EmailGroupDto emailGroupDto) {
-		if (emailGroupService.isEmailGroupNameExist(emailGroupDto.getEmailGroupName())) {
+		if (emailGroupService.isEmailGroupNameExist(emailGroupDto.getEmailNotifications())) {
 			return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP,
 					validationFailureStatusCodes.getEmailRecipientAlreadyExist()), HttpStatus.BAD_REQUEST);
 		}
@@ -78,7 +78,7 @@ public class EmailGroupController {
 	@PutMapping(value = EndpointURI.EMAIL_GROUP)
 	public ResponseEntity<Object> updateEmailGroup(@Valid @RequestBody EmailGroupDto emailGroupDto) {
 		if (emailGroupService.isEmailGroupExist(emailGroupDto.getId())) {
-			if (emailGroupService.isEmailGroupNameExist(emailGroupDto.getEmailGroupName())) {
+			if (emailGroupService.isEmailGroupNameExist(emailGroupDto.getEmailNotifications())) {
 				return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP,
 						validationFailureStatusCodes.getEmailRecipientAlreadyExist()), HttpStatus.BAD_REQUEST);
 			}

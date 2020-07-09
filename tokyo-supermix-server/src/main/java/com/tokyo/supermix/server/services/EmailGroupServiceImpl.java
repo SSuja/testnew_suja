@@ -39,7 +39,7 @@ public class EmailGroupServiceImpl implements EmailGroupService {
 	@Override
 	public boolean isEmailGroupNameExist(EmailNotifications emailNotifications) {
 		
-		return emailGroupRepository.existsByEmailGroupName(emailNotifications);
+		return emailGroupRepository.existsByEmailNotifications(emailNotifications);
 	}
 
 	@Transactional(readOnly = true)

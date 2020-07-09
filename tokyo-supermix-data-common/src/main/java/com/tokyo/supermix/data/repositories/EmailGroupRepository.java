@@ -9,5 +9,5 @@ import com.tokyo.supermix.data.enums.EmailNotifications;
 @Repository
 public interface EmailGroupRepository extends JpaRepository<EmailGroup, Long> {
   List<EmailGroup> findBySchedule(Boolean schedule);
-  boolean existsByEmailGroupName(EmailNotifications emailNotifications);
+  boolean existsByEmailNotifications(EmailNotifications emailNotifications);
 }

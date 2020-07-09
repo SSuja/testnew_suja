@@ -37,11 +37,12 @@ public class EmailGroup {
 		this.name = name;
 	}
 
-	public EmailNotifications getEmailGroupName() {
+	
+	public EmailNotifications getEmailNotifications() {
 		return emailNotifications;
 	}
 
-	public void setEmailGroupName(EmailNotifications emailNotifications) {
+	public void setEmailNotifications(EmailNotifications emailNotifications) {
 		this.emailNotifications = emailNotifications;
 	}
 
