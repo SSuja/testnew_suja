@@ -579,6 +579,8 @@ public final class EndpointURI {
   
   
   public static final String EMAIL_GROUPS = BASE_API_PATH + "email-groups";
+  public static final String EMAIL_GROUP = BASE_API_PATH + "email-group";
+  public static final String EMAIL_GROUP_BY_ID = EMAIL_GROUP + ID;
   public static final String EMAIL_GROUP_BY_SHEDULE = EMAIL_GROUPS +SLASH+ "email-group-schedule" + SLASH + "{schedule}";
   
   /*

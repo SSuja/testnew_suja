@@ -4,6 +4,7 @@ import java.util.List;
 import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
 import com.tokyo.supermix.data.dto.EmailRecipientResponseDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
+import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.data.enums.RecipientType;
 
 public interface EmailRecipientService {
@@ -11,7 +12,7 @@ public interface EmailRecipientService {
 
   public boolean isDuplicateDataExists(EmailRecipientRequestDto emailRecipientRequestDto);
 
-  public List<String> getEmailsByEmailGroupNameAndPlantCode(String emailGroupName,
+  public List<String> getEmailsByEmailNotificationAndPlantCode(EmailNotifications emailNotifications,
       String plantCode);
 
   public List<EmailRecipientResponseDto> getEmailRecipientByRecipient(Long emailGroupId,
