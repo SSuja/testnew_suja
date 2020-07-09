@@ -523,6 +523,11 @@ public class Constants {
   
   
   public static final String EMAIL_GROUPS = "emailGroups";
+  public static final String EMAIL_GROUP = "emailGroup";
+  public static final String ADD_EMAIL_GROUP_SUCCESS = "Email Group Added Successfully";
+  public static final String UPDATE_EMAIL_GROUP_SUCCESS = "Email Group Updated Successfully";
+  public static final String EMAIL_GROUP_DELETED = "Email Group Successfully Deleted";
+  public static final String EMAIL_GROUP_ID = "emailGroupId";
   public static final String EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION = "Plant Equipment Calibration Group";
   public static final String EMAIL_GROUP_MIX_DESIGN = "Mix Design Group";
   public static final String EMAIL_GROUP_INCOMING_SAMPLE_STATUS = "Incoming Sample Group";

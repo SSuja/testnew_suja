@@ -1728,5 +1728,31 @@ public String getEmailNotificationDaysNotExist() {
 public void setEmailNotificationDaysNotExist(String emailNotificationDaysNotExist) {
   this.emailNotificationDaysNotExist = emailNotificationDaysNotExist;
 }
+
+
+@Value("${validation.emailGroup.alreadyExist}")
+private String emailGroupAlreadyExist;
+
+@Value("${validation.emailGroup.notExist}")
+private String emailGroupNotExist;
+
+public String getEmailGroupAlreadyExist() {
+	return emailGroupAlreadyExist;
+}
+
+public void setEmailGroupAlreadyExist(String emailGroupAlreadyExist) {
+	this.emailGroupAlreadyExist = emailGroupAlreadyExist;
+}
+
+public String getEmailGroupNotExist() {
+	return emailGroupNotExist;
+}
+
+public void setEmailGroupNotExist(String emailGroupNotExist) {
+	this.emailGroupNotExist = emailGroupNotExist;
+}
+
+
+
 }
 

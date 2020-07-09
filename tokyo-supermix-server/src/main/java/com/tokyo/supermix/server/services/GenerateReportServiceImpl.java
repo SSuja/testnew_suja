@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
+import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.util.Constants;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -44,8 +45,8 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		params.put("datasource1", deliveryReports);
 		params.put("datasource2", incomingSampleTestDtos);
 		byte[] fileByte = generateReportPdf(tempPath, params);
-		List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(
-		        "Incoming Sample Group", deliveryReport.getPlant().getCode());
+		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+				EmailNotifications.INCOMING_SAMPLE_GROUP, deliveryReport.getPlant().getCode());
 		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]), Constants.SUBJECT_REPORT,
 				Constants.BODY_FOR_REPORT, fileByte, Constants.SUMMARY_REPORT);
 	}
@@ -71,8 +72,8 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		params.put("datasource1", deliveryReports);
 		params.put("datasource2", incomingSampleTestDtos);
 		byte[] fileByte = generateReportPdf(tempPath, params);
-		List<String> reciepientList = emailRecipientService.getEmailsByEmailGroupNameAndPlantCode(
-		        "Incoming Sample Group", deliveryReport.getPlant().getCode());
+		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+				EmailNotifications.INCOMING_SAMPLE_GROUP, deliveryReport.getPlant().getCode());
 		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]), Constants.SUBJECT_REPORT,
 				Constants.BODY_FOR_REPORT, fileByte,Constants.DELIVERY_REPORT );
 	}
