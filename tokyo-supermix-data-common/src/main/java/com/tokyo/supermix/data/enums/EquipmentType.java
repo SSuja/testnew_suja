@@ -1,5 +1,5 @@
 package com.tokyo.supermix.data.enums;
 
 public enum EquipmentType {
-  MATERIAL, FINISH_PRODUCT
+	TEST_EQUIPMENT, PRODUCTION_EQUIPMENT
 }
