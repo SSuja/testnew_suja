@@ -6,24 +6,27 @@ import com.tokyo.supermix.data.entities.FinishProductTest;
 
 public interface FinishProductTestRepository extends JpaRepository<FinishProductTest, String> {
 
-	List<FinishProductTest> findByTestConfigureId(Long testConfigureId);
+  List<FinishProductTest> findByTestConfigureId(Long testConfigureId);
 
-	boolean existsByTestConfigureId(Long testConfigureId);
+  boolean existsByTestConfigureId(Long testConfigureId);
 
-	boolean existsByCode(String code);
+  boolean existsByCode(String code);
 
-	FinishProductTest findFinishProductTestByCode(String code);
+  FinishProductTest findFinishProductTestByCode(String code);
 
-	List<FinishProductTest> findByCodeContaining(String code);
+  List<FinishProductTest> findByCodeContaining(String code);
 
-	List<FinishProductTest> findByFinishProductSampleId(Long finishProductSampleId);
+  List<FinishProductTest> findByFinishProductSampleId(Long finishProductSampleId);
 
-	List<FinishProductTest> findByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
-			Long testConfigureId);
+  List<FinishProductTest> findByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
+      Long testConfigureId);
 
-	List<FinishProductTest> findByTestConfigureTestName(String testName);
+  List<FinishProductTest> findByTestConfigureTestName(String testName);
 
-	boolean existsByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId, Long testConfigureId);
+  boolean existsByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
+      Long testConfigureId);
 
-	List<FinishProductTest> findByFinishProductSampleMixDesignPlantCodeIn(List<String> plantCodes);
+  List<FinishProductTest> findByFinishProductSampleMixDesignPlantCodeIn(List<String> plantCodes);
+
+  boolean existsByFinishProductSampleId(Long finishProductSampleId);
 }

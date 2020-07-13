@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.NotificationDaysResponseDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.NotificationDays;
+import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.data.repositories.EmailNotificationDaysRepository;
 
 @Service
@@ -52,8 +53,8 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   }
 
   @Transactional(readOnly = true)
-  public List<NotificationDays> getByEmailGroupName(String emailGroupName) {
-    return emailNotificationDaysRepository.getByEmailGroupName(emailGroupName);
+  public List<NotificationDays> getByEmailGroup(EmailNotifications emailNotifications) {
+    return emailNotificationDaysRepository.findByEmailGroupEmailNotifications(emailNotifications);
   }
 
   @Transactional(readOnly = true)

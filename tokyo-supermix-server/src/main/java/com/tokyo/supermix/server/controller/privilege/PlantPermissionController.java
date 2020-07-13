@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PlantPermissionResponseDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -58,5 +59,14 @@ public class PlantPermissionController {
         mapper.map(plantPermissionService.getPlantPermissionByPlantCodeAndMainModuleAndSubModule(
             plantCode, subModuleId, mainModuleId), PlantPermissionResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_PERMISSION_BY_PLANT_CODE)
+  public ResponseEntity<Object> getPlantPermissionsByPlantCode(@PathVariable String plantCode) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+            mapper.map(plantPermissionService.getAllPermissionsByPlantCode(plantCode), PlantRolePlantPermissionResponseDto.class),
+                RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }

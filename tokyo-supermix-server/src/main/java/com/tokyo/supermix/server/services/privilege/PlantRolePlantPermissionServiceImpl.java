@@ -117,7 +117,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       boolean status = getPlantPermissionsAndReturnSubModuleStatus(plantRolePlantPermissionList,
           subStatus, plantRoleId, sub.getId(), mainModuleId, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status);
-      subModulePlantRolePlantPermissionDto.setPlantPermissions(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setPrivilages(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
       if (status) {
         mainStatus = true;
@@ -134,7 +134,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
       plantRolePlantPermissionRequestDto
-          .setPlantPermissionName(plantRolePlantpermission.getPlantPermission().getPermission().getName());
+          .setPermissionName(plantRolePlantpermission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(plantRolePlantpermission.getPlantPermission().getId());
       plantRolePlantPermissionRequestDto.setPlantRoleId(plantRoleId);
       plantRolePlantPermissionRequestDto.setStatus(plantRolePlantpermission.isStatus());
@@ -207,7 +207,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermission.setStatus(false);
       plantRolePlantPermission.setPlantRole(plantRole);
       System.out.println("plantroleplant permission save method --"
-          + plantRolePlantPermission.getPlantPermission().getName());
+          + plantRolePlantPermission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRepository.save(plantRolePlantPermission);
     });
   }
