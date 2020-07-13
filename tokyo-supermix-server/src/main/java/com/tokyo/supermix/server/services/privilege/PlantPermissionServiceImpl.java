@@ -73,7 +73,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionSubModuleDto.setSubModule(sub.getName());
       plantPermissionSubModuleDto.setSubModuleId(sub.getId());
       plantPermissionSubModuleDto.setMainModuleId(mainModuleId);
-      plantPermissionSubModuleDto.setPlantPermissions(
+      plantPermissionSubModuleDto.setPrivilages(
           getPlantPermissionsBySubModuleId(sub.getId(), mainModuleId));
       SubModuleRolePermissionDtoList.add(plantPermissionSubModuleDto);
     }
@@ -89,7 +89,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
     for (PlantPermission plantPermission : plantPermissions) {
       PlantRolePlantPermissionRequestDto plantPermissionResponseDto =
           new PlantRolePlantPermissionRequestDto();
-      plantPermissionResponseDto.setPlantPermissionName(plantPermission.getName());
+      plantPermissionResponseDto.setPermissionName(plantPermission.getPermission().getName());
       plantPermissionResponseDto.setPlantPermissionId(plantPermission.getId());
       plantPermissionResponseDto.setMainModuleId(mainModuleId);
       plantPermissionResponseDto.setSubModuleId(subModuleId);
@@ -167,7 +167,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionSubModuleDto.setSubModule(sub.getName());
       plantPermissionSubModuleDto.setSubModuleId(sub.getId());
       plantPermissionSubModuleDto.setMainModuleId(mainModuleId);
-      plantPermissionSubModuleDto.setPlantPermissions(
+      plantPermissionSubModuleDto.setPrivilages(
           getPlantPermissionsBySubModuleId1(sub.getId(), mainModuleId ,plantCode));
       SubModuleRolePermissionDtoList.add(plantPermissionSubModuleDto);
     }
@@ -179,11 +179,11 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
     List<PlantRolePlantPermissionRequestDto> plantPermissionResponseDtos =
         new ArrayList<PlantRolePlantPermissionRequestDto>();
     List<PlantPermission> plantPermissions =
-        plantPermissionRepository.findByplantCodeAndPermissionSubModuleId(plantCode,subModuleId);
+        plantPermissionRepository.findByPlantCodeAndPermissionSubModuleId(plantCode,subModuleId);
     for (PlantPermission plantPermission : plantPermissions) {
       PlantRolePlantPermissionRequestDto plantPermissionResponseDto =
           new PlantRolePlantPermissionRequestDto();
-      plantPermissionResponseDto.setPlantPermissionName(plantPermission.getName());
+      plantPermissionResponseDto.setPermissionName(plantPermission.getPermission().getName());
       plantPermissionResponseDto.setPlantPermissionId(plantPermission.getId());
       plantPermissionResponseDto.setMainModuleId(mainModuleId);
       plantPermissionResponseDto.setSubModuleId(subModuleId);

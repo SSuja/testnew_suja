@@ -16,5 +16,5 @@ public interface PlantPermissionRepository extends JpaRepository<PlantPermission
 
   public List<PlantPermission> findByPermissionSubModuleId(Long id);
   
-  public List<PlantPermission> findByplantCodeAndPermissionSubModuleId(String plantcode,Long id);
+  public List<PlantPermission> findByPlantCodeAndPermissionSubModuleId(String plantCode,Long id);
 }
