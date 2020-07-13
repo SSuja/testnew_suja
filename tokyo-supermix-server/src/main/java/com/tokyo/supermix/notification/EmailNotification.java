@@ -65,7 +65,6 @@ public class EmailNotification {
           ChronoUnit.DAYS.between(finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
       List<NotificationDays> notificationDaysList =
           emailNotificationDaysService.getByEmailGroup(EmailNotifications.MIX_DESIGN_GROUP);
-          // getByEmailGroupName(Constants.EMAIL_GROUP_MIX_DESIGN);
       notificationDaysList.forEach(notificationday -> {
         if (noOfDays == notificationday.getDays()) {
           sendMixDesignEmail(finishProductSample, noOfDays);
