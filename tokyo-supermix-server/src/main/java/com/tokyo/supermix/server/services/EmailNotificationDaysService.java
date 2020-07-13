@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import com.tokyo.supermix.data.dto.NotificationDaysResponseDto;
 import com.tokyo.supermix.data.entities.NotificationDays;
+import com.tokyo.supermix.data.enums.EmailNotifications;
 
 public interface EmailNotificationDaysService {
 
@@ -12,7 +13,7 @@ public interface EmailNotificationDaysService {
 
   public boolean isDuplicateExists(Long emailGroupId, Double days);
   
-  public List<NotificationDays> getByEmailGroupName(String emailGroupName);
+  public List<NotificationDays> getByEmailGroup(EmailNotifications emailNotifications);
 
   public  List<NotificationDaysResponseDto> getAllEmailNotificationDaysByGroup();
 

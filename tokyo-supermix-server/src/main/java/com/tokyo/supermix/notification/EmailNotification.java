@@ -36,8 +36,7 @@ public class EmailNotification {
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
-      List<NotificationDays> notificationDaysList = emailNotificationDaysService
-          .getByEmailGroupName(Constants.EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION);
+      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroup(EmailNotifications.CALIBRATION_GROUP);
       notificationDaysList.forEach(notificationday -> {
         if (noOfDays == notificationday.getDays()) {
           sendEquipmentMail(calibration);
@@ -63,15 +62,15 @@ public class EmailNotification {
     final LocalDateTime today = LocalDateTime.now();
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
       long noOfDays =
-          ChronoUnit.DAYS.between(finishProductSample.getDate().toLocalDate(), today.toLocalDate());
+          ChronoUnit.DAYS.between(finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
       List<NotificationDays> notificationDaysList =
-          emailNotificationDaysService.getByEmailGroupName(Constants.EMAIL_GROUP_MIX_DESIGN);
+          emailNotificationDaysService.getByEmailGroup(EmailNotifications.MIX_DESIGN_GROUP);
+          // getByEmailGroupName(Constants.EMAIL_GROUP_MIX_DESIGN);
       notificationDaysList.forEach(notificationday -> {
         if (noOfDays == notificationday.getDays()) {
           sendMixDesignEmail(finishProductSample, noOfDays);
         }
       });
-
     });
   }
 
