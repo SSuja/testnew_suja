@@ -92,6 +92,7 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_PERMISSION_BY_ID = PLANT_PERMISSION + ID;
   public static final String PLANT_PERMISSION_BY_PERMISSION_NAME =
       PLANT_PERMISSION + SLASH + "{permissionName}";
+  public static final String PLANT_PERMISSION_BY_PLANT_CODE = PLANT_PERMISSION + SLASH +"plant"+ SLASH+ "{plantCode}";
 
   /*
    * plant Role
