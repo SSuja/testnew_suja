@@ -21,7 +21,12 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
   List<FinishProductTest> findByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
       Long testConfigureId);
 
+  List<FinishProductTest> findByTestConfigureTestName(String testName);
+
   boolean existsByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
       Long testConfigureId);
-  List<FinishProductTest> findByFinishProductSampleMixDesignPlantCodeIn(List<String>plantCodes);
+
+  List<FinishProductTest> findByFinishProductSampleMixDesignPlantCodeIn(List<String> plantCodes);
+
+  boolean existsByFinishProductSampleId(Long finishProductSampleId);
 }

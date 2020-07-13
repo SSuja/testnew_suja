@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.sql.Date;
-import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleReportDto {
   private String code;
@@ -10,7 +9,7 @@ public class IncomingSampleReportDto {
   private String rawMaterialName;
   private String materialCategory;
   private String materialSubCategory;
-  private Status status;
+  private String status;
 
   public String getCode() {
     return code;
@@ -60,12 +59,12 @@ public class IncomingSampleReportDto {
     this.vehicleNo = vehicleNo;
   }
 
-  public Status getStatus() {
-    return status;
-  }
+public String getStatus() {
+	return status;
+}
 
-  public void setStatus(Status status) {
-    this.status = status;
-  }
+public void setStatus(String status) {
+	this.status = status;
+}
 
 }

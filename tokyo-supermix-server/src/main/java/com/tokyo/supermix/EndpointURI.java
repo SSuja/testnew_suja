@@ -498,6 +498,8 @@ public final class EndpointURI {
       BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
   public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-trials-wise" + SLASH + "{materialTestCode}";
+  public static final String CONCRETE_STRENGTHS =
+	      BASE_API_PATH + "concrete-strengths" ;
   /*
    * File Export
    */
@@ -577,6 +579,8 @@ public final class EndpointURI {
   
   
   public static final String EMAIL_GROUPS = BASE_API_PATH + "email-groups";
+  public static final String EMAIL_GROUP = BASE_API_PATH + "email-group";
+  public static final String EMAIL_GROUP_BY_ID = EMAIL_GROUP + ID;
   public static final String EMAIL_GROUP_BY_SHEDULE = EMAIL_GROUPS +SLASH+ "email-group-schedule" + SLASH + "{schedule}";
   
   /*

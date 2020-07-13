@@ -26,7 +26,7 @@ INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('12', 'mix_des
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('13', 'result_and_report');
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('14', 'plant_equipment_calibration');
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('15', 'privilege');
-
+INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('16', 'settings');
 
 --privilege model
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('1', 'production_unit', '1');
@@ -307,11 +307,22 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('184', 'admixture_report', '46');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('185', 'material_status_total_count_dashboard', '46');
 	
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('47', 'admin_privilege', '16');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('186', 'create_admin_privilege', '47');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('187', 'view_admin_privilege', '47');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('188', 'edit_admin_privilege', '47');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('189', 'delete_admin_privilege', '47');
+
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('48', 'other_plant_access', '16');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('190', 'create_other_plant_access', '47');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('191', 'view_other_plant_access', '47');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('192', 'edit_other_plant_access', '47');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('193', 'delete_other_plant_access', '47');
+
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`,  `schedule`) VALUES ('1', 'Reporting Group',0);
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('2', 'Calibration Group',1);
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('3', 'Incoming Sample Group',0);
 INSERT INTO `tokyo-supermix`.`email_group` (`id`, `name`, `schedule`) VALUES ('4', 'Mix Design Group',1);
-
 
 INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`status`)VALUES
 (1,1,1,1),(2,1,2,1),(3,1,3,1),(4,1,4,1),(5,1,5,1),(6,1,6,1),(7,1,7,1),(8,1,8,1),(9,1,9,1),(10,1,10,1),
@@ -327,4 +338,5 @@ INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`
 (141,1,141,1),(142,1,142,1),(143,1,143,1),(144,1,144,1),(145,1,145,1),(146,1,146,1),(147,1,147,1),(148,1,148,1),(149,1,149,1),(150,1,150,1),(151,1,151,1),(152,1,152,1),(153,1,153,1),(154,1,154,1),(155,1,155,1),
 (156,1,156,1),(157,1,157,1),(158,1,158,1),(159,1,159,1),(160,1,160,1),(161,1,161,1),(162,1,162,1),(163,1,163,1),(164,1,164,1),(165,1,165,1),(166,1,166,1),(167,1,167,1),(168,1,168,1),(169,1,169,1),(170,1,170,1),
 (171,1,171,1),(172,1,172,1),(173,1,173,1),(174,1,174,1),(175,1,175,1),(176,1,176,1),(177,1,177,1),(178,1,178,1),(179,1,179,1),(180,1,180,1),
-(181,1,181,1),(182,1,182,1),(183,1,183,1),(184,1,184,1),(185,1,185,1);
+(181,1,181,1),(182,1,182,1),(183,1,183,1),(184,1,184,1),(185,1,185,1),(186,1,186,1),(187,1,187,1),(188,1,188,1),(189,1,189,1),(190,1,190,1),
+(191,1,191,1),(192,1,192,1),(193,1,193,1);

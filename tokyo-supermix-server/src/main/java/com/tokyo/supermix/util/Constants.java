@@ -10,18 +10,11 @@ public class Constants {
   public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
-  public static final String SUBJECT_NEW_PROJECT = "Notification : New Project";
-  public static final String SUBJECT_NEW_FINISH_PRODUCT = "Notification : New Finish Product";
-  public static final String SUBJECT_NEW_CONGRETE_STRENGTH_TEST =
-      "Notifiation : Congrete Strength Test";
-  public static final String SUBJECT_NEW_CONGRETE_TEST = "Notification : New Concrete Test";
-  public static final String SUBJECT_INCOMING_SAMPLE_RESULT =
-      "Notification : Information for Incoming Sample Test Status";
-  public static final String SUBJECT_NEW_MATERIAL_TEST = "Notification : New Material Test";
-  public static final String SUBJECT_NEW_SEIVE_TEST = "Notification : New Seive Test";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-  public static final String SUBJECT_REPORT = "Notification : Test Report";
-  public static final String BODY_FOR_REPORT ="Here you can find the Test Details Report";
+  public static final String SUBJECT_REPORT = "Delivery Details Report Of Incoming Sample";
+  public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
+  public static final String DELIVERY_REPORT = "delivery-report.pdf";
+  public static final String SUMMARY_REPORT = "summary-report.pdf";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
@@ -256,7 +249,7 @@ public class Constants {
   public static final String TEST_PARAMETER_DELETED = "Test Parameter Successfully Deleted";
   public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test Parameter Updated Successfully";
   public static final String ABBREVIATION = "abbreviation";
-  
+
   /*
    * Constants for Process Sample validation key & Success messages
    */
@@ -465,6 +458,7 @@ public class Constants {
   public static final String CONCRETE_TYPE = "concreteType";
   public static final String REPORT_SUCESS = "Sucessfully send e-mail for report";
   public static final String REPORT_SEND_ERROR = "Unable to send email";
+  public static final String CONCRETE_STRENGTH = "concreteStrength";
 
   /*
    * Constants for Parameter Equation validation key & Success messages
@@ -507,7 +501,7 @@ public class Constants {
   public static final String UPDATE_FINISH_PRODUCT_TRIAL_SUCCESS =
       "Finish Product Trial Updated Successfully";
   /*
-   *  Constants for Finish Product Parameter Result validation key & Success messages
+   * Constants for Finish Product Parameter Result validation key & Success messages
    */
   public static final String FINISH_PRODUCT_PARAMETER_RESULTS = "finishProductParameterResults";
   /*
@@ -520,27 +514,36 @@ public class Constants {
   public static final String DELETED_FINISH_PRODUCT_TEST = "Finish Product Successfully Deleted";
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
-  public static final String FINISH_PRODUCT_TEST_STATUS= "finishProductTestStatus";
-  
+  public static final String FINISH_PRODUCT_TEST_STATUS = "finishProductTestStatus";
+
   public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
   public static final String EMAIL_RECIPIENT = "emailRecipient";
   public static final String EMAIL_RECIPIENTS = "emailRecipients";
   public static final String EMAIL_RECIPIENT_DELETED = "Email Recipient Successfully Deleted";
   public static final String EMAIL_RECIPIENT_ID = "emailRecipientId";
-  
-  
+
+
   public static final String EMAIL_GROUPS = "emailGroups";
+  public static final String EMAIL_GROUP = "emailGroup";
+  public static final String ADD_EMAIL_GROUP_SUCCESS = "Email Group Added Successfully";
+  public static final String UPDATE_EMAIL_GROUP_SUCCESS = "Email Group Updated Successfully";
+  public static final String EMAIL_GROUP_DELETED = "Email Group Successfully Deleted";
+  public static final String EMAIL_GROUP_ID = "emailGroupId";
   public static final String EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION = "Plant Equipment Calibration Group";
   public static final String EMAIL_GROUP_MIX_DESIGN = "Mix Design Group";
   public static final String EMAIL_GROUP_INCOMING_SAMPLE_STATUS = "Incoming Sample Group";
-  
+
   /* email notification days */
-  public static final String ADD_EMAIL_NOTIFICATION_DAYS = "Email Notification Days Added Successfully";
-  public static final String UPDATE_EMAIL_NOTIFICATION_DAYS = "Email Notification Days Updated Successfully";
+  public static final String ADD_EMAIL_NOTIFICATION_DAYS =
+      "Email Notification Days Added Successfully";
+  public static final String UPDATE_EMAIL_NOTIFICATION_DAYS =
+      "Email Notification Days Updated Successfully";
   public static final String EMAIL_NOTIFICATION_DAYS = "EmailNotificationDays";
   public static final String EMAIL_NOTIFICATION_DAY = "EmailNotificationDay";
-  public static final String EMAIL_NOTIFICATION_DAY_DELETED = "Email Notification Days Successfully Deleted";
+  public static final String EMAIL_NOTIFICATION_DAY_DELETED =
+      "Email Notification Days Successfully Deleted";
   public static final String EMAIL_NOTIFICATION_DAY_ID = "emailNotificationDayId";
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */
