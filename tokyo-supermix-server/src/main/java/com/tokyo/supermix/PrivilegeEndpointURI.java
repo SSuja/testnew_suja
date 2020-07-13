@@ -92,6 +92,7 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_PERMISSION_BY_ID = PLANT_PERMISSION + ID;
   public static final String PLANT_PERMISSION_BY_PERMISSION_NAME =
       PLANT_PERMISSION + SLASH + "{permissionName}";
+  public static final String PLANT_PERMISSION_BY_PLANT_CODE = PLANT_PERMISSION + SLASH +"plant"+ SLASH+ "{plantCode}";
 
   /*
    * plant Role
@@ -147,5 +148,7 @@ public final class PrivilegeEndpointURI {
       BASE_API_PATH + "user-plant-permission";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID =
       USER_PLANT_PERMISSION + SLASH + "{userId}";
+  public static final String USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
+      USER_PLANT_PERMISSION + SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
 
 }

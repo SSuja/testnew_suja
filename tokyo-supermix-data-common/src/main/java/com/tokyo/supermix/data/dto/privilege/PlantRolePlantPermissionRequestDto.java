@@ -4,17 +4,17 @@ public class PlantRolePlantPermissionRequestDto {
   private Boolean status;
   private Long plantPermissionId;
   private String permissionName;
-  public String getPermissionName() {
-	return permissionName;
-}
-
-public void setPermissionName(String permissionName) {
-	this.permissionName = permissionName;
-}
-
-private Long plantRoleId;
+  private Long plantRoleId;
   private Long subModuleId;
   private Long mainModuleId;
+
+  public String getPermissionName() {
+    return permissionName;
+  }
+
+  public void setPermissionName(String permissionName) {
+    this.permissionName = permissionName;
+  }
 
   public Long getSubModuleId() {
     return subModuleId;
@@ -30,14 +30,6 @@ private Long plantRoleId;
 
   public void setMainModuleId(Long mainModuleId) {
     this.mainModuleId = mainModuleId;
-  }
-
-  public String getPlantPermissionName() {
-    return permissionName;
-  }
-
-  public void setPlantPermissionName(String plantPermissionName) {
-    this.permissionName = plantPermissionName;
   }
 
   public Boolean getStatus() {
