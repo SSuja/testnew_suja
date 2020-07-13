@@ -109,8 +109,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 	@Transactional(readOnly = true)
 	public boolean isexistByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(Long testId, Long materialCategoryId,
 			Long materialSubCategoryId) {
-		return testConfigureRepository.existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(testId,
-				materialCategoryId, materialSubCategoryId);
+	  if(testConfigureRepository.existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(testId,
+          materialCategoryId, materialSubCategoryId)) {
+	    return false;
+	  }
+		return true;
 	}
 
 	@Transactional(readOnly = true)
