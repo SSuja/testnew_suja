@@ -41,14 +41,6 @@ public class SubModulePlantRolePlantPermissionDto {
 		this.status = status;
 	}
 
-	public List<PlantRolePlantPermissionRequestDto> getPlantPermissions() {
-		return privilages;
-	}
-
-	public void setPlantPermissions(List<PlantRolePlantPermissionRequestDto> plantPermissions) {
-		this.privilages = plantPermissions;
-	}
-
 	public List<PlantRolePlantPermissionRequestDto> getPrivilages() {
 		return privilages;
 	}
