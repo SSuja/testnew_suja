@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
-import com.tokyo.supermix.data.dto.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
-import com.tokyo.supermix.data.dto.CubeAndResult;
 import com.tokyo.supermix.data.dto.CubeTestReportDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
+import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
+import com.tokyo.supermix.data.dto.report.DayAndResult;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
@@ -27,6 +27,7 @@ import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.dto.report.TestTrialDto;
 import com.tokyo.supermix.data.dto.report.TrailValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
@@ -36,11 +37,11 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
-import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
@@ -80,6 +81,8 @@ public class TestReportServiceImpl implements TestReportService {
   FinishProductTrialRepository finishProductTrialRepository;
   @Autowired
   TestConfigureRepository testConfigureRepository;
+  @Autowired
+  FinishProductSampleRepository finishProductSampleRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
@@ -439,28 +442,37 @@ public class TestReportServiceImpl implements TestReportService {
     return abbrevationAndValueDtoList;
   }
 
+  public boolean isFinishProductSampleExist(Long finishProductSampleId) {
+    return finishProductTestRepository.existsByFinishProductSampleId(finishProductSampleId);
+  }
+
   public List<ConcreteStrengthDto> getConcreteStrengths() {
     ArrayList<ConcreteStrengthDto> averageStrengthList = new ArrayList<ConcreteStrengthDto>();
-    List<TestConfigure> testConfigureList = testConfigureRepository.findByDaysNotNull();
-    for (TestConfigure testConfigure : testConfigureList) {
+    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
+    for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
-      averageStrength.setTestName(testConfigure.getTest().getName());
-      averageStrength.setCubeAndResult(getCubeResults(testConfigure.getTest().getName()));
-      averageStrengthList.add(averageStrength);
+      if (isFinishProductSampleExist(finishProductSample.getId())) {
+        averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
+        averageStrength.setDayAndResult(getDayResults(finishProductSample.getId()));
+        averageStrengthList.add(averageStrength);
+      }
     }
     return averageStrengthList;
   }
 
-  public List<CubeAndResult> getCubeResults(String testName) {
-    ArrayList<CubeAndResult> cubeAndResultList = new ArrayList<CubeAndResult>();
+  public List<DayAndResult> getDayResults(Long finishProductSampleId) {
+    ArrayList<DayAndResult> dayAndResultList = new ArrayList<DayAndResult>();
     List<FinishProductTest> finishProductTestList =
-        finishProductTestRepository.findByTestConfigureTestName(testName);
+        finishProductTestRepository.findByFinishProductSampleId(finishProductSampleId);
     for (FinishProductTest finishProductTest : finishProductTestList) {
-      CubeAndResult cubeAndResult = new CubeAndResult();
-      cubeAndResult.setCube(finishProductTest.getFinishProductSample().getFinishProductCode());
-      cubeAndResult.setResult(finishProductTest.getResult());
-      cubeAndResultList.add(cubeAndResult);
+      DayAndResult dayAndResult = new DayAndResult();
+      if (finishProductTest.getTestConfigure().getDays() != null) {
+        dayAndResult.setDay(finishProductTest.getTestConfigure().getDays());
+        dayAndResult.setTestName(finishProductTest.getTestConfigure().getTest().getName());
+        dayAndResult.setResult(finishProductTest.getResult());
+        dayAndResultList.add(dayAndResult);
+      }
     }
-    return cubeAndResultList;
+    return dayAndResultList;
   }
 }
