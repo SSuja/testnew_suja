@@ -152,7 +152,7 @@ public class MaterialTestTrialController {
     if (!materialTest.getTestConfigure().isBulkTrial()) {
       materialTestTrialService.getAverageAndStatus(materialTestCode);
       materialTestService
-          .updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
+          .updateIncomingSampleStatusByIncomingSample(materialTest);
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
     } else {
