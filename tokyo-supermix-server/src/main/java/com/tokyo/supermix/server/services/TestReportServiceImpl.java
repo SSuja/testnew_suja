@@ -91,7 +91,9 @@ public class TestReportServiceImpl implements TestReportService {
 		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
 		MaterialTestReportDto materialTestDto = mapper.map(materialTest, MaterialTestReportDto.class);
 		reportDto.setMaterialTest(materialTestDto);
-		reportDto.setEquation(materialTest.getTestConfigure().getEquation().getFormula());
+		if(materialTest.getTestConfigure().getEquation() != null){
+		  reportDto.setEquation(materialTest.getTestConfigure().getEquation().getFormula());
+		}
 		reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
 		reportDto.setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
 		reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
@@ -118,6 +120,7 @@ public class TestReportServiceImpl implements TestReportService {
 			TrailValueDto trailValueDto = new TrailValueDto();
 			if (paramResult.getTestParameter().getParameter() != null) {
 				trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
+				trailValueDto.setAbbreviation(paramResult.getTestParameter().getAbbreviation());
 				trailValueDtoList.add(trailValueDto);
 			}
 		});
