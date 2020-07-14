@@ -65,6 +65,6 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(
       UserPrincipal currentUser) {
     return finishProductSampleIssueRepository.findByProjectPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE));
   }
 }
