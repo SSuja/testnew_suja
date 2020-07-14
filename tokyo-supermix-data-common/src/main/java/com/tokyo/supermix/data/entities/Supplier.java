@@ -23,7 +23,6 @@ public class Supplier implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  private String companyName;
   private String address;
   private String phoneNumber;
   private String email;
@@ -50,14 +49,6 @@ public class Supplier implements Serializable {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getCompanyName() {
-    return companyName;
-  }
-
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
   }
 
   public String getAddress() {
