@@ -11,10 +11,12 @@ public class Constants {
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-  public static final String SUBJECT_REPORT = "Delivery Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_SUMMARY_REPORT = "Summary Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_DELIVERY_REPORT = "Delivery Details Report Of Incoming Sample";
   public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
   public static final String DELIVERY_REPORT = "delivery-report.pdf";
   public static final String SUMMARY_REPORT = "summary-report.pdf";
+  public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
