@@ -9,7 +9,6 @@ import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
-import com.tokyo.supermix.data.dto.privilege.UserPrivilegeDto;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
@@ -99,7 +98,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
-      plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
+      plantRolePlantPermissionRequestDto.setStatus(false);
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
       if (permission.getStatus()) {
@@ -138,22 +137,86 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     return plantResponseDtolist;
   }
 
-  @Transactional(readOnly = true)
-  public List<UserPrivilegeDto> getByUserIdAndPermissionAndStatus(Long userId, String plantCode,
-      Boolean status) {
-
-    List<UserPlantPermission> userPlantPermissionList = userPlantPermissionRepository
-        .findByUserIdAndPlantPermissionPlantCodeAndStatus(userId, plantCode, true);
-    List<UserPrivilegeDto> userPrivilegeDtolist = new ArrayList<UserPrivilegeDto>();
-    userPlantPermissionList.forEach(userPlantPermission->{
-      UserPrivilegeDto userPrivilegeDto = new UserPrivilegeDto();
-      
-      userPrivilegeDto.setPermissionId(userPlantPermission.getPlantPermission().getId());
-      userPrivilegeDto.setPermissionName(userPlantPermission.getPlantPermission().getPermission().getName());
-      userPrivilegeDto.setStatus(userPlantPermission.getStatus());
-      userPrivilegeDtolist.add(userPrivilegeDto);
-    });
-    return userPrivilegeDtolist;
+  @Override
+  public List<PlantRolePlantPermissionResponseDto> getByUserIdAndPlantCodeAndStatus(Long userId,
+      String plantCode, boolean status) {
+    return getMainModulesWithStatusByuserIdAndPlantCode(mainModuleRepository.findAll(), userId,
+        plantCode, status);
   }
 
+  private List<PlantRolePlantPermissionResponseDto> getMainModulesWithStatusByuserIdAndPlantCode(
+      List<MainModule> MainModuleList, Long userId, String plantCode, boolean status) {
+    List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
+        new ArrayList<PlantRolePlantPermissionResponseDto>();
+    MainModuleList.forEach(main -> {
+      PlantRolePlantPermissionResponseDto plantRolePlantPermissionResponseDto =
+          new PlantRolePlantPermissionResponseDto();
+      plantRolePlantPermissionResponseDto.setMainModuleId(main.getId());
+      plantRolePlantPermissionResponseDto.setMainModule(main.getName());
+      boolean mainStatus = false;
+      List<SubModulePlantRolePlantPermissionDto> subModulePlantRolePlantPermissionDtoList =
+          new ArrayList<SubModulePlantRolePlantPermissionDto>();
+      List<SubModule> subModuleList = subModuleRepository.findByMainModuleId(main.getId());
+      boolean status1 = getSubModulesByUserIdAndPlantCodeAndReturnMainStatus(subModuleList, userId,
+          main.getId(), plantCode, status, subModulePlantRolePlantPermissionDtoList, mainStatus);
+      plantRolePlantPermissionResponseDto.setStatus(status1);
+      plantRolePlantPermissionResponseDto.setSubModules(subModulePlantRolePlantPermissionDtoList);
+      plantRolePlantPermissionResponseDtolist.add(plantRolePlantPermissionResponseDto);
+    });
+    return plantRolePlantPermissionResponseDtolist;
+
+  }
+
+  private boolean getSubModulesByUserIdAndPlantCodeAndReturnMainStatus(
+      List<SubModule> subModuleList, Long userId, Long mainModuleId, String plantCode,
+      boolean status,
+      List<SubModulePlantRolePlantPermissionDto> subModulePlantRolePlantPermissionDtoList,
+      boolean mainStatus) {
+    for (SubModule sub : subModuleList) {
+      SubModulePlantRolePlantPermissionDto subModulePlantRolePlantPermissionDto =
+          new SubModulePlantRolePlantPermissionDto();
+      subModulePlantRolePlantPermissionDto.setMainModuleId(mainModuleId);
+      subModulePlantRolePlantPermissionDto.setSubModuleId(sub.getId());
+      subModulePlantRolePlantPermissionDto.setSubModule(sub.getName());
+      boolean subStatus = false;
+      List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList =
+          new ArrayList<PlantRolePlantPermissionRequestDto>();
+      List<UserPlantPermission> userPlantPermissionList = userPlantPermissionRepository
+          .findByUserIdAndPlantPermissionPermissionSubModuleIdAndPlantPermissionPlantCodeAndStatus(
+              userId, sub.getId(), plantCode, status);
+      boolean status1 =
+          getPlantPermissionsByPlantCodeAndReturnSubModuleStatus(userPlantPermissionList, subStatus,
+              userId, sub.getId(), mainModuleId, rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDto.setStatus(status1);
+      subModulePlantRolePlantPermissionDto.setPrivilages(rolePermissionDtoList);
+      subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
+      if (status1) {
+        mainStatus = true;
+      }
+    }
+    return mainStatus;
+  }
+
+  private boolean getPlantPermissionsByPlantCodeAndReturnSubModuleStatus(
+      List<UserPlantPermission> userPlantPermissionList, boolean subStatus, Long userId,
+      Long subModuleId, Long mainModuleId,
+      List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList) {
+    for (UserPlantPermission permission : userPlantPermissionList) {
+      PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
+          new PlantRolePlantPermissionRequestDto();
+      plantRolePlantPermissionRequestDto
+          .setPermissionName(permission.getPlantPermission().getPermission().getName());
+      plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
+      plantRolePlantPermissionRequestDto.setStatus(false);
+      plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
+      plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
+      if (permission.getStatus()) {
+        subStatus = true;
+      }
+      rolePermissionDtoList.add(plantRolePlantPermissionRequestDto);
+    }
+    return subStatus;
+  }
 }
+
+

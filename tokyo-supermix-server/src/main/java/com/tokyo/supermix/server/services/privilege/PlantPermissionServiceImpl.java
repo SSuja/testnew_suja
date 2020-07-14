@@ -185,6 +185,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
           new PlantRolePlantPermissionRequestDto();
       plantPermissionResponseDto.setPermissionName(plantPermission.getPermission().getName());
       plantPermissionResponseDto.setPlantPermissionId(plantPermission.getId());
+      plantPermissionResponseDto.setStatus(false);;
       plantPermissionResponseDto.setMainModuleId(mainModuleId);
       plantPermissionResponseDto.setSubModuleId(subModuleId);
       plantPermissionResponseDtos.add(plantPermissionResponseDto);
