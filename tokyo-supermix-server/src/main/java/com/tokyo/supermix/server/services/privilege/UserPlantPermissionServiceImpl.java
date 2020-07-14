@@ -207,7 +207,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
-      plantRolePlantPermissionRequestDto.setStatus(false);
+      plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
       if (permission.getStatus()) {
@@ -217,6 +217,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     }
     return subStatus;
   }
+
 }
 
 

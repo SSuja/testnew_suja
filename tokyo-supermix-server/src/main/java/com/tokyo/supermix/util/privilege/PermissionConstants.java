@@ -125,7 +125,7 @@ public final class PermissionConstants {
 	 /* test parameter */
 	 public static final String VIEW_TEST_PARAMETER = "view_manage_test_parameter";
 	 public static final String CREATE_TEST_PARAMETER= "create_manage_test_parameter";
-	 public static final String EDIT_TEST_PARAMETER = "edit_test_manage_parameter";
+	 public static final String EDIT_TEST_PARAMETER = "edit_manage_test_parameter";
 	 public static final String DELETE_TEST_PARAMETER = "delete_manage_test_parameter";
 	 /* Accepted value */
 	 public static final String VIEW_ACCEPTED_VALUE = "view_manage_accepted_value";
