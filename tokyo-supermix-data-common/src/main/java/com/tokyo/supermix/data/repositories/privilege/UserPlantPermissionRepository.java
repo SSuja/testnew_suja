@@ -6,14 +6,22 @@ import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 
 @Repository
-public interface UserPlantPermissionRepository extends JpaRepository<UserPlantPermission, Long>{
+public interface UserPlantPermissionRepository extends JpaRepository<UserPlantPermission, Long> {
   public List<UserPlantPermission> findByUserId(Long userId);
+
   public boolean existsByUserId(Long userId);
-  public List<UserPlantPermission>findByUserIdAndPlantPermissionPermissionSubModuleId(Long userId,Long subModuleId);
+
+  public List<UserPlantPermission> findByUserIdAndPlantPermissionPermissionSubModuleId(Long userId,
+      Long subModuleId);
+
   public UserPlantPermission findByUserIdAndPlantPermissionId(Long userId, Long plantPermissionId);
-//  public UserPlantPermission findByUserIdAndPlantPermissionPermissionName(Long userId, String PermissionnName);
+
   public List<UserPlantPermission> findByUserIdAndPlantPermissionPermissionNameAndStatus(
       Long userId, String PermissionnName, Boolean status);
-  public List<UserPlantPermission> findByUserIdAndPlantPermissionPlantCodeAndStatus(
-      Long userId, String plantCode, Boolean status);
+
+  public List<UserPlantPermission> findByUserIdAndPlantPermissionPlantCodeAndStatus(Long userId,
+      String plantCode, Boolean status);
+
+  public List<UserPlantPermission> findByUserIdAndPlantPermissionPermissionSubModuleIdAndPlantPermissionPlantCodeAndStatus(
+      Long userId, Long subModuleId, String plantCode, boolean status);
 }

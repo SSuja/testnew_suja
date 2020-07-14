@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.UserPlantPermissionRequestDto;
-import com.tokyo.supermix.data.dto.privilege.UserPrivilegeDto;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -64,8 +63,8 @@ public class UserPlantPermissionController {
     if (userPlantPermissionService.isUserIdExist(userId)) {
       return new ResponseEntity<>(
           new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
-              mapper.map(userPlantPermissionService.getByUserIdAndPermissionAndStatus(userId, plantCode, status),
-                  UserPrivilegeDto.class),
+              mapper.map(userPlantPermissionService.getByUserIdAndPlantCodeAndStatus(userId, plantCode, status),
+                  PlantRolePlantPermissionResponseDto.class),
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }
