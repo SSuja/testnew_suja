@@ -151,7 +151,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 		result = findResult(sievemain, materialTest.getTestConfigure().getEquation().getFormula());
 		materialTest.setAverage(result);
 		compareWithAverage(result, materialTest.getCode());
-		materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest.getIncomingSample());
+		materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
 	}
 
 	public double findResult(HashMap<String, Double> abb, String equation) {
