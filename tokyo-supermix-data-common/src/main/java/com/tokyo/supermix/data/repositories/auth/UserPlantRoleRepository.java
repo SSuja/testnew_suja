@@ -13,4 +13,5 @@ public interface UserPlantRoleRepository extends JpaRepository<UserPlantRole, Lo
   boolean existsByPlantRoleId(Long plantRoleId);
   boolean existsByUserId(Long userId);
   UserPlantRole findByPlantRoleIdAndUserId(Long PlantRoleId,Long userId);
+  UserPlantRole findByPlantRolePlantCodeAndUserId(String plantCode,Long userId);
 }
