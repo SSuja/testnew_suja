@@ -27,6 +27,7 @@ public class RawMaterial implements Serializable {
   @JoinColumn(name = "materialSubCategoryId", nullable = false)
   private MaterialSubCategory materialSubCategory;
   private String description;
+  private String prefix;
 
   public Long getId() {
     return id;
@@ -70,5 +71,13 @@ public class RawMaterial implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 }

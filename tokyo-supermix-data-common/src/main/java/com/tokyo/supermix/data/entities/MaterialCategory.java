@@ -1,12 +1,16 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.MainType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_category")
@@ -18,6 +22,11 @@ public class MaterialCategory implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
+  @NotNull(message = "{materialSubCategoryRequestDto.prefix.null}")
+  @NotEmpty(message = "{materialSubCategoryRequestDto.prefix.empty}")
+  private String prefix;
+  @Enumerated(EnumType.ORDINAL)
+  private MainType mainType;
 
   public Long getId() {
     return id;
@@ -39,4 +48,19 @@ public class MaterialCategory implements Serializable {
     return serialVersionUID;
   }
 
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
+  }
+
+  public MainType getMainType() {
+    return mainType;
+  }
+
+  public void setMainType(MainType mainType) {
+    this.mainType = mainType;
+  }
 }

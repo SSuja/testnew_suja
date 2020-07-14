@@ -8,6 +8,7 @@ public class RawMaterialResponseDto {
   private Nature nature;
   private MaterialSubCategoryResponseDto materialSubCategory;
   private String description;
+  private String prefix;
 
   public Long getId() {
     return id;
@@ -47,5 +48,13 @@ public class RawMaterialResponseDto {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 }
