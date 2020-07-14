@@ -189,4 +189,17 @@ public class TestConfigureController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
+  @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY_AND_TEST_TYPE)
+  public ResponseEntity<Object> getTestConfigureByMaterialSubCategoryAndTestType(
+      @PathVariable Long materialSubCategoryId, @PathVariable TestType testType) {
+    if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+          mapper.map(testConfigureService.getTestConfiguresByMaterialSubCategoryAndTestType(materialSubCategoryId, testType),
+              TestConfigureResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("No Test Configure record exist for given Material Sub Category");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
+        validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

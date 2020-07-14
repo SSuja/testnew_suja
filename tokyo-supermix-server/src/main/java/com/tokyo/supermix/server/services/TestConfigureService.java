@@ -36,4 +36,7 @@ public interface TestConfigureService {
   public boolean isexistByTestType(TestType testType);
 
   public List<TestConfigure> findByMaterialSubCategory(Long materialSubCategoryId);
+
+  public List<TestConfigure> getTestConfiguresByMaterialSubCategoryAndTestType(
+      Long materialSubCategoryId, TestType testType);
 }
