@@ -116,6 +116,8 @@ public final class EndpointURI {
   public static final String TEST_CONFIGURE_SEARCH = TEST_CONFIGURE + SEARCH;
   public static final String GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY =
       TEST_CONFIGURE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
+  public static final String GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY_AND_TEST_TYPE =
+      TEST_CONFIGURE + SLASH + "material-sub-category" + SLASH +"{testType}"+SLASH+ "{materialSubCategoryId}";
   /*
    * Material State
    */

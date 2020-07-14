@@ -20,7 +20,12 @@ public interface TestConfigureRepository
   boolean existsByTestType(TestType testType);
 
   List<TestConfigure> findByMaterialSubCategoryId(Long materialSubCategoryId);
+
   List<TestConfigure> findByMaterialSubCategoryIdAndCoreTestTrue(Long materialSubCategoryId);
-  
+
   List<TestConfigure> findByDaysNotNull();
+
+  List<TestConfigure> findByMaterialSubCategoryIdAndTestType(Long materialSubCategoryId,
+      TestType testType);
+
 }
