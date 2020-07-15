@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.MainType;
 
 @Entity
@@ -22,8 +20,6 @@ public class MaterialCategory implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  @NotNull(message = "{materialSubCategoryRequestDto.prefix.null}")
-  @NotEmpty(message = "{materialSubCategoryRequestDto.prefix.empty}")
   private String prefix;
   @Enumerated(EnumType.ORDINAL)
   private MainType mainType;

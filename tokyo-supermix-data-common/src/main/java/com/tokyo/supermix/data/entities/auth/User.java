@@ -33,13 +33,14 @@ public class User extends DateAudit {
   private Employee employee;
   @Enumerated(EnumType.ORDINAL)
   private UserType userType;
-  private Boolean isActive=true;
+  private Boolean isActive = true;
   @OneToMany(mappedBy = "user")
   private Set<UserRole> userRoles;
   @OneToMany(mappedBy = "user")
   private Set<UserPlantRole> userPlantRoles;
   @OneToMany(mappedBy = "user")
   private Set<UserPlantPermission> userPlantPermissions;
+
   public Long getId() {
     return id;
   }
@@ -119,5 +120,5 @@ public class User extends DateAudit {
   public void setUserPlantPermissions(Set<UserPlantPermission> userPlantPermissions) {
     this.userPlantPermissions = userPlantPermissions;
   }
-  
+
 }
