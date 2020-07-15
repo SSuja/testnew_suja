@@ -22,6 +22,7 @@ public class PlantEquipment implements Serializable {
   @ManyToOne
   @JoinColumn(name = "euipmentId", nullable = false)
   private Equipment equipment;
+  private boolean calibrationExists;
 
   public String getSerialNo() {
     return serialNo;
@@ -75,4 +76,11 @@ public class PlantEquipment implements Serializable {
     return serialVersionUID;
   }
 
+  public boolean isCalibrationExists() {
+    return calibrationExists;
+  }
+
+  public void setCalibrationExists(boolean calibrationExists) {
+    this.calibrationExists = calibrationExists;
+  }
 }
