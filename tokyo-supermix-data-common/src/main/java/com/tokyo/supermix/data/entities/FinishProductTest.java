@@ -6,11 +6,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_test")
-public class FinishProductTest implements Serializable {
+public class FinishProductTest extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;

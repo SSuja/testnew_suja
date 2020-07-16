@@ -9,55 +9,54 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.ParameterType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "parameter")
-public class Parameter implements Serializable {
+public class Parameter extends DateAudit implements Serializable {
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private String name;
+  @Enumerated(EnumType.ORDINAL)
+  private ParameterType parameterType;
+  private Long days;
 
-	private static final long serialVersionUID = 1L;
+  public Long getId() {
+    return id;
+  }
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String name;
-	@Enumerated(EnumType.ORDINAL)
-	private ParameterType parameterType;
-	private Long days;
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public Long getId() {
-		return id;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public ParameterType getParameterType() {
+    return parameterType;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setParameterType(ParameterType parameterType) {
+    this.parameterType = parameterType;
+  }
 
-	public ParameterType getParameterType() {
-		return parameterType;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
-	public void setParameterType(ParameterType parameterType) {
-		this.parameterType = parameterType;
-	}
+  public Long getDays() {
+    return days;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public Long getDays() {
-		return days;
-	}
-
-	public void setDays(Long days) {
-		this.days = days;
-	}
+  public void setDays(Long days) {
+    this.days = days;
+  }
 }

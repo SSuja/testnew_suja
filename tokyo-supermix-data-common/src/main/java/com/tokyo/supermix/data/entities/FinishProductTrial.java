@@ -7,10 +7,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_trial")
-public class FinishProductTrial implements Serializable {
+public class FinishProductTrial extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
