@@ -14,7 +14,7 @@ import com.tokyo.supermix.data.entities.privilege.RolePermission;
 
 @Entity
 @Table(name = "role", schema = "tokyo-supermix")
-public class Role implements Serializable {
+public class Role extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id

@@ -6,6 +6,8 @@ public class FinishProductSampleIssueResponseDto {
   private FinishProductSampleResponseDto finishProductSample;
   private ProjectResponseDto project;
   private PourDtoResponse pour;
+  private String createdAt;
+  private String updatedAt;
 
   public String getCode() {
     return code;
@@ -45,5 +47,21 @@ public class FinishProductSampleIssueResponseDto {
 
   public void setPour(PourDtoResponse pour) {
     this.pour = pour;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

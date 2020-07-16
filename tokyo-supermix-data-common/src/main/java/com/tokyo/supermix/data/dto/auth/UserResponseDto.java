@@ -7,6 +7,8 @@ public class UserResponseDto {
   private String userName;
   private String userType;
   private EmployeeResponseDto employee;
+  private String createdAt;
+  private String updatedAt;
 
   public Long getId() {
     return id;
@@ -40,4 +42,19 @@ public class UserResponseDto {
     this.userType = userType;
   }
 
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 }

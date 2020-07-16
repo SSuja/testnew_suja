@@ -10,12 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.enums.TrailResult;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_parameter")
-public class TestParameter implements Serializable {
+public class TestParameter extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

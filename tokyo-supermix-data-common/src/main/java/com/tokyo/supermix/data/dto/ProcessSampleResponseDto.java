@@ -8,6 +8,8 @@ public class ProcessSampleResponseDto {
   private Long rawMaterialId;
   private String rawMaterialName;
   private IncomingSampleResponseDto incomingSample;
+  private String createdAt;
+  private String updatedAt;
 
   public String getRawMaterialName() {
     return rawMaterialName;
@@ -63,5 +65,21 @@ public class ProcessSampleResponseDto {
 
   public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
     this.incomingSample = incomingSample;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

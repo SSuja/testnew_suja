@@ -6,13 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.entities.privilege.PlantAccessLevel;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant")
-public class Plant implements Serializable {
+public class Plant extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
