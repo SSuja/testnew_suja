@@ -8,14 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.MainType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_category")
-public class MaterialCategory implements Serializable {
-
+public class MaterialCategory extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;

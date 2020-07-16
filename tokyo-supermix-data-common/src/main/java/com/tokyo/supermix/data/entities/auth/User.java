@@ -18,9 +18,6 @@ import com.tokyo.supermix.data.enums.UserType;
 @Entity
 @Table(schema = "tokyo-supermix", name = "user")
 public class User extends DateAudit {
-  /**
-   * 
-   */
   private static final long serialVersionUID = -3475726035036394016L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

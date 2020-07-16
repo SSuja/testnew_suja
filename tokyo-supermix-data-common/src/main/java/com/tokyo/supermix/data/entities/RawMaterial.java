@@ -10,12 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Nature;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "raw_material")
-public class RawMaterial implements Serializable {
-
+public class RawMaterial extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
