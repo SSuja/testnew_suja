@@ -21,6 +21,9 @@ public interface PlantEquipmentService {
   public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size);
 
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode);
-  
+
   public List<PlantEquipment> getAllPlantEquipmentByPlant(UserPrincipal currentUser);
+
+  public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentId(
+      Long equipmentId);
 }
