@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.data.repositories.ProjectRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -22,7 +26,10 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public FinishProductSampleIssueRepository finishProductSampleIssueRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  
+
+  @Autowired
+  private ProjectRepository projectRepository;
+
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
     return finishProductSampleIssueRepository.findAll();
@@ -30,22 +37,50 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Transactional
   public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
+
+    if (finishProductSampleIssue.getCode() == null) {
+      String plantPrefix = projectRepository.getOne(finishProductSampleIssue.getProject().getCode())
+          .getPlant().getCode();
+      String codePrefix = plantPrefix + "-PO-";
+      List<FinishProductSampleIssue> finishProductSampleIssueList =
+          finishProductSampleIssueRepository.findByCodeContaining(codePrefix);
+      if (finishProductSampleIssueList.size() == 0) {
+        finishProductSampleIssue.setCode(codePrefix + String.format("%04d", 1));
+      } else {
+        finishProductSampleIssue.setCode(codePrefix
+            + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
+      }
+    }
     finishProductSampleIssueRepository.save(finishProductSampleIssue);
   }
 
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+
+  private Integer maxNumberFromCode(List<FinishProductSampleIssue> finishProductSampleIssueList) {
+    List<Integer> list = new ArrayList<Integer>();
+    finishProductSampleIssueList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+    });
+    return Collections.max(list);
+  }
+
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteFinishProductSampleIssue(Long id) {
-    finishProductSampleIssueRepository.deleteById(id);
+  public void deleteFinishProductSampleIssue(String code) {
+    finishProductSampleIssueRepository.deleteById(code);
   }
 
   @Transactional(readOnly = true)
-  public FinishProductSampleIssue getFinishProductSampleIssueById(Long id) {
-    return finishProductSampleIssueRepository.findById(id).get();
+  public FinishProductSampleIssue getFinishProductSampleIssueById(String code) {
+    return finishProductSampleIssueRepository.findById(code).get();
   }
 
   @Transactional(readOnly = true)
-  public boolean isIdExists(Long id) {
-    return finishProductSampleIssueRepository.existsById(id);
+  public boolean isCodeExists(String code) {
+    return finishProductSampleIssueRepository.existsById(code);
   }
 
   @Transactional(readOnly = true)
@@ -64,7 +99,8 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   @Override
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(
       UserPrincipal currentUser) {
-    return finishProductSampleIssueRepository.findByProjectPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE));
+    return finishProductSampleIssueRepository.findByProjectPlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE));
   }
 }

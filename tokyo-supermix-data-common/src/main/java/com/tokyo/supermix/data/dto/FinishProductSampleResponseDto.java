@@ -3,7 +3,7 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleResponseDto {
-  private Long id;
+  private String code;
   private String workOrderNo;
   private String finishProductCode;
   private EquipmentDto equipment;
@@ -12,12 +12,12 @@ public class FinishProductSampleResponseDto {
   private String createdAt;
   private String updatedAt;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getWorkOrderNo() {

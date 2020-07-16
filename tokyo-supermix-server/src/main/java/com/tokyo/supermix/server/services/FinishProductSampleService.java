@@ -17,19 +17,17 @@ public interface FinishProductSampleService {
 
   public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser);
 
-  boolean isFinishProductSampleExist(Long id);
+  boolean isFinishProductSampleExist(String code);
 
-  public FinishProductSample getFinishProductSampleById(Long id);
+  public FinishProductSample getFinishProductSampleById(String code);
 
-  public void deleteFinishProductSample(Long id);
+  public void deleteFinishProductSample(String code);
 
-  public boolean isUpdatedFinishProductCodeExist(Long id, String code);
+  public boolean isUpdatedFinishProductCodeExist(String code, String finishProductCode);
 
   boolean isMixDesignCodeExist(String code);
 
   public List<FinishProductSample> getFinishProductSampleByMixDesignCode(String code);
-
-  boolean isConcreteMixerExist(Long id);
 
   public List<FinishProductSample> getFinishProductSampleByEquipmentId(Long id);
 

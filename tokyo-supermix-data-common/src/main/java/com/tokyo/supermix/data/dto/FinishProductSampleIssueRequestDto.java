@@ -4,20 +4,20 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class FinishProductSampleIssueRequestDto {
-  private Long id;
+  private String code;
   @NotEmpty(message = "{finishProductSampleIssueRequestDto.truckNo.empty}")
   @NotNull(message = "{finishProductSampleIssueRequestDto.truckNo.null}")
   private String truckNo;
-  private Long finishProductSampleId;
+  private String finishProductSampleCode;
   private ProjectRequestDto project;
   private Long pourId;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getTruckNo() {
@@ -28,12 +28,12 @@ public class FinishProductSampleIssueRequestDto {
     this.truckNo = truckNo;
   }
 
-  public Long getFinishProductSampleId() {
-    return finishProductSampleId;
+  public String getFinishProductSampleCode() {
+    return finishProductSampleCode;
   }
 
-  public void setFinishProductSampleId(Long finishProductSampleId) {
-    this.finishProductSampleId = finishProductSampleId;
+  public void setFinishProductSampleCode(String finishProductSampleCode) {
+    this.finishProductSampleCode = finishProductSampleCode;
   }
 
   public ProjectRequestDto getProject() {

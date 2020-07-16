@@ -3,7 +3,6 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestResponseDto {
-
   private String code;
   private double result;
   private Status status;

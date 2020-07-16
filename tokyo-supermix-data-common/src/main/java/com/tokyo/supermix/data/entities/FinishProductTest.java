@@ -17,7 +17,7 @@ public class FinishProductTest implements Serializable {
   private double result;
   private Status status;
   @ManyToOne
-  @JoinColumn(name = "finishProductSampleId", nullable = false)
+  @JoinColumn(name = "finishProductSampleCode", nullable = false)
   private FinishProductSample finishProductSample;
   @ManyToOne
   @JoinColumn(name = "testConfigureId", nullable = false)

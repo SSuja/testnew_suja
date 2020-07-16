@@ -2,8 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,11 +13,10 @@ import javax.persistence.Table;
 public class FinishProductSampleIssue implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private String code;
   private String truckNo;
   @ManyToOne
-  @JoinColumn(name = "finishProductSampleId", nullable = false)
+  @JoinColumn(name = "finishProductSampleCode", nullable = false)
   private FinishProductSample finishProductSample;
   @ManyToOne
   @JoinColumn(name = "projectCode", nullable = false)
@@ -28,12 +25,12 @@ public class FinishProductSampleIssue implements Serializable {
   @JoinColumn(name = "pourId", nullable = false)
   private Pour pour;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getTruckNo() {
