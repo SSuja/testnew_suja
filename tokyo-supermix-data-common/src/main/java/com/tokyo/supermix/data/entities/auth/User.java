@@ -26,7 +26,7 @@ public class User extends DateAudit {
   private String password;
   private String email;
   @OneToOne
-  @JoinColumn(name = "employee_id", nullable = false)
+  @JoinColumn(name = "employee_id",nullable = true)
   private Employee employee;
   @Enumerated(EnumType.ORDINAL)
   private UserType userType;

@@ -160,9 +160,11 @@ public final class PermissionConstants {
 	   /* Role Permission */
 	  public static final String EDIT_ROLE_PERMISSION = "edit_role_permission";
 	  /* User Plant Permission */
-	  public static final String VIEW_USER_PLANT_PERMISSION_BY_USER = "view_user_plant_permission_by_user";
-	  public static final String EDIT_USER_PLANT_PERMISSION = "edit_user_plant_permission";
-	 
+	  public static final String EDIT_USER_PLANT_PERMISSION = "edit_other_plant_user_privilege";
+	  /* Plant Role Plant Permission */
+	  public static final String EDIT_PLANT_ROLE_PLANT_PERMISSION = "edit_user_role_privilege";
+	  /* Plant Permission */
+	  public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
 	  /* mix design*/
 	  public static final String VIEW_MIX_DESIGN = "view_mix_design";
 	  public static final String CREATE_MIX_DESIGN= "create_mix_design";
@@ -173,8 +175,6 @@ public final class PermissionConstants {
 	  public static final String CREATE_PROCESS_SAMPLE_LOAD= "create_process_sample load";
 	  public static final String EDIT_PROCESS_SAMPLE_LOAD = "edit_process_sample load";
 	  public static final String DELETE_PROCESS_SAMPLE_LOAD = "delete_process_sample load";
-	    /* Plant Permission */
-	  public static final String VIEW_PLANT_PERMISSION= "view_plant_permission";
 	   /* parameter result */
 	  public static final String VIEW_PARAMETER_RESULT = "view_parameter_result";
 	  public static final String CREATE_PARAMETER_RESULT= "create_parameter_result";
