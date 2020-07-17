@@ -12,6 +12,7 @@ public class MaterialTestResponseDto {
   private TestConfigureResponseDto testConfigure;
   private Long materialStateId;
   private String materialState;
+  private String specimenCode;
 
   public String getCode() {
     return code;
@@ -54,14 +55,14 @@ public class MaterialTestResponseDto {
   }
 
   public IncomingSampleResponseDto getIncomingSample() {
-	return incomingSample;
-}
+    return incomingSample;
+  }
 
-public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
-	this.incomingSample = incomingSample;
-}
+  public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
+    this.incomingSample = incomingSample;
+  }
 
-public TestConfigureResponseDto getTestConfigure() {
+  public TestConfigureResponseDto getTestConfigure() {
     return testConfigure;
   }
 
@@ -85,19 +86,28 @@ public TestConfigureResponseDto getTestConfigure() {
     this.materialState = materialState;
   }
 
-public String getCreatedAt() {
-	return createdAt;
-}
+  public String getCreatedAt() {
+    return createdAt;
+  }
 
-public void setCreatedAt(String createdAt) {
-	this.createdAt = createdAt;
-}
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
 
-public String getUpdatedAt() {
-	return updatedAt;
-}
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
 
-public void setUpdatedAt(String updatedAt) {
-	this.updatedAt = updatedAt;
-}
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
+
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
+  }
+
 }
