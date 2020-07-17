@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -23,6 +26,9 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
+  @Autowired
+  private MixDesignRepository mixDesignRepository;
+
   @Transactional(readOnly = true)
   public boolean isFinishProductCodeExist(String code) {
     return finishProductSampleRepository.existsByFinishProductCode(code);
@@ -30,8 +36,36 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional()
   public void saveFinishProductSample(FinishProductSample finishProductSample) {
+    if (finishProductSample.getCode() == null) {
+      String plantPrefix = mixDesignRepository.getOne(finishProductSample.getMixDesign().getCode())
+          .getPlant().getCode();
+      String codePrefix = plantPrefix + "-PP-";
+      List<FinishProductSample> finishProductSampleList =
+          finishProductSampleRepository.findByCodeContaining(codePrefix);
+      if (finishProductSampleList.size() == 0) {
+        finishProductSample.setCode(codePrefix + String.format("%04d", 1));
+      } else {
+        finishProductSample.setCode(
+            codePrefix + String.format("%04d", maxNumberFromCode(finishProductSampleList) + 1));
+      }
+    }
+
     finishProductSample.setStatus(Status.NEW);
     finishProductSampleRepository.save(finishProductSample);
+  }
+
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
+
+  private Integer maxNumberFromCode(List<FinishProductSample> finishProductSampleList) {
+    List<Integer> list = new ArrayList<Integer>();
+    finishProductSampleList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)
@@ -40,23 +74,23 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public boolean isFinishProductSampleExist(Long id) {
-    return finishProductSampleRepository.existsById(id);
+  public boolean isFinishProductSampleExist(String code) {
+    return finishProductSampleRepository.existsById(code);
   }
 
   @Transactional(readOnly = true)
-  public FinishProductSample getFinishProductSampleById(Long id) {
-    return finishProductSampleRepository.findById(id).get();
+  public FinishProductSample getFinishProductSampleById(String code) {
+    return finishProductSampleRepository.findById(code).get();
   }
 
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteFinishProductSample(Long id) {
-    finishProductSampleRepository.deleteById(id);
+  public void deleteFinishProductSample(String code) {
+    finishProductSampleRepository.deleteById(code);
   }
 
-  public boolean isUpdatedFinishProductCodeExist(Long id, String code) {
-    if ((!getFinishProductSampleById(id).getFinishProductCode().equals(code))
-        && (isFinishProductCodeExist(code))) {
+  public boolean isUpdatedFinishProductCodeExist(String code, String finishProductCode) {
+    if ((!getFinishProductSampleById(code).getFinishProductCode().equals(finishProductCode))
+        && (isFinishProductCodeExist(finishProductCode))) {
       return true;
     }
     return false;
@@ -70,11 +104,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSampleByMixDesignCode(String mixDesignCode) {
     return finishProductSampleRepository.findByMixDesignCode(mixDesignCode);
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isConcreteMixerExist(Long id) {
-    return finishProductSampleRepository.existsByEquipmentId(id);
   }
 
   @Transactional(readOnly = true)

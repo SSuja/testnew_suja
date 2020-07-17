@@ -12,6 +12,9 @@ public class EmployeeResponseDto {
   private String plantCode;
   private Long designationId;
   private boolean hasUser;
+  private String createdAt;
+  private String updatedAt;
+
   public Long getId() {
     return id;
   }
@@ -92,12 +95,27 @@ public class EmployeeResponseDto {
     this.designationId = designationId;
   }
 
-public boolean isHasUser() {
-	return hasUser;
-}
+  public boolean isHasUser() {
+    return hasUser;
+  }
 
-public void setHasUser(boolean hasUser) {
-	this.hasUser = hasUser;
-}
+  public void setHasUser(boolean hasUser) {
+    this.hasUser = hasUser;
+  }
 
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 }

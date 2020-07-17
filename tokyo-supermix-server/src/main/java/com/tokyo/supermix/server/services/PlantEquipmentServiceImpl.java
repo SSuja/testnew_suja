@@ -65,8 +65,14 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipmentByPlant(UserPrincipal currentUser) {
-    return PlantEquipmentRepository.findByPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT));
+    return PlantEquipmentRepository.findByPlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_PLANT_EQUIPMENT));
   }
 
+  @Transactional(readOnly = true)
+  public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentId(
+      Long equipmentId) {
+    return PlantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentId(equipmentId);
+  }
 }

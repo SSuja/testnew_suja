@@ -66,9 +66,9 @@ public class FinishProductSampleIssueController {
   }
 
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID)
-  public ResponseEntity<Object> deleteFinishProductSampleIssue(@PathVariable Long id) {
-    if (finishProductSampleIssueService.isIdExists(id)) {
-      finishProductSampleIssueService.deleteFinishProductSampleIssue(id);
+  public ResponseEntity<Object> deleteFinishProductSampleIssue(@PathVariable String code) {
+    if (finishProductSampleIssueService.isCodeExists(code)) {
+      finishProductSampleIssueService.deleteFinishProductSampleIssue(code);
       return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.FINISH_PRODUCT_SAMPLE_ISSUE_DELETED), HttpStatus.OK);
     }
@@ -80,12 +80,12 @@ public class FinishProductSampleIssueController {
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID)
-  public ResponseEntity<Object> getFinishProductSampleIssueById(@PathVariable Long id) {
-    if (finishProductSampleIssueService.isIdExists(id)) {
+  public ResponseEntity<Object> getFinishProductSampleIssueById(@PathVariable String code) {
+    if (finishProductSampleIssueService.isCodeExists(code)) {
       logger.debug("Get finish product sample issue by id ");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUE,
-              mapper.map(finishProductSampleIssueService.getFinishProductSampleIssueById(id),
+              mapper.map(finishProductSampleIssueService.getFinishProductSampleIssueById(code),
                   FinishProductSampleIssueResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
@@ -101,16 +101,10 @@ public class FinishProductSampleIssueController {
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
   public ResponseEntity<Object> updateFinishProductSampleIssue(
       @Valid @RequestBody FinishProductSampleIssueRequestDto finishProductSampleIssueRequestDto) {
-    if (finishProductSampleIssueService.isIdExists(finishProductSampleIssueRequestDto.getId())) {
-      finishProductSampleIssueService.saveFinishProductSampleIssue(
-          mapper.map(finishProductSampleIssueRequestDto, FinishProductSampleIssue.class));
-      return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(
-        new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ISSUE_ID,
-            validationFailureStatusCodes.getFinishProductSampleIssueAlreadyExist()),
-        HttpStatus.BAD_REQUEST);
+    finishProductSampleIssueService.saveFinishProductSampleIssue(
+        mapper.map(finishProductSampleIssueRequestDto, FinishProductSampleIssue.class));
+    return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH)
@@ -137,14 +131,16 @@ public class FinishProductSampleIssueController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT)
-  public ResponseEntity<Object> getAllFinishProductSampleIssuesByPlant(@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getAllFinishProductSampleIssuesByPlant(
+      @CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-            mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(currentUser),
+            mapper.map(
+                finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(currentUser),
                 FinishProductSampleIssueResponseDto.class),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
-  }
+}

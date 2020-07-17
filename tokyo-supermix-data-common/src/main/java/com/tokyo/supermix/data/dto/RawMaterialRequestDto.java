@@ -12,6 +12,9 @@ public class RawMaterialRequestDto {
   private Nature nature;
   private Long materialSubCategoryId;
   private String description;
+  @NotNull(message = "{rawMaterialRequestDto.prefix.null}")
+  @NotEmpty(message = "{rawMaterialRequestDto.prefix.empty}")
+  private String prefix;
 
   public Long getId() {
     return id;
@@ -51,5 +54,13 @@ public class RawMaterialRequestDto {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 }

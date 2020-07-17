@@ -11,16 +11,17 @@ public interface FinishProductSampleIssueService {
 
   public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue);
 
-  public void deleteFinishProductSampleIssue(Long id);
+  public void deleteFinishProductSampleIssue(String code);
 
-  public FinishProductSampleIssue getFinishProductSampleIssueById(Long id);
+  public FinishProductSampleIssue getFinishProductSampleIssueById(String code);
 
-  public boolean isIdExists(Long id);
+  public boolean isCodeExists(String code);
 
   public Page<FinishProductSampleIssue> searchFinishProductSampleIssue(Predicate predicate,
       int size, int page);
 
   public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode);
-  
-  public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(UserPrincipal currentUser);
+
+  public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(
+      UserPrincipal currentUser);
 }

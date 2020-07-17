@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +9,6 @@ public class SupplierRequestDto {
   @NotNull(message = "{supplierRequestDto.name.null}")
   @NotEmpty(message = "{supplierRequestDto.name.empty}")
   private String name;
-  private String companyName;
   private String address;
   @NotNull(message = "{supplierRequestDto.phoneNumber.null}")
   @NotEmpty(message = "{supplierRequestDto.phoneNumber.empty}")
@@ -35,14 +33,6 @@ public class SupplierRequestDto {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getCompanyName() {
-    return companyName;
-  }
-
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
   }
 
   public String getAddress() {

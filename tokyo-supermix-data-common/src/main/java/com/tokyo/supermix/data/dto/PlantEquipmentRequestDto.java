@@ -1,5 +1,4 @@
 package com.tokyo.supermix.data.dto;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -16,6 +15,7 @@ public class PlantEquipmentRequestDto {
   @NotEmpty(message = "{plantEquipmentDto.plantCode.empty}")
   private String plantCode;
   private Long equipmentId;
+  private boolean calibrationExists;
 
   public String getSerialNo() {
     return serialNo;
@@ -65,4 +65,11 @@ public class PlantEquipmentRequestDto {
     this.equipmentId = equipmentId;
   }
 
+  public boolean isCalibrationExists() {
+    return calibrationExists;
+  }
+
+  public void setCalibrationExists(boolean calibrationExists) {
+    this.calibrationExists = calibrationExists;
+  }
 }

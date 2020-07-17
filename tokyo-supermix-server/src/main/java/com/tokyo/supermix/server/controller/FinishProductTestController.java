@@ -56,7 +56,7 @@ public class FinishProductTestController {
   public ResponseEntity<Object> saveFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
     if (finishProductTestService.isDuplicateEntry(
-        finishProductTestRequestDto.getFinishProductSampleId(),
+        finishProductTestRequestDto.getFinishProductSampleCode(),
         finishProductTestRequestDto.getTestConfigureId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
@@ -126,12 +126,12 @@ public class FinishProductTestController {
 
   @GetMapping(value = EndpointURI.GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_TESTCONFIGURE)
   public ResponseEntity<Object> getFinishProductSampleTestByFinishProductSampleAndTestConfigure(
-      @PathVariable Long finishProductSampleId, @PathVariable Long testConfigureId) {
+      @PathVariable String finishProductSampleCode, @PathVariable Long testConfigureId) {
     if (finishProductTestService.isFinishProductTestExistsByTestConfigure(testConfigureId)) {
       logger.debug("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
           mapper.map(finishProductTestService
-              .getFinishProductTestByFinishProductSampleIdAndTestConfigureId(finishProductSampleId,
+              .getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode,
                   testConfigureId),
               FinishProductTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -139,8 +139,10 @@ public class FinishProductTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_PLANT)
-  public ResponseEntity<Object> getAllFinishProductSampleTestsByPlant(@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getAllFinishProductSampleTestsByPlant(
+      @CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_TESTS,
             mapper.map(finishProductTestService.getAllFinishProductTestByPlant(currentUser),

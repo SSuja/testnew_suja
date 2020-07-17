@@ -100,7 +100,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     FinishProductTest finishProductTest = finishProductTestRepository
         .findById(finishProductTrial.getFinishProductTest().getCode()).get();
     FinishProductSample finishProductSample = finishProductSampleRepository
-        .findById(finishProductTest.getFinishProductSample().getId()).get();
+        .findById(finishProductTest.getFinishProductSample().getCode()).get();
     Long day = finishProductTest.getTestConfigure().getDays();
     if (finishProductTrial.getTestParameter() != null) {
       FinishProductParameterResult finishProductParameterResult =
@@ -212,7 +212,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Override
   public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser) {
     return finishProductTrialRepository
-       .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
+        .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
             currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
                 PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
   }

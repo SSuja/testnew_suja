@@ -19,8 +19,9 @@ public class FinishProductParameterResultServiceImpl
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductParameterResult> getByFinishProductSampleId(Long finishProductSampleId) {
+  public List<FinishProductParameterResult> getByFinishProductSampleCode(
+      String finishProductSampleCode) {
     return finishProductParameterResultRepository
-        .findByFinishProductSampleId(finishProductSampleId);
+        .findByFinishProductSampleCode(finishProductSampleCode);
   }
 }

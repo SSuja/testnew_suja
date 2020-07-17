@@ -10,12 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Nature;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "raw_material")
-public class RawMaterial implements Serializable {
-
+public class RawMaterial extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,6 +27,7 @@ public class RawMaterial implements Serializable {
   @JoinColumn(name = "materialSubCategoryId", nullable = false)
   private MaterialSubCategory materialSubCategory;
   private String description;
+  private String prefix;
 
   public Long getId() {
     return id;
@@ -70,5 +71,13 @@ public class RawMaterial implements Serializable {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public String getPrefix() {
+    return prefix;
+  }
+
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
   }
 }

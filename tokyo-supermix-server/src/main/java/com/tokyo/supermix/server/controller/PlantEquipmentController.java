@@ -74,7 +74,7 @@ public class PlantEquipmentController {
 
   // Delete EquipmentPlant
   @DeleteMapping(value = EndpointURI.PLANTEQUIPMENT_BY_SERIALNO)
-   public ResponseEntity<Object> deletePlantEquipment(@PathVariable String serialNo) {
+  public ResponseEntity<Object> deletePlantEquipment(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
       logger.debug("delete Planteuipment by serialNo");
       plantEquipmentService.deletePlantEquipment(serialNo);
@@ -136,10 +136,22 @@ public class PlantEquipmentController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
-  public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getAllPlantEquipmentsByplant(
+      @CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-        mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser), PlantEquipmentResponseDto.class),
+        mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser),
+            PlantEquipmentResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID)
+  public ResponseEntity<Object> getAllPlantEquipmentsByCalibrationTrueAndEquipment(
+      @PathVariable Long equipmentId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
+        mapper.map(plantEquipmentService.getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentId(
+            equipmentId), PlantEquipmentResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

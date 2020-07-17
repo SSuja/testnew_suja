@@ -5,7 +5,7 @@ public class MaterialSubCategoryResponseDto {
   private String name;
   private String prefix;
   private Long materialCategoryId;
-  private String materialCategoryName;
+  private String materialCategoryName; 
 
   public Long getId() {
     return id;

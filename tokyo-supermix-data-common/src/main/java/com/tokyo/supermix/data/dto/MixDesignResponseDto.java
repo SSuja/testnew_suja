@@ -4,7 +4,6 @@ import java.sql.Date;
 import com.tokyo.supermix.data.enums.Status;
 
 public class MixDesignResponseDto {
-
   private String code;
   private Double targetGrade;
   private Date date;
@@ -14,6 +13,8 @@ public class MixDesignResponseDto {
   private String plantCode;
   private String plantName;
   private Status status;
+  private String createdAt;
+  private String updatedAt;
 
   public String getCode() {
     return code;
@@ -85,5 +86,21 @@ public class MixDesignResponseDto {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }

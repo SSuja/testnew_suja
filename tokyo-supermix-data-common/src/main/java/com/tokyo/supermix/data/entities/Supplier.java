@@ -12,18 +12,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "supplier")
-public class Supplier implements Serializable {
-
+public class Supplier extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  private String companyName;
   private String address;
   private String phoneNumber;
   private String email;
@@ -50,14 +48,6 @@ public class Supplier implements Serializable {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getCompanyName() {
-    return companyName;
-  }
-
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
   }
 
   public String getAddress() {

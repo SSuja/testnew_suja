@@ -9,10 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "parameter_equation_element")
-public class ParameterEquationElement implements Serializable {
+public class ParameterEquationElement extends DateAudit implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

@@ -6,8 +6,8 @@ import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 
 public interface FinishProductParameterResultRepository
     extends JpaRepository<FinishProductParameterResult, Long> {
-  List<FinishProductParameterResult> findByTestParameterIdAndFinishProductSampleId(
-      Long testParameterId, Long finishProductTestId);
+  List<FinishProductParameterResult> findByTestParameterIdAndFinishProductSampleCode(
+      Long testParameterId, String finishProductTestCode);
 
-  List<FinishProductParameterResult> findByFinishProductSampleId(Long finishProductSampleId);
+  List<FinishProductParameterResult> findByFinishProductSampleCode(String finishProductSampleCode);
 }

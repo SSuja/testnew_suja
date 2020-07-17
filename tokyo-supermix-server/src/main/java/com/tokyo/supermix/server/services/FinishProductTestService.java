@@ -20,9 +20,9 @@ public interface FinishProductTestService {
 
   boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId);
 
-  boolean isDuplicateEntry(Long finishProductSampleId, Long testConfigureId);
+  boolean isDuplicateEntry(String finishProductSampleCode, Long testConfigureId);
   
-  List<FinishProductTest> getFinishProductTestByFinishProductSampleIdAndTestConfigureId(Long finishProductSampleId,
+  List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(String finishProductSampleCode,
       Long testConfigureId);
 
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);

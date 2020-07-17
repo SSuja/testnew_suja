@@ -89,11 +89,11 @@ public class FinishProductSampleController {
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
-  public ResponseEntity<Object> getFinishProductSampleById(@PathVariable Long id) {
-    if (finishProductSampleService.isFinishProductSampleExist(id)) {
+  public ResponseEntity<Object> getFinishProductSampleById(@PathVariable String code) {
+    if (finishProductSampleService.isFinishProductSampleExist(code)) {
       logger.debug("Get Finish Product Sample By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE,
-          mapper.map(finishProductSampleService.getFinishProductSampleById(id),
+          mapper.map(finishProductSampleService.getFinishProductSampleById(code),
               FinishProductSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -102,10 +102,10 @@ public class FinishProductSampleController {
   }
 
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
-  public ResponseEntity<Object> deleteFinishProductSample(@PathVariable Long id) {
-    if (finishProductSampleService.isFinishProductSampleExist(id)) {
+  public ResponseEntity<Object> deleteFinishProductSample(@PathVariable String code) {
+    if (finishProductSampleService.isFinishProductSampleExist(code)) {
       logger.debug("delete Finish Product Sample by id");
-      finishProductSampleService.deleteFinishProductSample(id);;
+      finishProductSampleService.deleteFinishProductSample(code);;
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.FINISH_PRODUCT_SAMPLE_DELETED),
           HttpStatus.OK);
@@ -118,9 +118,9 @@ public class FinishProductSampleController {
   public ResponseEntity<Object> updateFinishProductSample(
       @Valid @RequestBody FinishProductSampleRequestDto finishProductSampleRequestDto) {
     if (finishProductSampleService
-        .isFinishProductSampleExist(finishProductSampleRequestDto.getId())) {
+        .isFinishProductSampleExist(finishProductSampleRequestDto.getCode())) {
       if (finishProductSampleService.isUpdatedFinishProductCodeExist(
-          finishProductSampleRequestDto.getId(),
+          finishProductSampleRequestDto.getCode(),
           finishProductSampleRequestDto.getFinishProductCode())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.FINISH_PRODUCT_CODE,
@@ -151,21 +151,6 @@ public class FinishProductSampleController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_CODE,
         validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID)
-  public ResponseEntity<Object> getFinishProductSampleByConcreteMixerId(
-      @PathVariable Long concreteMixerId) {
-    if (finishProductSampleService.isConcreteMixerExist(concreteMixerId)) {
-      logger.debug("Get Finish Product Sample By Concrete Mixer Id");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-          mapper.map(
-              finishProductSampleService.getFinishProductSampleByEquipmentId(concreteMixerId),
-              FinishProductSampleResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
-        validationFailureStatusCodes.getConcreteMixerNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_SEARCH)

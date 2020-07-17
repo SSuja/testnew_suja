@@ -8,10 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "sieve_accepted_value")
-public class SieveAcceptedValue implements Serializable {
+public class SieveAcceptedValue extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,5 +58,4 @@ public class SieveAcceptedValue implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

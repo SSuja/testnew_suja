@@ -6,10 +6,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant_equipment")
-public class PlantEquipment implements Serializable {
+public class PlantEquipment extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String serialNo;
@@ -20,8 +21,9 @@ public class PlantEquipment implements Serializable {
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
   @ManyToOne
-  @JoinColumn(name = "euipmentId", nullable = false)
+  @JoinColumn(name = "equipmentId", nullable = false)
   private Equipment equipment;
+  private boolean calibrationExists;
 
   public String getSerialNo() {
     return serialNo;
@@ -75,4 +77,11 @@ public class PlantEquipment implements Serializable {
     return serialVersionUID;
   }
 
+  public boolean isCalibrationExists() {
+    return calibrationExists;
+  }
+
+  public void setCalibrationExists(boolean calibrationExists) {
+    this.calibrationExists = calibrationExists;
+  }
 }
