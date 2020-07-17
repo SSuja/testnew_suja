@@ -9,10 +9,12 @@ import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
+import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.UserPlantPermissionRepository;
@@ -26,6 +28,8 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
   private MainModuleRepository mainModuleRepository;
   @Autowired
   private SubModuleRepository subModuleRepository;
+  @Autowired
+  UserPlantRoleRepository userPlantRoleRepository;
   @Autowired
   Mapper mapper;
 
@@ -184,9 +188,10 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       List<UserPlantPermission> userPlantPermissionList = userPlantPermissionRepository
           .findByUserIdAndPlantPermissionPermissionSubModuleIdAndPlantPermissionPlantCodeAndStatus(
               userId, sub.getId(), plantCode, status);
+      
       boolean status1 =
           getPlantPermissionsByPlantCodeAndReturnSubModuleStatus(userPlantPermissionList, subStatus,
-              userId, sub.getId(), mainModuleId, rolePermissionDtoList);
+              userId, sub.getId(), mainModuleId,plantCode, rolePermissionDtoList);
       subModulePlantRolePlantPermissionDto.setStatus(status1);
       subModulePlantRolePlantPermissionDto.setPrivilages(rolePermissionDtoList);
       subModulePlantRolePlantPermissionDtoList.add(subModulePlantRolePlantPermissionDto);
@@ -199,15 +204,17 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
 
   private boolean getPlantPermissionsByPlantCodeAndReturnSubModuleStatus(
       List<UserPlantPermission> userPlantPermissionList, boolean subStatus, Long userId,
-      Long subModuleId, Long mainModuleId,
+      Long subModuleId, Long mainModuleId,String plantCode,
       List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList) {
     for (UserPlantPermission permission : userPlantPermissionList) {
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
+      UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserId(plantCode, userId);
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
       plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
+      plantRolePlantPermissionRequestDto.setPlantRoleId(userPlantRole.getPlantRole().getId());
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
       if (permission.getStatus()) {

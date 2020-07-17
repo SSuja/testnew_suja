@@ -3,8 +3,6 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,78 +13,78 @@ import com.tokyo.supermix.data.enums.Status;
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_sample")
 public class FinishProductSample extends DateAudit implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private String workOrderNo;
-	private String finishProductCode;
-	private Date date;
-	@ManyToOne
-	@JoinColumn(name = "equipmentId", nullable = false)
-	private Equipment equipment;
-	@ManyToOne
-	@JoinColumn(name = "mixDesignCode", nullable = false)
-	private MixDesign mixDesign;
-	private Status status;
+  private static final long serialVersionUID = 1L;
+  @Id
+  private String code;
+  private String workOrderNo;
+  private String finishProductCode;
+  private Date date;
+  @ManyToOne
+  @JoinColumn(name = "equipmentId", nullable = false)
+  private Equipment equipment;
+  @ManyToOne
+  @JoinColumn(name = "mixDesignCode", nullable = false)
+  private MixDesign mixDesign;
+  private Status status;
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public String getWorkOrderNo() {
-		return workOrderNo;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public void setWorkOrderNo(String workOrderNo) {
-		this.workOrderNo = workOrderNo;
-	}
+  public String getWorkOrderNo() {
+    return workOrderNo;
+  }
 
-	public Equipment getEquipment() {
-		return equipment;
-	}
+  public void setWorkOrderNo(String workOrderNo) {
+    this.workOrderNo = workOrderNo;
+  }
 
-	public void setEquipment(Equipment equipment) {
-		this.equipment = equipment;
-	}
+  public Equipment getEquipment() {
+    return equipment;
+  }
 
-	public MixDesign getMixDesign() {
-		return mixDesign;
-	}
+  public void setEquipment(Equipment equipment) {
+    this.equipment = equipment;
+  }
 
-	public void setMixDesign(MixDesign mixDesign) {
-		this.mixDesign = mixDesign;
-	}
+  public MixDesign getMixDesign() {
+    return mixDesign;
+  }
 
-	public String getFinishProductCode() {
-		return finishProductCode;
-	}
+  public void setMixDesign(MixDesign mixDesign) {
+    this.mixDesign = mixDesign;
+  }
 
-	public void setFinishProductCode(String finishProductCode) {
-		this.finishProductCode = finishProductCode;
-	}
+  public String getFinishProductCode() {
+    return finishProductCode;
+  }
 
-	public Date getDate() {
-		return date;
-	}
+  public void setFinishProductCode(String finishProductCode) {
+    this.finishProductCode = finishProductCode;
+  }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+  public Date getDate() {
+    return date;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
-	public Status getStatus() {
-		return status;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 }

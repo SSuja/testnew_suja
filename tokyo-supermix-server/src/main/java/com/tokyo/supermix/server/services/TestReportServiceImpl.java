@@ -366,7 +366,7 @@ public class TestReportServiceImpl implements TestReportService {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     FinishProductSampleIssue finishProductSampleIssue = finishProductSampleIssueRepository
-        .findByFinishProductSampleId(finishProductTest.getFinishProductSample().getId());
+        .findByFinishProductSampleCode(finishProductTest.getFinishProductSample().getCode());
     concreteTestReportDto.setAddress(
         finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
     concreteTestReportDto.setPlantName(
@@ -443,8 +443,8 @@ public class TestReportServiceImpl implements TestReportService {
     return abbrevationAndValueDtoList;
   }
 
-  public boolean isFinishProductSampleExist(Long finishProductSampleId) {
-    return finishProductTestRepository.existsByFinishProductSampleId(finishProductSampleId);
+  public boolean isFinishProductSampleExist(String finishProductSampleCode) {
+    return finishProductTestRepository.existsByFinishProductSampleCode(finishProductSampleCode);
   }
 
   public List<ConcreteStrengthDto> getConcreteStrengths() {
@@ -452,19 +452,19 @@ public class TestReportServiceImpl implements TestReportService {
     List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
-      if (isFinishProductSampleExist(finishProductSample.getId())) {
+      if (isFinishProductSampleExist(finishProductSample.getCode())) {
         averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
-        averageStrength.setDayAndResult(getDayResults(finishProductSample.getId()));
+        averageStrength.setDayAndResult(getDayResults(finishProductSample.getCode()));
         averageStrengthList.add(averageStrength);
       }
     }
     return averageStrengthList;
   }
 
-  public List<DayAndResult> getDayResults(Long finishProductSampleId) {
+  public List<DayAndResult> getDayResults(String finishProductSampleCode) {
     ArrayList<DayAndResult> dayAndResultList = new ArrayList<DayAndResult>();
     List<FinishProductTest> finishProductTestList =
-        finishProductTestRepository.findByFinishProductSampleId(finishProductSampleId);
+        finishProductTestRepository.findByFinishProductSampleCode(finishProductSampleCode);
     for (FinishProductTest finishProductTest : finishProductTestList) {
       DayAndResult dayAndResult = new DayAndResult();
       if (finishProductTest.getTestConfigure().getDays() != null) {

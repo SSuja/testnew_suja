@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleRequestDto {
-  private Long id;
+  private String code;
   private String workOrderNo;
   @NotNull(message = "{finishProductSampleRequestDto.finishProductCode.null}")
   private String finishProductCode;
@@ -16,12 +16,12 @@ public class FinishProductSampleRequestDto {
   private String mixDesignCode;
   private Status status;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getWorkOrderNo() {

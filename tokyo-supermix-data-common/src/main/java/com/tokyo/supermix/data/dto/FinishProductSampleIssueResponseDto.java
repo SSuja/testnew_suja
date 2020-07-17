@@ -1,7 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 public class FinishProductSampleIssueResponseDto {
-  private Long id;
+  private String code;
   private String truckNo;
   private FinishProductSampleResponseDto finishProductSample;
   private ProjectResponseDto project;
@@ -9,12 +9,12 @@ public class FinishProductSampleIssueResponseDto {
   private String createdAt;
   private String updatedAt;
 
-  public Long getId() {
-    return id;
+  public String getCode() {
+    return code;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCode(String code) {
+    this.code = code;
   }
 
   public String getTruckNo() {

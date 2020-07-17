@@ -86,24 +86,25 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isDuplicateEntry(Long finishProductSampleId, Long testConfigureId) {
-    if (finishProductTestRepository
-        .existsByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId)) {
+  public boolean isDuplicateEntry(String finishProductSampleCode, Long testConfigureId) {
+    if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
+        finishProductSampleCode, testConfigureId)) {
       return true;
     }
     return false;
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTest> getFinishProductTestByFinishProductSampleIdAndTestConfigureId(
-      Long finishProductSampleId, Long testConfigureId) {
+  public List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
+      String finishProductSampleCode, Long testConfigureId) {
     return finishProductTestRepository
-        .findByFinishProductSampleIdAndTestConfigureId(finishProductSampleId, testConfigureId);
-      }
-  
+        .findByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode, testConfigureId);
+  }
+
   @Transactional(readOnly = true)
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
-    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
+    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
   }
 }

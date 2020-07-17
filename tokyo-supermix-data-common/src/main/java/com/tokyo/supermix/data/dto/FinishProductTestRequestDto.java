@@ -6,7 +6,7 @@ public class FinishProductTestRequestDto {
   private String code;
   private double result;
   private Status status;
-  private Long finishProductSampleId;
+  private String finishProductSampleCode;
   private Long testConfigureId;
 
   public String getCode() {
@@ -33,12 +33,12 @@ public class FinishProductTestRequestDto {
     this.status = status;
   }
 
-  public Long getFinishProductSampleId() {
-    return finishProductSampleId;
+  public String getFinishProductSampleCode() {
+    return finishProductSampleCode;
   }
 
-  public void setFinishProductSampleId(Long finishProductSampleId) {
-    this.finishProductSampleId = finishProductSampleId;
+  public void setFinishProductSampleCode(String finishProductSampleCode) {
+    this.finishProductSampleCode = finishProductSampleCode;
   }
 
   public Long getTestConfigureId() {
