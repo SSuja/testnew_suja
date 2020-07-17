@@ -17,90 +17,99 @@ import com.tokyo.supermix.data.enums.TestLevel;
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_test")
 public class MaterialTest extends DateAudit implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	private String code;
-	private Long noOfTrial;
-	private Double average;
-	@Enumerated(EnumType.ORDINAL)
-	private Status status;
-	@Enumerated(EnumType.ORDINAL)
-	private TestLevel testLevel;
-	@ManyToOne
-	@JoinColumn(name = "incomingSampleCode", nullable = false)
-	private IncomingSample incomingSample;
-	@ManyToOne
-	@JoinColumn(name = "testConfigureId", nullable = false)
-	private TestConfigure testConfigure;
-	@ManyToOne
-	@JoinColumn(name = "materialStateId", nullable = false)
-	private MaterialState materialState;
-	
-	public String getCode() {
-		return code;
-	}
+  private static final long serialVersionUID = 1L;
+  @Id
+  private String code;
+  private Long noOfTrial;
+  private Double average;
+  @Enumerated(EnumType.ORDINAL)
+  private Status status;
+  @Enumerated(EnumType.ORDINAL)
+  private TestLevel testLevel;
+  @ManyToOne
+  @JoinColumn(name = "incomingSampleCode", nullable = false)
+  private IncomingSample incomingSample;
+  @ManyToOne
+  @JoinColumn(name = "testConfigureId", nullable = false)
+  private TestConfigure testConfigure;
+  @ManyToOne
+  @JoinColumn(name = "materialStateId", nullable = false)
+  private MaterialState materialState;
+  private String specimenCode;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	public Long getNoOfTrial() {
-		return noOfTrial;
-	}
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
 
-	public void setNoOfTrial(Long noOfTrial) {
-		this.noOfTrial = noOfTrial;
-	}
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
+  }
 
-	public Double getAverage() {
-		return average;
-	}
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-	public void setAverage(Double average) {
-		this.average = average;
-	}
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
 
-	public Status getStatus() {
-		return status;
-	}
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
+  }
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+  public Double getAverage() {
+    return average;
+  }
 
-	public TestLevel getTestLevel() {
-		return testLevel;
-	}
+  public void setAverage(Double average) {
+    this.average = average;
+  }
 
-	public void setTestLevel(TestLevel testLevel) {
-		this.testLevel = testLevel;
-	}
+  public Status getStatus() {
+    return status;
+  }
 
-	public IncomingSample getIncomingSample() {
-		return incomingSample;
-	}
+  public void setStatus(Status status) {
+    this.status = status;
+  }
 
-	public void setIncomingSample(IncomingSample incomingSample) {
-		this.incomingSample = incomingSample;
-	}
+  public TestLevel getTestLevel() {
+    return testLevel;
+  }
 
-	public TestConfigure getTestConfigure() {
-		return testConfigure;
-	}
+  public void setTestLevel(TestLevel testLevel) {
+    this.testLevel = testLevel;
+  }
 
-	public void setTestConfigure(TestConfigure testConfigure) {
-		this.testConfigure = testConfigure;
-	}
+  public IncomingSample getIncomingSample() {
+    return incomingSample;
+  }
 
-	public MaterialState getMaterialState() {
-		return materialState;
-	}
+  public void setIncomingSample(IncomingSample incomingSample) {
+    this.incomingSample = incomingSample;
+  }
 
-	public void setMaterialState(MaterialState materialState) {
-		this.materialState = materialState;
-	}
+  public TestConfigure getTestConfigure() {
+    return testConfigure;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public void setTestConfigure(TestConfigure testConfigure) {
+    this.testConfigure = testConfigure;
+  }
+
+  public MaterialState getMaterialState() {
+    return materialState;
+  }
+
+  public void setMaterialState(MaterialState materialState) {
+    this.materialState = materialState;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 }
