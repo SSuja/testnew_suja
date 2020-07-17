@@ -11,6 +11,8 @@ public class SupplierResponseDto {
   private String email;
   private PlantDto plant;
   private List<SupplierCategory> supplierCategories;
+  private String createdAt;
+  private String updatedAt;
 
   public Long getId() {
     return id;
@@ -66,5 +68,21 @@ public class SupplierResponseDto {
 
   public void setSupplierCategories(List<SupplierCategory> supplierCategories) {
     this.supplierCategories = supplierCategories;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }
