@@ -5,6 +5,7 @@ public class EmailGroupDto {
   private String name;
   private Long EmailPointsId;
   private boolean schedule;
+  private boolean status;
 
   public Long getId() {
     return id;
@@ -36,6 +37,14 @@ public class EmailGroupDto {
 
   public void setEmailPointsId(Long emailPointsId) {
     EmailPointsId = emailPointsId;
+  }
+
+  public boolean isStatus() {
+    return status;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
   }
 
 

@@ -16,8 +16,11 @@ public interface EmailGroupService {
 
   public void deleteEmailGroup(Long id);
 
-  // public boolean isEmailGroupNameExist(EmailNotifications emailNotifications);
+  //public boolean isEmailGroupNameExist(EmailNotifications emailNotifications);
 
   public boolean isEmailGroupExist(Long id);
+  
+  public void updateStatus(Long emailPointsId);
+  
 
 }

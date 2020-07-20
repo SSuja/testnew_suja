@@ -4,52 +4,65 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.EmailGroupDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
+import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 
 @Service
 public class EmailGroupServiceImpl implements EmailGroupService {
-	@Autowired
-	private EmailGroupRepository emailGroupRepository;
+  @Autowired
+  private EmailGroupRepository emailGroupRepository;
+  @Autowired
+  EmailPointsRepository emailPointsRepository;
 
-	@Transactional(readOnly = true)
-	public List<EmailGroup> getAllEmailGroups() {
-		return emailGroupRepository.findAll();
-	}
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroups() {
+    return emailGroupRepository.findAll();
+  }
 
-	@Transactional(readOnly = true)
-	public List<EmailGroup> getAllEmailGroupsBySchedule(Boolean schedule) {
-		return emailGroupRepository.findBySchedule(schedule);
-	}
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsBySchedule(Boolean schedule) {
+    return emailGroupRepository.findBySchedule(schedule);
+  }
 
-	@Transactional
-	public void saveEmailGroup(EmailGroup emailGroup) {
+  @Transactional
+  public void saveEmailGroup(EmailGroup emailGroup) {
 
-		emailGroupRepository.save(emailGroup);
-	}
+    emailGroupRepository.save(emailGroup);
+  }
 
-	
-	@Transactional
-	public void deleteEmailGroup(Long id) {
-		emailGroupRepository.deleteById(id);
-	}
-	
 
-	
-	@Transactional(readOnly = true)
-	public boolean isEmailGroupExist(Long id) {
-		
-		return emailGroupRepository.existsById(id);
-	}
+  @Transactional
+  public void deleteEmailGroup(Long id) {
+    emailGroupRepository.deleteById(id);
+  }
 
-	@Transactional(readOnly = true)
+  @Transactional(readOnly = true)
+  public boolean isEmailGroupExist(Long id) {
+
+    return emailGroupRepository.existsById(id);
+  }
+
+  @Transactional(readOnly = true)
   public List<EmailGroup> getAllEmailGroupsByPlantCode(String plantCode) {
-    
+
     return emailGroupRepository.findByPlantCode(plantCode);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatus(String plantCode, boolean status) {
-        return emailGroupRepository.findByPlantCodeAndStatus(plantCode, status);
+    return emailGroupRepository.findByPlantCodeAndStatus(plantCode, status);
   }
+  
+  @Transactional
+  public void updateStatus(Long emailPointsId) {
+    emailGroupRepository.findByEmailPointsId(emailPointsId).forEach(emailGroup->{
+      EmailGroupDto emailGroupDto = new EmailGroupDto();
+      emailGroupDto.setStatus(emailGroup.isStatus());
+      emailGroupRepository.save(emailGroup);
+    });
+  }
+  
+  
 }
