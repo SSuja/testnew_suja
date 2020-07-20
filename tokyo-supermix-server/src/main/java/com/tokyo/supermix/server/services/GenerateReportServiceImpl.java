@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
-import com.tokyo.supermix.data.enums.EmailNotifications;
-import com.tokyo.supermix.util.Constants;
 import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -44,10 +42,10 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		params.put("reportTitle", "SUMMARY DETAILS REPORT OF INCOMING SAMPLE");
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream("summary_report.jrxml");
 		byte[] fileByte = generateReportPdf(inputStream, params);
-		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-				EmailNotifications.SUMMARY_REPORT_GROUP, deliveryReport.getPlant().getCode());
-		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
-				Constants.SUBJECT_OF_SUMMARY_REPORT, Constants.BODY_FOR_REPORT, fileByte, Constants.SUMMARY_REPORT);
+//		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+//				EmailNotifications.SUMMARY_REPORT_GROUP, deliveryReport.getPlant().getCode());
+//		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
+//				Constants.SUBJECT_OF_SUMMARY_REPORT, Constants.BODY_FOR_REPORT, fileByte, Constants.SUMMARY_REPORT);
 	}
 
 	private byte[] generateReportPdf(InputStream inputStream, Map<String, Object> params)
@@ -71,10 +69,10 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 		params.put("reportTitle", "DELIVERY DETAILS REPORT OF INCOMING SAMPLE");
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream("delivery_report.jrxml");
 		byte[] fileByte = generateReportPdf(inputStream, params);
-		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-				EmailNotifications.DELIVERY_REPORT_GROUP, deliveryReport.getPlant().getCode());
-		reciepientList.add(deliveryReport.getSupplierReportDtos().getEmail());
-		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
-				Constants.SUBJECT_OF_DELIVERY_REPORT, Constants.BODY_FOR_REPORT, fileByte, Constants.DELIVERY_REPORT);
+//		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+//				EmailNotifications.DELIVERY_REPORT_GROUP, deliveryReport.getPlant().getCode());
+//		reciepientList.add(deliveryReport.getSupplierReportDtos().getEmail());
+//		emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
+//				Constants.SUBJECT_OF_DELIVERY_REPORT, Constants.BODY_FOR_REPORT, fileByte, Constants.DELIVERY_REPORT);
 	}
 }

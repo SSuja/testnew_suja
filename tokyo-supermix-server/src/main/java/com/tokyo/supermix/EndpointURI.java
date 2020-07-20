@@ -578,6 +578,10 @@ public final class EndpointURI {
   public static final String EMAIL_GROUP_BY_ID = EMAIL_GROUP + ID;
   public static final String EMAIL_GROUP_BY_SHEDULE =
       EMAIL_GROUPS + SLASH + "email-group-schedule" + SLASH + "{schedule}";
+  public static final String EMAIL_GROUP_BY_PLANT_CODE =
+      EMAIL_GROUPS + SLASH + "email-group-plant-code" + SLASH + "{plantCode}";
+  public static final String EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS =
+      EMAIL_GROUPS + SLASH + "plant-code" + SLASH + "{plantCode}"+"status" + SLASH + "{status}";
 
   /*
    * email group notification days APIs
