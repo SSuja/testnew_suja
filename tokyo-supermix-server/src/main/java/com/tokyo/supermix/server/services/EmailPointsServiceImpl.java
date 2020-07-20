@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
+import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
+import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 
 @Service
@@ -13,22 +15,26 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   @Autowired
   private EmailPointsRepository emailPointsRepository;
   @Autowired
-  private MaterialSubCategoryService materialSubCategoryService ;
+  private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private TestService testService;
+  @Autowired
+  private EmailGroupRepository emailGroupRepository;
 
   @Transactional(readOnly = true)
   public boolean isEmailPointsExist(EmailPointsRequestDto emailPointsRequestDto) {
-    return emailPointsRepository.existsByMaterialSubCategoryIdAndTestId(emailPointsRequestDto.getMaterialSubCategoryId(),emailPointsRequestDto.getTestId());
+    return emailPointsRepository.existsByMaterialSubCategoryIdAndTestId(
+        emailPointsRequestDto.getMaterialSubCategoryId(), emailPointsRequestDto.getTestId());
   }
 
   @Transactional
   public void createEmailPoints(EmailPoints emailPoints) {
-    String materialSubCategoryName =  materialSubCategoryService.getMaterialSubCategoryById(emailPoints.getMaterialSubCategory().getId()).getName();
+    String materialSubCategoryName = materialSubCategoryService
+        .getMaterialSubCategoryById(emailPoints.getMaterialSubCategory().getId()).getName();
     String testName = testService.getTestById(emailPoints.getTest().getId()).getName();
     emailPoints.setName(materialSubCategoryName + "_" + testName);
     emailPoints.setActive(true);
-    emailPointsRepository.save(emailPoints); 
+    emailPointsRepository.save(emailPoints);
   }
 
   @Transactional(readOnly = true)
@@ -43,7 +49,12 @@ public class EmailPointsServiceImpl implements EmailPointsService {
 
   @Transactional
   public void updateEmailPointStatus(EmailPoints emailPoints) {
-   emailPoints.setName(emailPointsRepository.findById(emailPoints.getId()).get().getName());
+    emailPoints.setName(emailPointsRepository.findById(emailPoints.getId()).get().getName());
+    List<EmailGroup> emailGroupLists =
+        emailGroupRepository.findByEmailPointsId(emailPoints.getId());
+    emailGroupLists.forEach(emailGroups -> {
+      emailGroups.setStatus(emailPoints.isActive());
+    });
     emailPointsRepository.save(emailPoints);
   }
 
