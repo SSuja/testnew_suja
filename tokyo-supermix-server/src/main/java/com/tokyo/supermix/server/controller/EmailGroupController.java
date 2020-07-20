@@ -86,14 +86,14 @@ public class EmailGroupController {
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE)
   public ResponseEntity<Object> getAllEmailGroupsByPlantCode(@PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode), EmailGroup.class),
+        mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode), EmailGroupDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
   
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS)
   public ResponseEntity<Object> getAllEmailGroupsByPlantCodeAndStatus(@PathVariable String plantCode, @PathVariable boolean status) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatus(plantCode, status), EmailGroup.class),
+        mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatus(plantCode, status), EmailGroupDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
