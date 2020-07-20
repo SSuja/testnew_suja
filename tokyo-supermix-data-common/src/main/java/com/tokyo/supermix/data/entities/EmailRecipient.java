@@ -33,9 +33,6 @@ public class EmailRecipient extends DateAudit implements Serializable {
   private User user;
   @Enumerated(EnumType.ORDINAL)
   private RecipientType recipientType;
-  @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
-  private Plant plant;
 
   public Long getId() {
     return id;
@@ -79,13 +76,5 @@ public class EmailRecipient extends DateAudit implements Serializable {
 
   public void setRecipientType(RecipientType recipientType) {
     this.recipientType = recipientType;
-  }
-
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
   }
 }
