@@ -25,7 +25,7 @@ public class AcceptedValue extends DateAudit implements Serializable {
   private Double maxValue;
   private Double value;
   @Enumerated(EnumType.ORDINAL)
-  private Condition condition;
+  private Condition conditions;
   @OneToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
@@ -66,11 +66,11 @@ public class AcceptedValue extends DateAudit implements Serializable {
   }
 
   public Condition getCondition() {
-    return condition;
+    return conditions;
   }
 
   public void setCondition(Condition condition) {
-    this.condition = condition;
+    this.conditions = condition;
   }
 
   public TestConfigure getTestConfigure() {

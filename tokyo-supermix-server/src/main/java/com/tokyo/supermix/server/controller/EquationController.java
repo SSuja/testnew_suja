@@ -103,11 +103,4 @@ public class EquationController {
         .map(equationService.getEquationsByEquationType(equationType), EquationResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-
-  @GetMapping(value = EndpointURI.EQUATION_BY_EQUATION_EXISTS_TRUE)
-  public ResponseEntity<Object> getEquationByEquationExistsTrue() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
-        mapper.map(equationService.getEquationsByParameterExistsTrue(), EquationResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
-  }
 }

@@ -52,9 +52,4 @@ public class EquationServiceImpl implements EquationService {
   public List<Equation> getEquationsByEquationType(EquationType equationType) {
     return equationRepository.findByEquationType(equationType);
   }
-
-  @Transactional(readOnly = true)
-  public List<Equation> getEquationsByParameterExistsTrue() {
-    return equationRepository.findByParameterExistsTrue();
-  }
 }

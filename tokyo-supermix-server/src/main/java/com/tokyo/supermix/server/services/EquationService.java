@@ -18,6 +18,4 @@ public interface EquationService {
   public boolean isFormulaExists(String formula);
 
   public List<Equation> getEquationsByEquationType(EquationType equationType);
-
-  public List<Equation> getEquationsByParameterExistsTrue();
 }
