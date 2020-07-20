@@ -587,5 +587,13 @@ public final class EndpointURI {
   public static final String EMAIL_NOTIFICATIONS_BY_GROUP = EMAIL_NOTIFICATION + SLASH + "group";
   public static final String EMAIL_NOTIFICATION_BY_ID = EMAIL_NOTIFICATION + SLASH + ID;
 
+  /*
+   * Email Points
+   */
+  public static final String EMAIL_POINT = BASE_API_PATH + "email_point";
+  public static final String EMAIL_POINTS = BASE_API_PATH + "email_points";
+  public static final String EMAIL_POINTS_BY_STATUS =
+      EMAIL_POINT  + SLASH + "{status}";
+  
   private EndpointURI() {}
 }

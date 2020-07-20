@@ -1752,7 +1752,25 @@ public void setEmailGroupNotExist(String emailGroupNotExist) {
 	this.emailGroupNotExist = emailGroupNotExist;
 }
 
+@Value("${validation.emailPoints.notExists}")
+private String emailPointsNotExist;
+@Value("${validation.emailPoints.alreadyExist}")
+private String emailPointsAlreadyExist;
 
+public String getEmailPointsNotExist() {
+  return emailPointsNotExist;
+}
 
+public void setEmailPointsNotExist(String emailPointsNotExist) {
+  this.emailPointsNotExist = emailPointsNotExist;
+}
+
+public String getEmailPointsAlreadyExist() {
+  return emailPointsAlreadyExist;
+}
+
+public void setEmailPointsAlreadyExist(String emailPointsAlreadyExist) {
+  this.emailPointsAlreadyExist = emailPointsAlreadyExist;
+}
 }
 

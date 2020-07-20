@@ -545,6 +545,13 @@ public class Constants {
   public static final String EMAIL_NOTIFICATION_DAY_DELETED =
       "Email Notification Days Successfully Deleted";
   public static final String EMAIL_NOTIFICATION_DAY_ID = "emailNotificationDayId";
+  
+  /* email points */
+  public static final String EMAIL_POINT = "emailPoint";
+  public static final String EMAIL_POINTS = "emailPoints";
+  public static final String EMAIL_POINT_ID = "emailPointId";
+  public static final String ADD_EMAIL_POINT_SUCCESS = "Email Points Added Successfully";
+  public static final String UPDATE_EMAIL_POINT_SUCCESS = "Email Points Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside
