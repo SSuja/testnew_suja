@@ -3,9 +3,10 @@ package com.tokyo.supermix.data.dto;
 public class EmailGroupDto {
   private Long id;
   private String name;
-  private Long EmailPointsId;
+  private Long emailPointsId;
   private boolean schedule;
   private boolean status;
+  private String plantCode;
 
   public Long getId() {
     return id;
@@ -31,20 +32,29 @@ public class EmailGroupDto {
     this.schedule = schedule;
   }
 
-  public Long getEmailPointsId() {
-    return EmailPointsId;
-  }
-
-  public void setEmailPointsId(Long emailPointsId) {
-    EmailPointsId = emailPointsId;
-  }
-
+ 
   public boolean isStatus() {
     return status;
   }
 
   public void setStatus(boolean status) {
     this.status = status;
+  }
+
+  public Long getEmailPointsId() {
+    return emailPointsId;
+  }
+
+  public void setEmailPointsId(Long emailPointsId) {
+    this.emailPointsId = emailPointsId;
+  }
+
+  public String getPlantCode() {
+    return plantCode;
+  }
+
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
   }
 
 
