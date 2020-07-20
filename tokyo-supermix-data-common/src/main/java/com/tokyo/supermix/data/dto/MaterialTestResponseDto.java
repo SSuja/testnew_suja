@@ -5,7 +5,6 @@ public class MaterialTestResponseDto {
   private String createdAt;
   private String updatedAt;
   private Long noOfTrial;
-  private Double average;
   private String status;
   private String testLevel;
   private IncomingSampleResponseDto incomingSample;
@@ -13,6 +12,15 @@ public class MaterialTestResponseDto {
   private Long materialStateId;
   private String materialState;
   private String specimenCode;
+  private String comment;
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
   public String getCode() {
     return code;
@@ -28,14 +36,6 @@ public class MaterialTestResponseDto {
 
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
-  }
-
-  public Double getAverage() {
-    return average;
-  }
-
-  public void setAverage(Double average) {
-    this.average = average;
   }
 
   public String getStatus() {

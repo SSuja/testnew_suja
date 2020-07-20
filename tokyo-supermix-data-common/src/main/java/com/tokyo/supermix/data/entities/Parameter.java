@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,7 +21,6 @@ public class Parameter extends DateAudit implements Serializable {
   private String name;
   @Enumerated(EnumType.ORDINAL)
   private ParameterType parameterType;
-  private Long days;
 
   public Long getId() {
     return id;
@@ -50,13 +48,5 @@ public class Parameter extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
-  }
-
-  public Long getDays() {
-    return days;
-  }
-
-  public void setDays(Long days) {
-    this.days = days;
   }
 }

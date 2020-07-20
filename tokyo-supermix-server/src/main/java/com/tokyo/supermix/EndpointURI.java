@@ -332,25 +332,6 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_TRIAL_BY_PLANT = MATERIAL_TEST_TRIAL + PLANT_WISE;
 
   /*
-   * Sieve Size
-   */
-  public static final String SIEVE_SIZE = BASE_API_PATH + "sieve-size";
-  public static final String SIEVE_SIZES = BASE_API_PATH + "sieve-sizes";
-  public static final String SIEVE_SIZE_BY_ID = SIEVE_SIZE + ID;
-  public static final String SIEVE_SIZE_BY_MATERIAL_SUB_CATEGORY_ID =
-      SIEVE_SIZE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
-  public static final String SIEVE_SIZE_ACCEPTED_VALUE_BY_MATERIAL_SUB_CATEGORY_ID =
-      SIEVE_SIZE + SLASH + "sieve-accepted-value" + SLASH + "{materialSubCategoryId}";
-  public static final String SIEVE_SIZE_SEARCH = SIEVE_SIZE + SEARCH;
-  /*
-   * Sieve Accepted Value
-   */
-  public static final String SIEVE_ACCEPTED_VALUE = BASE_API_PATH + "sieve-accepted-value";
-  public static final String SIEVE_ACCEPTED_VALUES = BASE_API_PATH + "sieve-accepted-values";
-  public static final String SIEVE_ACCEPTED_VALUE_BY_ID = SIEVE_ACCEPTED_VALUE + ID;
-  public static final String SIEVE_ACCEPTED_VALUE_SEARCH = SIEVE_ACCEPTED_VALUE + SEARCH;
-
-  /*
    * Test
    */
   public static final String TEST = BASE_API_PATH + "test";
@@ -415,18 +396,6 @@ public final class EndpointURI {
   public static final String MATERIAL_SUB_CATEGORY_ID = "/{materialSubCategoryId}";
   public static final String GET_QUALITY_PARAMETERS_BY_MATERIAL_SUB_CATEGORY_ID =
       QUALITY_PARAMETER + "/qualityparameter" + MATERIAL_SUB_CATEGORY_ID;
-
-  /*
-   * qualityParameterMaterial
-   */
-  public static final String MATERIAL_QUALITY_PARAMETER =
-      BASE_API_PATH + "material-quality-parameter";
-  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
-  public static final String MATERIAL_QUALITY_PARAMETERS =
-      BASE_API_PATH + "material-quality-parameters";
-  public static final String MATERIAL_QUALITY_PARAMETER_BY_MATERIAL =
-      MATERIAL_QUALITY_PARAMETER + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
-
 
 
   /*

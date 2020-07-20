@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.Condition;
 
 public class MaterialAcceptedValueRequestDto {
   private Long id;
@@ -10,7 +11,9 @@ public class MaterialAcceptedValueRequestDto {
   private Long rawMaterialId;
   @NotNull(message = "{materialAcceptedValueRequestDto.testConfigureId.null}")
   private Long testConfigureId;
-  private Long unitId;
+  private Long testParameterId;
+  private Double value;
+  private Condition condition;
 
   public Long getId() {
     return id;
@@ -52,12 +55,27 @@ public class MaterialAcceptedValueRequestDto {
     this.testConfigureId = testConfigureId;
   }
 
-  public Long getUnitId() {
-    return unitId;
+  public Long getTestParameterId() {
+    return testParameterId;
   }
 
-  public void setUnitId(Long unitId) {
-    this.unitId = unitId;
+  public void setTestParameterId(Long testParameterId) {
+    this.testParameterId = testParameterId;
   }
 
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
+  }
+
+  public Condition getCondition() {
+    return condition;
+  }
+
+  public void setCondition(Condition condition) {
+    this.condition = condition;
+  }
 }

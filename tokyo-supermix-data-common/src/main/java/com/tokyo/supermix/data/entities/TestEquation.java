@@ -8,19 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.tokyo.supermix.data.entities.auth.DateAudit;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "sieve_size")
-public class SieveSize extends DateAudit implements Serializable {
+@Table(schema = "tokyo-supermix", name = "test_equation")
+public class TestEquation implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private Double size;
   @ManyToOne
-  @JoinColumn(name = "materialSubCategoryId", nullable = false)
-  private MaterialSubCategory materialSubCategory;
+  @JoinColumn(name = "testConfigureId", nullable = false)
+  private TestConfigure testConfigure;
+  @ManyToOne
+  @JoinColumn(name = "equationId", nullable = false)
+  private Equation equation;
 
   public Long getId() {
     return id;
@@ -30,24 +31,23 @@ public class SieveSize extends DateAudit implements Serializable {
     this.id = id;
   }
 
-  public Double getSize() {
-    return size;
+  public TestConfigure getTestConfigure() {
+    return testConfigure;
   }
 
-  public void setSize(Double size) {
-    this.size = size;
+  public void setTestConfigure(TestConfigure testConfigure) {
+    this.testConfigure = testConfigure;
   }
 
-  public MaterialSubCategory getMaterialSubCategory() {
-    return materialSubCategory;
+  public Equation getEquation() {
+    return equation;
   }
 
-  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
+  public void setEquation(Equation equation) {
+    this.equation = equation;
   }
 
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

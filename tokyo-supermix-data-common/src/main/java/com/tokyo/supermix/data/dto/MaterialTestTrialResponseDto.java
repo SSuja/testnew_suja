@@ -3,18 +3,9 @@ package com.tokyo.supermix.data.dto;
 public class MaterialTestTrialResponseDto {
   private String code;
   private Long trialNo;
-  private Double result;
   private MaterialTestResponseDto materialTest;
+  private TestEquationResponseDto testEquation;
   private String createdAt;
-  private SieveSizeResponseDto sieveSize;
-
-  public String getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
 
   public String getCode() {
     return code;
@@ -32,14 +23,6 @@ public class MaterialTestTrialResponseDto {
     this.trialNo = trialNo;
   }
 
-  public Double getResult() {
-    return result;
-  }
-
-  public void setResult(Double result) {
-    this.result = result;
-  }
-
   public MaterialTestResponseDto getMaterialTest() {
     return materialTest;
   }
@@ -48,11 +31,19 @@ public class MaterialTestTrialResponseDto {
     this.materialTest = materialTest;
   }
 
-  public SieveSizeResponseDto getSieveSize() {
-    return sieveSize;
+  public TestEquationResponseDto getTestEquation() {
+    return testEquation;
   }
 
-  public void setSieveSize(SieveSizeResponseDto sieveSize) {
-    this.sieveSize = sieveSize;
+  public void setTestEquation(TestEquationResponseDto testEquation) {
+    this.testEquation = testEquation;
+  }
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
   }
 }

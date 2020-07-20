@@ -355,26 +355,6 @@ public class Constants {
   public static final String DELETE_SIEVE_TEST_TRIAL_SUCCESS =
       "Sieve Test Trial Successfully Deleted";
   /*
-   * Constants for Sieve Size validation key & Success messages
-   */
-  public static final String SIEVE_SIZES = "sieveSizes";
-  public static final String SIEVE_SIZE = "sieveSize";
-  public static final String ADD_SIEVE_SIZE_SUCCESS = "Sieve Size Added Successfully";
-  public static final String SIEVE_SIZE_ID = "id";
-  public static final String UPDATE_SIEVE_SIZE_SUCCESS = "Sieve Size Updated Successfully";
-  public static final String DELETE_SIEVE_SIZE_SUCCESS = "Sieve Size Successfully Deleted";
-  /*
-   * Constants for Sieve Accepted Value validation key & Success messages
-   */
-  public static final String SIEVE_ACCEPTED_VALUES = "sieveAcceptedValues";
-  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS =
-      "Sieve Accepted Value Added Successfully";
-  public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
-  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS =
-      "Sieve Accepted Value Updated Successfully";
-  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS =
-      "Sieve Accepted Value Successfully Deleted";
-  /*
    * Constants for Sieve Test validation key & Success messages
    */
   public static final String SIEVE_TEST_CODE = "sieveTestCode";
@@ -438,20 +418,6 @@ public class Constants {
   public static final String DELETED_QUALITY_PARAMETER = "Quality Parameter Successfully Deleted";
   public static final String UPDATE_QUALITY_PARAMETER_SUCCESS =
       "Quality Parameter Updated Successfully";
-
-  /*
-   * Constants for Material Quality Parameter validation key & Success messages
-   */
-  public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
-  public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
-  public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
-  public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS =
-      "Material Quality Parameter Added Successfully";
-  public static final String DELETED_MATERIAL_QUALITY_PARAMETER =
-      "Material Quality Parameter Successfully Deleted";
-  public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
-      "Material Quality Parameter Updated Successfully";
-
   /*
    * Constants for report
    */

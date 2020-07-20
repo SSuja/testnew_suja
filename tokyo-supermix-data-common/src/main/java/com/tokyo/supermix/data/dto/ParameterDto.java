@@ -5,42 +5,33 @@ import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.ParameterType;
 
 public class ParameterDto {
-	private Long id;
-	@NotNull(message = "{parameterDto.name.null}")
-	@NotEmpty(message = "{parameterDto.name.empty}")
-	private String name;
-	private ParameterType parameterType;
-	private Long days;
+  private Long id;
+  @NotNull(message = "{parameterDto.name.null}")
+  @NotEmpty(message = "{parameterDto.name.empty}")
+  private String name;
+  private ParameterType parameterType;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public ParameterType getParameterType() {
-		return parameterType;
-	}
+  public ParameterType getParameterType() {
+    return parameterType;
+  }
 
-	public void setParameterType(ParameterType parameterType) {
-		this.parameterType = parameterType;
-	}
-
-	public Long getDays() {
-		return days;
-	}
-
-	public void setDays(Long days) {
-		this.days = days;
-	}
+  public void setParameterType(ParameterType parameterType) {
+    this.parameterType = parameterType;
+  }
 }

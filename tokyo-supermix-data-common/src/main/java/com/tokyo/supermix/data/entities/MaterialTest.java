@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestLevel;
@@ -21,7 +19,7 @@ public class MaterialTest extends DateAudit implements Serializable {
   @Id
   private String code;
   private Long noOfTrial;
-  private Double average;
+  private String comment;
   @Enumerated(EnumType.ORDINAL)
   private Status status;
   @Enumerated(EnumType.ORDINAL)
@@ -41,14 +39,6 @@ public class MaterialTest extends DateAudit implements Serializable {
     return code;
   }
 
-  public String getSpecimenCode() {
-    return specimenCode;
-  }
-
-  public void setSpecimenCode(String specimenCode) {
-    this.specimenCode = specimenCode;
-  }
-
   public void setCode(String code) {
     this.code = code;
   }
@@ -61,12 +51,12 @@ public class MaterialTest extends DateAudit implements Serializable {
     this.noOfTrial = noOfTrial;
   }
 
-  public Double getAverage() {
-    return average;
+  public String getComment() {
+    return comment;
   }
 
-  public void setAverage(Double average) {
-    this.average = average;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public Status getStatus() {
@@ -107,6 +97,14 @@ public class MaterialTest extends DateAudit implements Serializable {
 
   public void setMaterialState(MaterialState materialState) {
     this.materialState = materialState;
+  }
+
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
+
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
   }
 
   public static long getSerialversionuid() {
