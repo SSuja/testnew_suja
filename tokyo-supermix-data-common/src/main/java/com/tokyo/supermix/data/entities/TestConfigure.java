@@ -24,13 +24,8 @@ public class TestConfigure extends DateAudit implements Serializable {
   private String description;
   private String testProcedure;
   private String prefix;
-  private String resultLabel;
   @Enumerated(EnumType.ORDINAL)
   private TestType testType;
-  private boolean equationExists;
-  @ManyToOne
-  @JoinColumn(name = "equationId", nullable = true)
-  private Equation equation;
   @ManyToOne
   @JoinColumn(name = "testId", nullable = false)
   private Test test;
@@ -40,8 +35,6 @@ public class TestConfigure extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = true)
   private MaterialSubCategory materialSubCategory;
-  private Long days;
-  private boolean bulkTrial;
 
   public Long getId() {
     return id;
@@ -117,45 +110,5 @@ public class TestConfigure extends DateAudit implements Serializable {
 
   public void setTestType(TestType testType) {
     this.testType = testType;
-  }
-
-  public boolean isEquationExists() {
-    return equationExists;
-  }
-
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
-  }
-
-  public Equation getEquation() {
-    return equation;
-  }
-
-  public void setEquation(Equation equation) {
-    this.equation = equation;
-  }
-
-  public String getResultLabel() {
-    return resultLabel;
-  }
-
-  public void setResultLabel(String resultLabel) {
-    this.resultLabel = resultLabel;
-  }
-
-  public Long getDays() {
-    return days;
-  }
-
-  public void setDays(Long days) {
-    this.days = days;
-  }
-
-  public boolean isBulkTrial() {
-    return bulkTrial;
-  }
-
-  public void setBulkTrial(boolean bulkTrial) {
-    this.bulkTrial = bulkTrial;
   }
 }

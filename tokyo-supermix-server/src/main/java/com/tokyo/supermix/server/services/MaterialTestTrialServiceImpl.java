@@ -15,10 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
-import com.tokyo.supermix.data.entities.ParameterResult;
-import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.enums.TrailResult;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -130,29 +127,29 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 		}
 	}
 
-	public void sieveavg(String materialTestCode) {
-		Double result = 0.0;
-		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-		Long testConfigureId = materialTest.getTestConfigure().getId();
-		TestParameter testParameter = testParameterRepository.findByTestConfigureIdAndTrailResult(testConfigureId,
-				TrailResult.SUM);
-		Double trailparsum = 0.0;
-
-		List<ParameterResult> parameterResultlist = parameterResultRepository
-				.findByTestParameterIdAndMaterialTestCode(testParameter.getId(), materialTest.getCode());
-		for (int i = 0; i < parameterResultlist.size(); i++) {
-			if (parameterResultlist.get(i).getMaterialTestTrial().getSieveSize().getSize() != 0.0) {
-				trailparsum = trailparsum + parameterResultlist.get(i).getValue();
-			}
-
-		}
-		HashMap<String, Double> sievemain = new HashMap<String, Double>();
-		sievemain.put(testParameter.getAbbreviation(), trailparsum);
-		result = findResult(sievemain, materialTest.getTestConfigure().getEquation().getFormula());
-		materialTest.setAverage(result);
-		compareWithAverage(result, materialTest.getCode());
-		materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
-	}
+//	public void sieveavg(String materialTestCode) {
+//		Double result = 0.0;
+//		MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+//		Long testConfigureId = materialTest.getTestConfigure().getId();
+//		TestParameter testParameter = testParameterRepository.findByTestConfigureIdAndTrailResult(testConfigureId,
+//				TrailResult.SUM);
+//		Double trailparsum = 0.0;
+//
+//		List<ParameterResult> parameterResultlist = parameterResultRepository
+//				.findByTestParameterIdAndMaterialTestCode(testParameter.getId(), materialTest.getCode());
+//		for (int i = 0; i < parameterResultlist.size(); i++) {
+//			if (parameterResultlist.get(i).getMaterialTestTrial().getSieveSize().getSize() != 0.0) {
+//				trailparsum = trailparsum + parameterResultlist.get(i).getValue();
+//			}
+//
+//		}
+//		HashMap<String, Double> sievemain = new HashMap<String, Double>();
+//		sievemain.put(testParameter.getAbbreviation(), trailparsum);
+//		result = findResult(sievemain, materialTest.getTestConfigure().getEquation().getFormula());
+//		materialTest.setAverage(result);
+//		compareWithAverage(result, materialTest.getCode());
+//		materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
+//	}
 
 	public double findResult(HashMap<String, Double> abb, String equation) {
 		ScriptEngineManager mgr = new ScriptEngineManager();
@@ -175,7 +172,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 		List<MaterialTestTrial> listMaterialTestTrial = materialTestTrialRepository
 				.findByMaterialTestCode(materialTestCode);
 		for (MaterialTestTrial materialTestTrial : listMaterialTestTrial) {
-			totalResult = totalResult + materialTestTrial.getResult();
+	//		totalResult = totalResult + materialTestTrial.getResult();
 			trialTotal = listMaterialTestTrial.size();
 		}
 		return roundDoubleValue(totalResult / trialTotal);
@@ -194,7 +191,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 	@Transactional
 	public MaterialTest updateAverage(Double average, String code, Status status) {
 		MaterialTest materialTest = materialTestRepository.findByCode(code);
-		materialTest.setAverage(roundDoubleValue(average));
+	//	materialTest.setAverage(roundDoubleValue(average));
 		materialTest.setStatus(status);
 		materialTestRepository.save(materialTest);
 		return materialTest;

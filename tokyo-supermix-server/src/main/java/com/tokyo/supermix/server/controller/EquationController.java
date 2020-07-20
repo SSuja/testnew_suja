@@ -24,7 +24,6 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquationService;
-import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -37,8 +36,6 @@ public class EquationController {
   private Mapper mapper;
   @Autowired
   private EquationService equationService;
-  @Autowired
-  private TestConfigureService testConfigureService;
   private static final Logger logger = Logger.getLogger(EquationController.class);
 
   @PostMapping(value = EndpointURI.EQUATION)
@@ -112,21 +109,5 @@ public class EquationController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
         mapper.map(equationService.getEquationsByParameterExistsTrue(), EquationResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
-  }
-
-  @PostMapping(value = EndpointURI.UPADTE_TEST_CONFIGURE_EQUATION)
-  public ResponseEntity<Object> updateTestConfigureEquationByTestConfigureId(
-      @PathVariable Long testConfigureId,
-      @Valid @RequestBody EquationRequestDto equationRequestDto) {
-    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.EQUATION,
-              equationService.updateTestConfigureEquation(testConfigureId,
-                  mapper.map(equationRequestDto, Equation.class)),
-              RestApiResponseStatus.OK),
-          HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

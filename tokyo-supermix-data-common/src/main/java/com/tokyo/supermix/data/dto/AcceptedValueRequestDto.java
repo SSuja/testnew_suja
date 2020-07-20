@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.Condition;
 
 public class AcceptedValueRequestDto {
   private Long id;
@@ -8,7 +9,9 @@ public class AcceptedValueRequestDto {
   private Double maxValue;
   @NotNull(message = "{acceptedValueRequestDto.testConfigureId.null}")
   private Long testConfigureId;
-  private Long unitId;
+  private Long testParameterId;
+  private Double value;
+  private Condition condition;
 
   public Long getId() {
     return id;
@@ -41,11 +44,28 @@ public class AcceptedValueRequestDto {
   public void setTestConfigureId(Long testConfigureId) {
     this.testConfigureId = testConfigureId;
   }
-  public Long getUnitId() {
-    return unitId;
+
+  public Long getTestParameterId() {
+    return testParameterId;
   }
 
-  public void setUnitId(Long unitId) {
-    this.unitId = unitId;
+  public void setTestParameterId(Long testParameterId) {
+    this.testParameterId = testParameterId;
+  }
+
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
+  }
+
+  public Condition getCondition() {
+    return condition;
+  }
+
+  public void setCondition(Condition condition) {
+    this.condition = condition;
   }
 }

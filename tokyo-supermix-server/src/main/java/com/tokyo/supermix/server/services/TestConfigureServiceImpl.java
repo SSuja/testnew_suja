@@ -98,9 +98,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     testConfigureDto.setTestType(testConfigure.getTestType());
     testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
     testConfigureDto.setCoreTest(testConfigure.isCoreTest());
-    if (testConfigure.getEquation() != null) {
-      testConfigureDto.setFormula(testConfigure.getEquation().getFormula());
-    }
     testConfigureDto.setDescription(testConfigure.getDescription());
     List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
     testConfigureDto.setTestparameters(testParameterList);
