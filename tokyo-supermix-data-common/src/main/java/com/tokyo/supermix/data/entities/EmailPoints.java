@@ -23,7 +23,7 @@ public class EmailPoints {
   @JoinColumn(name = "materialCategoryId", nullable = true)
   private MaterialCategory materialCategory;
   @ManyToOne
-  @JoinColumn(name = "testId", nullable = false)
+  @JoinColumn(name = "testId", nullable = true)
   private Test test;
   
   public Long getId() {
