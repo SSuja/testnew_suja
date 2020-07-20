@@ -9,7 +9,6 @@ public class EmailRecipientRequestDto {
   private List<Long> plantRoleId;
   private List<Long> userId;
   private RecipientType recipientType;
-  private String plantCode;
 
   public Long getId() {
     return id;
@@ -49,13 +48,5 @@ public class EmailRecipientRequestDto {
 
   public void setRecipientType(RecipientType recipientType) {
     this.recipientType = recipientType;
-  }
-
-  public String getPlantCode() {
-    return plantCode;
-  }
-
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
   }
 }
