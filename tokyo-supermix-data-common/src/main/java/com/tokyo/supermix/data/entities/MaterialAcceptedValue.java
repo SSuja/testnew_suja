@@ -2,6 +2,8 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.enums.Condition;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_accepted_value")
@@ -20,15 +23,19 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   private Long id;
   private Double minValue;
   private Double maxValue;
+  private Double value;
   @OneToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "unitId", nullable = false)
-  private Unit unit;
+  @JoinColumn(name = "testParameterId", nullable = false)
+  private TestParameter testParameter;
   @ManyToOne
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
+  @Enumerated(EnumType.ORDINAL)
+  private Condition conditionRange;
+  private boolean isFinalResult;
 
   public Long getId() {
     return id;
@@ -54,6 +61,14 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     this.maxValue = maxValue;
   }
 
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
+  }
+
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
@@ -62,12 +77,12 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     this.testConfigure = testConfigure;
   }
 
-  public Unit getUnit() {
-    return unit;
+  public TestParameter getTestParameter() {
+    return testParameter;
   }
 
-  public void setUnit(Unit unit) {
-    this.unit = unit;
+  public void setTestParameter(TestParameter testParameter) {
+    this.testParameter = testParameter;
   }
 
   public RawMaterial getRawMaterial() {
@@ -78,7 +93,23 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     this.rawMaterial = rawMaterial;
   }
 
+  public Condition getConditionRange() {
+    return conditionRange;
+  }
+
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
+  }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isFinalResult() {
+    return isFinalResult;
+  }
+
+  public void setFinalResult(boolean isFinalResult) {
+    this.isFinalResult = isFinalResult;
   }
 }

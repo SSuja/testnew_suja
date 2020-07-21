@@ -10,6 +10,10 @@ INSERT INTO `tokyo-supermix`.`user` (`id`, `email`, `password`, `user_name`, `us
 --user role
 INSERT INTO `tokyo-supermix`.`user_role` (`id`, `role_id`, `user_id`,`role_type`) VALUES ('1', '1', '1','0');
 
+--parameter
+INSERT INTO `tokyo-supermix`.`parameter` (`id`, `name`, `parameter_type`) VALUES ('1', 'Trial Result', 0);
+INSERT INTO `tokyo-supermix`.`parameter` (`id`, `name`, `parameter_type`) VALUES ('2', 'Final Result', 0);
+
 --privillege
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('1', 'plant');
 INSERT INTO `tokyo-supermix`.`main_module` (`id`, `name`) VALUES ('2', 'equipment');

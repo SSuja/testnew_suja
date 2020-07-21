@@ -10,6 +10,4 @@ public interface EquationRepository extends JpaRepository<Equation, Long> {
   boolean existsByFormula(String formula);
 
   List<Equation> findByEquationType(EquationType equationType);
-
-  List<Equation> findByParameterExistsTrue();
 }

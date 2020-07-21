@@ -269,15 +269,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.EDIT_MATERIAL_ACCEPTED_VALUE)
         .antMatchers(HttpMethod.DELETE, EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_MATERIAL_ACCEPTED_VALUE)
-        // sieve accepted value
-        .antMatchers(HttpMethod.GET, EndpointURI.SIEVE_ACCEPTED_VALUES)
-        .hasAuthority(PermissionConstants.VIEW_SIEVE_ACCEPTED_VALUE)
-        .antMatchers(HttpMethod.POST, EndpointURI.SIEVE_ACCEPTED_VALUE)
-        .hasAuthority(PermissionConstants.CREATE_SIEVE_ACCEPTED_VALUE)
-        .antMatchers(HttpMethod.PUT, EndpointURI.SIEVE_ACCEPTED_VALUE)
-        .hasAuthority(PermissionConstants.EDIT_SIEVE_ACCEPTED_VALUE)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.SIEVE_ACCEPTED_VALUE_BY_ID)
-        .hasAuthority(PermissionConstants.DELETE_SIEVE_ACCEPTED_VALUE)
+        
         // Test
         .antMatchers(HttpMethod.GET, EndpointURI.TEST_CONFIGURES)
         .hasAuthority(PermissionConstants.VIEW_TEST_CONFIGURE)
@@ -368,15 +360,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST_TRIAL)
         .antMatchers(HttpMethod.DELETE, EndpointURI.MATERIAL_TEST_TRIAL_BY_CODE)
         .hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST_TRIAL)
-        // sieve size
-        .antMatchers(HttpMethod.POST, EndpointURI.SIEVE_SIZE)
-        .hasAuthority(PermissionConstants.CREATE_SIEVE_SIZE)
-        .antMatchers(HttpMethod.GET, EndpointURI.SIEVE_SIZES)
-        .hasAuthority(PermissionConstants.VIEW_SIEVE_SIZE)
-        .antMatchers(HttpMethod.PUT, EndpointURI.SIEVE_SIZE)
-        .hasAuthority(PermissionConstants.EDIT_SIEVE_SIZE)
-        .antMatchers(HttpMethod.DELETE, EndpointURI.SIEVE_SIZE_BY_ID)
-        .hasAuthority(PermissionConstants.DELETE_SIEVE_SIZE)
+       
         // finish product sample issue
         .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
         .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE)

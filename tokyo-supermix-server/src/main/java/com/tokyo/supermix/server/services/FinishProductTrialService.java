@@ -14,7 +14,7 @@ public interface FinishProductTrialService {
 
   public String saveFinishProductTrial(FinishProductTrial finishProductTrial);
 
-  public void updateFinishProductResult(FinishProductTrial finishProductTrial);
+  //public void updateFinishProductResult(FinishProductTrial finishProductTrial);
 
   public void deleteFinishProductTrial(String code);
 

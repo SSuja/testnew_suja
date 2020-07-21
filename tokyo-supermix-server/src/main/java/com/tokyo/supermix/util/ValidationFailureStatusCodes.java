@@ -1312,106 +1312,6 @@ public class ValidationFailureStatusCodes {
     this.parameterResultNotExist = parameterResultNotExist;
   }
 
-  // Sieve Size
-  @Value("${validation.sieveSizeRequestDto.alreadyExist}")
-  private String sieveSizeAlreadyExist;
-  @Value("${validation.sieveSizeRequestDto.notExist}")
-  private String sieveSizeNotExist;
-
-  public String getSieveSizeAlreadyExist() {
-    return sieveSizeAlreadyExist;
-  }
-
-  public void setSieveSizeAlreadyExist(String sieveSizeAlreadyExist) {
-    this.sieveSizeAlreadyExist = sieveSizeAlreadyExist;
-  }
-
-  public String getSieveSizeNotExist() {
-    return sieveSizeNotExist;
-  }
-
-  public void setSieveSizeNotExist(String sieveSizeNotExist) {
-    this.sieveSizeNotExist = sieveSizeNotExist;
-  }
-
-  // Sieve Accepted Value
-  @Value("${validation.sieveAcceptedValueRequestDto.alreadyExist}")
-  private String sieveAcceptedValueAlreadyExist;
-  @Value("${validation.sieveAcceptedValueRequestDto.notExist}")
-  private String sieveAcceptedValueNotExist;
-
-  public String getSieveAcceptedValueAlreadyExist() {
-    return sieveAcceptedValueAlreadyExist;
-  }
-
-  public void setSieveAcceptedValueAlreadyExist(String sieveAcceptedValueAlreadyExist) {
-    this.sieveAcceptedValueAlreadyExist = sieveAcceptedValueAlreadyExist;
-  }
-
-  public String getSieveAcceptedValueNotExist() {
-    return sieveAcceptedValueNotExist;
-  }
-
-  public void setSieveAcceptedValueNotExist(String sieveAcceptedValueNotExist) {
-    this.sieveAcceptedValueNotExist = sieveAcceptedValueNotExist;
-  }
-
-  // Sieve Test Trial
-  @Value("${validation.sieveTestTrialRequestDto.alreadyExist}")
-  private String sieveTestTrialAlreadyExist;
-  @Value("${validation.sieveTestTrialRequestDto.notExist}")
-  private String sieveTestTrialNotExist;
-
-  public String getSieveTestTrialAlreadyExist() {
-    return sieveTestTrialAlreadyExist;
-  }
-
-  public void setSieveTestTrialAlreadyExist(String sieveTestTrialAlreadyExist) {
-    this.sieveTestTrialAlreadyExist = sieveTestTrialAlreadyExist;
-  }
-
-  public String getSieveTestTrialNotExist() {
-    return sieveTestTrialNotExist;
-  }
-
-  public void setSieveTestTrialNotExist(String sieveTestTrialNotExist) {
-    this.sieveTestTrialNotExist = sieveTestTrialNotExist;
-  }
-
-  // for sieveTest
-  @Value("${validation.sieveTest.notExists}")
-  private String sieveTestNotExist;
-  @Value("${validation.sieveTest.alreadyExist}")
-  private String sieveTestAlreadyExist;
-
-  public String getSieveTestAlreadyExist() {
-    return sieveTestAlreadyExist;
-  }
-
-  public void setSieveTestAlreadyExist(String sieveTestAlreadyExist) {
-    this.sieveTestAlreadyExist = sieveTestAlreadyExist;
-  }
-
-  public String getSieveTestNotExist() {
-    return sieveTestNotExist;
-  }
-
-  public void setSieveTestNotExist(String sieveTestNotExist) {
-    this.sieveTestNotExist = sieveTestNotExist;
-  }
-
-  // for finenessModulus
-  @Value("${validation.finenessModulus.notExists}")
-  private String finenessModulusNotExist;
-
-  public String getFinenessModulusNotExist() {
-    return finenessModulusNotExist;
-  }
-
-  public void setFinenessModulusNotExist(String finenessModulusNotExist) {
-    this.finenessModulusNotExist = finenessModulusNotExist;
-  }
-
   // for finishProductSample
   @Value("${validation.finishProductSample.notExists}")
   private String finishProductSampleNotExist;
@@ -1442,51 +1342,6 @@ public class ValidationFailureStatusCodes {
 
   public void setFinishProductSampleCodeIsNull(String finishProductSampleCodeIsNull) {
     this.finishProductSampleCodeIsNull = finishProductSampleCodeIsNull;
-  }
-
-  /*
-   * Concrete Mixer
-   */
-  @Value("${validation.concreteMixer.notExists}")
-  private String concreteMixerNotExist;
-
-  @Value("${validation.concreteMixer.alreadyExist}")
-  private String concreteMixerAlreadyExist;
-  @Value("${concreteMixerRequestDto.name.null}")
-  private String concreteMixerNameIsNull;
-  @Value("${concreteMixerRequestDto.name.empty}")
-  private String concreteMixerNameIsEmpty;
-
-  public String getConcreteMixerNotExist() {
-    return concreteMixerNotExist;
-  }
-
-  public void setConcreteMixerNotExist(String concreteMixerNotExist) {
-    this.concreteMixerNotExist = concreteMixerNotExist;
-  }
-
-  public String getConcreteMixerAlreadyExist() {
-    return concreteMixerAlreadyExist;
-  }
-
-  public void setConcreteMixerAlreadyExist(String concreteMixerAlreadyExist) {
-    this.concreteMixerAlreadyExist = concreteMixerAlreadyExist;
-  }
-
-  public String getConcreteMixerNameIsNull() {
-    return concreteMixerNameIsNull;
-  }
-
-  public void setConcreteMixerNameIsNull(String concreteMixerNameIsNull) {
-    this.concreteMixerNameIsNull = concreteMixerNameIsNull;
-  }
-
-  public String getConcreteMixerNameIsEmpty() {
-    return concreteMixerNameIsEmpty;
-  }
-
-  public void setConcreteMixerNameIsEmpty(String concreteMixerNameIsEmpty) {
-    this.concreteMixerNameIsEmpty = concreteMixerNameIsEmpty;
   }
 
   // For finishProductSampleIssue
@@ -1555,30 +1410,6 @@ public class ValidationFailureStatusCodes {
 
   public void setQualityParameterAlreadyExist(String qualityParameterAlreadyExist) {
     this.qualityParameterAlreadyExist = qualityParameterAlreadyExist;
-  }
-
-  /*
-   * Quality parameter
-   */
-  @Value("${validation.materialQualityParameter.notExists}")
-  private String materialQualityParameterNotExist;
-  @Value("${validation.materialQualityParameter.alreadyExist}")
-  private String materialQualityParameterAlreadyExist;
-
-  public String getMaterialQualityParameterNotExist() {
-    return materialQualityParameterNotExist;
-  }
-
-  public void setMaterialQualityParameterNotExist(String materialQualityParameterNotExist) {
-    this.materialQualityParameterNotExist = materialQualityParameterNotExist;
-  }
-
-  public String getMaterialQualityParameterAlreadyExist() {
-    return materialQualityParameterAlreadyExist;
-  }
-
-  public void setMaterialQualityParameterAlreadyExist(String materialQualityParameterAlreadyExist) {
-    this.materialQualityParameterAlreadyExist = materialQualityParameterAlreadyExist;
   }
 
   /*
@@ -1685,74 +1516,97 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductTrialNotExit(String finishProductTrialNotExit) {
     this.finishProductTrialNotExit = finishProductTrialNotExit;
   }
+
   @Value("${validation.emailRecipient.alreadyExist}")
   private String emailRecipientAlreadyExist;
-  
+
   @Value("${validation.emailRecipient.notExist}")
   private String emailRecipientnotExist;
 
-public String getEmailRecipientAlreadyExist() {
-	return emailRecipientAlreadyExist;
-}
+  public String getEmailRecipientAlreadyExist() {
+    return emailRecipientAlreadyExist;
+  }
 
-public void setEmailRecipientAlreadyExist(String emailRecipientAlreadyExist) {
-	this.emailRecipientAlreadyExist = emailRecipientAlreadyExist;
-}
+  public void setEmailRecipientAlreadyExist(String emailRecipientAlreadyExist) {
+    this.emailRecipientAlreadyExist = emailRecipientAlreadyExist;
+  }
 
-public String getEmailRecipientnotExist() {
-	return emailRecipientnotExist;
-}
+  public String getEmailRecipientnotExist() {
+    return emailRecipientnotExist;
+  }
 
-public void setEmailRecipientnotExist(String emailRecipientnotExist) {
-	this.emailRecipientnotExist = emailRecipientnotExist;
-}
+  public void setEmailRecipientnotExist(String emailRecipientnotExist) {
+    this.emailRecipientnotExist = emailRecipientnotExist;
+  }
 
-@Value("${validation.emailNotificationDays.alreadyExist}")
-private String emailNotificationDaysAlreadyExist;
+  @Value("${validation.emailNotificationDays.alreadyExist}")
+  private String emailNotificationDaysAlreadyExist;
 
-@Value("${validation.emailNotificationDays.notExist}")
-private String emailNotificationDaysNotExist;
+  @Value("${validation.emailNotificationDays.notExist}")
+  private String emailNotificationDaysNotExist;
 
-public String getEmailNotificationDaysAlreadyExist() {
-  return emailNotificationDaysAlreadyExist;
-}
+  public String getEmailNotificationDaysAlreadyExist() {
+    return emailNotificationDaysAlreadyExist;
+  }
 
-public void setEmailNotificationDaysAlreadyExist(String emailNotificationDaysAlreadyExist) {
-  this.emailNotificationDaysAlreadyExist = emailNotificationDaysAlreadyExist;
-}
+  public void setEmailNotificationDaysAlreadyExist(String emailNotificationDaysAlreadyExist) {
+    this.emailNotificationDaysAlreadyExist = emailNotificationDaysAlreadyExist;
+  }
 
-public String getEmailNotificationDaysNotExist() {
-  return emailNotificationDaysNotExist;
-}
+  public String getEmailNotificationDaysNotExist() {
+    return emailNotificationDaysNotExist;
+  }
 
-public void setEmailNotificationDaysNotExist(String emailNotificationDaysNotExist) {
-  this.emailNotificationDaysNotExist = emailNotificationDaysNotExist;
-}
-
-
-@Value("${validation.emailGroup.alreadyExist}")
-private String emailGroupAlreadyExist;
-
-@Value("${validation.emailGroup.notExist}")
-private String emailGroupNotExist;
-
-public String getEmailGroupAlreadyExist() {
-	return emailGroupAlreadyExist;
-}
-
-public void setEmailGroupAlreadyExist(String emailGroupAlreadyExist) {
-	this.emailGroupAlreadyExist = emailGroupAlreadyExist;
-}
-
-public String getEmailGroupNotExist() {
-	return emailGroupNotExist;
-}
-
-public void setEmailGroupNotExist(String emailGroupNotExist) {
-	this.emailGroupNotExist = emailGroupNotExist;
-}
+  public void setEmailNotificationDaysNotExist(String emailNotificationDaysNotExist) {
+    this.emailNotificationDaysNotExist = emailNotificationDaysNotExist;
+  }
 
 
+  @Value("${validation.emailGroup.alreadyExist}")
+  private String emailGroupAlreadyExist;
+
+  @Value("${validation.emailGroup.notExist}")
+  private String emailGroupNotExist;
+
+  public String getEmailGroupAlreadyExist() {
+    return emailGroupAlreadyExist;
+  }
+
+  public void setEmailGroupAlreadyExist(String emailGroupAlreadyExist) {
+    this.emailGroupAlreadyExist = emailGroupAlreadyExist;
+  }
+
+  public String getEmailGroupNotExist() {
+    return emailGroupNotExist;
+  }
+
+  public void setEmailGroupNotExist(String emailGroupNotExist) {
+    this.emailGroupNotExist = emailGroupNotExist;
+  }
+
+  /*
+   * Test Equation
+   */
+  @Value("${validation.testEquation.notExists}")
+  private String testEquationNotExist;
+  @Value("${validation.testEquation.alreadyExist}")
+  private String testEquationAlreadyExist;
+
+  public String getTestEquationNotExist() {
+    return testEquationNotExist;
+  }
+
+  public void setTestEquationNotExist(String testEquationNotExist) {
+    this.testEquationNotExist = testEquationNotExist;
+  }
+
+  public String getTestEquationAlreadyExist() {
+    return testEquationAlreadyExist;
+  }
+
+  public void setTestEquationAlreadyExist(String testEquationAlreadyExist) {
+    this.testEquationAlreadyExist = testEquationAlreadyExist;
+  }
 
 }
 
