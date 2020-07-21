@@ -17,7 +17,12 @@ public class Constants {
   public static final String DELIVERY_REPORT = "delivery-report.pdf";
   public static final String SUMMARY_REPORT = "summary-report.pdf";
   public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
-  public static final String SUBJECT_NEW_PROJECT = "Notification : About Project ";
+  public static final String SUBJECT_NEW_PROJECT = "Notification : About Project Creation ";
+  public static final String SUBJECT_NEW_SUPPLIER = "Notification : About Supplier Creation ";
+  public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
+  public static final String SUBJECT_NEW_INCOMING_SAMPLE = "Notification : About Incoming Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE = "Notification : About Finish Product Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE = "Notification : About Finish Product Sample Issue Creation ";
   public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   

@@ -149,7 +149,7 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);
+            Constants.SUBJECT_NEW_SUPPLIER, mailBody);
       }
     }
   }
@@ -165,7 +165,7 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);
+            Constants.SUBJECT_NEW_EMPLOYEE, mailBody);
       }
     }
   }
@@ -181,7 +181,7 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);
+            Constants.SUBJECT_NEW_INCOMING_SAMPLE, mailBody);
       }
     }
   }
@@ -190,7 +190,7 @@ public class EmailNotification {
     String mailBody = "project";
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductSample.getMixDesign().getPlant().getCode(),
-        MailGroupConstance.CREATE_INCOMING_SAMPLE);
+        MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         List<String> reciepientList =
@@ -198,7 +198,7 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);
+            Constants.SUBJECT_FINISH_PRODUCT_SAMPLE, mailBody);
       }
     }
   }
@@ -207,7 +207,7 @@ public class EmailNotification {
     String mailBody = "project";
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductSampleIssue.getFinishProductSample().getMixDesign().getPlant().getCode(),
-        MailGroupConstance.CREATE_INCOMING_SAMPLE);
+        MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         List<String> reciepientList =
@@ -215,7 +215,7 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);
+            Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE, mailBody);
           
          }
     }
