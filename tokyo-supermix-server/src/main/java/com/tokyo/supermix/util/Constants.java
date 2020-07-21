@@ -11,8 +11,10 @@ public class Constants {
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-  public static final String SUBJECT_OF_SUMMARY_REPORT = "Summary Details Report Of Incoming Sample";
-  public static final String SUBJECT_OF_DELIVERY_REPORT = "Delivery Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_SUMMARY_REPORT =
+      "Summary Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_DELIVERY_REPORT =
+      "Delivery Details Report Of Incoming Sample";
   public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
   public static final String DELIVERY_REPORT = "delivery-report.pdf";
   public static final String SUMMARY_REPORT = "summary-report.pdf";
@@ -511,6 +513,16 @@ public class Constants {
   public static final String EMAIL_NOTIFICATION_DAY_DELETED =
       "Email Notification Days Successfully Deleted";
   public static final String EMAIL_NOTIFICATION_DAY_ID = "emailNotificationDayId";
+
+  /*
+   * Constants for Test Equation validation key & Success messages
+   */
+  public static final String TEST_EQUATION = "testEquation";
+  public static final String TEST_EQUATIONS = "testEquations";
+  public static final String TEST_EQUATION_ID = "testEquationId";
+  public static final String ADD_TEST_EQUATION_SUCCESS = "Test Equation Added Successfully";
+  public static final String UPDATE_TEST_EQUATION_SUCCESS = "Test Equation Updated Successfully";
+  public static final String DELETE_TEST_EQUATION_SCCESS = "Test Equation successfully Deleted";
 
   /*
    * Encapsulate constructor to restrict modification from outside
