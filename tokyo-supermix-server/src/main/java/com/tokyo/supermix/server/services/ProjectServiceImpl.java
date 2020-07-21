@@ -20,90 +20,89 @@ import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
-	@Autowired
-	private ProjectRepository projectRepository;
-	@Autowired
-    private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-	@Autowired
-    private EmailNotification emailNotification;
+  @Autowired
+  private ProjectRepository projectRepository;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
-	@Transactional(readOnly = true)
-	public boolean isNameExist(String name) {
-		return projectRepository.existsByName(name);
-	}
+  @Transactional(readOnly = true)
+  public boolean isNameExist(String name) {
+    return projectRepository.existsByName(name);
+  }
 
-	     
-	@Transactional(readOnly = true)
-	public List<Project> getAllProjectsByPlant(UserPrincipal currentUser) {
-	  return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
-          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT));
-	}
+  @Transactional(readOnly = true)
+  public List<Project> getAllProjectsByPlant(UserPrincipal currentUser) {
+    return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT));
+  }
 
-	@Transactional
-	public void saveProject(Project project) {
-		if (project.getCode() == null) {
-			String codePrefix = project.getPlant().getCode() + "-PRJ-";
-			List<Project> projectList = projectRepository.findByCodeContaining(codePrefix);
-			if (projectList.size() == 0) {
-				project.setCode(codePrefix + String.format("%03d", 1));
-			} else {
-				project.setCode(codePrefix + String.format("%03d", maxNumberFromCode(projectList) + 1));
-			}
-		}
-		projectRepository.save(project);
-		emailNotification.sendProjectEmail(project);
-	}
+  @Transactional
+  public void saveProject(Project project) {
+    if (project.getCode() == null) {
+      String codePrefix = project.getPlant().getCode() + "-PRJ-";
+      List<Project> projectList = projectRepository.findByCodeContaining(codePrefix);
+      if (projectList.size() == 0) {
+        project.setCode(codePrefix + String.format("%03d", 1));
+      } else {
+        project.setCode(codePrefix + String.format("%03d", maxNumberFromCode(projectList) + 1));
+      }
+    }
+    if (projectRepository.save(project) != null)
+      emailNotification.sendProjectEmail(project);
+  }
 
-	private Integer getNumberFromCode(String code) {
-		String numberOnly = code.replaceAll("[^0-9]", "");
-		return Integer.parseInt(numberOnly);
-	}
+  private Integer getNumberFromCode(String code) {
+    String numberOnly = code.replaceAll("[^0-9]", "");
+    return Integer.parseInt(numberOnly);
+  }
 
-	private Integer maxNumberFromCode(List<Project> projectList) {
-		List<Integer> list = new ArrayList<Integer>();
-		projectList.forEach(obj -> {
-			String code = obj.getCode();
-			list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
-		});
-		return Collections.max(list);
-	}
+  private Integer maxNumberFromCode(List<Project> projectList) {
+    List<Integer> list = new ArrayList<Integer>();
+    projectList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+    });
+    return Collections.max(list);
+  }
 
-	@Transactional(readOnly = true)
-	public Project getProjectByCode(String code) {
-		return projectRepository.findById(code).get();
-	}
+  @Transactional(readOnly = true)
+  public Project getProjectByCode(String code) {
+    return projectRepository.findById(code).get();
+  }
 
-	@Transactional(readOnly = true)
-	public boolean isProjectExist(String code) {
-		return projectRepository.existsById(code);
-	}
+  @Transactional(readOnly = true)
+  public boolean isProjectExist(String code) {
+    return projectRepository.existsById(code);
+  }
 
-	@Transactional(propagation = Propagation.NEVER)
-	public void deleteProject(String code) {
-		projectRepository.deleteById(code);
-	}
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteProject(String code) {
+    projectRepository.deleteById(code);
+  }
 
-	public boolean isUpdatedProjectExist(String code, String name) {
-		if ((!getProjectByCode(code).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
-			return true;
-		}
-		return false;
-	}
+  public boolean isUpdatedProjectExist(String code, String name) {
+    if ((!getProjectByCode(code).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
+      return true;
+    }
+    return false;
+  }
 
-	@Transactional(readOnly = true)
-	public Page<Project> searchProject(Predicate predicate, int size, int page) {
-		return projectRepository.findAll(predicate, PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
-	}
+  @Transactional(readOnly = true)
+  public Page<Project> searchProject(Predicate predicate, int size, int page) {
+    return projectRepository.findAll(predicate,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+  }
 
-	@Transactional(readOnly = true)
-	public List<Project> getProjectByPlantCode(String plantCode) {
-		return projectRepository.findByPlantCode(plantCode);
-	}
+  @Transactional(readOnly = true)
+  public List<Project> getProjectByPlantCode(String plantCode) {
+    return projectRepository.findByPlantCode(plantCode);
+  }
 
 
   @Transactional(readOnly = true)
   public List<Project> getAllProjects() {
     return projectRepository.findAll();
   }
-  
 }

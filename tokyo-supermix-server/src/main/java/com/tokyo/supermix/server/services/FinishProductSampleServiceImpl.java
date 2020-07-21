@@ -54,8 +54,9 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
 
     finishProductSample.setStatus(Status.NEW);
-    finishProductSampleRepository.save(finishProductSample);
-    emailNotification.sendFinishProductSampleEmail(finishProductSample);
+    if (finishProductSampleRepository.save(finishProductSample) != null) {
+      emailNotification.sendFinishProductSampleEmail(finishProductSample);
+    }
   }
 
   private Integer getNumberFromCode(String code) {

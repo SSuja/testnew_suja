@@ -29,6 +29,7 @@ public class SupplierServiceImpl implements SupplierService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private EmailNotification emailNotification;
+
   @Transactional(readOnly = true)
   public List<Supplier> getSuppliers() {
     return supplierRepository.findAll();
@@ -46,14 +47,14 @@ public class SupplierServiceImpl implements SupplierService {
     supplierCategoryIds
         .forEach(id -> supplierList.add(supplierCategoryRepository.findById(id).get()));
     supplier.setSupplierCategories(supplierList);
-    supplierRepository.save(supplier);
-    emailNotification.sendSupplierEmail(supplier);
+    if (supplierRepository.save(supplier) != null) {
+      emailNotification.sendSupplierEmail(supplier);
+    }
   }
 
   @Transactional
   public void updateSupplier(Supplier supplier) {
     supplierRepository.save(supplier);
-    
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -69,7 +70,6 @@ public class SupplierServiceImpl implements SupplierService {
   @Transactional(readOnly = true)
   public boolean isSupplierExist(Long id) {
     return supplierRepository.existsById(id);
-
   }
 
   @Transactional(readOnly = true)

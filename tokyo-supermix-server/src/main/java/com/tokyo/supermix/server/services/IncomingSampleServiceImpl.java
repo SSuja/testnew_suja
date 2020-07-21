@@ -49,8 +49,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     incomingSample.setStatus(Status.NEW);
     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
     incomingSample.setDate(date);
-    incomingSampleRepository.save(incomingSample);
-    emailNotification.sendIncomingSampleEmail(incomingSample);
+    if (incomingSampleRepository.save(incomingSample) != null) {
+      emailNotification.sendIncomingSampleEmail(incomingSample);
+    }
   }
 
   private Integer getNumberFromCode(String code) {
