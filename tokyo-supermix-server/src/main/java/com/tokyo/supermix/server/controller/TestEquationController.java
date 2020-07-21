@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.TestEquationRequestDto;
+import com.tokyo.supermix.data.dto.TestEquationDto;
 import com.tokyo.supermix.data.dto.TestEquationResponseDto;
-import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -45,14 +44,14 @@ public class TestEquationController {
   // Create Test Equation API
   @PostMapping(value = EndpointURI.TEST_EQUATION)
   public ResponseEntity<Object> createTestEquation(
-      @Valid @RequestBody TestEquationRequestDto testEquationRequestDto) {
-    if (testEquationService.isDuplicateEntry(testEquationRequestDto.getTestConfigureId(),
-        testEquationRequestDto.getEquationId())) {
+      @Valid @RequestBody TestEquationDto testEquationDto) {
+    if (testEquationService.isDuplicateEntry(testEquationDto.getTestConfigId(),
+        testEquationDto.getEquationId())) {
       logger.debug("Test Equation already exists: createTestEquation(), testEquation: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_EQUATION,
           validationFailureStatusCodes.getTestEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    testEquationService.saveTestEquation(mapper.map(testEquationRequestDto, TestEquation.class));
+    testEquationService.saveTestEquationAndTestEquationParameter(testEquationDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_EQUATION_SUCCESS),
         HttpStatus.OK);
