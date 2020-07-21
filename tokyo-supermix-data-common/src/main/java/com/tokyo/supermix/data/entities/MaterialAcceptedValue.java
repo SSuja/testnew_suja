@@ -35,6 +35,7 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   private RawMaterial rawMaterial;
   @Enumerated(EnumType.ORDINAL)
   private Condition conditions;
+  private boolean isFinalResult;
 
   public Long getId() {
     return id;
@@ -102,5 +103,13 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isFinalResult() {
+    return isFinalResult;
+  }
+
+  public void setFinalResult(boolean isFinalResult) {
+    this.isFinalResult = isFinalResult;
   }
 }

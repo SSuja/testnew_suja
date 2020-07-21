@@ -17,96 +17,96 @@ import com.tokyo.supermix.data.enums.Condition;
 @Entity
 @Table(schema = "tokyo-supermix", name = "accepted_value")
 public class AcceptedValue extends DateAudit implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Double minValue;
-	private Double maxValue;
-	private Double value;
-	@Enumerated(EnumType.ORDINAL)
-	private Condition conditions;
-	@OneToOne
-	@JoinColumn(name = "testConfigureId", nullable = false)
-	private TestConfigure testConfigure;
-	@ManyToOne
-	@JoinColumn(name = "testParameterId", nullable = false)
-	private TestParameter testParameter;
-	private boolean isFinalResult;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  private Double minValue;
+  private Double maxValue;
+  private Double value;
+  @Enumerated(EnumType.ORDINAL)
+  private Condition conditions;
+  @OneToOne
+  @JoinColumn(name = "testConfigureId", nullable = false)
+  private TestConfigure testConfigure;
+  @ManyToOne
+  @JoinColumn(name = "testParameterId", nullable = false)
+  private TestParameter testParameter;
+  private boolean isFinalResult;
 
-	public Long getId() {
-		return id;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public Double getMinValue() {
-		return minValue;
-	}
+  public Double getMinValue() {
+    return minValue;
+  }
 
-	public void setMinValue(Double minValue) {
-		this.minValue = minValue;
-	}
+  public void setMinValue(Double minValue) {
+    this.minValue = minValue;
+  }
 
-	public Double getMaxValue() {
-		return maxValue;
-	}
+  public Double getMaxValue() {
+    return maxValue;
+  }
 
-	public void setMaxValue(Double maxValue) {
-		this.maxValue = maxValue;
-	}
+  public void setMaxValue(Double maxValue) {
+    this.maxValue = maxValue;
+  }
 
-	public Double getValue() {
-		return value;
-	}
+  public Double getValue() {
+    return value;
+  }
 
-	public void setValue(Double value) {
-		this.value = value;
-	}
+  public void setValue(Double value) {
+    this.value = value;
+  }
 
-	public Condition getCondition() {
-		return conditions;
-	}
+  public Condition getCondition() {
+    return conditions;
+  }
 
-	public void setCondition(Condition condition) {
-		this.conditions = condition;
-	}
+  public void setCondition(Condition condition) {
+    this.conditions = condition;
+  }
 
-	public TestConfigure getTestConfigure() {
-		return testConfigure;
-	}
+  public TestConfigure getTestConfigure() {
+    return testConfigure;
+  }
 
-	public void setTestConfigure(TestConfigure testConfigure) {
-		this.testConfigure = testConfigure;
-	}
+  public void setTestConfigure(TestConfigure testConfigure) {
+    this.testConfigure = testConfigure;
+  }
 
-	public TestParameter getTestParameter() {
-		return testParameter;
-	}
+  public TestParameter getTestParameter() {
+    return testParameter;
+  }
 
-	public void setTestParameter(TestParameter testParameter) {
-		this.testParameter = testParameter;
-	}
+  public void setTestParameter(TestParameter testParameter) {
+    this.testParameter = testParameter;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
-	public Condition getConditions() {
-		return conditions;
-	}
+  public Condition getConditions() {
+    return conditions;
+  }
 
-	public void setConditions(Condition conditions) {
-		this.conditions = conditions;
-	}
+  public void setConditions(Condition conditions) {
+    this.conditions = conditions;
+  }
 
-	public boolean isFinalResult() {
-		return isFinalResult;
-	}
+  public boolean isFinalResult() {
+    return isFinalResult;
+  }
 
-	public void setFinalResult(boolean isFinalResult) {
-		this.isFinalResult = isFinalResult;
-	}
+  public void setFinalResult(boolean isFinalResult) {
+    this.isFinalResult = isFinalResult;
+  }
 }
