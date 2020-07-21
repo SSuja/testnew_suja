@@ -525,6 +525,12 @@ public class Constants {
   public static final String DELETE_TEST_EQUATION_SCCESS = "Test Equation successfully Deleted";
 
   /*
+   * Constants for Test Equation Parameter validation key & Success messages
+   */
+  public static final String TEST_EQUATION_PARAMETERS = "testEquations";
+
+
+  /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}

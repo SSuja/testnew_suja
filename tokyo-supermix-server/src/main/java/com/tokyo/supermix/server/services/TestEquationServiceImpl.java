@@ -43,4 +43,14 @@ public class TestEquationServiceImpl implements TestEquationService {
     testEquationRepository.deleteById(id);
   }
 
+  @Transactional(readOnly = true)
+  public List<TestEquation> getByTestConfigure(Long testConfigureId) {
+    return testEquationRepository.findByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestEquation> getByEquation(Long equationId) {
+    return testEquationRepository.findByEquationId(equationId);
+  }
+
 }
