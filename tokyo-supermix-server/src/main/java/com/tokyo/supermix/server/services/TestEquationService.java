@@ -15,4 +15,8 @@ public interface TestEquationService {
   public boolean isTestEquationExists(Long id);
 
   public void deleteTestEquation(Long id);
+
+  public List<TestEquation> getByTestConfigure(Long testConfigureId);
+
+  public List<TestEquation> getByEquation(Long equationId);
 }
