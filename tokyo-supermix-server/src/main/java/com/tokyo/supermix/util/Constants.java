@@ -552,7 +552,11 @@ public class Constants {
   public static final String EMAIL_POINT_ID = "emailPointId";
   public static final String ADD_EMAIL_POINT_SUCCESS = "Email Points Added Successfully";
   public static final String UPDATE_EMAIL_POINT_SUCCESS = "Email Points Updated Successfully";
-
+  
+  /* email group name */
+  public static final String MIX_DESIGN_EMAIL_GROUP = "Mix Design";
+  public static final String  PLANT_EQUIPMENT_CALIBRATION_GROUP = "Plant Equipment Calibration";
+ 
   /*
    * Encapsulate constructor to restrict modification from outside
    */

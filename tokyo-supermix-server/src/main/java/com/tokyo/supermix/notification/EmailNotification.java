@@ -2,6 +2,7 @@ package com.tokyo.supermix.notification;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,6 +13,8 @@ import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
 import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
+import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.data.entities.NotificationDays;
 
 @Configuration
 public class EmailNotification {
@@ -32,25 +35,26 @@ public class EmailNotification {
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
-//      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroup(EmailNotifications.CALIBRATION_GROUP);
-//      notificationDaysList.forEach(notificationday -> {
-//        if (noOfDays == notificationday.getDays()) {
-//          sendEquipmentMail(calibration);
-//        }
-//      });
+     String plantCode = plantEquipmentCalibrationRepository.findById(calibration.getId()).get().getPlantEquipment().getPlant().getCode();
+      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroup(Constants.PLANT_EQUIPMENT_CALIBRATION_GROUP, plantCode);
+      notificationDaysList.forEach(notificationday -> {
+        if (noOfDays == notificationday.getDays()) {
+          sendEquipmentMail(calibration);
+        }
+      });
     });
   }
 
   private void sendEquipmentMail(PlantEquipmentCalibration calibration) {
-//    List<String> equipmentCalibrationEmailList = emailRecipientService
-//        .getEmailsByEmailNotificationAndPlantCode(EmailNotifications.CALIBRATION_GROUP,
-//            calibration.getPlantEquipment().getPlant().getCode());
-//    emailService.sendMail(
-//        equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
-//        Constants.SUBJECT_EQUIPMENT_CALIBRATION,
-//        "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
-//            + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
-//            + calibration.getPlantEquipment().getPlant().getName());
+    List<String> equipmentCalibrationEmailList = emailRecipientService
+        .getEmailsByEmailNotificationAndPlantCode(Constants.PLANT_EQUIPMENT_CALIBRATION_GROUP,
+            calibration.getPlantEquipment().getPlant().getCode());
+    emailService.sendMail(
+        equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
+        Constants.SUBJECT_EQUIPMENT_CALIBRATION,
+        "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
+            + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
+            + calibration.getPlantEquipment().getPlant().getName());
   }
 
   @Scheduled(cron = "${mail.notificationtime.strengthTestMixDesign}")
