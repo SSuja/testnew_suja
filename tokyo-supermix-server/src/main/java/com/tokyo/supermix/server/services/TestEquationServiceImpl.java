@@ -78,4 +78,14 @@ public class TestEquationServiceImpl implements TestEquationService {
       testEquationParameterRepository.save(testEquationParameter);
     }
   }
+  @Transactional(readOnly = true)
+  public List<TestEquation> getByTestConfigure(Long testConfigureId) {
+    return testEquationRepository.findByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestEquation> getByEquation(Long equationId) {
+    return testEquationRepository.findByEquationId(equationId);
+  }
+
 }

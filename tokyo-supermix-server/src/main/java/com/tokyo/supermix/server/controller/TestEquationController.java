@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestEquationDto;
-import com.tokyo.supermix.data.dto.TestEquationRequestDto;
 import com.tokyo.supermix.data.dto.TestEquationResponseDto;
-import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.EquationService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.TestEquationService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -31,6 +31,10 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class TestEquationController {
   @Autowired
   private TestEquationService testEquationService;
+  @Autowired
+  private TestConfigureService testConfigureService;
+  @Autowired
+  private EquationService equationService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -87,5 +91,34 @@ public class TestEquationController {
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_EQUATION_ID,
         validationFailureStatusCodes.getTestEquationNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  // Get Test Equation by Test Configure API
+  @GetMapping(value = EndpointURI.TEST_EQUATION_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getByTestConfigureId(@PathVariable Long testConfigureId) {
+    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
+      logger.debug("Test Configure id is found");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
+          mapper.map(testEquationService.getByTestConfigure(testConfigureId),
+              TestEquationResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  // Get Test Equation by Equation API
+  @GetMapping(value = EndpointURI.TEST_EQUATION_BY_EQUATION_ID)
+  public ResponseEntity<Object> getByEquationId(@PathVariable Long equationId) {
+    if (equationService.isEquationExist(equationId)) {
+      logger.debug("Equation id is found");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
+          mapper.map(testEquationService.getByEquation(equationId), TestEquationResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
+        validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

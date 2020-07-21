@@ -34,7 +34,8 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
   @Enumerated(EnumType.ORDINAL)
-  private Condition conditions;
+  private Condition conditionRange;
+  private boolean isFinalResult;
 
   public Long getId() {
     return id;
@@ -92,15 +93,23 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     this.rawMaterial = rawMaterial;
   }
 
-  public Condition getConditions() {
-    return conditions;
+  public Condition getConditionRange() {
+    return conditionRange;
   }
 
-  public void setConditions(Condition conditions) {
-    this.conditions = conditions;
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
   }
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isFinalResult() {
+    return isFinalResult;
+  }
+
+  public void setFinalResult(boolean isFinalResult) {
+    this.isFinalResult = isFinalResult;
   }
 }

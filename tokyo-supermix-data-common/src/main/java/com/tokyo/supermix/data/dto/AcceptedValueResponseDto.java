@@ -9,7 +9,8 @@ public class AcceptedValueResponseDto {
   private TestConfigureResponseDto testConfigure;
   private Double value;
   private TestParameterResponseDto testParameter;
-  private Condition condition;
+  private Condition conditionRange;
+  private boolean isFinalResult;
 
   public Long getId() {
     return id;
@@ -59,11 +60,19 @@ public class AcceptedValueResponseDto {
     this.testParameter = testParameter;
   }
 
-  public Condition getCondition() {
-    return condition;
+  public Condition getConditionRange() {
+    return conditionRange;
   }
 
-  public void setCondition(Condition condition) {
-    this.condition = condition;
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
+  }
+
+  public boolean isFinalResult() {
+    return isFinalResult;
+  }
+
+  public void setFinalResult(boolean isFinalResult) {
+    this.isFinalResult = isFinalResult;
   }
 }

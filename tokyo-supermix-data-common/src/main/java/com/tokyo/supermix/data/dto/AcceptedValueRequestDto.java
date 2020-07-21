@@ -11,7 +11,8 @@ public class AcceptedValueRequestDto {
   private Long testConfigureId;
   private Long testParameterId;
   private Double value;
-  private Condition condition;
+  private Condition conditionRange;
+  private boolean isFinalResult;
 
   public Long getId() {
     return id;
@@ -61,11 +62,19 @@ public class AcceptedValueRequestDto {
     this.value = value;
   }
 
-  public Condition getCondition() {
-    return condition;
+  public Condition getConditionRange() {
+    return conditionRange;
   }
 
-  public void setCondition(Condition condition) {
-    this.condition = condition;
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
+  }
+
+  public boolean isFinalResult() {
+    return isFinalResult;
+  }
+
+  public void setFinalResult(boolean isFinalResult) {
+    this.isFinalResult = isFinalResult;
   }
 }

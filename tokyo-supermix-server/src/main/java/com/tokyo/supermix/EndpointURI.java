@@ -559,6 +559,20 @@ public final class EndpointURI {
   public static final String TEST_EQUATION = BASE_API_PATH + "test-equation";
   public static final String TEST_EQUATIONS = BASE_API_PATH + "test-equations";
   public static final String TEST_EQUATION_BY_ID = TEST_EQUATION + ID;
+  public static final String TEST_EQUATION_BY_TEST_CONFIGURE_ID =
+      TEST_EQUATION + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String TEST_EQUATION_BY_EQUATION_ID =
+      TEST_EQUATION + SLASH + "equation" + SLASH + "{equationId}";
+  /*
+   * Test Equation Parameter
+   */
+  public static final String TEST_EQUATION_PARAMETER = BASE_API_PATH + "test-equation-parameter";
+  public static final String TEST_EQUATION_PARAMETERS = BASE_API_PATH + "test-equation-parameters";
+  public static final String TEST_EQUATION_PARAMETER_BY_ID = TEST_EQUATION_PARAMETER + ID;
+  public static final String TEST_EQUATION_PARAMETER_BY_TEST_PARAMETER_ID =
+      TEST_EQUATION_PARAMETER + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+  public static final String TEST_EQUATION_PARAMETER_BY_TEST_EQUATION_ID =
+      TEST_EQUATION_PARAMETER + SLASH + "test-equation" + SLASH + "{testEquationId}";
 
   private EndpointURI() {}
 }
