@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.ProjectRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -29,6 +29,8 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Autowired
   private ProjectRepository projectRepository;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
@@ -52,6 +54,7 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
       }
     }
     finishProductSampleIssueRepository.save(finishProductSampleIssue);
+    emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssue);
   }
 
   private Integer getNumberFromCode(String code) {

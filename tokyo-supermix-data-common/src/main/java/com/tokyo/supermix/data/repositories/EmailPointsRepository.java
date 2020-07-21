@@ -11,5 +11,7 @@ public interface EmailPointsRepository extends JpaRepository<EmailPoints, Long>{
   boolean existsByMaterialSubCategoryIdAndTestId(Long materialSubCategoryId, Long testId);
 
   List<EmailPoints> findByActive(boolean status);
+  
+  EmailPoints findByMaterialSubCategoryIdAndTestId(Long materialSubCategoryId, Long testId);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -20,11 +21,14 @@ public class EmployeeServiceImpl implements EmployeeService {
   private EmployeeRepository employeeRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional()
   public void createEmployee(Employee employee) {
     employee.setHasUser(false);
     employeeRepository.save(employee);
+    emailNotification.sendEmployeeEmail(employee);
   }
 
   @Transactional(readOnly = true)

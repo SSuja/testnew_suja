@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -26,7 +27,8 @@ public class SupplierServiceImpl implements SupplierService {
   private SupplierCategoryRepository supplierCategoryRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-
+  @Autowired
+  private EmailNotification emailNotification;
   @Transactional(readOnly = true)
   public List<Supplier> getSuppliers() {
     return supplierRepository.findAll();
@@ -45,11 +47,13 @@ public class SupplierServiceImpl implements SupplierService {
         .forEach(id -> supplierList.add(supplierCategoryRepository.findById(id).get()));
     supplier.setSupplierCategories(supplierList);
     supplierRepository.save(supplier);
+    emailNotification.sendSupplierEmail(supplier);
   }
 
   @Transactional
   public void updateSupplier(Supplier supplier) {
     supplierRepository.save(supplier);
+    
   }
 
   @Transactional(propagation = Propagation.NEVER)
