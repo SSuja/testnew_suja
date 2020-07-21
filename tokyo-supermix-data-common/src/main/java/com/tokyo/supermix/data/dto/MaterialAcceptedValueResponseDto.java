@@ -10,7 +10,7 @@ public class MaterialAcceptedValueResponseDto {
   private TestConfigureResponseDto testConfigure;
   private Double value;
   private TestParameterResponseDto testParameter;
-  private Condition conditions;
+  private Condition conditionRange;
   private boolean isFinalResult;
 
   public Long getId() {
@@ -69,19 +69,19 @@ public class MaterialAcceptedValueResponseDto {
     this.testParameter = testParameter;
   }
 
-  public Condition getConditions() {
-    return conditions;
-  }
-
-  public void setConditions(Condition conditions) {
-    this.conditions = conditions;
-  }
-
   public boolean isFinalResult() {
     return isFinalResult;
   }
 
   public void setFinalResult(boolean isFinalResult) {
     this.isFinalResult = isFinalResult;
+  }
+
+  public Condition getConditionRange() {
+    return conditionRange;
+  }
+
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
   }
 }

@@ -25,7 +25,7 @@ public class AcceptedValue extends DateAudit implements Serializable {
   private Double maxValue;
   private Double value;
   @Enumerated(EnumType.ORDINAL)
-  private Condition conditions;
+  private Condition conditionRange;
   @OneToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
@@ -66,14 +66,6 @@ public class AcceptedValue extends DateAudit implements Serializable {
     this.value = value;
   }
 
-  public Condition getCondition() {
-    return conditions;
-  }
-
-  public void setCondition(Condition condition) {
-    this.conditions = condition;
-  }
-
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
@@ -94,12 +86,12 @@ public class AcceptedValue extends DateAudit implements Serializable {
     return serialVersionUID;
   }
 
-  public Condition getConditions() {
-    return conditions;
+  public Condition getConditionRange() {
+    return conditionRange;
   }
 
-  public void setConditions(Condition conditions) {
-    this.conditions = conditions;
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
   }
 
   public boolean isFinalResult() {
