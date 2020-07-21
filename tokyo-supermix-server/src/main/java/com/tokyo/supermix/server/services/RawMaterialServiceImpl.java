@@ -11,15 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 
 @Service
 public class RawMaterialServiceImpl implements RawMaterialService {
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
-  public RawMaterial saveRawMaterial(RawMaterial rawMaterial) {
-    return rawMaterialRepository.save(rawMaterial);
+  public void saveRawMaterial(RawMaterial rawMaterial) {
+     rawMaterialRepository.save(rawMaterial);
+    emailNotification.sendRawmaterialCreationEmail(rawMaterial);
   }
 
   @Transactional(readOnly = true)

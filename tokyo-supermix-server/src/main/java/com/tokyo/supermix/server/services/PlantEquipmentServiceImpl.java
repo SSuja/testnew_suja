@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -22,10 +23,13 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   private PlantEquipmentRepository PlantEquipmentRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
   public void savePlantEquipment(PlantEquipment Plantequipment) {
     PlantEquipmentRepository.save(Plantequipment);
+    emailNotification.sendPlantEquipmentCalibrationEmail(Plantequipment);
   }
 
   @Transactional(readOnly = true)
