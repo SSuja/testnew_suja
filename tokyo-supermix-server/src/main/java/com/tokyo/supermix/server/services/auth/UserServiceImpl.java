@@ -182,8 +182,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<User> getAllUsersByPlant(UserPrincipal currentUser) {
-    return userRepository.findByEmployeePlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER));
+    return currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())
+			? userRepository.findAll()
+			: userRepository.findByEmployeePlantCodeIn(currentUserPermissionPlantService
+			        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER));   		
   }
 
   @Override
