@@ -553,6 +553,12 @@ public final class EndpointURI {
   public static final String EMAIL_NOTIFICATIONS = BASE_API_PATH + "email-notification-days";
   public static final String EMAIL_NOTIFICATIONS_BY_GROUP = EMAIL_NOTIFICATION + SLASH + "group";
   public static final String EMAIL_NOTIFICATION_BY_ID = EMAIL_NOTIFICATION + SLASH + ID;
+  /*
+   * Test Equation
+   */
+  public static final String TEST_EQUATION = BASE_API_PATH + "test-equation";
+  public static final String TEST_EQUATIONS = BASE_API_PATH + "test-equations";
+  public static final String TEST_EQUATION_BY_ID = TEST_EQUATION + ID;
 
   private EndpointURI() {}
 }

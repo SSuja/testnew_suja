@@ -1584,7 +1584,29 @@ public class ValidationFailureStatusCodes {
     this.emailGroupNotExist = emailGroupNotExist;
   }
 
+  /*
+   * Test Equation
+   */
+  @Value("${validation.testEquation.notExists}")
+  private String testEquationNotExist;
+  @Value("${validation.testEquation.alreadyExist}")
+  private String testEquationAlreadyExist;
 
+  public String getTestEquationNotExist() {
+    return testEquationNotExist;
+  }
+
+  public void setTestEquationNotExist(String testEquationNotExist) {
+    this.testEquationNotExist = testEquationNotExist;
+  }
+
+  public String getTestEquationAlreadyExist() {
+    return testEquationAlreadyExist;
+  }
+
+  public void setTestEquationAlreadyExist(String testEquationAlreadyExist) {
+    this.testEquationAlreadyExist = testEquationAlreadyExist;
+  }
 
 }
 
