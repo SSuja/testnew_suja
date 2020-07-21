@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EmailGroupDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
@@ -74,27 +72,38 @@ public class EmailGroupController {
   @PutMapping(value = EndpointURI.EMAIL_GROUP)
   public ResponseEntity<Object> updateEmailGroup(@Valid @RequestBody EmailGroupDto emailGroupDto) {
     if (emailGroupService.isEmailGroupExist(emailGroupDto.getId())) {
+      if (emailGroupDto.isStatus() == true) {
+        if (emailGroupService.isEmailPointsStatus(emailGroupDto)) {
+          emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
+          return new ResponseEntity<>(
+              new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
+              HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
+            Constants.EMAIL_POINTS_STATUS_ACTIVE), HttpStatus.BAD_REQUEST);
+      }
       emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
           HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP,
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP_ID,
         validationFailureStatusCodes.getEmailGroupNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE)
   public ResponseEntity<Object> getAllEmailGroupsByPlantCode(@PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
         mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode), EmailGroupDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS)
-  public ResponseEntity<Object> getAllEmailGroupsByPlantCodeAndStatus(@PathVariable String plantCode, @PathVariable boolean status) {
+  public ResponseEntity<Object> getAllEmailGroupsByPlantCodeAndStatus(
+      @PathVariable String plantCode, @PathVariable boolean status) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatus(plantCode, status), EmailGroupDto.class),
+        mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatus(plantCode, status),
+            EmailGroupDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-
 }

@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.EmailGroupDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
 
 public interface EmailGroupService {
@@ -21,6 +22,8 @@ public interface EmailGroupService {
   public boolean isEmailGroupExist(Long id);
   
   public void updateStatus(Long emailPointsId);
+
+  public boolean isEmailPointsStatus(EmailGroupDto emailGroupDto);
   
 
 }

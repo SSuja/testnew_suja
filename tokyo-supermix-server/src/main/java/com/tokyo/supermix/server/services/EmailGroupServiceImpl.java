@@ -28,10 +28,8 @@ public class EmailGroupServiceImpl implements EmailGroupService {
 
   @Transactional
   public void saveEmailGroup(EmailGroup emailGroup) {
-
     emailGroupRepository.save(emailGroup);
   }
-
 
   @Transactional
   public void deleteEmailGroup(Long id) {
@@ -62,6 +60,14 @@ public class EmailGroupServiceImpl implements EmailGroupService {
       emailGroupDto.setStatus(emailGroup.isStatus());
       emailGroupRepository.save(emailGroup);
     });
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isEmailPointsStatus(EmailGroupDto emailGroupDto) {
+  if(emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().isActive()==emailGroupDto.isStatus()) {
+    return true;
+  }
+    return false;
   }
   
   
