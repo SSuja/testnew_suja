@@ -543,6 +543,7 @@ public class Constants {
   public static final String EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION = "Calibration Group";
   public static final String EMAIL_GROUP_MIX_DESIGN = "Mix Design Group";
   public static final String EMAIL_GROUP_INCOMING_SAMPLE_STATUS = "Incoming Sample Group";
+  
 
   /* email notification days */
   public static final String ADD_EMAIL_NOTIFICATION_DAYS =
@@ -561,6 +562,7 @@ public class Constants {
   public static final String EMAIL_POINT_ID = "emailPointId";
   public static final String ADD_EMAIL_POINT_SUCCESS = "Email Points Added Successfully";
   public static final String UPDATE_EMAIL_POINT_SUCCESS = "Email Points Updated Successfully";
+  public static final String EMAIL_POINTS_STATUS_ACTIVE = "Email Points is Inactive";
   
  
  
