@@ -17,6 +17,7 @@ public class Constants {
   public static final String DELIVERY_REPORT = "delivery-report.pdf";
   public static final String SUMMARY_REPORT = "summary-report.pdf";
   public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
+  public static final String SUBJECT_NEW_PROJECT = "Notification : About Project ";
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
