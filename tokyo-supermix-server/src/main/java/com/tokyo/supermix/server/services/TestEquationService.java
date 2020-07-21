@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.TestEquationDto;
 import com.tokyo.supermix.data.entities.TestEquation;
 
 public interface TestEquationService {
@@ -15,4 +16,6 @@ public interface TestEquationService {
   public boolean isTestEquationExists(Long id);
 
   public void deleteTestEquation(Long id);
+
+  public void saveTestEquationAndTestEquationParameter(TestEquationDto testEquationDto);
 }
