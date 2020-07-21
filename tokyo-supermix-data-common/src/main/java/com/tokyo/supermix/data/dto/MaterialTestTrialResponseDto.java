@@ -4,7 +4,6 @@ public class MaterialTestTrialResponseDto {
   private String code;
   private Long trialNo;
   private MaterialTestResponseDto materialTest;
-  private TestEquationResponseDto testEquation;
   private String createdAt;
 
   public String getCode() {
@@ -29,14 +28,6 @@ public class MaterialTestTrialResponseDto {
 
   public void setMaterialTest(MaterialTestResponseDto materialTest) {
     this.materialTest = materialTest;
-  }
-
-  public TestEquationResponseDto getTestEquation() {
-    return testEquation;
-  }
-
-  public void setTestEquation(TestEquationResponseDto testEquation) {
-    this.testEquation = testEquation;
   }
 
   public String getCreatedAt() {

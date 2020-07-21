@@ -6,6 +6,7 @@ public class ParameterResultResponseDto {
   private TestParameterResponseDto testParameter;
   private MaterialTestTrialResponseDto materialTestTrial;
   private MaterialTestResponseDto materialTest;
+  private TestEquationResponseDto testEquation;
 
   public Long getId() {
     return id;
@@ -45,5 +46,13 @@ public class ParameterResultResponseDto {
 
   public void setMaterialTest(MaterialTestResponseDto materialTest) {
     this.materialTest = materialTest;
+  }
+
+  public TestEquationResponseDto getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquationResponseDto testEquation) {
+    this.testEquation = testEquation;
   }
 }
