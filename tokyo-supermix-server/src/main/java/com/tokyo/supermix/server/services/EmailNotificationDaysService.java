@@ -12,7 +12,7 @@ public interface EmailNotificationDaysService {
 
   public boolean isDuplicateExists(Long emailGroupId, Double days);
   
-  public List<NotificationDays> getByEmailGroup(String name);
+  public List<NotificationDays> getByEmailGroup(String name, String plantCode);
 
   public  List<NotificationDaysResponseDto> getAllEmailNotificationDaysByGroup();
 

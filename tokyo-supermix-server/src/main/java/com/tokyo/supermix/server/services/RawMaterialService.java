@@ -6,7 +6,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.RawMaterial;
 
 public interface RawMaterialService {
-  public RawMaterial saveRawMaterial(RawMaterial rawMaterial);
+  public void saveRawMaterial(RawMaterial rawMaterial);
 
   public boolean isRawMaterialNameExist(String name);
 

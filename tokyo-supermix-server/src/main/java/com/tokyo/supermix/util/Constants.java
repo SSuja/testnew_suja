@@ -18,6 +18,9 @@ public class Constants {
   public static final String SUMMARY_REPORT = "summary-report.pdf";
   public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
   public static final String SUBJECT_NEW_PROJECT = "Notification : About Project ";
+  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
+  public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
+  
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
@@ -553,7 +556,9 @@ public class Constants {
   public static final String EMAIL_POINT_ID = "emailPointId";
   public static final String ADD_EMAIL_POINT_SUCCESS = "Email Points Added Successfully";
   public static final String UPDATE_EMAIL_POINT_SUCCESS = "Email Points Updated Successfully";
-
+  
+ 
+ 
   /*
    * Encapsulate constructor to restrict modification from outside
    */

@@ -52,8 +52,8 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   }
 
   @Transactional(readOnly = true)
-  public List<NotificationDays> getByEmailGroup(String name) {
-    return emailNotificationDaysRepository.findByEmailGroupEmailPointsName(name);
+  public List<NotificationDays> getByEmailGroup(String name, String plantCode) {
+    return emailNotificationDaysRepository.findByEmailGroupEmailPointsNameAndEmailGroupPlantCode(name, plantCode);
   }
 
   @Transactional(readOnly = true)

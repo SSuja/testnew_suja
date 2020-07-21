@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Scheduled;
+import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
 import com.tokyo.supermix.data.entities.Employee;
@@ -16,6 +17,7 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
@@ -24,6 +26,8 @@ import com.tokyo.supermix.server.services.EmailNotificationDaysService;
 import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.data.entities.NotificationDays;
+import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.util.MailGroupConstance;
 
 @Configuration
@@ -49,26 +53,26 @@ public class EmailNotification {
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
-      // List<NotificationDays> notificationDaysList =
-      // emailNotificationDaysService.getByEmailGroup(EmailNotifications.CALIBRATION_GROUP);
-      // notificationDaysList.forEach(notificationday -> {
-      // if (noOfDays == notificationday.getDays()) {
-      // sendEquipmentMail(calibration);
-      // }
-      // });
+     String plantCode = plantEquipmentCalibrationRepository.findById(calibration.getId()).get().getPlantEquipment().getPlant().getCode();
+      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroup(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP, plantCode);
+      notificationDaysList.forEach(notificationday -> {
+        if (noOfDays == notificationday.getDays()) {
+          sendEquipmentMail(calibration);
+        }
+      });
     });
   }
 
   private void sendEquipmentMail(PlantEquipmentCalibration calibration) {
-    // List<String> equipmentCalibrationEmailList = emailRecipientService
-    // .getEmailsByEmailNotificationAndPlantCode(EmailNotifications.CALIBRATION_GROUP,
-    // calibration.getPlantEquipment().getPlant().getCode());
-    // emailService.sendMail(
-    // equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
-    // Constants.SUBJECT_EQUIPMENT_CALIBRATION,
-    // "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
-    // + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
-    // + calibration.getPlantEquipment().getPlant().getName());
+    List<String> equipmentCalibrationEmailList = emailRecipientService
+        .getEmailsByEmailNotificationAndPlantCode(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP,
+            calibration.getPlantEquipment().getPlant().getCode());
+    emailService.sendMail(
+        equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
+        Constants.SUBJECT_EQUIPMENT_CALIBRATION,
+        "Please Calibrate the " + calibration.getPlantEquipment().getEquipment().getName()
+            + " due date is " + calibration.getDueDate().toLocalDate() + ". Plant name is "
+            + calibration.getPlantEquipment().getPlant().getName());
   }
 
   @Scheduled(cron = "${mail.notificationtime.strengthTestMixDesign}")
@@ -77,13 +81,14 @@ public class EmailNotification {
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
       long noOfDays = ChronoUnit.DAYS.between(
           finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
-      // List<NotificationDays> notificationDaysList =
-      // emailNotificationDaysService.getByEmailGroup(EmailNotifications.MIX_DESIGN_GROUP);
-      // notificationDaysList.forEach(notificationday -> {
-      // if (noOfDays == notificationday.getDays()) {
-      // sendMixDesignEmail(finishProductSample, noOfDays);
-      // }
-      // });
+      String plantCode = finishProductSampleRepository.findById(finishProductSample.getCode()).get().getMixDesign().getPlant().getCode();
+       List<NotificationDays> notificationDaysList =
+       emailNotificationDaysService.getByEmailGroup(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP, plantCode);
+       notificationDaysList.forEach(notificationday -> {
+       if (noOfDays == notificationday.getDays()) {
+       sendMixDesignEmail(finishProductSample, noOfDays);
+       }
+       });
     });
   }
 
@@ -211,10 +216,52 @@ public class EmailNotification {
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_NEW_PROJECT, mailBody);
-      }
+          
+         }
     }
   }
 
+  public void sendPlantEquipmentCalibrationEmail(PlantEquipment plantequipment) {
+    String mailBody = "Plant Equipment Calibration Created Successfully for the plant,"+plantequipment.getPlant().getCode()+".";  
+    EmailGroup emailGroup =emailGroupRepository.findByPlantCodeAndEmailPointsName(plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
+    if(emailGroup!=null) {
+      if(emailGroup.isStatus()) {
+        List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+            MailGroupConstance.CREATE_PLANT_EQUIPMENT, plantequipment.getPlant().getCode());
+        
+      emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+          Constants.SUBJECT_PLANT_EQUIPMENT, mailBody);
+      }
+      } 
+  }
+
+  public void sendRawmaterialCreationEmail(RawMaterial rawMaterial) {
+//    String mailBody = "Raw material "+rawMaterial.getName() +"created for material sub category" + rawMaterial.getMaterialSubCategory().getName()+".";  
+//    EmailGroup emailGroup =emailGroupRepository.findByPlantCodeAndEmailPointsName(plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
+//    if(emailGroup!=null) {
+//      if(emailGroup.isStatus()) {
+//        List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+//            MailGroupConstance.CREATE_PLANT_EQUIPMENT, plantequipment.getPlant().getCode());
+//        
+//      emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+//          Constants.SUBJECT_PLANT_EQUIPMENT, mailBody);
+//      }
+//      }    
+  }
+
+  public void sendCustomerCreationEmail(Customer customer) {
+    String mailBody = "Customer, "+ customer.getName()+ " having email id "+ customer.getEmail()+ " created successfully";  
+    EmailGroup emailGroup =emailGroupRepository.findByPlantCodeAndEmailPointsName(customer.getPlant().getCode(), MailGroupConstance.CREATE_CUSTOMER);
+    if(emailGroup!=null) {
+      if(emailGroup.isStatus()) {
+        List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+            MailGroupConstance.CREATE_CUSTOMER, customer.getPlant().getCode());
+        
+      emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+          Constants.SUBJECT_PLANT_EQUIPMENT, mailBody);
+      }
+      } 
+  }
 }
 
 
