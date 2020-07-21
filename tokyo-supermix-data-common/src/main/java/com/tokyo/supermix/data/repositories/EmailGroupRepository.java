@@ -9,7 +9,8 @@ import com.tokyo.supermix.data.entities.EmailGroup;
 public interface EmailGroupRepository extends JpaRepository<EmailGroup, Long> {
   List<EmailGroup> findBySchedule(Boolean schedule);
   List<EmailGroup> findByPlantCode(String plantCode);
-  List<EmailGroup> findByPlantCodeAndStatus(String plantCode, Boolean status);
+  List<EmailGroup> findByPlantCodeAndStatus(String plantCode, boolean status);
   List<EmailGroup> findByEmailPointsId(Long emailPointsId);
+  EmailGroup findByPlantCodeAndEmailPointsName(String plantCode, String name);
 //boolean existsByEmailNotifications(EmailNotifications emailNotifications);
 }

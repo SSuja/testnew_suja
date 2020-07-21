@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.repositories.ProjectRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -23,6 +24,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectRepository projectRepository;
 	@Autowired
     private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+	@Autowired
+    private EmailNotification emailNotification;
 
 	@Transactional(readOnly = true)
 	public boolean isNameExist(String name) {
@@ -48,6 +51,7 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 		}
 		projectRepository.save(project);
+		emailNotification.sendProjectEmail(project);
 	}
 
 	private Integer getNumberFromCode(String code) {
@@ -101,7 +105,5 @@ public class ProjectServiceImpl implements ProjectService {
   public List<Project> getAllProjects() {
     return projectRepository.findAll();
   }
-
-
   
 }
