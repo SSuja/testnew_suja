@@ -54,8 +54,10 @@ public class EmailNotification {
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
       long noOfDays =
           ChronoUnit.DAYS.between(today.toLocalDate(), calibration.getDueDate().toLocalDate());
-     String plantCode = plantEquipmentCalibrationRepository.findById(calibration.getId()).get().getPlantEquipment().getPlant().getCode();
-      List<NotificationDays> notificationDaysList = emailNotificationDaysService.getByEmailGroup(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP, plantCode);
+      String plantCode = plantEquipmentCalibrationRepository.findById(calibration.getId()).get()
+          .getPlantEquipment().getPlant().getCode();
+      List<NotificationDays> notificationDaysList = emailNotificationDaysService
+          .getByEmailGroup(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP, plantCode);
       notificationDaysList.forEach(notificationday -> {
         if (noOfDays == notificationday.getDays()) {
           sendEquipmentMail(calibration);
@@ -65,8 +67,9 @@ public class EmailNotification {
   }
 
   private void sendEquipmentMail(PlantEquipmentCalibration calibration) {
-    List<String> equipmentCalibrationEmailList = emailRecipientService
-        .getEmailsByEmailNotificationAndPlantCode(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP,
+    List<String> equipmentCalibrationEmailList =
+        emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+            MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP,
             calibration.getPlantEquipment().getPlant().getCode());
     emailService.sendMail(
         equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
@@ -82,14 +85,15 @@ public class EmailNotification {
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
       long noOfDays = ChronoUnit.DAYS.between(
           finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
-      String plantCode = finishProductSampleRepository.findById(finishProductSample.getCode()).get().getMixDesign().getPlant().getCode();
-       List<NotificationDays> notificationDaysList =
-       emailNotificationDaysService.getByEmailGroup(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP, plantCode);
-       notificationDaysList.forEach(notificationday -> {
-       if (noOfDays == notificationday.getDays()) {
-       sendMixDesignEmail(finishProductSample, noOfDays);
-       }
-       });
+      String plantCode = finishProductSampleRepository.findById(finishProductSample.getCode()).get()
+          .getMixDesign().getPlant().getCode();
+      List<NotificationDays> notificationDaysList = emailNotificationDaysService
+          .getByEmailGroup(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP, plantCode);
+      notificationDaysList.forEach(notificationday -> {
+        if (noOfDays == notificationday.getDays()) {
+          sendMixDesignEmail(finishProductSample, noOfDays);
+        }
+      });
     });
   }
 
@@ -97,11 +101,11 @@ public class EmailNotification {
     String mailBody = "The work order no is " + finishProductSample.getWorkOrderNo()
         + ", created on " + finishProductSample.getDate() + "." + " reached " + noOfDays + "days "
         + " Please test" + noOfDays + " days strength.";
-     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-     MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
-     finishProductSample.getMixDesign().getPlant().getCode());
-     emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-     Constants.SUBJECT_MIX_DESIGN, mailBody);
+    List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+        MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
+        finishProductSample.getMixDesign().getPlant().getCode());
+    emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+        Constants.SUBJECT_MIX_DESIGN, mailBody);
   }
 
   public void sendProjectEmail(Project project) {
@@ -124,22 +128,24 @@ public class EmailNotification {
     EmailPoints emailPoints = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(
         materialTest.getTestConfigure().getMaterialSubCategory().getId(),
         materialTest.getTestConfigure().getTest().getId());
-        EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
-        String  mailBody="<ul><li>Incoming Sample <b>" +materialTest.getIncomingSample().getCode()
+        String mailBody = "<ul><li>Incoming Sample <b>" + materialTest.getIncomingSample().getCode()
             + "</b></li><li> Test Name <b>" + materialTest.getTestConfigure().getTest().getName()
-            + "</b></li><li> Material <b>"+ materialTest.getTestConfigure().getTest().getName()
-            + "</b></li><li> Supplier <b>"+  materialTest.getIncomingSample().getSupplier().getName()
-     //       + "</b></li><li> Test Results <b>"+ materialTest.getAverage()
-            + "</b></li><li> Status <b>"+ materialTest.getStatus() +"</b></li></ul>";
-
+            + "</b></li><li> Material <b>" + materialTest.getTestConfigure().getTest().getName()
+            + "</b></li><li> Supplier <b>"
+            + materialTest.getIncomingSample().getSupplier().getName()
+//            + "</b></li><li> Test Results <b>" + materialTest.
+//            + "</b>"
+            + "</li><li> Status <b>" + materialTest.getStatus() + "</b></li></ul>";
+      
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);                            
+            Constants.SUBJECT_MATRIAL_TEST, mailBody);
       }
     }
   }
@@ -219,22 +225,25 @@ public class EmailNotification {
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE, mailBody);     
-         }
+            Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE, mailBody);
+      }
     }
   }
 
   public void sendPlantEquipmentCalibrationEmail(PlantEquipment plantequipment) {
-    String mailBody = "Plant Equipment Calibration Created Successfully for the plant,"+plantequipment.getPlant().getCode()+".";  
-    EmailGroup emailGroup =emailGroupRepository.findByPlantCodeAndEmailPointsName(plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
-    if(emailGroup!=null) {
-      if(emailGroup.isStatus()) {
-        List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-            MailGroupConstance.CREATE_PLANT_EQUIPMENT, plantequipment.getPlant().getCode());
-      emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-          Constants.SUBJECT_PLANT_EQUIPMENT, mailBody);
+    String mailBody = "Plant Equipment Calibration Created Successfully for the plant,"
+        + plantequipment.getPlant().getCode() + ".";
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
+    if (emailGroup != null) {
+      if (emailGroup.isStatus()) {
+        List<String> reciepientList =
+            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                MailGroupConstance.CREATE_PLANT_EQUIPMENT, plantequipment.getPlant().getCode());
+        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+            Constants.SUBJECT_PLANT_EQUIPMENT, mailBody);
       }
-      } 
+    }
   }
 
   public void sendRawmaterialCreationEmail(RawMaterial rawMaterial) {
@@ -262,7 +271,7 @@ public class EmailNotification {
       emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
           Constants.SUBJECT_CUSTOMER, mailBody);
       }
-      } 
+    }
   }
 
   public void sendPlantCreationEmail(Plant plant) {
