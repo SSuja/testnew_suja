@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
+import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
@@ -345,7 +346,20 @@ public class EmailNotification {
     }  
   }
 
- 
+  public void sendMixDesignCreationEmail(MixDesign mixDesign) {
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_MIX_DESIGN);
+    if (emailGroup != null) {
+      if (emailGroup.isStatus()) {
+        String mailBody =mixDesign.getCode() + " for" +mixDesign.getTargetGrade()+" and "+ mixDesign.getTargetSlump()+ " mix design is created successsfully.";
+              List<String> reciepientList =
+            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                MailGroupConstance.CREATE_MIX_DESIGN,mixDesign.getPlant().getCode());
+        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+            Constants.SUBJECT_MIX_DESIGN, mailBody);
+      }
+    }  
+  }
 }
 
 
