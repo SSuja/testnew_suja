@@ -15,7 +15,6 @@ public class TestParameterRequestDto {
   private String abbreviation;
   private TestParameterType type;
   private Double value;
-  private boolean equationExists;
   private Long qualityParameterId;
   private boolean acceptedCriteria;
   private InputMethod inputMethods;
@@ -66,14 +65,6 @@ public class TestParameterRequestDto {
 
   public void setValue(Double value) {
     this.value = value;
-  }
-
-  public boolean isEquationExists() {
-    return equationExists;
-  }
-
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
   }
 
   public TestParameterType getType() {
