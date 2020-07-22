@@ -214,7 +214,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserId(plantCode, userId);
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
-      plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getId());
+      plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getPlantPermission().getPermission().getId());
       plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
       plantRolePlantPermissionRequestDto.setPlantRoleId(userPlantRole.getPlantRole().getId());
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
