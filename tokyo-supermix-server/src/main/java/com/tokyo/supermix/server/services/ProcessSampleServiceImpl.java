@@ -38,8 +38,9 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
     IncomingSample incomingSample =
         incomingSampleService.getIncomingSampleById(processSample.getIncomingSample().getCode());
     processSample.setRawMaterial(incomingSample.getRawMaterial());
-    if ( processSampleRepository.save(processSample) != null) {
-      emailNotification.sendProcessSampleCreationEmail(processSample);
+    ProcessSample processSampleObj = processSampleRepository.save(processSample);
+    if (processSampleObj != null) {
+      emailNotification.sendProcessSampleCreationEmail(processSampleObj);
     }
   }
 

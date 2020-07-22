@@ -49,8 +49,9 @@ public class ProjectServiceImpl implements ProjectService {
         project.setCode(codePrefix + String.format("%03d", maxNumberFromCode(projectList) + 1));
       }
     }
-    if (projectRepository.save(project) != null)
-      emailNotification.sendProjectEmail(project);
+    Project projectObj = projectRepository.save(project); 
+    if (projectObj != null)
+      emailNotification.sendProjectEmail(projectObj);
   }
 
   private Integer getNumberFromCode(String code) {

@@ -27,8 +27,10 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Transactional()
   public void createEmployee(Employee employee) {
     employee.setHasUser(false);
-    employeeRepository.save(employee);
-    emailNotification.sendEmployeeEmail(employee);
+    Employee employeeObj =employeeRepository.save(employee);
+    if(employeeObj != null) {
+    emailNotification.sendEmployeeEmail(employeeObj);
+    }
   }
 
   @Transactional(readOnly = true)

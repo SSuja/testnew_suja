@@ -53,8 +53,9 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
             + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
       }
     }
-    if ( finishProductSampleIssueRepository.save(finishProductSampleIssue) != null) {
-      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssue);    
+    FinishProductSampleIssue finishProductSampleIssueObj = finishProductSampleIssueRepository.save(finishProductSampleIssue);
+    if (finishProductSampleIssueObj != null) {
+      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);    
     }
   }
 

@@ -49,8 +49,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     incomingSample.setStatus(Status.NEW);
     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
     incomingSample.setDate(date);
-    if (incomingSampleRepository.save(incomingSample) != null) {
-      emailNotification.sendIncomingSampleEmail(incomingSample);
+    IncomingSample incomingSampleObj = incomingSampleRepository.save(incomingSample);
+    if ( incomingSampleObj!= null) {
+      emailNotification.sendIncomingSampleEmail(incomingSampleObj);
     }
   }
 

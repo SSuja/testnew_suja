@@ -21,9 +21,10 @@ public class PlantServiceImpl implements PlantService {
   private EmailNotification emailNotification;
 
   @Transactional
-  public Plant savePlant(Plant plant) {  
-    if (plantRepository.save(plant) != null) {
-      emailNotification.sendPlantCreationEmail(plant);
+  public Plant savePlant(Plant plant) { 
+    Plant plantObj = plantRepository.save(plant);
+    if (plantObj != null) {
+      emailNotification.sendPlantCreationEmail(plantObj);
     }
     return plantRepository.save(plant);
   }

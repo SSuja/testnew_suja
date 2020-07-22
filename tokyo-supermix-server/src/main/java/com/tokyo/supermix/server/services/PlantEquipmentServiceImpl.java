@@ -27,13 +27,13 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
   @Transactional
   public void savePlantEquipment(PlantEquipment plantequipment) {
-    if (plantEquipmentRepository.save(plantequipment) != null)
-      emailNotification.sendPlantEquipmentCalibrationEmail(plantequipment);
+    PlantEquipment plantequipmentObj = plantEquipmentRepository.save(plantequipment);
+    if (plantequipmentObj != null)
+      emailNotification.sendPlantEquipmentCalibrationEmail(plantequipmentObj);
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipments() {
-
     return plantEquipmentRepository.findAll();
   }
 

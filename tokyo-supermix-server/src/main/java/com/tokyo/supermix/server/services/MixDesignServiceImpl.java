@@ -51,8 +51,9 @@ public class MixDesignServiceImpl implements MixDesignService {
         mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
       }
     }
-    if (mixDesignRepository.save(mixDesign) != null) {
-      emailNotification.sendMixDesignCreationEmail(mixDesign);
+    MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
+    if (mixDesignObj != null) {
+      emailNotification.sendMixDesignCreationEmail(mixDesignObj);
     }
     return mixDesign.getCode();
   }

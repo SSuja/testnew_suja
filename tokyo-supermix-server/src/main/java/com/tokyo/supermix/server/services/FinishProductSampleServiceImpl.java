@@ -54,8 +54,9 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
 
     finishProductSample.setStatus(Status.NEW);
-    if (finishProductSampleRepository.save(finishProductSample) != null) {
-      emailNotification.sendFinishProductSampleEmail(finishProductSample);
+    FinishProductSample finishProductSampleObj = finishProductSampleRepository.save(finishProductSample);
+    if (finishProductSampleObj != null) {
+      emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
   }
 

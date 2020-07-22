@@ -22,7 +22,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional
   public void saveRawMaterial(RawMaterial rawMaterial) {
-    if (rawMaterialRepository.save(rawMaterial) != null) {
+    RawMaterial rawMaterialObj= rawMaterialRepository.save(rawMaterial);
+    if (rawMaterialObj != null) {
       emailNotification.sendRawmaterialCreationEmail(rawMaterial);
     }
   }
