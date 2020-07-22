@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,16 +71,18 @@ public class EmailPointsController {
 
   @PutMapping(value = EndpointURI.EMAIL_POINT)
   public ResponseEntity<Object> updateEmailPointsStatus(
-      @RequestBody EmailPointsRequestDto emailPointsRequestDto) {
-    if (emailPointsService.isEmailPointIdExists(emailPointsRequestDto.getId())) {
-      emailPointsService
-          .updateEmailPointStatus(mapper.map(emailPointsRequestDto, EmailPoints.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_POINT_SUCCESS),
-          HttpStatus.OK);
+      @RequestBody List<EmailPointsRequestDto> emailPointsRequestDtoList) {
+    for (EmailPointsRequestDto emailPointsRequestDto : emailPointsRequestDtoList) {
+      if (emailPointsService.isEmailPointIdExists(emailPointsRequestDto.getId())) {
+        emailPointsService
+            .updateEmailPointStatus(mapper.map(emailPointsRequestDto, EmailPoints.class));
+      } else {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_POINT_ID,
+            validationFailureStatusCodes.getEmailPointsNotExist()), HttpStatus.BAD_REQUEST);
+      }
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_POINT_ID,
-        validationFailureStatusCodes.getEmailPointsNotExist()), HttpStatus.BAD_REQUEST);
-
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_POINT_SUCCESS),
+        HttpStatus.OK);
   }
 }

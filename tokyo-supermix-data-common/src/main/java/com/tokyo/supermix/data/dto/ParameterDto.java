@@ -10,7 +10,6 @@ public class ParameterDto {
 	@NotEmpty(message = "{parameterDto.name.empty}")
 	private String name;
 	private ParameterType parameterType;
-	private Long days;
 
 	public Long getId() {
 		return id;
@@ -34,13 +33,5 @@ public class ParameterDto {
 
 	public void setParameterType(ParameterType parameterType) {
 		this.parameterType = parameterType;
-	}
-
-	public Long getDays() {
-		return days;
-	}
-
-	public void setDays(Long days) {
-		this.days = days;
 	}
 }

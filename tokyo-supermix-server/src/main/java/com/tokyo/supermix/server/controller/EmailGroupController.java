@@ -1,6 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.validation.Valid;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,9 +49,8 @@ public class EmailGroupController {
   }
 
   @PostMapping(value = EndpointURI.EMAIL_GROUP)
-  public ResponseEntity<Object> createGroup(@Valid @RequestBody EmailGroupDto emailGroupDto) {
+  public ResponseEntity<Object> createGroup(@RequestBody EmailGroupDto emailGroupDto) {
     emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
-
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_GROUP_SUCCESS),
         HttpStatus.OK);
@@ -70,25 +69,30 @@ public class EmailGroupController {
   }
 
   @PutMapping(value = EndpointURI.EMAIL_GROUP)
-  public ResponseEntity<Object> updateEmailGroup(@Valid @RequestBody EmailGroupDto emailGroupDto) {
-    if (emailGroupService.isEmailGroupExist(emailGroupDto.getId())) {
-      if (emailGroupDto.isStatus() == true) {
-        if (emailGroupService.isEmailPointsStatus(emailGroupDto)) {
-          emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
-          return new ResponseEntity<>(
-              new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
-              HttpStatus.OK);
+  public ResponseEntity<Object> updateEmailGroup(@RequestBody List<EmailGroupDto> emailGroupDtos) {
+    for (EmailGroupDto emailGroupDto : emailGroupDtos) {
+      if (emailGroupService.isEmailGroupExist(emailGroupDto.getId())) {
+        if (emailGroupDto.isStatus() == true) {
+          if (emailGroupService.isEmailPointsStatus(emailGroupDto)) {
+            emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
+          } else {
+            return new ResponseEntity<>(
+                new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
+                    Constants.EMAIL_POINTS_STATUS_ACTIVE),
+                HttpStatus.BAD_REQUEST);
+          }
         }
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
-            Constants.EMAIL_POINTS_STATUS_ACTIVE), HttpStatus.BAD_REQUEST);
+        if (emailGroupDto.isStatus() == false) {
+          emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
+        }
+      } else {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP_ID,
+            validationFailureStatusCodes.getEmailGroupNotExist()), HttpStatus.BAD_REQUEST);
       }
-      emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
-          HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP_ID,
-        validationFailureStatusCodes.getEmailGroupNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE)

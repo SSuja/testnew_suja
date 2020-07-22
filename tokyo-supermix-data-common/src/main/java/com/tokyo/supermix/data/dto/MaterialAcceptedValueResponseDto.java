@@ -1,13 +1,17 @@
 package com.tokyo.supermix.data.dto;
 
-public class MaterialAcceptedValueResponseDto {
+import com.tokyo.supermix.data.enums.Condition;
 
+public class MaterialAcceptedValueResponseDto {
   private Long id;
   private Double minValue;
   private Double maxValue;
   private RawMaterialResponseDto rawMaterial;
   private TestConfigureResponseDto testConfigure;
-  private UnitDto unit;
+  private Double value;
+  private TestParameterResponseDto testParameter;
+  private Condition conditionRange;
+  private boolean finalResult;
 
   public Long getId() {
     return id;
@@ -49,11 +53,35 @@ public class MaterialAcceptedValueResponseDto {
     this.testConfigure = testConfigure;
   }
 
-  public UnitDto getUnit() {
-    return unit;
+  public Double getValue() {
+    return value;
   }
 
-  public void setUnit(UnitDto unit) {
-    this.unit = unit;
+  public void setValue(Double value) {
+    this.value = value;
+  }
+
+  public TestParameterResponseDto getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameterResponseDto testParameter) {
+    this.testParameter = testParameter;
+  }
+
+  public Condition getConditionRange() {
+    return conditionRange;
+  }
+
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
+  }
+
+  public boolean isFinalResult() {
+    return finalResult;
+  }
+
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
   }
 }

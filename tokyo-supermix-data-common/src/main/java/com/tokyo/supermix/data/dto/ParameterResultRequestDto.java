@@ -11,6 +11,7 @@ public class ParameterResultRequestDto {
   private Double value;
   private Long testParameterId;
   private String materialTestCode;
+  private Long testEquationId;
 
   public Long getId() {
     return id;
@@ -50,5 +51,13 @@ public class ParameterResultRequestDto {
 
   public void setMaterialTestCode(String materialTestCode) {
     this.materialTestCode = materialTestCode;
+  }
+
+  public Long getTestEquationId() {
+    return testEquationId;
+  }
+
+  public void setTestEquationId(Long testEquationId) {
+    this.testEquationId = testEquationId;
   }
 }

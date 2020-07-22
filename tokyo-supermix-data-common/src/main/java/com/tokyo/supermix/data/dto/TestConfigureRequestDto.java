@@ -12,7 +12,6 @@ public class TestConfigureRequestDto {
   private boolean coreTest;
   private String description;
   private String testProcedure;
-  private String resultLabel;
   @NotNull(message = "{testConfigureRequestDto.prefix.null}")
   @NotEmpty(message = "{testConfigureRequestDto.prefix.empty}")
   @Pattern(regexp = "^[a-zA-Z0-9\\s-]+$*",
@@ -20,19 +19,8 @@ public class TestConfigureRequestDto {
   private String prefix;
   private Long materialCategoryId;
   private Long materialSubCategoryId;
-  private Long equationId;
-  private boolean equationExists;
-  private boolean bulkTrial;
-  private Long days;
-
-  public Long getDays() {
-    return days;
-  }
-
-  public void setDays(Long days) {
-    this.days = days;
-  }
-
+  private boolean active;
+  
   public Long getId() {
     return id;
   }
@@ -49,6 +37,14 @@ public class TestConfigureRequestDto {
     this.testId = testId;
   }
 
+  public TestType getTestType() {
+    return testType;
+  }
+
+  public void setTestType(TestType testType) {
+    this.testType = testType;
+  }
+
   public boolean isCoreTest() {
     return coreTest;
   }
@@ -59,22 +55,6 @@ public class TestConfigureRequestDto {
 
   public String getDescription() {
     return description;
-  }
-
-  public Long getMaterialCategoryId() {
-    return materialCategoryId;
-  }
-
-  public void setMaterialCategoryId(Long materialCategoryId) {
-    this.materialCategoryId = materialCategoryId;
-  }
-
-  public Long getMaterialSubCategoryId() {
-    return materialSubCategoryId;
-  }
-
-  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
-    this.materialSubCategoryId = materialSubCategoryId;
   }
 
   public void setDescription(String description) {
@@ -97,43 +77,27 @@ public class TestConfigureRequestDto {
     this.prefix = prefix;
   }
 
-  public TestType getTestType() {
-    return testType;
+  public Long getMaterialCategoryId() {
+    return materialCategoryId;
   }
 
-  public void setTestType(TestType testType) {
-    this.testType = testType;
+  public void setMaterialCategoryId(Long materialCategoryId) {
+    this.materialCategoryId = materialCategoryId;
   }
 
-  public Long getEquationId() {
-    return equationId;
+  public Long getMaterialSubCategoryId() {
+    return materialSubCategoryId;
   }
 
-  public void setEquationId(Long equationId) {
-    this.equationId = equationId;
+  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
+    this.materialSubCategoryId = materialSubCategoryId;
   }
 
-  public boolean isEquationExists() {
-    return equationExists;
+  public boolean isActive() {
+    return active;
   }
 
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
-  }
-
-  public String getResultLabel() {
-    return resultLabel;
-  }
-
-  public void setResultLabel(String resultLabel) {
-    this.resultLabel = resultLabel;
-  }
-
-  public boolean isBulkTrial() {
-    return bulkTrial;
-  }
-
-  public void setBulkTrial(boolean bulkTrial) {
-    this.bulkTrial = bulkTrial;
+  public void setActive(boolean active) {
+    this.active = active;
   }
 }

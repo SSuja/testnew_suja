@@ -3,7 +3,6 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -137,20 +136,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     }
     if (status != null) {
       booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
-    }
-    if (averageMax != null && averageMax != 0 && averageMin == null && average == null) {
-      booleanBuilder.and(QMaterialTest.materialTest.average.lt(averageMax));
-    }
-    if (averageMin != null && averageMin != 0 && averageMax == null && average == null) {
-      booleanBuilder.and(QMaterialTest.materialTest.average.gt(averageMin));
-    }
-
-    if (averageMin != null && averageMin != 0 && averageMax != null && averageMax != null
-        && average == null) {
-      booleanBuilder.and(QMaterialTest.materialTest.average.between(averageMin, averageMax));
-    }
-    if (average != null && average != 0 && averageMax == null && averageMin == null) {
-      booleanBuilder.and(QMaterialTest.materialTest.average.eq(average));
     }
     if (testName != null && !testName.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.eq(testName));

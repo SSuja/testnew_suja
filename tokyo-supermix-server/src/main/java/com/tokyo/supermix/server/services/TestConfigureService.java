@@ -4,11 +4,12 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
+import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.TestType;
 
 public interface TestConfigureService {
-  public Long saveTestConfigure(TestConfigure testConfigure);
+  public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto);
 
   public boolean isTestConfigureExist(Long id);
 
@@ -39,4 +40,6 @@ public interface TestConfigureService {
 
   public List<TestConfigure> getTestConfiguresByMaterialSubCategoryAndTestType(
       Long materialSubCategoryId, TestType testType);
+
+  public Long updateTestConfigure(TestConfigure testConfigure);
 }
