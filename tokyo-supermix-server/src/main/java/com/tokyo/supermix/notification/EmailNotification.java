@@ -123,17 +123,22 @@ public class EmailNotification {
     EmailPoints emailPoints = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(
         materialTest.getTestConfigure().getMaterialSubCategory().getId(),
         materialTest.getTestConfigure().getTest().getId());
-    String mailBody = "project";
-    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
+        String  mailBody="<ul><li>Incoming Sample <b>" +materialTest.getIncomingSample().getCode()
+            + "</b></li><li> Test Name <b>" + materialTest.getTestConfigure().getTest().getName()
+            + "</b></li><li> Material <b>"+ materialTest.getTestConfigure().getTest().getName()
+            + "</b></li><li> Supplier <b>"+  materialTest.getIncomingSample().getSupplier().getName()
+            + "</b></li><li> Test Results <b>"+ materialTest.getAverage()
+            + "</b></li><li> Status <b>"+ materialTest.getStatus() +"</b></li></ul>";
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_NEW_PROJECT, mailBody);
+            Constants.SUBJECT_NEW_PROJECT, mailBody);                            
       }
     }
   }
