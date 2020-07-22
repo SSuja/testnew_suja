@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -27,6 +28,8 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   RawMaterialRepository rawMaterialRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
   public void createIncomingSample(IncomingSample incomingSample) {
@@ -46,7 +49,10 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     incomingSample.setStatus(Status.NEW);
     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
     incomingSample.setDate(date);
-    incomingSampleRepository.save(incomingSample);
+    IncomingSample incomingSampleObj = incomingSampleRepository.save(incomingSample);
+    if ( incomingSampleObj!= null) {
+      emailNotification.sendIncomingSampleEmail(incomingSampleObj);
+    }
   }
 
   private Integer getNumberFromCode(String code) {

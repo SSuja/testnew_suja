@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -25,6 +26,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Autowired
   private MixDesignRepository mixDesignRepository;
@@ -51,7 +54,10 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
 
     finishProductSample.setStatus(Status.NEW);
-    finishProductSampleRepository.save(finishProductSample);
+    FinishProductSample finishProductSampleObj = finishProductSampleRepository.save(finishProductSample);
+    if (finishProductSampleObj != null) {
+      emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
+    }
   }
 
   private Integer getNumberFromCode(String code) {

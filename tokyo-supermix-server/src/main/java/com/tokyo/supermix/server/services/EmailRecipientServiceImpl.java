@@ -10,7 +10,6 @@ import com.tokyo.supermix.data.dto.EmailRecipientRequestDto;
 import com.tokyo.supermix.data.dto.EmailRecipientResponseDto;
 import com.tokyo.supermix.data.entities.EmailRecipient;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
-import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.data.enums.RecipientType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailRecipientRepository;
@@ -33,7 +32,6 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         emailRecipientRequestDtoObj.setPlantRoleId(plantRoleId);
         emailRecipientRequestDtoObj.setEmailGroupId(emailRecipientRequestDto.getEmailGroupId());
         emailRecipientRequestDtoObj.setRecipientType(emailRecipientRequestDto.getRecipientType());
-        emailRecipientRequestDtoObj.setPlantCode(emailRecipientRequestDto.getPlantCode());
         emailRecipientRepository.save(mapper.map(emailRecipientRequestDtoObj, EmailRecipient.class));
       }
     }
@@ -43,7 +41,6 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
         emailRecipientRequestDtoObj.setUserId(userId);
         emailRecipientRequestDtoObj.setEmailGroupId(emailRecipientRequestDto.getEmailGroupId());
         emailRecipientRequestDtoObj.setRecipientType(emailRecipientRequestDto.getRecipientType());
-        emailRecipientRequestDtoObj.setPlantCode(emailRecipientRequestDto.getPlantCode());
         emailRecipientRepository.save(mapper.map(emailRecipientRequestDtoObj, EmailRecipient.class));
       }
     }
@@ -71,10 +68,10 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   }
 
   @Transactional(readOnly = true)
-  public List<String> getEmailsByEmailNotificationAndPlantCode(EmailNotifications emailNotifications,
+  public List<String> getEmailsByEmailNotificationAndPlantCode(String name,
       String plantCode) {
     List<EmailRecipient> emailRecipientList =
-        emailRecipientRepository.findByEmailGroupEmailNotificationsAndPlantCode(emailNotifications, plantCode);
+        emailRecipientRepository.findByEmailGroupEmailPointsNameAndEmailGroupPlantCode(name, plantCode);
     List<String> emaillist = new ArrayList<String>();
     emailRecipientList.forEach(emailRecipient -> {
       if (emailRecipient.getPlantRole() != null) {
@@ -112,5 +109,25 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   @Transactional(readOnly = true)
   public List<EmailRecipient> getEmailRecipient() {
     return emailRecipientRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public List<String> getEmailsByEmailNotification(String groupName) {
+    List<EmailRecipient> emailRecipientList =
+        emailRecipientRepository.findByEmailGroupEmailPointsName(groupName);
+    List<String> emaillist = new ArrayList<String>();
+    emailRecipientList.forEach(emailRecipient -> {
+      if (emailRecipient.getPlantRole() != null) {
+        List<UserPlantRole> userPlantRoleList =
+            userPlantRoleRepository.findByPlantRoleId(emailRecipient.getPlantRole().getId());
+        userPlantRoleList.forEach(userPlantRole -> {
+          emaillist.add(userPlantRole.getUser().getEmployee().getEmail());
+        });
+      }
+      if (emailRecipient.getUser() != null) {
+        emaillist.add(emailRecipient.getUser().getEmployee().getEmail());
+      }
+    });
+    return emaillist;
   }
 }

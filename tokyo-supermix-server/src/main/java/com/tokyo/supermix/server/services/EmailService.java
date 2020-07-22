@@ -78,7 +78,7 @@ public class EmailService {
         mimeMessage.setRecipients(Message.RecipientType.TO, convertStringArraytoString(to));
         mimeMessage.setSubject(subject);
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        helper.setText("<html><body>" + body + "</body></html>", true);
+        helper.setText("<html><body>"+ body + "</body></html>", true);
       }
     };
     try {

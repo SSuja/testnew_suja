@@ -4,47 +4,83 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.EmailGroupDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
-import com.tokyo.supermix.data.enums.EmailNotifications;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
+import com.tokyo.supermix.data.repositories.EmailPointsRepository;
+import com.tokyo.supermix.util.MailGroupConstance;
 
 @Service
 public class EmailGroupServiceImpl implements EmailGroupService {
-	@Autowired
-	private EmailGroupRepository emailGroupRepository;
+  @Autowired
+  private EmailGroupRepository emailGroupRepository;
+  @Autowired
+  EmailPointsRepository emailPointsRepository;
+  @Autowired
+  private Mapper mapper;
 
-	@Transactional(readOnly = true)
-	public List<EmailGroup> getAllEmailGroups() {
-		return emailGroupRepository.findAll();
-	}
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroups() {
+    return emailGroupRepository.findAll();
+  }
 
-	@Transactional(readOnly = true)
-	public List<EmailGroup> getAllEmailGroupsBySchedule(Boolean schedule) {
-		return emailGroupRepository.findBySchedule(schedule);
-	}
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsBySchedule(Boolean schedule) {
+    return emailGroupRepository.findBySchedule(schedule);
+  }
 
-	@Transactional
-	public void saveEmailGroup(EmailGroup emailGroup) {
+  @Transactional 
+  public void saveEmailGroup(EmailGroupDto emailGroupDto) {
+    System.out.println("MailGroupConstance.MIX_DESIGN_EMAIL_GROUP "+MailGroupConstance.MIX_DESIGN_EMAIL_GROUP);
+    System.out.println("emailGroup.getEmailPoints().getName() "+emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName());
+    if (emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName().equalsIgnoreCase(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP)
+        || emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName().equalsIgnoreCase(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP)) {
+      emailGroupDto.setSchedule(true);
+    } else {
+      emailGroupDto.setSchedule(false);
+    }
+    emailGroupRepository.save(mapper.map(emailGroupDto, EmailGroup.class));
+  }
 
-		emailGroupRepository.save(emailGroup);
-	}
+  @Transactional
+  public void deleteEmailGroup(Long id) {
+    emailGroupRepository.deleteById(id);
+  }
 
-	
-	@Transactional
-	public void deleteEmailGroup(Long id) {
-		emailGroupRepository.deleteById(id);
-	}
-	
+  @Transactional(readOnly = true)
+  public boolean isEmailGroupExist(Long id) {
+    return emailGroupRepository.existsById(id);
+  }
 
-	@Override
-	public boolean isEmailGroupNameExist(EmailNotifications emailNotifications) {
-		
-		return emailGroupRepository.existsByEmailNotifications(emailNotifications);
-	}
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsByPlantCode(String plantCode) {
 
-	@Transactional(readOnly = true)
-	public boolean isEmailGroupExist(Long id) {
-		
-		return emailGroupRepository.existsById(id);
-	}
+    return emailGroupRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatus(String plantCode, boolean status) {
+    return emailGroupRepository.findByPlantCodeAndStatus(plantCode, status);
+  }
+
+  @Transactional
+  public void updateStatus(Long emailPointsId) {
+    emailGroupRepository.findByEmailPointsId(emailPointsId).forEach(emailGroup -> {
+      EmailGroupDto emailGroupDto = new EmailGroupDto();
+      emailGroupDto.setStatus(emailGroup.isStatus());
+      emailGroupRepository.save(emailGroup);
+    });
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isEmailPointsStatus(EmailGroupDto emailGroupDto) {
+    if (emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get()
+        .isActive() == emailGroupDto.isStatus()) {
+      return true;
+    }
+    return false;
+  }
+
+
 }

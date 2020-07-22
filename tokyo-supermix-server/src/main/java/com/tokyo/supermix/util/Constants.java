@@ -19,6 +19,20 @@ public class Constants {
   public static final String DELIVERY_REPORT = "delivery-report.pdf";
   public static final String SUMMARY_REPORT = "summary-report.pdf";
   public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
+  public static final String SUBJECT_NEW_PROJECT = "Notification : About Project Creation ";
+  public static final String SUBJECT_NEW_SUPPLIER = "Notification : About Supplier Creation ";
+  public static final String SUBJECT_MATRIAL_TEST = "Notification : About Matrial test result ";
+  public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
+  public static final String SUBJECT_NEW_INCOMING_SAMPLE = "Notification : About Incoming Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE = "Notification : About Finish Product Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE = "Notification : About Finish Product Sample Issue Creation ";
+  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
+  public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
+  public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
+  public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
+  public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
+  
+  
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";
   // for plants
@@ -502,6 +516,7 @@ public class Constants {
   public static final String EMAIL_GROUP_PLANT_EQUIPMENT_CALIBRATION = "Calibration Group";
   public static final String EMAIL_GROUP_MIX_DESIGN = "Mix Design Group";
   public static final String EMAIL_GROUP_INCOMING_SAMPLE_STATUS = "Incoming Sample Group";
+  
 
   /* email notification days */
   public static final String ADD_EMAIL_NOTIFICATION_DAYS =
@@ -513,7 +528,17 @@ public class Constants {
   public static final String EMAIL_NOTIFICATION_DAY_DELETED =
       "Email Notification Days Successfully Deleted";
   public static final String EMAIL_NOTIFICATION_DAY_ID = "emailNotificationDayId";
-
+  
+  /* email points */
+  public static final String EMAIL_POINT = "emailPoint";
+  public static final String EMAIL_POINTS = "emailPoints";
+  public static final String EMAIL_POINT_ID = "emailPointId";
+  public static final String ADD_EMAIL_POINT_SUCCESS = "Email Points Added Successfully";
+  public static final String UPDATE_EMAIL_POINT_SUCCESS = "Email Points Updated Successfully";
+  public static final String EMAIL_POINTS_STATUS_ACTIVE = "Email Points is Inactive";
+  
+ 
+ 
   /*
    * Constants for Test Equation validation key & Success messages
    */

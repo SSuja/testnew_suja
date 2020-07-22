@@ -22,6 +22,7 @@ import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -45,6 +46,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 	ParameterResultRepository parameterResultRepository;
 	@Autowired
 	MaterialTestService materialTestService;
+	@Autowired
+  private EmailNotification emailNotification;
 
 	@Transactional
 	public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {

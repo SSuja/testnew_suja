@@ -2,14 +2,13 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
-import com.tokyo.supermix.data.enums.EmailNotifications;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "email_group")
@@ -18,10 +17,15 @@ public class EmailGroup extends DateAudit implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  @Enumerated(EnumType.ORDINAL)
-  private EmailNotifications emailNotifications;
   private boolean schedule;
+  private boolean status;
   private static final long serialVersionUID = 1L;
+  @ManyToOne
+  @JoinColumn(name = "emailPointsId", nullable = false)
+  private EmailPoints emailPoints;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = true)
+  private Plant plant;
 
   public Long getId() {
     return id;
@@ -39,15 +43,6 @@ public class EmailGroup extends DateAudit implements Serializable {
     this.name = name;
   }
 
-
-  public EmailNotifications getEmailNotifications() {
-    return emailNotifications;
-  }
-
-  public void setEmailNotifications(EmailNotifications emailNotifications) {
-    this.emailNotifications = emailNotifications;
-  }
-
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
@@ -58,5 +53,29 @@ public class EmailGroup extends DateAudit implements Serializable {
 
   public void setSchedule(boolean schedule) {
     this.schedule = schedule;
+  }
+
+  public EmailPoints getEmailPoints() {
+    return emailPoints;
+  }
+
+  public void setEmailPoints(EmailPoints emailPoints) {
+    this.emailPoints = emailPoints;
+  }
+
+  public boolean isStatus() {
+    return status;
+  }
+
+  public void setStatus(boolean status) {
+    this.status = status;
+  }
+
+  public Plant getPlant() {
+    return plant;
+  }
+
+  public void setPlant(Plant plant) {
+    this.plant = plant;
   }
 }
