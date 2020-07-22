@@ -13,7 +13,7 @@ public interface EmailGroupService {
 
   public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatus(String plantCode, boolean status);
 
-  public void saveEmailGroup(EmailGroup emailGroup);
+  public void saveEmailGroup(EmailGroupDto emailGroupDto);
 
   public void deleteEmailGroup(Long id);
 

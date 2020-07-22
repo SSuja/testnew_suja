@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.EmailGroupDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 import com.tokyo.supermix.util.MailGroupConstance;
@@ -16,6 +17,8 @@ public class EmailGroupServiceImpl implements EmailGroupService {
   private EmailGroupRepository emailGroupRepository;
   @Autowired
   EmailPointsRepository emailPointsRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<EmailGroup> getAllEmailGroups() {
@@ -28,15 +31,16 @@ public class EmailGroupServiceImpl implements EmailGroupService {
   }
 
   @Transactional 
-  public void saveEmailGroup(EmailGroup emailGroup) {
-    if (emailGroup.getEmailPoints().getName() == MailGroupConstance.MIX_DESIGN_EMAIL_GROUP
-        || emailGroup.getEmailPoints()
-            .getName() == MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP) {
-      emailGroup.setSchedule(true);
+  public void saveEmailGroup(EmailGroupDto emailGroupDto) {
+    System.out.println("MailGroupConstance.MIX_DESIGN_EMAIL_GROUP "+MailGroupConstance.MIX_DESIGN_EMAIL_GROUP);
+    System.out.println("emailGroup.getEmailPoints().getName() "+emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName());
+    if (emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName().equalsIgnoreCase(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP)
+        || emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName().equalsIgnoreCase(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP)) {
+      emailGroupDto.setSchedule(true);
     } else {
-      emailGroup.setSchedule(false);
+      emailGroupDto.setSchedule(false);
     }
-    emailGroupRepository.save(emailGroup);
+    emailGroupRepository.save(mapper.map(emailGroupDto, EmailGroup.class));
   }
 
   @Transactional

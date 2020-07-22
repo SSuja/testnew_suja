@@ -583,12 +583,12 @@ public final class EndpointURI {
   /*
    * Email Points
    */
-  public static final String EMAIL_POINT = BASE_API_PATH + "email_point";
-  public static final String EMAIL_POINTS = BASE_API_PATH + "email_points";
+  public static final String EMAIL_POINT = BASE_API_PATH + "email-point";
+  public static final String EMAIL_POINTS = BASE_API_PATH + "email-points";
   public static final String EMAIL_POINTS_BY_STATUS =
       EMAIL_POINT  + SLASH + "{status}";
   public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
-      EMAIL_POINT  + SLASH + "admin_status"+ SLASH + "{status}";
+      EMAIL_POINT  + SLASH + "admin-status"+ SLASH + "{status}";
   
   private EndpointURI() {}
 }

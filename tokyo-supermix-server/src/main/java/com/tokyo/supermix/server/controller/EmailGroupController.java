@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EmailGroupDto;
-import com.tokyo.supermix.data.entities.EmailGroup;
+import com.tokyo.supermix.data.dto.EmailGroupResponseDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -37,20 +37,20 @@ public class EmailGroupController {
   @GetMapping(value = EndpointURI.EMAIL_GROUPS)
   public ResponseEntity<Object> getAllEmailGroups() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroups(), EmailGroup.class),
+        mapper.map(emailGroupService.getAllEmailGroups(), EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_SHEDULE)
   public ResponseEntity<Object> getAllEmailGroupsBySchedule(@PathVariable Boolean schedule) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsBySchedule(schedule), EmailGroup.class),
+        mapper.map(emailGroupService.getAllEmailGroupsBySchedule(schedule), EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   @PostMapping(value = EndpointURI.EMAIL_GROUP)
   public ResponseEntity<Object> createGroup(@RequestBody EmailGroupDto emailGroupDto) {
-    emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
+    emailGroupService.saveEmailGroup(emailGroupDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_GROUP_SUCCESS),
         HttpStatus.OK);
@@ -74,7 +74,7 @@ public class EmailGroupController {
       if (emailGroupService.isEmailGroupExist(emailGroupDto.getId())) {
         if (emailGroupDto.isStatus() == true) {
           if (emailGroupService.isEmailPointsStatus(emailGroupDto)) {
-            emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
+            emailGroupService.saveEmailGroup(emailGroupDto);
           } else {
             return new ResponseEntity<>(
                 new BasicResponse<>(RestApiResponseStatus.VALIDATION_FAILURE,
@@ -83,7 +83,7 @@ public class EmailGroupController {
           }
         }
         if (emailGroupDto.isStatus() == false) {
-          emailGroupService.saveEmailGroup(mapper.map(emailGroupDto, EmailGroup.class));
+          emailGroupService.saveEmailGroup(emailGroupDto);
         }
       } else {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP_ID,
@@ -98,7 +98,7 @@ public class EmailGroupController {
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE)
   public ResponseEntity<Object> getAllEmailGroupsByPlantCode(@PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode), EmailGroupDto.class),
+        mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode), EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -107,7 +107,7 @@ public class EmailGroupController {
       @PathVariable String plantCode, @PathVariable boolean status) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
         mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatus(plantCode, status),
-            EmailGroupDto.class),
+            EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
