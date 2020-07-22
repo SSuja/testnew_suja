@@ -10,7 +10,6 @@ public class MaterialTestTrialRequestDto {
   @NotNull(message = "{materialTestTrialRequestDto.materialTestCode.null}")
   @NotEmpty(message = "{materialTestTrialRequestDto.materialTestCode.empty}")
   private String materialTestCode;
-  private Long testEquationId;
 
   public String getCode() {
     return code;
@@ -34,13 +33,5 @@ public class MaterialTestTrialRequestDto {
 
   public void setMaterialTestCode(String materialTestCode) {
     this.materialTestCode = materialTestCode;
-  }
-
-  public Long getTestEquationId() {
-    return testEquationId;
-  }
-
-  public void setTestEquationId(Long testEquationId) {
-    this.testEquationId = testEquationId;
   }
 }

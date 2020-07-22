@@ -111,8 +111,9 @@ public class ParameterResultServiceImpl implements ParameterResultService {
 
   @Transactional(readOnly = true)
   public List<ParameterResult> getTestParamWithEquationByTestTrial(String materialTestTrialCode) {
-    return parameterResultRepository
-        .findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(materialTestTrialCode);
+    return null;
+//    return parameterResultRepository
+//        .findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(materialTestTrialCode);
   }
 
   public String getEquation(Long paramterEquationId) {

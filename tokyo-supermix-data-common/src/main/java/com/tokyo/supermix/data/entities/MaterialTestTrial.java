@@ -20,39 +20,39 @@ public class MaterialTestTrial extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialTestCode", nullable = false)
   private MaterialTest materialTest;
-  @ManyToOne
-  @JoinColumn(name = "testEquationId", nullable = false)
-  private TestEquation testEquation;
+
   public String getCode() {
     return code;
   }
+
   public void setCode(String code) {
     this.code = code;
   }
+
   public Long getTrialNo() {
     return trialNo;
   }
+
   public void setTrialNo(Long trialNo) {
     this.trialNo = trialNo;
   }
+
   public Date getTrialDate() {
     return trialDate;
   }
+
   public void setTrialDate(Date trialDate) {
     this.trialDate = trialDate;
   }
+
   public MaterialTest getMaterialTest() {
     return materialTest;
   }
+
   public void setMaterialTest(MaterialTest materialTest) {
     this.materialTest = materialTest;
   }
-  public TestEquation getTestEquation() {
-    return testEquation;
-  }
-  public void setTestEquation(TestEquation testEquation) {
-    this.testEquation = testEquation;
-  }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
   }

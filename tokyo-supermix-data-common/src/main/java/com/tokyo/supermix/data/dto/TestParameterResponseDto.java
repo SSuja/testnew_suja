@@ -13,7 +13,6 @@ public class TestParameterResponseDto {
   private TestParameterType type;
   private Double value;
   private Unit unit;
-  private boolean equationExists;
   private QualityParameterResponseDto qualityParameter;
   private boolean acceptedCriteria;
   private InputMethod inputMethods;
@@ -64,14 +63,6 @@ public class TestParameterResponseDto {
 
   public void setUnit(Unit unit) {
     this.unit = unit;
-  }
-
-  public boolean isEquationExists() {
-    return equationExists;
-  }
-
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
   }
 
   public TestParameterType getType() {

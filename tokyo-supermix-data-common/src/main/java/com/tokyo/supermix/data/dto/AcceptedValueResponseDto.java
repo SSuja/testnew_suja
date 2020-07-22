@@ -10,7 +10,7 @@ public class AcceptedValueResponseDto {
   private Double value;
   private TestParameterResponseDto testParameter;
   private Condition conditionRange;
-  private boolean isFinalResult;
+  private boolean finalResult;
 
   public Long getId() {
     return id;
@@ -69,10 +69,10 @@ public class AcceptedValueResponseDto {
   }
 
   public boolean isFinalResult() {
-    return isFinalResult;
+    return finalResult;
   }
 
-  public void setFinalResult(boolean isFinalResult) {
-    this.isFinalResult = isFinalResult;
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
   }
 }
