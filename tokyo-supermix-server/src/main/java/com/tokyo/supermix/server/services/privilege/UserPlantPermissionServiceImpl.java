@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
@@ -21,7 +22,6 @@ import com.tokyo.supermix.data.repositories.privilege.UserPlantPermissionReposit
 
 @Service
 public class UserPlantPermissionServiceImpl implements UserPlantPermissionService {
-
   @Autowired
   private UserPlantPermissionRepository userPlantPermissionRepository;
   @Autowired
@@ -32,6 +32,8 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
   UserPlantRoleRepository userPlantRoleRepository;
   @Autowired
   Mapper mapper;
+  @Autowired
+  private PlantRepository plantRepository;
 
   @Transactional(readOnly = true)
   public List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionsByUserId(Long userId) {
@@ -42,7 +44,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
   public boolean isUserIdExist(Long userId) {
     return userPlantPermissionRepository.existsByUserId(userId);
   }
-
+  
   private List<PlantRolePlantPermissionResponseDto> getMainModulesWithStatusByuserId(
       List<MainModule> MainModuleList, Long userId) {
     List<PlantRolePlantPermissionResponseDto> plantRolePlantPermissionResponseDtolist =
@@ -224,6 +226,21 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     }
     return subStatus;
   }
+
+	public boolean isPlantCodeExists(String plantCode) {
+		return userPlantPermissionRepository.existsByPlantPermissionPlantCode(plantCode) ;
+	}
+	
+	public List<PlantResponseDto> getPlantsByNonPlantUserId(Long userId) {
+		List<PlantResponseDto>  plantList = new ArrayList<PlantResponseDto>();
+		plantRepository.findAll().forEach(plant->{
+			if(isPlantCodeExists(plant.getCode())) {
+				PlantResponseDto plantObj = mapper.map(plant, PlantResponseDto.class);
+				plantList.add(plantObj);
+			} 
+		});
+		return plantList;
+	}
 
 }
 
