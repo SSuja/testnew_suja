@@ -3,8 +3,16 @@ package com.tokyo.supermix.data.dto.report;
 public class AcceptedValueDto {
   private Double minValue;
   private Double maxValue;
-  private String testName;
-  private String unit;
+  private Double value;
+  private String testParameterName;
+
+  public String getTestParameterName() {
+    return testParameterName;
+  }
+
+  public void setTestParameterName(String testParameterName) {
+    this.testParameterName = testParameterName;
+  }
 
   public Double getMinValue() {
     return minValue;
@@ -22,19 +30,11 @@ public class AcceptedValueDto {
     this.maxValue = maxValue;
   }
 
-  public String getTestName() {
-    return testName;
+  public Double getValue() {
+    return value;
   }
 
-  public void setTestName(String testName) {
-    this.testName = testName;
-  }
-
-  public String getUnit() {
-    return unit;
-  }
-
-  public void setUnit(String unit) {
-    this.unit = unit;
+  public void setValue(Double value) {
+    this.value = value;
   }
 }
