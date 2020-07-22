@@ -200,9 +200,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 		materialTest.setAverage(roundDoubleValue(average));
 		materialTest.setStatus(status);
 		materialTestRepository.save(materialTest);
-		 if (materialTestRepository.save(materialTest) != null) {
-		      emailNotification.sendTestEmail(materialTest);
-		    }
 		return materialTest;
 	}
 

@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -38,6 +39,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private GenerateReportService generateReportService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -215,12 +218,16 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       MaterialTest materialTestObj) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
+    emailNotification.sendTestEmail(materialTestObj);
+
     if (!status.equals(Status.PROCESS)) {
       try {
         generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
+
       } catch (Exception e) {
         System.out.println(e.getMessage());
         e.printStackTrace();
+
       }
     }
     if (materialTestObj.getTestConfigure().getTest().getName()
