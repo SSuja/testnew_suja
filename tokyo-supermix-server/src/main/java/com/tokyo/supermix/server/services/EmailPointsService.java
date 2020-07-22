@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
+import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.entities.EmailPoints;
 
 public interface EmailPointsService {
@@ -17,4 +18,6 @@ public interface EmailPointsService {
   void updateEmailPointStatus(EmailPoints emailPoints);
 
   boolean isEmailPointIdExists(Long id);
+
+  void createEmailPoints(TestConfigureRequestDto testConfigureRequestDto);
 }

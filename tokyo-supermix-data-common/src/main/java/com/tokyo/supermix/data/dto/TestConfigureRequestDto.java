@@ -19,7 +19,8 @@ public class TestConfigureRequestDto {
   private String prefix;
   private Long materialCategoryId;
   private Long materialSubCategoryId;
-
+  private boolean active;
+  
   public Long getId() {
     return id;
   }
@@ -90,5 +91,13 @@ public class TestConfigureRequestDto {
 
   public void setMaterialSubCategoryId(Long materialSubCategoryId) {
     this.materialSubCategoryId = materialSubCategoryId;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
   }
 }

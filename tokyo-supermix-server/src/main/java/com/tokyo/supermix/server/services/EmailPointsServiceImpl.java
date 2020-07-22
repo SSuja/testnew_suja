@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
+import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 
@@ -17,9 +19,13 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   @Autowired
   private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
+  private MaterialCategoryService materialCategoryService;
+  @Autowired
   private TestService testService;
   @Autowired
   private EmailGroupRepository emailGroupRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public boolean isEmailPointsExist(EmailPointsRequestDto emailPointsRequestDto) {
@@ -61,5 +67,26 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   @Transactional(readOnly = true)
   public boolean isEmailPointIdExists(Long id) {
     return emailPointsRepository.existsById(id);
+  }
+
+  @Transactional
+  public void createEmailPoints(TestConfigureRequestDto testConfigureRequestDto) {
+    EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
+    String testName = testService.getTestById(testConfigureRequestDto.getTestId()).getName();
+    emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
+    emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
+    if (testConfigureRequestDto.getMaterialSubCategoryId() != null) {
+      String materialSubCategoryName = materialSubCategoryService
+          .getMaterialSubCategoryById(testConfigureRequestDto.getMaterialSubCategoryId()).getName();
+      emailPointsRequestDto.setName(materialSubCategoryName + "_" + testName);
+      emailPointsRequestDto
+          .setMaterialSubCategoryId(testConfigureRequestDto.getMaterialSubCategoryId());
+    } else {
+      String materialCategoryName = materialCategoryService
+          .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
+      emailPointsRequestDto.setName(materialCategoryName + "_" + testName);
+      emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
+    }
+    emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
   }
 }
