@@ -323,6 +323,9 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('54', 'mail_group_configuration', '15');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('193', 'mail_group_configuration', '54');
 
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('55', 'non_plant_user_privilege', '15');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('194', 'edit_other_plant_user_privilege', '55');
+
 INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`status`)VALUES
 (1,1,1,1),(2,1,2,1),(3,1,3,1),(4,1,4,1),(5,1,5,1),(6,1,6,1),(7,1,7,1),(8,1,8,1),(9,1,9,1),(10,1,10,1),
 (11,1,11,1),(12,1,12,1),(13,1,13,1),(14,1,14,1),(15,1,15,1),(16,1,16,1),(17,1,17,1),(18,1,18,1),(19,1,19,1),(20,1,20,1),(21,1,21,1),(22,1,22,1),(23,1,23,1),(24,1,24,1),(25,1,25,1),
@@ -338,4 +341,4 @@ INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`
 (156,1,156,1),(157,1,157,1),(158,1,158,1),(159,1,159,1),(160,1,160,1),(161,1,161,1),(162,1,162,1),(163,1,163,1),(168,1,168,1),(169,1,169,1),(170,1,170,1),
 (171,1,171,1),(172,1,172,1),(173,1,173,1),(174,1,174,1),(175,1,175,1),(176,1,176,1),(177,1,177,1),(178,1,178,1),(179,1,179,1),(180,1,180,1),
 (181,1,181,1),(182,1,182,1),(183,1,183,1),(184,1,184,1),(185,1,185,1),(186,1,186,1),(187,1,187,1),(188,1,188,1),(189,1,189,1),(190,1,190,1),
-(191,1,191,1),(192,1,192,1),(193,1,193,1);
+(191,1,191,1),(192,1,192,1),(193,1,193,1),(194,1,194,1);

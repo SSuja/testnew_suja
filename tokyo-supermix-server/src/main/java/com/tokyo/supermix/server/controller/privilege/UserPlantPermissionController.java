@@ -71,6 +71,19 @@ public class UserPlantPermissionController {
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
   }
-
+  
+  @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID_FOR_GET_PLANTS)
+	  public ResponseEntity<Object> getPermissionPlantsForNonPlantUser(
+	      @PathVariable Long userId) {
+	    if (userPlantPermissionService.isUserIdExist(userId)) {
+	      return new ResponseEntity<>(
+	          new ContentResponse<>(PrivilegeConstants.PLANTS,
+	        		  userPlantPermissionService.getPlantsByNonPlantUserId(userId),
+	              RestApiResponseStatus.OK),
+	          null, HttpStatus.OK);
+	    }
+	    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
+	        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+	  }
 
 }
