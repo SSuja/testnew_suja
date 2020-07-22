@@ -28,7 +28,9 @@ import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
 import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
+import com.tokyo.supermix.server.services.EquipmentService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.data.entities.NotificationDays;
 import com.tokyo.supermix.data.entities.Plant;
@@ -53,6 +55,10 @@ public class EmailNotification {
   private EmailPointsRepository emailPointsRepository;
   @Autowired
   private MaterialSubCategoryService materialSubCategoryService;
+  @Autowired
+  private EquipmentService equipmentService;
+  @Autowired
+  private PlantService plantService;
 
   @Scheduled(cron = "${mail.notificationtime.plantEquipment}")
   public void alertForEquipmentCalibration() {
@@ -281,8 +287,10 @@ public class EmailNotification {
         plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = " Equipment" + plantequipment.getEquipment().getName()
-            + "is newly added for," + plantequipment.getPlant().getName() + ".";
+        String plantEquipmentName = equipmentService.getEquipmentById(plantequipment.getEquipment().getId()).getName(); 
+        String plantName = plantService.getPlantByCode(plantequipment.getPlant().getCode()).getName();
+        String mailBody = " Equipment " + plantEquipmentName
+            + " is newly added for " + plantName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 MailGroupConstance.CREATE_PLANT_EQUIPMENT, plantequipment.getPlant().getCode());
@@ -303,7 +311,7 @@ public class EmailNotification {
       emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
           Constants.SUBJECT_RAW_MATERIAL, mailBody);
       }
-      }    
+     }    
   }
 
   public void sendCustomerCreationEmail(Customer customer) {
@@ -330,7 +338,7 @@ public class EmailNotification {
       emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
           Constants.SUBJECT_PLANT, mailBody);
       }
-      }   
+     }   
   }
 
   public void sendProcessSampleCreationEmail(ProcessSample processSample) {
