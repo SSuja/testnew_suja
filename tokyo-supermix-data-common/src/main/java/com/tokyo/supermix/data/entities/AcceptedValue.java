@@ -32,7 +32,7 @@ public class AcceptedValue extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "testParameterId", nullable = false)
   private TestParameter testParameter;
-  private boolean isFinalResult;
+  private boolean finalResult;
 
   public Long getId() {
     return id;
@@ -95,10 +95,10 @@ public class AcceptedValue extends DateAudit implements Serializable {
   }
 
   public boolean isFinalResult() {
-    return isFinalResult;
+    return finalResult;
   }
 
-  public void setFinalResult(boolean isFinalResult) {
-    this.isFinalResult = isFinalResult;
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
   }
 }
