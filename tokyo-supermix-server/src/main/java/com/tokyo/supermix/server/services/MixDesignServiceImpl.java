@@ -18,6 +18,7 @@ import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QMixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -29,6 +30,8 @@ public class MixDesignServiceImpl implements MixDesignService {
   public MixDesignRepository mixDesignRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesigns() {
@@ -48,7 +51,9 @@ public class MixDesignServiceImpl implements MixDesignService {
         mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
       }
     }
-    mixDesignRepository.save(mixDesign);
+    if (mixDesignRepository.save(mixDesign) != null) {
+      emailNotification.sendMixDesignCreationEmail(mixDesign);
+    }
     return mixDesign.getCode();
   }
 
