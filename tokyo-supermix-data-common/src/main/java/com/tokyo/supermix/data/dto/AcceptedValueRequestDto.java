@@ -12,7 +12,7 @@ public class AcceptedValueRequestDto {
   private Long testParameterId;
   private Double value;
   private Condition conditionRange;
-  private boolean isFinalResult;
+  private boolean finalResult;
 
   public Long getId() {
     return id;
@@ -71,10 +71,10 @@ public class AcceptedValueRequestDto {
   }
 
   public boolean isFinalResult() {
-    return isFinalResult;
+    return finalResult;
   }
 
-  public void setFinalResult(boolean isFinalResult) {
-    this.isFinalResult = isFinalResult;
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
   }
 }

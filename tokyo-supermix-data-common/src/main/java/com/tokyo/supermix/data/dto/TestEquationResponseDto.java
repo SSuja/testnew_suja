@@ -4,6 +4,15 @@ public class TestEquationResponseDto {
   private Long id;
   private TestConfigureResponseDto testConfigure;
   private EquationResponseDto equation;
+  private TestParameterResponseDto testParameter;
+
+  public TestParameterResponseDto getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameterResponseDto testParameter) {
+    this.testParameter = testParameter;
+  }
 
   public Long getId() {
     return id;

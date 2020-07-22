@@ -28,13 +28,12 @@ public class TestParameter extends DateAudit implements Serializable {
   @JoinColumn(name = "parameterId", nullable = true)
   private Parameter parameter;
   @ManyToOne
-  @JoinColumn(name = "unitId", nullable = false)
+  @JoinColumn(name = "unitId", nullable = true)
   private Unit unit;
   private String abbreviation;
   @Enumerated(EnumType.ORDINAL)
   private TestParameterType type;
   private Double value;
-  private boolean equationExists;
   @ManyToOne
   @JoinColumn(name = "qualityParameterId", nullable = true)
   private QualityParameter qualityParameter;
@@ -88,14 +87,6 @@ public class TestParameter extends DateAudit implements Serializable {
 
   public void setValue(Double value) {
     this.value = value;
-  }
-
-  public boolean isEquationExists() {
-    return equationExists;
-  }
-
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
   }
 
   public TestParameterType getType() {

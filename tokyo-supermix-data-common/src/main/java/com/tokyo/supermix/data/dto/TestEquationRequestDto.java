@@ -4,6 +4,15 @@ public class TestEquationRequestDto {
   private Long id;
   private Long testConfigureId;
   private Long equationId;
+  private Long testParameterId;
+
+  public Long getTestParameterId() {
+    return testParameterId;
+  }
+
+  public void setTestParameterId(Long testParameterId) {
+    this.testParameterId = testParameterId;
+  }
 
   public Long getId() {
     return id;
