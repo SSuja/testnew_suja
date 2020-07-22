@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
+import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.RawMaterial;
@@ -288,6 +289,22 @@ public class EmailNotification {
           Constants.SUBJECT_PLANT, mailBody);
       }
       }   
+  }
+
+  public void sendProcessSampleCreationEmail(ProcessSample processSample) {
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        processSample.getIncomingSample().getPlant().getCode(), MailGroupConstance.CREATE_PROCESS_SAMPLE);
+    if (emailGroup != null) {
+      if (emailGroup.isStatus()) {
+        String mailBody =
+            "Material Load  for " + processSample.getRawMaterial().getName() + " arrived  from " + processSample.getIncomingSample().getSupplier().getName() + ".";
+               List<String> reciepientList =
+            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                MailGroupConstance.CREATE_PROCESS_SAMPLE,  processSample.getIncomingSample().getPlant().getCode());
+        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+            Constants.SUBJECT_PROCESS_SAMPLE, mailBody);
+      }
+    }  
   }
 }
 

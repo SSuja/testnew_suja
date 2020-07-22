@@ -30,6 +30,8 @@ public class Constants {
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
+  public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
+  
   
   // for sample counts
   public static final String SAMPLE_COUNTS = "sampleCounts";

@@ -15,6 +15,7 @@ public class MailGroupConstance {
   public static final String CREATE_CUSTOMER = "Customer Creation";
   public static final String CREATE_PLANT= "Plant Creation";
   public static final String CREATE_RAW_MATERIAL= "Material Creation";
+  public static final String CREATE_PROCESS_SAMPLE= "Process Sample Creation";
   
   private MailGroupConstance() {}
 
