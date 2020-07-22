@@ -5,6 +5,16 @@ import java.util.List;
 public class TestEquationDto {
   private Long testConfigId;
   private Long equationId;
+  private Long testParameterId;
+
+  public Long getTestParameterId() {
+    return testParameterId;
+  }
+
+  public void setTestParameterId(Long testParameterId) {
+    this.testParameterId = testParameterId;
+  }
+
   private List<TestEquationParameterDto> testEquationParameters;
 
   public Long getTestConfigId() {

@@ -124,15 +124,18 @@ public class TestParameterServiceImpl implements TestParameterService {
     List<TestParameterResponseDto> testParameterResponseDtoList =
         new ArrayList<TestParameterResponseDto>();
     testParameterList.forEach(test -> {
-      TestParameterResponseDto testParameterResponseDto = new TestParameterResponseDto();
-      testParameterResponseDto.setId(test.getId());
-      testParameterResponseDto.setAbbreviation(test.getAbbreviation());
-      testParameterResponseDto.setType(test.getType());
-      testParameterResponseDto.setParameter(test.getParameter());
-      testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
-      testParameterResponseDto.setUnit(test.getUnit());
-      testParameterResponseDto.setValue(test.getValue());
-      testParameterResponseDtoList.add(testParameterResponseDto);
+      if (test.getQualityParameter() == null) {
+        TestParameterResponseDto testParameterResponseDto = new TestParameterResponseDto();
+        testParameterResponseDto.setId(test.getId());
+        testParameterResponseDto.setAbbreviation(test.getAbbreviation());
+        testParameterResponseDto.setType(test.getType());
+        testParameterResponseDto.setParameter(test.getParameter());
+        testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
+        testParameterResponseDto.setInputMethods(test.getInputMethods());
+        testParameterResponseDto.setUnit(test.getUnit());
+        testParameterResponseDto.setValue(test.getValue());
+        testParameterResponseDtoList.add(testParameterResponseDto);
+      }
     });
     List<ParameterEquation> parameterEquationList =
         parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);

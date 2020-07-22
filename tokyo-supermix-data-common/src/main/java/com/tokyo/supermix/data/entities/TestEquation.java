@@ -22,9 +22,20 @@ public class TestEquation implements Serializable {
   @ManyToOne
   @JoinColumn(name = "equationId", nullable = false)
   private Equation equation;
+  @ManyToOne
+  @JoinColumn(name = "testParameterId", nullable = false)
+  private TestParameter testParameter;
 
   public Long getId() {
     return id;
+  }
+
+  public TestParameter getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameter testParameter) {
+    this.testParameter = testParameter;
   }
 
   public void setId(Long id) {
