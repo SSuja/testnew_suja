@@ -38,7 +38,6 @@ public class EmailGroupServiceImpl implements EmailGroupService {
 
   @Transactional(readOnly = true)
   public boolean isEmailGroupExist(Long id) {
-
     return emailGroupRepository.existsById(id);
   }
 
