@@ -5,7 +5,7 @@ import java.util.List;
 public class MaterialParameterResultDto {
   private String materialTestCode;
   private String materialTestTrialCode;
-  private Long sieveSizeId;
+//  private Long sieveSizeId;
   public List<ParameterResultDto> parameterResults;
 
   public String getMaterialTestCode() {
@@ -32,11 +32,11 @@ public class MaterialParameterResultDto {
     this.parameterResults = parameterResults;
   }
 
-  public Long getSieveSizeId() {
-    return sieveSizeId;
-  }
-
-  public void setSieveSizeId(Long sieveSizeId) {
-    this.sieveSizeId = sieveSizeId;
-  }
+//  public Long getSieveSizeId() {
+//    return sieveSizeId;
+//  }
+//
+//  public void setSieveSizeId(Long sieveSizeId) {
+//    this.sieveSizeId = sieveSizeId;
+//  }
 }
