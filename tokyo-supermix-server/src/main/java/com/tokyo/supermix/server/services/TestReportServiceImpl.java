@@ -176,9 +176,7 @@ public class TestReportServiceImpl implements TestReportService {
     AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(testConfigureId);
     acceptedValueDto.setMaxValue(acceptedValue.getMaxValue());
     acceptedValueDto.setMinValue(acceptedValue.getMinValue());
-    acceptedValueDto.setValue(acceptedValue.getValue());
-    acceptedValueDto
-        .setTestParameterName(acceptedValue.getTestParameter().getParameter().getName());
+   // acceptedValueDto.setUnit(acceptedValue.getTestParameter().getUnit().getUnit());
     return acceptedValueDto;
   }
 
@@ -197,12 +195,13 @@ public class TestReportServiceImpl implements TestReportService {
     AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
     MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
         .findByTestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
-    acceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
-    acceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
-    acceptedValueDto.setValue(materialAcceptedValue.getValue());
-    acceptedValueDto
-        .setTestParameterName(materialAcceptedValue.getTestParameter().getParameter().getName());
-    return acceptedValueDto;
+    materialAcceptedValueDto
+        .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
+    materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
+    materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
+ //   materialAcceptedValueDto.setUnit(materialAcceptedValue.getTestParameter().getUnit().getUnit());
+    materialAcceptedValueDto.setRawMaterialName(materialAcceptedValue.getRawMaterial().getName());
+    return materialAcceptedValueDto;
   }
 
   // Incoming Sample Summary Report

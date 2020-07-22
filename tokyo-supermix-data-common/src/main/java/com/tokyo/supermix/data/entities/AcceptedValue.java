@@ -30,8 +30,8 @@ public class AcceptedValue extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "testParameterId", nullable = false)
-  private TestParameter testParameter;
+  @JoinColumn(name = "testEquationId", nullable = true)
+  private TestEquation testEquation;
   private boolean finalResult;
 
   public Long getId() {
@@ -74,12 +74,12 @@ public class AcceptedValue extends DateAudit implements Serializable {
     this.testConfigure = testConfigure;
   }
 
-  public TestParameter getTestParameter() {
-    return testParameter;
+  public TestEquation getTestEquation() {
+    return testEquation;
   }
 
-  public void setTestParameter(TestParameter testParameter) {
-    this.testParameter = testParameter;
+  public void setTestEquation(TestEquation testEquation) {
+    this.testEquation = testEquation;
   }
 
   public static long getSerialversionuid() {
