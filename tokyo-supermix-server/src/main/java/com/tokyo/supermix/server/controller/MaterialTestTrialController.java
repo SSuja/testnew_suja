@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestTrialRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResponseDto;
-import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -145,20 +144,20 @@ public class MaterialTestTrialController {
     }
   }
 
-  @PutMapping(value = EndpointURI.MATERIAL_RESULT_BY_MATERIAL_TEST_CODE)
-  public ResponseEntity<Object> getMaterialTestAverageBycode(
-      @PathVariable String materialTestCode) {
-    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    if (!materialTest.getTestConfigure().isBulkTrial()) {
-      materialTestTrialService.getAverageAndStatus(materialTestCode);
-      materialTestService
-          .updateIncomingSampleStatusByIncomingSample(materialTest);
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
-    } else {
-      materialTestTrialService.sieveavg(materialTestCode);
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
-    }
-  }
+//  @PutMapping(value = EndpointURI.MATERIAL_RESULT_BY_MATERIAL_TEST_CODE)
+//  public ResponseEntity<Object> getMaterialTestAverageBycode(
+//      @PathVariable String materialTestCode) {
+//    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+//    if (!materialTest.getTestConfigure().isBulkTrial()) {
+//      materialTestTrialService.getAverageAndStatus(materialTestCode);
+//      materialTestService
+//          .updateIncomingSampleStatusByIncomingSample(materialTest);
+//      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+//          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
+//    } else {
+//      materialTestTrialService.sieveavg(materialTestCode);
+//      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+//          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
+//    }
+//  }
 }

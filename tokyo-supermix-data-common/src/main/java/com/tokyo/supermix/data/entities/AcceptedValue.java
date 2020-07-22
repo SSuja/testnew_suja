@@ -1,8 +1,9 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,9 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.enums.Condition;
 
 @Entity
-@Table(schema = "tokyo-supermix",name = "accepted_value")
+@Table(schema = "tokyo-supermix", name = "accepted_value")
 public class AcceptedValue extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
@@ -21,24 +23,16 @@ public class AcceptedValue extends DateAudit implements Serializable {
   private Long id;
   private Double minValue;
   private Double maxValue;
+  private Double value;
+  @Enumerated(EnumType.ORDINAL)
+  private Condition conditionRange;
   @OneToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "unitId", nullable = true)
-  private Unit unit;
-
-  public Unit getUnit() {
-    return unit;
-  }
-
-  public void setUnit(Unit unit) {
-    this.unit = unit;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+  @JoinColumn(name = "testParameterId", nullable = false)
+  private TestParameter testParameter;
+  private boolean finalResult;
 
   public Long getId() {
     return id;
@@ -64,11 +58,47 @@ public class AcceptedValue extends DateAudit implements Serializable {
     this.maxValue = maxValue;
   }
 
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
+  }
+
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
 
   public void setTestConfigure(TestConfigure testConfigure) {
     this.testConfigure = testConfigure;
+  }
+
+  public TestParameter getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameter testParameter) {
+    this.testParameter = testParameter;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
+
+  public Condition getConditionRange() {
+    return conditionRange;
+  }
+
+  public void setConditionRange(Condition conditionRange) {
+    this.conditionRange = conditionRange;
+  }
+
+  public boolean isFinalResult() {
+    return finalResult;
+  }
+
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
   }
 }

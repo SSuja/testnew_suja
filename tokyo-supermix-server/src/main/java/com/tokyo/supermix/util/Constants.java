@@ -11,8 +11,10 @@ public class Constants {
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-  public static final String SUBJECT_OF_SUMMARY_REPORT = "Summary Details Report Of Incoming Sample";
-  public static final String SUBJECT_OF_DELIVERY_REPORT = "Delivery Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_SUMMARY_REPORT =
+      "Summary Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_DELIVERY_REPORT =
+      "Delivery Details Report Of Incoming Sample";
   public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
   public static final String DELIVERY_REPORT = "delivery-report.pdf";
   public static final String SUMMARY_REPORT = "summary-report.pdf";
@@ -364,26 +366,6 @@ public class Constants {
   public static final String DELETE_SIEVE_TEST_TRIAL_SUCCESS =
       "Sieve Test Trial Successfully Deleted";
   /*
-   * Constants for Sieve Size validation key & Success messages
-   */
-  public static final String SIEVE_SIZES = "sieveSizes";
-  public static final String SIEVE_SIZE = "sieveSize";
-  public static final String ADD_SIEVE_SIZE_SUCCESS = "Sieve Size Added Successfully";
-  public static final String SIEVE_SIZE_ID = "id";
-  public static final String UPDATE_SIEVE_SIZE_SUCCESS = "Sieve Size Updated Successfully";
-  public static final String DELETE_SIEVE_SIZE_SUCCESS = "Sieve Size Successfully Deleted";
-  /*
-   * Constants for Sieve Accepted Value validation key & Success messages
-   */
-  public static final String SIEVE_ACCEPTED_VALUES = "sieveAcceptedValues";
-  public static final String ADD_SIEVE_ACCEPTED_VALUE_SUCCESS =
-      "Sieve Accepted Value Added Successfully";
-  public static final String SIEVE_ACCEPTED_VALUE_ID = "id";
-  public static final String UPDATE_SIEVE_ACCEPTED_VALUE_SUCCESS =
-      "Sieve Accepted Value Updated Successfully";
-  public static final String DELETE_SIEVE_ACCEPTED_VALUE_SUCCESS =
-      "Sieve Accepted Value Successfully Deleted";
-  /*
    * Constants for Sieve Test validation key & Success messages
    */
   public static final String SIEVE_TEST_CODE = "sieveTestCode";
@@ -447,20 +429,6 @@ public class Constants {
   public static final String DELETED_QUALITY_PARAMETER = "Quality Parameter Successfully Deleted";
   public static final String UPDATE_QUALITY_PARAMETER_SUCCESS =
       "Quality Parameter Updated Successfully";
-
-  /*
-   * Constants for Material Quality Parameter validation key & Success messages
-   */
-  public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
-  public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
-  public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
-  public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS =
-      "Material Quality Parameter Added Successfully";
-  public static final String DELETED_MATERIAL_QUALITY_PARAMETER =
-      "Material Quality Parameter Successfully Deleted";
-  public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
-      "Material Quality Parameter Updated Successfully";
-
   /*
    * Constants for report
    */
@@ -566,6 +534,22 @@ public class Constants {
   
  
  
+  /*
+   * Constants for Test Equation validation key & Success messages
+   */
+  public static final String TEST_EQUATION = "testEquation";
+  public static final String TEST_EQUATIONS = "testEquations";
+  public static final String TEST_EQUATION_ID = "testEquationId";
+  public static final String ADD_TEST_EQUATION_SUCCESS = "Test Equation Added Successfully";
+  public static final String UPDATE_TEST_EQUATION_SUCCESS = "Test Equation Updated Successfully";
+  public static final String DELETE_TEST_EQUATION_SCCESS = "Test Equation successfully Deleted";
+
+  /*
+   * Constants for Test Equation Parameter validation key & Success messages
+   */
+  public static final String TEST_EQUATION_PARAMETERS = "testEquations";
+
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */

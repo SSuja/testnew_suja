@@ -134,7 +134,7 @@ public class EmailNotification {
             + "</b></li><li> Test Name <b>" + materialTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Material <b>"+ materialTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Supplier <b>"+  materialTest.getIncomingSample().getSupplier().getName()
-            + "</b></li><li> Test Results <b>"+ materialTest.getAverage()
+     //       + "</b></li><li> Test Results <b>"+ materialTest.getAverage()
             + "</b></li><li> Status <b>"+ materialTest.getStatus() +"</b></li></ul>";
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),

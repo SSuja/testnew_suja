@@ -2,8 +2,8 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.TestParameterType;
-import com.tokyo.supermix.data.enums.TrailResult;
 
 public class TestParameterRequestDto {
   private Long id;
@@ -13,18 +13,11 @@ public class TestParameterRequestDto {
   @NotNull(message = "{testParameterDto.abbreviation.null}")
   @NotEmpty(message = "{testParameterDto.abbreviation.empty}")
   private String abbreviation;
-  private TestParameterType entryLevel;
+  private TestParameterType type;
   private Double value;
-  private boolean equationExists;
-  private TrailResult trailResult;
-
-  public TrailResult getTrailResult() {
-    return trailResult;
-  }
-
-  public void setTrailResult(TrailResult trailResult) {
-    this.trailResult = trailResult;
-  }
+  private Long qualityParameterId;
+  private boolean acceptedCriteria;
+  private InputMethod inputMethods;
 
   public Long getId() {
     return id;
@@ -66,14 +59,6 @@ public class TestParameterRequestDto {
     this.abbreviation = abbreviation;
   }
 
-  public TestParameterType getEntryLevel() {
-    return entryLevel;
-  }
-
-  public void setEntryLevel(TestParameterType entryLevel) {
-    this.entryLevel = entryLevel;
-  }
-
   public Double getValue() {
     return value;
   }
@@ -82,11 +67,35 @@ public class TestParameterRequestDto {
     this.value = value;
   }
 
-  public boolean isEquationExists() {
-    return equationExists;
+  public TestParameterType getType() {
+    return type;
   }
 
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
+  public void setType(TestParameterType type) {
+    this.type = type;
+  }
+
+  public Long getQualityParameterId() {
+    return qualityParameterId;
+  }
+
+  public void setQualityParameterId(Long qualityParameterId) {
+    this.qualityParameterId = qualityParameterId;
+  }
+
+  public boolean isAcceptedCriteria() {
+    return acceptedCriteria;
+  }
+
+  public void setAcceptedCriteria(boolean acceptedCriteria) {
+    this.acceptedCriteria = acceptedCriteria;
+  }
+
+  public InputMethod getInputMethods() {
+    return inputMethods;
+  }
+
+  public void setInputMethods(InputMethod inputMethods) {
+    this.inputMethods = inputMethods;
   }
 }

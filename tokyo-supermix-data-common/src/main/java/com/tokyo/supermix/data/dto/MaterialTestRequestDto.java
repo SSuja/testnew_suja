@@ -6,12 +6,12 @@ import com.tokyo.supermix.data.enums.TestLevel;
 public class MaterialTestRequestDto {
   private String code;
   private Long noOfTrial;
-  private Double average;
   private Status status;
   private TestLevel testLevel;
   private String incomingSampleCode;
   private Long testConfigureId;
   private Long materialStateId;
+  private String comment;
 
   public String getCode() {
     return code;
@@ -27,14 +27,6 @@ public class MaterialTestRequestDto {
 
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
-  }
-
-  public Double getAverage() {
-    return average;
-  }
-
-  public void setAverage(Double average) {
-    this.average = average;
   }
 
   public Status getStatus() {
@@ -77,4 +69,11 @@ public class MaterialTestRequestDto {
     this.materialStateId = materialStateId;
   }
 
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 }

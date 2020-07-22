@@ -23,8 +23,6 @@ public interface TestConfigureRepository
 
   List<TestConfigure> findByMaterialSubCategoryIdAndCoreTestTrue(Long materialSubCategoryId);
 
-  List<TestConfigure> findByDaysNotNull();
-
   List<TestConfigure> findByMaterialSubCategoryIdAndTestType(Long materialSubCategoryId,
       TestType testType);
 
