@@ -7,6 +7,7 @@ public class EmailPointsRequestDto {
   private Long materialSubCategoryId;
   private Long materialCategoryId;
   private Long testId;
+  private boolean adminLevelEmailConfiguration;
   
   public Long getId() {
     return id;
@@ -43,5 +44,11 @@ public class EmailPointsRequestDto {
   }
   public void setTestId(Long testId) {
     this.testId = testId;
+  }
+  public boolean isAdminLevelEmailConfiguration() {
+    return adminLevelEmailConfiguration;
+  }
+  public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
+    this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
   } 
 }

@@ -24,7 +24,7 @@ public class EmailGroup extends DateAudit implements Serializable {
   @JoinColumn(name = "emailPointsId", nullable = false)
   private EmailPoints emailPoints;
   @ManyToOne
-  @JoinColumn(name = "plantCode", nullable = false)
+  @JoinColumn(name = "plantCode", nullable = true)
   private Plant plant;
 
   public Long getId() {

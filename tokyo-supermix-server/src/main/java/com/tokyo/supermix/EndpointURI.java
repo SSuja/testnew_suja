@@ -587,6 +587,8 @@ public final class EndpointURI {
   public static final String EMAIL_POINTS = BASE_API_PATH + "email_points";
   public static final String EMAIL_POINTS_BY_STATUS =
       EMAIL_POINT  + SLASH + "{status}";
+  public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
+      EMAIL_POINT  + SLASH + "admin_status"+ SLASH + "{status}";
   
   private EndpointURI() {}
 }

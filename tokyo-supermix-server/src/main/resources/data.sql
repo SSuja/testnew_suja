@@ -323,18 +323,23 @@ INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('192', 'edit_other_plant_access', '48');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('193', 'delete_other_plant_access', '48');
 
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('1', 0, 'Mix Design');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('2', 0, 'Plant Equipment Calibration');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('3', 0, 'Plant Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('4', 0, 'Plant Equipment Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('5', 0, 'Material Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('6', 0, 'Project Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('7', 0, 'Supplier Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('8', 0, 'Employee Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('9', 0, 'Incoming Sample Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('10', 0, 'Finish Product Sample Creation');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('11', 0, 'Finish Product Sample Issue For Customer');
-INSERT INTO `tokyo-supermix`.email_points (id, active, name) VALUES ('12', 0, 'Customer Creation');
+
+
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('1', 0, 'Mix Design', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('2', 0, 'Plant Equipment Calibration', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('3', 0, 'Plant Creation', 1);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('4', 0, 'Plant Equipment Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('5', 0, 'Material Creation', 1);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('6', 0, 'Project Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('7', 0, 'Supplier Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('8', 0, 'Employee Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('9', 0, 'Incoming Sample Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('10', 0, 'Finish Product Sample Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('11', 0, 'Finish Product Sample Issue For Customer', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('12', 0, 'Customer Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('13', 0, 'Process Sample Creation', 0);
+
+
 
 INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`status`)VALUES
 (1,1,1,1),(2,1,2,1),(3,1,3,1),(4,1,4,1),(5,1,5,1),(6,1,6,1),(7,1,7,1),(8,1,8,1),(9,1,9,1),(10,1,10,1),

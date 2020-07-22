@@ -17,4 +17,6 @@ public interface EmailRecipientRepository extends JpaRepository<EmailRecipient, 
   List<EmailRecipient> findByEmailGroupEmailPointsNameAndEmailGroupPlantCode(String name, String plantCode);
   
   List<EmailRecipient> findByEmailGroupIdAndRecipientType(Long emailGroupId, RecipientType recipientType);
+
+  List<EmailRecipient> findByEmailGroupEmailPointsName(String groupName);
 }

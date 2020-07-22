@@ -11,14 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.repositories.PlantRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 
 @Service
 public class PlantServiceImpl implements PlantService {
   @Autowired
   private PlantRepository plantRepository;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
-  public Plant savePlant(Plant plant) {
+  public Plant savePlant(Plant plant) {  
+    if (plantRepository.save(plant) != null) {
+      emailNotification.sendPlantCreationEmail(plant);
+    }
     return plantRepository.save(plant);
   }
 

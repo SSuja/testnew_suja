@@ -25,6 +25,7 @@ public class EmailPoints {
   @ManyToOne
   @JoinColumn(name = "testId", nullable = true)
   private Test test;
+  private boolean adminLevelEmailConfiguration;
   
   public Long getId() {
     return id;
@@ -61,5 +62,11 @@ public class EmailPoints {
   }
   public void setTest(Test test) {
     this.test = test;
+  }
+  public boolean isAdminLevelEmailConfiguration() {
+    return adminLevelEmailConfiguration;
+  }
+  public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
+    this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
   }
 }

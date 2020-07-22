@@ -12,6 +12,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.repositories.ProcessSampleRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -24,6 +25,8 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   private IncomingSampleService incomingSampleService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional(readOnly = true)
   public List<ProcessSample> getAllProcessSamples() {
@@ -35,7 +38,9 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
     IncomingSample incomingSample =
         incomingSampleService.getIncomingSampleById(processSample.getIncomingSample().getCode());
     processSample.setRawMaterial(incomingSample.getRawMaterial());
-    processSampleRepository.save(processSample);
+    if ( processSampleRepository.save(processSample) != null) {
+      emailNotification.sendProcessSampleCreationEmail(processSample);
+    }
   }
 
   @Transactional(propagation = Propagation.NEVER)

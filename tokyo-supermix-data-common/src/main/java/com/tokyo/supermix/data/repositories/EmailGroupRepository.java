@@ -13,4 +13,5 @@ public interface EmailGroupRepository extends JpaRepository<EmailGroup, Long> {
   List<EmailGroup> findByEmailPointsId(Long emailPointsId);
   EmailGroup findByPlantCodeAndEmailPointsName(String plantCode, String name);
 //boolean existsByEmailNotifications(EmailNotifications emailNotifications);
+  EmailGroup findByEmailPointsName(String name);
 }

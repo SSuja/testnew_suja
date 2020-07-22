@@ -22,4 +22,6 @@ public interface EmailRecipientService {
   public void deleteEmailRecipient(Long id);
 
   public List<EmailRecipient> getEmailRecipient();
+
+  public List<String> getEmailsByEmailNotification(String groupName);
 }

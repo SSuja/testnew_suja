@@ -20,4 +20,6 @@ public interface EmailPointsService {
   boolean isEmailPointIdExists(Long id);
 
   void createEmailPoints(TestConfigureRequestDto testConfigureRequestDto);
+
+  List<EmailPoints> getAllEmailPointsByAdminStatus(boolean status);
 }
