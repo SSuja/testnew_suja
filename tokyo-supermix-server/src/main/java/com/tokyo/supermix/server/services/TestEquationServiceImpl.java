@@ -67,6 +67,8 @@ public class TestEquationServiceImpl implements TestEquationService {
     testEquation.setTestConfigure(
         testConfigureRepository.findById(testEquationDto.getTestConfigId()).get());
     testEquation.setEquation(equationRepository.findById(testEquationDto.getEquationId()).get());
+    testEquation.setTestParameter(
+        testParameterRepository.findById(testEquationDto.getTestParameterId()).get());
     testEquationRepository.save(testEquation);
     for (TestEquationParameterDto testEquationParameterDto : testEquationDto
         .getTestEquationParameters()) {
@@ -78,6 +80,7 @@ public class TestEquationServiceImpl implements TestEquationService {
       testEquationParameterRepository.save(testEquationParameter);
     }
   }
+
   @Transactional(readOnly = true)
   public List<TestEquation> getByTestConfigure(Long testConfigureId) {
     return testEquationRepository.findByTestConfigureId(testConfigureId);
