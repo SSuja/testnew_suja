@@ -341,7 +341,7 @@ public class EmailNotification {
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 MailGroupConstance.CREATE_PROCESS_SAMPLE,  processSample.getIncomingSample().getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_CUSTOMER, mailBody);
+            Constants.SUBJECT_PROCESS_SAMPLE, mailBody);
       }
     }  
   }
