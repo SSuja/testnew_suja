@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
-import com.tokyo.supermix.data.dto.report.AdmixtureTestReportDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
@@ -55,30 +54,6 @@ public class TestReportController {
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.CEMENT_REPORT_DETAIL)
-  public ResponseEntity<Object> getCementReportDetails(@PathVariable String materialTestCode) {
-    if (materialTestService.isMaterialTestExists(materialTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getCementDetailReport(materialTestCode),
-              TestReportDetailDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
-  @GetMapping(value = EndpointURI.ADMIXTURE_REPORT_DETAIL)
-  public ResponseEntity<Object> getAdmixtureReportDetails(@PathVariable String materialTestCode) {
-    if (materialTestService.isMaterialTestExists(materialTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getAdmixtureReport(materialTestCode),
-              AdmixtureTestReportDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-        validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
   public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
       @PathVariable String incomingSampleCode) {
@@ -105,17 +80,6 @@ public class TestReportController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-  // @GetMapping(value = EndpointURI.SIEVE_REPORT_DETAIL)
-  // public ResponseEntity<Object> getSieveReportDetails(@PathVariable String materialTestCode) {
-  // if (materialTestService.isMaterialTestExists(materialTestCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT, mapper
-  // .map(testReportService.getSieveTestReport(materialTestCode), SieveTestReportDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
-  // validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-  // }
 
   @GetMapping(value = EndpointURI.CONCRETE_TEST_REPORT)
   public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode) {
