@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialCategoryDto;
 import com.tokyo.supermix.data.entities.MaterialCategory;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -109,6 +110,19 @@ public class MaterialCategoryController {
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_MATERIAL_CATEGORY_SUCCESS),
           HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_ID,
+        validationFailureStatusCodes.getMaterialCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_MAIN_TYPE)
+  public ResponseEntity<Object> getMaterialCategoryByMainType(@PathVariable MainType mainType) {
+    if (materialCategoryService.isMainTypeExist(mainType)) {
+      logger.debug("Get Material Category By Main Type");
+      return new ResponseEntity<>(new ContentResponse<>(
+          Constants.MATERIAL_CATEGORY, mapper
+              .map(materialCategoryService.getByMainType(mainType), MaterialCategoryDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_ID,
         validationFailureStatusCodes.getMaterialCategoryNotExist()), HttpStatus.BAD_REQUEST);

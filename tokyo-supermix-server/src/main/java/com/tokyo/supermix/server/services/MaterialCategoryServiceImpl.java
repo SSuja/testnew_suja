@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialCategory;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.repositories.MaterialCategoryRepository;
 
 @Service
@@ -53,5 +54,15 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
   @Transactional(readOnly = true)
   public MaterialCategory getMaterialCategoryByName(String name) {
     return materialCategoryRepository.findByName(name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialCategory> getByMainType(MainType mainType) {
+    return materialCategoryRepository.findByMainType(mainType);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMainTypeExist(MainType mainType) {
+    return materialCategoryRepository.existsByMainType(mainType);
   }
 }

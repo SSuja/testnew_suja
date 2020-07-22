@@ -22,7 +22,6 @@ import com.tokyo.supermix.security.JwtAuthenticationFilter;
 import com.tokyo.supermix.server.services.auth.AuthUserDetailsService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
@@ -409,14 +408,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Role Permission
          .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION)
         .hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
+        // Plant Role Plant Permission
+        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION)
+        .hasAuthority(PermissionConstants.EDIT_PLANT_ROLE_PLANT_PERMISSION)
         // User Plant Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID)
-        .hasAuthority(PermissionConstants.VIEW_USER_PLANT_PERMISSION_BY_USER)
         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.USER_PLANT_PERMISSION)
         .hasAuthority(PermissionConstants.EDIT_USER_PLANT_PERMISSION)
-        // Plant Permission
-        .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.PLANT_PERMISSIONS)
-        .hasAuthority(PermissionConstants.VIEW_PLANT_PERMISSION)
         // role
         .antMatchers(HttpMethod.GET, PrivilegeEndpointURI.ROLES)
         .hasAuthority(PermissionConstants.VIEW_ROLE)
