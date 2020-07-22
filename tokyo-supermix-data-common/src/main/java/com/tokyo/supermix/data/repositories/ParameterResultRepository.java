@@ -16,7 +16,7 @@ public interface ParameterResultRepository extends JpaRepository<ParameterResult
 	List<ParameterResult> findByMaterialTestTrialCodeAndMaterialTestCode(String materialTestTrialCode,
 			String materialTestCode);
 
-	List<ParameterResult> findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(String materialTestTrialCode);
+//	List<ParameterResult> findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(String materialTestTrialCode);
 
 	ParameterResult findByTestParameterIdAndMaterialTestTrialCode(Long parameterId,String materialTestTrialCode);
 	

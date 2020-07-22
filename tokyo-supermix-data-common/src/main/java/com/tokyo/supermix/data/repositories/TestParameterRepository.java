@@ -24,6 +24,6 @@ public interface TestParameterRepository
 
   public boolean existsByAbbreviation(String abbreviation);
 
-  List<TestParameter> findByTestConfigureIdAndEquationExistsTrue(Long testConfigureId);
+//  List<TestParameter> findByTestConfigureIdAndEquationExistsTrue(Long testConfigureId);
   // TestParameter findByTestConfigureIdAndTrailResult(Long testConfigureId,TrailResult trail);
 }

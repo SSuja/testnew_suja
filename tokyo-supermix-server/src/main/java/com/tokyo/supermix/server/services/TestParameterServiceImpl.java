@@ -130,7 +130,6 @@ public class TestParameterServiceImpl implements TestParameterService {
       testParameterResponseDto.setType(test.getType());
       testParameterResponseDto.setParameter(test.getParameter());
       testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
-      testParameterResponseDto.setEquationExists(test.isEquationExists());
       testParameterResponseDto.setUnit(test.getUnit());
       testParameterResponseDto.setValue(test.getValue());
       testParameterResponseDtoList.add(testParameterResponseDto);
