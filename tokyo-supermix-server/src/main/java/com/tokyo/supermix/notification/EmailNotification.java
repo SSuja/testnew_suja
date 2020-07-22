@@ -28,6 +28,7 @@ import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
 import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
+import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.data.entities.NotificationDays;
 import com.tokyo.supermix.data.entities.Plant;
@@ -50,6 +51,8 @@ public class EmailNotification {
   private EmailGroupRepository emailGroupRepository;
   @Autowired
   private EmailPointsRepository emailPointsRepository;
+  @Autowired
+  private MaterialSubCategoryService materialSubCategoryService;
 
   @Scheduled(cron = "${mail.notificationtime.plantEquipment}")
   public void alertForEquipmentCalibration() {
@@ -291,9 +294,10 @@ public class EmailNotification {
 
   public void sendRawmaterialCreationEmail(RawMaterial rawMaterial) {
      EmailGroup emailGroup =emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
+     String materialSubCategoryName = materialSubCategoryService.getMaterialSubCategoryById(rawMaterial.getMaterialSubCategory().getId()).getName();
     if(emailGroup!=null) {
       if(emailGroup.isStatus()) {
-        String mailBody = "Raw Material "+rawMaterial.getName()+ " successfully created "+" under "+rawMaterial.getMaterialSubCategory().getName();  
+        String mailBody = "Raw Material "+rawMaterial.getName()+ " successfully created "+" under "+ materialSubCategoryName;  
         List<String> reciepientList = emailRecipientService.getEmailsByEmailNotification(
             MailGroupConstance.CREATE_RAW_MATERIAL); 
       emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
