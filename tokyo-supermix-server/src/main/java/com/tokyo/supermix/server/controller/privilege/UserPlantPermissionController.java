@@ -60,16 +60,20 @@ public class UserPlantPermissionController {
       value = PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS)
   public ResponseEntity<Object> getUserPlantPermissionByUserIdAndPlantCodeStatus(
       @PathVariable Long userId, @PathVariable String plantCode, @PathVariable Boolean status) {
-    if (userPlantPermissionService.isUserIdExist(userId)) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
-              mapper.map(userPlantPermissionService.getByUserIdAndPlantCodeAndStatus(userId, plantCode, status),
-                  PlantRolePlantPermissionResponseDto.class),
-              RestApiResponseStatus.OK),
-          null, HttpStatus.OK);
+    if (!userPlantPermissionService.isUserIdExist(userId)) {
+    	 return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
+    		        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
-        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+    if(!userPlantPermissionService.isPlantCodeExists(plantCode, userId)) {
+    	 return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_CODE,
+    		        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(
+            new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+                mapper.map(userPlantPermissionService.getByUserIdAndPlantCodeAndStatus(userId, plantCode, status),
+                    PlantRolePlantPermissionResponseDto.class),
+                RestApiResponseStatus.OK),
+            null, HttpStatus.OK);
   }
   
   @GetMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSION_BY_USER_ID_FOR_GET_PLANTS)
