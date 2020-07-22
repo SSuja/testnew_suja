@@ -110,4 +110,24 @@ public class EmailRecipientServiceImpl implements EmailRecipientService {
   public List<EmailRecipient> getEmailRecipient() {
     return emailRecipientRepository.findAll();
   }
+
+  @Transactional(readOnly = true)
+  public List<String> getEmailsByEmailNotification(String groupName) {
+    List<EmailRecipient> emailRecipientList =
+        emailRecipientRepository.findByEmailGroupEmailPointsName(groupName);
+    List<String> emaillist = new ArrayList<String>();
+    emailRecipientList.forEach(emailRecipient -> {
+      if (emailRecipient.getPlantRole() != null) {
+        List<UserPlantRole> userPlantRoleList =
+            userPlantRoleRepository.findByPlantRoleId(emailRecipient.getPlantRole().getId());
+        userPlantRoleList.forEach(userPlantRole -> {
+          emaillist.add(userPlantRole.getUser().getEmployee().getEmail());
+        });
+      }
+      if (emailRecipient.getUser() != null) {
+        emaillist.add(emailRecipient.getUser().getEmployee().getEmail());
+      }
+    });
+    return emaillist;
+  }
 }

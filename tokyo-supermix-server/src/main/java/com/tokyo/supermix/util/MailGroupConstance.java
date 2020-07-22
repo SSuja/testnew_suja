@@ -13,6 +13,8 @@ public class MailGroupConstance {
   public static final String PLANT_EQUIPMENT_CALIBRATION_GROUP = "Plant Equipment Calibration";
   public static final String CREATE_PLANT_EQUIPMENT = "Plant Equipment Creation";
   public static final String CREATE_CUSTOMER = "Customer Creation";
+  public static final String CREATE_PLANT= "Plant Creation";
+  public static final String CREATE_RAW_MATERIAL= "Material Creation";
   
   private MailGroupConstance() {}
 

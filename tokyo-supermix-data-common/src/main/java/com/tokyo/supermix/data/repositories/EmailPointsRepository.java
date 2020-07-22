@@ -14,4 +14,6 @@ public interface EmailPointsRepository extends JpaRepository<EmailPoints, Long>{
   
   EmailPoints findByMaterialSubCategoryIdAndTestId(Long materialSubCategoryId, Long testId);
 
+  List<EmailPoints> findByActiveAndAdminLevelEmailConfiguration(boolean status, boolean adminStatus);
+
 }

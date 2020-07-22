@@ -50,7 +50,7 @@ public class EmailPointsServiceImpl implements EmailPointsService {
 
   @Transactional(readOnly = true)
   public List<EmailPoints> getAllEmailPointsByStatus(boolean status) {
-    return emailPointsRepository.findByActive(status);
+    return emailPointsRepository.findByActiveAndAdminLevelEmailConfiguration(status,false);
   }
 
   @Transactional
@@ -75,6 +75,7 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     String testName = testService.getTestById(testConfigureRequestDto.getTestId()).getName();
     emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
     emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
+    emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
     if (testConfigureRequestDto.getMaterialSubCategoryId() != null) {
       String materialSubCategoryName = materialSubCategoryService
           .getMaterialSubCategoryById(testConfigureRequestDto.getMaterialSubCategoryId()).getName();
@@ -88,5 +89,10 @@ public class EmailPointsServiceImpl implements EmailPointsService {
       emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
     }
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
+  }
+
+  @Transactional(readOnly = true)
+  public List<EmailPoints> getAllEmailPointsByAdminStatus(boolean status) {
+    return emailPointsRepository.findByActiveAndAdminLevelEmailConfiguration(true, status);
   }
 }

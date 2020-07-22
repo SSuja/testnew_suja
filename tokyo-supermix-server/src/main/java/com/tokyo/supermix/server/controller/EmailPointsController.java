@@ -68,6 +68,14 @@ public class EmailPointsController {
         .map(emailPointsService.getAllEmailPointsByStatus(status), EmailPointsResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  
+  @GetMapping(value = EndpointURI.EMAIL_POINTS_BY_ADMIN_STATUS)
+  public ResponseEntity<Object> getAllEmailPointsByAdminStatus(@PathVariable boolean status) {
+    logger.debug("get all email points");
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_POINTS, mapper
+        .map(emailPointsService.getAllEmailPointsByAdminStatus(status), EmailPointsResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 
   @PutMapping(value = EndpointURI.EMAIL_POINT)
   public ResponseEntity<Object> updateEmailPointsStatus(
