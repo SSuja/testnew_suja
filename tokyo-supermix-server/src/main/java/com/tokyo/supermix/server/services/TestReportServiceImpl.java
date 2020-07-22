@@ -146,7 +146,7 @@ public class TestReportServiceImpl implements TestReportService {
     acceptedValueDto.setTestName(acceptedValue.getTestConfigure().getTest().getName());
     acceptedValueDto.setMaxValue(acceptedValue.getMaxValue());
     acceptedValueDto.setMinValue(acceptedValue.getMinValue());
-    acceptedValueDto.setUnit(acceptedValue.getTestParameter().getUnit().getUnit());
+   // acceptedValueDto.setUnit(acceptedValue.getTestParameter().getUnit().getUnit());
     return acceptedValueDto;
   }
 
@@ -208,7 +208,7 @@ public class TestReportServiceImpl implements TestReportService {
         .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
     materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
     materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
-    materialAcceptedValueDto.setUnit(materialAcceptedValue.getTestParameter().getUnit().getUnit());
+ //   materialAcceptedValueDto.setUnit(materialAcceptedValue.getTestParameter().getUnit().getUnit());
     materialAcceptedValueDto.setRawMaterialName(materialAcceptedValue.getRawMaterial().getName());
     return materialAcceptedValueDto;
   }

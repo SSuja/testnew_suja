@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
@@ -49,7 +50,11 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             codePrefix + String.format("%04d", maxNumberFromCode(finishProductSampleList) + 1));
       }
     }
-
+    if (finishProductSample.getMixDesign().getStatus().equals(Status.NEW)) {
+      finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
+    } else if (finishProductSample.getMixDesign().getStatus().equals(Status.PASS)) {
+      finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
+    }
     finishProductSample.setStatus(Status.NEW);
     finishProductSampleRepository.save(finishProductSample);
   }
