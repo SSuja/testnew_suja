@@ -227,14 +227,14 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     return subStatus;
   }
 
-	public boolean isPlantCodeExists(String plantCode) {
-		return userPlantPermissionRepository.existsByPlantPermissionPlantCode(plantCode) ;
+	public boolean isPlantCodeExists(String plantCode,Long userId) {
+		return userPlantPermissionRepository.existsByPlantPermissionPlantCodeAndUserId(plantCode,userId) ;
 	}
 	
 	public List<PlantResponseDto> getPlantsByNonPlantUserId(Long userId) {
 		List<PlantResponseDto>  plantList = new ArrayList<PlantResponseDto>();
 		plantRepository.findAll().forEach(plant->{
-			if(isPlantCodeExists(plant.getCode())) {
+			if(isPlantCodeExists(plant.getCode(),userId)) {
 				PlantResponseDto plantObj = mapper.map(plant, PlantResponseDto.class);
 				plantList.add(plantObj);
 			} 
