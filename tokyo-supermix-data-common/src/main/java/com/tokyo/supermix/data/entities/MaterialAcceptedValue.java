@@ -28,8 +28,8 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   @ManyToOne
-  @JoinColumn(name = "testParameterId", nullable = false)
-  private TestParameter testParameter;
+  @JoinColumn(name = "testEquationId", nullable = true)
+  private TestEquation testEquation;
   @ManyToOne
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
@@ -75,14 +75,6 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
 
   public void setTestConfigure(TestConfigure testConfigure) {
     this.testConfigure = testConfigure;
-  }
-
-  public TestParameter getTestParameter() {
-    return testParameter;
-  }
-
-  public void setTestParameter(TestParameter testParameter) {
-    this.testParameter = testParameter;
   }
 
   public RawMaterial getRawMaterial() {
