@@ -9,7 +9,7 @@ public class AcceptedValueRequestDto {
   private Double maxValue;
   @NotNull(message = "{acceptedValueRequestDto.testConfigureId.null}")
   private Long testConfigureId;
-  private Long testParameterId;
+  private Long testEquationId;
   private Double value;
   private Condition conditionRange;
   private boolean finalResult;
@@ -46,12 +46,12 @@ public class AcceptedValueRequestDto {
     this.testConfigureId = testConfigureId;
   }
 
-  public Long getTestParameterId() {
-    return testParameterId;
+  public Long getTestEquationId() {
+    return testEquationId;
   }
 
-  public void setTestParameterId(Long testParameterId) {
-    this.testParameterId = testParameterId;
+  public void setTestEquationId(Long testEquationId) {
+    this.testEquationId = testEquationId;
   }
 
   public Double getValue() {

@@ -15,6 +15,7 @@ public class FinishProductSampleRequestDto {
   @NotEmpty(message = "{finishProductSampleRequestDto.mixDesignCode.empty}")
   private String mixDesignCode;
   private Status status;
+  private String projectCode;
 
   public String getCode() {
     return code;
@@ -62,5 +63,13 @@ public class FinishProductSampleRequestDto {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public String getProjectCode() {
+    return projectCode;
+  }
+
+  public void setProjectCode(String projectCode) {
+    this.projectCode = projectCode;
   }
 }

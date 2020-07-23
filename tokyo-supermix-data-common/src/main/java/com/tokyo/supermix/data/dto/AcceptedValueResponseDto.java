@@ -8,9 +8,17 @@ public class AcceptedValueResponseDto {
   private Double maxValue;
   private TestConfigureResponseDto testConfigure;
   private Double value;
-  private TestParameterResponseDto testParameter;
+  private TestEquationResponseDto testEquation;
   private Condition conditionRange;
   private boolean finalResult;
+
+  public TestEquationResponseDto getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquationResponseDto testEquation) {
+    this.testEquation = testEquation;
+  }
 
   public Long getId() {
     return id;
@@ -50,14 +58,6 @@ public class AcceptedValueResponseDto {
 
   public void setValue(Double value) {
     this.value = value;
-  }
-
-  public TestParameterResponseDto getTestParameter() {
-    return testParameter;
-  }
-
-  public void setTestParameter(TestParameterResponseDto testParameter) {
-    this.testParameter = testParameter;
   }
 
   public Condition getConditionRange() {
