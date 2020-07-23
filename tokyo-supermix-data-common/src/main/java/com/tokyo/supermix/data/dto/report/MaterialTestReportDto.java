@@ -1,14 +1,14 @@
 package com.tokyo.supermix.data.dto.report;
 
-import com.tokyo.supermix.data.entities.auth.DateAudit;
+import java.util.Date;
 import com.tokyo.supermix.data.enums.Status;
 
-public class MaterialTestReportDto extends DateAudit {
-  private static final long serialVersionUID = 1L;
+public class MaterialTestReportDto {
   private String code;
   private Double average;
   private Long noOfTrial;
   private Status status;
+  private Date date;
 
   public String getCode() {
     return code;
@@ -16,18 +16,6 @@ public class MaterialTestReportDto extends DateAudit {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public Double getAverage() {
-    return average;
-  }
-
-  public void setAverage(Double average) {
-    this.average = average;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
   }
 
   public Long getNoOfTrial() {
@@ -44,5 +32,21 @@ public class MaterialTestReportDto extends DateAudit {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
+  public Double getAverage() {
+    return average;
+  }
+
+  public void setAverage(Double average) {
+    this.average = average;
   }
 }

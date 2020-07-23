@@ -26,4 +26,6 @@ public interface TestConfigureRepository
   List<TestConfigure> findByMaterialSubCategoryIdAndTestType(Long materialSubCategoryId,
       TestType testType);
 
+  TestConfigure findByMaterialCategoryName(String materialCategoryName);
+
 }
