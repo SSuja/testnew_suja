@@ -18,7 +18,7 @@ public interface UserPlantPermissionService {
 
   public List<PlantRolePlantPermissionResponseDto> getByUserIdAndPlantCodeAndStatus(Long userId,
       String plantCode, boolean status);
-  public boolean isPlantCodeExists(String plantCode);
+  public boolean isPlantCodeExists(String plantCode,Long userId);
   
   public List<PlantResponseDto> getPlantsByNonPlantUserId(Long userId);
 }

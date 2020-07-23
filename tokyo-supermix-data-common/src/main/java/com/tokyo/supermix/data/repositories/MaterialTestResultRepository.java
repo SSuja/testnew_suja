@@ -8,6 +8,6 @@ import com.tokyo.supermix.data.entities.TestEquation;
 public interface MaterialTestResultRepository extends JpaRepository<MaterialTestResult,Long>{
 	MaterialTestResult findByTestEquationAndMaterialTestCode(TestEquation testEquation,String materialTestCode);
 	MaterialTestResult findByMaterialTestCode(String materialTestCode);
+	public List<MaterialTestResult> findByMaterialTestCode(String materialTestCode);
 
 }
-

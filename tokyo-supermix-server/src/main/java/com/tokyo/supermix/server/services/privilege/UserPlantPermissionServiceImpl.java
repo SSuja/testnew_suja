@@ -9,13 +9,16 @@ import com.tokyo.supermix.data.dto.privilege.PlantResponseDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
+import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
+import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
+import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.UserPlantPermissionRepository;
@@ -34,6 +37,8 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
   Mapper mapper;
   @Autowired
   private PlantRepository plantRepository;
+  @Autowired
+  private UserRepository userRepository;
 
   @Transactional(readOnly = true)
   public List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionsByUserId(Long userId) {
@@ -216,7 +221,10 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getPlantPermission().getPermission().getId());
       plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
-      plantRolePlantPermissionRequestDto.setPlantRoleId(userPlantRole.getPlantRole().getId());
+      User user =userRepository.findById(userId).get();
+      if(user.getUserType().name().equalsIgnoreCase(UserType.PLANT_USER.name())){
+    	  plantRolePlantPermissionRequestDto.setPlantRoleId(userPlantRole.getPlantRole().getId());
+      }
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
       if (permission.getStatus()) {
@@ -227,14 +235,14 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     return subStatus;
   }
 
-	public boolean isPlantCodeExists(String plantCode) {
-		return userPlantPermissionRepository.existsByPlantPermissionPlantCode(plantCode) ;
+	public boolean isPlantCodeExists(String plantCode,Long userId) {
+		return userPlantPermissionRepository.existsByPlantPermissionPlantCodeAndUserId(plantCode,userId) ;
 	}
 	
 	public List<PlantResponseDto> getPlantsByNonPlantUserId(Long userId) {
 		List<PlantResponseDto>  plantList = new ArrayList<PlantResponseDto>();
 		plantRepository.findAll().forEach(plant->{
-			if(isPlantCodeExists(plant.getCode())) {
+			if(isPlantCodeExists(plant.getCode(),userId)) {
 				PlantResponseDto plantObj = mapper.map(plant, PlantResponseDto.class);
 				plantList.add(plantObj);
 			} 

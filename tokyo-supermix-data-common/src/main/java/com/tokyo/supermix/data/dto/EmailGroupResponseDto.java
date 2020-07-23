@@ -1,12 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
-public class EmailGroupDto {
+public class EmailGroupResponseDto {
   private Long id;
   private String name;
-  private Long emailPointsId;
+  private EmailPointsResponseDto emailPoints;
   private boolean schedule;
   private boolean status;
-  private String plantCode;
+  private PlantDto plant;
 
   public Long getId() {
     return id;
@@ -32,7 +32,6 @@ public class EmailGroupDto {
     this.schedule = schedule;
   }
 
- 
   public boolean isStatus() {
     return status;
   }
@@ -41,22 +40,19 @@ public class EmailGroupDto {
     this.status = status;
   }
 
-  public Long getEmailPointsId() {
-    return emailPointsId;
+  public EmailPointsResponseDto getEmailPoints() {
+    return emailPoints;
   }
 
-  public void setEmailPointsId(Long emailPointsId) {
-    this.emailPointsId = emailPointsId;
+  public void setEmailPoints(EmailPointsResponseDto emailPoints) {
+    this.emailPoints = emailPoints;
   }
 
-  public String getPlantCode() {
-    return plantCode;
+  public PlantDto getPlant() {
+    return plant;
   }
 
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
   }
-
-
-
 }

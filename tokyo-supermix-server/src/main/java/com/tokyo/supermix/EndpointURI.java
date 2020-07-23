@@ -418,32 +418,16 @@ public final class EndpointURI {
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
-
   /*
    * test Report
    */
   public static final String TEST_REPORT = BASE_API_PATH + "test-report";
-  public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
-  public static final String MATERIAL_TEST_REPORT = TEST_REPORT + SLASH + MATERIAL_TEST_CODE;
-
-  public static final String INCOMING_CODE = "incoming-sample" + SLASH + "{icomingSampleCode}";
-  public static final String MATERIAL_TEST_DETAIL_REPORT = TEST_REPORT + SLASH + INCOMING_CODE;
   public static final String TEST_REPORT_DETAIL = BASE_API_PATH + "test-detail-report";
+  public static final String MATERIAL_TEST_CODE = "material-test" + SLASH + "{materialTestCode}";
   public static final String MATERIAL_TEST_REPORT_DETAIL =
       TEST_REPORT_DETAIL + SLASH + MATERIAL_TEST_CODE;
-  /*
-   * test Report
-   */
-  public static final String SIEVE_TEST_CODE = "sieve-test" + SLASH + "{sieveTestCode}";
-  public static final String SIEVE_TEST_REPORT = TEST_REPORT + SLASH + SIEVE_TEST_CODE;
   public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
       + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
-  public static final String CEMENT_REPORT_DETAIL =
-      TEST_REPORT_DETAIL + SLASH + "cement" + SLASH + MATERIAL_TEST_CODE;
-  public static final String ADMIXTURE_REPORT_DETAIL =
-      TEST_REPORT_DETAIL + SLASH + "admixture" + SLASH + MATERIAL_TEST_CODE;
-  public static final String SIEVE_REPORT_DETAIL =
-      TEST_REPORT_DETAIL + SLASH + "sieve" + SLASH + MATERIAL_TEST_CODE;
   /*
    * Finish Product Sample
    */
@@ -547,6 +531,10 @@ public final class EndpointURI {
   public static final String EMAIL_GROUP_BY_ID = EMAIL_GROUP + ID;
   public static final String EMAIL_GROUP_BY_SHEDULE =
       EMAIL_GROUPS + SLASH + "email-group-schedule" + SLASH + "{schedule}";
+  public static final String EMAIL_GROUP_BY_PLANT_CODE =
+      EMAIL_GROUPS + SLASH + "email-group-plant-code" + SLASH + "{plantCode}";
+  public static final String EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS =
+      EMAIL_GROUPS + SLASH + "plant-code" + SLASH + "{plantCode}"+SLASH +"status" + SLASH + "{status}";
 
   /*
    * email group notification days APIs
@@ -576,5 +564,15 @@ public final class EndpointURI {
   public static final String TEST_EQUATION_PARAMETER_BY_TEST_EQUATION_ID =
       TEST_EQUATION_PARAMETER + SLASH + "test-equation" + SLASH + "{testEquationId}";
 
+  /*
+   * Email Points
+   */
+  public static final String EMAIL_POINT = BASE_API_PATH + "email-point";
+  public static final String EMAIL_POINTS = BASE_API_PATH + "email-points";
+  public static final String EMAIL_POINTS_BY_STATUS =
+      EMAIL_POINT  + SLASH + "{status}";
+  public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
+      EMAIL_POINT  + SLASH + "admin-status"+ SLASH + "{status}";
+  
   private EndpointURI() {}
 }

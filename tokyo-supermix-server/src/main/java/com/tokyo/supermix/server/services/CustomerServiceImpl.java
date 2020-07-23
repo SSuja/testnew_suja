@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -21,6 +22,8 @@ public class CustomerServiceImpl implements CustomerService {
   private CustomerRepository customerRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional(readOnly = true)
   public List<Customer> getAllCustomersByCurrentUser(UserPrincipal currentUser) {
@@ -30,7 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional
   public void saveCustomer(Customer customer) {
-    customerRepository.save(customer);
+    Customer customerObj = customerRepository.save(customer);
+    if (customerObj != null)
+      emailNotification.sendCustomerCreationEmail(customerObj);
   }
 
   @Transactional(readOnly = true)

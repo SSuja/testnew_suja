@@ -52,6 +52,7 @@ public class TestReportDetailDto {
   public AcceptedValueDto getAcceptanceCriteria() {
     return acceptanceCriteria;
   }
+
   public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
     this.acceptanceCriteria = acceptanceCriteria;
   }

@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.EmailRecipient;
-import com.tokyo.supermix.data.enums.EmailNotifications;
 import com.tokyo.supermix.data.enums.RecipientType;
 
 @Repository
@@ -15,7 +14,9 @@ public interface EmailRecipientRepository extends JpaRepository<EmailRecipient, 
 
   List<EmailRecipient> findByPlantRoleId(Long plantRoleId);
 
-  List<EmailRecipient> findByEmailGroupEmailNotificationsAndPlantCode(EmailNotifications emailNotifications, String plantCode);
+  List<EmailRecipient> findByEmailGroupEmailPointsNameAndEmailGroupPlantCode(String name, String plantCode);
   
   List<EmailRecipient> findByEmailGroupIdAndRecipientType(Long emailGroupId, RecipientType recipientType);
+
+  List<EmailRecipient> findByEmailGroupEmailPointsName(String groupName);
 }

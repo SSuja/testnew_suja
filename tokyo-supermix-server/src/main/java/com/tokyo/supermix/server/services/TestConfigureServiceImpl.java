@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
+import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
@@ -36,11 +37,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private MaterialSubCategoryRepository materialSubCategoryRepository;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private EmailPointsService emailPointsService;
 
   @Transactional
-  public Long saveTestConfigure(TestConfigure testConfigure) {
-    testConfigureRepository.save(testConfigure);
-    return testConfigure.getId();
+  public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
+    testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class));
+    emailPointsService.createEmailPoints(testConfigureRequestDto);
+    return testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
+        .getId();
   }
 
   @Transactional(readOnly = true)
@@ -156,5 +161,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       Long materialSubCategoryId, TestType testType) {
     return testConfigureRepository.findByMaterialSubCategoryIdAndTestType(materialSubCategoryId,
         testType);
+  }
+
+  @Transactional
+  public Long updateTestConfigure(TestConfigure testConfigure) {
+    testConfigureRepository.save(testConfigure);
+    return testConfigure.getId();
   }
 }

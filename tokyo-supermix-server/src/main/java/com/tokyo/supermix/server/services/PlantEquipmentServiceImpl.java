@@ -11,61 +11,61 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class PlantEquipmentServiceImpl implements PlantEquipmentService {
-
   @Autowired
-  private PlantEquipmentRepository PlantEquipmentRepository;
+  private PlantEquipmentRepository plantEquipmentRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
-  public void savePlantEquipment(PlantEquipment Plantequipment) {
-    PlantEquipmentRepository.save(Plantequipment);
+  public void savePlantEquipment(PlantEquipment plantequipment) {
+    PlantEquipment plantequipmentObj = plantEquipmentRepository.save(plantequipment);
+    if (plantequipmentObj != null)
+      emailNotification.sendPlantEquipmentCalibrationEmail(plantequipmentObj);
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipments() {
-
-    return PlantEquipmentRepository.findAll();
+    return plantEquipmentRepository.findAll();
   }
 
   @Transactional(propagation = Propagation.NEVER)
   public void deletePlantEquipment(String serialNo) {
-    PlantEquipmentRepository.deleteById(serialNo);
-
+    plantEquipmentRepository.deleteById(serialNo);
   }
 
   @Transactional(readOnly = true)
   public boolean isPlantEquipmentExist(String serialNo) {
-
-    return PlantEquipmentRepository.existsByserialNo(serialNo);
+    return plantEquipmentRepository.existsByserialNo(serialNo);
   }
 
   @Transactional(readOnly = true)
   public PlantEquipment getPlantEquipmentBySerialNo(String serialNo) {
-
-    return PlantEquipmentRepository.findPlantEquipmentBySerialNo(serialNo);
+    return plantEquipmentRepository.findPlantEquipmentBySerialNo(serialNo);
   }
 
   @Transactional(readOnly = true)
   public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size) {
-    return PlantEquipmentRepository.findAll(predicate,
+    return plantEquipmentRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "serialNo")));
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode) {
-    return PlantEquipmentRepository.findByPlantCode(plantCode);
+    return plantEquipmentRepository.findByPlantCode(plantCode);
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipmentByPlant(UserPrincipal currentUser) {
-    return PlantEquipmentRepository.findByPlantCodeIn(
+    return plantEquipmentRepository.findByPlantCodeIn(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_PLANT_EQUIPMENT));
   }
@@ -73,6 +73,6 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentId(
       Long equipmentId) {
-    return PlantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentId(equipmentId);
+    return plantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentId(equipmentId);
   }
 }
