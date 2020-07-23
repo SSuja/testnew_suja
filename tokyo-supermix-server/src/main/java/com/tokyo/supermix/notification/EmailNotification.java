@@ -328,12 +328,12 @@ public class EmailNotification {
   public void sendRawmaterialCreationEmail(RawMaterial rawMaterial) {
     EmailGroup emailGroup =
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
-    MaterialSubCategory materialSubCategory =
-        materialSubCategoryRepository.findById(rawMaterial.getMaterialSubCategory().getId()).get();
-    String mailBody = "Raw Material " + rawMaterial.getName() + " successfully created " + " under "
-        + materialSubCategory.getName();
-    if (emailGroup != null) {
+      if (emailGroup != null) {
       if (emailGroup.isStatus()) {
+        MaterialSubCategory materialSubCategory = materialSubCategoryRepository
+            .findById(rawMaterial.getMaterialSubCategory().getId()).get();
+        String mailBody = "Raw Material " + rawMaterial.getName() + " successfully created "
+            + " under " + materialSubCategory.getName();
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -383,7 +383,6 @@ public class EmailNotification {
         String mailBody =
             "Material Load  for " + processSampleobj.getRawMaterial().getName() + " arrived  from "
                 + processSampleobj.getIncomingSample().getSupplier().getName() + ".";
-        System.out.println(mailBody);
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotificationAndPlantCode(MailGroupConstance.CREATE_PROCESS_SAMPLE,
                 processSample.getIncomingSample().getPlant().getCode());
