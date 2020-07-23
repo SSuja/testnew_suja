@@ -11,6 +11,7 @@ import com.tokyo.supermix.data.entities.EmailPoints;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
+import com.tokyo.supermix.util.MailGroupConstance;
 
 @Service
 public class EmailPointsServiceImpl implements EmailPointsService {
@@ -50,17 +51,26 @@ public class EmailPointsServiceImpl implements EmailPointsService {
 
   @Transactional(readOnly = true)
   public List<EmailPoints> getAllEmailPointsByStatus(boolean status) {
-    return emailPointsRepository.findByActiveAndAdminLevelEmailConfiguration(status,false);
+    return emailPointsRepository.findByActiveAndAdminLevelEmailConfiguration(status, false);
   }
 
   @Transactional
   public void updateEmailPointStatus(EmailPoints emailPoints) {
     emailPoints.setName(emailPointsRepository.findById(emailPoints.getId()).get().getName());
+    if (emailPointsRepository.findById(emailPoints.getId()).get().getName().equalsIgnoreCase(MailGroupConstance.CREATE_PLANT)
+        || emailPointsRepository.findById(emailPoints.getId()).get().getName().equalsIgnoreCase(MailGroupConstance.CREATE_RAW_MATERIAL)) {
+      emailPoints.setAdminLevelEmailConfiguration(true);
+    } else {
+      emailPoints.setAdminLevelEmailConfiguration(false);
+    }
+    
     List<EmailGroup> emailGroupLists =
         emailGroupRepository.findByEmailPointsId(emailPoints.getId());
-    emailGroupLists.forEach(emailGroups -> {
-      emailGroups.setStatus(emailPoints.isActive());
-    });
+    if (emailGroupLists != null) {
+      emailGroupLists.forEach(emailGroups -> {
+        emailGroups.setStatus(emailPoints.isActive());
+      });
+    }
     emailPointsRepository.save(emailPoints);
   }
 
