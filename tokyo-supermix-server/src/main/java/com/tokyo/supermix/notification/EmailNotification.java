@@ -336,7 +336,6 @@ public class EmailNotification {
             .findById(rawMaterial.getMaterialSubCategory().getId()).get();
         String mailBody = "Raw Material " + rawMaterial.getName() + " successfully created "
             + " under " + materialSubCategory.getName();
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + mailBody);
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -386,7 +385,6 @@ public class EmailNotification {
         String mailBody =
             "Material Load  for " + processSampleobj.getRawMaterial().getName() + " arrived  from "
                 + processSampleobj.getIncomingSample().getSupplier().getName() + ".";
-        System.out.println(mailBody);
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotificationAndPlantCode(MailGroupConstance.CREATE_PROCESS_SAMPLE,
                 processSample.getIncomingSample().getPlant().getCode());

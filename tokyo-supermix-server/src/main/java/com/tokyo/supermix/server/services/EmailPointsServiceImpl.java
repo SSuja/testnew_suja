@@ -63,7 +63,6 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     } else {
       emailPoints.setAdminLevelEmailConfiguration(false);
     }
-    
     List<EmailGroup> emailGroupLists =
         emailGroupRepository.findByEmailPointsId(emailPoints.getId());
     if (emailGroupLists != null) {
