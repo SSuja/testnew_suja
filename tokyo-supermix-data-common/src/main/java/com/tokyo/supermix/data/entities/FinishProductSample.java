@@ -31,7 +31,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
   private MixDesign mixDesign;
   private Status status;
   @OneToOne
-  @JoinColumn(name = "projectId", nullable = true)
+  @JoinColumn(name = "projectCode", nullable = true)
   private Project project;
   @Enumerated(EnumType.ORDINAL)
   private FinishProductTestType finishProductTestType;
