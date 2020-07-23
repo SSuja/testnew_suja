@@ -24,6 +24,9 @@ public interface EmailGroupService {
   public void updateStatus(Long emailPointsId);
 
   public boolean isEmailPointsStatus(EmailGroupDto emailGroupDto);
+
+  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatusAndSchedule(String plantCode, boolean status,
+      boolean schedule);
   
 
 }
