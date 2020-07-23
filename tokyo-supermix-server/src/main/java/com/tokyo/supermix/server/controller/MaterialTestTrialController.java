@@ -149,16 +149,9 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-//    if (!materialTest.getTestConfigure().isBulkTrial()) {
-      materialTestTrialService.getAverageAndStatus(materialTestCode);
-      materialTestService
-          .updateIncomingSampleStatusByIncomingSample(materialTest);
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
-//    } else {
-//      materialTestTrialService.sieveavg(materialTestCode);
-//      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-//          Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
-//    }
+    materialTestTrialService.getAverageAndStatus(materialTestCode);
+    materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
   }
 }
