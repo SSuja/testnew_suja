@@ -3,22 +3,23 @@ package com.tokyo.supermix.data.dto.report;
 import java.util.List;
 
 public class ConcreteStrengthDto {
-  private String cubeCode;
-  private List<DayAndResult> dayAndResult;
+	private String cubeCode;
+	private List<TestAndResult> testAndResult;
 
-  public String getCubeCode() {
-    return cubeCode;
-  }
+	public String getCubeCode() {
+		return cubeCode;
+	}
 
-  public void setCubeCode(String cubeCode) {
-    this.cubeCode = cubeCode;
-  }
+	public void setCubeCode(String cubeCode) {
+		this.cubeCode = cubeCode;
+	}
 
-  public List<DayAndResult> getDayAndResult() {
-    return dayAndResult;
-  }
+	public List<TestAndResult> getTestAndResult() {
+		return testAndResult;
+	}
 
-  public void setDayAndResult(List<DayAndResult> dayAndResult) {
-    this.dayAndResult = dayAndResult;
-  }
+	public void setTestAndResult(List<TestAndResult> testAndResult) {
+		this.testAndResult = testAndResult;
+	}
+
 }

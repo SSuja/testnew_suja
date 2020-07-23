@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleResponseDto {
@@ -11,6 +12,8 @@ public class FinishProductSampleResponseDto {
   private Status status;
   private String createdAt;
   private String updatedAt;
+  private ProjectResponseDto project;
+  private FinishProductTestType finishProductTestType;
 
   public String getCode() {
     return code;
@@ -74,5 +77,21 @@ public class FinishProductSampleResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public ProjectResponseDto getProject() {
+    return project;
+  }
+
+  public void setProject(ProjectResponseDto project) {
+    this.project = project;
+  }
+
+  public FinishProductTestType getFinishProductTestType() {
+    return finishProductTestType;
+  }
+
+  public void setFinishProductTestType(FinishProductTestType finishProductTestType) {
+    this.finishProductTestType = finishProductTestType;
   }
 }
