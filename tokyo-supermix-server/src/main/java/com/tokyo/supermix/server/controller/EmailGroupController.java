@@ -43,8 +43,8 @@ public class EmailGroupController {
 
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_SHEDULE)
   public ResponseEntity<Object> getAllEmailGroupsBySchedule(@PathVariable Boolean schedule) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsBySchedule(schedule), EmailGroupResponseDto.class),
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS, mapper
+        .map(emailGroupService.getAllEmailGroupsBySchedule(schedule), EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -98,7 +98,8 @@ public class EmailGroupController {
   @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE)
   public ResponseEntity<Object> getAllEmailGroupsByPlantCode(@PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS,
-        mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode), EmailGroupResponseDto.class),
+        mapper.map(emailGroupService.getAllEmailGroupsByPlantCode(plantCode),
+            EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -109,5 +110,17 @@ public class EmailGroupController {
         mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatus(plantCode, status),
             EmailGroupResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS_SCEHDULE)
+  public ResponseEntity<Object> getAllEmailGroupsByPlantCodeAndStatusAndSchedule(
+      @PathVariable String plantCode, @PathVariable boolean status,
+      @PathVariable boolean schedule) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.EMAIL_GROUPS,
+            mapper.map(emailGroupService.getAllEmailGroupsByPlantCodeAndStatusAndSchedule(plantCode,
+                status, schedule), EmailGroupResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }
