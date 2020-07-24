@@ -3,11 +3,15 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 
 @Entity
@@ -26,7 +30,11 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
   private Status status;
-
+  @OneToOne
+  @JoinColumn(name = "projectCode", nullable = true)
+  private Project project;
+  @Enumerated(EnumType.ORDINAL)
+  private FinishProductTestType finishProductTestType;
 
   public String getCode() {
     return code;
@@ -87,4 +95,20 @@ public class FinishProductSample extends DateAudit implements Serializable {
   public void setStatus(Status status) {
     this.status = status;
   }
+
+  public Project getProject() {
+    return project;
+  }
+
+  public void setProject(Project project) {
+    this.project = project;
+  }
+
+  public FinishProductTestType getFinishProductTestType() {
+    return finishProductTestType;
+  }
+
+  public void setFinishProductTestType(FinishProductTestType finishProductTestType) {
+    this.finishProductTestType = finishProductTestType;
+  } 
 }
