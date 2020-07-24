@@ -110,14 +110,11 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
   @Transactional
   public void getAverageAndStatus(String materialTestCode) {
-
     List<MaterialTestResult> materialTestResults =
         materialTestResultRepository.findByMaterialTestCode(materialTestCode);
-
     materialTestResults.forEach(materialTestResult -> {
       MaterialTest materialTest = materialTestRepository.getOne(materialTestCode);
       if (materialTestResult.getTestEquation() == null) {
-
         MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
             .findByTestConfigureIdAndRawMaterialId(materialTest.getTestConfigure().getId(),
                 materialTest.getIncomingSample().getRawMaterial().getId());
@@ -136,7 +133,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
         }
       }
     });
-
   }
 
   private void compareAverage(Double minValue, Double maxValue, Double value, Condition condition,
@@ -177,7 +173,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     materialTestRepository.save(materialTest);
     return materialTest;
   }
-
 
   @Transactional(readOnly = true)
   public List<MaterialTestTrial> getMaterialTestTrialByPlantCode(String plantCode) {
