@@ -537,7 +537,10 @@ public final class EndpointURI {
       EMAIL_GROUPS + SLASH + "plant-code" + SLASH + "{plantCode}"+SLASH +"status" + SLASH + "{status}";
   public static final String EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS_SCEHDULE =
       EMAIL_GROUPS + SLASH + "plant-code" + SLASH + "{plantCode}"+SLASH +"status" + SLASH + "{status}" + SLASH +"schedule" + SLASH + "{schedule}";
-
+  public static final String EMAIL_GROUP_BY_PLANT_CODE_ADMIN_STATUS =
+      EMAIL_GROUPS + SLASH + "email-group-admin-status" + SLASH+ "plant-code" +SLASH+ "{plantCode}"+ SLASH+ "admin-status"+ SLASH + "{adminStatus}";
+  public static final String EMAIL_GROUP_BY_ADMIN_STATUS =
+      EMAIL_GROUPS + SLASH + "email-group-admin-status" +SLASH+ "{adminStatus}";
 
   /*
    * email group notification days APIs

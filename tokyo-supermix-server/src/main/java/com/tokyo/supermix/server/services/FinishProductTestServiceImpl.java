@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -23,6 +24,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -39,7 +42,6 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       }
     }
     finishProductTestRepository.save(finishProductTest);
-//    sendFinishProductTestEmail(finishProductTest)
     return finishProductTest.getCode();
   }
 

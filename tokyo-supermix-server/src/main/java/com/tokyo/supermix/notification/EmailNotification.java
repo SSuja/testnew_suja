@@ -188,7 +188,7 @@ public class EmailNotification {
             + "</b></li><li> Results <b>"
             +average  
             + "</b></li><li> Status <b>"+ materialTest.getStatus()
-                +"</b></li></ul>";
+            + "</b></li></ul>";
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MATRIAL_TEST, mailBody);
@@ -198,7 +198,7 @@ public class EmailNotification {
 
   public void sendFinishProductTestEmail(FinishProductTest finishProductTest) {
     EmailPoints emailPoints = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(
-        finishProductTest.getTestConfigure().getMaterialCategory().getId(),
+        finishProductTest.getTestConfigure().getMaterialSubCategory().getId(),
         finishProductTest.getTestConfigure().getTest().getId());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode(),
@@ -212,9 +212,9 @@ public class EmailNotification {
             + finishProductTest.getFinishProductSample().getCode() + "</b></li><li> Test Name <b>"
             + finishProductTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Material <b>"
-            + finishProductTest.getTestConfigure().getTest().getName() + "</li><li> Status <b>"
-            + "</b></li><li> Test Results <b>" + finishProductTest.getStatus() + "</b>"
-            + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
+            + finishProductTest.getTestConfigure().getMaterialCategory().getName() 
+            + "</b></li><li> Test Results <b>" + finishProductTest.getResult() + "</b>"
+                  + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MATRIAL_TEST, mailBody);
       }
