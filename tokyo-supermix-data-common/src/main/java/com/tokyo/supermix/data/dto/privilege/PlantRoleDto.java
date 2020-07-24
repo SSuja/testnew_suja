@@ -3,9 +3,11 @@ package com.tokyo.supermix.data.dto.privilege;
 public class PlantRoleDto {
   private Long id;
   private String plantCode;
+  private String plantName;
   private Long roleId;
   private String roleName;
   private String name;
+
   public Long getId() {
     return id;
   }
@@ -46,5 +48,11 @@ public class PlantRoleDto {
     this.name = name;
   }
 
+  public String getPlantName() {
+    return plantName;
+  }
 
+  public void setPlantName(String plantName) {
+    this.plantName = plantName;
+  }
 }

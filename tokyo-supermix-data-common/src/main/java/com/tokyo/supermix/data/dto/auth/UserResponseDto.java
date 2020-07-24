@@ -1,6 +1,9 @@
 package com.tokyo.supermix.data.dto.auth;
 
+import java.util.List;
+
 import com.tokyo.supermix.data.dto.EmployeeResponseDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRoleDto;
 
 public class UserResponseDto {
   private Long id;
@@ -9,7 +12,8 @@ public class UserResponseDto {
   private EmployeeResponseDto employee;
   private String createdAt;
   private String updatedAt;
-
+  private List<RoleDto> roles;
+  private List<PlantRoleDto> plantRoles;
   public Long getId() {
     return id;
   }
@@ -56,5 +60,21 @@ public class UserResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public List<RoleDto> getRoles() {
+    return roles;
+  }
+
+  public void setRoles(List<RoleDto> roles) {
+    this.roles = roles;
+  }
+
+  public List<PlantRoleDto> getPlantRoles() {
+    return plantRoles;
+  }
+
+  public void setPlantRoles(List<PlantRoleDto> plantRoles) {
+    this.plantRoles = plantRoles;
   }
 }
