@@ -328,7 +328,7 @@ public class EmailNotification {
   public void sendRawmaterialCreationEmail(RawMaterial rawMaterial) {
     EmailGroup emailGroup =
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
-      if (emailGroup != null) {
+    if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         MaterialSubCategory materialSubCategory = materialSubCategoryRepository
             .findById(rawMaterial.getMaterialSubCategory().getId()).get();
@@ -408,5 +408,3 @@ public class EmailNotification {
     }
   }
 }
-
-

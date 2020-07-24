@@ -39,7 +39,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       }
     }
     finishProductTestRepository.save(finishProductTest);
-//    sendFinishProductTestEmail(finishProductTest)
+    // sendFinishProductTestEmail(finishProductTest)
     return finishProductTest.getCode();
   }
 
@@ -94,6 +94,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     }
     return false;
   }
+
   @Transactional(readOnly = true)
   public List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
       String finishProductSampleCode, Long testConfigureId) {
