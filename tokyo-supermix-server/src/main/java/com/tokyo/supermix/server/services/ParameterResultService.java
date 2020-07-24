@@ -24,9 +24,6 @@ public interface ParameterResultService {
 
   public List<ParameterResult> findByMaterialTestCode(String materialTestCode);
 
-  public List<ParameterResult> getTestParamWithEquationByTestTrial(String materialTestTrialCode);
-
   public void saveParameterResults(List<MaterialParameterResultDto> materialParameterResultDtolist);
 
-  //public List<SieveTestResultsDto> getSieveTestResultsByMaterialTestCode(String materialTestCode);
 }

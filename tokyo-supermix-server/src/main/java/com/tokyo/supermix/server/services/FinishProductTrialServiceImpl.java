@@ -46,7 +46,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private EmailNotification emailNotification;
-
   @Autowired
   TestConfigureRepository testConfigureRepository;
 
@@ -63,7 +62,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public String saveFinishProductTrial(FinishProductTrial finishProductTrial) {
     if (finishProductTrial.getCode() == null) {
-      String prefix = finishProductTrial.getFinishProductTest().getCode();
+      String prefix = finishProductTestRepository
+          .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
       List<FinishProductTrial> FinishProductTrialList =
           finishProductTrialRepository.findByCodeContaining(prefix);
       if (FinishProductTrialList.size() == 0) {
@@ -124,7 +124,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSampleRepository.save(finishProductSample);
         updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
             finishProductTest.getFinishProductSample().getStatus());
-
       } else {
         finishProductParameterResult
             .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
@@ -218,8 +217,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     emailNotification.sendFinishProductTestEmail(finishProductTest);
     return finishProductTest.getStatus();
   }
-
-  @Override
+  
+  @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser) {
     return finishProductTrialRepository
         .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(

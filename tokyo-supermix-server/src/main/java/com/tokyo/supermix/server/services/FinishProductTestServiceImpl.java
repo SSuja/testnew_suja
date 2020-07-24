@@ -96,6 +96,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     }
     return false;
   }
+
   @Transactional(readOnly = true)
   public List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
       String finishProductSampleCode, Long testConfigureId) {
