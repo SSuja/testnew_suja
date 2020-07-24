@@ -25,15 +25,16 @@ import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
-import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.ProcessSampleRepository;
 import com.tokyo.supermix.data.repositories.ProjectRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
@@ -74,7 +75,9 @@ public class EmailNotification {
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
-  private EmployeeRepository employeeRepository;
+  private DesignationRepository designationRepository;
+  @Autowired
+  private PlantRepository plantRepository;
 
 
   @Scheduled(cron = "${mail.notificationtime.plantEquipment}")
@@ -228,16 +231,17 @@ public class EmailNotification {
   public void sendEmployeeEmail(Employee employee) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         employee.getPlant().getCode(), MailGroupConstance.CREATE_EMPLOYEE);
-    Employee employeeobj = employeeRepository.findById(employee.getId()).get();
+    String plantName = plantRepository.findById(employee.getPlant().getCode()).get().getName();
+    String designationName = designationRepository.findById(employee.getDesignation().getId()).get().getName();
     if (employee.getEmail() != null) {
-      String mailBody = "Dear " + employeeobj.getFirstName() + " WELCOME TO "
-          + employeeobj.getPlant().getName() + "as " + employeeobj.getDesignation().getName();
+      String mailBody = "Dear " +employee.getFirstName() + " WELCOME TO "
+          + plantName + " as " + designationName;
       emailService.sendMail(employee.getEmail(), Constants.SUBJECT_NEW_EMPLOYEE, mailBody);
     }
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Employee " + employeeobj.getFirstName() + " " + employeeobj.getLastName()
-            + " newly added " + "as " + employeeobj.getDesignation().getName() + ".";
+        String mailBody = "Employee " + employee.getFirstName() + " " + employee.getLastName()
+            + " newly added " + "as " + designationName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
