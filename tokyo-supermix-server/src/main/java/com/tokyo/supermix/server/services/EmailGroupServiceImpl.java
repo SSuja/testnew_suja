@@ -89,6 +89,11 @@ public class EmailGroupServiceImpl implements EmailGroupService {
   }
 
   @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndAdminStatus(String plantCode, Boolean adminStatus) {
+    return emailGroupRepository.findByPlantCodeAndEmailPointsAdminLevelEmailConfiguration(plantCode, adminStatus);
+  }
+
+  @Transactional(readOnly = true)
   public List<EmailGroup> getAllEmailGroupsByAdminStatus(Boolean adminStatus) {
     return emailGroupRepository.findByEmailPointsAdminLevelEmailConfiguration(adminStatus);
   }
