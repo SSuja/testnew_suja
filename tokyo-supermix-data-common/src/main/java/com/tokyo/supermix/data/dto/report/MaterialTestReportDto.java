@@ -1,11 +1,12 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.util.Date;
+import java.util.List;
 import com.tokyo.supermix.data.enums.Status;
 
 public class MaterialTestReportDto {
   private String code;
-  private Double average;
+  private List<Double> average;
   private Long noOfTrial;
   private Status status;
   private Date date;
@@ -42,11 +43,11 @@ public class MaterialTestReportDto {
     this.date = date;
   }
 
-  public Double getAverage() {
+  public List<Double> getAverage() {
     return average;
   }
 
-  public void setAverage(Double average) {
+  public void setAverage(List<Double> average) {
     this.average = average;
   }
 }

@@ -95,7 +95,11 @@ public class TestReportServiceImpl implements TestReportService {
         materialTestResultRepository.findByMaterialTestCode(materialTestCode);
     reportDto.setMaterialTest(getMaterialTestReport(materialTestCode));
     if (materialTestResult.get(0).getTestEquation() != null) {
-      reportDto.setEquation(testEquation.get(0).getEquation().getFormula());
+      List<String> equations = new ArrayList<String>();
+      for (TestEquation testEquations : testEquation) {
+        equations.add(testEquations.getEquation().getFormula());
+      }
+      reportDto.setEquation(equations);
     }
     reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
     reportDto
@@ -118,12 +122,16 @@ public class TestReportServiceImpl implements TestReportService {
   private MaterialTestReportDto getMaterialTestReport(String materialTestCode) {
     MaterialTestReportDto materialTestReportDto = new MaterialTestReportDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    List<MaterialTestResult> materialTestResult =
-        materialTestResultRepository.findByMaterialTestCode(materialTestCode);
     materialTestReportDto.setCode(materialTest.getCode());
     materialTestReportDto.setNoOfTrial(materialTest.getNoOfTrial());
     materialTestReportDto.setStatus(materialTest.getStatus());
-    materialTestReportDto.setAverage(materialTestResult.get(0).getResult());
+    List<MaterialTestResult> materialTestResults =
+        materialTestResultRepository.findByMaterialTestCode(materialTestCode);
+    List<Double> results = new ArrayList<Double>();
+    for (MaterialTestResult materialTestResult : materialTestResults) {
+      results.add(materialTestResult.getResult());
+    }
+    materialTestReportDto.setAverage(results);
     materialTestReportDto.setDate(materialTest.getCreatedAt());
     return materialTestReportDto;
   }
