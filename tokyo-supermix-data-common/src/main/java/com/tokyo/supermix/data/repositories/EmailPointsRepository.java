@@ -15,4 +15,14 @@ public interface EmailPointsRepository extends JpaRepository<EmailPoints, Long>{
   EmailPoints findByMaterialSubCategoryIdAndTestId(Long materialSubCategoryId, Long testId);
 
   List<EmailPoints> findByActiveAndAdminLevelEmailConfiguration(boolean status, boolean adminStatus);
+
+  void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
+
+  void deleteByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId);
+
+  EmailPoints findByMaterialCategoryIdAndTestId(Long materialCategoryId, Long testId);
+
+  EmailPoints findByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId);
+
+  EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
 }
