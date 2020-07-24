@@ -13,13 +13,28 @@ public class TestConfigureDto {
   private String description;
   private String testProcedure;
   private String prefix;
-  private String resultLabel;
   private AcceptedValueDto acceptedValue;
-  private String formula;
   private List<TestParameterDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
-  private boolean equationExists;
- 
+  private List<TestEquationResponseDto> testEquation;
+  private List<ParameterEquationResponseDto> parameterEquation;
+
+  public List<TestEquationResponseDto> getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(List<TestEquationResponseDto> testEquation) {
+    this.testEquation = testEquation;
+  }
+
+  public List<ParameterEquationResponseDto> getParameterEquation() {
+    return parameterEquation;
+  }
+
+  public void setParameterEquation(List<ParameterEquationResponseDto> parameterEquation) {
+    this.parameterEquation = parameterEquation;
+  }
+
   public Long getId() {
     return id;
   }
@@ -92,14 +107,6 @@ public class TestConfigureDto {
     this.testparameters = testparameters;
   }
 
-  public String getFormula() {
-    return formula;
-  }
-
-  public void setFormula(String formula) {
-    this.formula = formula;
-  }
-
   public MaterialSubCategoryResponseDto getMaterialSubCategory() {
     return materialSubCategory;
   }
@@ -108,19 +115,4 @@ public class TestConfigureDto {
     this.materialSubCategory = materialSubCategory;
   }
 
-  public boolean isEquationExists() {
-    return equationExists;
-  }
-
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
-  }
-
-  public String getResultLabel() {
-    return resultLabel;
-  }
-
-  public void setResultLabel(String resultLabel) {
-    this.resultLabel = resultLabel;
-  }
 }

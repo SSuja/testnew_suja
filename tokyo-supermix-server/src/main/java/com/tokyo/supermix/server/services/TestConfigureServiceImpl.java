@@ -9,20 +9,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.EquationRequestDto;
+import com.tokyo.supermix.data.dto.EquationResponseDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
+import com.tokyo.supermix.data.dto.ParameterEquationResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
+import com.tokyo.supermix.data.dto.TestEquationResponseDto;
 import com.tokyo.supermix.data.dto.TestParameterDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
+import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestEquationRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
@@ -39,6 +47,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private Mapper mapper;
   @Autowired
   private EmailPointsService emailPointsService;
+  @Autowired
+  private TestEquationRepository testEquationRepository;
+  @Autowired
+  private ParameterEquationRepository parameterEquationRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -136,9 +148,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   @Transactional(readOnly = true)
   public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id) {
     TestConfigureDto testConfigureDto = new TestConfigureDto();
-    TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-    AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
-    List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id);
+    TestConfigure testConfigure = testConfigureRepository.findById(id).get(); 
     MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findById(id).get();
     testConfigureDto.setMaterialSubCategory(
         mapper.map(materialSubCategory, MaterialSubCategoryResponseDto.class));
@@ -147,11 +157,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     testConfigureDto.setTestName(testConfigure.getTest().getName());
     testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
     testConfigureDto.setTestType(testConfigure.getTestType());
-    testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
+    testConfigureDto.setAcceptedValue(mapper.map(acceptedValueRepository.findByTestConfigureId(id), AcceptedValueDto.class));
     testConfigureDto.setCoreTest(testConfigure.isCoreTest());
     testConfigureDto.setDescription(testConfigure.getDescription());
-    List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
-    testConfigureDto.setTestparameters(testParameterList);
+    testConfigureDto.setTestEquation(mapper.map(testEquationRepository.findByTestConfigureId(id),
+        TestEquationResponseDto.class));
+    testConfigureDto.setParameterEquation(
+        mapper.map(parameterEquationRepository.findByTestParameterTestConfigureId(id),
+            ParameterEquationResponseDto.class));
+    testConfigureDto.setTestparameters( mapper.map(testParameterRepository.findByTestConfigureId(id), TestParameterDto.class));
     return testConfigureDto;
   }
 
