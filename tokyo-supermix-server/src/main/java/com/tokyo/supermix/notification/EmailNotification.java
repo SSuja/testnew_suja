@@ -14,7 +14,6 @@ import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.IncomingSample;
-import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.NotificationDays;
@@ -25,17 +24,19 @@ import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.repositories.CustomerRepository;
+import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
-import com.tokyo.supermix.data.repositories.EmployeeRepository;
-import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.data.repositories.EquipmentRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
-import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
-import com.tokyo.supermix.data.repositories.ProcessSampleRepository;
-import com.tokyo.supermix.data.repositories.ProjectRepository;
+import com.tokyo.supermix.data.repositories.PlantRepository;
+import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
 import com.tokyo.supermix.server.services.EmailRecipientService;
@@ -60,24 +61,28 @@ public class EmailNotification {
   @Autowired
   private EmailPointsRepository emailPointsRepository;
   @Autowired
-  private ProjectRepository projectRepository;
-  @Autowired
   private SupplierRepository supplierRepository;
-  @Autowired
-  private ProcessSampleRepository processSampleRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
   @Autowired
-  private PlantEquipmentRepository plantEquipmentRepository;
+  private DesignationRepository designationRepository;
   @Autowired
-  private FinishProductSampleIssueRepository finishProductSampleIssueRepository;
+  private PlantRepository plantRepository;
+  @Autowired
+  private CustomerRepository customerRepository;
+  @Autowired
+  private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private MixDesignRepository mixDesignRepository;
+  @Autowired
+  private EquipmentRepository equipmentRepository;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
-  private EmployeeRepository employeeRepository;
+  private MaterialTestResultRepository materialTestResultRepository;
 
 
-  @Scheduled(cron = "${mail.notificationtime.plantEquipment}")
+  @Scheduled(cron = "${mail.notificationTime.plantEquipment}")
   public void alertForEquipmentCalibration() {
     final LocalDateTime today = LocalDateTime.now();
     plantEquipmentCalibrationRepository.findAll().forEach(calibration -> {
@@ -108,7 +113,7 @@ public class EmailNotification {
             + calibration.getPlantEquipment().getPlant().getName());
   }
 
-  @Scheduled(cron = "${mail.notificationtime.strengthTestMixDesign}")
+  @Scheduled(cron = "${mail.notificationTime.strengthTestMixDesign}")
   public void notifyStrengthTestForMixdesign() {
     final LocalDateTime today = LocalDateTime.now();
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
@@ -140,11 +145,12 @@ public class EmailNotification {
   public void sendProjectEmail(Project project) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         project.getPlant().getCode(), MailGroupConstance.CREATE_PROJECT);
-    Project projectobj = projectRepository.findById(project.getCode()).get();
+    String customerName =
+        customerRepository.findById(project.getCustomer().getId()).get().getName();
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "project " + projectobj.getName() + " newly added for the customer "
-            + projectobj.getCustomer().getName() + ".";
+        String mailBody =
+            "project " + project.getName() + " newly added for the customer " + customerName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -162,6 +168,8 @@ public class EmailNotification {
         materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
+//        Double testResult = materialTestResultRepository
+//            .findTopByOrderByMaterialTestCodeDesc(materialTest.getCode()).getResult();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -171,9 +179,8 @@ public class EmailNotification {
             + materialTest.getIncomingSample().getRawMaterial().getName()
             + "</b></li><li> Supplier <b>"
             + materialTest.getIncomingSample().getSupplier().getName()
-            // + "</b></li><li> Test Results <b>" + materialTest.
-            // + "</b>"
-            + "</li><li> Status <b>" + materialTest.getStatus() + "</b></li></ul>";
+ //           + "</b></li><li> Test Results <b>" + testResult + "</b>" + "</li><li> Status <b>"
+            + materialTest.getStatus() + "</b></li></ul>";
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MATRIAL_TEST, mailBody);
@@ -197,11 +204,9 @@ public class EmailNotification {
             + finishProductTest.getFinishProductSample().getCode() + "</b></li><li> Test Name <b>"
             + finishProductTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Material <b>"
-            + finishProductTest.getTestConfigure().getTest().getName()
-            // + "</b></li><li> Supplier <b>"
-            // + finishProductTest.getFinishProductSample().ge.getSupplier().getName()
-            // + "</b></li><li> Test Results <b>" + materialTest.
-            // + "</b>"
+            + finishProductTest.getTestConfigure().getTest().getName() + "</li><li> Status <b>"
+            + "</b></li><li> Test Results <b>" + finishProductTest.getStatus()
+            + "</b>"
             + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MATRIAL_TEST, mailBody);
@@ -214,8 +219,7 @@ public class EmailNotification {
         supplier.getPlant().getCode(), MailGroupConstance.CREATE_SUPPLIER);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        Supplier supplierobj = supplierRepository.findById(supplier.getId()).get();
-        String mailBody = "Supplier" + supplierobj.getName() + " newly added successfully";
+        String mailBody = "Supplier" + supplier.getName() + " newly added successfully";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -228,16 +232,18 @@ public class EmailNotification {
   public void sendEmployeeEmail(Employee employee) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         employee.getPlant().getCode(), MailGroupConstance.CREATE_EMPLOYEE);
-    Employee employeeobj = employeeRepository.findById(employee.getId()).get();
+    String plantName = plantRepository.findById(employee.getPlant().getCode()).get().getName();
+    String designationName =
+        designationRepository.findById(employee.getDesignation().getId()).get().getName();
     if (employee.getEmail() != null) {
-      String mailBody = "Dear " + employeeobj.getFirstName() + " WELCOME TO "
-          + employeeobj.getPlant().getName() + "as " + employeeobj.getDesignation().getName();
+      String mailBody =
+          "Dear " + employee.getFirstName() + " WELCOME TO " + plantName + " as " + designationName;
       emailService.sendMail(employee.getEmail(), Constants.SUBJECT_NEW_EMPLOYEE, mailBody);
     }
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Employee " + employeeobj.getFirstName() + " " + employeeobj.getLastName()
-            + " newly added " + "as " + employeeobj.getDesignation().getName() + ".";
+        String mailBody = "Employee " + employee.getFirstName() + " " + employee.getLastName()
+            + " newly added " + "as " + designationName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -252,11 +258,12 @@ public class EmailNotification {
         incomingSample.getPlant().getCode(), MailGroupConstance.CREATE_INCOMING_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        IncomingSample incomingSampleobj =
-            incomingSampleRepository.findById(incomingSample.getCode()).get();
+        String suplierName =
+            supplierRepository.findById(incomingSample.getSupplier().getId()).get().getName();
+        String rawMaterialName =
+            rawMaterialRepository.findById(incomingSample.getRawMaterial().getId()).get().getName();
         String mailBody =
-            " An Incoming sample for a " + incomingSampleobj.getRawMaterial().getName()
-                + " arrived from " + incomingSampleobj.getSupplier().getName() + ".";
+            " An Incoming sample for a " + rawMaterialName + " arrived from " + suplierName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -272,12 +279,10 @@ public class EmailNotification {
         MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        FinishProductSample finishProductSampleobj =
-            finishProductSampleRepository.findById(finishProductSample.getCode()).get();
-        String mailBody = "Finish Product sample created for the "
-            + finishProductSampleobj.getMixDesign().getCode() + " for"
-            + finishProductSampleobj.getMixDesign().getTargetGrade() + " and"
-            + finishProductSampleobj.getMixDesign().getTargetGrade() + " mix design";
+        MixDesign mixDesign =
+            mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+        String mailBody = "Finish Product sample created for the " + mixDesign.getCode() + " for"
+            + mixDesign.getTargetGrade() + " and" + mixDesign.getTargetGrade() + " mix design";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -293,11 +298,10 @@ public class EmailNotification {
         MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        FinishProductSampleIssue finishProductSampleIssueobj =
-            finishProductSampleIssueRepository.findById(finishProductSampleIssue.getCode()).get();
+        String customerName = customerRepository
+            .findById(finishProductSampleIssue.getProject().getCustomer().getId()).get().getName();
         String mailBody = "Finish product deliveried for  Finish product sample of "
-            + finishProductSampleIssue.getCode() + " by "
-            + finishProductSampleIssueobj.getProject().getCustomer().getName();
+            + finishProductSampleIssue.getCode() + " by " + customerName;
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -310,10 +314,11 @@ public class EmailNotification {
   public void sendPlantEquipmentCalibrationEmail(PlantEquipment plantequipment) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
-    PlantEquipment plantEquipmentobj =
-        plantEquipmentRepository.findById(plantequipment.getSerialNo()).get();
-    String mailBody = " Equipment " + plantEquipmentobj.getEquipment().getName()
-        + " is newly added for " + plantEquipmentobj.getPlant().getName() + ".";
+    String plantName =
+        plantRepository.findPlantByCode(plantequipment.getPlant().getCode()).getName();
+    String equipmentName =
+        equipmentRepository.findById(plantequipment.getEquipment().getId()).get().getName();
+    String mailBody = " Equipment " + equipmentName + " is newly added for " + plantName + ".";
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         List<String> reciepientList =
@@ -330,10 +335,10 @@ public class EmailNotification {
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        MaterialSubCategory materialSubCategory = materialSubCategoryRepository
-            .findById(rawMaterial.getMaterialSubCategory().getId()).get();
+        String materialSubCategoryName = materialSubCategoryRepository
+            .findById(rawMaterial.getMaterialSubCategory().getId()).get().getName();
         String mailBody = "Raw Material " + rawMaterial.getName() + " successfully created "
-            + " under " + materialSubCategory.getName();
+            + " under " + materialSubCategoryName;
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -378,11 +383,12 @@ public class EmailNotification {
         MailGroupConstance.CREATE_PROCESS_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        ProcessSample processSampleobj =
-            processSampleRepository.findById(processSample.getCode()).get();
+        String rawMaterialName =
+            rawMaterialRepository.findById(processSample.getRawMaterial().getId()).get().getName();
+        String suplierName = incomingSampleRepository
+            .findById(processSample.getIncomingSample().getCode()).get().getSupplier().getName();
         String mailBody =
-            "Material Load  for " + processSampleobj.getRawMaterial().getName() + " arrived  from "
-                + processSampleobj.getIncomingSample().getSupplier().getName() + ".";
+            "Material Load  for " + rawMaterialName + " arrived  from " + suplierName + ".";
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotificationAndPlantCode(MailGroupConstance.CREATE_PROCESS_SAMPLE,
                 processSample.getIncomingSample().getPlant().getCode());
