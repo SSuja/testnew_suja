@@ -168,8 +168,8 @@ public class EmailNotification {
         materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        Double testResult = materialTestResultRepository
-            .findTopByOrderByMaterialTestCodeDesc(materialTest.getCode()).getResult();
+//        Double testResult = materialTestResultRepository
+//            .findTopByOrderByMaterialTestCodeDesc(materialTest.getCode()).getResult();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -179,7 +179,7 @@ public class EmailNotification {
             + materialTest.getIncomingSample().getRawMaterial().getName()
             + "</b></li><li> Supplier <b>"
             + materialTest.getIncomingSample().getSupplier().getName()
-            + "</b></li><li> Test Results <b>" + testResult + "</b>" + "</li><li> Status <b>"
+ //           + "</b></li><li> Test Results <b>" + testResult + "</b>" + "</li><li> Status <b>"
             + materialTest.getStatus() + "</b></li></ul>";
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
