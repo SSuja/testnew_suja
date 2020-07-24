@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.InputMethod;
 
 @Repository
 public interface TestParameterRepository
@@ -24,6 +25,6 @@ public interface TestParameterRepository
 
   public boolean existsByAbbreviation(String abbreviation);
 
-//  List<TestParameter> findByTestConfigureIdAndEquationExistsTrue(Long testConfigureId);
-  // TestParameter findByTestConfigureIdAndTrailResult(Long testConfigureId,TrailResult trail);
+  List<TestParameter> findByTestConfigureIdAndInputMethods(Long testConfigureId,
+      InputMethod inputMethod);
 }

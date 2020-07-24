@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.tokyo.supermix.data.entities.FinishProductParameterResult;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
@@ -39,7 +43,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   FinishProductParameterResultRepository finishProductParameterResultRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-
   @Autowired
   TestConfigureRepository testConfigureRepository;
 
@@ -56,7 +59,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public String saveFinishProductTrial(FinishProductTrial finishProductTrial) {
     if (finishProductTrial.getCode() == null) {
-      String prefix = finishProductTrial.getFinishProductTest().getCode();
+      String prefix = finishProductTestRepository
+          .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
       List<FinishProductTrial> FinishProductTrialList =
           finishProductTrialRepository.findByCodeContaining(prefix);
       if (FinishProductTrialList.size() == 0) {
@@ -67,7 +71,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       }
     }
     finishProductTrialRepository.save(finishProductTrial);
-   // updateFinishProductResult(finishProductTrial);
+    updateFinishProductResult(finishProductTrial);
     return finishProductTrial.getCode();
   }
 
@@ -94,56 +98,51 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository.existsByCode(code);
   }
 
-//  public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
-//    FinishProductTest finishProductTest = finishProductTestRepository
-//        .findById(finishProductTrial.getFinishProductTest().getCode()).get();
-//    FinishProductSample finishProductSample = finishProductSampleRepository
-//        .findById(finishProductTest.getFinishProductSample().getCode()).get();
-//    Long day = finishProductTest.getTestConfigure().getDays();
-//    if (finishProductTrial.getTestParameter() != null) {
-//      FinishProductParameterResult finishProductParameterResult =
-//          new FinishProductParameterResult();
-//      finishProductParameterResult.setFinishProductSample(finishProductSample);
-//      finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
-//      if (day == null) {
-//        finishProductParameterResult
-//            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
-//        finishProductTest.setStatus(Status.PROCESS);
-//        finishProductSample.setStatus(
-//            getSlumpTestStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
-//                finishProductTrial.getValue()));
-//        finishProductParameterResultRepository.save(finishProductParameterResult);
-//        finishProductTest.setResult(finishProductParameterResult.getResult());
-//        finishProductSampleRepository.save(finishProductSample);
-//      } else {
-//        finishProductParameterResult
-//            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
-//        finishProductTest.setStatus(Status.COMPLETED);
-//        System.out.println();
-//        finishProductParameterResultRepository.save(finishProductParameterResult);
-//        finishProductTest.setResult(finishProductParameterResult.getResult());
-//        finishProductSampleRepository.save(finishProductSample);
-//      }
-//    } else {
-//      if (day != null) {
-//        finishProductTest
-//            .setResult(roundDoubleValue(strengthGradeRatio(finishProductTrial.getValue(),
-//                finishProductSample.getMixDesign().getCode())));
-//        finishProductTestRepository.save(finishProductTest);
-//
-//      } else {
-//        finishProductTest.setResult(roundDoubleValue(slumpGradeRatio(finishProductTrial.getValue(),
-//            finishProductSample.getMixDesign().getCode())));
-//        finishProductTestRepository.save(finishProductTest);
-//
-//      }
-//    }
-//  }
-//
-//  public String getEquation(String finidhProductTestCode) {
-//    return finishProductTestRepository.getOne(finidhProductTestCode).getTestConfigure()
-//        .getEquation().getFormula();
-//  }
+  public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
+    FinishProductTest finishProductTest = finishProductTestRepository
+        .findById(finishProductTrial.getFinishProductTest().getCode()).get();
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishProductTest.getFinishProductSample().getCode()).get();
+    Boolean check = finishProductTest.getTestConfigure().isCoreTest();
+    if (finishProductTrial.getTestParameter() != null) {
+      FinishProductParameterResult finishProductParameterResult =
+          new FinishProductParameterResult();
+      finishProductParameterResult.setFinishProductSample(finishProductSample);
+      finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
+      if (check) {
+        finishProductParameterResult
+            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
+        finishProductTest.setStatus(Status.PROCESS);
+        finishProductSample.setStatus(
+            getSlumpTestStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
+                finishProductTrial.getValue()));
+        finishProductParameterResultRepository.save(finishProductParameterResult);
+        finishProductTest.setResult(finishProductParameterResult.getResult());
+        finishProductSampleRepository.save(finishProductSample);
+        updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
+            finishProductTest.getFinishProductSample().getStatus());
+      } else {
+        finishProductParameterResult
+            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
+        finishProductTest.setStatus(Status.COMPLETED);
+        finishProductParameterResultRepository.save(finishProductParameterResult);
+        finishProductTest.setResult(finishProductParameterResult.getResult());
+        finishProductSampleRepository.save(finishProductSample);
+      }
+    } else {
+      if (check) {
+        finishProductTest
+            .setResult(roundDoubleValue(strengthGradeRatio(finishProductTrial.getValue(),
+                finishProductSample.getMixDesign().getCode())));
+        finishProductTestRepository.save(finishProductTest);
+
+      } else {
+        finishProductTest.setResult(roundDoubleValue(slumpGradeRatio(finishProductTrial.getValue(),
+            finishProductSample.getMixDesign().getCode())));
+        finishProductTestRepository.save(finishProductTest);
+      }
+    }
+  }
 
   public double averageResult(String finidhProductTestCode) {
     List<FinishProductTrial> finishProductTrialList =
@@ -155,6 +154,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       trialNo++;
     }
     return Result / trialNo;
+  }
+
+  public void updateMixDesignStatus(String mixDesignCode, Status status) {
+    MixDesign mixDesign = mixDesignRepository.findByCode(mixDesignCode);
+    if (mixDesign.getStatus().equals(Status.NEW)) {
+      mixDesign.setStatus(status);
+    }
+    mixDesignRepository.save(mixDesign);
   }
 
   private Double roundDoubleValue(Double value) {
@@ -207,7 +214,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTest.getStatus();
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser) {
     return finishProductTrialRepository
         .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(

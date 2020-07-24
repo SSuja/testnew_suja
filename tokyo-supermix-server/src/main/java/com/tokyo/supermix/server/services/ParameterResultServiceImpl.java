@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.script.ScriptEngine;
@@ -12,17 +11,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
-import com.tokyo.supermix.data.dto.ParameterResultDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
+import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
+import com.tokyo.supermix.data.entities.ParameterEquation;
+import com.tokyo.supermix.data.entities.ParameterEquationElement;
 import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.entities.TestEquation;
+import com.tokyo.supermix.data.entities.TestEquationParameter;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
+import com.tokyo.supermix.data.repositories.TestEquationParameterRepository;
+import com.tokyo.supermix.data.repositories.TestEquationRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
 
@@ -46,6 +53,12 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   MaterialTestService materialTestService;
   @Autowired
   MaterialTestTrialService materialTestTrialService;
+  @Autowired
+  TestEquationRepository testEquationRepository;
+  @Autowired
+  TestEquationParameterRepository testEquationParameterRepository;
+  @Autowired
+  MaterialTestResultRepository materialTestResultRepository;
 
   @Transactional
   public void saveParameterValue(ParameterResult parameterValue) {
@@ -105,15 +118,9 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return paramterResultList;
   }
 
+
   public List<ParameterResult> findByMaterialTestCode(String materialTestCode) {
     return parameterResultRepository.findByMaterialTestCode(materialTestCode);
-  }
-
-  @Transactional(readOnly = true)
-  public List<ParameterResult> getTestParamWithEquationByTestTrial(String materialTestTrialCode) {
-    return null;
-//    return parameterResultRepository
-//        .findByMaterialTestTrialCodeAndTestParameterEquationExistsTrue(materialTestTrialCode);
   }
 
   public String getEquation(Long paramterEquationId) {
@@ -122,8 +129,8 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   }
 
   public double findResult(HashMap<String, Double> abb, String equation) {
-    ScriptEngineManager mgr = new ScriptEngineManager();
-    ScriptEngine engine = mgr.getEngineByName("JavaScript");
+    ScriptEngineManager engineManager = new ScriptEngineManager();
+    ScriptEngine engine = engineManager.getEngineByName("JavaScript");
     double result = 0.0;
     for (String i : abb.keySet()) {
       engine.put(i, abb.get(i));
@@ -136,46 +143,22 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return roundDoubleValue(result);
   }
 
-
   @Override
   public void saveParameterResults(
       List<MaterialParameterResultDto> materialParameterResultDtolist) {
-    int no = materialParameterResultDtolist.size();
-    Double du = 0.0;
-    if (no > 1) {
-      List<ParameterResultDto> paralist =
-          materialParameterResultDtolist.get(no - 1).getParameterResults();
-      for (ParameterResultDto paraRe : paralist) {
-        TestParameter testParameter = testParameterRepository.getOne(paraRe.getTestParameterId());
-        // if (testParameter.getType().equals(TestParameterType.TEST)) {
-        // du = paraRe.getValue();
-        // }
-
-      }
-
-    }
     for (MaterialParameterResultDto materialParameterResultDto : materialParameterResultDtolist) {
       MaterialTest materialTest = materialTestService
           .getMaterialTestByCode(materialParameterResultDto.getMaterialTestCode());
       MaterialTestTrial materialTestTrial = new MaterialTestTrial();
       materialTestTrial.setMaterialTest(materialTest);
-      // if (materialParameterResultDto.getSieveSizeId() != null) {
-      // SieveSize sieveSize =
-      // sieveSizeRepository.getOne(materialParameterResultDto.getSieveSizeId());
-      // materialTestTrial.setSieveSize(sieveSize);
-      // }
-
       materialParameterResultDto.setMaterialTestTrialCode(
           materialTestTrialService.saveMaterialTestTrial(materialTestTrial));
-      setParameterResult(materialParameterResultDto, du);
+      setParameterResult(materialParameterResultDto);
     }
   }
 
-  public void setParameterResult(MaterialParameterResultDto materialParameterResultDto, Double du) {
-    ArrayList<ParameterResult> parameterResultList = new ArrayList<ParameterResult>();
-    for (int i = 0; i < materialParameterResultDto.parameterResults.size(); i++) {
-      ParameterResultDto parameterResultDto = materialParameterResultDto.parameterResults.get(i);
-
+  public void setParameterResult(MaterialParameterResultDto materialParameterResultDto) {
+    materialParameterResultDto.getParameterResults().forEach(parameterResultDto -> {
       ParameterResult parameterResult = new ParameterResult();
       parameterResult.setMaterialTest(
           materialTestRepository.findByCode(materialParameterResultDto.getMaterialTestCode()));
@@ -183,119 +166,133 @@ public class ParameterResultServiceImpl implements ParameterResultService {
           .findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
       parameterResult.setTestParameter(
           testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
-
-
-      // if (du != 0.0) {
-      // TestParameter testParameter =
-      // testParameterRepository.getOne(parameterResultDto.getTestParameterId());
-      // if (!testParameter.isEquationExists()) {
-      // if (testParameter.getType().equals(TestParameterType.GENERATE)) {
-      // parameterResult.setValue(du);
-      // } else {
-      // parameterResult.setValue(parameterResultDto.getValue());
-      // }
-      // } else {
-      // parameterResult.setValue(parameterResultDto.getValue());
-      // }
-      // } else {
-      // parameterResult.setValue(parameterResultDto.getValue());
-      // }
-      //
-      // parameterResultList.add(parameterResult);
-      // parameterResultRepository.save(parameterResult);
-      //
-      // }
-    }
-    getvalueCalculate(materialParameterResultDto.getMaterialTestTrialCode());
+      parameterResult.setValue(parameterResultDto.getValue());
+      parameterResultRepository.save(parameterResult);
+    });
+    getValueCalculate(materialParameterResultDto.getMaterialTestTrialCode());
   }
 
-  public void getvalueCalculate(String materialTestTrialCode) {
-    // MaterialTestTrial materialTestTrial =
-    // materialTestTrialRepository.getOne(materialTestTrialCode);
-    // List<TestParameter> testparameters = testParameterRepository
-    // .findByTestConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId());
-    // String mainEquation = "";
-    // if (!materialTestTrial.getMaterialTest().getTestConfigure().isEquationExists()) {
-    // testparameters.forEach(tes -> {
-    // ParameterResult parameterResultsum = parameterResultRepository
-    // .findByTestParameterIdAndMaterialTestTrialCode(tes.getId(), materialTestTrialCode);
-    // materialTestTrial.setResult(parameterResultsum.getValue());
-    // materialTestTrialRepository.save(materialTestTrial);
-    // });
-    // } else {
-    // List<TestParameter> testParametershasEqu =
-    // testParameterRepository.findByTestConfigureIdAndEquationExistsTrue(
-    // materialTestTrial.getMaterialTest().getTestConfigure().getId());
-    // if
-    // (materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getName().equals(EquationName.EQUATION))
-    // {
-    // mainEquation =
-    // materialTestTrial.getMaterialTest().getTestConfigure().getEquation().getFormula();
-    // }
-    // for (TestParameter testparameter : testParametershasEqu) {
-    // ParameterEquation parameterEquation =
-    // parameterEquationRepository.findByTestParameterId(testparameter.getId());
-    // String paraEq = "";
-    // List<ParameterEquationElement> parameterEquationElementlist =
-    // parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
-    // paraEq = parameterEquation.getEquation().getFormula();
-    // HashMap<String, Double> sum = new HashMap<String, Double>();
-    // for (ParameterEquationElement paramEquationEle : parameterEquationElementlist) {
-    // Long testParameterId = paramEquationEle.getTestParameter().getId();
-    // paramEquationEle.getTestParameter().getValue();
-    // paramEquationEle.getTestParameter().getAbbreviation();
-    // ParameterResult parameterResult =
-    // parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
-    // testParameterId, materialTestTrialCode);
-    // sum.put(paramEquationEle.getTestParameter().getAbbreviation(),
-    // parameterResult.getValue());
-    // }
-    // ParameterResult parameterResultsum =
-    // parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
-    // testparameter.getId(), materialTestTrialCode);
-    // parameterResultsum.setValue(findResult(sum, paraEq));
-    // parameterResultRepository.save(parameterResultsum);
-    // }
-    // HashMap<String, Double> main = new HashMap<String, Double>();
-    // for (TestParameter tepa : testparameters) {
-    // tepa.getAbbreviation();
-    // ParameterResult parameterResultmain = parameterResultRepository
-    // .findByTestParameterIdAndMaterialTestTrialCode(tepa.getId(), materialTestTrialCode);
-    // main.put(tepa.getAbbreviation(), parameterResultmain.getValue());
-    // }
-    // if (!mainEquation.isEmpty()) {
-    // materialTestTrial.setResult(findResult(main, mainEquation));
-    // materialTestTrialRepository.save(materialTestTrial);
-    // }
-    // }
-  }
 
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
     return Double.valueOf(decimalFormat.format(value));
   }
 
-  // public List<SieveTestResultsDto> getSieveTestResultsByMaterialTestCode(String materialTestCode)
-  // {
-  // List<MaterialTestTrial> materialTestTriallist =
-  // materialTestTrialService.getMaterialTestTrialByMaterialTestCode(materialTestCode);
-  // List<SieveTestResultsDto> sieveTestResultsDtolist = new ArrayList<>();
-  // materialTestTriallist.forEach(materialTestTrial -> {
-  // SieveTestResultsDto sieveTestResultsDto = new SieveTestResultsDto();
-  // sieveTestResultsDto.setSieveSize(materialTestTrial.getSieveSize().getSize());
-  // List<ParameterResult> ParameterResultlist =
-  // parameterResultRepository.findByMaterialTestTrialCode(materialTestTrial.getCode());
-  // List<SieveParameterResultDto> SieveParameterResultDtolist = new ArrayList<>();
-  // for (ParameterResult parRes : ParameterResultlist) {
-  // SieveParameterResultDto sieveParameterResultDto = new SieveParameterResultDto();
-  // sieveParameterResultDto
-  // .setParameterName(parRes.getTestParameter().getParameter().getName());
-  // sieveParameterResultDto.setValue(parRes.getValue());
-  // SieveParameterResultDtolist.add(sieveParameterResultDto);
-  // }
-  // sieveTestResultsDto.setSieveParameters(SieveParameterResultDtolist);
-  // sieveTestResultsDtolist.add(sieveTestResultsDto);
-  // });
-  // return sieveTestResultsDtolist;
-  // }
+  public void getValueCalculate(String materialTestTrialCode) {
+    MaterialTestTrial materialTestTrial = materialTestTrialRepository.getOne(materialTestTrialCode);
+    List<TestParameter> testparameters = testParameterRepository
+        .findByTestConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId());
+    List<TestParameter> calculationTestParameterList =
+        testParameterRepository.findByTestConfigureIdAndInputMethods(
+            materialTestTrial.getMaterialTest().getTestConfigure().getId(),
+            InputMethod.CALCULATION);
+    calculationTestParameterList.forEach(testparameter -> {
+      if (!testparameter.getType().equals(TestParameterType.RESULT)) {
+        ParameterEquation parameterEquation =
+            parameterEquationRepository.findByTestParameterId(testparameter.getId());
+        String paramEquation = "";
+        List<ParameterEquationElement> parameterEquationElementlist =
+            parameterEquationElementRepository.findByParameterEquationId(parameterEquation.getId());
+        paramEquation = parameterEquation.getEquation().getFormula();
+        HashMap<String, Double> sum = new HashMap<String, Double>();
+        for (ParameterEquationElement paramEquationEle : parameterEquationElementlist) {
+
+          ParameterResult parameterResult =
+              parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
+                  paramEquationEle.getTestParameter().getId(), materialTestTrialCode);
+          sum.put(paramEquationEle.getTestParameter().getAbbreviation(),
+              parameterResult.getValue());
+        }
+        ParameterResult parameterResultSum =
+            parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
+                testparameter.getId(), materialTestTrialCode);
+        parameterResultSum.setValue(findResult(sum, paramEquation));
+        parameterResultRepository.save(parameterResultSum);
+
+      }
+    });
+    for (TestParameter testParam : testparameters) {
+      if (testParam.getType().equals(TestParameterType.RESULT)
+          && testParam.getInputMethods().equals(InputMethod.OBSERVE)) {
+        parameterResultRepository.findByMaterialTestTrialCodeAndMaterialTestCode(
+            materialTestTrialCode, materialTestTrial.getMaterialTest().getCode()).forEach(par -> {
+              if (par.getTestParameter().getType().equals(TestParameterType.INPUT)) {
+                ParameterResult paramResult =
+                    parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
+                        testParam.getId(), materialTestTrialCode);
+                paramResult.setValue(par.getValue());
+                parameterResultRepository.save(paramResult);
+                List<ParameterResult> paramResultLists =
+                    parameterResultRepository.findByTestParameterIdAndMaterialTestCode(
+                        testParam.getId(), materialTestTrial.getMaterialTest().getCode());
+                Double value = 0.0;
+                for (ParameterResult paramList : paramResultLists) {
+                  value = value + paramList.getValue();
+                }
+                Double average = value.doubleValue() / paramResultLists.size();
+
+                if (materialTestResultRepository
+                    .findByMaterialTestCode(materialTestTrial.getMaterialTest().getCode())
+                    .size() == 0) {
+                  MaterialTestResult materialTestResults = new MaterialTestResult();
+                  materialTestResults.setMaterialTest(materialTestTrial.getMaterialTest());
+                  materialTestResults.setResult(average);
+                  materialTestResultRepository.save(materialTestResults);
+                } else {
+                  List<MaterialTestResult> materialResults = materialTestResultRepository
+                      .findByMaterialTestCode(materialTestTrial.getMaterialTest().getCode());
+                  for (MaterialTestResult MaterialTestResult : materialResults) {
+                    MaterialTestResult.setResult(average);
+                    materialTestResultRepository.save(MaterialTestResult);
+                  }
+                }
+              }
+            });
+      }
+      if (testParam.getType().equals(TestParameterType.RESULT)
+          && testParam.getInputMethods().equals(InputMethod.CALCULATION)) {
+        TestEquation testEquation = testEquationRepository.findByTestParameterId(testParam.getId());
+        String testTrialEquation = "";
+        List<TestEquationParameter> testEquationParameterlist =
+            testEquationParameterRepository.findByTestEquationId(testEquation.getId());
+        testTrialEquation = testEquation.getEquation().getFormula();
+        HashMap<String, Double> testResultTot = new HashMap<String, Double>();
+        for (TestEquationParameter testEquationElement : testEquationParameterlist) {
+          ParameterResult testparameterResult =
+              parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
+                  testEquationElement.getTestParameter().getId(), materialTestTrialCode);
+          testResultTot.put(testEquationElement.getTestParameter().getAbbreviation(),
+              testparameterResult.getValue());
+        }
+        ParameterResult testparameterResultSum =
+            parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
+                testParam.getId(), materialTestTrialCode);
+        testparameterResultSum.setValue(findResult(testResultTot, testTrialEquation));
+        testparameterResultSum.setTestEquation(testEquation);
+        parameterResultRepository.save(testparameterResultSum);
+        List<ParameterResult> paramResultList =
+            parameterResultRepository.findByTestParameterIdAndMaterialTestCode(testParam.getId(),
+                materialTestTrial.getMaterialTest().getCode());
+        Double value = 0.0;
+        for (ParameterResult paraResult : paramResultList) {
+          value = value + paraResult.getValue();
+        }
+        Double average = value.doubleValue() / paramResultList.size();
+
+        if (materialTestResultRepository.findByTestEquationAndMaterialTestCode(testEquation,
+            materialTestTrial.getMaterialTest().getCode()) == null) {
+          MaterialTestResult testResult = new MaterialTestResult();
+          testResult.setMaterialTest(materialTestTrial.getMaterialTest());
+          testResult.setTestEquation(testEquation);
+          testResult.setResult(average);
+          materialTestResultRepository.save(testResult);
+        }
+        MaterialTestResult materialTestResults =
+            materialTestResultRepository.findByTestEquationAndMaterialTestCode(testEquation,
+                materialTestTrial.getMaterialTest().getCode());
+        materialTestResults.setResult(average);
+        materialTestResultRepository.save(materialTestResults);
+      }
+    }
+  }
 }
