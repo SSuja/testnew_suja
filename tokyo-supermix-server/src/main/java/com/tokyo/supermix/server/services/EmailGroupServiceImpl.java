@@ -87,4 +87,9 @@ public class EmailGroupServiceImpl implements EmailGroupService {
       boolean status, boolean schedule) {
     return emailGroupRepository.findByPlantCodeAndStatusAndSchedule(plantCode, status, schedule);
   }
+
+  @Transactional(readOnly = true)
+  public List<EmailGroup> getAllEmailGroupsByAdminStatus(Boolean adminStatus) {
+    return emailGroupRepository.findByEmailPointsAdminLevelEmailConfiguration(adminStatus);
+  }
 }

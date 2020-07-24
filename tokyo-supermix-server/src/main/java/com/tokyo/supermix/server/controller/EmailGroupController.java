@@ -123,4 +123,11 @@ public class EmailGroupController {
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
+  
+  @GetMapping(value = EndpointURI.EMAIL_GROUP_BY_ADMIN_STATUS)
+  public ResponseEntity<Object> getAllEmailGroupsByAdminStatus(@PathVariable Boolean adminStatus) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_GROUPS, mapper
+        .map(emailGroupService.getAllEmailGroupsByAdminStatus(adminStatus), EmailGroupResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }

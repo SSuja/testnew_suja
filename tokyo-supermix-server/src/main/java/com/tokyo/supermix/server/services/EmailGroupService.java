@@ -28,5 +28,6 @@ public interface EmailGroupService {
   public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatusAndSchedule(String plantCode, boolean status,
       boolean schedule);
   
+  public List<EmailGroup> getAllEmailGroupsByAdminStatus(Boolean adminStatus);
 
 }

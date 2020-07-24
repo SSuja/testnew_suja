@@ -205,7 +205,7 @@ public class EmailNotification {
             + finishProductTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Material <b>"
             + finishProductTest.getTestConfigure().getTest().getName() + "</li><li> Status <b>"
-            + "</b></li><li> Test Results <b>" + finishProductTest.getStatus()
+  //          + "</b></li><li> Test Results <b>" + finishProductTest.get
             + "</b>"
             + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),

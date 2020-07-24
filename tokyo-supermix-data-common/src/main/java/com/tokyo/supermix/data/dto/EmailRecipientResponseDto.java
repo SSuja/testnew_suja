@@ -5,6 +5,7 @@ import com.tokyo.supermix.data.enums.RecipientType;
 public class EmailRecipientResponseDto {
   private Long id;
   private Long plantRoleId;
+  private String plantRoleName;
   private Long userId;
   private String userName;
   private Long emailGroupId;
@@ -56,5 +57,13 @@ public class EmailRecipientResponseDto {
 
   public void setUserName(String userName) {
     this.userName = userName;
+  }
+
+  public String getPlantRoleName() {
+    return plantRoleName;
+  }
+
+  public void setPlantRoleName(String plantRoleName) {
+    this.plantRoleName = plantRoleName;
   }
 }
