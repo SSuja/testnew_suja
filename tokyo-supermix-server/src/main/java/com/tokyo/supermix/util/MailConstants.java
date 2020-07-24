@@ -17,9 +17,9 @@ public class MailConstants {
 
 	@Value("${mail.notify.report}")
     private String[] mailReportUser;
-	@Value("${mail.notificationtime.plantEquipment}")
+	@Value("${mail.notificationTime.plantEquipment}")
     private String plantEquipmentTime;
-	@Value("${mail.notificationtime.strengthTestMixDesign}")
+	@Value("${mail.notificationTime.strengthTestMixDesign}")
     private String strengthTestMixDesign;
 	
 	public String getAdmin() {
