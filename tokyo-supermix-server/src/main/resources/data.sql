@@ -341,6 +341,8 @@ INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_c
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('12', 0, 'Customer Creation', 0);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('13', 0, 'Process Sample Creation', 0);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('14', 0, 'Mix Design Creation', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('15', 0, 'Summary Report Group', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('16', 0, 'Delivery Report Group', 0);
 
 
 INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`status`)VALUES
