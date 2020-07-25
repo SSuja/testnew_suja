@@ -16,6 +16,7 @@ public class TestParameterResponseDto {
   private QualityParameterResponseDto qualityParameter;
   private boolean acceptedCriteria;
   private InputMethod inputMethods;
+  private String level;
 
   public Long getId() {
     return id;
@@ -96,4 +97,13 @@ public class TestParameterResponseDto {
   public void setInputMethods(InputMethod inputMethods) {
     this.inputMethods = inputMethods;
   }
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+  
 }
