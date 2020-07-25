@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.NotificationDaysDto;
 import com.tokyo.supermix.data.dto.NotificationDaysRequestDto;
 import com.tokyo.supermix.data.dto.NotificationDaysResponseDto;
 import com.tokyo.supermix.data.entities.NotificationDays;
@@ -94,5 +95,12 @@ public class EmailNotificationDaysController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_NOTIFICATION_DAY_ID,
         validationFailureStatusCodes.getEmailNotificationDaysNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  @GetMapping(value = EndpointURI.EMAIL_NOTIFICATIONS_BY_PLANT_CODE)
+  public ResponseEntity<Object> getAllEmailNotificationDaysByPlantCode(@PathVariable String plantCode) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_NOTIFICATION_DAYS,
+        mapper.map(emailNotificationDaysService.getByPlantCode(plantCode),
+            NotificationDaysDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

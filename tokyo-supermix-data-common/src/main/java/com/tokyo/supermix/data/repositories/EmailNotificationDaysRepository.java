@@ -9,6 +9,8 @@ public interface EmailNotificationDaysRepository extends JpaRepository<Notificat
   boolean existsByEmailGroupIdAndDays(Long emailGroupId, Double days);
 
   List<NotificationDays> findByEmailGroupEmailPointsNameAndEmailGroupPlantCode(String name, String plantCode);
+  
+  List<NotificationDays> findByEmailGroupPlantCode(String plantCode);
 
   List<NotificationDays> findByEmailGroupId(Long id);
   

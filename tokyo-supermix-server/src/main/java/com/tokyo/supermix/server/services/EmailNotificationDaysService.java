@@ -19,5 +19,7 @@ public interface EmailNotificationDaysService {
   public boolean isEmailNotificationDaysExist(Long id);
 
   public void deleteEmailNotificationDays(Long id);
+  
+  public List<NotificationDays> getByPlantCode(String plantCode);
 
 }

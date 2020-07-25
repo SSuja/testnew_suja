@@ -297,16 +297,30 @@ INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUE
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('190', 'edit_role_permission', '51');
 
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('52', 'schedule_configuration', '15');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('191', 'schedule_configuration', '52');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('191', 'add_schedule_configuration', '52');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('203', 'get_schedule_configuration', '52');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('204', 'edit_schedule_configuration', '52');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('205', 'delete_schedule_configuration', '52');
+
 
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('53', 'mail_notification_configuration', '15');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('192', 'mail_notification_configuration', '53');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('192', 'add_mail_notification_configuration', '53');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('197', 'get_mail_notification_configuration', '53');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('198', 'update_mail_notification_configuration', '53');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('199', 'delete_mail_notification_configuration', '53');
 
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('54', 'mail_group_configuration', '15');
-INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('193', 'mail_group_configuration', '54');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('193', 'add_mail_group_configuration', '54');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('200', 'get_mail_group_configuration', '54');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('201', 'edit_mail_group_configuration', '54');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('202', 'delete_mail_group_configuration', '54');
 
 INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('55', 'non_plant_user_privilege', '15');
 INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('194', 'edit_other_plant_user_privilege', '55');
+
+INSERT INTO `tokyo-supermix`.`sub_module` (`id`, `name`, `main_module_id`) VALUES ('56', 'email_points', '15');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('195', 'get_email_points', '56');
+INSERT INTO `tokyo-supermix`.`permission` (`id`, `name`, `sub_module_id`) VALUES ('196', 'edit_email_points', '56');
 
 
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('1', 0, 'Mix Design', 0);
@@ -341,4 +355,4 @@ INSERT INTO `tokyo-supermix`.`role_permission` (`id`,`role_id`,`permission_id`,`
 (150,1,150,1),(151,1,151,1),(152,1,152,1),(153,1,153,1),(154,1,154,1),(155,1,155,1),(156,1,156,1),(157,1,157,1),(158,1,158,1),(159,1,159,1),(160,1,160,1),(161,1,161,1),(162,1,162,1),
 (163,1,163,1),(168,1,168,1),(169,1,169,1),(170,1,170,1),(171,1,171,1),(172,1,172,1),(173,1,173,1),(174,1,174,1),(175,1,175,1),(176,1,176,1),(177,1,177,1),(178,1,178,1),(179,1,179,1),
 (180,1,180,1),(181,1,181,1),(182,1,182,1),(183,1,183,1),(184,1,184,1),(185,1,185,1),(186,1,186,1),(187,1,187,1),(188,1,188,1),(189,1,189,1),(190,1,190,1),(191,1,191,1),(192,1,192,1),
-(193,1,193,1),(194,1,194,1);
+(193,1,193,1),(194,1,194,1),(195,1,195,1),(196,1,196,1),(197,1,197,1),(198,1,198,1),(199,1,199,1),(200,1,200,1),(201,1,201,1),(202,1,202,1),(203,1,203,1),(204,1,204,1),(205,1,205,1);
