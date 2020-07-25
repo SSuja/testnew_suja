@@ -174,7 +174,6 @@ public class EmailNotification {
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
-
         String average = "";
         for (MaterialTestResult materialTestResult : materialTestAverageList) {
           average = average + materialTestResult.getResult() + ",";
@@ -226,7 +225,7 @@ public class EmailNotification {
         supplier.getPlant().getCode(), MailGroupConstance.CREATE_SUPPLIER);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Supplier" + supplier.getName() + " newly added successfully";
+        String mailBody = "Supplier" + supplier.getName() + " newly added ";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -344,7 +343,7 @@ public class EmailNotification {
       if (emailGroup.isStatus()) {
         String materialSubCategoryName = materialSubCategoryRepository
             .findById(rawMaterial.getMaterialSubCategory().getId()).get().getName();
-        String mailBody = "Raw Material " + rawMaterial.getName() + " successfully created "
+        String mailBody = "Raw Material " + rawMaterial.getName() + " newly created "
             + " under " + materialSubCategoryName;
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
@@ -360,7 +359,7 @@ public class EmailNotification {
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         String mailBody = "Customer, " + customer.getName() + " having email id "
-            + customer.getEmail() + " created successfully";
+            + customer.getEmail() + " created ";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 MailGroupConstance.CREATE_CUSTOMER, customer.getPlant().getCode());
@@ -371,7 +370,7 @@ public class EmailNotification {
   }
 
   public void sendPlantCreationEmail(Plant plant) {
-    String mailBody = "plant " + plant.getName() + " successfully created";
+    String mailBody = "plant " + plant.getName() + " newly created";
     EmailGroup emailGroup =
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_PLANT);
     if (emailGroup != null) {
@@ -411,7 +410,7 @@ public class EmailNotification {
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         String mailBody = mixDesign.getCode() + " for" + mixDesign.getTargetGrade() + " and "
-            + mixDesign.getTargetSlump() + " mix design is created successsfully.";
+            + mixDesign.getTargetSlump() + " mix design is created .";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 MailGroupConstance.CREATE_MIX_DESIGN, mixDesign.getPlant().getCode());
