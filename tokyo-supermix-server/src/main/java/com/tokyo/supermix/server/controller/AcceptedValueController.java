@@ -46,8 +46,9 @@ public class AcceptedValueController {
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
   public ResponseEntity<Object> createAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
-    if (acceptedValueService
-        .isAcceptedValueByTestConfigureId(acceptedValueRequestDto.getTestConfigureId())) {
+    if (acceptedValueService.isAcceptedValueByTestConfigureIdAndTestEquation(
+        acceptedValueRequestDto.getTestConfigureId(),
+        acceptedValueRequestDto.getTestEquationId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
               validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),

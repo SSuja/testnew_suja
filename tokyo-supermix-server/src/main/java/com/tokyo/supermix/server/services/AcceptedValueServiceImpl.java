@@ -54,6 +54,13 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
     return acceptedValueRepository.existsAcceptedValueByTestConfigureId(testConfigureId);
   }
 
+  @Transactional(readOnly = true)
+  public boolean isAcceptedValueByTestConfigureIdAndTestEquation(Long testConfigureId,
+      Long testEquationId) {
+    return acceptedValueRepository.existsByTestConfigureIdAndTestEquationId(testConfigureId, testEquationId);
+  }
+
+
   public boolean isUpdatedAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId) {
     if ((!getAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
         && (isAcceptedValueByTestConfigureId(testConfigureId))) {
@@ -67,5 +74,4 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
     return acceptedValueRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
-
 }
