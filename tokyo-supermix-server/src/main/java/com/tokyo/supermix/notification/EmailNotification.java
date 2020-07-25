@@ -208,7 +208,7 @@ public class EmailNotification {
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
-        String mailBody = "<ul><li>Incoming Sample <b>"
+        String mailBody = "<ul><li>Finish Product Sample <b>"
             + finishProductTest.getFinishProductSample().getCode() + "</b></li><li> Test Name <b>"
             + finishProductTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Material <b>"
@@ -216,7 +216,7 @@ public class EmailNotification {
             + "</b></li><li> Test Results <b>" + finishProductTest.getResult() + "</b>"
                   + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_MATRIAL_TEST, mailBody);
+            Constants.SUBJECT_CONCRETE_TEST, mailBody);
       }
     }
   }
