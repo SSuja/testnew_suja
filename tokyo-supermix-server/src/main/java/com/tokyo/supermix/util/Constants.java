@@ -120,6 +120,7 @@ public class Constants {
    */
   public static final String EQUIPMENT_PLANT_CALIBRATION = "plantEquipmentCalibration";
   public static final String EQUIPMENT_PLANT_CALIBRATIONS = "plantEquipmentCalibrations";
+  public static final String DUE_DATE="dueDate";
   public static final String ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS =
       "Plant Equipment Calibration Added Successfully";
   public static final String EQUIPMENT_PLANT_CALIBRATION_DELETED =

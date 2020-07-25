@@ -1275,6 +1275,16 @@ public class ValidationFailureStatusCodes {
   private String EmployeeIdIsNull;
   @Value("${validation.supplierId.null}")
   private String SupplierIdIsNull;
+  @Value("${validation.dueDate.exist}")
+  private String dueDateExist;
+
+  public String getDueDateExist() {
+    return dueDateExist;
+  }
+
+  public void setDueDateExist(String dueDateExist) {
+    this.dueDateExist = dueDateExist;
+  }
 
   public String getPlantEquipmentCalibrationNotExist() {
     return plantEquipmentCalibrationNotExist;
