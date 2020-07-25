@@ -90,8 +90,6 @@ public class TestReportServiceImpl implements TestReportService {
   @Autowired
   private TestEquationRepository testEquationRepository;
   @Autowired
-  private TestParameterRepository testParameterRepository;
-  @Autowired
   private TestParameterService testParameterService;
 
   // Generate Test Report for Material Test Wise
@@ -466,7 +464,7 @@ public class TestReportServiceImpl implements TestReportService {
     seiveTestReportResponseDto
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     seiveTestReportResponseDto.setIncomingSample(
-        mapper.map(materialTest.getIncomingSample(),IncomingSampleResponseDto.class));
+        mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
     seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     return seiveTestReportResponseDto;
 
@@ -477,17 +475,12 @@ public class TestReportServiceImpl implements TestReportService {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     for (String level : testParameterService
         .getAllOriLevel(materialTest.getTestConfigure().getId())) {
-      // List<ParameterResult> parameterResultList =
-      // parameterResultRepository.findByTestParameterLevelAndTestParameterTestConfigureId(level,
-      // materialTest.getTestConfigure().getId());
-      // for (ParameterResult parameterResult : parameterResultList) {
       SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
       sieveTestTrialDto.setSize(level);
-      sieveTestTrialDto.setSieveResultAndParameter(getParaAndResult(level,materialTest.getTestConfigure().getId()));
+      sieveTestTrialDto.setSieveResultAndParameter(
+          getParaAndResult(level, materialTest.getTestConfigure().getId()));
       sieveTestTrialDtoList.add(sieveTestTrialDto);
-      // }
     }
-    // }
     return sieveTestTrialDtoList;
   }
 
@@ -497,8 +490,9 @@ public class TestReportServiceImpl implements TestReportService {
     List<ParameterResult> parameterResultList = parameterResultRepository
         .findByTestParameterLevelAndTestParameterTestConfigureId(level, testConfigId);
     for (ParameterResult parameterResult : parameterResultList) {
-      SieveResultAndParameter sieveResultAndParameter=new SieveResultAndParameter();
-      sieveResultAndParameter.setParameter(parameterResult.getTestParameter().getParameter().getName());
+      SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
+      sieveResultAndParameter
+          .setParameter(parameterResult.getTestParameter().getParameter().getName());
       sieveResultAndParameter.setVale(parameterResult.getValue());
       sieveResultAndParameterList.add(sieveResultAndParameter);
     }

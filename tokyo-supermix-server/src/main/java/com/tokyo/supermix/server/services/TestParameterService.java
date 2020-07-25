@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestParameterEquationDto;
@@ -34,4 +35,6 @@ public interface TestParameterService {
   public boolean isAbbreviationExists(String abbreviation);
 
   public TestParameterEquationDto getTestParameterEquation(Long testConfigureId);
+
+  public Set<String> getAllOriLevel(Long testConfigId);
 }

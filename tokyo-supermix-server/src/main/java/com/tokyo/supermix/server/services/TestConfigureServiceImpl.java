@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.EquationRequestDto;
-import com.tokyo.supermix.data.dto.EquationResponseDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.ParameterEquationResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
@@ -20,7 +19,6 @@ import com.tokyo.supermix.data.dto.TestParameterDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
-import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.entities.TestParameter;
@@ -129,6 +127,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     testConfigureDto.setCoreTest(testConfigure.isCoreTest());
     testConfigureDto.setDescription(testConfigure.getDescription());
     List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
+    testConfigureDto.setTestEquations((mapper.map(testEquationRepository.findByTestConfigureId(id),
+        TestEquationResponseDto.class)));
+    testConfigureDto.setParameterEquations(
+        mapper.map(parameterEquationRepository.findByTestParameterTestConfigureId(id),
+            ParameterEquationResponseDto.class));
     testConfigureDto.setTestparameters(testParameterList);
     return testConfigureDto;
   }
@@ -161,8 +164,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   @Transactional(readOnly = true)
   public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id) {
     TestConfigureDto testConfigureDto = new TestConfigureDto();
-    TestConfigure testConfigure = testConfigureRepository.findById(id).get(); 
+    ArrayList<TestEquationResponseDto> testEquationArryList =
+        new ArrayList<TestEquationResponseDto>();
+    TestConfigure testConfigure = testConfigureRepository.findById(id).get();
     MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findById(id).get();
+    List<TestEquation> testEquationList = testEquationRepository.findByTestConfigureId(id);
     testConfigureDto.setMaterialSubCategory(
         mapper.map(materialSubCategory, MaterialSubCategoryResponseDto.class));
     testConfigureDto.setId(testConfigure.getId());
@@ -170,15 +176,17 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     testConfigureDto.setTestName(testConfigure.getTest().getName());
     testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
     testConfigureDto.setTestType(testConfigure.getTestType());
-    testConfigureDto.setAcceptedValue(mapper.map(acceptedValueRepository.findByTestConfigureId(id), AcceptedValueDto.class));
+    testConfigureDto.setAcceptedValue(
+        mapper.map(acceptedValueRepository.findByTestConfigureId(id), AcceptedValueDto.class));
     testConfigureDto.setCoreTest(testConfigure.isCoreTest());
     testConfigureDto.setDescription(testConfigure.getDescription());
-    testConfigureDto.setTestEquation(mapper.map(testEquationRepository.findByTestConfigureId(id),
-        TestEquationResponseDto.class));
-    testConfigureDto.setParameterEquation(
+    testConfigureDto.setTestEquations((mapper.map(testEquationRepository.findByTestConfigureId(id),
+        TestEquationResponseDto.class)));
+    testConfigureDto.setParameterEquations(
         mapper.map(parameterEquationRepository.findByTestParameterTestConfigureId(id),
             ParameterEquationResponseDto.class));
-    testConfigureDto.setTestparameters( mapper.map(testParameterRepository.findByTestConfigureId(id), TestParameterDto.class));
+    testConfigureDto.setTestparameters(
+        mapper.map(testParameterRepository.findByTestConfigureId(id), TestParameterDto.class));
     return testConfigureDto;
   }
 

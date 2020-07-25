@@ -57,7 +57,11 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   @Transactional(readOnly = true)
   public boolean isAcceptedValueByTestConfigureIdAndTestEquation(Long testConfigureId,
       Long testEquationId) {
-    return acceptedValueRepository.existsByTestConfigureIdAndTestEquationId(testConfigureId, testEquationId);
+    if (acceptedValueRepository.existsByTestConfigureIdAndTestEquationId(testConfigureId,
+        testEquationId)) {
+      return true;
+    }
+    return false;
   }
 
 

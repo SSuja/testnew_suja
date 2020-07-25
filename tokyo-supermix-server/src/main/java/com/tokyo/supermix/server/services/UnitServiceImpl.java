@@ -20,6 +20,13 @@ public class UnitServiceImpl implements UnitService {
 
   @Transactional(readOnly = true)
   public List<Unit> getAllUnits() {
+
+    
+    String str = "geekss@for@kiri";
+    String[] arrOfStr = str.split("@", str.length());
+    String part2 = arrOfStr[1];
+    System.out.println(part2);
+    
     return unitRepository.findAll();
   }
 
