@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services.auth;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
+import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.UserType;
@@ -38,4 +39,5 @@ public interface UserService {
   
   List<User> getAllUsersByUserTypeByplant(UserPrincipal currentUser,UserType userType);
   List<User> getAllUsersByUserType(UserType userType);
+  public UserResponseDto getUserDetailById(Long id);
 }
