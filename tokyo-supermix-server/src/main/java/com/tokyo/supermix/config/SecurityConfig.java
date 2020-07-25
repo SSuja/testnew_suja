@@ -434,6 +434,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.EDIT_USER_ROLE)
         .antMatchers(HttpMethod.DELETE, PrivilegeEndpointURI.USER_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_USER)
+        
+     // email points
+        .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_POINTS)
+       .hasAuthority(PermissionConstants.GET_EMAIL_POINTS)
+       .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_POINT)
+       .hasAuthority(PermissionConstants.EDIT_EMAIL_POINTS)
+       
+    // email notification
+       .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_GROUP_BY_ADMIN_STATUS)
+      .hasAuthority(PermissionConstants.GET_EMAIL_GROUP)
+      .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_GROUP)
+      .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
+      .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_GROUP)
+      .hasAuthority(PermissionConstants.ADD_EMAIL_GROUP)
+      .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_GROUP_BY_ID)
+      .hasAuthority(PermissionConstants.DELETE_EMAIL_GROUP)
+      
+      // email group configuration
+      .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE)
+     .hasAuthority(PermissionConstants.GET_EMAIL_RECIPIENT)
+     .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_RECIPIENT)
+     .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
+     .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_RECIPIENT)
+     .hasAuthority(PermissionConstants.ADD_EMAIL_RECIPIENT)
+     .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_RECIPIENT_BY_ID)
+     .hasAuthority(PermissionConstants.DELETE_EMAIL_RECIPIENT)
+     
+     // notification days
+     .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_NOTIFICATIONS_BY_PLANT_CODE)
+    .hasAuthority(PermissionConstants.GET_NOTIFICATION_DAYS)
+    .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_NOTIFICATION)
+    .hasAuthority(PermissionConstants.EDIT_NOTIFICATION_DAYS)
+    .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_NOTIFICATION)
+    .hasAuthority(PermissionConstants.ADD_NOTIFICATION_DAYS)
+    .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_NOTIFICATION_BY_ID)
+    .hasAuthority(PermissionConstants.DELETE_NOTIFICATION_DAYS)
+         
     .anyRequest().authenticated()
     ;
     // Add our custom JWT security filter
