@@ -203,16 +203,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       MaterialTest materialTestObj) {
     incomingSample.setStatus(status);
     incomingSampleRepository.save(incomingSample);
-
-
     if (!status.equals(Status.PROCESS)) {
       try {
         emailNotification.sendTestEmail(materialTestObj);
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + materialTestObj);
         generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
 
       } catch (Exception e) {
-        System.out.println(e.getMessage());
         e.printStackTrace();
       }
     } else {
@@ -224,7 +220,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         generateReportService.generatePdfDeliveryDetailReport(incomingSample.getCode(),
             materialTestObj.getTestConfigure().getTest().getName());
       } catch (Exception e) {
-        System.out.println(e.getMessage());
         e.printStackTrace();
       }
     }
