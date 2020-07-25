@@ -105,7 +105,7 @@ public class UserController {
   public ResponseEntity<Object> getUserById(@PathVariable Long id) {
     if (userService.isUserExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
-          mapper.map(userService.getUserById(id), UserResponseDto.class), RestApiResponseStatus.OK),
+         userService.getUserDetailById(id), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
     logger.debug("No User record exist for given id");

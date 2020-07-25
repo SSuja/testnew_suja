@@ -70,4 +70,10 @@ public class EmailNotificationDaysServiceImpl implements EmailNotificationDaysSe
   public void deleteEmailNotificationDays(Long id) {
     emailNotificationDaysRepository.deleteById(id);
   }
+
+  @Transactional(readOnly = true)
+  public List<NotificationDays> getByPlantCode(String plantCode) {
+   
+    return emailNotificationDaysRepository.findByEmailGroupPlantCode(plantCode);
+  }
 }

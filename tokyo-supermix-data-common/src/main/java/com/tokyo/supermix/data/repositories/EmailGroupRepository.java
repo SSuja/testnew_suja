@@ -16,4 +16,7 @@ public interface EmailGroupRepository extends JpaRepository<EmailGroup, Long> {
   EmailGroup findByEmailPointsName(String name);
   List<EmailGroup> findByPlantCodeAndStatusAndSchedule(String plantCode, boolean status,
       boolean schedule);
+  List<EmailGroup> findByPlantCodeAndEmailPointsAdminLevelEmailConfiguration(String plantCode,
+      Boolean adminStatus);
+  List<EmailGroup> findByEmailPointsAdminLevelEmailConfiguration(Boolean adminStatus);
 }

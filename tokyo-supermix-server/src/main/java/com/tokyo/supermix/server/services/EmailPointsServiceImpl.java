@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
@@ -103,5 +104,27 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   @Transactional(readOnly = true)
   public List<EmailPoints> getAllEmailPointsByAdminStatus(boolean status) {
     return emailPointsRepository.findByActiveAndAdminLevelEmailConfiguration(true, status);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) { 
+    Long emailPointId = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(materialSubCategoryId, testId).getId();
+    emailPointsRepository.deleteById(emailPointId);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId) {
+    Long emailPointId = emailPointsRepository.findByMaterialCategoryIdAndTestId(materialCategoryId, testId).getId();
+    emailPointsRepository.deleteById(emailPointId);
+  }
+
+  @Transactional(readOnly = true)
+  public EmailPoints findByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId) {
+    return emailPointsRepository.findByTestIdAndMaterialCategoryId(testId,materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
+    return emailPointsRepository.findByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId);
   }
 }

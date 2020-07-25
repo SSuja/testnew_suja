@@ -539,7 +539,10 @@ public final class EndpointURI {
       EMAIL_GROUPS + SLASH + "plant-code" + SLASH + "{plantCode}"+SLASH +"status" + SLASH + "{status}";
   public static final String EMAIL_GROUP_BY_PLANT_CODE_AND_STATUS_SCEHDULE =
       EMAIL_GROUPS + SLASH + "plant-code" + SLASH + "{plantCode}"+SLASH +"status" + SLASH + "{status}" + SLASH +"schedule" + SLASH + "{schedule}";
-
+  public static final String EMAIL_GROUP_BY_PLANT_CODE_ADMIN_STATUS =
+      EMAIL_GROUPS + SLASH + "email-group-admin-status" + SLASH+ "plant-code" +SLASH+ "{plantCode}"+ SLASH+ "admin-status"+ SLASH + "{adminStatus}";
+  public static final String EMAIL_GROUP_BY_ADMIN_STATUS =
+      EMAIL_GROUPS + SLASH + "email-group-admin-status" +SLASH+ "{adminStatus}";
 
   /*
    * email group notification days APIs
@@ -548,6 +551,7 @@ public final class EndpointURI {
   public static final String EMAIL_NOTIFICATIONS = BASE_API_PATH + "email-notification-days";
   public static final String EMAIL_NOTIFICATIONS_BY_GROUP = EMAIL_NOTIFICATION + SLASH + "group";
   public static final String EMAIL_NOTIFICATION_BY_ID = EMAIL_NOTIFICATION + SLASH + ID;
+  public static final String EMAIL_NOTIFICATIONS_BY_PLANT_CODE = EMAIL_NOTIFICATION + SLASH + "{plantCode}";
   /*
    * Test Equation
    */

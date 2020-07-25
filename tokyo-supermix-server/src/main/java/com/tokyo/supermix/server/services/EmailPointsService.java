@@ -22,4 +22,12 @@ public interface EmailPointsService {
   void createEmailPoints(TestConfigureRequestDto testConfigureRequestDto);
 
   List<EmailPoints> getAllEmailPointsByAdminStatus(boolean status);
+
+  void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
+
+  void deleteByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId);
+
+  EmailPoints findByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId);
+
+  EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
 }
