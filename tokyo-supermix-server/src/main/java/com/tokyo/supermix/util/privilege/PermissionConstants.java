@@ -102,16 +102,16 @@ public final class PermissionConstants {
 	 public static final String CREATE_QUALITY_PARAMETER= "create_quality_parameter";
 	 public static final String EDIT_QUALITY_PARAMETER= "edit_quality_parameter";
 	 public static final String DELETE_QUALITY_PARAMETER = "delete_quality_parameter";
-	  /* sieve size */
-	 public static final String VIEW_SIEVE_SIZE = "view_sieve_size";
-	 public static final String CREATE_SIEVE_SIZE= "create_sieve_size";
-	 public static final String EDIT_SIEVE_SIZE= "edit_sieve_size";
-	 public static final String DELETE_SIEVE_SIZE = "delete_sieve_size";
-	 /* material accepted value */
-	 public static final String VIEW_SIEVE_ACCEPTED_VALUE = "view_sieve_accepted_value";
-	 public static final String CREATE_SIEVE_ACCEPTED_VALUE= "create_sieve_accepted_value";
-	 public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
-	 public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
+//	  /* sieve size */
+//	 public static final String VIEW_SIEVE_SIZE = "view_sieve_size";
+//	 public static final String CREATE_SIEVE_SIZE= "create_sieve_size";
+//	 public static final String EDIT_SIEVE_SIZE= "edit_sieve_size";
+//	 public static final String DELETE_SIEVE_SIZE = "delete_sieve_size";
+//	 /* material accepted value */
+//	 public static final String VIEW_SIEVE_ACCEPTED_VALUE = "view_sieve_accepted_value";
+//	 public static final String CREATE_SIEVE_ACCEPTED_VALUE= "create_sieve_accepted_value";
+//	 public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
+//	 public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
 	 /* test */
 	 public static final String VIEW_TEST = "view_manage_test";
 	 public static final String CREATE_TEST= "create_manage_test";
