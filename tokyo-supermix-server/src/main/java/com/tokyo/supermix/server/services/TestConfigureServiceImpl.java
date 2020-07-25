@@ -64,6 +64,19 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteTestConfigure(Long id) {
+    TestConfigure testconfigure = testConfigureRepository.findById(id).get();
+    Long testId = testconfigure.getTest().getId();
+    if (testconfigure.getMaterialSubCategory() != null) {
+      Long materialSubCategoryId = testconfigure.getMaterialSubCategory().getId();
+      if(emailPointsService.findByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId) !=null) {
+      emailPointsService.deleteByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId);
+      }
+    } else {
+      Long materialCategoryId = testconfigure.getMaterialCategory().getId();
+      if(emailPointsService.findByTestIdAndMaterialCategoryId(testId, materialCategoryId) != null) {
+      emailPointsService.deleteByTestIdAndMaterialCategoryId(testId, materialCategoryId);
+      }
+    }
     testConfigureRepository.deleteById(id);
   }
 
