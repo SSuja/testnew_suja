@@ -17,6 +17,8 @@ public class MailGroupConstance {
   public static final String CREATE_RAW_MATERIAL= "Material Creation";
   public static final String CREATE_PROCESS_SAMPLE= "Process Sample Creation";
   public static final String CREATE_MIX_DESIGN = "Mix Design Creation";
+  public static final String CREATE_SUMMARY_REPORT= "Summary Report Group";
+  public static final String CREATE_DELIVERY_REPORT = "Delivery Report Group";
   
   private MailGroupConstance() {}
 
