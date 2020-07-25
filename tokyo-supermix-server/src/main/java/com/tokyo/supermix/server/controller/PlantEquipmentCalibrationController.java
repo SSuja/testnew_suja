@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.sql.Date;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,18 @@ public class PlantEquipmentCalibrationController {
 
   // post API for PlantEquipmentCalibration
   @PostMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
-   public ResponseEntity<Object> createPlantEquipmentCalibration(
+  public ResponseEntity<Object> createPlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
+    if (plantEquipmentCalibrationService.existsByPlantEquipmentSerialNo(
+        plantEquipmentCalibrationRequestDto.getPlantEquipmentSerialNo())) {
+      Date dueDate = plantEquipmentCalibrationService.getLastDueDateByPlantEquipmentSerialNo(
+          plantEquipmentCalibrationRequestDto.getPlantEquipmentSerialNo());
+      if (!dueDate.before(plantEquipmentCalibrationRequestDto.getCalibratedDate())
+          && dueDate != null) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.DUE_DATE,
+            validationFailureStatusCodes.getDueDateExist()), HttpStatus.BAD_REQUEST);
+      }
+    }
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
@@ -65,7 +76,6 @@ public class PlantEquipmentCalibrationController {
         mapper.map(plantEquipmentCalibrationRequestDto, PlantEquipmentCalibration.class));
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.ADD_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
-
   }
 
   // get all PlantEquipmentCalibration
@@ -115,7 +125,7 @@ public class PlantEquipmentCalibrationController {
 
   // update API for PlantEquipmentCalibration
   @PutMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
-   public ResponseEntity<Object> updatePlantEquipmentCalibration(
+  public ResponseEntity<Object> updatePlantEquipmentCalibration(
       @Valid @RequestBody PlantEquipmentCalibrationRequestDto plantEquipmentCalibrationRequestDto) {
     if (plantEquipmentCalibrationRequestDto.getCalibrationType() == CalibrationType.INTERNAL) {
       if (plantEquipmentCalibrationRequestDto.getEmployeeId() == null) {
@@ -155,13 +165,14 @@ public class PlantEquipmentCalibrationController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
-  public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(
+      @CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<Object>(
         new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-            mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibrationsByPlant(currentUser),
-                PlantEquipmentCalibrationResponseDto.class),
+            mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibrationsByPlant(
+                currentUser), PlantEquipmentCalibrationResponseDto.class),
             RestApiResponseStatus.OK),
         HttpStatus.OK);
   }

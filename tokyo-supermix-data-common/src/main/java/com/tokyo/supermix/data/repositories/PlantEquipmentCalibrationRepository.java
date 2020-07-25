@@ -6,8 +6,15 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 
 public interface PlantEquipmentCalibrationRepository
-		extends JpaRepository<PlantEquipmentCalibration, Long>, QuerydslPredicateExecutor<PlantEquipmentCalibration> {
+    extends JpaRepository<PlantEquipmentCalibration, Long>,
+    QuerydslPredicateExecutor<PlantEquipmentCalibration> {
 
-	List<PlantEquipmentCalibration> findByPlantEquipmentPlantCode(String plantCode);
-	List<PlantEquipmentCalibration> findByPlantEquipmentPlantCodeIn(List<String>plantCodes);
+  List<PlantEquipmentCalibration> findByPlantEquipmentPlantCode(String plantCode);
+
+  List<PlantEquipmentCalibration> findByPlantEquipmentPlantCodeIn(List<String> plantCodes);
+
+  PlantEquipmentCalibration findTopByPlantEquipmentSerialNoOrderByIdDesc(
+      String plantEquipmentSerialNo);
+
+  boolean existsByPlantEquipmentSerialNo(String plantEquipmentSerialNo);
 }
