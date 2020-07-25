@@ -226,7 +226,28 @@ public final class PermissionConstants {
 	  public static final String ADMIXTURE_REPORT = "admixture_report";
 	  public static final String INCOMING_SAMPLE_SUMMARY_REPORT= "incoming_sample_summary_report";
 	  public static final String INCOMING_SAMPLE_DELIVERY_REPORT = "incoming_sample_delivery_report";
+	  /* email points */
+      public static final String GET_EMAIL_POINTS = "get_email_points";
+      public static final String EDIT_EMAIL_POINTS = "edit_email_points";
+      
+      /* email group */
+      public static final String GET_EMAIL_GROUP = "get_mail_notification_configuration";
+      public static final String UPDATE_EMAIL_GROUP = "update_mail_notification_configuration";
+      public static final String ADD_EMAIL_GROUP = "add_mail_notification_configuration";
+      public static final String DELETE_EMAIL_GROUP = "delete_mail_notification_configuration";
+      
+      /* email recipent */
+      public static final String GET_EMAIL_RECIPIENT = "get_mail_group_configuration";
+      public static final String UPDATE_EMAIL_RECIPIENT = "edit_mail_group_configuration";
+      public static final String ADD_EMAIL_RECIPIENT = "add_mail_group_configuration";
+      public static final String DELETE_EMAIL_RECIPIENT = "delete_mail_group_configuration";
+      
+      /* notification days */
+      public static final String GET_NOTIFICATION_DAYS = "get_schedule_configuration";
+      public static final String EDIT_NOTIFICATION_DAYS = "edit_schedule_configuration";
+      public static final String ADD_NOTIFICATION_DAYS = "add_schedule_configuration";
+      public static final String DELETE_NOTIFICATION_DAYS = "delete_schedule_configuration";
   
-  
+      
   
 }

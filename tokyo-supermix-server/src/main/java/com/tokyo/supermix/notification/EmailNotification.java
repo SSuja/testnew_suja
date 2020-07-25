@@ -370,7 +370,7 @@ public class EmailNotification {
   }
 
   public void sendPlantCreationEmail(Plant plant) {
-    String mailBody = "plant " + plant.getName() + " newly created";
+    String mailBody = "Plant " + plant.getName() + " newly created";
     EmailGroup emailGroup =
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_PLANT);
     if (emailGroup != null) {
