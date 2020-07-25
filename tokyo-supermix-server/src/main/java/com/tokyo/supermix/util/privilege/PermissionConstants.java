@@ -218,8 +218,8 @@ public final class PermissionConstants {
 	  public static final String EDIT_FINISH_PRODUCT_TRAIL = "edit_finish_product_trail";
 	  public static final String DELETE_FINISH_PRODUCT_TRAIL = "delete_finish_product_trail";
 	    /* file export */
-	  public static final String VIEW_EXPORT_MIXDESIGN = "view_export_mixdesign";
-	  public static final String CREATE_UPLOAD_MIXDESIGN= "create_upload_mixdesign";
+	  public static final String VIEW_EXPORT_MIXDESIGN = "export";
+	  public static final String CREATE_UPLOAD_MIXDESIGN= "import";
 	  /* report */
 	  public static final String MATERIAL_TEST_REPORT = "material_test_report";
 	  public static final String CEMENT_REPORT= "cement_report";
