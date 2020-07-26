@@ -1,118 +1,124 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
-
-import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.enums.TestType;
 
 public class TestConfigureDto {
-	private Long id;
-	private TestType testType;
-	private String testName;
-	private boolean coreTest;
-	private String description;
-	private String testProcedure;
-	private String prefix;
-	private AcceptedValueDto acceptedValue;
-	private List<TestParameterDto> testparameters;
-	private MaterialSubCategoryResponseDto materialSubCategory;
-	private List<TestEquationResponseDto> testEquations;
-	private List<ParameterEquationResponseDto> parameterEquations;
+  private Long id;
+  private TestType testType;
+  private String testName;
+  private boolean coreTest;
+  private String description;
+  private String testProcedure;
+  private String prefix;
+  private AcceptedValueResponseDto acceptedValue;
+  private MaterialAcceptedValueResponseDto materialAcceptedValue;
+  private List<TestParameterResponseDto> testparameters;
+  private MaterialSubCategoryResponseDto materialSubCategory;
+  private List<TestEquationResponseDto> testEquations;
+  private List<ParameterEquationResponseDto> parameterEquations;
 
-	public List<TestEquationResponseDto> getTestEquations() {
-		return testEquations;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setTestEquations(List<TestEquationResponseDto> testEquations) {
-		this.testEquations = testEquations;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public List<ParameterEquationResponseDto> getParameterEquations() {
-		return parameterEquations;
-	}
+  public TestType getTestType() {
+    return testType;
+  }
 
-	public void setParameterEquations(List<ParameterEquationResponseDto> parameterEquations) {
-		this.parameterEquations = parameterEquations;
-	}
+  public void setTestType(TestType testType) {
+    this.testType = testType;
+  }
 
-	public Long getId() {
-		return id;
-	}
+  public String getTestName() {
+    return testName;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setTestName(String testName) {
+    this.testName = testName;
+  }
 
-	public boolean isCoreTest() {
-		return coreTest;
-	}
+  public boolean isCoreTest() {
+    return coreTest;
+  }
 
-	public void setCoreTest(boolean coreTest) {
-		this.coreTest = coreTest;
-	}
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public String getTestProcedure() {
-		return testProcedure;
-	}
+  public String getTestProcedure() {
+    return testProcedure;
+  }
 
-	public void setTestProcedure(String testProcedure) {
-		this.testProcedure = testProcedure;
-	}
+  public void setTestProcedure(String testProcedure) {
+    this.testProcedure = testProcedure;
+  }
 
-	public String getPrefix() {
-		return prefix;
-	}
+  public String getPrefix() {
+    return prefix;
+  }
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
+  }
 
-	public AcceptedValueDto getAcceptedValue() {
-		return acceptedValue;
-	}
+  public AcceptedValueResponseDto getAcceptedValue() {
+    return acceptedValue;
+  }
 
-	public void setAcceptedValue(AcceptedValueDto acceptedValue) {
-		this.acceptedValue = acceptedValue;
-	}
+  public void setAcceptedValue(AcceptedValueResponseDto acceptedValue) {
+    this.acceptedValue = acceptedValue;
+  }
 
-	public String getTestName() {
-		return testName;
-	}
+  public MaterialAcceptedValueResponseDto getMaterialAcceptedValue() {
+    return materialAcceptedValue;
+  }
 
-	public void setTestName(String testName) {
-		this.testName = testName;
-	}
+  public void setMaterialAcceptedValue(MaterialAcceptedValueResponseDto materialAcceptedValue) {
+    this.materialAcceptedValue = materialAcceptedValue;
+  }
 
-	public TestType getTestType() {
-		return testType;
-	}
+  public List<TestParameterResponseDto> getTestparameters() {
+    return testparameters;
+  }
 
-	public void setTestType(TestType testType) {
-		this.testType = testType;
-	}
+  public void setTestparameters(List<TestParameterResponseDto> testparameters) {
+    this.testparameters = testparameters;
+  }
 
-	public List<TestParameterDto> getTestparameters() {
-		return testparameters;
-	}
+  public MaterialSubCategoryResponseDto getMaterialSubCategory() {
+    return materialSubCategory;
+  }
 
-	public void setTestparameters(List<TestParameterDto> testparameters) {
-		this.testparameters = testparameters;
-	}
+  public void setMaterialSubCategory(MaterialSubCategoryResponseDto materialSubCategory) {
+    this.materialSubCategory = materialSubCategory;
+  }
 
-	public MaterialSubCategoryResponseDto getMaterialSubCategory() {
-		return materialSubCategory;
-	}
+  public List<TestEquationResponseDto> getTestEquations() {
+    return testEquations;
+  }
 
-	public void setMaterialSubCategory(MaterialSubCategoryResponseDto materialSubCategory) {
-		this.materialSubCategory = materialSubCategory;
-	}
+  public void setTestEquations(List<TestEquationResponseDto> testEquations) {
+    this.testEquations = testEquations;
+  }
 
+  public List<ParameterEquationResponseDto> getParameterEquations() {
+    return parameterEquations;
+  }
+
+  public void setParameterEquations(List<ParameterEquationResponseDto> parameterEquations) {
+    this.parameterEquations = parameterEquations;
+  }
 }

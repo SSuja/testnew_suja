@@ -17,7 +17,6 @@ import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
 import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
-import com.tokyo.supermix.data.dto.report.Level;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
 import com.tokyo.supermix.data.dto.report.SeiveTestReportResponseDto;
 import com.tokyo.supermix.data.dto.report.SieveResultAndParameter;
@@ -55,7 +54,6 @@ import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestEquationRepository;
-import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class TestReportServiceImpl implements TestReportService {
@@ -491,8 +489,8 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestParameterLevelAndTestParameterTestConfigureId(level, testConfigId);
     for (ParameterResult parameterResult : parameterResultList) {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
-      sieveResultAndParameter
-          .setParameter(parameterResult.getTestParameter().getParameter().getName());
+      String[] parts = parameterResult.getTestParameter().getParameter().getName().split("_");
+      sieveResultAndParameter.setParameter(parts[0]);
       sieveResultAndParameter.setVale(parameterResult.getValue());
       sieveResultAndParameterList.add(sieveResultAndParameter);
     }
