@@ -22,6 +22,9 @@ public interface AcceptedValueService {
 
   boolean isAcceptedValueByTestConfigureId(Long testConfigureId);
 
+  boolean isAcceptedValueByTestConfigureIdAndTestEquation(Long testConfigureId,
+      Long testEquationId);
+
   public boolean isUpdatedAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId);
 
   public Page<AcceptedValue> searchAcceptedValue(Predicate predicate, int size, int page);

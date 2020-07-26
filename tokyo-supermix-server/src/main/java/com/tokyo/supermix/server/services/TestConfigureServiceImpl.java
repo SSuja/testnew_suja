@@ -9,18 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
+import com.tokyo.supermix.data.dto.MaterialAcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
-import com.tokyo.supermix.data.dto.TestParameterDto;
-import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
-import com.tokyo.supermix.data.entities.AcceptedValue;
-import com.tokyo.supermix.data.entities.MaterialSubCategory;
+import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
@@ -39,6 +38,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private Mapper mapper;
   @Autowired
   private EmailPointsService emailPointsService;
+  @Autowired
+  private MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -68,13 +69,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     Long testId = testconfigure.getTest().getId();
     if (testconfigure.getMaterialSubCategory() != null) {
       Long materialSubCategoryId = testconfigure.getMaterialSubCategory().getId();
-      if(emailPointsService.findByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId) !=null) {
-      emailPointsService.deleteByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId);
+      if (emailPointsService.findByTestIdAndMaterialSubCategoryId(testId,
+          materialSubCategoryId) != null) {
+        emailPointsService.deleteByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId);
       }
     } else {
       Long materialCategoryId = testconfigure.getMaterialCategory().getId();
-      if(emailPointsService.findByTestIdAndMaterialCategoryId(testId, materialCategoryId) != null) {
-      emailPointsService.deleteByTestIdAndMaterialCategoryId(testId, materialCategoryId);
+      if (emailPointsService.findByTestIdAndMaterialCategoryId(testId,
+          materialCategoryId) != null) {
+        emailPointsService.deleteByTestIdAndMaterialCategoryId(testId, materialCategoryId);
       }
     }
     testConfigureRepository.deleteById(id);
@@ -96,29 +99,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public Page<TestConfigure> searchTestConfigure(Predicate predicate, int page, int size) {
     return testConfigureRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
-
-  @Transactional(readOnly = true)
-  public TestConfigureDto getTestDetailsByConfigureId(Long id) {
-    TestConfigureDto testConfigureDto = new TestConfigureDto();
-    TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-    AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
-    List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id);
-    MaterialSubCategory materialSubCategory = materialSubCategoryRepository
-        .findById(testConfigure.getMaterialSubCategory().getId()).get();
-    testConfigureDto.setMaterialSubCategory(
-        mapper.map(materialSubCategory, MaterialSubCategoryResponseDto.class));
-    testConfigureDto.setId(testConfigure.getId());
-    testConfigureDto.setPrefix(testConfigure.getPrefix());
-    testConfigureDto.setTestName(testConfigure.getTest().getName());
-    testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
-    testConfigureDto.setTestType(testConfigure.getTestType());
-    testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
-    testConfigureDto.setCoreTest(testConfigure.isCoreTest());
-    testConfigureDto.setDescription(testConfigure.getDescription());
-    List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
-    testConfigureDto.setTestparameters(testParameterList);
-    return testConfigureDto;
   }
 
   @Transactional(readOnly = true)
@@ -150,21 +130,29 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id) {
     TestConfigureDto testConfigureDto = new TestConfigureDto();
     TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-    AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(id);
-    List<TestParameter> testParameter = testParameterRepository.findByTestConfigureId(id);
-    MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findById(id).get();
-    testConfigureDto.setMaterialSubCategory(
-        mapper.map(materialSubCategory, MaterialSubCategoryResponseDto.class));
-    testConfigureDto.setId(testConfigure.getId());
+    if (testConfigure.getMaterialSubCategory() != null) {
+      testConfigureDto.setMaterialSubCategory(mapper.map(
+          materialSubCategoryRepository.findById(testConfigure.getMaterialSubCategory().getId()).get(), MaterialSubCategoryResponseDto.class));
+    }
     testConfigureDto.setPrefix(testConfigure.getPrefix());
     testConfigureDto.setTestName(testConfigure.getTest().getName());
     testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
     testConfigureDto.setTestType(testConfigure.getTestType());
-    testConfigureDto.setAcceptedValue(mapper.map(acceptedValue, AcceptedValueDto.class));
+    if (materialAcceptedValueRepository.findByTestConfigureId(id) != null) {
+      testConfigureDto.setMaterialAcceptedValue(
+          mapper.map(materialAcceptedValueRepository.findByTestConfigureId(id),
+              MaterialAcceptedValueResponseDto.class));
+    }
+    if (acceptedValueRepository.findByTestConfigureId(id) != null) {
+      testConfigureDto.setAcceptedValue(mapper
+          .map(acceptedValueRepository.findByTestConfigureId(id), AcceptedValueResponseDto.class));
+    }
     testConfigureDto.setCoreTest(testConfigure.isCoreTest());
     testConfigureDto.setDescription(testConfigure.getDescription());
-    List<TestParameterDto> testParameterList = mapper.map(testParameter, TestParameterDto.class);
-    testConfigureDto.setTestparameters(testParameterList);
+    if (testParameterRepository.findByTestConfigureId(id) != null) {
+      testConfigureDto.setTestparameters(mapper
+          .map(testParameterRepository.findByTestConfigureId(id), TestParameterResponseDto.class));
+    }
     return testConfigureDto;
   }
 

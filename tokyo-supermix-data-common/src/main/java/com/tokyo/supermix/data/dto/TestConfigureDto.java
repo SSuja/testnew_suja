@@ -1,8 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
-
-import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.enums.TestType;
 
 public class TestConfigureDto {
@@ -13,19 +11,35 @@ public class TestConfigureDto {
   private String description;
   private String testProcedure;
   private String prefix;
-  private String resultLabel;
-  private AcceptedValueDto acceptedValue;
-  private String formula;
-  private List<TestParameterDto> testparameters;
+  private AcceptedValueResponseDto acceptedValue;
+  private MaterialAcceptedValueResponseDto materialAcceptedValue;
+  private List<TestParameterResponseDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
-  private boolean equationExists;
- 
+  private List<TestEquationResponseDto> testEquations;
+  private List<ParameterEquationResponseDto> parameterEquations;
+
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public TestType getTestType() {
+    return testType;
+  }
+
+  public void setTestType(TestType testType) {
+    this.testType = testType;
+  }
+
+  public String getTestName() {
+    return testName;
+  }
+
+  public void setTestName(String testName) {
+    this.testName = testName;
   }
 
   public boolean isCoreTest() {
@@ -60,44 +74,28 @@ public class TestConfigureDto {
     this.prefix = prefix;
   }
 
-  public AcceptedValueDto getAcceptedValue() {
+  public AcceptedValueResponseDto getAcceptedValue() {
     return acceptedValue;
   }
 
-  public void setAcceptedValue(AcceptedValueDto acceptedValue) {
+  public void setAcceptedValue(AcceptedValueResponseDto acceptedValue) {
     this.acceptedValue = acceptedValue;
   }
 
-  public String getTestName() {
-    return testName;
+  public MaterialAcceptedValueResponseDto getMaterialAcceptedValue() {
+    return materialAcceptedValue;
   }
 
-  public void setTestName(String testName) {
-    this.testName = testName;
+  public void setMaterialAcceptedValue(MaterialAcceptedValueResponseDto materialAcceptedValue) {
+    this.materialAcceptedValue = materialAcceptedValue;
   }
 
-  public TestType getTestType() {
-    return testType;
-  }
-
-  public void setTestType(TestType testType) {
-    this.testType = testType;
-  }
-
-  public List<TestParameterDto> getTestparameters() {
+  public List<TestParameterResponseDto> getTestparameters() {
     return testparameters;
   }
 
-  public void setTestparameters(List<TestParameterDto> testparameters) {
+  public void setTestparameters(List<TestParameterResponseDto> testparameters) {
     this.testparameters = testparameters;
-  }
-
-  public String getFormula() {
-    return formula;
-  }
-
-  public void setFormula(String formula) {
-    this.formula = formula;
   }
 
   public MaterialSubCategoryResponseDto getMaterialSubCategory() {
@@ -108,19 +106,19 @@ public class TestConfigureDto {
     this.materialSubCategory = materialSubCategory;
   }
 
-  public boolean isEquationExists() {
-    return equationExists;
+  public List<TestEquationResponseDto> getTestEquations() {
+    return testEquations;
   }
 
-  public void setEquationExists(boolean equationExists) {
-    this.equationExists = equationExists;
+  public void setTestEquations(List<TestEquationResponseDto> testEquations) {
+    this.testEquations = testEquations;
   }
 
-  public String getResultLabel() {
-    return resultLabel;
+  public List<ParameterEquationResponseDto> getParameterEquations() {
+    return parameterEquations;
   }
 
-  public void setResultLabel(String resultLabel) {
-    this.resultLabel = resultLabel;
+  public void setParameterEquations(List<ParameterEquationResponseDto> parameterEquations) {
+    this.parameterEquations = parameterEquations;
   }
 }

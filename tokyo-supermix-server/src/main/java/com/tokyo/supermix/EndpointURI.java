@@ -448,6 +448,8 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-trials-wise" + SLASH + "{materialTestCode}";
   public static final String CONCRETE_STRENGTHS = BASE_API_PATH + "concrete-strengths";
+  public static final String SIEVE_TRIALS_BY_MATERIAL_TEST_CODE =
+      BASE_API_PATH + "material-test-sieve" + SLASH + "{materialTestCode}";
   /*
    * File Export
    */

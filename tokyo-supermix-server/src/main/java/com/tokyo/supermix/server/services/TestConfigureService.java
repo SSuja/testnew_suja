@@ -25,8 +25,6 @@ public interface TestConfigureService {
 
   public Page<TestConfigure> searchTestConfigure(Predicate predicate, int page, int size);
 
-  public TestConfigureDto getTestDetailsByConfigureId(Long id);
-
   public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id);
 
   public boolean isexistByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(Long testId,

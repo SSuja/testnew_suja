@@ -27,4 +27,6 @@ public interface TestParameterRepository
 
   List<TestParameter> findByTestConfigureIdAndInputMethods(Long testConfigureId,
       InputMethod inputMethod);
+
+  List<TestParameter> findByTestConfigureIdAndLevel(Long testConfigId, String level);
 }
