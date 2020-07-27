@@ -113,25 +113,25 @@ public final class PermissionConstants {
 //	 public static final String EDIT_SIEVE_ACCEPTED_VALUE = "edit_sieve_accepted_value";
 //	 public static final String DELETE_SIEVE_ACCEPTED_VALUE = "delete_sieve_accepted_value";
 	 /* test */
-	 public static final String VIEW_TEST = "view_manage_test";
-	 public static final String CREATE_TEST= "create_manage_test";
-	 public static final String EDIT_TEST = "edit_manage_test";
-	 public static final String DELETE_TEST = "delete_manage_test";
+	 public static final String VIEW_TEST = "view_test";
+	 public static final String CREATE_TEST= "create_test";
+	 public static final String EDIT_TEST = "edit_test";
+	 public static final String DELETE_TEST = "delete_test";
 	 /* equation */
-	 public static final String VIEW_EQUATION = "view_manage_equation";
-	 public static final String CREATE_EQUATION= "create_manage_equation";
-	 public static final String EDIT_EQUATION = "edit_manage_equation";
-	 public static final String DELETE_EQUATION = "delete_emanage_quation";
+	 public static final String VIEW_EQUATION = "view_equation";
+	 public static final String CREATE_EQUATION= "create_equation";
+	 public static final String EDIT_EQUATION = "edit_equation";
+	 public static final String DELETE_EQUATION = "delete_equation";
 	 /* test parameter */
-	 public static final String VIEW_TEST_PARAMETER = "view_manage_test_parameter";
-	 public static final String CREATE_TEST_PARAMETER= "create_manage_test_parameter";
-	 public static final String EDIT_TEST_PARAMETER = "edit_manage_test_parameter";
-	 public static final String DELETE_TEST_PARAMETER = "delete_manage_test_parameter";
+	 public static final String VIEW_TEST_PARAMETER = "view_test_parameter";
+	 public static final String CREATE_TEST_PARAMETER= "create_test_parameter";
+	 public static final String EDIT_TEST_PARAMETER = "edit_test_parameter";
+	 public static final String DELETE_TEST_PARAMETER = "delete_test_parameter";
 	 /* Accepted value */
-	 public static final String VIEW_ACCEPTED_VALUE = "view_manage_accepted_value";
-	 public static final String CREATE_ACCEPTED_VALUE= "create_manage_accepted_value";
-	 public static final String EDIT_ACCEPTED_VALUE= "edit_manage_accepted_value";
-	 public static final String DELETE_ACCEPTED_VALUE = "delete_manage_accepted_value";
+	 public static final String VIEW_ACCEPTED_VALUE = "view_accepted_value";
+	 public static final String CREATE_ACCEPTED_VALUE= "create_accepted_value";
+	 public static final String EDIT_ACCEPTED_VALUE= "edit_accepted_value";
+	 public static final String DELETE_ACCEPTED_VALUE = "delete_accepted_value";
 	 /* Incoming Sample */
 	 public static final String VIEW_INCOMING_SAMPLE = "view_incoming_sample";
 	 public static final String CREATE_INCOMING_SAMPLE= "create_incoming_sample";
@@ -247,7 +247,5 @@ public final class PermissionConstants {
       public static final String EDIT_NOTIFICATION_DAYS = "edit_schedule_configuration";
       public static final String ADD_NOTIFICATION_DAYS = "add_schedule_configuration";
       public static final String DELETE_NOTIFICATION_DAYS = "delete_schedule_configuration";
-  
-      
   
 }
