@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,12 +16,15 @@ import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
+import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
@@ -40,6 +44,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EmailPointsService emailPointsService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private RawMaterialRepository rawMaterialRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -131,17 +137,19 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     TestConfigureDto testConfigureDto = new TestConfigureDto();
     TestConfigure testConfigure = testConfigureRepository.findById(id).get();
     if (testConfigure.getMaterialSubCategory() != null) {
-      testConfigureDto.setMaterialSubCategory(mapper.map(
-          materialSubCategoryRepository.findById(testConfigure.getMaterialSubCategory().getId()).get(), MaterialSubCategoryResponseDto.class));
+      testConfigureDto
+          .setMaterialSubCategory(
+              mapper.map(
+                  materialSubCategoryRepository
+                      .findById(testConfigure.getMaterialSubCategory().getId()).get(),
+                  MaterialSubCategoryResponseDto.class));
     }
     testConfigureDto.setPrefix(testConfigure.getPrefix());
     testConfigureDto.setTestName(testConfigure.getTest().getName());
     testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
     testConfigureDto.setTestType(testConfigure.getTestType());
     if (materialAcceptedValueRepository.findByTestConfigureId(id) != null) {
-      testConfigureDto.setMaterialAcceptedValue(
-          mapper.map(materialAcceptedValueRepository.findByTestConfigureId(id),
-              MaterialAcceptedValueResponseDto.class));
+      testConfigureDto.setMaterialAcceptedValue(getMaterialAcceptedValue(id));
     }
     if (acceptedValueRepository.findByTestConfigureId(id) != null) {
       testConfigureDto.setAcceptedValue(mapper
@@ -156,6 +164,24 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     return testConfigureDto;
   }
 
+  public List<MaterialAcceptedValueDto> getMaterialAcceptedValue(Long testConfigId) {
+    ArrayList<MaterialAcceptedValueDto> materialAcceptedValueDtoList =
+        new ArrayList<MaterialAcceptedValueDto>();
+    List<MaterialAcceptedValue> materialAcceptedValueList =
+        materialAcceptedValueRepository.findByTestConfigureId(testConfigId);
+    for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
+      MaterialAcceptedValueDto materialAcceptedValueDto = new MaterialAcceptedValueDto();
+      materialAcceptedValueDto.setMaterialName(materialAcceptedValue.getRawMaterial().getName());
+      materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
+      materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
+      materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
+      materialAcceptedValueDto
+          .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
+      materialAcceptedValueDtoList.add(materialAcceptedValueDto);
+    }
+    return materialAcceptedValueDtoList;
+  }
+
   @Transactional(readOnly = true)
   public List<TestConfigure> getTestConfiguresByMaterialSubCategoryAndTestType(
       Long materialSubCategoryId, TestType testType) {
@@ -168,4 +194,5 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     testConfigureRepository.save(testConfigure);
     return testConfigure.getId();
   }
+
 }

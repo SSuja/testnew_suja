@@ -7,14 +7,12 @@ import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductTrialService {
   public List<FinishProductTrial> getAllFinishProductTrials();
-  
+
   public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser);
 
   public FinishProductTrial getFinishProductTrialByCode(String code);
 
   public String saveFinishProductTrial(FinishProductTrial finishProductTrial);
-
-  //public void updateFinishProductResult(FinishProductTrial finishProductTrial);
 
   public void deleteFinishProductTrial(String code);
 
@@ -26,5 +24,7 @@ public interface FinishProductTrialService {
   public boolean isFinishProductTestExists(String finishProductTestCode);
 
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode);
+
+  public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial);
 }
 

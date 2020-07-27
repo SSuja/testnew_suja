@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.enums.TestType;
 
 public class TestConfigureDto {
@@ -12,11 +13,11 @@ public class TestConfigureDto {
   private String testProcedure;
   private String prefix;
   private AcceptedValueResponseDto acceptedValue;
-  private MaterialAcceptedValueResponseDto materialAcceptedValue;
+  private List<MaterialAcceptedValueDto> materialAcceptedValue;
   private List<TestParameterResponseDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
   private List<TestEquationResponseDto> testEquations;
-  private List<ParameterEquationResponseDto> parameterEquations;
+  private List<MaterialAcceptedValueDto> rawMaterialDto;
 
   public Long getId() {
     return id;
@@ -82,11 +83,11 @@ public class TestConfigureDto {
     this.acceptedValue = acceptedValue;
   }
 
-  public MaterialAcceptedValueResponseDto getMaterialAcceptedValue() {
+  public List<MaterialAcceptedValueDto> getMaterialAcceptedValue() {
     return materialAcceptedValue;
   }
 
-  public void setMaterialAcceptedValue(MaterialAcceptedValueResponseDto materialAcceptedValue) {
+  public void setMaterialAcceptedValue(List<MaterialAcceptedValueDto> materialAcceptedValue) {
     this.materialAcceptedValue = materialAcceptedValue;
   }
 
@@ -114,11 +115,11 @@ public class TestConfigureDto {
     this.testEquations = testEquations;
   }
 
-  public List<ParameterEquationResponseDto> getParameterEquations() {
-    return parameterEquations;
+  public List<MaterialAcceptedValueDto> getRawMaterialDto() {
+    return rawMaterialDto;
   }
 
-  public void setParameterEquations(List<ParameterEquationResponseDto> parameterEquations) {
-    this.parameterEquations = parameterEquations;
+  public void setRawMaterialDto(List<MaterialAcceptedValueDto> rawMaterialDto) {
+    this.rawMaterialDto = rawMaterialDto;
   }
 }
