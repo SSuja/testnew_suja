@@ -30,8 +30,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProcessSampleService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,6 +46,8 @@ public class ProcessSampleController {
   private ProcessSampleService processSampleService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   private static final Logger logger = Logger.getLogger(ProcessSampleController.class);
 
@@ -70,11 +74,15 @@ public class ProcessSampleController {
   }
   
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT)
-  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), CustomerResponseDto.class),
+  public ResponseEntity<Object> getAllProcessSamplesByCurrentUserPermission(@CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROCESS_SAMPLE).contains(plantCode)) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
+        mapper.map(processSampleService.getProcessSampleByPlantCode(plantCode), ProcessSampleResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+}
   
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
   public ResponseEntity<Object> deleteProcessSample(@PathVariable String code) {

@@ -266,7 +266,7 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
   public static final String PROCESS_SAMPLES_BY_PLANT_CODE =
       PROCESS_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String PROCESS_SAMPLE_BY_PLANT = PROCESS_SAMPLE + PLANT_WISE;
+  public static final String PROCESS_SAMPLE_BY_PLANT = PROCESS_SAMPLE + PLANT_WISE + SLASH + "{plantCode}";
 
   /*
    * Mix design proportion apis
