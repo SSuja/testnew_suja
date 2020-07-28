@@ -197,12 +197,11 @@ public class MaterialTestController {
 				RestApiResponseStatus.OK), null, HttpStatus.OK);
 	}
 
-	@PutMapping(value = EndpointURI.MATERIAL_TEST)
+	@PutMapping(value = EndpointURI.MATERIAL_TEST_COMMENT)
 	public ResponseEntity<Object> updateMaterialTestComment(
 			@Valid @RequestBody MaterialTestRequestDto materialTestRequestDto) {
 		materialTestService.updateMaterialTestComment(mapper.map(materialTestRequestDto, MaterialTest.class));
 		return new ResponseEntity<>(
 				new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_COMMENT_UPDATED), HttpStatus.OK);
-
 	}
 }

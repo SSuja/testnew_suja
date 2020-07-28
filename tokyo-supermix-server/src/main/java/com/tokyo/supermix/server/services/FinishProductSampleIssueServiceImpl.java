@@ -39,7 +39,6 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Transactional
   public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
-
     if (finishProductSampleIssue.getCode() == null) {
       String plantPrefix = projectRepository.getOne(finishProductSampleIssue.getProject().getCode())
           .getPlant().getCode();
@@ -53,9 +52,10 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
             + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
       }
     }
-    FinishProductSampleIssue finishProductSampleIssueObj = finishProductSampleIssueRepository.save(finishProductSampleIssue);
+    FinishProductSampleIssue finishProductSampleIssueObj =
+        finishProductSampleIssueRepository.save(finishProductSampleIssue);
     if (finishProductSampleIssueObj != null) {
-      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);    
+      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);
     }
   }
 
