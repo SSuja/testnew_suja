@@ -1,15 +1,13 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-import java.util.List;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.tokyo.supermix.data.entities.auth.DateAudit;
@@ -25,11 +23,9 @@ public class Customer extends DateAudit implements Serializable {
 	private String phoneNumber;
 	private String address;
 	private String email;
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "customer_customerPlant", joinColumns = {
-			@JoinColumn(name = "customer_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "plant_code", referencedColumnName = "code") })
-	private List<Plant> plants;
+	@ManyToOne
+	@JoinColumn(name = "plantCode", nullable = false)
+	private Plant plant;
 
 	public Long getId() {
 		return id;
@@ -71,15 +67,15 @@ public class Customer extends DateAudit implements Serializable {
 		this.email = email;
 	}
 
-	public List<Plant> getPlants() {
-		return plants;
-	}
-
-	public void setPlants(List<Plant> plants) {
-		this.plants = plants;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Plant getPlant() {
+		return plant;
+	}
+
+	public void setPlant(Plant plant) {
+		this.plant = plant;
 	}
 }
