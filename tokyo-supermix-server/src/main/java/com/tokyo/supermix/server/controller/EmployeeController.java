@@ -29,8 +29,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -43,6 +45,8 @@ public class EmployeeController {
   private EmployeeService employeeService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(EmployeeController.class);
 
   // Add Employee
@@ -112,11 +116,14 @@ public class EmployeeController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
   @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser) {
-    logger.debug("get all employee");
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-        mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
+	  if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE).contains(plantCode)) {
+		  return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+			        mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
+			        RestApiResponseStatus.OK), null, HttpStatus.OK);
+	  }
+	  return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+		        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
   
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
