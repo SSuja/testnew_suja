@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.NotificationDaysDto;
 import com.tokyo.supermix.data.dto.NotificationDaysRequestDto;
 import com.tokyo.supermix.data.dto.NotificationDaysResponseDto;
+import com.tokyo.supermix.data.dto.emailNotificationDto;
 import com.tokyo.supermix.data.entities.NotificationDays;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -24,7 +24,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.ValidationFailureStatusCodes;;
 
 @RestController
 @CrossOrigin
@@ -82,7 +82,7 @@ public class EmailNotificationDaysController {
   public ResponseEntity<Object> getAllEmailNotificationDays() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_NOTIFICATION_DAYS,
         mapper.map(emailNotificationDaysService.getAllEmailNotificationDays(),
-            NotificationDays.class),
+            emailNotificationDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
   
@@ -100,7 +100,7 @@ public class EmailNotificationDaysController {
   public ResponseEntity<Object> getAllEmailNotificationDaysByPlantCode(@PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_NOTIFICATION_DAYS,
         mapper.map(emailNotificationDaysService.getByPlantCode(plantCode),
-            NotificationDaysDto.class),
+            emailNotificationDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }
