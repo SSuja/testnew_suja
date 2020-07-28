@@ -182,12 +182,14 @@ public class TestReportServiceImpl implements TestReportService {
     AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
     AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(testConfigureId);
     if (acceptedValue.getConditionRange() == Condition.BETWEEN) {
+      acceptedValueDto.setCondition(acceptedValue.getConditionRange());
       acceptedValueDto.setMaxValue(acceptedValue.getMaxValue());
       acceptedValueDto.setMinValue(acceptedValue.getMinValue());
     } else if (acceptedValue.getConditionRange() == Condition.EQUAL
         || acceptedValue.getConditionRange() == Condition.GREATER_THAN
         || acceptedValue.getConditionRange() == Condition.LESS_THAN) {
       acceptedValueDto.setValue(acceptedValue.getValue());
+      acceptedValueDto.setCondition(acceptedValue.getConditionRange());
     }
     return acceptedValueDto;
   }
@@ -208,12 +210,14 @@ public class TestReportServiceImpl implements TestReportService {
     MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
         .findByTestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
     if (materialAcceptedValue.getConditionRange() == Condition.BETWEEN) {
+      acceptedValueDto.setCondition(materialAcceptedValue.getConditionRange());
       acceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
       acceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
     } else if (materialAcceptedValue.getConditionRange() == Condition.EQUAL
         || materialAcceptedValue.getConditionRange() == Condition.GREATER_THAN
         || materialAcceptedValue.getConditionRange() == Condition.LESS_THAN) {
       acceptedValueDto.setValue(materialAcceptedValue.getValue());
+      acceptedValueDto.setCondition(materialAcceptedValue.getConditionRange());
     }
     return acceptedValueDto;
   }

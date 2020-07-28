@@ -1,7 +1,10 @@
 package com.tokyo.supermix.data.dto.report;
 
+import com.tokyo.supermix.data.enums.Condition;
+
 public class AcceptedValueDto {
   private Double minValue;
+  private Condition condition;
   private Double maxValue;
   private Double value;
 
@@ -27,5 +30,13 @@ public class AcceptedValueDto {
 
   public void setValue(Double value) {
     this.value = value;
+  }
+
+  public Condition getCondition() {
+    return condition;
+  }
+
+  public void setCondition(Condition condition) {
+    this.condition = condition;
   }
 }
