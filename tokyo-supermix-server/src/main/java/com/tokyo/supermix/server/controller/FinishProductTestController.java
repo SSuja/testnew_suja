@@ -25,20 +25,22 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductTestService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin
 @RestController
 public class FinishProductTestController {
-
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
   @Autowired
   private FinishProductTestService finishProductTestService;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(FinishProductTestController.class);
 
 
@@ -130,9 +132,10 @@ public class FinishProductTestController {
     if (finishProductTestService.isFinishProductTestExistsByTestConfigure(testConfigureId)) {
       logger.debug("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
-          mapper.map(finishProductTestService
-              .getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode,
-                  testConfigureId),
+          mapper.map(
+              finishProductTestService
+                  .getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
+                      finishProductSampleCode, testConfigureId),
               FinishProductTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -142,12 +145,17 @@ public class FinishProductTestController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSampleTestsByPlant(
-      @CurrentUser UserPrincipal currentUser) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_TEST).contains(plantCode)) {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_TESTS,
-            mapper.map(finishProductTestService.getAllFinishProductTestByPlant(currentUser),
+            mapper.map(finishProductTestService.getAllFinishProductTestByPlant(plantCode),
                 FinishProductTestResponseDto.class),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+}
+
 }

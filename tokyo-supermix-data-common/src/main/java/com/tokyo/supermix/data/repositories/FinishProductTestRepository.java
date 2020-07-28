@@ -29,4 +29,6 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
   List<FinishProductTest> findByFinishProductSampleMixDesignPlantCodeIn(List<String> plantCodes);
 
   boolean existsByFinishProductSampleCode(String finishProductSampleCode);
+
+List<FinishProductTest> findByPlantCode(String plantCode);
 }

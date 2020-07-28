@@ -516,7 +516,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}"
           + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
-  public static final String FINISH_PRODUCT_TEST_BY_PLANT = FINISH_PRODUCT_TEST + PLANT_WISE;
+  public static final String FINISH_PRODUCT_TEST_BY_PLANT = FINISH_PRODUCT_TEST + PLANT_WISE + SLASH + "{plantCode}";
 
   /*
    * Employee apis

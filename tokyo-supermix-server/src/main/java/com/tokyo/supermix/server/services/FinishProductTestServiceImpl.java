@@ -110,4 +110,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode) {
+    return finishProductTestRepository.findByPlantCode(plantCode);
+  }
 }

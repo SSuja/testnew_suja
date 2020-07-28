@@ -26,4 +26,6 @@ public interface FinishProductTestService {
       Long testConfigureId);
 
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);
+
+  public  List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode);
 }
