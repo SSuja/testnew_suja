@@ -30,8 +30,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin
 @RestController
@@ -44,6 +46,8 @@ public class FinishProductSampleController {
   private FinishProductSampleService finishProductSampleService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
@@ -78,16 +82,20 @@ public class FinishProductSampleController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSamplesByPlant(
-      @CurrentUser UserPrincipal currentUser) {
-    logger.debug("get all finish product samples by plant");
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode ) {
+    logger.debug("get all finish product samples by plant");  
+    if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-            mapper.map(finishProductSampleService.getAllFinishProductSamplesByPlant(currentUser),
+            mapper.map(finishProductSampleService.getFinishProductSampleByPlantCode(plantCode),
                 FinishProductSampleResponseDto.class),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
-
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+}
+  
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
   public ResponseEntity<Object> getFinishProductSampleById(@PathVariable String code) {
     if (finishProductSampleService.isFinishProductSampleExist(code)) {

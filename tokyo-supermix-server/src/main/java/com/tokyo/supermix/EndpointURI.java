@@ -370,7 +370,7 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE_ISSUES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT =
       FINISH_PRODUCT_SAMPLE_ISSUE + PLANT_WISE;
-  public static final String FINISH_PRODUCT_SAMPLE_BY_PLANT = FINISH_PRODUCT_SAMPLE + PLANT_WISE;
+  public static final String FINISH_PRODUCT_SAMPLE_BY_PLANT = FINISH_PRODUCT_SAMPLE + PLANT_WISE +SLASH + "{plantCode}";
   /*
    * incoming samples count APIs
    */
