@@ -42,7 +42,15 @@ public class TestParameter extends DateAudit implements Serializable {
   private InputMethod inputMethods;
   private String level;
 
-  public Long getId() {
+  public String getLevel() {
+	return level;
+}
+
+public void setLevel(String level) {
+	this.level = level;
+}
+
+public Long getId() {
     return id;
   }
 
@@ -125,13 +133,4 @@ public class TestParameter extends DateAudit implements Serializable {
   public void setInputMethods(InputMethod inputMethods) {
     this.inputMethods = inputMethods;
   }
-
-  public String getLevel() {
-    return level;
-  }
-
-  public void setLevel(String level) {
-    this.level = level;
-  }
-  
 }

@@ -127,7 +127,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       } else {
         finishProductParameterResult
             .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
-        finishProductTest.setStatus(Status.COMPLETED);
         finishProductParameterResultRepository.save(finishProductParameterResult);
         finishProductTest.setResult(finishProductParameterResult.getResult());
         finishProductSampleRepository.save(finishProductSample);
@@ -217,12 +216,20 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     emailNotification.sendFinishProductTestEmail(finishProductTest);
     return finishProductTest.getStatus();
   }
-  
+
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser) {
     return finishProductTrialRepository
         .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
             currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
                 PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
+  }
+
+  @Transactional
+  public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial) {
+    finishProductTestRepository.findById(finishProductTrial.getFinishProductTest().getCode()).get()
+        .setStatus(Status.PROCESS);
+    updateFinishProductResult(finishProductTrial);
+    finishProductTrialRepository.save(finishProductTrial);
   }
 }

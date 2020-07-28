@@ -107,4 +107,12 @@ public class TestReportController {
         mapper.map(testReportService.getConcreteStrengths(), ConcreteStrengthDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.SIEVE_TRIALS_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getSeiveTest(@PathVariable String materialTestCode) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.SIEVE_TEST,
+            testReportService.getSieveTestReport(materialTestCode), RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
 }

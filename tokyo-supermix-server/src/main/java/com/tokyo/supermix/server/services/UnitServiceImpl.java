@@ -19,7 +19,7 @@ public class UnitServiceImpl implements UnitService {
   }
 
   @Transactional(readOnly = true)
-  public List<Unit> getAllUnits() {
+  public List<Unit> getAllUnits() {    
     return unitRepository.findAll();
   }
 
