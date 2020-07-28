@@ -101,10 +101,16 @@ public class FinishProductSampleIssueController {
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
   public ResponseEntity<Object> updateFinishProductSampleIssue(
       @Valid @RequestBody FinishProductSampleIssueRequestDto finishProductSampleIssueRequestDto) {
+    if (finishProductSampleIssueService.isCodeExists(finishProductSampleIssueRequestDto.getCode())) {
     finishProductSampleIssueService.saveFinishProductSampleIssue(
         mapper.map(finishProductSampleIssueRequestDto, FinishProductSampleIssue.class));
     return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ISSUE_ID,
+            validationFailureStatusCodes.getFinishProductSampleIssueNotExists()),
+        HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH)
