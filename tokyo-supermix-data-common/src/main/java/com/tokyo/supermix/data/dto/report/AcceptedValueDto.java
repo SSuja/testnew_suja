@@ -4,15 +4,6 @@ public class AcceptedValueDto {
   private Double minValue;
   private Double maxValue;
   private Double value;
-  private String testParameterName;
-
-  public String getTestParameterName() {
-    return testParameterName;
-  }
-
-  public void setTestParameterName(String testParameterName) {
-    this.testParameterName = testParameterName;
-  }
 
   public Double getMinValue() {
     return minValue;

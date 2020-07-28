@@ -112,4 +112,16 @@ public class SupplierServiceImpl implements SupplierService {
   public List<Supplier> getSupplierByPlantCode(String plantCode) {
     return supplierRepository.findByPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<Supplier> getByPlantCodeAndSupplierCategoryId(String plantCode,
+      Long supplierCategoryId) {
+    return supplierRepository.findByPlantCodeAndSupplierCategoriesId(plantCode, supplierCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPlantCodeAndSupplierCategoryIdExist(String plantCode, Long supplierCategoryId) {
+    return supplierRepository.existsByPlantCodeAndSupplierCategoriesId(plantCode,
+        supplierCategoryId);
+  }
 }

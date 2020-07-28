@@ -14,6 +14,10 @@ public interface SupplierRepository
   List<Supplier> findBySupplierCategoriesId(Long suppilerCategoryId);
 
   List<Supplier> findByPlantCode(String plantCode);
-  
+
   List<Supplier> findByPlantCodeIn(List<String> plantCodes);
+
+  List<Supplier> findByPlantCodeAndSupplierCategoriesId(String plantCode, Long supplierCategoryId);
+
+  boolean existsByPlantCodeAndSupplierCategoriesId(String plantCode, Long supplierCategoryId);
 }

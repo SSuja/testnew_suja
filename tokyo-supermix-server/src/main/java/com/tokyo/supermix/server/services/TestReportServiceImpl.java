@@ -38,6 +38,7 @@ import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.TestEquation;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -180,10 +181,14 @@ public class TestReportServiceImpl implements TestReportService {
   private AcceptedValueDto getAcceptedCriteriaDetails(Long testConfigureId) {
     AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
     AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(testConfigureId);
-    acceptedValueDto.setMaxValue(acceptedValue.getMaxValue());
-    acceptedValueDto.setMinValue(acceptedValue.getMinValue());
-    acceptedValueDto.setValue(acceptedValue.getValue());
-    // acceptedValueDto.setTestParameterName(acceptedValue.getTestParameter().getParameter().getName());
+    if (acceptedValue.getConditionRange() == Condition.BETWEEN) {
+      acceptedValueDto.setMaxValue(acceptedValue.getMaxValue());
+      acceptedValueDto.setMinValue(acceptedValue.getMinValue());
+    } else if (acceptedValue.getConditionRange() == Condition.EQUAL
+        || acceptedValue.getConditionRange() == Condition.GREATER_THAN
+        || acceptedValue.getConditionRange() == Condition.LESS_THAN) {
+      acceptedValueDto.setValue(acceptedValue.getValue());
+    }
     return acceptedValueDto;
   }
 
@@ -202,10 +207,14 @@ public class TestReportServiceImpl implements TestReportService {
     AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
     MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
         .findByTestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
-    acceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
-    acceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
-    acceptedValueDto.setValue(materialAcceptedValue.getValue());
-    // acceptedValueDto.setTestParameterName(materialAcceptedValue.getTestParameter().getParameter().getName());
+    if (materialAcceptedValue.getConditionRange() == Condition.BETWEEN) {
+      acceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
+      acceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
+    } else if (materialAcceptedValue.getConditionRange() == Condition.EQUAL
+        || materialAcceptedValue.getConditionRange() == Condition.GREATER_THAN
+        || materialAcceptedValue.getConditionRange() == Condition.LESS_THAN) {
+      acceptedValueDto.setValue(materialAcceptedValue.getValue());
+    }
     return acceptedValueDto;
   }
 
