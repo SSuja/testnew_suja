@@ -234,7 +234,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
   public static final String GET_MIX_DESIGN_BY_PLANT =
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String MIX_DESIGN_BY_PLANT = MIX_DESIGN + PLANT_WISE;
+  public static final String MIX_DESIGN_BY_PLANT = MIX_DESIGN + PLANT_WISE + SLASH + "{plantCode}";
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
 
