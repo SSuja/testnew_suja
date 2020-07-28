@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.TestParameterType;
@@ -30,6 +31,7 @@ public class TestParameter extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = true)
   private Unit unit;
+  @Size(max = 2)
   private String abbreviation;
   @Enumerated(EnumType.ORDINAL)
   private TestParameterType type;
