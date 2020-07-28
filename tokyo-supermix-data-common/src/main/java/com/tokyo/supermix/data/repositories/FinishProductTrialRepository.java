@@ -18,4 +18,7 @@ public interface FinishProductTrialRepository extends JpaRepository<FinishProduc
 
   List<FinishProductTrial> findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
       List<String> plantCodes);
+  
+  List<FinishProductTrial> findByFinishProductTestFinishProductSampleMixDesignPlantCode(
+      String plantCode);
 }

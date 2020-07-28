@@ -82,20 +82,21 @@ public class FinishProductSampleController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSamplesByPlant(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode ) {
-    logger.debug("get all finish product samples by plant");  
-    if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-            mapper.map(finishProductSampleService.getFinishProductSampleByPlantCode(plantCode),
-                FinishProductSampleResponseDto.class),
-            RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    logger.debug("get all finish product samples by plant");
+    if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+        PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+              mapper.map(finishProductSampleService.getFinishProductSampleByPlantCode(plantCode),
+                  FinishProductSampleResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-}
-  
+  }
+
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
   public ResponseEntity<Object> getFinishProductSampleById(@PathVariable String code) {
     if (finishProductSampleService.isFinishProductSampleExist(code)) {

@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
@@ -33,8 +31,10 @@ import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin
@@ -49,7 +49,8 @@ public class MaterialTestController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   Mapper mapper;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(MaterialTestController.class);
 
   // create material tests
@@ -192,12 +193,20 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
-//get all material tests
- @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
- public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser) {
-   return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
-       mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser), MaterialTestResponseDto.class),
-       RestApiResponseStatus.OK), null, HttpStatus.OK);
- }
+
+  // get all material tests
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
+  public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+          mapper.map(materialTestService.getMaterialTestByPlantCode(plantCode),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

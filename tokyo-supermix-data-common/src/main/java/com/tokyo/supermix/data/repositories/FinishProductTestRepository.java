@@ -30,5 +30,5 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
 
   boolean existsByFinishProductSampleCode(String finishProductSampleCode);
 
-List<FinishProductTest> findByPlantCode(String plantCode);
+  List<FinishProductTest> findByFinishProductSampleMixDesignPlantCode(String plantCode);
 }

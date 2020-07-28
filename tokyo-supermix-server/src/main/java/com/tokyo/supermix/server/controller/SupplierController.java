@@ -30,8 +30,10 @@ import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -46,7 +48,8 @@ public class SupplierController {
   private Mapper mapper;
   @Autowired
   private PlantService plantService;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(SupplierController.class);
 
   @GetMapping(value = EndpointURI.SUPPLIERS)
@@ -55,12 +58,21 @@ public class SupplierController {
         mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
-  public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
-        mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+          mapper.map(supplierService.getSupplierByPlantCode(plantCode), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @PostMapping(value = EndpointURI.SUPPLIER)
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
     if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {

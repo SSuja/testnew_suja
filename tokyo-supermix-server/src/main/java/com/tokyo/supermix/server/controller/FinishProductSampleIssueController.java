@@ -29,8 +29,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -43,6 +45,8 @@ public class FinishProductSampleIssueController {
   private Mapper mapper;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(FinishProductSampleIssueController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
@@ -101,11 +105,12 @@ public class FinishProductSampleIssueController {
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
   public ResponseEntity<Object> updateFinishProductSampleIssue(
       @Valid @RequestBody FinishProductSampleIssueRequestDto finishProductSampleIssueRequestDto) {
-    if (finishProductSampleIssueService.isCodeExists(finishProductSampleIssueRequestDto.getCode())) {
-    finishProductSampleIssueService.saveFinishProductSampleIssue(
-        mapper.map(finishProductSampleIssueRequestDto, FinishProductSampleIssue.class));
-    return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
-        Constants.UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS), HttpStatus.OK);
+    if (finishProductSampleIssueService
+        .isCodeExists(finishProductSampleIssueRequestDto.getCode())) {
+      finishProductSampleIssueService.saveFinishProductSampleIssue(
+          mapper.map(finishProductSampleIssueRequestDto, FinishProductSampleIssue.class));
+      return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ISSUE_ID,
@@ -140,13 +145,18 @@ public class FinishProductSampleIssueController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSampleIssuesByPlant(
-      @CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-            mapper.map(
-                finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(currentUser),
-                FinishProductSampleIssueResponseDto.class),
-            RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+        PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE).contains(plantCode)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
+              mapper.map(
+                  finishProductSampleIssueService.getFinishProductSampleIssueByPlantCode(plantCode),
+                  FinishProductSampleIssueResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

@@ -29,8 +29,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.PourService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin("*")
@@ -43,6 +45,8 @@ public class PourController {
   private PlantService plantService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(PourController.class);
 
   @PostMapping(value = EndpointURI.POUR)
@@ -79,7 +83,7 @@ public class PourController {
   }
 
   @DeleteMapping(value = EndpointURI.POUR_BY_ID)
-    public ResponseEntity<Object> deletePour(@PathVariable Long id) {
+  public ResponseEntity<Object> deletePour(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
       logger.debug("get pour By Id");
       pourService.deletePour(id);
@@ -126,13 +130,19 @@ public class PourController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.POUR_BY_PLANT)
-  public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser) {
-    logger.debug("gat all pour");
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.POUR,
-            mapper.map(pourService.getAllPourByPlant(currentUser), PourDtoResponse.class), RestApiResponseStatus.OK),
-        HttpStatus.OK);
+  public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR)
+        .contains(plantCode)) {
+      logger.debug("gat all pour");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
+          mapper.map(pourService.getPoursByPlantCode(plantCode), PourDtoResponse.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

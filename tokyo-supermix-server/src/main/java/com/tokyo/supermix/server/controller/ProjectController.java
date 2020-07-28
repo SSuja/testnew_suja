@@ -29,8 +29,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -43,6 +45,8 @@ public class ProjectController {
   private ProjectService projectService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
@@ -65,12 +69,20 @@ public class ProjectController {
         mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
-  public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-        mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+  public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+          mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+
   }
 
   @DeleteMapping(value = EndpointURI.PROJECT_BY_ID)

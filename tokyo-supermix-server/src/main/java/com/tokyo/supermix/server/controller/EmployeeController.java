@@ -115,17 +115,21 @@ public class EmployeeController {
         mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
-	  if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE).contains(plantCode)) {
-		  return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-			        mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
-			        RestApiResponseStatus.OK), null, HttpStatus.OK);
-	  }
-	  return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-		        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
   public ResponseEntity<Object> getEmployeeSearch(
       @QuerydslPredicate(root = Employee.class) Predicate predicate,

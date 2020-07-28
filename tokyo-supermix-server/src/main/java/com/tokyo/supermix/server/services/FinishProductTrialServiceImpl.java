@@ -232,4 +232,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     updateFinishProductResult(finishProductTrial);
     finishProductTrialRepository.save(finishProductTrial);
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTrial> getAllFinishProductTrialsByPlantCode(String plantCode) {
+    return finishProductTrialRepository
+        .findByFinishProductTestFinishProductSampleMixDesignPlantCode(plantCode);
+  }
 }

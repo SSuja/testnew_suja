@@ -25,13 +25,16 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.PlantAccessLevelService;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
 import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
 import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin
@@ -47,9 +50,9 @@ public class PlantController {
   @Autowired
   private PlantPermissionService plantPermissionService;
   @Autowired
-  private PlantAccessLevelService plantAccessLevelService;
-  @Autowired
   private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(PlantController.class);
 
   @PostMapping(value = EndpointURI.PLANT)
@@ -67,7 +70,6 @@ public class PlantController {
     Plant plant = plantService.savePlant(mapper.map(plantDto, Plant.class));
     PlantRole plantRoleObj = plantRoleService.savePlantRole(plant.getCode(), 1L);
     plantRoleService.savePlantRole(plant.getCode(), 2L);
-    plantAccessLevelService.createPlantAccessLevel(plantRoleObj);
     plantPermissionService.savePlantPermission(plant);
     plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRoleObj);
     return new ResponseEntity<>(
@@ -75,21 +77,27 @@ public class PlantController {
   }
 
   @GetMapping(value = EndpointURI.PLANTS)
-  public ResponseEntity<Object> getAllPlants() {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.PLANTS,
-            mapper.map(plantService.getAllPlants(), PlantDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllPlants(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
+        mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
   // get plant by id
   @GetMapping(value = EndpointURI.PLANT_BY_CODE)
-  public ResponseEntity<Object> getPlantByCode(@PathVariable String code) {
+  public ResponseEntity<Object> getPlantByCode(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String code) {
     if (plantService.isPlantExist(code)) {
-      logger.debug("Get plant by plantCode ");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
-          mapper.map(plantService.getPlantByCode(code), PlantDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+      if (currentUserPermissionPlantService
+          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT)
+          .contains(code)) {
+        logger.debug("Get plant by plantCode ");
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
+            mapper.map(plantService.getPlantByCode(code), PlantDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
