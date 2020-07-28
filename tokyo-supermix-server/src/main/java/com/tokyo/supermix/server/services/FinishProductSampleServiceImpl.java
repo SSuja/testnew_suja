@@ -40,10 +40,17 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional()
   public void saveFinishProductSample(FinishProductSample finishProductSample) {
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     if (finishProductSample.getCode() == null) {
       String plantPrefix = mixDesignRepository.getOne(finishProductSample.getMixDesign().getCode())
           .getPlant().getCode();
-      String codePrefix = plantPrefix + "-PP-";
+      String codePrefix = "";
+      if (mixDesign.getStatus().equals(Status.NEW)) {
+        codePrefix = plantPrefix + "-PP-";
+      } else if (mixDesign.getStatus().equals(Status.PASS)) {
+        codePrefix = plantPrefix + "-PO-";
+      }
       List<FinishProductSample> finishProductSampleList =
           finishProductSampleRepository.findByCodeContaining(codePrefix);
       if (finishProductSampleList.size() == 0) {
@@ -60,8 +67,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     if (finishProductSampleObj != null) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
-    MixDesign mixDesign =
-        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+
     if (mixDesign.getStatus().equals(Status.NEW)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
     } else if (mixDesign.getStatus().equals(Status.PASS)) {
