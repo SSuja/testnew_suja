@@ -109,7 +109,7 @@ public class AuthController {
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.EMAIL,
-        privilegeValidationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
+        privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PutMapping(value = PrivilegeEndpointURI.RESET_PASSWORD)
