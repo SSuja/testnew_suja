@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
+import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
@@ -437,6 +438,14 @@ public class EmailNotification {
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MIX_DESIGN, mailBody);
       }
+    }
+  }
+  @Async
+  public void sendUserCreationEmail(UserCredentialDto userDto) {
+    if (userDto != null) {
+      String message = "Your Account sucessfully created. Your Username is " + userDto.getUserName()
+          + ". Password is " + userDto.getPassword();
+      emailService.sendMail(userDto.getEmail(), Constants.SUBJECT_NEW_USER, message);
     }
   }
 }

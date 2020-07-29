@@ -21,15 +21,14 @@ import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
-import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.auth.UserService;
-import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
@@ -43,7 +42,7 @@ public class UserController {
   @Autowired
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
   @Autowired
-  private EmailService emailService;
+  private EmailNotification emailNotification;
   private static final Logger logger = Logger.getLogger(UserController.class);
 
   @PostMapping(value = PrivilegeEndpointURI.USER)
@@ -62,11 +61,7 @@ public class UserController {
 
     UserCredentialDto userDto =
         userService.saveUser(mapper.map(generateUserDto, User.class), generateUserDto.getRoleIds());
-    if (userDto != null) {
-      String message = "Your Account sucessfully created. Your Username is " + userDto.getUserName()
-          + ". Password is " + userDto.getPassword();
-      emailService.sendMail(userDto.getEmail(), Constants.SUBJECT_NEW_USER, message);
-    }
+    emailNotification.sendUserCreationEmail(userDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ADD_USER_SUCCESS),
         HttpStatus.OK);

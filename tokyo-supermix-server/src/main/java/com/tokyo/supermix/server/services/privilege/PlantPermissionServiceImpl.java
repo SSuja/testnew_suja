@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services.privilege;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.privilege.PlantPermissionResponseDto;
@@ -105,7 +106,6 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       PlantPermission plantPermission = new PlantPermission();
       plantPermission.setPermission(permission);
       plantPermission.setPlant(plant);
-      plantPermission.setName(plant.getCode() + "_" + permission.getName());
       plantPermissionRepository.save(plantPermission);
     }
   }

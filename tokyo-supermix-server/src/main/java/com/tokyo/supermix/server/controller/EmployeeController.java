@@ -119,6 +119,11 @@ public class EmployeeController {
   @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
   public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase("admin") ) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE)
         .contains(plantCode)) {
