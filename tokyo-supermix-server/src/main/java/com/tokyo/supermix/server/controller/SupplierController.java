@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,8 +62,9 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
   public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode) {
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
           mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -139,12 +141,20 @@ public class SupplierController {
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID_AND_PLANT_CODE)
+  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
   public ResponseEntity<Object> getSupplierBySupplierCategoryId(
-      @PathVariable Long suppilerCategoryId , @PathVariable String plantCode) {
+      @PathVariable Long suppilerCategoryId, HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+          mapper.map(supplierService.findBySupplierCategoryId(suppilerCategoryId),
+              SupplierResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
     if (supplierCategoryService.isSupplierCategoryExist(suppilerCategoryId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
-          mapper.map(supplierService.findBySupplierCategoryIdAndPlantCode(suppilerCategoryId, plantCode),
+          mapper.map(
+              supplierService.findBySupplierCategoryIdAndPlantCode(suppilerCategoryId, plantCode),
               SupplierResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
