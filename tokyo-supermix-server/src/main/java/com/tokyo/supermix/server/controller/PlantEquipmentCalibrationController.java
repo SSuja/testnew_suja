@@ -173,6 +173,14 @@ public class PlantEquipmentCalibrationController {
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
   public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<Object>(
+          new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
+              mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibration(),
+                  PlantEquipmentCalibrationResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
         PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION).contains(plantCode)) {
       return new ResponseEntity<Object>(

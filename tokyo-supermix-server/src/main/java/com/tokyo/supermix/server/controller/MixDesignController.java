@@ -157,6 +157,11 @@ public class MixDesignController {
   
   @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
   public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+                mapper.map(mixDesignService.getAllMixDesigns(), MixDesignResponseDto.class),
+                RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
       if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN).contains(plantCode)) {
           return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
                     mapper.map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),

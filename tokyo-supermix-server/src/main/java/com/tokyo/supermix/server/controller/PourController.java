@@ -134,6 +134,12 @@ public class PourController {
   @GetMapping(value = EndpointURI.POUR_BY_PLANT)
   public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      logger.debug("gat all pour");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
+          mapper.map(pourService.getAllPour(), PourDtoResponse.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR)
         .contains(plantCode)) {

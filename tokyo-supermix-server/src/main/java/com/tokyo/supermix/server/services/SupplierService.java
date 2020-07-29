@@ -29,7 +29,7 @@ public interface SupplierService {
 
   public boolean isUpdatedPhoneNumberExist(Long id, String phoneNumber);
 
-  public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId);
+  public List<Supplier> findBySupplierCategoryIdAndPlantCode(Long suppilerCategoryId,String plantCode);
 
   public Page<Supplier> searchSupplier(Predicate predicate, int page, int size);
 

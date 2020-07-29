@@ -62,6 +62,11 @@ public class SupplierController {
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
   public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+          mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER)
         .contains(plantCode)) {
@@ -134,12 +139,12 @@ public class SupplierController {
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
+  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID_AND_PLANT_CODE)
   public ResponseEntity<Object> getSupplierBySupplierCategoryId(
-      @PathVariable Long suppilerCategoryId) {
+      @PathVariable Long suppilerCategoryId , @PathVariable String plantCode) {
     if (supplierCategoryService.isSupplierCategoryExist(suppilerCategoryId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
-          mapper.map(supplierService.findBySupplierCategoryId(suppilerCategoryId),
+          mapper.map(supplierService.findBySupplierCategoryIdAndPlantCode(suppilerCategoryId, plantCode),
               SupplierResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
