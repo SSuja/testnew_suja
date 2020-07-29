@@ -41,7 +41,7 @@ public class IncomingSamplesCountController {
       @PathVariable String materialSubCategoryName,@CurrentUser UserPrincipal currentUser, HttpSession session) {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(!currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode) && plantCode != null) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
    }
@@ -61,7 +61,7 @@ public class IncomingSamplesCountController {
       @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser, HttpSession session) {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(!currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)&& plantCode != null) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
    }
@@ -81,7 +81,7 @@ public class IncomingSamplesCountController {
       @PathVariable String materialSubCategoryName, @CurrentUser UserPrincipal currentUser, HttpSession session) {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);   
     if(!currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)&& plantCode != null) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
    }
@@ -100,7 +100,7 @@ public class IncomingSamplesCountController {
       @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser, HttpSession session) {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(!currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)&& plantCode != null) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
    }
