@@ -57,6 +57,14 @@ public class FinishProductTrialController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductTrialsByPlant(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_TRIALS,
+              mapper.map(finishProductTrialService.getAllFinishProductTrials(),
+                  FinishProductSampleIssueResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
         PermissionConstants.VIEW_FINISH_PRODUCT_TRAIL).contains(plantCode)) {
       return new ResponseEntity<>(

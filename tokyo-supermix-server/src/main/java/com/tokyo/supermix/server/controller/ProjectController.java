@@ -73,11 +73,16 @@ public class ProjectController {
   @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+          mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
         .contains(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-          mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
+          mapper.map(projectService.getProjectByPlantCode(plantCode), ProjectResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,

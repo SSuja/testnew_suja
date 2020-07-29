@@ -121,7 +121,7 @@ public class EmployeeController {
       @PathVariable String plantCode) {
     if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-          mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
+          mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
