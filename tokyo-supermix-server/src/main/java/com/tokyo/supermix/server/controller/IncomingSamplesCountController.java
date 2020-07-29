@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,8 @@ public class IncomingSamplesCountController {
   
   @GetMapping(value = EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleCountByMaterialSubCategory(
-      @PathVariable String materialSubCategoryName,@CurrentUser UserPrincipal currentUser, @PathVariable String plantCode ) {
+      @PathVariable String materialSubCategoryName,@CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(!currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
@@ -56,7 +58,8 @@ public class IncomingSamplesCountController {
 
   @GetMapping(value = EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY)
   public ResponseEntity<Object> getincomingSampleCountByMaterialCategory(
-      @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
+      @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(!currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
@@ -75,7 +78,8 @@ public class IncomingSamplesCountController {
   }
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT)
   public ResponseEntity<Object> getCountByMaterialSubCategory(
-      @PathVariable String materialSubCategoryName, @CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {    
+      @PathVariable String materialSubCategoryName, @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);   
     if(!currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
@@ -93,7 +97,8 @@ public class IncomingSamplesCountController {
 
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT)
   public ResponseEntity<Object> getCountByMaterialCategory(
-      @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
+      @PathVariable String materialCategoryName, @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(!currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS).contains(plantCode)) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,

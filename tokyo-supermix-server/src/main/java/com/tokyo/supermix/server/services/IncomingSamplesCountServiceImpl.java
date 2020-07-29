@@ -15,7 +15,6 @@ import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
-import com.tokyo.supermix.util.Constants;
 
 @Service
 public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountService {
@@ -39,7 +38,7 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
           rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
       for (RawMaterial rawMaterial : rawMaterials) {
         Status status = null;
-        if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        if(plantCode == null) {
           countMaterialDtoList.add(setAdminFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));     
         }else {
         countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status, plantCode));
@@ -57,7 +56,7 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
     for (RawMaterial rawMaterial : rawMaterialList) {
       Status status = null;
-      if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      if(plantCode == null) {
         countMaterialDtoList.add(setAdminFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));
       }else {
       countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status, plantCode));
@@ -105,7 +104,7 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
     List<RawMaterial> rawMaterialList =
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
     Status status = null;
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+    if(plantCode == null) {
       statusCountResponseDtoList.add(setAdminFieldsStatusMaterialSubCategory(
           rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status));
        
@@ -118,8 +117,6 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
 
   private StatusCountResponseDto setFieldsStatusMaterialSubCategory(Long materialSubCategoryId,
       Date sqlDate, Status status, String plantCode) {
-//    List<String> plantCodes = currentUserPermissionPlantService
-//        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS);
     StatusCountResponseDto statusCountResponseDto = new StatusCountResponseDto();
     statusCountResponseDto.setTotal(incomingSampleRepository
         .findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(materialSubCategoryId, sqlDate, plantCode).size());
@@ -141,8 +138,6 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
   
   private StatusCountResponseDto setAdminFieldsStatusMaterialSubCategory(Long materialSubCategoryId,
       Date sqlDate, Status status) {
-//    List<String> plantCodes = currentUserPermissionPlantService
-//        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS);
     StatusCountResponseDto statusCountResponseDto = new StatusCountResponseDto();
     statusCountResponseDto.setTotal(incomingSampleRepository
         .findByRawMaterialMaterialSubCategoryIdAndDate(materialSubCategoryId, sqlDate).size());
@@ -171,7 +166,7 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
     List<RawMaterial> rawMaterialList =
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategories.get(0).getId());
     Status status = null;
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+    if(plantCode == null) {
       statusCountResponseDtoList.add(setAdminFieldsStatusMaterialSubCategory(
           rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status));
        

@@ -67,13 +67,13 @@ public class MaterialTestTrialController {
       @CurrentUser UserPrincipal currentUser,HttpSession session) {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) {
-      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIALS,
+      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
           mapper.map(materialTestTrialService.getAllMaterialTestTrial(),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST_TRIAL).contains(plantCode)) {   
-      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIALS,
+      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
           mapper.map(materialTestTrialService.getMaterialTestTrialByPlantCode(plantCode),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
