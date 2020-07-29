@@ -3,11 +3,12 @@ package com.tokyo.supermix.util;
 public class Constants {
   // for email notification
   public static final String ADMIXTURE = "Admixture";
-  public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : equipment calibration";
+  public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : Calibration Reminder";
   public static final String SUBJECT_ADMIXTURE_EXPIRY = "Notification : expiry date for Admixture";
   public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY =
-      "Notification : Information for Samples";
+      "Notification : Incoming Sample Reminder";
   public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
+  public static final String SUBJECT_CALIBRATED = "Notification :  Equipment is Calibrated ";
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
   public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
