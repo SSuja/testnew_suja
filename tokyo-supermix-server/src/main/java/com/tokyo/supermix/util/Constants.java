@@ -40,6 +40,7 @@ public class Constants {
   public static final String PLANT_NAME = "PlantName";
   public static final String PLANT_ID = "PlantId";
   public static final String PLANTS = "plants";
+  public static final String ADMIN = "admin";
   /*
    * Constants for Plant validation key & Success messages
    */
