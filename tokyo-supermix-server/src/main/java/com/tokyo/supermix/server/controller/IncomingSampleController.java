@@ -60,6 +60,12 @@ public class IncomingSampleController {
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getIncomingSamplesByUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getAllIncomingSamples(),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
         .contains(plantCode)) {

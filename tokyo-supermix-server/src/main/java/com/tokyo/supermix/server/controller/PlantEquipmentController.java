@@ -144,6 +144,12 @@ public class PlantEquipmentController {
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
   public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
+          mapper.map(plantEquipmentService.getAllPlantEquipments(),
+              PlantEquipmentResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
         .contains(plantCode)) {

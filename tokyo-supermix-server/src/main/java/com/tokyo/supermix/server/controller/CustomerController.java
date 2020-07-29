@@ -52,6 +52,11 @@ public class CustomerController {
   @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
   public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+          mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER)
         .contains(plantCode)) {

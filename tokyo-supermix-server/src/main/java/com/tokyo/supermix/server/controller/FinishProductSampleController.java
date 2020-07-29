@@ -84,6 +84,14 @@ public class FinishProductSampleController {
   public ResponseEntity<Object> getAllFinishProductSamplesByPlant(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
     logger.debug("get all finish product samples by plant");
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+              mapper.map(finishProductSampleService.getAllFinishProductSamples(),
+                  FinishProductSampleResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
         PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
       return new ResponseEntity<>(

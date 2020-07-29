@@ -87,6 +87,11 @@ public class PlantController {
   @GetMapping(value = EndpointURI.PLANT_BY_CODE)
   public ResponseEntity<Object> getPlantByCode(@CurrentUser UserPrincipal currentUser,
       @PathVariable String code) {
+    if (code.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
+          mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (plantService.isPlantExist(code)) {
       if (currentUserPermissionPlantService
           .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT)

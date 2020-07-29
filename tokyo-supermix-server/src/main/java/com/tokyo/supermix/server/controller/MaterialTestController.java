@@ -198,6 +198,11 @@ public class MaterialTestController {
   @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
   public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+          mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST)
         .contains(plantCode)) {
