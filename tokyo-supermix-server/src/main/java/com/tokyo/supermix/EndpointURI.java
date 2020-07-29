@@ -378,14 +378,14 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLES_COUNT_BY_MATERIAL =
       BASE_API_PATH + "incoming-samples-count-by-material";
   public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY =
-      INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + "{materialCategoryName}";
+      INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + "{materialCategoryName}" + PLANT_WISE +SLASH + "{plantCode}";
 
   public static final String SUB_CATEGORY = "materialSubCategory";
   public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + SUB_CATEGORY + SLASH
-          + "{materialSubCategoryName}";
+          + "{materialSubCategoryName}"  + PLANT_WISE +SLASH + "{plantCode}";
   public static final String MATERIAL_SUB_CATEGORY_STATUS_COUNT = INCOMING_SAMPLES_COUNT + SLASH
-      + "material-sub-category" + SLASH + "{materialSubCategoryName}";
+      + "material-sub-category" + SLASH + "{materialSubCategoryName}" + PLANT_WISE +SLASH + "{plantCode}";
   public static final String MATERIAL_CATEGORY_STATUS_COUNT =
       INCOMING_SAMPLES_COUNT + SLASH + "material-category" + SLASH + "{materialCategoryName}";
 
