@@ -14,7 +14,6 @@ public final class EndpointURI {
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
   private static final String PLANT_WISE = "/plant";
-  public static final String PLANT_SESSION = "/currentPlantCard/{plantCode}";
   /*
    * Plant apis
    */
@@ -22,6 +21,7 @@ public final class EndpointURI {
   public static final String PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String SEARCH_PLANT = PLANT + SEARCH;
+  public static final String PLANT_SESSION = BASE_API_PATH + SLASH +"currentPlantCard"+ SLASH +"{plantCode}";
 
   /*
    * Designation API
@@ -43,7 +43,7 @@ public final class EndpointURI {
   public static final String SUPPLIER = BASE_API_PATH + "supplier";
   public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
   public static final String SUPPLIER_BY_ID = SUPPLIER + ID;
-  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID_AND_PLANT_CODE =
+  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =

@@ -112,4 +112,9 @@ public class SupplierServiceImpl implements SupplierService {
   public List<Supplier> getSupplierByPlantCode(String plantCode) {
     return supplierRepository.findByPlantCode(plantCode);
   }
+
+  @Override
+  public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId) {
+    return supplierRepository.findBySupplierCategoriesId(suppilerCategoryId);
+  }
 }
