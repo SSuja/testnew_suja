@@ -19,6 +19,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.CustomerRequestDto;
 import com.tokyo.supermix.data.dto.CustomerResponseDto;
+import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -52,6 +53,11 @@ public class CustomerController {
   @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
   public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+          mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER)
         .contains(plantCode)) {
