@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QMixDesign;
@@ -186,5 +184,10 @@ public class MixDesignServiceImpl implements MixDesignService {
   public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser) {
     return mixDesignRepository.findByPlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN));
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getAllMixDesignByDecending() {
+    return mixDesignRepository.findAllByOrderByCodeDesc();
   }
 }
