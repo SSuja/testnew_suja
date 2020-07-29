@@ -65,13 +65,13 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getAllMaterialTestTrialByPlant(
       @CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIALS,
           mapper.map(materialTestTrialService.getAllMaterialTestTrial(),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST_TRIAL).contains(plantCode)) {   
-      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIALS,
           mapper.map(materialTestTrialService.getMaterialTestTrialByPlantCode(plantCode),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);

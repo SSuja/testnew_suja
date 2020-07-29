@@ -79,7 +79,7 @@ public class ProjectController {
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT)
         .contains(plantCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
           mapper.map(projectService.getProjectByPlantCode(plantCode), ProjectResponseDto.class),
