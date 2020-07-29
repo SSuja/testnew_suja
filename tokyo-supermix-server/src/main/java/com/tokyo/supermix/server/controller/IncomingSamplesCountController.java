@@ -73,7 +73,6 @@ public class IncomingSamplesCountController {
             validationFailureStatusCodes.getMaterialCategoryAlreadyExist()),
         HttpStatus.BAD_REQUEST);
   }
-///////////////////////////////////////
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT)
   public ResponseEntity<Object> getCountByMaterialSubCategory(
       @PathVariable String materialSubCategoryName, @CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {    

@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,13 +118,14 @@ public class EmployeeController {
   }
 
   @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode) {
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,HttpSession session) {
+    String plantCode = (String)session.getAttribute("MY_SESSION_PLANT");
+    if(plantCode == null) {    
+      System.out.println("MY_SESSION_PLANT" + plantCode);
       return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
           mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
-    }
+    }    
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE)
         .contains(plantCode)) {

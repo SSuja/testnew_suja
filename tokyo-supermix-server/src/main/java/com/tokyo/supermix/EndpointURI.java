@@ -14,6 +14,7 @@ public final class EndpointURI {
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
   private static final String PLANT_WISE = "/plantWise";
+  public static final String PLANT_SESSION = "/currentPlantCard/{plantCode}";
   /*
    * Plant apis
    */
@@ -43,11 +44,11 @@ public final class EndpointURI {
   public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
   public static final String SUPPLIER_BY_ID = SUPPLIER + ID;
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID_AND_PLANT_CODE =
-      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}"+ SLASH +"plantCode"+ SLASH+"{plantCode}";
+      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String SUPPLIER_BY_PLANT = SUPPLIER + PLANT_WISE + SLASH + "{plantCode}";
+  public static final String SUPPLIER_BY_PLANT = SUPPLIER + PLANT_WISE;
   /*
    * Employee apis
    */
@@ -57,7 +58,7 @@ public final class EndpointURI {
   public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE+ SLASH + "{plantCode}";
+  public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + "/plant";
   /*
    * Material Category APIs
    */
