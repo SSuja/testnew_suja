@@ -121,7 +121,6 @@ public class EmployeeController {
   public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,HttpSession session) {
     String plantCode = (String)session.getAttribute("MY_SESSION_PLANT");
     if(plantCode == null) {    
-      System.out.println("MY_SESSION_PLANT" + plantCode);
       return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
           mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
