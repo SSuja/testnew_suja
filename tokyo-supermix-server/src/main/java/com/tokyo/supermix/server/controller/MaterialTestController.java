@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,8 +198,9 @@ public class MaterialTestController {
   // get all material tests
   @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
   public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode) {
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
+    if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
           mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);

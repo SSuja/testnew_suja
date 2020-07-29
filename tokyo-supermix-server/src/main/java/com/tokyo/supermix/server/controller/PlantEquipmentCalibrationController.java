@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,8 +173,9 @@ public class PlantEquipmentCalibrationController {
 
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
   public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
       return new ResponseEntity<Object>(
           new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
               mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibration(),

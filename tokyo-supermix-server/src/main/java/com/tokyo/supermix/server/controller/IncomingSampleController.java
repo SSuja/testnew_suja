@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,9 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getIncomingSamplesByUserPermission(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
+    if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
           mapper.map(incomingSampleService.getAllIncomingSamples(),
               IncomingSampleResponseDto.class),

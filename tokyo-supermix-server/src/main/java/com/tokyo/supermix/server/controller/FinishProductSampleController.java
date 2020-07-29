@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,9 +83,10 @@ public class FinishProductSampleController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSamplesByPlant(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+      @CurrentUser UserPrincipal currentUser,HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     logger.debug("get all finish product samples by plant");
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+    if(plantCode == null) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
               mapper.map(finishProductSampleService.getAllFinishProductSamples(),

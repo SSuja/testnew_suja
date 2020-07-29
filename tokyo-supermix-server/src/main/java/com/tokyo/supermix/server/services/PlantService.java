@@ -4,14 +4,13 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
-import com.tokyo.supermix.security.UserPrincipal;
 
 public interface PlantService {
   public Plant savePlant(Plant plant);
 
   public boolean isPlantNameExist(String plant);
 
-  public List<Plant> getAllPlants(UserPrincipal currentUser);
+  public List<Plant> getAllPlants();
 
   public Plant getPlantByCode(String code);
 

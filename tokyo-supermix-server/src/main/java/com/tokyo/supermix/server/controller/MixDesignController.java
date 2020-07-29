@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,8 +157,9 @@ public class MixDesignController {
   }
   
   @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,@PathVariable String plantCode) {
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
+    if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
                 mapper.map(mixDesignService.getAllMixDesigns(), MixDesignResponseDto.class),
                 RestApiResponseStatus.OK), null, HttpStatus.OK);
