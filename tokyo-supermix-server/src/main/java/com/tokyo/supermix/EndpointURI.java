@@ -42,12 +42,12 @@ public final class EndpointURI {
   public static final String SUPPLIER = BASE_API_PATH + "supplier";
   public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
   public static final String SUPPLIER_BY_ID = SUPPLIER + ID;
-  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
-      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
+  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID_AND_PLANT_CODE =
+      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}"+ SLASH +"plantCode"+ SLASH+"{plantCode}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String SUPPLIER_BY_PLANT = SUPPLIER + PLANT_WISE;
+  public static final String SUPPLIER_BY_PLANT = SUPPLIER + PLANT_WISE + SLASH + "{plantCode}";
   /*
    * Employee apis
    */
@@ -147,7 +147,7 @@ public final class EndpointURI {
   public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
       EQUIPMENT_PLANT_CALIBRATIONS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT =
-      EQUIPMENT_PLANT_CALIBRATION + PLANT_WISE;
+      EQUIPMENT_PLANT_CALIBRATION + PLANT_WISE+ SLASH + "{plantCode}";
   /*
    * PlantEquipment
    * 

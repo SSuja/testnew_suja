@@ -98,8 +98,8 @@ public class SupplierServiceImpl implements SupplierService {
   }
 
   @Transactional(readOnly = true)
-  public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId) {
-    return supplierRepository.findBySupplierCategoriesId(suppilerCategoryId);
+  public List<Supplier> findBySupplierCategoryIdAndPlantCode(Long suppilerCategoryId, String plantCode) {
+    return supplierRepository.findBySupplierCategoriesIdAndPlantCode(suppilerCategoryId, plantCode);
   }
 
   @Transactional(readOnly = true)

@@ -11,7 +11,7 @@ public interface SupplierRepository
 
   boolean existsByPhoneNumber(String phoneNumber);
 
-  List<Supplier> findBySupplierCategoriesId(Long suppilerCategoryId);
+  List<Supplier> findBySupplierCategoriesIdAndPlantCode(Long suppilerCategoryId, String plantCode);
 
   List<Supplier> findByPlantCode(String plantCode);
   
