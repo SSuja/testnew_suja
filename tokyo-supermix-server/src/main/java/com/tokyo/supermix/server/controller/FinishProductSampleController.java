@@ -89,7 +89,7 @@ public class FinishProductSampleController {
     if(plantCode == null) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-              mapper.map(finishProductSampleService.getAllFinishProductSamples(),
+              mapper.map(finishProductSampleService.getAllFinishProductSamplesByPlant(currentUser),
                   FinishProductSampleResponseDto.class),
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);

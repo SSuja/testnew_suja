@@ -139,7 +139,7 @@ public class PourController {
     if (plantCode == null) {
       logger.debug("gat all pour");
       return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
-          mapper.map(pourService.getAllPour(), PourDtoResponse.class), RestApiResponseStatus.OK),
+          mapper.map(pourService.getAllPourByPlant(currentUser), PourDtoResponse.class), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

@@ -77,7 +77,7 @@ public class ProjectController {
     String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
     if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-          mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
+          mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

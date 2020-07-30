@@ -62,7 +62,7 @@ public class FinishProductTrialController {
     if(plantCode == null) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_TRIALS,
-              mapper.map(finishProductTrialService.getAllFinishProductTrials(),
+              mapper.map(finishProductTrialService.getAllFinishProductTrialsByPlant(currentUser),
                   FinishProductSampleIssueResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);

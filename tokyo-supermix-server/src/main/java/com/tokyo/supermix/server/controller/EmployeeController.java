@@ -122,7 +122,7 @@ public class EmployeeController {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) { 
       return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-          mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
+          mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }    
     if (currentUserPermissionPlantService

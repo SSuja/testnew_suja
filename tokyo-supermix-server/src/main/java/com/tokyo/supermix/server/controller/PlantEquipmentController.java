@@ -148,7 +148,7 @@ public class PlantEquipmentController {
     String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
     if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS, mapper
-          .map(plantEquipmentService.getAllPlantEquipments(), PlantEquipmentResponseDto.class),
+          .map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser), PlantEquipmentResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

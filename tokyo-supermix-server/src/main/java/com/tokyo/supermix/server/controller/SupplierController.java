@@ -66,7 +66,7 @@ public class SupplierController {
     String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
     if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
-          mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
+          mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

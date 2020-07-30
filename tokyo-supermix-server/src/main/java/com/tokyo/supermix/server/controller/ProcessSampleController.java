@@ -79,7 +79,7 @@ public class ProcessSampleController {
     String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
     if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
-          mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class),
+          mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

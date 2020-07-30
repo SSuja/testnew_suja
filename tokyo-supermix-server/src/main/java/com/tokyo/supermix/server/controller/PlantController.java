@@ -84,7 +84,7 @@ public class PlantController {
     if (plantCode == null) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.PLANTS,
-              mapper.map(plantService.getAllPlants(), PlantDto.class), RestApiResponseStatus.OK),
+              mapper.map(plantService.getAllPlants(currentUser), PlantDto.class), RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

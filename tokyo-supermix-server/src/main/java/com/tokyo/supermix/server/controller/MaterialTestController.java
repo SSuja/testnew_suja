@@ -202,7 +202,7 @@ public class MaterialTestController {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
-          mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
+          mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser), MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

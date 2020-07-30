@@ -161,7 +161,7 @@ public class MixDesignController {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-                mapper.map(mixDesignService.getAllMixDesigns(), MixDesignResponseDto.class),
+                mapper.map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
                 RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
       if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN).contains(plantCode)) {

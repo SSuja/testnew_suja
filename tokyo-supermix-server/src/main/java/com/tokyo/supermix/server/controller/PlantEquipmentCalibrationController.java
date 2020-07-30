@@ -178,7 +178,7 @@ public class PlantEquipmentCalibrationController {
     if (plantCode == null) {
       return new ResponseEntity<Object>(
           new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-              mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibration(),
+              mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibrationsByPlant(currentUser),
                   PlantEquipmentCalibrationResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);

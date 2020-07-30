@@ -151,7 +151,7 @@ public class FinishProductSampleIssueController {
     if(plantCode == null) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-              mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssues(),
+              mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(currentUser),
                   FinishProductSampleIssueResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);

@@ -64,7 +64,7 @@ public class IncomingSampleController {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-          mapper.map(incomingSampleService.getAllIncomingSamples(),
+          mapper.map(incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser),
               IncomingSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }

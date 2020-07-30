@@ -56,7 +56,7 @@ public class CustomerController {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
+          mapper.map(customerService.getAllCustomersByCurrentUser(currentUser), CustomerResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

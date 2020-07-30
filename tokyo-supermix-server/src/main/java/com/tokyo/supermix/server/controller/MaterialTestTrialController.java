@@ -68,7 +68,7 @@ public class MaterialTestTrialController {
     String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     if(plantCode == null) {
       return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
-          mapper.map(materialTestTrialService.getAllMaterialTestTrial(),
+          mapper.map(materialTestTrialService.getAllMaterialTestTrialByplant(currentUser),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
