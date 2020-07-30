@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -24,6 +25,8 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
   private PlantEquipmentCalibrationRepository plantEquipmentCalibrationRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private EmailNotification emailNotification;
 
 
   @Transactional
@@ -33,7 +36,12 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
         .plusDays(plantEquipmentCalibration.getNoOfDays());
     java.sql.Date dueDate = java.sql.Date.valueOf(localDueDate);
     plantEquipmentCalibration.setDueDate(dueDate);
+    PlantEquipmentCalibration plantEquipmentCalibrationobj =plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+    if (plantEquipmentCalibrationobj != null) {
+      emailNotification.sendcalibrationCreationEmail(plantEquipmentCalibrationobj);
+    }
     return plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+    
   }
 
   @Transactional(readOnly = true)
