@@ -52,11 +52,12 @@ public class CustomerController {
 
   @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
   public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(
-      @CurrentUser UserPrincipal currentUser,HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
+      @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getAllCustomersByCurrentUser(currentUser), CustomerResponseDto.class),
+          mapper.map(customerService.getAllCustomersByCurrentUser(currentUser),
+              CustomerResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
@@ -69,7 +70,7 @@ public class CustomerController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.CUSTOMERS)
   public ResponseEntity<Object> getAllCustomers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,

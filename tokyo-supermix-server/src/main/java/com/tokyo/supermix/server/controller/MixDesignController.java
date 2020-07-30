@@ -59,7 +59,7 @@ public class MixDesignController {
   @GetMapping(value = EndpointURI.MIX_DESIGNS)
   public ResponseEntity<Object> getAllMixDesigns() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-        mapper.map(mixDesignService.getAllMixDesigns(), MixDesignResponseDto.class),
+        mapper.map(mixDesignService.getAllMixDesignByDecending(), MixDesignResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

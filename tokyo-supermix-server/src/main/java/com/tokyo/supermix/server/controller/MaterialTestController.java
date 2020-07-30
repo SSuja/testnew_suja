@@ -195,14 +195,14 @@ public class MaterialTestController {
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // get all material tests
   @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
   public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser,
       HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
-          mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser), MaterialTestResponseDto.class),
+          mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser),
+              MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
@@ -215,5 +215,15 @@ public class MaterialTestController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @PutMapping(value = EndpointURI.MATERIAL_TEST_COMMENT)
+  public ResponseEntity<Object> updateMaterialTestComment(
+      @Valid @RequestBody MaterialTestRequestDto materialTestRequestDto) {
+    materialTestService
+        .updateMaterialTestComment(mapper.map(materialTestRequestDto, MaterialTest.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_COMMENT_UPDATED),
+        HttpStatus.OK);
   }
 }

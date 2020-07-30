@@ -8,7 +8,7 @@ import com.tokyo.supermix.security.UserPrincipal;
 
 public interface SupplierService {
   public List<Supplier> getSuppliers();
-  
+
   public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser);
 
   public void createSupplier(Supplier supplier, List<Long> supplierCategoryIds);
@@ -36,4 +36,9 @@ public interface SupplierService {
   public List<Supplier> getSupplierByPlantCode(String plantCode);
   
   public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId);
+
+  public List<Supplier> getByPlantCodeAndSupplierCategoryId(String plantCode,
+      Long supplierCategoryId);
+
+  public boolean isPlantCodeAndSupplierCategoryIdExist(String plantCode, Long supplierCategoryId);
 }

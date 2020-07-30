@@ -36,6 +36,9 @@ public class TestParameter extends DateAudit implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private TestParameterType type;
   private Double value;
+  private String name;
+  private String groupKey;
+  private String mixDesignField;
   @ManyToOne
   @JoinColumn(name = "qualityParameterId", nullable = true)
   private QualityParameter qualityParameter;
@@ -45,14 +48,14 @@ public class TestParameter extends DateAudit implements Serializable {
   private String level;
 
   public String getLevel() {
-	return level;
-}
+    return level;
+  }
 
-public void setLevel(String level) {
-	this.level = level;
-}
+  public void setLevel(String level) {
+    this.level = level;
+  }
 
-public Long getId() {
+  public Long getId() {
     return id;
   }
 
@@ -134,5 +137,29 @@ public Long getId() {
 
   public void setInputMethods(InputMethod inputMethods) {
     this.inputMethods = inputMethods;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getGroupKey() {
+    return groupKey;
+  }
+
+  public void setGroupKey(String groupKey) {
+    this.groupKey = groupKey;
+  }
+
+  public String getMixDesignField() {
+    return mixDesignField;
+  }
+
+  public void setMixDesignField(String mixDesignField) {
+    this.mixDesignField = mixDesignField;
   }
 }

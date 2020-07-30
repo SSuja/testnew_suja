@@ -54,11 +54,6 @@ public class ProcessSampleController {
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
   public ResponseEntity<Object> createProcessSample(
       @Valid @RequestBody ProcessSampleRequestDto processSampleRequestDto) {
-    if (processSampleService.isProcessSampleExist(processSampleRequestDto.getCode())) {
-      logger.debug("ProcessSample code already exists: ");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_CODE,
-          validationFailureStatusCodes.getProcessSampleAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     processSampleService
         .saveProcessSample(mapper.map(processSampleRequestDto, ProcessSample.class));
     return new ResponseEntity<>(

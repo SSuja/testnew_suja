@@ -4,8 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class ProcessSampleRequestDto {
-  @NotNull(message = "{processSampleRequestDto.code.null}")
-  @NotEmpty(message = "{processSampleRequestDto.code.empty}")
   private String code;
   @NotNull(message = "{processSampleRequestDto.incomingSampleCode.null}")
   @NotEmpty(message = "{processSampleRequestDto.incomingSampleCode.empty}")

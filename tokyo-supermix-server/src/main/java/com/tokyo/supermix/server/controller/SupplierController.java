@@ -184,4 +184,19 @@ public class SupplierController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY)
+  public ResponseEntity<Object> getSupplierByPlantCodeAndSupplierCategoryId(
+      @PathVariable String plantCode, @PathVariable Long supplierCategoryId) {
+    if (supplierService.isPlantCodeAndSupplierCategoryIdExist(plantCode, supplierCategoryId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.SUPPLIER,
+              mapper.map(supplierService.getByPlantCodeAndSupplierCategoryId(plantCode,
+                  supplierCategoryId), SupplierResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+        validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
+  }
 }
