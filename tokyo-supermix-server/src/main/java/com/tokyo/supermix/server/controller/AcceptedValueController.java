@@ -48,7 +48,6 @@ public class AcceptedValueController {
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
     acceptedValueService
         .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));
-
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_ACCEPTED_VALUE_SUCCESS),
         HttpStatus.OK);
