@@ -20,7 +20,8 @@ public class FinishProductTrial extends DateAudit implements Serializable {
   private String code;
   private Long trialNo;
   @Enumerated(EnumType.ORDINAL)
-  private FinishProductState testSample;
+  private FinishProductState testSampleState;
+  private Long testSampleNo;
   private Date date;
   private Double value;
   @ManyToOne
@@ -46,12 +47,12 @@ public class FinishProductTrial extends DateAudit implements Serializable {
     this.trialNo = trialNo;
   }
 
-  public FinishProductState getTestSample() {
-    return testSample;
+  public FinishProductState getTestSampleState() {
+    return testSampleState;
   }
 
-  public void setTestSample(FinishProductState testSample) {
-    this.testSample = testSample;
+  public void setTestSampleState(FinishProductState testSampleState) {
+    this.testSampleState = testSampleState;
   }
 
   public Date getDate() {
@@ -84,6 +85,14 @@ public class FinishProductTrial extends DateAudit implements Serializable {
 
   public void setTestParameter(TestParameter testParameter) {
     this.testParameter = testParameter;
+  }
+
+  public Long getTestSampleNo() {
+    return testSampleNo;
+  }
+
+  public void setTestSampleNo(Long testSampleNo) {
+    this.testSampleNo = testSampleNo;
   }
 
   public static long getSerialversionuid() {

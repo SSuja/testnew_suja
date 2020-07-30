@@ -18,10 +18,10 @@ public class FinishProductParameterResultServiceImpl
     return finishProductParameterResultRepository.findAll();
   }
 
-  @Transactional(readOnly = true)
-  public List<FinishProductParameterResult> getByFinishProductSampleCode(
-      String finishProductSampleCode) {
-    return finishProductParameterResultRepository
-        .findByFinishProductSampleCode(finishProductSampleCode);
-  }
+//  @Transactional(readOnly = true)
+//  public List<FinishProductParameterResult> getByFinishProductSampleCode(
+//      String finishProductSampleCode) {
+//    return finishProductParameterResultRepository
+//        .findByFinishProductSampleCode(finishProductSampleCode);
+//  }
 }

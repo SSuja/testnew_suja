@@ -4,7 +4,7 @@ public class FinishProductParameterResultResponseDto {
   private Long id;
   private Double result;
   private TestParameterResponseDto testParameter;
-  private FinishProductSampleResponseDto finishProductSample;
+  private FinishProductTestResponseDto finishProductTest;
 
   public Long getId() {
     return id;
@@ -30,11 +30,11 @@ public class FinishProductParameterResultResponseDto {
     this.testParameter = testParameter;
   }
 
-  public FinishProductSampleResponseDto getFinishProductSample() {
-    return finishProductSample;
+  public FinishProductTestResponseDto getFinishProductTest() {
+    return finishProductTest;
   }
 
-  public void setFinishProductSample(FinishProductSampleResponseDto finishProductSample) {
-    this.finishProductSample = finishProductSample;
+  public void setFinishProductTest(FinishProductTestResponseDto finishProductTest) {
+    this.finishProductTest = finishProductTest;
   }
 }
