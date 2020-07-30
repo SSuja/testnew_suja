@@ -3,6 +3,7 @@ package com.tokyo.supermix.notification;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
@@ -26,6 +27,9 @@ import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.entities.auth.UserPlantRole;
+import com.tokyo.supermix.data.entities.auth.UserRole;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
@@ -482,6 +486,47 @@ public class EmailNotification {
                   plantEquipmentCalibration.getPlantEquipment().getPlant().getCode());
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CALIBRATED, mailBody);
+        }
+
+      }
+    }
+  }
+
+  @Async
+  public void sendUserCreationEmail(User user) {
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        user.getEmployee().getPlant().getCode(), MailGroupConstance.CREATE_USER);
+    if (emailGroup != null) {
+      if (emailGroup.isStatus()) {
+        if (user.getUserType().equals("PLANT_USER")) {
+          Set<UserPlantRole> userSet = user.getUserPlantRoles();
+          String roles = " ";
+          for (UserPlantRole userPlantRole : userSet) {
+            roles = roles + userPlantRole + ",";
+          } ;
+          String mailBody = user.getEmployee().getPlant().getName() + "'s "
+              + user.getEmployee().getDesignation() + user.getEmployee().getDesignation()
+              + user.getEmployee().getLastName() + " is assigned to the role of " + roles + ".";
+          List<String> reciepientList =
+              emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                  MailGroupConstance.CREATE_USER, user.getEmployee().getPlant().getCode());
+          emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+              Constants.SUBJECT_USER_CREATION, mailBody);
+        } else {
+          Set<UserRole> userSet = user.getUserRoles();
+          String roles = " ";
+          for (UserRole userRole : userSet) {
+            roles = roles + userRole + ",";
+          } ;
+          String mailBody = user.getEmployee().getPlant().getName() + "'s "
+              + user.getEmployee().getDesignation() + user.getEmployee().getDesignation()
+              + user.getEmployee().getLastName() + " is assigned to the role of " + roles + ".";
+          List<String> reciepientList =
+              emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                  MailGroupConstance.CREATE_USER, user.getEmployee().getPlant().getCode());
+          emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+              Constants.SUBJECT_USER_CREATION, mailBody);
+
         }
 
       }
