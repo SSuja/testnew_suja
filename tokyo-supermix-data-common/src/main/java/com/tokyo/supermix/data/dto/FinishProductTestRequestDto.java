@@ -7,6 +7,7 @@ public class FinishProductTestRequestDto {
   private Status status;
   private String finishProductSampleCode;
   private Long testConfigureId;
+  private Long noOfTrial;
 
   public String getCode() {
     return code;
@@ -38,5 +39,13 @@ public class FinishProductTestRequestDto {
 
   public void setTestConfigureId(Long testConfigureId) {
     this.testConfigureId = testConfigureId;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
   }
 }
