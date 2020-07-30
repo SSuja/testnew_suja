@@ -41,6 +41,7 @@ public class TestParameter extends DateAudit implements Serializable {
   private Double value;
   private String name;
   private String groupKey;
+  @Enumerated(EnumType.ORDINAL)
   private MixDesignField mixDesignField;
   @ManyToOne
   @JoinColumn(name = "qualityParameterId", nullable = true)
