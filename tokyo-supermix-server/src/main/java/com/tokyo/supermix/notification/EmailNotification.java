@@ -30,6 +30,7 @@ import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.auth.UserRole;
+import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
@@ -41,6 +42,7 @@ import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
+import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
@@ -89,6 +91,8 @@ public class EmailNotification {
   private MaterialTestResultRepository materialTestResultRepository;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private PlantEquipmentRepository plantEquipmentRepository;
 
 
   @Scheduled(cron = "${mail.notificationTime.plantEquipment}")
@@ -234,7 +238,14 @@ public class EmailNotification {
         supplier.getPlant().getCode(), MailGroupConstance.CREATE_SUPPLIER);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Supplier " + supplier.getName() + " Newly created under the ";
+        List<SupplierCategory> supplierCategoriesList = supplier.getSupplierCategories();
+        String categories = "";
+        for (SupplierCategory supplierCategory : supplierCategoriesList) {
+          categories = categories + supplierCategory.getCategory() + ",";
+        }
+        String supplierCategories = categories.replaceAll(",$", ".");
+        String mailBody =
+            "Supplier " + supplier.getName() + " Newly created under the " + supplierCategories;
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -452,38 +463,37 @@ public class EmailNotification {
 
   @Async
   public void sendcalibrationCreationEmail(PlantEquipmentCalibration plantEquipmentCalibration) {
-    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        plantEquipmentCalibration.getPlantEquipment().getPlant().getCode(),
+    String plantCode = plantEquipmentRepository
+        .findById(plantEquipmentCalibration.getPlantEquipment().getSerialNo()).get().getPlant()
+        .getCode();
+    String plantName = plantRepository.findPlantByCode(plantCode).getName();
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(plantCode,
         MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String equipmentName = equipmentRepository
-            .findById(plantEquipmentCalibration.getPlantEquipment().getEquipment().getId()).get()
-            .getName();
-        String supplierName = supplierRepository
-            .findById(plantEquipmentCalibration.getSupplier().getId()).get().getName();
-        if (supplierRepository.findById(plantEquipmentCalibration.getSupplier().getId()) != null) {
-          String mailBody = plantEquipmentCalibration.getPlantEquipment().getEquipment().getName()
-              + " is calibrated by " + plantEquipmentCalibration.getCalibrationType()
-              + " by the supplier," + supplierName + " and the "
-              + plantEquipmentCalibration.getDueDate() + "at " + equipmentName;
+        String equipmentName = plantEquipmentRepository
+            .findById(plantEquipmentCalibration.getPlantEquipment().getSerialNo()).get()
+            .getEquipment().getName();
+        if (plantEquipmentCalibration.getSupplier() != null) {
+          String supplierName = supplierRepository
+              .findById(plantEquipmentCalibration.getSupplier().getId()).get().getName();
+          String mailBody = equipmentName + " is calibrated by "
+              + plantEquipmentCalibration.getCalibrationType() + " by the supplier," + supplierName
+              + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
               emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-                  MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION,
-                  plantEquipmentCalibration.getPlantEquipment().getPlant().getCode());
+                  MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION, plantCode);
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CALIBRATED, mailBody);
         } else {
           String userName = userRepository.findById(plantEquipmentCalibration.getUser().getId())
               .get().getUserName();
-          String mailBody = plantEquipmentCalibration.getPlantEquipment().getEquipment().getName()
-              + " is calibrated by " + plantEquipmentCalibration.getCalibrationType()
-              + " by the user," + userName + " and the " + plantEquipmentCalibration.getDueDate()
-              + "at " + equipmentName;
+          String mailBody = equipmentName + " is calibrated by "
+              + plantEquipmentCalibration.getCalibrationType() + " by the user," + userName
+              + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
               emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-                  MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION,
-                  plantEquipmentCalibration.getPlantEquipment().getPlant().getCode());
+                  MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION, plantCode);
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CALIBRATED, mailBody);
         }

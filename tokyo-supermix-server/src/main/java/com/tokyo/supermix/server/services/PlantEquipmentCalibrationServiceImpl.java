@@ -40,7 +40,7 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
     if (plantEquipmentCalibrationobj != null) {
       emailNotification.sendcalibrationCreationEmail(plantEquipmentCalibrationobj);
     }
-    return plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+    return plantEquipmentCalibrationobj;
     
   }
 
