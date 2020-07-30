@@ -3,6 +3,7 @@ package com.tokyo.supermix.notification;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.lang.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
@@ -26,6 +27,7 @@ import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
@@ -233,7 +235,14 @@ public class EmailNotification {
         supplier.getPlant().getCode(), MailGroupConstance.CREATE_SUPPLIER);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Supplier " + supplier.getName() + " Newly created under the ";
+        List<SupplierCategory> supplierCategoriesList = supplier.getSupplierCategories();
+        String categories = "";
+        for (SupplierCategory supplierCategory : supplierCategoriesList) {
+          categories = categories + supplierCategory.getCategory() + ",";
+        }
+        String supplierCategories = categories.replaceAll(",$", "");
+        String mailBody =
+            "Supplier " + supplier.getName() + " Newly created under the " + supplierCategories;
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
