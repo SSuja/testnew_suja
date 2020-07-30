@@ -22,5 +22,7 @@ public interface MixDesignRepository
 
   boolean existsByStatus(Status status);
 
-  List<MixDesign> findByPlantCodeIn(List<String>plantCodes);
+  List<MixDesign> findByPlantCodeIn(List<String> plantCodes);
+
+  List<MixDesign> findAllByOrderByCodeDesc();
 }

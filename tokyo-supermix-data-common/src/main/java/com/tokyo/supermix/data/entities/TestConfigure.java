@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.enums.Format;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.TestType;
 
 @Entity
@@ -26,6 +28,11 @@ public class TestConfigure extends DateAudit implements Serializable {
   private String prefix;
   @Enumerated(EnumType.ORDINAL)
   private TestType testType;
+  @Enumerated(EnumType.ORDINAL)
+  private Format format;
+  private boolean isTrialExist;
+  @Enumerated(EnumType.ORDINAL)
+  private ReportFormat reportFormat;
   @ManyToOne
   @JoinColumn(name = "testId", nullable = false)
   private Test test;
@@ -110,5 +117,29 @@ public class TestConfigure extends DateAudit implements Serializable {
 
   public void setTestType(TestType testType) {
     this.testType = testType;
+  }
+
+  public Format getFormat() {
+    return format;
+  }
+
+  public void setFormat(Format format) {
+    this.format = format;
+  }
+
+  public boolean isTrialExist() {
+    return isTrialExist;
+  }
+
+  public void setTrialExist(boolean isTrialExist) {
+    this.isTrialExist = isTrialExist;
+  }
+
+  public ReportFormat getReportFormat() {
+    return reportFormat;
+  }
+
+  public void setReportFormat(ReportFormat reportFormat) {
+    this.reportFormat = reportFormat;
   }
 }
