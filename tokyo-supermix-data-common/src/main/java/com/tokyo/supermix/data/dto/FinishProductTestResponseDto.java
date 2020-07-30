@@ -7,6 +7,7 @@ public class FinishProductTestResponseDto {
   private Status status;
   private FinishProductSampleResponseDto finishProductSample;
   private TestConfigureResponseDto testConfigure;
+  private Long noOfTrial;
 
   public String getCode() {
     return code;
@@ -38,5 +39,13 @@ public class FinishProductTestResponseDto {
 
   public void setTestConfigure(TestConfigureResponseDto testConfigure) {
     this.testConfigure = testConfigure;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
   }
 }
