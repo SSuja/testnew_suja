@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -60,7 +61,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Transactional()
 	public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser) {
-		return employeeRepository.findByPlantCodeIn(currentUserPermissionPlantService
+	  return currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())&& currentUser.getRoles().contains(1L) ?
+	      employeeRepository.findAll(): employeeRepository.findByPlantCodeIn(currentUserPermissionPlantService
 						.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE));
 	}
 
