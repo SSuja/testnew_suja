@@ -195,31 +195,31 @@ public class EmailNotification {
     }
   }
 
-  @Async
-  public void sendFinishProductTestEmail(FinishProductTest finishProductTest) {
-    EmailPoints emailPoints = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(
-        finishProductTest.getTestConfigure().getMaterialSubCategory().getId(),
-        finishProductTest.getTestConfigure().getTest().getId());
-    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode(),
-        emailPoints.getName());
-    if (emailGroup != null) {
-      if (emailGroup.isStatus()) {
-        List<String> reciepientList =
-            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-                emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
-        String mailBody = "<ul><li>Finish Product Sample <b>"
-            + finishProductTest.getFinishProductSample().getCode() + "</b></li><li> Test Name <b>"
-            + finishProductTest.getTestConfigure().getTest().getName()
-            + "</b></li><li> Material <b>"
-            + finishProductTest.getTestConfigure().getMaterialCategory().getName()
-            + "</b></li><li> Test Results <b>" + finishProductTest.getResult() + "</b>"
-            + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
-        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_CONCRETE_TEST, mailBody);
-      }
-    }
-  }
+//  @Async
+//  public void sendFinishProductTestEmail(FinishProductTest finishProductTest) {
+//    EmailPoints emailPoints = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(
+//        finishProductTest.getTestConfigure().getMaterialSubCategory().getId(),
+//        finishProductTest.getTestConfigure().getTest().getId());
+//    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+//        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode(),
+//        emailPoints.getName());
+//    if (emailGroup != null) {
+//      if (emailGroup.isStatus()) {
+//        List<String> reciepientList =
+//            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+//                emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
+//        String mailBody = "<ul><li>Finish Product Sample <b>"
+//            + finishProductTest.getFinishProductSample().getCode() + "</b></li><li> Test Name <b>"
+//            + finishProductTest.getTestConfigure().getTest().getName()
+//            + "</b></li><li> Material <b>"
+//            + finishProductTest.getTestConfigure().getMaterialCategory().getName()
+//            + "</b></li><li> Test Results <b>" + finishProductTest.getResult() + "</b>"
+//            + "</li><li> Status <b>" + finishProductTest.getStatus() + "</b></li></ul>";
+//        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+//            Constants.SUBJECT_CONCRETE_TEST, mailBody);
+//      }
+//    }
+//  }
 
   @Async
   public void sendSupplierEmail(Supplier supplier) {

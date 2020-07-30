@@ -102,48 +102,48 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   public void updateFinishProductResult(FinishProductTrial finishProductTrial) {
-    FinishProductTest finishProductTest = finishProductTestRepository
-        .findById(finishProductTrial.getFinishProductTest().getCode()).get();
-    FinishProductSample finishProductSample = finishProductSampleRepository
-        .findById(finishProductTest.getFinishProductSample().getCode()).get();
-    Boolean check = finishProductTest.getTestConfigure().isCoreTest();
-    if (finishProductTrial.getTestParameter() != null) {
-      FinishProductParameterResult finishProductParameterResult =
-          new FinishProductParameterResult();
-      finishProductParameterResult.setFinishProductSample(finishProductSample);
-      finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
-      if (check) {
-        finishProductParameterResult
-            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
-        finishProductTest.setStatus(Status.PROCESS);
-        finishProductSample.setStatus(
-            getSlumpTestStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
-                finishProductTrial.getValue()));
-        finishProductParameterResultRepository.save(finishProductParameterResult);
-        finishProductTest.setResult(finishProductParameterResult.getResult());
-        finishProductSampleRepository.save(finishProductSample);
-        updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
-            finishProductTest.getFinishProductSample().getStatus());
-      } else {
-        finishProductParameterResult
-            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
-        finishProductParameterResultRepository.save(finishProductParameterResult);
-        finishProductTest.setResult(finishProductParameterResult.getResult());
-        finishProductSampleRepository.save(finishProductSample);
-      }
-    } else {
-      if (check) {
-        finishProductTest
-            .setResult(roundDoubleValue(strengthGradeRatio(finishProductTrial.getValue(),
-                finishProductSample.getMixDesign().getCode())));
-        finishProductTestRepository.save(finishProductTest);
-
-      } else {
-        finishProductTest.setResult(roundDoubleValue(slumpGradeRatio(finishProductTrial.getValue(),
-            finishProductSample.getMixDesign().getCode())));
-        finishProductTestRepository.save(finishProductTest);
-      }
-    }
+//    FinishProductTest finishProductTest = finishProductTestRepository
+//        .findById(finishProductTrial.getFinishProductTest().getCode()).get();
+//    FinishProductSample finishProductSample = finishProductSampleRepository
+//        .findById(finishProductTest.getFinishProductSample().getCode()).get();
+//    Boolean check = finishProductTest.getTestConfigure().isCoreTest();
+//    if (finishProductTrial.getTestParameter() != null) {
+//      FinishProductParameterResult finishProductParameterResult =
+//          new FinishProductParameterResult();
+//      finishProductParameterResult.setFinishProductSample(finishProductSample);
+//      finishProductParameterResult.setTestParameter(finishProductTrial.getTestParameter());
+//      if (check) {
+//        finishProductParameterResult
+//            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
+//        finishProductTest.setStatus(Status.PROCESS);
+//        finishProductSample.setStatus(
+//            getSlumpTestStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
+//                finishProductTrial.getValue()));
+//        finishProductParameterResultRepository.save(finishProductParameterResult);
+//        finishProductTest.setResult(finishProductParameterResult.getResult());
+//        finishProductSampleRepository.save(finishProductSample);
+//        updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
+//            finishProductTest.getFinishProductSample().getStatus());
+//      } else {
+//        finishProductParameterResult
+//            .setResult(roundDoubleValue(averageResult(finishProductTest.getCode())));
+//        finishProductParameterResultRepository.save(finishProductParameterResult);
+//        finishProductTest.setResult(finishProductParameterResult.getResult());
+//        finishProductSampleRepository.save(finishProductSample);
+//      }
+//    } else {
+//      if (check) {
+//        finishProductTest
+//            .setResult(roundDoubleValue(strengthGradeRatio(finishProductTrial.getValue(),
+//                finishProductSample.getMixDesign().getCode())));
+//        finishProductTestRepository.save(finishProductTest);
+//
+//      } else {
+//        finishProductTest.setResult(roundDoubleValue(slumpGradeRatio(finishProductTrial.getValue(),
+//            finishProductSample.getMixDesign().getCode())));
+//        finishProductTestRepository.save(finishProductTest);
+//      }
+//    }
   }
 
   public double averageResult(String finidhProductTestCode) {
@@ -210,11 +210,12 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   @Transactional
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode) {
-    FinishProductTest finishProductTest = finishProductTestRepository.getOne(finishProductTestCode);
-    finishProductTest.setStatus(Status.COMPLETED);
-    finishProductTestRepository.save(finishProductTest);
-    emailNotification.sendFinishProductTestEmail(finishProductTest);
-    return finishProductTest.getStatus();
+    return null;
+//    FinishProductTest finishProductTest = finishProductTestRepository.getOne(finishProductTestCode);
+//    finishProductTest.setStatus(Status.COMPLETED);
+//    finishProductTestRepository.save(finishProductTest);
+//    emailNotification.sendFinishProductTestEmail(finishProductTest);
+//    return finishProductTest.getStatus();
   }
 
   @Transactional(readOnly = true)

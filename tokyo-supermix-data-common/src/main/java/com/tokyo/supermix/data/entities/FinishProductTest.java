@@ -15,7 +15,6 @@ public class FinishProductTest extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
-  private double result;
   private Status status;
   @ManyToOne
   @JoinColumn(name = "finishProductSampleCode", nullable = false)
@@ -30,14 +29,6 @@ public class FinishProductTest extends DateAudit implements Serializable {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public double getResult() {
-    return result;
-  }
-
-  public void setResult(double result) {
-    this.result = result;
   }
 
   public Status getStatus() {

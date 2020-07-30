@@ -22,8 +22,8 @@ public class FinishProductParameterResult extends DateAudit implements Serializa
   @JoinColumn(name = "testParameterId", nullable = false)
   private TestParameter testParameter;
   @ManyToOne
-  @JoinColumn(name = "finishProductSampleId", nullable = false)
-  private FinishProductSample finishProductSample;
+  @JoinColumn(name = "finishProductTestCode", nullable = false)
+  private FinishProductTest finishProductTest;
 
   public Long getId() {
     return id;
@@ -49,12 +49,12 @@ public class FinishProductParameterResult extends DateAudit implements Serializa
     this.testParameter = testParameter;
   }
 
-  public FinishProductSample getFinishProductSample() {
-    return finishProductSample;
+  public FinishProductTest getFinishProductTest() {
+    return finishProductTest;
   }
 
-  public void setFinishProductSample(FinishProductSample finishProductSample) {
-    this.finishProductSample = finishProductSample;
+  public void setFinishProductTest(FinishProductTest finishProductTest) {
+    this.finishProductTest = finishProductTest;
   }
 
   public static long getSerialversionuid() {

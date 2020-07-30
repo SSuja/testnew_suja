@@ -4,7 +4,6 @@ import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestResponseDto {
   private String code;
-  private double result;
   private Status status;
   private FinishProductSampleResponseDto finishProductSample;
   private TestConfigureResponseDto testConfigure;
@@ -15,14 +14,6 @@ public class FinishProductTestResponseDto {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public double getResult() {
-    return result;
-  }
-
-  public void setResult(double result) {
-    this.result = result;
   }
 
   public Status getStatus() {
