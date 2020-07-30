@@ -3,7 +3,6 @@ package com.tokyo.supermix.server.services.auth;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
@@ -12,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
@@ -67,13 +65,14 @@ public class UserServiceImpl implements UserService {
     User userObj = saveUserPassword(user, password);
     if (user.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())) {
       createUserRoles(roles, userObj);
+      emailNotification.sendNonPlantUserCreationEmail(userObj, roles);
     } else {
       createUserPlantRoles(roles, userObj);
+      emailNotification.sendPlantUserCreationEmail(userObj, roles);
     }
     if (user.getEmployee() != null) {
       updateEmployee(user.getEmployee().getId());
     }
-    emailNotification.sendUserCreationEmail(userObj);
     return createUserCredentialDto(user.getUserName(), password, user.getEmail());
   }
 

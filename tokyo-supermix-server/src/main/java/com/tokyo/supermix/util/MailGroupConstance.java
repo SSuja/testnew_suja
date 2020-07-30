@@ -20,7 +20,8 @@ public class MailGroupConstance {
   public static final String CREATE_SUMMARY_REPORT= "Summary Report Group";
   public static final String CREATE_DELIVERY_REPORT = "Delivery Report Group";
   public static final String CREATE_PLANT_EQUIPMENT_CALIBRATION = "Plant Equipment Calibration Creation";
-  public static final String CREATE_USER = "User Creation";
+  public static final String CREATE_PLANT_USER = "Plant User Creation";
+  public static final String CREATE_NON_PLANT_USER = "Non Plant User Creation";
   
   private MailGroupConstance() {}
 
