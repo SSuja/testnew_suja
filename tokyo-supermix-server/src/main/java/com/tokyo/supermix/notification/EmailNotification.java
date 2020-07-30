@@ -239,7 +239,7 @@ public class EmailNotification {
         for (SupplierCategory supplierCategory : supplierCategoriesList) {
           categories = categories + supplierCategory.getCategory() + ",";
         }
-        String supplierCategories = categories.replaceAll(",$", "");
+        String supplierCategories = categories.replaceAll(",$", ".");
         String mailBody =
             "Supplier " + supplier.getName() + " Newly created under the " + supplierCategories;
         List<String> reciepientList =
