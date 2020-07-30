@@ -1,12 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
+import com.tokyo.supermix.data.enums.FinishProductState;
 
 public class FinishProductTrialResponseDto {
   private String code;
   private Long trialNo;
-  private String testSample;
-  private Long testSampleNo;
+  private FinishProductState testSample;
   private Date date;
   private Double value;
   private FinishProductTestResponseDto finishProductTest;
@@ -28,20 +28,12 @@ public class FinishProductTrialResponseDto {
     this.trialNo = trialNo;
   }
 
-  public String getTestSample() {
+  public FinishProductState getTestSample() {
     return testSample;
   }
 
-  public void setTestSample(String testSample) {
+  public void setTestSample(FinishProductState testSample) {
     this.testSample = testSample;
-  }
-
-  public Long getTestSampleNo() {
-    return testSampleNo;
-  }
-
-  public void setTestSampleNo(Long testSampleNo) {
-    this.testSampleNo = testSampleNo;
   }
 
   public Date getDate() {

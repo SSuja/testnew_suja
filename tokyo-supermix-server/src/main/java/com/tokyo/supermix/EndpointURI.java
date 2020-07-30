@@ -51,6 +51,7 @@ public final class EndpointURI {
   public static final String GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}" + SLASH + "supplier-category" + SLASH
           + "{supplierCategoryId}";
+
   /*
    * Employee apis
    */
@@ -241,7 +242,6 @@ public final class EndpointURI {
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
 
-
   /*
    * Test Parameter APIs
    * 
@@ -315,6 +315,8 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
+
+  public static final String MATERIAL_TEST_COMMENT = MATERIAL_TEST + SLASH + "comment";
 
   public static final String MATERIAL_TEST_BY_PLANT = MATERIAL_TEST + PLANT_WISE;
   public static final String MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE =
@@ -401,7 +403,6 @@ public final class EndpointURI {
   public static final String MATERIAL_SUB_CATEGORY_ID = "/{materialSubCategoryId}";
   public static final String GET_QUALITY_PARAMETERS_BY_MATERIAL_SUB_CATEGORY_ID =
       QUALITY_PARAMETER + "/qualityparameter" + MATERIAL_SUB_CATEGORY_ID;
-
 
   /*
    * MaterialAcceptedValue Apis
@@ -529,7 +530,6 @@ public final class EndpointURI {
   public static final String EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE = EMAIL_RECIPIENT + SLASH
       + "{emailGroupId}" + SLASH + "recipientType" + SLASH + "{recipientType}";
   public static final String EMAIL_RECIPIENT_BY_ID = EMAIL_RECIPIENT + ID;
-
 
   public static final String EMAIL_GROUPS = BASE_API_PATH + "email-groups";
   public static final String EMAIL_GROUP = BASE_API_PATH + "email-group";

@@ -50,11 +50,6 @@ public class ProcessSampleController {
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
   public ResponseEntity<Object> createProcessSample(
       @Valid @RequestBody ProcessSampleRequestDto processSampleRequestDto) {
-    if (processSampleService.isProcessSampleExist(processSampleRequestDto.getCode())) {
-      logger.debug("ProcessSample code already exists: ");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_CODE,
-          validationFailureStatusCodes.getProcessSampleAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     processSampleService
         .saveProcessSample(mapper.map(processSampleRequestDto, ProcessSample.class));
     return new ResponseEntity<>(
@@ -68,14 +63,16 @@ public class ProcessSampleController {
         mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT)
-  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(
+      @CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), CustomerResponseDto.class),
+        mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser),
+            CustomerResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  
+
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
   public ResponseEntity<Object> deleteProcessSample(@PathVariable String code) {
     if (processSampleService.isProcessSampleExist(code)) {

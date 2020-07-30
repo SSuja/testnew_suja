@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
-import com.tokyo.supermix.data.repositories.ProjectRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -26,9 +26,9 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public FinishProductSampleIssueRepository finishProductSampleIssueRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-
   @Autowired
-  private ProjectRepository projectRepository;
+  private FinishProductSampleRepository finishProductSampleRepository;
+
   @Autowired
   private EmailNotification emailNotification;
 
@@ -39,23 +39,22 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Transactional
   public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
-
     if (finishProductSampleIssue.getCode() == null) {
-      String plantPrefix = projectRepository.getOne(finishProductSampleIssue.getProject().getCode())
-          .getPlant().getCode();
-      String codePrefix = plantPrefix + "-PO-";
+      String codePrefix = finishProductSampleRepository
+          .getOne(finishProductSampleIssue.getFinishProductSample().getCode()).getCode();
       List<FinishProductSampleIssue> finishProductSampleIssueList =
           finishProductSampleIssueRepository.findByCodeContaining(codePrefix);
       if (finishProductSampleIssueList.size() == 0) {
-        finishProductSampleIssue.setCode(codePrefix + String.format("%04d", 1));
+        finishProductSampleIssue.setCode(codePrefix + String.format("%02d", 1));
       } else {
         finishProductSampleIssue.setCode(codePrefix
-            + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
+            + String.format("%02d", maxNumberFromCode(finishProductSampleIssueList) + 1));
       }
     }
-    FinishProductSampleIssue finishProductSampleIssueObj = finishProductSampleIssueRepository.save(finishProductSampleIssue);
+    FinishProductSampleIssue finishProductSampleIssueObj =
+        finishProductSampleIssueRepository.save(finishProductSampleIssue);
     if (finishProductSampleIssueObj != null) {
-      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);    
+      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);
     }
   }
 

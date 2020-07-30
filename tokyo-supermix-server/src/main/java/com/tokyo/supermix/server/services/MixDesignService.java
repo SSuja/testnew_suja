@@ -28,6 +28,8 @@ public interface MixDesignService {
   public List<MixDesign> getMixDesignByStatus(Status status);
 
   public boolean isMixDesignStatusExist(Status status);
-  
+
   public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser);
+
+  public List<MixDesign> getAllMixDesignByDecending();
 }
