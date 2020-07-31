@@ -10,5 +10,6 @@ public interface FinishProductParameterResultRepository
 //      Long testParameterId, String finishProductTestCode);
 
 //  List<FinishProductParameterResult> findByFinishProductSampleCode(String finishProductSampleCode);
-//  FinishProductParameterResult findByTestParameterIdAndfinishProductTestCode(Long testParameterId,String finishProductCode);
+ FinishProductParameterResult findByTestParameterId(Long testParameterId);
+  
 }

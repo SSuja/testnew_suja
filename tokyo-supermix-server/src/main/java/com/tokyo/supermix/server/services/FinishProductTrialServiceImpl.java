@@ -11,16 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
+import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
@@ -57,6 +60,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   TestConfigureRepository testConfigureRepository;
   @Autowired
   TestEquationRepository testEquationRepository;
+  @Autowired
+  FinishProductAcceptedValueRepository finishProductAcceptedValueRepository;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -70,19 +75,22 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   @Transactional
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
-    if (finishProductTrial.getCode() == null) {
-      String prefix = finishProductTestRepository
-          .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
-      List<FinishProductTrial> FinishProductTrialList =
-          finishProductTrialRepository.findByCodeContaining(prefix);
-      if (FinishProductTrialList.size() == 0) {
-        finishProductTrial.setCode(prefix + String.format("%03d", 1));
-      } else {
-        finishProductTrial
-            .setCode(prefix + String.format("%03d", maxNumberFromCode(FinishProductTrialList) + 1));
-      }
-    }
+    // if (finishProductTrial.getCode() == null) {
+    // String prefix = finishProductTestRepository
+    // .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
+    // List<FinishProductTrial> FinishProductTrialList =
+    // finishProductTrialRepository.findByCodeContaining(prefix);
+    //
+    // if (FinishProductTrialList.size() == 0) {
+    // finishProductTrial.setCode(prefix + String.format("%04d", 1));
+    // finishProductTrial.setTrialNo(1l);
+    // } else {
+    // finishProductTrial
+    // .setCode(prefix + String.format("%04d", maxNumberFromCode(FinishProductTrialList) + 1));
+    // finishProductTrial.setTrialNo(maxNumberFromCode(FinishProductTrialList).longValue() + 1l);
+    // }
     finishProductTrialRepository.save(finishProductTrial);
+    // }
   }
 
   private Integer getNumberFromCode(String code) {
@@ -90,9 +98,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return Integer.parseInt(numberOnly);
   }
 
-  private Integer maxNumberFromCode(List<FinishProductTrial> FinishProductTrialList) {
+  private Integer maxNumberFromCode(List<FinishProductTrial> finishProductTrialList) {
     List<Integer> list = new ArrayList<Integer>();
-    FinishProductTrialList.forEach(obj -> {
+    finishProductTrialList.forEach(obj -> {
       list.add(getNumberFromCode(obj.getCode()));
     });
     return Collections.max(list);
@@ -153,12 +161,12 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode) {
     return null;
-//     FinishProductTest finishProductTest =
-//     finishProductTestRepository.getOne(finishProductTestCode);
-//     finishProductTest.setStatus(Status.COMPLETED);
-//     finishProductTestRepository.save(finishProductTest);
-//     emailNotification.sendFinishProductTestEmail(finishProductTest);
-//     return finishProductTest.getStatus();
+    // FinishProductTest finishProductTest =
+    // finishProductTestRepository.getOne(finishProductTestCode);
+    // finishProductTest.setStatus(Status.COMPLETED);
+    // finishProductTestRepository.save(finishProductTest);
+    // emailNotification.sendFinishProductTestEmail(finishProductTest);
+    // return finishProductTest.getStatus();
   }
 
   @Transactional(readOnly = true)
@@ -197,6 +205,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
     finishProductParameterResultRepository.save(finishProductParameterResult);
     saveGradeRatio(finishProductTestCode);
+    checkAcceptedValue(testConfigure.getId(),finishProductTestCode);
   }
 
   public void saveGradeRatio(String finishProductTestCode) {
@@ -235,7 +244,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return (sumOfValue / noOfTrial);
   }
 
- 
+
   public String getFormula(String finishProductTestCode) {
     List<FinishProductTrial> finishProductTrialList =
         finishProductTrialRepository.findByFinishProductTestCode(finishProductTestCode);
@@ -272,23 +281,76 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             && testParameter.getInputMethods().equals(InputMethod.OBSERVE)
             && testParameter.getMixDesignField().equals(MixDesignField.TARGETSLUMP)) {
           engine.put(testParameter.getAbbreviation(), mixDesign.getTargetSlump());
-         } else if (testParameter.getType().equals(TestParameterType.INPUT)
-             && testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-             && testParameter.getMixDesignField().equals(MixDesignField.TARGETGRADE)) {
-         engine.put(testParameter.getAbbreviation(), mixDesign.getTargetGrade());
-         }
+        } else if (testParameter.getType().equals(TestParameterType.INPUT)
+            && testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+            && testParameter.getMixDesignField().equals(MixDesignField.TARGETGRADE)) {
+          engine.put(testParameter.getAbbreviation(), mixDesign.getTargetGrade());
+        }
       }
-     
-    }try
+    }
+    try {
+      finishProductResult = (double) engine.eval(getFormula(finishProductTestCode));
+    } catch (ScriptException e) {
+      e.printStackTrace();
+    }
+    return roundDoubleValue(finishProductResult);
+  }
 
-  {
-    finishProductResult = (double) engine.eval(getFormula(finishProductTestCode));
-  }catch(
-  ScriptException e)
-  {
-    e.printStackTrace();
-  }return
 
-  roundDoubleValue(finishProductResult);
+  public void checkFinishproductAcceptedValue(Double minValue, Double maxValue, Double value,
+      Condition condition, Double gradeRatio, String finishProductTestCode) {
+    if (condition == Condition.BETWEEN) {
+      if (minValue <= gradeRatio && maxValue >= gradeRatio) {
+        updateStatus(finishProductTestCode, Status.PASS);
+      } else {
+        updateStatus(finishProductTestCode, Status.FAIL);
+      }
+    } else if (condition == Condition.EQUAL) {
+      if (value == gradeRatio) {
+        updateStatus(finishProductTestCode, Status.PASS);
+      } else {
+        updateStatus(finishProductTestCode, Status.FAIL);
+      }
+    } else if (condition == Condition.GREATER_THAN) {
+      if (value <= gradeRatio) {
+        updateStatus(finishProductTestCode, Status.PASS);
+      } else {
+        updateStatus(finishProductTestCode, Status.FAIL);
+      }
+
+    } else if (condition == Condition.LESS_THAN) {
+      if (value >= gradeRatio) {
+        updateStatus(finishProductTestCode, Status.PASS);
+      } else {
+        updateStatus(finishProductTestCode, Status.FAIL);
+      }
+    }
+  }
+
+  public void updateStatus(String finishProductTestCode, Status status) {
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    finishProductTest.setStatus(status);
+    finishProductTestRepository.save(finishProductTest);
+  }
+
+  public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
+    List<TestParameter> testParamterList =
+        testParameterRepository.findByTestConfigureId(testConfigureId);
+    for (TestParameter testParameter : testParamterList) {
+      if (testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+          && testParameter.getType().equals(TestParameterType.RESULT)) {
+        List<FinishProductAcceptedValue> finishProductAcceptedValueList =
+            finishProductAcceptedValueRepository.findByTestParameterId(testParameter.getId());
+        FinishProductParameterResult finishProductParameterResult =
+            finishProductParameterResultRepository.findByTestParameterId(testParameter.getId());
+        for (FinishProductAcceptedValue finishProductAcceptedValue : finishProductAcceptedValueList) {
+          checkFinishproductAcceptedValue(finishProductAcceptedValue.getMinValue(),
+              finishProductAcceptedValue.getMaxValue(), finishProductAcceptedValue.getValue(),
+              finishProductAcceptedValue.getConditionRange(),
+              finishProductParameterResult.getResult(), finishProductTestCode);
+        }
+      }
+    }
   }
 }
