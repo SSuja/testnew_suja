@@ -551,6 +551,7 @@ public class EmailNotification {
             plantRoleNames = plantRoleNames + plantRoleName;
           }
         }
+
         String mailBody = employee.getFirstName() + " " + employee.getLastName()
             + " is assigned to the role of " + plantRoleNames + ".";
         List<String> reciepientList = emailRecipientService
@@ -559,6 +560,9 @@ public class EmailNotification {
             Constants.SUBJECT_USER_CREATION, mailBody);
 
       }
+    }
+  }
+
   @Async
   public void sendUserCreationEmail(UserCredentialDto userDto) {
     if (userDto != null) {
