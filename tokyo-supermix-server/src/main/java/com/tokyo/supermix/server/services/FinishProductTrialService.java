@@ -12,7 +12,7 @@ public interface FinishProductTrialService {
 
   public FinishProductTrial getFinishProductTrialByCode(String code);
 
-  public String saveFinishProductTrial(FinishProductTrial finishProductTrial);
+  public void saveFinishProductTrial(FinishProductTrial finishProductTrial);
 
   public void deleteFinishProductTrial(String code);
 
@@ -24,6 +24,7 @@ public interface FinishProductTrialService {
   public boolean isFinishProductTestExists(String finishProductTestCode);
 
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode);
+  public void saveFinishproductResult(String finishProductTestCode);
 
   public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial);
 }

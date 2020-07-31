@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,12 +62,23 @@ public class FinishProductTrialController {
   }
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
-  public String saveFinishProductTrial(
-      @Valid @RequestBody FinishProductTrialRequestDto finishProductTrialRequestDto) {
-    return finishProductTrialService
-        .saveFinishProductTrial(mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
+  public ResponseEntity<Object> saveFinishProductTrial(@Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList) {
+    for (FinishProductTrialRequestDto finishProductTrialRequestDto : finishProductTrialRequestDtoList) {
+      finishProductTrialService.saveFinishProductTrial(
+          mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
+    }
+    return null;
   }
-
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE)
+  public ResponseEntity<Object> getResultByFinishProductCode(@PathVariable String finishProductCode) {
+   // if (finishProductTrialService.isFinishProductTestExists(finishProductCode)) {
+      logger.debug("Get Finish Product Trial By Id");
+      finishProductTrialService.saveFinishproductResult(finishProductCode);
+ //   }
+//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
+//        validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
+      return null;
+  }
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
   public ResponseEntity<Object> getFinishProductTrialByCode(@PathVariable String code) {
     if (finishProductTrialService.isFinishProductTrialExists(code)) {
@@ -116,11 +128,11 @@ public class FinishProductTrialController {
 
   @PutMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
   public ResponseEntity<Object> updateFinishProductTrial(
-      @Valid @RequestBody FinishProductTrialRequestDto finishProductTrialRequestDto) { 
-      finishProductTrialService.updateFinishProductTestTrial(
-          mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_FINISH_PRODUCT_TRIAL_SUCCESS), HttpStatus.OK);
+      @Valid @RequestBody FinishProductTrialRequestDto finishProductTrialRequestDto) {
+    finishProductTrialService.updateFinishProductTestTrial(
+        mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.UPDATE_FINISH_PRODUCT_TRIAL_SUCCESS), HttpStatus.OK);
   }
 
 }

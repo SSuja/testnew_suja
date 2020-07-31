@@ -508,6 +508,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE =
       FINISH_PRODUCT_PARAMETER_RESULT + SLASH + "finish-product-sample" + SLASH
           + "{finishProductSampleCode}";
+  public static final String FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE =
+      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test" + SLASH + "{finishProductCode}";
   /*
    * Finish Product Test
    */

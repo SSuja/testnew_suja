@@ -6,6 +6,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.MixDesignField;
 
 @Repository
 public interface TestParameterRepository
@@ -29,4 +30,7 @@ public interface TestParameterRepository
       InputMethod inputMethod);
 
   List<TestParameter> findByTestConfigureIdAndLevel(Long testConfigId, String level);
+
+  TestParameter findByMixDesignField(MixDesignField mixDesignField);
+
 }
