@@ -380,7 +380,7 @@ public class TestReportServiceImpl implements TestReportService {
       concreteTestReportDto
           .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
       concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
-      concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
+//      concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
     }
     return concreteTestReportDto;
   }
@@ -462,7 +462,7 @@ public class TestReportServiceImpl implements TestReportService {
       TestAndResult testAndResult = new TestAndResult();
       if (!finishProductTest.getTestConfigure().isCoreTest()) {
         testAndResult.setTestName(finishProductTest.getTestConfigure().getTest().getName());
-        testAndResult.setResult(finishProductTest.getResult());
+//        testAndResult.setResult(finishProductTest.getResult());
         testAndResultList.add(testAndResult);
       }
     }

@@ -40,16 +40,16 @@ public class FinishProductParameterResultController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE)
-  public ResponseEntity<Object> getByFinishProductSampleId(
-      @PathVariable String finishProductSampleCode) {
-    if (finishProductSampleService.isFinishProductSampleExist(finishProductSampleCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
-          mapper.map(finishProductParameterResultService.getByFinishProductSampleCode(
-              finishProductSampleCode), FinishProductParameterResultResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
-        validationFailureStatusCodes.getFinishProductSampleNotExist()), HttpStatus.BAD_REQUEST);
-  }
+//  @GetMapping(value = EndpointURI.FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE)
+//  public ResponseEntity<Object> getByFinishProductSampleId(
+//      @PathVariable String finishProductSampleCode) {
+//    if (finishProductSampleService.isFinishProductSampleExist(finishProductSampleCode)) {
+//      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
+//          mapper.map(finishProductParameterResultService.getByFinishProductSampleCode(
+//              finishProductSampleCode), FinishProductParameterResultResponseDto.class),
+//          RestApiResponseStatus.OK), HttpStatus.OK);
+//    }
+//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
+//        validationFailureStatusCodes.getFinishProductSampleNotExist()), HttpStatus.BAD_REQUEST);
+//  }
 }
