@@ -1,34 +1,109 @@
 package com.tokyo.supermix.util;
 
 public class Constants {
-	// for email notification
-	public static final String ADMIXTURE = "Admixture";
-	public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : equipment calibration";
-	public static final String SUBJECT_ADMIXTURE_EXPIRY = "Notification : expiry date for Admixture";
-	public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY = "Notification : Information for Samples";
-	public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
-	public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
-	public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
-	public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
-	public static final String SUBJECT_OF_SUMMARY_REPORT = "Summary Details Report Of Incoming Sample";
-	public static final String SUBJECT_OF_DELIVERY_REPORT = "Delivery Details Report Of Incoming Sample";
-	public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
-	public static final String DELIVERY_REPORT = "delivery-report.pdf";
-	public static final String SUMMARY_REPORT = "summary-report.pdf";
-	public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
-	public static final String SUBJECT_NEW_PROJECT = "Notification : About Project Creation ";
-	public static final String SUBJECT_NEW_SUPPLIER = "Notification : About Supplier Creation ";
-	public static final String SUBJECT_MATRIAL_TEST = "Notification : About Matrial test result ";
-	public static final String SUBJECT_CONCRETE_TEST = "Notification : About Concrete test result ";
-	public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
-	public static final String SUBJECT_NEW_INCOMING_SAMPLE = "Notification : About Incoming Sample Creation ";
-	public static final String SUBJECT_FINISH_PRODUCT_SAMPLE = "Notification : About Finish Product Sample Creation ";
-	public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE = "Notification : About Finish Product Sample Issue Creation ";
-	public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
-	public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
-	public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
-	public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
-	public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
+  // for email notification
+  public static final String ADMIXTURE = "Admixture";
+  public static final String SUBJECT_EQUIPMENT_CALIBRATION = "Notification : Calibration Reminder";
+  public static final String SUBJECT_ADMIXTURE_EXPIRY = "Notification : expiry date for Admixture";
+  public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY =
+      "Notification : Incoming Sample Reminder";
+  public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
+  public static final String SUBJECT_CALIBRATED = "Notification :  Equipment is Calibrated ";
+  public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
+  public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
+  public static final String SUBJECT_FORGOT_PASSWORD = "Forgot Password";
+  public static final String SUBJECT_OF_SUMMARY_REPORT =
+      "Summary Details Report Of Incoming Sample";
+  public static final String SUBJECT_OF_DELIVERY_REPORT =
+      "Delivery Details Report Of Incoming Sample";
+  public static final String BODY_FOR_REPORT = "Here you can find the Test Details Report";
+  public static final String DELIVERY_REPORT = "delivery-report.pdf";
+  public static final String SUMMARY_REPORT = "summary-report.pdf";
+  public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
+  public static final String SUBJECT_NEW_PROJECT = "Notification : About Project Creation ";
+  public static final String SUBJECT_NEW_SUPPLIER = "Notification : About Supplier Creation ";
+  public static final String SUBJECT_MATRIAL_TEST = "Notification : About Matrial test result ";
+  public static final String SUBJECT_CONCRETE_TEST = "Notification : About Concrete test result ";
+  public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
+  public static final String SUBJECT_NEW_INCOMING_SAMPLE = "Notification : About Incoming Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE = "Notification : About Finish Product Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE = "Notification : About Finish Product Sample Issue Creation ";
+  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
+  public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
+  public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
+  public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
+  public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
+  public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
+  
+  
+  // for sample counts
+  public static final String SAMPLE_COUNTS = "sampleCounts";
+  // for plants
+  public static final String PLANT_NAME = "PlantName";
+  public static final String PLANT_ID = "PlantId";
+  public static final String PLANTS = "plants";
+  /*
+   * Constants for Plant validation key & Success messages
+   */
+  public static final String ADD_PLANT_SUCCESS = "Plant Added Successfully";
+  public static final String UPDATE_PLANT_SUCCESS = "Plant Updated Successfully";
+  public static final String NO_DATA_FOUND = "No Data Found";
+  public static final String PLANT_DELETED = "Plant Successfully Deleted";
+  public static final String PLANT = "plant";
+  /*
+   * Constants for Designation validation key & Success messages
+   */
+  public static final String DESIGNATION_NAME = "designationName";
+  public static final String DESIGNATION = "designation";
+  public static final String DESIGNATIONS = "designations";
+  public static final String ADD_DESIGNATION_SUCCESS = "Designation Added Successfully";
+  public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
+  public static final String UPDATE_DESIGNATION_SUCCESS = "Designation Updated Successfully";
+  /*
+   * Constants for Supplier Category validation key & Success messages
+   */
+  public static final String SUPPLIER_CATEGORY = "supplierCategory";
+  public static final String SUPPLIER_CATEGORY_NAME = "category";
+  public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category Added Successfully";
+  public static final String DELETE_SUPPLIER_CATEGORY_SCCESS =
+      "Supplier Category Successfully Deleted";
+  public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
+      "Supplier Category Updated Successfully";
+  /*
+   * Constants for Supplier validation key & Success messages
+   */
+  public static final String SUPPLIER_NAME = "name";
+  public static final String EMAIL = "email";
+  public static final String PHONE_NUMBER = "phoneNumber";
+  public static final String ADD_SUPPLIER_SUCCESS = "Supplier Added Successfully";
+  public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier Updated Successfully";
+  public static final String DELETE_SUPPLIER_SUCCESS = "Supplier Successfully Deleted";
+  public static final String SUPPLIER = "Supplier";
+  /*
+   * Constants for Employee validation key & Success messages
+   */
+  public static final String EMPLOYEE_ID = "employeeId";
+  public static final String EMPLOYEES = "employees";
+  public static final String EMPLOYEE = "employee";
+  public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
+  public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
+  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
+  /*
+   * Constants for Pour validation key & Success messages
+   */
+  public static final String POUR = "pour";
+  public static final String POURS = "pours";
+  public static final String ADD_POUR_SUCCESS = "Pour Added Successfully";
+  public static final String POUR_DELETED = "Pour Succeessfully Deleted";
+  public static final String UPDATE_POUR_SUCCESS = "Pour Updated Successfully";
+  /*
+   * Constants for Unit validation key & Success messages
+   */
+  public static final String UNIT = "unit";
+  public static final String UNITS = "units";
+  public static final String ADD_UNIT_SUCCESS = "Unit Added Successfully";
+  public static final String UNIT_DELETED = "Unit Successfully Deleted";
+  public static final String UNIT_UPDATED_SUCCESS = "Unit Updated Successfully";
 
 	// for sample counts
 	public static final String SAMPLE_COUNTS = "sampleCounts";

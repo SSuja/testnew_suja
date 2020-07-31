@@ -47,8 +47,9 @@ public class SupplierServiceImpl implements SupplierService {
     supplierCategoryIds
         .forEach(id -> supplierList.add(supplierCategoryRepository.findById(id).get()));
     supplier.setSupplierCategories(supplierList);
-    if (supplierRepository.save(supplier) != null) {
-      emailNotification.sendSupplierEmail(supplier);
+    Supplier supplierObj = supplierRepository.save(supplier);
+    if (supplierObj != null) {
+      emailNotification.sendSupplierEmail(supplierObj);
     }
   }
 
