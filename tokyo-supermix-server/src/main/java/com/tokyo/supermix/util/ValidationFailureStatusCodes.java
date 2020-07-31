@@ -1594,18 +1594,19 @@ public class ValidationFailureStatusCodes {
     this.emailGroupNotExist = emailGroupNotExist;
   }
 
-@Value("${validation.emailPoints.notExists}")
-private String emailPointsNotExist;
-@Value("${validation.emailPoints.alreadyExist}")
-private String emailPointsAlreadyExist;
+  @Value("${validation.emailPoints.notExists}")
+  private String emailPointsNotExist;
+  @Value("${validation.emailPoints.alreadyExist}")
+  private String emailPointsAlreadyExist;
 
-public String getEmailPointsNotExist() {
-  return emailPointsNotExist;
-}
+  public String getEmailPointsNotExist() {
+    return emailPointsNotExist;
+  }
 
-public void setEmailPointsNotExist(String emailPointsNotExist) {
-  this.emailPointsNotExist = emailPointsNotExist;
-}
+  public void setEmailPointsNotExist(String emailPointsNotExist) {
+    this.emailPointsNotExist = emailPointsNotExist;
+  }
+
   /*
    * Test Equation
    */
@@ -1630,12 +1631,26 @@ public void setEmailPointsNotExist(String emailPointsNotExist) {
     this.testEquationAlreadyExist = testEquationAlreadyExist;
   }
 
-public String getEmailPointsAlreadyExist() {
-  return emailPointsAlreadyExist;
-}
+  public String getEmailPointsAlreadyExist() {
+    return emailPointsAlreadyExist;
+  }
 
-public void setEmailPointsAlreadyExist(String emailPointsAlreadyExist) {
-  this.emailPointsAlreadyExist = emailPointsAlreadyExist;
-}
+  public void setEmailPointsAlreadyExist(String emailPointsAlreadyExist) {
+    this.emailPointsAlreadyExist = emailPointsAlreadyExist;
+  }
+
+  /*
+   * Finish Product Accepted Value
+   */
+  @Value("${validation.finishProductAcceptedValue.notExists}")
+  private String finishProductAcceptedValueNotExist;
+
+  public String getFinishProductAcceptedValueNotExist() {
+    return finishProductAcceptedValueNotExist;
+  }
+
+  public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
+    this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
+  }
 }
 

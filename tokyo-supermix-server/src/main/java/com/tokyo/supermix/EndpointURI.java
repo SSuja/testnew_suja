@@ -590,5 +590,17 @@ public final class EndpointURI {
   public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
       EMAIL_POINT + SLASH + "admin-status" + SLASH + "{status}";
 
+  /*
+   * Finish Product Accepted Value
+   */
+  public static final String FINISH_PRODUCT_ACCEPTED_VALUE =
+      BASE_API_PATH + "finish-product-accepted-value";
+  public static final String FINISH_PRODUCT_ACCEPTED_VALUES =
+      BASE_API_PATH + "finish-product-accepted-values";
+  public static final String FINISH_PRODUCT_ACCEPTED_VALUE_BY_ID =
+      FINISH_PRODUCT_ACCEPTED_VALUE + ID;
+  public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_PARAMETER =
+      FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+
   private EndpointURI() {}
 }

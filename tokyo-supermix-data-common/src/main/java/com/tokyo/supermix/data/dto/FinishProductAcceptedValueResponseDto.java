@@ -1,33 +1,15 @@
-package com.tokyo.supermix.data.entities;
+package com.tokyo.supermix.data.dto;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import com.tokyo.supermix.data.enums.Condition;
 
-@Entity
-@Table(schema = "tokyo-supermix", name = "finish_product_accepted_value")
-public class FinishProductAcceptedValue implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class FinishProductAcceptedValueResponseDto {
   private Long id;
   private Double minValue;
   private Double maxValue;
   private Double value;
-  @Enumerated(EnumType.ORDINAL)
   private Condition conditionRange;
-  @ManyToOne
-  @JoinColumn(name = "testParameterId", nullable = false)
-  private TestParameter testParameter;
   private boolean finalResult;
+  private TestParameterResponseDto testParameter;
 
   public Long getId() {
     return id;
@@ -69,14 +51,6 @@ public class FinishProductAcceptedValue implements Serializable {
     this.conditionRange = conditionRange;
   }
 
-  public TestParameter getTestParameter() {
-    return testParameter;
-  }
-
-  public void setTestParameter(TestParameter testParameter) {
-    this.testParameter = testParameter;
-  }
-
   public boolean isFinalResult() {
     return finalResult;
   }
@@ -85,7 +59,11 @@ public class FinishProductAcceptedValue implements Serializable {
     this.finalResult = finalResult;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
+  public TestParameterResponseDto getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameterResponseDto testParameter) {
+    this.testParameter = testParameter;
   }
 }
