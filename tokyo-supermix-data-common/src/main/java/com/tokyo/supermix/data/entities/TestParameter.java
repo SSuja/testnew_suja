@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,8 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 @Entity
@@ -38,7 +41,8 @@ public class TestParameter extends DateAudit implements Serializable {
   private Double value;
   private String name;
   private String groupKey;
-  private String mixDesignField;
+  @Enumerated(EnumType.ORDINAL)
+  private MixDesignField mixDesignField;
   @ManyToOne
   @JoinColumn(name = "qualityParameterId", nullable = true)
   private QualityParameter qualityParameter;
@@ -155,11 +159,11 @@ public class TestParameter extends DateAudit implements Serializable {
     this.groupKey = groupKey;
   }
 
-  public String getMixDesignField() {
+  public MixDesignField getMixDesignField() {
     return mixDesignField;
   }
 
-  public void setMixDesignField(String mixDesignField) {
+  public void setMixDesignField(MixDesignField mixDesignField) {
     this.mixDesignField = mixDesignField;
   }
 }
