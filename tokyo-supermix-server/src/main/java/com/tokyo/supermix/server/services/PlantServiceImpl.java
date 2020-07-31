@@ -12,6 +12,9 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class PlantServiceImpl implements PlantService {
@@ -19,7 +22,8 @@ public class PlantServiceImpl implements PlantService {
   private PlantRepository plantRepository;
   @Autowired
   private EmailNotification emailNotification;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Transactional
   public Plant savePlant(Plant plant) { 
     Plant plantObj = plantRepository.save(plant);
@@ -35,8 +39,9 @@ public class PlantServiceImpl implements PlantService {
   }
 
   @Transactional(readOnly = true)
-  public List<Plant> getAllPlants() {
-    return plantRepository.findAll();
+  public List<Plant> getAllPlants(UserPrincipal currentUser) {
+      return plantRepository.findByCodeIn(currentUserPermissionPlantService
+          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT));
   }
 
   @Transactional(readOnly = true)

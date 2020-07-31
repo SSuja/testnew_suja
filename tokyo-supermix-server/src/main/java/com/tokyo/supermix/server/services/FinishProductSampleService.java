@@ -39,4 +39,5 @@ public interface FinishProductSampleService {
   public List<FinishProductSample> getFinishProductSampleByStatus(Status status);
 
   public boolean isFinishProductSampleStatusExist(Status status);
+
 }

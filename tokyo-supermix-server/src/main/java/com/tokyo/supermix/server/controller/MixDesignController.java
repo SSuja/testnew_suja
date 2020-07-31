@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,14 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -42,6 +47,8 @@ public class MixDesignController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(MixDesignController.class);
 
   @PostMapping(value = EndpointURI.MIX_DESIGN)
@@ -52,7 +59,7 @@ public class MixDesignController {
   @GetMapping(value = EndpointURI.MIX_DESIGNS)
   public ResponseEntity<Object> getAllMixDesigns() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-        mapper.map(mixDesignService.getAllMixDesigns(), MixDesignResponseDto.class),
+        mapper.map(mixDesignService.getAllMixDesignByDecending(), MixDesignResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -147,5 +154,22 @@ public class MixDesignController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+  
+  @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
+    if(plantCode == null) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+                mapper.map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
+                RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+      if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN).contains(plantCode)) {
+          return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+                    mapper.map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
+                    RestApiResponseStatus.OK), null, HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+                validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

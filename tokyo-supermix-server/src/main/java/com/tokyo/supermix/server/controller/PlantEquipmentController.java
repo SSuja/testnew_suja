@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantEquipmentService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,6 +47,8 @@ public class PlantEquipmentController {
   private PlantEquipmentService plantEquipmentService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(PlantEquipmentController.class);
 
   // Add EquipmentPlant
@@ -138,12 +143,24 @@ public class PlantEquipmentController {
   }
 
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
-  public ResponseEntity<Object> getAllPlantEquipmentsByplant(
-      @CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-        mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser),
-            PlantEquipmentResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal currentUser,
+      HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS, mapper
+          .map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser), PlantEquipmentResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
+          mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode),
+              PlantEquipmentResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID)

@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.dto.ProcessSampleRequestDto;
 import com.tokyo.supermix.data.dto.ProcessSampleResponseDto;
 import com.tokyo.supermix.data.entities.ProcessSample;
@@ -30,8 +30,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProcessSampleService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,17 +46,14 @@ public class ProcessSampleController {
   private ProcessSampleService processSampleService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   private static final Logger logger = Logger.getLogger(ProcessSampleController.class);
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
   public ResponseEntity<Object> createProcessSample(
       @Valid @RequestBody ProcessSampleRequestDto processSampleRequestDto) {
-    if (processSampleService.isProcessSampleExist(processSampleRequestDto.getCode())) {
-      logger.debug("ProcessSample code already exists: ");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_CODE,
-          validationFailureStatusCodes.getProcessSampleAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     processSampleService
         .saveProcessSample(mapper.map(processSampleRequestDto, ProcessSample.class));
     return new ResponseEntity<>(
@@ -68,14 +67,28 @@ public class ProcessSampleController {
         mapper.map(processSampleService.getAllProcessSamples(), ProcessSampleResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT)
-  public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), CustomerResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllProcessSamplesByCurrentUserPermission(
+      @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
+          mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), ProcessSampleResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROCESS_SAMPLE)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
+          mapper.map(processSampleService.getProcessSampleByPlantCode(plantCode),
+              ProcessSampleResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
   public ResponseEntity<Object> deleteProcessSample(@PathVariable String code) {
     if (processSampleService.isProcessSampleExist(code)) {

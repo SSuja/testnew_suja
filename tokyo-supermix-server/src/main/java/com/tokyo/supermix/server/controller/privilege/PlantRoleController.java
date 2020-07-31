@@ -19,7 +19,6 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.PlantAccessLevelService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.RoleService;
 import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServices;
@@ -34,8 +33,6 @@ public class PlantRoleController {
   private PlantRoleService plantRoleService;
   @Autowired
   private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
-  @Autowired
-  private PlantAccessLevelService plantAccessLevelService;
   @Autowired
   private RoleService roleService;
   @Autowired
@@ -59,7 +56,6 @@ public class PlantRoleController {
         PlantRole plantRole =
             plantRoleService.savePlantRole(plantRoleDto.getPlantCode(), plantRoleDto.getRoleId());
         plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRole);
-        plantAccessLevelService.createPlantAccessLevel(plantRole);
         return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
             PrivilegeConstants.ADD_PLANT_ROLE_SUCCESS), HttpStatus.OK);
       }

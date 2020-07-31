@@ -26,5 +26,7 @@ public interface FinishProductTrialService {
   public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode);
 
   public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial);
+
+  public List<FinishProductTrial> getAllFinishProductTrialsByPlantCode(String plantCode);
 }
 

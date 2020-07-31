@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,10 @@ import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -46,7 +49,8 @@ public class SupplierController {
   private Mapper mapper;
   @Autowired
   private PlantService plantService;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(SupplierController.class);
 
   @GetMapping(value = EndpointURI.SUPPLIERS)
@@ -55,12 +59,27 @@ public class SupplierController {
         mapper.map(supplierService.getSuppliers(), SupplierResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
-  public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
-        mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
+      HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+          mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+          mapper.map(supplierService.getSupplierByPlantCode(plantCode), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @PostMapping(value = EndpointURI.SUPPLIER)
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
     if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {
@@ -124,10 +143,18 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
   public ResponseEntity<Object> getSupplierBySupplierCategoryId(
-      @PathVariable Long suppilerCategoryId) {
-    if (supplierCategoryService.isSupplierCategoryExist(suppilerCategoryId)) {
+      @PathVariable Long suppilerCategoryId, HttpSession session) {
+    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
+    if (plantCode == null) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
           mapper.map(supplierService.findBySupplierCategoryId(suppilerCategoryId),
+              SupplierResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    if (supplierCategoryService.isSupplierCategoryExist(suppilerCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
+          mapper.map(
+              supplierService.findBySupplierCategoryIdAndPlantCode(suppilerCategoryId, plantCode),
               SupplierResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
@@ -156,5 +183,20 @@ public class SupplierController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY)
+  public ResponseEntity<Object> getSupplierByPlantCodeAndSupplierCategoryId(
+      @PathVariable String plantCode, @PathVariable Long supplierCategoryId) {
+    if (supplierService.isPlantCodeAndSupplierCategoryIdExist(plantCode, supplierCategoryId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.SUPPLIER,
+              mapper.map(supplierService.getByPlantCodeAndSupplierCategoryId(plantCode,
+                  supplierCategoryId), SupplierResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+        validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
   }
 }

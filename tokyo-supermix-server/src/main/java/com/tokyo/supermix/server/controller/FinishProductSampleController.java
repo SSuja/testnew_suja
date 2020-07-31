@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin
 @RestController
@@ -44,6 +47,8 @@ public class FinishProductSampleController {
   private FinishProductSampleService finishProductSampleService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
@@ -78,14 +83,28 @@ public class FinishProductSampleController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSamplesByPlant(
-      @CurrentUser UserPrincipal currentUser) {
+      @CurrentUser UserPrincipal currentUser,HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
     logger.debug("get all finish product samples by plant");
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-            mapper.map(finishProductSampleService.getAllFinishProductSamplesByPlant(currentUser),
-                FinishProductSampleResponseDto.class),
-            RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    if(plantCode == null) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+              mapper.map(finishProductSampleService.getAllFinishProductSamplesByPlant(currentUser),
+                  FinishProductSampleResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+        PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+              mapper.map(finishProductSampleService.getFinishProductSampleByPlantCode(plantCode),
+                  FinishProductSampleResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)

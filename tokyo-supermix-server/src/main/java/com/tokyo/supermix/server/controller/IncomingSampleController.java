@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -44,6 +47,8 @@ public class IncomingSampleController {
   private Mapper mapper;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
@@ -52,12 +57,27 @@ public class IncomingSampleController {
         mapper.map(incomingSampleService.getAllIncomingSamples(), IncomingSampleResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
-  public ResponseEntity<Object> getIncomingSamplesByUserPermission(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-        mapper.map(incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser), IncomingSampleResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+  public ResponseEntity<Object> getIncomingSamplesByUserPermission(
+      @CurrentUser UserPrincipal currentUser, HttpSession session) {
+    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
+    if(plantCode == null) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE)
