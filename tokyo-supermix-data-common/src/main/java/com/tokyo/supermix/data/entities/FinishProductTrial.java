@@ -14,7 +14,8 @@ import com.tokyo.supermix.data.entities.auth.DateAudit;
 public class FinishProductTrial extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  private String code;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private Long trialNo;
   private Long testSampleNo;
   private Date date;
@@ -26,13 +27,7 @@ public class FinishProductTrial extends DateAudit implements Serializable {
   @JoinColumn(name = "testParameterId", nullable = true)
   private TestParameter testParameter;
 
-  public String getCode() {
-    return code;
-  }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
 
   public Long getTrialNo() {
     return trialNo;
