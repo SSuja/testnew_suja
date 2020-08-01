@@ -75,22 +75,22 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   @Transactional
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
-    // if (finishProductTrial.getCode() == null) {
-    // String prefix = finishProductTestRepository
-    // .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
-    // List<FinishProductTrial> FinishProductTrialList =
-    // finishProductTrialRepository.findByCodeContaining(prefix);
-    //
-    // if (FinishProductTrialList.size() == 0) {
-    // finishProductTrial.setCode(prefix + String.format("%04d", 1));
-    // finishProductTrial.setTrialNo(1l);
-    // } else {
-    // finishProductTrial
-    // .setCode(prefix + String.format("%04d", maxNumberFromCode(FinishProductTrialList) + 1));
-    // finishProductTrial.setTrialNo(maxNumberFromCode(FinishProductTrialList).longValue() + 1l);
-    // }
-    finishProductTrialRepository.save(finishProductTrial);
-    // }
+    if (finishProductTrial.getCode() == null) {
+      String prefix = finishProductTestRepository
+          .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
+      List<FinishProductTrial> FinishProductTrialList =
+          finishProductTrialRepository.findByCodeContaining(prefix);
+
+      if (FinishProductTrialList.size() == 0) {
+        finishProductTrial.setCode(prefix + String.format("%04d", 1));
+        finishProductTrial.setTrialNo(1l);
+      } else {
+        finishProductTrial
+            .setCode(prefix + String.format("%04d", maxNumberFromCode(FinishProductTrialList) + 1));
+        finishProductTrial.setTrialNo(maxNumberFromCode(FinishProductTrialList).longValue() + 1l);
+      }
+      finishProductTrialRepository.save(finishProductTrial);
+    }
   }
 
   private Integer getNumberFromCode(String code) {
@@ -129,24 +129,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return Double.valueOf(decimalFormat.format(value));
   }
 
-  // private Status getSlumpTestStatus(String mixDesignCode, Double slump) {
-  // Double targetSlump = getTargetSlump(mixDesignCode);
-  // if (targetSlump - 25 <= slump && slump <= targetSlump + 25) {
-  // return Status.PASS;
-  // } else {
-  // return Status.FAIL;
-  // }
-  // }
-
-  // public double slumpGradeRatio(double trialslumpValue, String mixDesignCode) {
-  // return trialslumpValue / getTargetSlump(mixDesignCode);
-  // }
-  //
-  // public double strengthGradeRatio(double trialStrengthValue, String mixDesignCode) {
-  // return trialStrengthValue / getTargetGrade(mixDesignCode);
-  //
-  // }
-
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getFinishProductTrialsByFinishProductTestCode(
       String finishProductTestCode) {
@@ -156,17 +138,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional(readOnly = true)
   public boolean isFinishProductTestExists(String finishProductTestCode) {
     return finishProductTrialRepository.existsByFinishProductTestCode(finishProductTestCode);
-  }
-
-  @Transactional
-  public Status upadateFinishProductStatusByFinishProductCode(String finishProductTestCode) {
-    return null;
-    // FinishProductTest finishProductTest =
-    // finishProductTestRepository.getOne(finishProductTestCode);
-    // finishProductTest.setStatus(Status.COMPLETED);
-    // finishProductTestRepository.save(finishProductTest);
-    // emailNotification.sendFinishProductTestEmail(finishProductTest);
-    // return finishProductTest.getStatus();
   }
 
   @Transactional(readOnly = true)
@@ -205,7 +176,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
     finishProductParameterResultRepository.save(finishProductParameterResult);
     saveGradeRatio(finishProductTestCode);
-    checkAcceptedValue(testConfigure.getId(),finishProductTestCode);
+    checkAcceptedValue(testConfigure.getId(), finishProductTestCode);
   }
 
   public void saveGradeRatio(String finishProductTestCode) {
