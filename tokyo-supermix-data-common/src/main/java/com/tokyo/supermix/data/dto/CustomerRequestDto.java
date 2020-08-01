@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -14,7 +15,7 @@ public class CustomerRequestDto {
   private String email;
   @NotNull(message = "{customerDto.plantCode.null}")
   @NotEmpty(message = "{customerDto.plantCode.empty}")
-  private String plantCode;
+  private List<String> plantCodes;
 
   public Long getId() {
     return id;
@@ -56,11 +57,11 @@ public class CustomerRequestDto {
     this.email = email;
   }
 
-  public String getPlantCode() {
-    return plantCode;
+  public List<String> getPlantCodes() {
+    return plantCodes;
   }
 
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
+  public void setPlantCodes(List<String> plantCodes) {
+    this.plantCodes = plantCodes;
   }
 }
