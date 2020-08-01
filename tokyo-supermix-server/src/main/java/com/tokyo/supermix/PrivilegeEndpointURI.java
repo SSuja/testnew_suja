@@ -112,6 +112,9 @@ public final class PrivilegeEndpointURI {
 
   public static final String PLANT_ROLE_PERMISSION_MODULE_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "module" + SLASH + "status" + SLASH + "{plantRoleId}";
+  public static final String PLANT_ROLE_PERMISSION_MODULE_STATUS_USER_ID =
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "module" + SLASH + "status" + SLASH + "{userId}"+ SLASH + "{plantCode}";
+
 
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
