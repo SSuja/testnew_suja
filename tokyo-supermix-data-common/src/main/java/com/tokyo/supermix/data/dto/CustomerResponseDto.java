@@ -1,12 +1,15 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
+import com.tokyo.supermix.data.entities.Plant;
+
 public class CustomerResponseDto {
   private Long id;
   private String name;
   private String phoneNumber;
   private String address;
   private String email;
-  private PlantDto plant;
+  private List<Plant> plants;
   private String createdAt;
   private String updatedAt;
 
@@ -50,14 +53,6 @@ public class CustomerResponseDto {
     this.email = email;
   }
 
-  public PlantDto getPlant() {
-    return plant;
-  }
-
-  public void setPlant(PlantDto plant) {
-    this.plant = plant;
-  }
-
   public String getCreatedAt() {
     return createdAt;
   }
@@ -72,5 +67,13 @@ public class CustomerResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public List<Plant> getPlants() {
+    return plants;
+  }
+
+  public void setPlants(List<Plant> plants) {
+    this.plants = plants;
   }
 }

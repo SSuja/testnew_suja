@@ -2,7 +2,6 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,11 +9,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Plant;
-import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -41,16 +38,10 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional
   public void saveCustomer(Customer customer, List<String> plantCodes) {
-    // Customer customerObj = customerRepository.save(customer);
-    // if (customerObj != null)
-    // emailNotification.sendCustomerCreationEmail(customerObj);
-
     List<Plant> plantList = new ArrayList<Plant>();
     plantCodes.forEach(code -> plantList.add(plantRepository.findById(code).get()));
     customer.setPlant(plantList);
     customerRepository.save(customer);
-
-
   }
 
   @Transactional(readOnly = true)
