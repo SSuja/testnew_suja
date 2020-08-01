@@ -36,8 +36,8 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	public void saveCustomer(Customer customer) {
 		Customer customerObj = customerRepository.save(customer);
-    if (customerObj != null)
-      emailNotification.sendCustomerCreationEmail(customerObj);
+//    if (customerObj != null)
+//      emailNotification.sendCustomerCreationEmail(customerObj);
 	}
 
 	@Transactional(readOnly = true)

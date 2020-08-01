@@ -369,22 +369,22 @@ public class EmailNotification {
     }
   }
   
-  @Async
-  public void sendCustomerCreationEmail(Customer customer) {
-    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        customer.getPlant().getCode(), MailGroupConstance.CREATE_CUSTOMER);
-    if (emailGroup != null) {
-      if (emailGroup.isStatus()) {
-        String mailBody = "Customer, " + customer.getName() + " having email id "
-            + customer.getEmail() + " created ";
-        List<String> reciepientList =
-            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-                MailGroupConstance.CREATE_CUSTOMER, customer.getPlant().getCode());
-        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_CUSTOMER, mailBody);
-      }
-    }
-  }
+  // @Async
+  // public void sendCustomerCreationEmail(Customer customer) {
+  // EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+  // customer.getPlant().getCode(), MailGroupConstance.CREATE_CUSTOMER);
+  // if (emailGroup != null) {
+  // if (emailGroup.isStatus()) {
+  // String mailBody = "Customer, " + customer.getName() + " having email id "
+  // + customer.getEmail() + " created ";
+  // List<String> reciepientList =
+  // emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+  // MailGroupConstance.CREATE_CUSTOMER, customer.getPlant().getCode());
+  // emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+  // Constants.SUBJECT_CUSTOMER, mailBody);
+  // }
+  // }
+  // }
 
   @Async
   public void sendPlantCreationEmail(Plant plant) {
