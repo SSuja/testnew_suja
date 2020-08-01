@@ -8,6 +8,7 @@ public class FinishProductTestResponseDto {
   private FinishProductSampleResponseDto finishProductSample;
   private TestConfigureResponseDto testConfigure;
   private Long noOfTrial;
+  private Long materialStateId;
 
   public String getCode() {
     return code;
@@ -47,5 +48,13 @@ public class FinishProductTestResponseDto {
 
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
+  }
+
+  public Long getMaterialStateId() {
+    return materialStateId;
+  }
+
+  public void setMaterialStateId(Long materialStateId) {
+    this.materialStateId = materialStateId;
   }
 }
