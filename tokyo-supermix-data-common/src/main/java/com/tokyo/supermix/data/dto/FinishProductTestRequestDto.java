@@ -4,10 +4,10 @@ import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestRequestDto {
   private String code;
-  private double result;
   private Status status;
   private String finishProductSampleCode;
   private Long testConfigureId;
+  private Long noOfTrial;
 
   public String getCode() {
     return code;
@@ -15,14 +15,6 @@ public class FinishProductTestRequestDto {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public double getResult() {
-    return result;
-  }
-
-  public void setResult(double result) {
-    this.result = result;
   }
 
   public Status getStatus() {
@@ -47,5 +39,13 @@ public class FinishProductTestRequestDto {
 
   public void setTestConfigureId(Long testConfigureId) {
     this.testConfigureId = testConfigureId;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
   }
 }
