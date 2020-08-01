@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
@@ -73,24 +74,20 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository.findFinishProductTrialByCode(code);
   }
 
-  @Transactional
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
     if (finishProductTrial.getCode() == null) {
       String prefix = finishProductTestRepository
           .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
       List<FinishProductTrial> FinishProductTrialList =
           finishProductTrialRepository.findByCodeContaining(prefix);
-
       if (FinishProductTrialList.size() == 0) {
-        finishProductTrial.setCode(prefix + String.format("%04d", 1));
-        finishProductTrial.setTrialNo(1l);
+        finishProductTrial.setCode(prefix + String.format("%03d", 1));
       } else {
         finishProductTrial
-            .setCode(prefix + String.format("%04d", maxNumberFromCode(FinishProductTrialList) + 1));
-        finishProductTrial.setTrialNo(maxNumberFromCode(FinishProductTrialList).longValue() + 1l);
+            .setCode(prefix + String.format("%03d", maxNumberFromCode(FinishProductTrialList) + 1));
       }
-      finishProductTrialRepository.save(finishProductTrial);
     }
+    finishProductTrialRepository.save(finishProductTrial);
   }
 
   private Integer getNumberFromCode(String code) {
@@ -98,9 +95,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return Integer.parseInt(numberOnly);
   }
 
-  private Integer maxNumberFromCode(List<FinishProductTrial> finishProductTrialList) {
+  private Integer maxNumberFromCode(List<FinishProductTrial> FinishProductTrialList) {
     List<Integer> list = new ArrayList<Integer>();
-    finishProductTrialList.forEach(obj -> {
+    FinishProductTrialList.forEach(obj -> {
       list.add(getNumberFromCode(obj.getCode()));
     });
     return Collections.max(list);
