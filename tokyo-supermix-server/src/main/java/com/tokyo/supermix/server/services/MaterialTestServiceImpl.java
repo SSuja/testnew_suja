@@ -52,7 +52,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 				materialTest.setCode(prefix + String.format("%04d", maxNumberFromCode(materialTestList) + 1));
 			}
 		}
-		materialTest.setStatus(Status.NEW);
+		materialTest.setStatus(Status.PROCESS);
 		String codePrefix = materialTest.getIncomingSample().getCode();
 		String subPrefix = codePrefix + "-SP-";
 		List<MaterialTest> materialTestTrialList = materialTestRepository.findByIncomingSampleCode(codePrefix);
