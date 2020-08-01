@@ -9,13 +9,13 @@ public interface FinishProductTrialService {
 
   public List<FinishProductTrial> getAllFinishProductTrialsByPlant(UserPrincipal currentUser);
 
-  public FinishProductTrial getFinishProductTrialByCode(String code);
+  public FinishProductTrial getFinishProductTrialByCode(Long id);
 
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial);
 
-  public void deleteFinishProductTrial(String code);
+  public void deleteFinishProductTrial(Long id);
 
-  public boolean isFinishProductTrialExists(String code);
+  public boolean isFinishProductTrialExists(Long id);
 
   public List<FinishProductTrial> getFinishProductTrialsByFinishProductTestCode(
       String finishProductTestCode);

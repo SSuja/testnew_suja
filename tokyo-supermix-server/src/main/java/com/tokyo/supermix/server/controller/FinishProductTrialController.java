@@ -83,12 +83,12 @@ public class FinishProductTrialController {
     return null;
   }
 
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
-  public ResponseEntity<Object> getFinishProductTrialByCode(@PathVariable String code) {
-    if (finishProductTrialService.isFinishProductTrialExists(code)) {
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
+  public ResponseEntity<Object> getFinishProductTrialByCode(@PathVariable Long id) {
+    if (finishProductTrialService.isFinishProductTrialExists(id)) {
       logger.debug("Get Finish Product Trial By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
-          mapper.map(finishProductTrialService.getFinishProductTrialByCode(code),
+          mapper.map(finishProductTrialService.getFinishProductTrialByCode(id),
               FinishProductTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -96,11 +96,11 @@ public class FinishProductTrialController {
         validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
   }
 
-  @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
-  public ResponseEntity<Object> deleteFinishProductTrial(@PathVariable String code) {
-    if (finishProductTrialService.isFinishProductTrialExists(code)) {
+  @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
+  public ResponseEntity<Object> deleteFinishProductTrial(@PathVariable Long id) {
+    if (finishProductTrialService.isFinishProductTrialExists(id)) {
       logger.debug("delete finishProductTrial by id");
-      finishProductTrialService.deleteFinishProductTrial(code);
+      finishProductTrialService.deleteFinishProductTrial(id);
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.DELETE_FINISH_PRODUCT_TRIAL_SUCCESS), HttpStatus.OK);
     }
@@ -129,5 +129,4 @@ public class FinishProductTrialController {
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_FINISH_PRODUCT_TRIAL_SUCCESS), HttpStatus.OK);
   }
-
 }

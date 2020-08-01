@@ -5,14 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 @Repository
-public interface FinishProductTrialRepository extends JpaRepository<FinishProductTrial, String> {
-  boolean existsByCode(String code);
+public interface FinishProductTrialRepository extends JpaRepository<FinishProductTrial, Long> {
+  boolean existsByCode(Long id);
 
-  FinishProductTrial findFinishProductTrialByCode(String code);
+  FinishProductTrial findFinishProductTrialByCode(Long code);
 
   List<FinishProductTrial> findByFinishProductTestCode(String finishProductTestCode);
-
-  List<FinishProductTrial> findByCodeContaining(String code);
 
   boolean existsByFinishProductTestCode(String finishProductTestCode);
 

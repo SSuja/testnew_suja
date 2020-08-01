@@ -4,7 +4,7 @@ import java.sql.Date;
 import com.tokyo.supermix.data.enums.FinishProductState;
 
 public class FinishProductTrialResponseDto {
-  private String code;
+  private Long id;
   private Long trialNo;
   private FinishProductState testSample;
   private Date date;
@@ -12,12 +12,12 @@ public class FinishProductTrialResponseDto {
   private FinishProductTestResponseDto finishProductTest;
   private TestParameterResponseDto testParameter;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public Long getTrialNo() {

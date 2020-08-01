@@ -70,47 +70,23 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   @Transactional(readOnly = true)
-  public FinishProductTrial getFinishProductTrialByCode(String code) {
-    return finishProductTrialRepository.findFinishProductTrialByCode(code);
+  public FinishProductTrial getFinishProductTrialByCode(Long id) {
+    return finishProductTrialRepository.findFinishProductTrialByCode(id);
   }
 
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
-    if (finishProductTrial.getCode() == null) {
-      String prefix = finishProductTestRepository
-          .getOne(finishProductTrial.getFinishProductTest().getCode()).getCode();
-      List<FinishProductTrial> FinishProductTrialList =
-          finishProductTrialRepository.findByCodeContaining(prefix);
-      if (FinishProductTrialList.size() == 0) {
-        finishProductTrial.setCode(prefix + String.format("%03d", 1));
-      } else {
-        finishProductTrial
-            .setCode(prefix + String.format("%03d", maxNumberFromCode(FinishProductTrialList) + 1));
-      }
-    }
+
     finishProductTrialRepository.save(finishProductTrial);
   }
 
-  private Integer getNumberFromCode(String code) {
-    String numberOnly = code.replaceAll("[^0-9]", "");
-    return Integer.parseInt(numberOnly);
-  }
-
-  private Integer maxNumberFromCode(List<FinishProductTrial> FinishProductTrialList) {
-    List<Integer> list = new ArrayList<Integer>();
-    FinishProductTrialList.forEach(obj -> {
-      list.add(getNumberFromCode(obj.getCode()));
-    });
-    return Collections.max(list);
-  }
-
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteFinishProductTrial(String code) {
-    finishProductTrialRepository.deleteById(code);
+  public void deleteFinishProductTrial(Long id) {
+    finishProductTrialRepository.deleteById(id);
   }
 
   @Transactional(readOnly = true)
-  public boolean isFinishProductTrialExists(String code) {
-    return finishProductTrialRepository.existsByCode(code);
+  public boolean isFinishProductTrialExists(Long id) {
+    return finishProductTrialRepository.existsByCode(id);
   }
 
   public void updateMixDesignStatus(String mixDesignCode, Status status) {
