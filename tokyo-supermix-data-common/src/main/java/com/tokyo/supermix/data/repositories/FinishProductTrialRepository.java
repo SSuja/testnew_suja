@@ -4,11 +4,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+
 @Repository
 public interface FinishProductTrialRepository extends JpaRepository<FinishProductTrial, Long> {
-  boolean existsByCode(Long id);
 
-  FinishProductTrial findFinishProductTrialByCode(Long code);
 
   List<FinishProductTrial> findByFinishProductTestCode(String finishProductTestCode);
 

@@ -71,7 +71,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   @Transactional(readOnly = true)
   public FinishProductTrial getFinishProductTrialByCode(Long id) {
-    return finishProductTrialRepository.findFinishProductTrialByCode(id);
+    return finishProductTrialRepository.findById(id).get();
   }
 
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
@@ -86,7 +86,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   @Transactional(readOnly = true)
   public boolean isFinishProductTrialExists(Long id) {
-    return finishProductTrialRepository.existsByCode(id);
+    return finishProductTrialRepository.existsById(id);
   }
 
   public void updateMixDesignStatus(String mixDesignCode, Status status) {
