@@ -23,6 +23,9 @@ public class FinishProductTest extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   private Long noOfTrial;
+  @ManyToOne
+  @JoinColumn(name = "materialStateId", nullable = false)
+  private MaterialState testSampleState;
 
   public String getCode() {
     return code;
@@ -66,5 +69,13 @@ public class FinishProductTest extends DateAudit implements Serializable {
 
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
+  }
+
+  public MaterialState getTestSampleState() {
+    return testSampleState;
+  }
+
+  public void setTestSampleState(MaterialState testSampleState) {
+    this.testSampleState = testSampleState;
   }
 }

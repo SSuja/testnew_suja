@@ -3,14 +3,11 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
-import com.tokyo.supermix.data.enums.FinishProductState;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_trial")
@@ -19,8 +16,6 @@ public class FinishProductTrial extends DateAudit implements Serializable {
   @Id
   private String code;
   private Long trialNo;
-  @Enumerated(EnumType.ORDINAL)
-  private FinishProductState testSampleState;
   private Long testSampleNo;
   private Date date;
   private Double value;
@@ -45,14 +40,6 @@ public class FinishProductTrial extends DateAudit implements Serializable {
 
   public void setTrialNo(Long trialNo) {
     this.trialNo = trialNo;
-  }
-
-  public FinishProductState getTestSampleState() {
-    return testSampleState;
-  }
-
-  public void setTestSampleState(FinishProductState testSampleState) {
-    this.testSampleState = testSampleState;
   }
 
   public Date getDate() {

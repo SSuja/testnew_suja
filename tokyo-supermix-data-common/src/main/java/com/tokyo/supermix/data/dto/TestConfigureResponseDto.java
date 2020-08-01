@@ -1,6 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
 
 public class TestConfigureResponseDto {
   private Long id;
@@ -11,7 +11,7 @@ public class TestConfigureResponseDto {
   private String description;
   private String testProcedure;
   private String prefix;
-  private TestType testType;
+  private MainType testType;
 
   public Long getId() {
     return id;
@@ -77,11 +77,11 @@ public class TestConfigureResponseDto {
     this.prefix = prefix;
   }
 
-  public TestType getTestType() {
+  public MainType getTestType() {
     return testType;
   }
 
-  public void setTestType(TestType testType) {
+  public void setTestType(MainType testType) {
     this.testType = testType;
   }
 }
