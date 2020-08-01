@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface CustomerService {
-  public void saveCustomer(Customer customer);
+  public void saveCustomer(Customer customer, List<String> plantCodes);
 
   public List<Customer> getAllCustomersByCurrentUser(UserPrincipal currentUser);
 
