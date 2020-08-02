@@ -2,7 +2,6 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,11 +9,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.CustomerResponseDto;
+import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Plant;
-import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -41,16 +40,10 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional
   public void saveCustomer(Customer customer, List<String> plantCodes) {
-    // Customer customerObj = customerRepository.save(customer);
-    // if (customerObj != null)
-    // emailNotification.sendCustomerCreationEmail(customerObj);
-
     List<Plant> plantList = new ArrayList<Plant>();
     plantCodes.forEach(code -> plantList.add(plantRepository.findById(code).get()));
     customer.setPlant(plantList);
     customerRepository.save(customer);
-
-
   }
 
   @Transactional(readOnly = true)
@@ -104,8 +97,43 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findByPlantCode(plantCode);
   }
 
+  public List<CustomerResponseDto> getAllCustomer() {
+    ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
+    List<Customer> customerList = getAllCustomers();
+    for (Customer customer : customerList) {
+      CustomerResponseDto customerResponseDto = new CustomerResponseDto();
+      customerResponseDto.setId(customer.getId());
+      customerResponseDto.setAddress(customer.getAddress());
+      customerResponseDto.setCreatedAt(customer.getCreatedAt().toString());
+      customerResponseDto.setUpdatedAt(customer.getUpdatedAt().toString());
+      customerResponseDto.setName(customer.getName());
+      customerResponseDto.setPhoneNumber(customer.getPhoneNumber());
+      customerResponseDto.setEmail(customer.getEmail());
+      customerResponseDto.setPlants(getAllPlant(customer.getId()));
+      customerResponseDtoList.add(customerResponseDto);
+    }
+    return customerResponseDtoList;
+  }
+
+  public List<PlantDto> getAllPlant(Long customerId) {
+    List<PlantDto> plantDtoList = new ArrayList<PlantDto>();
+    Customer Customer = customerRepository.findById(customerId).get();
+    for (Plant plant : Customer.getPlant()) {
+      PlantDto plantDto = new PlantDto();
+      plantDto.setCode(plant.getCode());
+      plantDto.setAddress(plant.getAddress());
+      plantDto.setDescription(plant.getDescription());
+      plantDto.setFaxNumber(plant.getFaxNumber());
+      plantDto.setName(plant.getName());
+      plantDto.setPhoneNumber(plant.getPhoneNumber());
+      plantDtoList.add(plantDto);
+    }
+    return plantDtoList;
+  }
+
   @Transactional(readOnly = true)
   public List<Customer> getAllCustomers() {
+
     return customerRepository.findAll();
   }
 }

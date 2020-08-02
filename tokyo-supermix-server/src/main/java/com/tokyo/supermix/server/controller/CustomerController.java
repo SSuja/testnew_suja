@@ -56,7 +56,7 @@ public class CustomerController {
   @GetMapping(value = EndpointURI.CUSTOMERS)
   public ResponseEntity<Object> getAllCustomers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
+        mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

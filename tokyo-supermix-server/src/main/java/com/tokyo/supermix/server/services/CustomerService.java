@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -12,6 +13,8 @@ public interface CustomerService {
   public List<Customer> getAllCustomersByCurrentUser(UserPrincipal currentUser);
 
   public List<Customer> getAllCustomers();
+  
+  public List<CustomerResponseDto> getAllCustomer();
 
   public boolean isEmailExist(String email);
 
