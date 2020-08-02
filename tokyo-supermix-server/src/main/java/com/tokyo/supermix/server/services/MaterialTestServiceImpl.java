@@ -16,6 +16,7 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -206,8 +207,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 		} else {
 			emailNotification.sendTestEmail(materialTestObj);
 		}
-		if (materialTestObj.getTestConfigure().getTest().getName()
-				.equalsIgnoreCase(Constants.DELIVERY_REPORT_MOISTURE_TEST)) {
+		if (materialTestObj.getTestConfigure().getReportFormat().equals(ReportFormat.DELIVERY_REPORT)) {
 			try {
 				generateReportService.generatePdfDeliveryDetailReport(incomingSample.getCode(),
 						materialTestObj.getTestConfigure().getTest().getName());
