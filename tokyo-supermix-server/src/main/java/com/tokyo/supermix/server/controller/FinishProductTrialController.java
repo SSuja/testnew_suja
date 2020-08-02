@@ -74,13 +74,12 @@ public class FinishProductTrialController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE)
   public ResponseEntity<Object> getResultByFinishProductCode(
       @PathVariable String finishProductCode) {
-    // if (finishProductTrialService.isFinishProductTestExists(finishProductCode)) {
-    logger.debug("Get Finish Product Trial By Id");
-    finishProductTrialService.saveFinishproductResult(finishProductCode);
-    // }
-    // return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
-    // validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
-    return null;
+    if (finishProductTrialService.isFinishProductTestExists(finishProductCode)) {
+      logger.debug("Get Finish Product Trial By Id");
+      finishProductTrialService.saveFinishproductResult(finishProductCode);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
+        validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
