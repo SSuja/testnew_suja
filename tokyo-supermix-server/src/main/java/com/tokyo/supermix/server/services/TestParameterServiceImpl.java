@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -139,7 +140,9 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setInputMethods(test.getInputMethods());
         testParameterResponseDto.setUnit(test.getUnit());
         testParameterResponseDto.setValue(test.getValue());
+        testParameterResponseDto.setMixDesignField(test.getMixDesignField());
         testParameterResponseDtoList.add(testParameterResponseDto);
+        
       }
     });
     List<ParameterEquation> parameterEquationList =
@@ -190,7 +193,8 @@ public class TestParameterServiceImpl implements TestParameterService {
     String isEquationExists = " ";
     List<TestParameter> testParam = testParameterRepository.findByTestConfigureId(testConfigureId);
     for (TestParameter testParameter : testParam) {
-      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))) {
+      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))
+          || testParameter.getType().equals(TestParameterType.RESULT)) {
         isEquationExists =
             Constants.CHECK_EQUATION_TRUE + "  " + Constants.ADD_TEST_PARAMETER_SUCCESS;
       } else {
