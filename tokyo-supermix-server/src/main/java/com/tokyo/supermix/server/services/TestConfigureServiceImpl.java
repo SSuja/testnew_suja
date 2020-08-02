@@ -18,7 +18,7 @@ import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
@@ -113,12 +113,12 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public List<TestConfigure> findByTestType(TestType testType) {
+  public List<TestConfigure> findByTestType(MainType testType) {
     return testConfigureRepository.findByTestType(testType);
   }
 
   @Transactional(readOnly = true)
-  public boolean isexistByTestType(TestType testType) {
+  public boolean isexistByTestType(MainType testType) {
     return testConfigureRepository.existsByTestType(testType);
   }
 
@@ -179,7 +179,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional(readOnly = true)
   public List<TestConfigure> getTestConfiguresByMaterialSubCategoryAndTestType(
-      Long materialSubCategoryId, TestType testType) {
+      Long materialSubCategoryId, MainType testType) {
     return testConfigureRepository.findByMaterialSubCategoryIdAndTestType(materialSubCategoryId,
         testType);
   }

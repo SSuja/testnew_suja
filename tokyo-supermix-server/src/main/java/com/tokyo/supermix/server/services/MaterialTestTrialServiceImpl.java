@@ -53,11 +53,11 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     List<MaterialTestTrial> materialTestTrialList =
         materialTestTrialRepository.findByCodeContaining(subPrefix);
     if (materialTestTrialList.size() == 0) {
-      materialTestTrial.setCode(subPrefix + String.format("%04d", 1));
+      materialTestTrial.setCode(subPrefix + String.format("%02d", 1));
       materialTestTrial.setTrialNo(1l);
     } else {
       materialTestTrial
-          .setCode(subPrefix + String.format("%04d", maxNumberFromCode(materialTestTrialList) + 1));
+          .setCode(subPrefix + String.format("%02d", maxNumberFromCode(materialTestTrialList) + 1));
       materialTestTrial.setTrialNo(maxNumberFromCode(materialTestTrialList).longValue() + 1l);
     }
     materialTestTrialRepository.save(materialTestTrial);
@@ -73,7 +73,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     List<Integer> list = new ArrayList<Integer>();
     materialTestTrialList.forEach(obj -> {
       String code = obj.getCode();
-      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+      list.add(getNumberFromCode(code.substring(code.indexOf("-"))));
     });
     return Collections.max(list);
   }
@@ -144,7 +144,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
         updateAverage(materialTestCode, Status.FAIL);
       }
     } else if (condition == Condition.EQUAL) {
-      if (value == average) {
+      if (value.equals(average)) {
         updateAverage(materialTestCode, Status.PASS);
       } else {
         updateAverage(materialTestCode, Status.FAIL);

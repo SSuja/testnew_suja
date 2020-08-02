@@ -6,7 +6,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
 
 public interface TestConfigureService {
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto);
@@ -29,14 +29,14 @@ public interface TestConfigureService {
 
   public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId,Long materialSubCategoryId);
 
-  public List<TestConfigure> findByTestType(TestType testType);
+  public List<TestConfigure> findByTestType(MainType testType);
 
-  public boolean isexistByTestType(TestType testType);
+  public boolean isexistByTestType(MainType testType);
 
   public List<TestConfigure> findByMaterialSubCategory(Long materialSubCategoryId);
 
   public List<TestConfigure> getTestConfiguresByMaterialSubCategoryAndTestType(
-      Long materialSubCategoryId, TestType testType);
+      Long materialSubCategoryId, MainType testType);
 
   public Long updateTestConfigure(TestConfigure testConfigure);
 

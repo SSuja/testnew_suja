@@ -42,4 +42,6 @@ public interface TestParameterService {
   public boolean isParameterExists(Long testConfigureId, Long parameterId);
 
   public boolean isUpdatedExists(Long id, Long testConfigureId, Long parameterId);
+  
+  public String checkEqutaionExistsForTest(Long testConfigureId);
 }

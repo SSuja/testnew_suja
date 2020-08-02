@@ -3,12 +3,13 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ReportFormat;
 
 public class TestConfigureRequestDto {
   private Long id;
   private Long testId;
-  private TestType testType;
+  private MainType testType;
   private boolean coreTest;
   private String description;
   private String testProcedure;
@@ -21,7 +22,8 @@ public class TestConfigureRequestDto {
   private Long materialSubCategoryId;
   private boolean active;
   private boolean adminLevelEmailConfiguration;
-  
+  private ReportFormat reportFormat;
+
   public Long getId() {
     return id;
   }
@@ -38,11 +40,11 @@ public class TestConfigureRequestDto {
     this.testId = testId;
   }
 
-  public TestType getTestType() {
+  public MainType getTestType() {
     return testType;
   }
 
-  public void setTestType(TestType testType) {
+  public void setTestType(MainType testType) {
     this.testType = testType;
   }
 
@@ -108,5 +110,13 @@ public class TestConfigureRequestDto {
 
   public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
     this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
+  }
+
+  public ReportFormat getReportFormat() {
+    return reportFormat;
+  }
+
+  public void setReportFormat(ReportFormat reportFormat) {
+    this.reportFormat = reportFormat;
   }
 }

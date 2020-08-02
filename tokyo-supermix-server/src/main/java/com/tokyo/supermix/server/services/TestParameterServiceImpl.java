@@ -20,10 +20,12 @@ import com.tokyo.supermix.data.dto.report.Level;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
+import com.tokyo.supermix.util.Constants;
 
 @Service
 public class TestParameterServiceImpl implements TestParameterService {
@@ -204,5 +206,19 @@ public class TestParameterServiceImpl implements TestParameterService {
       return true;
     }
     return false;
+  }
+
+  public String checkEqutaionExistsForTest(Long testConfigureId) {
+    String isEquationExists = " ";
+    List<TestParameter> testParam = testParameterRepository.findByTestConfigureId(testConfigureId);
+    for (TestParameter testParameter : testParam) {
+      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))) {
+        isEquationExists =
+            Constants.CHECK_EQUATION_TRUE + "  " + Constants.ADD_TEST_PARAMETER_SUCCESS;
+      } else {
+        isEquationExists = Constants.CHECK_EQUATION_FALSE + Constants.ADD_TEST_PARAMETER_SUCCESS;
+      }
+    }
+    return isEquationExists;
   }
 }

@@ -20,7 +20,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -156,7 +156,7 @@ public class TestConfigureController {
   }
 
   @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_TEST_TYPE)
-  public ResponseEntity<Object> getTestConfigureByTestType(@PathVariable TestType testType) {
+  public ResponseEntity<Object> getTestConfigureByTestType(@PathVariable MainType testType) {
     if (testConfigureService.isexistByTestType(testType)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
           mapper.map(testConfigureService.findByTestType(testType), TestConfigureResponseDto.class),
@@ -183,7 +183,7 @@ public class TestConfigureController {
 
   @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY_AND_TEST_TYPE)
   public ResponseEntity<Object> getTestConfigureByMaterialSubCategoryAndTestType(
-      @PathVariable Long materialSubCategoryId, @PathVariable TestType testType) {
+      @PathVariable Long materialSubCategoryId, @PathVariable MainType testType) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
           mapper.map(testConfigureService.getTestConfiguresByMaterialSubCategoryAndTestType(
