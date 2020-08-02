@@ -281,6 +281,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     finishProductTestRepository.save(finishProductTest);
     updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
         status);
+    updateFinishProductSampleStatus(finishProductTest.getFinishProductSample().getCode(),status);
   }
 
   public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {

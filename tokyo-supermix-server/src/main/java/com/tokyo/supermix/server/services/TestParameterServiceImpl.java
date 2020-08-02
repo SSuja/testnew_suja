@@ -196,9 +196,9 @@ public class TestParameterServiceImpl implements TestParameterService {
       if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))
           || testParameter.getType().equals(TestParameterType.RESULT)) {
         isEquationExists =
-            Constants.CHECK_EQUATION_TRUE + "  " + Constants.ADD_TEST_PARAMETER_SUCCESS;
+            Constants.CHECK_EQUATION_TRUE;
       } else {
-        isEquationExists = Constants.CHECK_EQUATION_FALSE + Constants.ADD_TEST_PARAMETER_SUCCESS;
+        isEquationExists = Constants.CHECK_EQUATION_FALSE;
       }
     }
     return isEquationExists;

@@ -18,6 +18,7 @@ public class TestParameterResponseDto {
   private boolean acceptedCriteria;
   private InputMethod inputMethods;
   private String level;
+  private String name;
   private MixDesignField mixDesignField;
 
   public MixDesignField getMixDesignField() {
@@ -115,5 +116,12 @@ public class TestParameterResponseDto {
   public void setLevel(String level) {
     this.level = level;
   }
-  
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }
