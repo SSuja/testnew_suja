@@ -6,7 +6,6 @@ import com.tokyo.supermix.data.enums.FinishProductState;
 public class FinishProductTrialRequestDto {
   private Long id;
   private Long trialNo;
-  private FinishProductState testSample;
   private Date date;
   private Double value;
   private String finishProductTestCode;
@@ -26,14 +25,6 @@ public class FinishProductTrialRequestDto {
 
   public void setTrialNo(Long trialNo) {
     this.trialNo = trialNo;
-  }
-
-  public FinishProductState getTestSample() {
-    return testSample;
-  }
-
-  public void setTestSample(FinishProductState testSample) {
-    this.testSample = testSample;
   }
 
   public Date getDate() {
