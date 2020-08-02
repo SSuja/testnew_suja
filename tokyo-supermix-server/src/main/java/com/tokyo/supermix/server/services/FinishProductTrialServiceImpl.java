@@ -185,7 +185,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       sumOfValue = sumOfValue + finishProductTrial.getValue();
       count++;
     }
-    return (sumOfValue / noOfTrial);
+    return (sumOfValue / count);
   }
 
 

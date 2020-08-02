@@ -505,9 +505,9 @@ public final class EndpointURI {
       BASE_API_PATH + "finish-product-parameter-results";
   public static final String FINISH_PRODUCT_PARAMETER_RESULT =
       BASE_API_PATH + "finish-product-parameter-result";
-  public static final String FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE =
-      FINISH_PRODUCT_PARAMETER_RESULT + SLASH + "finish-product-sample" + SLASH
-          + "{finishProductSampleCode}";
+  public static final String FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_TEST_CODE =
+      FINISH_PRODUCT_PARAMETER_RESULT + SLASH + "finish-product-test-result" + SLASH
+          + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE =
       FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test" + SLASH + "{finishProductCode}";
   /*
