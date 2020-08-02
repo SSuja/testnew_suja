@@ -2,11 +2,11 @@ package com.tokyo.supermix.data.dto;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
 
 public class TestConfigureDto {
   private Long id;
-  private TestType testType;
+  private MainType testType;
   private String testName;
   private boolean coreTest;
   private String description;
@@ -27,11 +27,11 @@ public class TestConfigureDto {
     this.id = id;
   }
 
-  public TestType getTestType() {
+  public MainType getTestType() {
     return testType;
   }
 
-  public void setTestType(TestType testType) {
+  public void setTestType(MainType testType) {
     this.testType = testType;
   }
 

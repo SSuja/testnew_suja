@@ -7,7 +7,8 @@ import com.tokyo.supermix.data.entities.ParameterEquation;
 public interface ParameterEquationService {
   public void saveParameterEquation(ParameterEquation parameterEquation);
 
-  public boolean isEquationIdAndTestParameterId(Long equationId, Long testParameterId);
+  public boolean isEquationIdAndTestParameterId(Long equationId, Long testParameterId,
+      Long testConfigureId);
 
   public List<ParameterEquation> getParameterEquations();
 
