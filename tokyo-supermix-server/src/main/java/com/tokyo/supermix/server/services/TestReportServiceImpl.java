@@ -39,6 +39,7 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -109,8 +110,7 @@ public class TestReportServiceImpl implements TestReportService {
         .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
     reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
     reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-    if ((materialTest.getTestConfigure().getMaterialCategory().getName()
-        .equalsIgnoreCase("Admixture"))) {
+    if ((materialTest.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
       reportDto.setAcceptanceCriteria(
           getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId(),
               materialTest.getIncomingSample().getRawMaterial().getId()));
@@ -252,7 +252,7 @@ public class TestReportServiceImpl implements TestReportService {
       incomingSampleTestDto.setAverage(materialTestResult.get(0).getResult());
       incomingSampleTestDto.setStatus(test.getStatus().name());
       incomingSampleTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
-      if ((test.getTestConfigure().getMaterialCategory().getName().equalsIgnoreCase("Admixture"))) {
+      if ((test.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
         incomingSampleTestDto.setAcceptanceCriteria(getMaterialAcceptedValueDto(
             test.getTestConfigure().getId(), test.getIncomingSample().getRawMaterial().getId()));
       } else {
