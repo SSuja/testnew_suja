@@ -602,5 +602,8 @@ public final class EndpointURI {
   public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_PARAMETER =
       FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-parameter" + SLASH + "{testParameterId}";
 
+  public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_CONFIGURE =
+      FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+
   private EndpointURI() {}
 }

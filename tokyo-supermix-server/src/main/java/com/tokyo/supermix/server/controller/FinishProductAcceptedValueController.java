@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.FinishProductAcceptedValueService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -34,6 +35,8 @@ public class FinishProductAcceptedValueController {
   private FinishProductAcceptedValueService finishProductAcceptedValueService;
   @Autowired
   private TestParameterService testParameterService;
+  @Autowired
+  private TestConfigureService testConfigureService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -127,4 +130,20 @@ public class FinishProductAcceptedValueController {
     }
   }
 
+  @GetMapping(value = EndpointURI.GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_CONFIGURE)
+  public ResponseEntity<Object> getFinishProductAcceptedValueByTestConfigure(
+      @PathVariable Long testConfigureId) {
+    if (testConfigureService.isTestConfigureExist(testConfigureId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_ACCEPTED_VALUE,
+              mapper.map(finishProductAcceptedValueService.getByAcceptedValueByTestConfigure(
+                  testConfigureId), FinishProductAcceptedValueResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    } else {
+      logger.debug("No Finish Product Accepted Value record exist for given Test Parameter id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
+          validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
 }

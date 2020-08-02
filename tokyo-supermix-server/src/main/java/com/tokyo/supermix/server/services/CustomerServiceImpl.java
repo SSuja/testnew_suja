@@ -58,8 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional(readOnly = true)
   public CustomerResponseDto getCustomerById(Long id) {
-    Customer customer=customerRepository.findById(id).get();
-    CustomerResponseDto customerResponseDto=new CustomerResponseDto();
+    Customer customer = customerRepository.findById(id).get();
+    CustomerResponseDto customerResponseDto = new CustomerResponseDto();
     customerResponseDto.setId(customer.getId());
     customerResponseDto.setAddress(customer.getAddress());
     customerResponseDto.setCreatedAt(customer.getCreatedAt().toString());
