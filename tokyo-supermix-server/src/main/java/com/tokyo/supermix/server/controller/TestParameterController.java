@@ -66,7 +66,8 @@ public class TestParameterController {
           .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
     }
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TEST_PARAMETER_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, testParameterService
+            .checkEqutaionExistsForTest(testParameterRequestDtoList.get(0).getTestConfigureId())),
         HttpStatus.OK);
   }
 

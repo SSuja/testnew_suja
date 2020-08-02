@@ -15,8 +15,8 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -145,7 +145,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<MaterialTest> getMaterialTestByTestConfigureTestType(TestType testType) {
+	public List<MaterialTest> getMaterialTestByTestConfigureTestType(MainType testType) {
 		return materialTestRepository.findByTestConfigureTestType(testType);
 	}
 

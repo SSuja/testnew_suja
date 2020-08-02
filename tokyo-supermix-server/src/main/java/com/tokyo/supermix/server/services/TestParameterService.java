@@ -37,4 +37,6 @@ public interface TestParameterService {
   public TestParameterEquationDto getTestParameterEquation(Long testConfigureId);
 
   public Set<String> getAllOriLevel(Long testConfigId);
+  
+  public String checkEqutaionExistsForTest(Long testConfigureId);
 }

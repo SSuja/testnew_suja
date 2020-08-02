@@ -12,7 +12,6 @@ import com.tokyo.supermix.data.dto.FinishProductParameterResultResponseDto;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.FinishProductParameterResultService;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.util.Constants;
@@ -40,16 +39,15 @@ public class FinishProductParameterResultController {
         null, HttpStatus.OK);
   }
 
-//  @GetMapping(value = EndpointURI.FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE)
-//  public ResponseEntity<Object> getByFinishProductSampleId(
-//      @PathVariable String finishProductSampleCode) {
-//    if (finishProductSampleService.isFinishProductSampleExist(finishProductSampleCode)) {
-//      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
-//          mapper.map(finishProductParameterResultService.getByFinishProductSampleCode(
-//              finishProductSampleCode), FinishProductParameterResultResponseDto.class),
-//          RestApiResponseStatus.OK), HttpStatus.OK);
-//    }
-//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLE_ID,
-//        validationFailureStatusCodes.getFinishProductSampleNotExist()), HttpStatus.BAD_REQUEST);
-//  }
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_TEST_CODE)
+  public ResponseEntity<Object> getByFinishProductTestCode(
+      @PathVariable String finishProductTestCode) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ID,
+            mapper.map(
+                finishProductParameterResultService.getFinishProductResult(finishProductTestCode),
+                FinishProductParameterResultResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
 }

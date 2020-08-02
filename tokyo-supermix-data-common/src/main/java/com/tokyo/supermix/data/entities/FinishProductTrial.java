@@ -3,24 +3,22 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
-import com.tokyo.supermix.data.enums.FinishProductState;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_trial")
 public class FinishProductTrial extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
-  private String code;
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
   private Long trialNo;
-  @Enumerated(EnumType.ORDINAL)
-  private FinishProductState testSampleState;
   private Long testSampleNo;
   private Date date;
   private Double value;
@@ -31,13 +29,7 @@ public class FinishProductTrial extends DateAudit implements Serializable {
   @JoinColumn(name = "testParameterId", nullable = true)
   private TestParameter testParameter;
 
-  public String getCode() {
-    return code;
-  }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
 
   public Long getTrialNo() {
     return trialNo;
@@ -45,14 +37,6 @@ public class FinishProductTrial extends DateAudit implements Serializable {
 
   public void setTrialNo(Long trialNo) {
     this.trialNo = trialNo;
-  }
-
-  public FinishProductState getTestSampleState() {
-    return testSampleState;
-  }
-
-  public void setTestSampleState(FinishProductState testSampleState) {
-    this.testSampleState = testSampleState;
   }
 
   public Date getDate() {
