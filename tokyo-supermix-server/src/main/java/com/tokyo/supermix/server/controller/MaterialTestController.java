@@ -20,8 +20,8 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestResponseDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.enums.TestType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -182,7 +182,7 @@ public class MaterialTestController {
   // get material test by TestConfigureTestType
   @GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_TESTCONFIGURE_TESTTYPE)
   public ResponseEntity<Object> getMaterialTestByTestConfigureTestType(
-      @PathVariable TestType testType) {
+      @PathVariable MainType testType) {
     if (!materialTestService.getMaterialTestByTestConfigureTestType(testType).isEmpty()) {
       logger.debug("testType Exists");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,

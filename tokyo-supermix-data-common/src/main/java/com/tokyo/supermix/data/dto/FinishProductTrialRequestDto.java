@@ -4,20 +4,19 @@ import java.sql.Date;
 import com.tokyo.supermix.data.enums.FinishProductState;
 
 public class FinishProductTrialRequestDto {
-  private String code;
+  private Long id;
   private Long trialNo;
-  private FinishProductState testSample;
   private Date date;
   private Double value;
   private String finishProductTestCode;
   private Long testParameterId;
 
-  public String getCode() {
-    return code;
+  public Long getId() {
+    return id;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public Long getTrialNo() {
@@ -26,14 +25,6 @@ public class FinishProductTrialRequestDto {
 
   public void setTrialNo(Long trialNo) {
     this.trialNo = trialNo;
-  }
-
-  public FinishProductState getTestSample() {
-    return testSample;
-  }
-
-  public void setTestSample(FinishProductState testSample) {
-    this.testSample = testSample;
   }
 
   public Date getDate() {

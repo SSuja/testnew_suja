@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
-import com.tokyo.supermix.data.dto.MaterialAcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
@@ -19,12 +18,11 @@ import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.enums.TestType;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
-import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
@@ -44,8 +42,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EmailPointsService emailPointsService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
-  @Autowired
-  private RawMaterialRepository rawMaterialRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -118,12 +114,12 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public List<TestConfigure> findByTestType(TestType testType) {
+  public List<TestConfigure> findByTestType(MainType testType) {
     return testConfigureRepository.findByTestType(testType);
   }
 
   @Transactional(readOnly = true)
-  public boolean isexistByTestType(TestType testType) {
+  public boolean isexistByTestType(MainType testType) {
     return testConfigureRepository.existsByTestType(testType);
   }
 
@@ -184,7 +180,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional(readOnly = true)
   public List<TestConfigure> getTestConfiguresByMaterialSubCategoryAndTestType(
-      Long materialSubCategoryId, TestType testType) {
+      Long materialSubCategoryId, MainType testType) {
     return testConfigureRepository.findByMaterialSubCategoryIdAndTestType(materialSubCategoryId,
         testType);
   }

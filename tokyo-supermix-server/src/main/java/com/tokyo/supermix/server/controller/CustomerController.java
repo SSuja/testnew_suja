@@ -74,7 +74,7 @@ public class CustomerController {
   @GetMapping(value = EndpointURI.CUSTOMERS)
   public ResponseEntity<Object> getAllCustomers() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(customerService.getAllCustomers(), CustomerResponseDto.class),
+        mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
@@ -86,7 +86,8 @@ public class CustomerController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
           validationFailureStatusCodes.getCustomerAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    customerService.saveCustomer(mapper.map(customerRequestDto, Customer.class));
+    customerService.saveCustomer(mapper.map(customerRequestDto, Customer.class),
+        customerRequestDto.getPlantCodes());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CUSTOMER_SUCCESS),
         HttpStatus.OK);
@@ -130,7 +131,8 @@ public class CustomerController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
             validationFailureStatusCodes.getCustomerAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      customerService.saveCustomer(mapper.map(customerRequestDto, Customer.class));
+      customerService.saveCustomer(mapper.map(customerRequestDto, Customer.class),
+          customerRequestDto.getPlantCodes());
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_CUSTOMER_SUCCESS),
           HttpStatus.OK);
