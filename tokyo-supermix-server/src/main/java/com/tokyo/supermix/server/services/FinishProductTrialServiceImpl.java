@@ -180,7 +180,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     Long noOfTrial = finishProductTest.getNoOfTrial();
-    System.out.println();
     double sumOfValue = 0.0;
     Long count = (long) 0;
     List<FinishProductTrial> finishProductTrialList =
@@ -189,7 +188,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       sumOfValue = sumOfValue + finishProductTrial.getValue();
       count++;
     }
-    return (sumOfValue / count);
+    return (sumOfValue / noOfTrial);
   }
 
 
