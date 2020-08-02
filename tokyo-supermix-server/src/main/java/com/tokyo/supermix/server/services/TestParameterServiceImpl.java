@@ -66,9 +66,14 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameterRepository.existsByTestConfigureId(id);
   }
 
-  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation) {
-    return testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
-        abbreviation);
+  @Transactional(readOnly = true)
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation,
+      Long parameterId) {
+    if (testParameterRepository.existsByTestConfigureIdAndAbbreviationAndParameterId(
+        testConfigureId, abbreviation, parameterId)) {
+      return true;
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)
@@ -167,9 +172,9 @@ public class TestParameterServiceImpl implements TestParameterService {
     ArrayList<Level> levelList = new ArrayList<Level>();
     for (TestParameter testParameter : testParameterRepository
         .findByTestConfigureId(testConfigId)) {
-        Level levels = new Level();
-        levels.setLevel(testParameter.getLevel());
-        levelList.add(levels);
+      Level levels = new Level();
+      levels.setLevel(testParameter.getLevel());
+      levelList.add(levels);
     }
     return levelList;
   }
@@ -182,5 +187,22 @@ public class TestParameterServiceImpl implements TestParameterService {
     originalLevelList.toString();
     Set<String> oriList = new LinkedHashSet<String>(originalLevelList);
     return oriList;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isParameterExists(Long testConfigureId, Long parameterId) {
+    if (testParameterRepository.existsByTestConfigureIdAndParameterId(testConfigureId,
+        parameterId)) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean isUpdatedExists(Long id, Long testConfigureId, Long parameterId) {
+    if ((!getTestParameterById(id).getParameter().getId().equals(parameterId))
+        && (isParameterExists(parameterId, testConfigureId))) {
+      return true;
+    }
+    return false;
   }
 }
