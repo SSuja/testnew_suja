@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ReportFormat;
 
 public class TestConfigureResponseDto {
   private Long id;
@@ -12,6 +13,7 @@ public class TestConfigureResponseDto {
   private String testProcedure;
   private String prefix;
   private MainType testType;
+  private ReportFormat reportFormat;
 
   public Long getId() {
     return id;
@@ -83,5 +85,13 @@ public class TestConfigureResponseDto {
 
   public void setTestType(MainType testType) {
     this.testType = testType;
+  }
+
+  public ReportFormat getReportFormat() {
+    return reportFormat;
+  }
+
+  public void setReportFormat(ReportFormat reportFormat) {
+    this.reportFormat = reportFormat;
   }
 }

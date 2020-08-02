@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ReportFormat;
 
 public class TestConfigureRequestDto {
   private Long id;
@@ -21,6 +22,7 @@ public class TestConfigureRequestDto {
   private Long materialSubCategoryId;
   private boolean active;
   private boolean adminLevelEmailConfiguration;
+  private ReportFormat reportFormat;
 
   public Long getId() {
     return id;
@@ -108,5 +110,13 @@ public class TestConfigureRequestDto {
 
   public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
     this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
+  }
+
+  public ReportFormat getReportFormat() {
+    return reportFormat;
+  }
+
+  public void setReportFormat(ReportFormat reportFormat) {
+    this.reportFormat = reportFormat;
   }
 }
