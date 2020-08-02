@@ -111,10 +111,8 @@ public class CustomerServiceImpl implements CustomerService {
       customerResponseDto.setEmail(customer.getEmail());
       customerResponseDto.setPlants(getAllPlant(customer.getId()));
       customerResponseDtoList.add(customerResponseDto);
-
     }
     return customerResponseDtoList;
-
   }
 
   public List<PlantDto> getAllPlant(Long customerId) {
