@@ -1,8 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -13,9 +11,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
-import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
@@ -75,7 +73,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
-
     finishProductTrialRepository.save(finishProductTrial);
   }
 
@@ -95,6 +92,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       mixDesign.setStatus(status);
     }
     mixDesignRepository.save(mixDesign);
+  }
+
+  public void updateFinishProductSampleStatus(String finishProductSampleCode, Status status) {
+    FinishProductSample finishProductSample =
+        finishProductSampleRepository.findById(finishProductSampleCode).get();
+    finishProductSample.setStatus(status);
+    finishProductSampleRepository.save(finishProductSample);
   }
 
   private Double roundDoubleValue(Double value) {
@@ -125,7 +129,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial) {
     finishProductTestRepository.findById(finishProductTrial.getFinishProductTest().getCode()).get()
         .setStatus(Status.PROCESS);
-    // updateFinishProductResult(finishProductTrial);
     finishProductTrialRepository.save(finishProductTrial);
   }
 
@@ -144,7 +147,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
           && testParameter.getMixDesignField() == null) {
         finishProductParameterResult.setFinishProductTest(finishproductTest);
         finishProductParameterResult.setTestParameter(testParameter);
-        finishProductParameterResult.setResult(averageValue(finishProductTestCode));
+        finishProductParameterResult
+            .setResult(roundDoubleValue(averageValue(finishProductTestCode)));
       }
     }
     finishProductParameterResultRepository.save(finishProductParameterResult);
@@ -276,6 +280,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductTestRepository.findById(finishProductTestCode).get();
     finishProductTest.setStatus(status);
     finishProductTestRepository.save(finishProductTest);
+    updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
+        status);
   }
 
   public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
@@ -287,7 +293,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         List<FinishProductAcceptedValue> finishProductAcceptedValueList =
             finishProductAcceptedValueRepository.findByTestParameterId(testParameter.getId());
         FinishProductParameterResult finishProductParameterResult =
-            finishProductParameterResultRepository.findByTestParameterId(testParameter.getId());
+            finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(testParameterRepository
+                .findByTestConfigureIdAndInputMethods(testConfigureId, InputMethod.CALCULATION)
+                .get(0).getId(),finishProductTestCode);
         for (FinishProductAcceptedValue finishProductAcceptedValue : finishProductAcceptedValueList) {
           checkFinishproductAcceptedValue(finishProductAcceptedValue.getMinValue(),
               finishProductAcceptedValue.getMaxValue(), finishProductAcceptedValue.getValue(),
