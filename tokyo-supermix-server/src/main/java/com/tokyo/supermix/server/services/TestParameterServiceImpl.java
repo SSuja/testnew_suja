@@ -173,7 +173,8 @@ public class TestParameterServiceImpl implements TestParameterService {
     for (TestParameter testParameter : testParameterRepository
         .findByTestConfigureId(testConfigId)) {
       Level levels = new Level();
-      levels.setLevel(testParameter.getLevel());
+      String[] parts = testParameter.getName().split("_");
+      levels.setLevel(parts[1]);
       levelList.add(levels);
     }
     return levelList;
