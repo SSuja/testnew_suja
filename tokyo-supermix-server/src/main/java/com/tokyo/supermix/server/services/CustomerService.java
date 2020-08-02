@@ -22,7 +22,7 @@ public interface CustomerService {
 
   boolean isCustomerExist(Long id);
 
-  public Customer getCustomerById(Long id);
+  public CustomerResponseDto getCustomerById(Long id);
 
   public boolean isUpdatedCustomerEmailExist(Long id, String email);
 
