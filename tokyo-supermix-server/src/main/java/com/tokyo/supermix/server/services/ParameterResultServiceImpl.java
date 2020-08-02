@@ -118,7 +118,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     return paramterResultList;
   }
 
-
   public List<ParameterResult> findByMaterialTestCode(String materialTestCode) {
     return parameterResultRepository.findByMaterialTestCode(materialTestCode);
   }
@@ -171,7 +170,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
     });
     getValueCalculate(materialParameterResultDto.getMaterialTestTrialCode());
   }
-
 
   private Double roundDoubleValue(Double value) {
     DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
@@ -229,7 +227,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
                 for (ParameterResult paramList : paramResultLists) {
                   value = value + paramList.getValue();
                 }
-                Double average = value.doubleValue() / paramResultLists.size();
+                Double average = roundDoubleValue(value.doubleValue() / paramResultLists.size());
 
                 if (materialTestResultRepository
                     .findByMaterialTestCode(materialTestTrial.getMaterialTest().getCode())
@@ -277,7 +275,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         for (ParameterResult paraResult : paramResultList) {
           value = value + paraResult.getValue();
         }
-        Double average = value.doubleValue() / paramResultList.size();
+        Double average = roundDoubleValue(value.doubleValue() / paramResultList.size());
 
         if (materialTestResultRepository.findByTestEquationAndMaterialTestCode(testEquation,
             materialTestTrial.getMaterialTest().getCode()) == null) {

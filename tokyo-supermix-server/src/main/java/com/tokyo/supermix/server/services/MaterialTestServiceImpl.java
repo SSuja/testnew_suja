@@ -155,7 +155,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 				.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
 	}
 
-	public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
+  public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
 		IncomingSample incomingSample = materialTestObj.getIncomingSample();
 		Integer count = 0;
 		String bodyMessage = "";
