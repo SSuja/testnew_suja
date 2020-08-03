@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.CubeTestReportDto;
+import com.tokyo.supermix.data.dto.FinishProductTestReportDetailDto;
 import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
@@ -27,6 +28,7 @@ import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.dto.report.TestTrialDto;
 import com.tokyo.supermix.data.dto.report.TrailValueDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
@@ -38,11 +40,15 @@ import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.TestEquation;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
@@ -56,6 +62,7 @@ import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestEquationRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class TestReportServiceImpl implements TestReportService {
@@ -91,6 +98,10 @@ public class TestReportServiceImpl implements TestReportService {
   private TestEquationRepository testEquationRepository;
   @Autowired
   private TestParameterService testParameterService;
+  @Autowired
+  private FinishProductParameterResultRepository finishProductParameterResultRepository;
+  @Autowired
+  private TestParameterRepository testParameterRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
@@ -357,6 +368,10 @@ public class TestReportServiceImpl implements TestReportService {
     ConcreteTestReportDto concreteTestReportDto = new ConcreteTestReportDto();
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
+    List<TestParameter> testParamterList =
+        testParameterRepository.findByTestConfigureIdAndInputMethods(
+            finishProductTest.getTestConfigure().getId(), InputMethod.OBSERVE);
+
     if (!finishProductTest.getTestConfigure().isCoreTest()) {
       concreteTestReportDto.setAddress(
           finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
@@ -381,7 +396,15 @@ public class TestReportServiceImpl implements TestReportService {
       concreteTestReportDto
           .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
       concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
-      // concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
+      for (TestParameter testParamter : testParamterList) {
+        if (testParamter.getType().equals(TestParameterType.INPUT)
+            && testParamter.getMixDesignField() == null) {
+          FinishProductParameterResult finishProductResult =
+              finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
+                  testParamter.getId(), finishProductTestCode);
+          concreteTestReportDto.setAverageStrength(finishProductResult.getResult());
+        }
+      }
     }
     return concreteTestReportDto;
   }
@@ -511,5 +534,10 @@ public class TestReportServiceImpl implements TestReportService {
       sieveResultAndParameterList.add(sieveResultAndParameter);
     }
     return sieveResultAndParameterList;
+  }
+
+  public FinishProductTestReportDetailDto getFinishProductTestDetailReport(
+      String finishProductTestCode) {
+    return null;
   }
 }

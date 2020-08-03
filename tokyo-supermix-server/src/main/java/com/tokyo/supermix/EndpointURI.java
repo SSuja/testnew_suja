@@ -432,6 +432,8 @@ public final class EndpointURI {
       TEST_REPORT_DETAIL + SLASH + MATERIAL_TEST_CODE;
   public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
       + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
+  public static final String FINISH_PRODUCT_TEST_DETAIL_REPORT =
+      TEST_REPORT + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   /*
    * Finish Product Sample
    */
