@@ -17,99 +17,101 @@ import com.tokyo.supermix.util.privilege.PermissionConstants;
 @Service
 public class FinishProductTestServiceImpl implements FinishProductTestService {
 
-  @Autowired
-  private FinishProductTestRepository finishProductTestRepository;
-  @Autowired
-  private TestConfigureRepository testConfigureRepository;
-  @Autowired
-  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+	@Autowired
+	private FinishProductTestRepository finishProductTestRepository;
+	@Autowired
+	private TestConfigureRepository testConfigureRepository;
+	@Autowired
+	private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
-  @Transactional
-  public String createFinishProductTest(FinishProductTest finishProductTest) {
-    if (finishProductTest.getCode() == null) {
-      String prefix =
-          testConfigureRepository.getOne(finishProductTest.getTestConfigure().getId()).getPrefix();
-      List<FinishProductTest> finishProductTestList =
-          finishProductTestRepository.findByCodeContaining(prefix);
-      if (finishProductTestList.size() == 0) {
-        finishProductTest.setCode(prefix + String.format("%04d", 1));
-      } else {
-        finishProductTest
-            .setCode(prefix + String.format("%03d", maxNumberFromCode(finishProductTestList) + 1));
-      }
-    }
-    finishProductTestRepository.save(finishProductTest);
-    return finishProductTest.getCode();
-  }
+	@Transactional
+	public String createFinishProductTest(FinishProductTest finishProductTest) {
+		if (finishProductTest.getCode() == null) {
+			String prefix = testConfigureRepository.getOne(finishProductTest.getTestConfigure().getId()).getPrefix();
+			List<FinishProductTest> finishProductTestList = finishProductTestRepository.findByCodeContaining(prefix);
+			if (finishProductTestList.size() == 0) {
+				finishProductTest.setCode(prefix + String.format("%04d", 1));
+			} else {
+				finishProductTest.setCode(prefix + String.format("%03d", maxNumberFromCode(finishProductTestList) + 1));
+			}
+		}
+		finishProductTestRepository.save(finishProductTest);
+		return finishProductTest.getCode();
+	}
 
-  private Integer getNumberFromCode(String code) {
-    String numberOnly = code.replaceAll("[^0-9]", "");
-    return Integer.parseInt(numberOnly);
-  }
+	private Integer getNumberFromCode(String code) {
+		String numberOnly = code.replaceAll("[^0-9]", "");
+		return Integer.parseInt(numberOnly);
+	}
 
-  private Integer maxNumberFromCode(List<FinishProductTest> finishProductTestList) {
-    List<Integer> list = new ArrayList<Integer>();
-    finishProductTestList.forEach(obj -> {
-      list.add(getNumberFromCode(obj.getCode()));
-    });
-    return Collections.max(list);
-  }
+	private Integer maxNumberFromCode(List<FinishProductTest> finishProductTestList) {
+		List<Integer> list = new ArrayList<Integer>();
+		finishProductTestList.forEach(obj -> {
+			list.add(getNumberFromCode(obj.getCode()));
+		});
+		return Collections.max(list);
+	}
 
-  @Transactional(readOnly = true)
-  public FinishProductTest getFinishProductTestByCode(String code) {
-    return finishProductTestRepository.findFinishProductTestByCode(code);
-  }
+	@Transactional(readOnly = true)
+	public FinishProductTest getFinishProductTestByCode(String code) {
+		return finishProductTestRepository.findFinishProductTestByCode(code);
+	}
 
-  @Transactional(readOnly = true)
-  public List<FinishProductTest> getAllFinishProductTests() {
-    return finishProductTestRepository.findAll();
-  }
+	@Transactional(readOnly = true)
+	public List<FinishProductTest> getAllFinishProductTests() {
+		return finishProductTestRepository.findAll();
+	}
 
-  @Transactional(propagation = Propagation.NEVER)
-  public void deleteFinishProductTest(String code) {
-    finishProductTestRepository.deleteById(code);
-  }
+	@Transactional(propagation = Propagation.NEVER)
+	public void deleteFinishProductTest(String code) {
+		finishProductTestRepository.deleteById(code);
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isFinishProductTestExists(String code) {
-    return finishProductTestRepository.existsByCode(code);
-  }
+	@Transactional(readOnly = true)
+	public boolean isFinishProductTestExists(String code) {
+		return finishProductTestRepository.existsByCode(code);
+	}
 
-  @Transactional(readOnly = true)
-  public List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId) {
-    return finishProductTestRepository.findByTestConfigureId(testConfigureId);
-  }
+	@Transactional(readOnly = true)
+	public List<FinishProductTest> getAllFinishProductTestsByTestConfigure(Long testConfigureId) {
+		return finishProductTestRepository.findByTestConfigureId(testConfigureId);
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId) {
-    return finishProductTestRepository.existsByTestConfigureId(testConfigureId);
-  }
+	@Transactional(readOnly = true)
+	public boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId) {
+		return finishProductTestRepository.existsByTestConfigureId(testConfigureId);
+	}
 
-  @Transactional(readOnly = true)
-  public boolean isDuplicateEntry(String finishProductSampleCode, Long testConfigureId) {
-    if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
-        finishProductSampleCode, testConfigureId)) {
-      return true;
-    }
-    return false;
-  }
+	@Transactional(readOnly = true)
+	public boolean isDuplicateEntry(String finishProductSampleCode, Long testConfigureId) {
+		if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode,
+				testConfigureId)) {
+			return true;
+		}
+		return false;
+	}
 
-  @Transactional(readOnly = true)
-  public List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
-      String finishProductSampleCode, Long testConfigureId) {
-    return finishProductTestRepository
-        .findByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode, testConfigureId);
-  }
+	@Transactional(readOnly = true)
+	public List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
+			String finishProductSampleCode, Long testConfigureId) {
+		return finishProductTestRepository.findByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode,
+				testConfigureId);
+	}
 
-  @Transactional(readOnly = true)
-  public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
-    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(
-        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
-  }
+	@Transactional(readOnly = true)
+	public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
+		return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeIn(
+				currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+						PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
+	}
 
-  @Transactional(readOnly = true)
-  public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode) {
-    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCode(plantCode);
-  }
+	@Transactional(readOnly = true)
+	public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode) {
+		return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCode(plantCode);
+	}
+
+	@Transactional
+	public void updateFinishProductTestComment(FinishProductTest finishProductTest) {
+		finishProductTestRepository.save(finishProductTest);
+	}
 }

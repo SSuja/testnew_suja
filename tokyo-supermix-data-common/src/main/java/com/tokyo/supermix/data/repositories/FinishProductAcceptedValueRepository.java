@@ -7,4 +7,6 @@ import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 public interface FinishProductAcceptedValueRepository
     extends JpaRepository<FinishProductAcceptedValue, Long> {
   List<FinishProductAcceptedValue> findByTestParameterId(Long testParameterId);
+
+  FinishProductAcceptedValue findByTestParameterTestConfigureId(Long testConfigureId);
 }

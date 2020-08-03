@@ -18,11 +18,11 @@ public interface CustomerService {
 
   public boolean isEmailExist(String email);
 
-  public List<Customer> getCustomerByPlantCode(String plantCode);
+  public  List<CustomerResponseDto> getCustomerByPlantCode(String plantCode);
 
   boolean isCustomerExist(Long id);
 
-  public Customer getCustomerById(Long id);
+  public CustomerResponseDto getCustomerById(Long id);
 
   public boolean isUpdatedCustomerEmailExist(Long id, String email);
 
