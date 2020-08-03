@@ -142,7 +142,7 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setValue(test.getValue());
         testParameterResponseDto.setMixDesignField(test.getMixDesignField());
         testParameterResponseDtoList.add(testParameterResponseDto);
-        
+
       }
     });
     List<ParameterEquation> parameterEquationList =
@@ -170,12 +170,27 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   public List<Level> getLevelsByTestConfigureId(Long testConfigId) {
     ArrayList<Level> levelList = new ArrayList<Level>();
+    System.out.println("test config" + testConfigId);
     for (TestParameter testParameter : testParameterRepository
         .findByTestConfigureId(testConfigId)) {
       Level levels = new Level();
-      String[] parts = testParameter.getName().split("_");
-      levels.setLevel(parts[1]);
+      if (testParameter.getName() != null) {
+       
+        String[] parts = testParameter.getName().split("_");
+        System.out.println("test para name" + testParameter.getName());
+        System.out.println("name cvbdyy" + testParameter.getName().split("_").toString());
+        levels.setLevel(parts[1]);
+        testParameter.setLevel(parts[1]);
+        testParameterRepository.save(testParameter);
+        
+      }
+      else {
+        testParameter.setLevel("result");
+        levels.setLevel("result");
+        testParameterRepository.save(testParameter);
+      }
       levelList.add(levels);
+
     }
     return levelList;
   }
@@ -196,8 +211,7 @@ public class TestParameterServiceImpl implements TestParameterService {
     for (TestParameter testParameter : testParam) {
       if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))
           || testParameter.getType().equals(TestParameterType.RESULT)) {
-        isEquationExists =
-            Constants.CHECK_EQUATION_TRUE;
+        isEquationExists = Constants.CHECK_EQUATION_TRUE;
       } else {
         isEquationExists = Constants.CHECK_EQUATION_FALSE;
       }

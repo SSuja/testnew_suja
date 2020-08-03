@@ -486,6 +486,7 @@ public class TestReportServiceImpl implements TestReportService {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     for (String level : testParameterService
         .getAllOriLevel(materialTest.getTestConfigure().getId())) {
+      System.out.println(level);
       SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
       sieveTestTrialDto.setSize(level);
       sieveTestTrialDto.setSieveResultAndParameter(
@@ -502,13 +503,17 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestParameterLevelAndTestParameterTestConfigureId(level, testConfigId);
     for (ParameterResult parameterResult : parameterResultList) {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
-      if (parameterResult.getTestParameter().getGroupKey() != null) {
+     if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
-        sieveResultAndParameter.setParameter(parts[0]);
-      }
+        sieveResultAndParameter.setParameter(parts[0].toString());
+     }
+     else {
+       sieveResultAndParameter.setParameter(parameterResult.getTestParameter().getParameter().getName());
+     }
       sieveResultAndParameter.setVale(parameterResult.getValue());
       sieveResultAndParameterList.add(sieveResultAndParameter);
     }
+    
     return sieveResultAndParameterList;
   }
 }
