@@ -37,9 +37,10 @@ import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestEquation;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
-import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -103,21 +104,25 @@ public class TestReportServiceImpl implements TestReportService {
         materialTestResultRepository.findByMaterialTestCode(materialTestCode);
     reportDto.setMaterialTest(getMaterialTestReport(materialTestCode));
     if (materialTestResult.get(0).getTestEquation() != null) {
-      reportDto.setEquation(testEquation.get(0).getEquation().getFormula());
+      List<String> equations = new ArrayList<String>();
+      for (TestEquation testEquations : testEquation) {
+        equations.add(testEquations.getEquation().getFormula());
+      }
+      reportDto.setEquation(equations);
     }
     reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
     reportDto
         .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
     reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
     reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-    if ((materialTest.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
-      reportDto.setAcceptanceCriteria(
-          getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId(),
-              materialTest.getIncomingSample().getRawMaterial().getId()));
-    } else {
-      reportDto.setAcceptanceCriteria(
+//    if ((materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
+//      reportDto.setAcceptanceCriteria(getMaterialAcceptedValueDto(
+//          materialTest.getTestConfigure().getId(),
+//          materialTest.getIncomingSample().getRawMaterial().getId(), testEquation.get(0).getId()));
+//    } else {
+      reportDto.setAcceptanceCriterias(
           getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
-    }
+//    }
     reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
     return reportDto;
   }
@@ -125,12 +130,16 @@ public class TestReportServiceImpl implements TestReportService {
   private MaterialTestReportDto getMaterialTestReport(String materialTestCode) {
     MaterialTestReportDto materialTestReportDto = new MaterialTestReportDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    List<MaterialTestResult> materialTestResult =
-        materialTestResultRepository.findByMaterialTestCode(materialTestCode);
     materialTestReportDto.setCode(materialTest.getCode());
     materialTestReportDto.setNoOfTrial(materialTest.getNoOfTrial());
     materialTestReportDto.setStatus(materialTest.getStatus());
-    materialTestReportDto.setAverage(materialTestResult.get(0).getResult());
+    List<MaterialTestResult> materialTestResults =
+        materialTestResultRepository.findByMaterialTestCode(materialTestCode);
+    List<Double> results = new ArrayList<Double>();
+    for (MaterialTestResult materialTestResultList : materialTestResults) {
+      results.add(materialTestResultList.getResult());
+    }
+    materialTestReportDto.setAverage(results);
     materialTestReportDto.setDate(materialTest.getCreatedAt());
     materialTestReportDto.setCommment(materialTest.getComment());
     return materialTestReportDto;
@@ -179,20 +188,27 @@ public class TestReportServiceImpl implements TestReportService {
     return trailValueDtoList;
   }
 
-  private AcceptedValueDto getAcceptedCriteriaDetails(Long testConfigureId) {
-    AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-    AcceptedValue acceptedValue = acceptedValueRepository.findByTestConfigureId(testConfigureId);
-    if (acceptedValue.getConditionRange() == Condition.BETWEEN) {
-      acceptedValueDto.setCondition(acceptedValue.getConditionRange());
-      acceptedValueDto.setMaxValue(acceptedValue.getMaxValue());
-      acceptedValueDto.setMinValue(acceptedValue.getMinValue());
-    } else if (acceptedValue.getConditionRange() == Condition.EQUAL
-        || acceptedValue.getConditionRange() == Condition.GREATER_THAN
-        || acceptedValue.getConditionRange() == Condition.LESS_THAN) {
-      acceptedValueDto.setValue(acceptedValue.getValue());
-      acceptedValueDto.setCondition(acceptedValue.getConditionRange());
-    }
-    return acceptedValueDto;
+  private List<AcceptedValueDto> getAcceptedCriteriaDetails(Long testConfigureId) {
+    System.out.println("check1");
+    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
+    List<AcceptedValue> acceptedValueList =
+        acceptedValueRepository.findByTestConfigureId(testConfigureId);
+    acceptedValueList.forEach(values -> {
+      System.out.println("check2");
+      AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
+      if (values.getConditionRange() == Condition.BETWEEN) {
+        acceptedValueDtos.setCondition(values.getConditionRange());
+        acceptedValueDtos.setMaxValue(values.getMaxValue());
+        acceptedValueDtos.setMinValue(values.getMinValue());
+      } else if (values.getConditionRange() == Condition.EQUAL
+          || values.getConditionRange() == Condition.GREATER_THAN
+          || values.getConditionRange() == Condition.LESS_THAN) {
+        acceptedValueDtos.setValue(values.getValue());
+        acceptedValueDtos.setCondition(values.getConditionRange());
+        acceptedValueDtoList.add(acceptedValueDtos);
+      }
+    });
+    return acceptedValueDtoList;
   }
 
   private IncomingSampleReportDto getIncomingSampleDetails(String incomingSampleCode) {
@@ -206,21 +222,27 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleReportDto;
   }
 
-  private AcceptedValueDto getMaterialAcceptedValueDto(Long testConfigureId, Long rawMaterialId) {
-    AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-    MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
-        .findByTestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
-    if (materialAcceptedValue.getConditionRange() == Condition.BETWEEN) {
-      acceptedValueDto.setCondition(materialAcceptedValue.getConditionRange());
-      acceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
-      acceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
-    } else if (materialAcceptedValue.getConditionRange() == Condition.EQUAL
-        || materialAcceptedValue.getConditionRange() == Condition.GREATER_THAN
-        || materialAcceptedValue.getConditionRange() == Condition.LESS_THAN) {
-      acceptedValueDto.setValue(materialAcceptedValue.getValue());
-      acceptedValueDto.setCondition(materialAcceptedValue.getConditionRange());
-    }
-    return acceptedValueDto;
+  private List<AcceptedValueDto> getMaterialAcceptedValueDto(Long testConfigureId,
+      Long rawMaterialId, Long testEquationId) {
+    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
+    List<MaterialAcceptedValue> materialAcceptedValueList =
+        materialAcceptedValueRepository.findByTestConfigureIdAndRawMaterialIdAndTestEquationId(
+            testConfigureId, rawMaterialId, testEquationId);
+    materialAcceptedValueList.forEach(values -> {
+      AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
+      if (values.getConditionRange() == Condition.BETWEEN) {
+        acceptedValueDtos.setCondition(values.getConditionRange());
+        acceptedValueDtos.setMaxValue(values.getMaxValue());
+        acceptedValueDtos.setMinValue(values.getMinValue());
+      } else if (values.getConditionRange() == Condition.EQUAL
+          || values.getConditionRange() == Condition.GREATER_THAN
+          || values.getConditionRange() == Condition.LESS_THAN) {
+        acceptedValueDtos.setCondition(values.getConditionRange());
+        acceptedValueDtos.setValue(values.getValue());
+        acceptedValueDtoList.add(acceptedValueDtos);
+      }
+    });
+    return acceptedValueDtoList;
   }
 
   // Incoming Sample Summary Report
@@ -253,13 +275,13 @@ public class TestReportServiceImpl implements TestReportService {
       incomingSampleTestDto.setAverage(materialTestResult.get(0).getResult());
       incomingSampleTestDto.setStatus(test.getStatus().name());
       incomingSampleTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
-      if ((test.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
-        incomingSampleTestDto.setAcceptanceCriteria(getMaterialAcceptedValueDto(
-            test.getTestConfigure().getId(), test.getIncomingSample().getRawMaterial().getId()));
-      } else {
-        incomingSampleTestDto
-            .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
-      }
+      // if ((test.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
+      // incomingSampleTestDto.setAcceptanceCriteria(getMaterialAcceptedValueDto(
+      // test.getTestConfigure().getId(), test.getIncomingSample().getRawMaterial().getId()));
+      // } else {
+      // incomingSampleTestDto
+      // .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
+      // }
       incomingSampleTestDtoList.add(incomingSampleTestDto);
     });
     return incomingSampleTestDtoList;
@@ -278,15 +300,15 @@ public class TestReportServiceImpl implements TestReportService {
           incomingSampleTestDto.setAverage(materialTestResult.get(0).getResult());
           incomingSampleTestDto.setStatus(test.getStatus().name());
           incomingSampleTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
-          if ((test.getTestConfigure().getMaterialCategory().getName()
-              .equalsIgnoreCase("Admixture"))) {
-            incomingSampleTestDto
-                .setAcceptanceCriteria(getMaterialAcceptedValueDto(test.getTestConfigure().getId(),
-                    test.getIncomingSample().getRawMaterial().getId()));
-          } else {
-            incomingSampleTestDto
-                .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
-          }
+          // if ((test.getTestConfigure().getMaterialCategory().getName()
+          // .equalsIgnoreCase("Admixture"))) {
+          // incomingSampleTestDto
+          // .setAcceptanceCriteria(getMaterialAcceptedValueDto(test.getTestConfigure().getId(),
+          // test.getIncomingSample().getRawMaterial().getId()));
+          // } else {
+          // incomingSampleTestDto
+          // .setAcceptanceCriteria(getAcceptedCriteriaDetails(test.getTestConfigure().getId()));
+          // }
           incomingSampleTestDtoList.add(incomingSampleTestDto);
         });
     return incomingSampleTestDtoList;

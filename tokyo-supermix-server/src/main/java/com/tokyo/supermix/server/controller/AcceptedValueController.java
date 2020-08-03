@@ -120,9 +120,7 @@ public class AcceptedValueController {
   public ResponseEntity<Object> getAcceptedValueByTestId(@PathVariable Long testConfigureId) {
     if (testService.isTestConfigureExist(testConfigureId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
-          mapper.map(
-              acceptedValueService.getAcceptedValueByTestConfigure(
-                  testService.getTestConfigureById(testConfigureId)),
+          mapper.map(acceptedValueService.findByTestConfigure(testConfigureId),
               AcceptedValueResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
