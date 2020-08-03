@@ -13,6 +13,7 @@ public class AcceptedValueRequestDto {
   private Double value;
   private Condition conditionRange;
   private boolean finalResult;
+  private Long testParameterId;
 
   public Long getId() {
     return id;
@@ -76,5 +77,13 @@ public class AcceptedValueRequestDto {
 
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
+  }
+
+  public Long getTestParameterId() {
+    return testParameterId;
+  }
+
+  public void setTestParameterId(Long testParameterId) {
+    this.testParameterId = testParameterId;
   }
 }

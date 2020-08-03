@@ -12,6 +12,7 @@ public class MaterialAcceptedValueRequestDto {
   @NotNull(message = "{materialAcceptedValueRequestDto.testConfigureId.null}")
   private Long testConfigureId;
   private Long testParameterId;
+  private Long testEquationId;
   private Double value;
   private Condition conditionRange;
   private boolean finalResult;
@@ -86,5 +87,13 @@ public class MaterialAcceptedValueRequestDto {
 
   public void setConditionRange(Condition conditionRange) {
     this.conditionRange = conditionRange;
+  }
+
+  public Long getTestEquationId() {
+    return testEquationId;
+  }
+
+  public void setTestEquationId(Long testEquationId) {
+    this.testEquationId = testEquationId;
   }
 }
