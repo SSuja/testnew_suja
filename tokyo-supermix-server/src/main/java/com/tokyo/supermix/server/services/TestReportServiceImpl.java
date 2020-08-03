@@ -39,6 +39,7 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -109,8 +110,7 @@ public class TestReportServiceImpl implements TestReportService {
         .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
     reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
     reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-    if ((materialTest.getTestConfigure().getMaterialCategory().getName()
-        .equalsIgnoreCase("Admixture"))) {
+    if ((materialTest.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
       reportDto.setAcceptanceCriteria(
           getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId(),
               materialTest.getIncomingSample().getRawMaterial().getId()));
@@ -132,6 +132,7 @@ public class TestReportServiceImpl implements TestReportService {
     materialTestReportDto.setStatus(materialTest.getStatus());
     materialTestReportDto.setAverage(materialTestResult.get(0).getResult());
     materialTestReportDto.setDate(materialTest.getCreatedAt());
+    materialTestReportDto.setCommment(materialTest.getComment());
     return materialTestReportDto;
   }
 
@@ -252,7 +253,7 @@ public class TestReportServiceImpl implements TestReportService {
       incomingSampleTestDto.setAverage(materialTestResult.get(0).getResult());
       incomingSampleTestDto.setStatus(test.getStatus().name());
       incomingSampleTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
-      if ((test.getTestConfigure().getMaterialCategory().getName().equalsIgnoreCase("Admixture"))) {
+      if ((test.getTestConfigure().getReportFormat().equals(ReportFormat.ADMIXTURE_REPORT))) {
         incomingSampleTestDto.setAcceptanceCriteria(getMaterialAcceptedValueDto(
             test.getTestConfigure().getId(), test.getIncomingSample().getRawMaterial().getId()));
       } else {
@@ -380,7 +381,7 @@ public class TestReportServiceImpl implements TestReportService {
       concreteTestReportDto
           .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
       concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
-//      concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
+      // concreteTestReportDto.setAverageStrength(finishProductTest.getResult());
     }
     return concreteTestReportDto;
   }
@@ -462,7 +463,7 @@ public class TestReportServiceImpl implements TestReportService {
       TestAndResult testAndResult = new TestAndResult();
       if (!finishProductTest.getTestConfigure().isCoreTest()) {
         testAndResult.setTestName(finishProductTest.getTestConfigure().getTest().getName());
-//        testAndResult.setResult(finishProductTest.getResult());
+        // testAndResult.setResult(finishProductTest.getResult());
         testAndResultList.add(testAndResult);
       }
     }
@@ -502,8 +503,10 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestParameterLevelAndTestParameterTestConfigureId(level, testConfigId);
     for (ParameterResult parameterResult : parameterResultList) {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
-      String[] parts = parameterResult.getTestParameter().getParameter().getName().split("_");
-      sieveResultAndParameter.setParameter(parts[0]);
+      if (parameterResult.getTestParameter().getGroupKey() != null) {
+        String[] parts = parameterResult.getTestParameter().getName().split("_");
+        sieveResultAndParameter.setParameter(parts[0]);
+      }
       sieveResultAndParameter.setVale(parameterResult.getValue());
       sieveResultAndParameterList.add(sieveResultAndParameter);
     }

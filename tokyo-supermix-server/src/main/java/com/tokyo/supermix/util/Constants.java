@@ -273,8 +273,8 @@ public class Constants {
   public static final String TEST_PARAMETER_DELETED = "Test Parameter Successfully Deleted";
   public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test Parameter Updated Successfully";
   public static final String ABBREVIATION = "abbreviation";
-  public static final String CHECK_EQUATION_TRUE = "Test has Equation";
-  public static final String CHECK_EQUATION_FALSE = "Test hasn't Equation";
+  public static final String CHECK_EQUATION_TRUE = "TRUE";
+  public static final String CHECK_EQUATION_FALSE = "FALSE";
 
   /*
    * Constants for Process Sample validation key & Success messages
@@ -511,6 +511,7 @@ public class Constants {
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
   public static final String FINISH_PRODUCT_TEST_STATUS = "finishProductTestStatus";
+  public static final String FINISH_PRODUCT_TEST_COMMENT_UPDATED = "Test Comment is Updated";
 
   public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
   public static final String EMAIL_RECIPIENT = "emailRecipient";

@@ -20,6 +20,7 @@ public class TestParameterRequestDto {
   private boolean acceptedCriteria;
   private InputMethod inputMethods;
   private String level;
+  private String name;
   private MixDesignField mixDesignField;
 
   public Long getId() {
@@ -117,5 +118,12 @@ public class TestParameterRequestDto {
   public void setMixDesignField(MixDesignField mixDesignField) {
     this.mixDesignField = mixDesignField;
   }
-  
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }

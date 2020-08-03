@@ -16,4 +16,7 @@ public interface AcceptedValueRepository
       Long testEquationId);
 
   AcceptedValue findByTestConfigureId(Long testConfigureId);
+
+  public AcceptedValue findByTestConfigureIdAndTestEquationId(Long testConfigureId,
+      Long testEquationId);
 }
