@@ -12,6 +12,7 @@ public class MaterialAcceptedValueResponseDto {
   private TestParameterResponseDto testParameter;
   private Condition conditionRange;
   private boolean finalResult;
+  private TestEquationResponseDto testEquation;
 
   public Long getId() {
     return id;
@@ -83,5 +84,13 @@ public class MaterialAcceptedValueResponseDto {
 
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
+  }
+
+  public TestEquationResponseDto getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquationResponseDto testEquation) {
+    this.testEquation = testEquation;
   }
 }
