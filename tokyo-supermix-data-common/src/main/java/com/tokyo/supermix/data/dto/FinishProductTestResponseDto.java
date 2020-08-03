@@ -9,7 +9,7 @@ public class FinishProductTestResponseDto {
   private TestConfigureResponseDto testConfigure;
   private Long noOfTrial;
   private MaterialStateDto materialState;
-
+  private String comments;
   public String getCode() {
     return code;
   }
@@ -56,5 +56,13 @@ public class FinishProductTestResponseDto {
 
   public void setMaterialState(MaterialStateDto materialState) {
     this.materialState = materialState;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
   }
 }

@@ -21,7 +21,6 @@ import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
-import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -175,16 +174,15 @@ public class TestParameterServiceImpl implements TestParameterService {
         .findByTestConfigureId(testConfigId)) {
       Level levels = new Level();
       if (testParameter.getName() != null) {
-       
+
         String[] parts = testParameter.getName().split("_");
         System.out.println("test para name" + testParameter.getName());
         System.out.println("name cvbdyy" + testParameter.getName().split("_").toString());
         levels.setLevel(parts[1]);
         testParameter.setLevel(parts[1]);
         testParameterRepository.save(testParameter);
-        
-      }
-      else {
+
+      } else {
         testParameter.setLevel("result");
         levels.setLevel("result");
         testParameterRepository.save(testParameter);
@@ -206,14 +204,12 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   public String checkEqutaionExistsForTest(Long testConfigureId) {
-    String isEquationExists = " ";
+    String isEquationExists =Constants.CHECK_EQUATION_FALSE;
     List<TestParameter> testParam = testParameterRepository.findByTestConfigureId(testConfigureId);
     for (TestParameter testParameter : testParam) {
-      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))
-          || testParameter.getType().equals(TestParameterType.RESULT)) {
+      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))){
         isEquationExists = Constants.CHECK_EQUATION_TRUE;
-      } else {
-        isEquationExists = Constants.CHECK_EQUATION_FALSE;
+        break;
       }
     }
     return isEquationExists;

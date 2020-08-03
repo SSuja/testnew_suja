@@ -26,43 +26,65 @@ public class FinishProductTest extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialStateId", nullable = false)
   private MaterialState materialState;
+  private String comments;
+
   public String getCode() {
     return code;
   }
+
   public void setCode(String code) {
     this.code = code;
   }
+
   public Status getStatus() {
     return status;
   }
+
   public void setStatus(Status status) {
     this.status = status;
   }
+
   public FinishProductSample getFinishProductSample() {
     return finishProductSample;
   }
+
   public void setFinishProductSample(FinishProductSample finishProductSample) {
     this.finishProductSample = finishProductSample;
   }
+
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
+
   public void setTestConfigure(TestConfigure testConfigure) {
     this.testConfigure = testConfigure;
   }
+
   public Long getNoOfTrial() {
     return noOfTrial;
   }
+
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
   }
+
   public MaterialState getMaterialState() {
     return materialState;
   }
+
   public void setMaterialState(MaterialState materialState) {
     this.materialState = materialState;
   }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
   }
 }
