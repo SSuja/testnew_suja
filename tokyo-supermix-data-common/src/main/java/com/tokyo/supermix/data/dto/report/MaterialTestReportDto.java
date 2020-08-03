@@ -9,6 +9,7 @@ public class MaterialTestReportDto {
   private Long noOfTrial;
   private Status status;
   private Date date;
+  private String commment;
 
   public String getCode() {
     return code;
@@ -48,5 +49,13 @@ public class MaterialTestReportDto {
 
   public void setAverage(Double average) {
     this.average = average;
+  }
+
+  public String getCommment() {
+    return commment;
+  }
+
+  public void setCommment(String commment) {
+    this.commment = commment;
   }
 }

@@ -132,6 +132,7 @@ public class TestReportServiceImpl implements TestReportService {
     materialTestReportDto.setStatus(materialTest.getStatus());
     materialTestReportDto.setAverage(materialTestResult.get(0).getResult());
     materialTestReportDto.setDate(materialTest.getCreatedAt());
+    materialTestReportDto.setCommment(materialTest.getComment());
     return materialTestReportDto;
   }
 

@@ -130,9 +130,10 @@ public class FinishProductTestController {
     if (finishProductTestService.isFinishProductTestExistsByTestConfigure(testConfigureId)) {
       logger.debug("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
-          mapper.map(finishProductTestService
-              .getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(finishProductSampleCode,
-                  testConfigureId),
+          mapper.map(
+              finishProductTestService
+                  .getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
+                      finishProductSampleCode, testConfigureId),
               FinishProductTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -149,5 +150,14 @@ public class FinishProductTestController {
                 FinishProductTestResponseDto.class),
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @PutMapping(value = EndpointURI.FINISH_PRODUCT_TEST_COMMENT)
+  public ResponseEntity<Object> updateFinishProductTestComment(
+      @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
+    finishProductTestService.updateFinishProductTestComment(
+        mapper.map(finishProductTestRequestDto, FinishProductTest.class));
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.FINISH_PRODUCT_TEST_COMMENT_UPDATED), HttpStatus.OK);
   }
 }
