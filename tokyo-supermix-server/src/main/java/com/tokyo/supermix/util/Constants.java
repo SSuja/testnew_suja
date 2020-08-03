@@ -508,6 +508,7 @@ public class Constants {
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
   public static final String FINISH_PRODUCT_TEST_STATUS = "finishProductTestStatus";
+  public static final String FINISH_PRODUCT_TEST_COMMENT_UPDATED = "Test Comment is Updated";
 
   public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
   public static final String EMAIL_RECIPIENT = "emailRecipient";
