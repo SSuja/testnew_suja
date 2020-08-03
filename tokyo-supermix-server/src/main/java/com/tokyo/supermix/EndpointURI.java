@@ -510,7 +510,7 @@ public final class EndpointURI {
    */
   public static final String FINISH_PRODUCT_TRIAL = BASE_API_PATH + "finish-product-trial";
   public static final String FINISH_PRODUCT_TRIALS = BASE_API_PATH + "finish-product-trials";
-  public static final String FINISH_PRODUCT_TRIAL_BY_CODE = FINISH_PRODUCT_TRIAL + CODE;
+  public static final String FINISH_PRODUCT_TRIAL_BY_ID = FINISH_PRODUCT_TRIAL + ID;
   public static final String FINISH_PRODUCT_TRIALS_BY_FINISH_PRODUCT_TEST_CODE =
       FINISH_PRODUCT_TRIALS + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   public static final String FINISH_PRODUCT_TEST_STATUS_BY_FINISH_PRODUCT_TEST_CODE =
@@ -521,9 +521,11 @@ public final class EndpointURI {
       BASE_API_PATH + "finish-product-parameter-results";
   public static final String FINISH_PRODUCT_PARAMETER_RESULT =
       BASE_API_PATH + "finish-product-parameter-result";
-  public static final String FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_SAMPLE =
-      FINISH_PRODUCT_PARAMETER_RESULT + SLASH + "finish-product-sample" + SLASH
-          + "{finishProductSampleCode}";
+  public static final String FINISH_PRODUCT_PARAMETER_RESULT_BY_FINISH_PRODUCT_TEST_CODE =
+      FINISH_PRODUCT_PARAMETER_RESULT + SLASH + "finish-product-test-result" + SLASH
+          + "{finishProductTestCode}";
+  public static final String FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE =
+      FINISH_PRODUCT_TRIAL + SLASH + "finish-product-test" + SLASH + "{finishProductCode}";
   /*
    * Finish Product Test
    */
@@ -602,6 +604,18 @@ public final class EndpointURI {
   public static final String EMAIL_POINTS_BY_STATUS = EMAIL_POINT + SLASH + "{status}";
   public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
       EMAIL_POINT  + SLASH + "admin-status"+ SLASH + "{status}";
+
+  /*
+   * Finish Product Accepted Value
+   */
+  public static final String FINISH_PRODUCT_ACCEPTED_VALUE =
+      BASE_API_PATH + "finish-product-accepted-value";
+  public static final String FINISH_PRODUCT_ACCEPTED_VALUES =
+      BASE_API_PATH + "finish-product-accepted-values";
+  public static final String FINISH_PRODUCT_ACCEPTED_VALUE_BY_ID =
+      FINISH_PRODUCT_ACCEPTED_VALUE + ID;
+  public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_PARAMETER =
+      FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-parameter" + SLASH + "{testParameterId}";
 
   private EndpointURI() {}
 }

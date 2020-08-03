@@ -19,7 +19,6 @@ import com.tokyo.supermix.data.repositories.TestParameterRepository;
 public class ParameterEquationServiceImpl implements ParameterEquationService {
   @Autowired
   private ParameterEquationRepository parameterEquationRepository;
-
   @Autowired
   TestParameterRepository testParameterRepository;
   @Autowired
@@ -33,9 +32,11 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isEquationIdAndTestParameterId(Long equationId, Long testParameterId) {
-    return parameterEquationRepository.existsByEquationIdAndTestParameterId(equationId,
-        testParameterId);
+  public boolean isEquationIdAndTestParameterId(Long equationId, Long testParameterId,
+      Long testConfigureId) {
+    return parameterEquationRepository
+        .existsByEquationIdAndTestParameterIdAndTestParameterTestConfigureId(equationId,
+            testParameterId, testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -88,7 +89,7 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
       parameterEquationElementRepository.save(parameterEquationElement);
     }
   }
-  
+
   @Transactional(readOnly = true)
   public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId) {
     return parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);

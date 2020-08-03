@@ -160,4 +160,11 @@ public class PlantRolePlantPermissionController {
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
   }
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PERMISSION_MODULE_STATUS_USER_ID)
+  public ResponseEntity<Object> getModulePlantRolePermissionsByRoleAndModuleStatuswithCombine(
+      @PathVariable Long userId,  @PathVariable String plantCode) {
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
+        plantRolePlantPermissionServices.getCombine(userId, plantCode),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 }

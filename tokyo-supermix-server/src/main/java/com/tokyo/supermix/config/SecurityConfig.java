@@ -182,7 +182,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.UNIT_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_UNIT)
         // customer
-        .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMER_BY_PLANT)
+        .antMatchers(HttpMethod.GET, EndpointURI.CUSTOMERS)
         .hasAuthority(PermissionConstants.VIEW_CUSTOMER)
         .antMatchers(HttpMethod.POST, EndpointURI.CUSTOMER)
         .hasAuthority(PermissionConstants.CREATE_CUSTOMER)

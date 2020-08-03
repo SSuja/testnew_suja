@@ -7,6 +7,7 @@ import com.tokyo.supermix.data.enums.UserType;
 
 public interface UserPlantRoleRepository extends JpaRepository<UserPlantRole, Long> {
   List<UserPlantRole> findByUserId(Long userId);
+  List<UserPlantRole> findByUserIdAndPlantRolePlantCode(Long userId, String plantCode);
 
   List<UserPlantRole> findByPlantRoleId(Long PlantRoleId);
   List<UserPlantRole> findByPlantRoleIdAndUserUserType(Long PlantRoleId,UserType userType);

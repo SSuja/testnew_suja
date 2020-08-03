@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,136 +11,117 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import com.tokyo.supermix.data.entities.auth.DateAudit;
-import com.tokyo.supermix.data.enums.Format;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
-import com.tokyo.supermix.data.enums.TestType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_configure")
 public class TestConfigure extends DateAudit implements Serializable {
-  private static final long serialVersionUID = 1L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-  private boolean coreTest;
-  private String description;
-  private String testProcedure;
-  private String prefix;
-  @Enumerated(EnumType.ORDINAL)
-  private TestType testType;
-  @Enumerated(EnumType.ORDINAL)
-  private Format format;
-  private boolean isTrialExist;
-  @Enumerated(EnumType.ORDINAL)
-  private ReportFormat reportFormat;
-  @ManyToOne
-  @JoinColumn(name = "testId", nullable = false)
-  private Test test;
-  @ManyToOne
-  @JoinColumn(name = "materialCategoryId", nullable = false)
-  private MaterialCategory materialCategory;
-  @ManyToOne
-  @JoinColumn(name = "materialSubCategoryId", nullable = true)
-  private MaterialSubCategory materialSubCategory;
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	private boolean coreTest;
+	private String description;
+	private String testProcedure;
+	private String prefix;
+	@Enumerated(EnumType.ORDINAL)
+	private MainType testType;
+	@Enumerated(EnumType.ORDINAL)
+	private ReportFormat reportFormat;
+	@ManyToOne
+	@JoinColumn(name = "testId", nullable = false)
+	private Test test;
+	@ManyToOne
+	@JoinColumn(name = "materialCategoryId", nullable = false)
+	private MaterialCategory materialCategory;
+	@ManyToOne
+	@JoinColumn(name = "materialSubCategoryId", nullable = true)
+	private MaterialSubCategory materialSubCategory;
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public MaterialCategory getMaterialCategory() {
-    return materialCategory;
-  }
+	public MaterialCategory getMaterialCategory() {
+		return materialCategory;
+	}
 
-  public void setMaterialCategory(MaterialCategory materialCategory) {
-    this.materialCategory = materialCategory;
-  }
+	public void setMaterialCategory(MaterialCategory materialCategory) {
+		this.materialCategory = materialCategory;
+	}
 
-  public MaterialSubCategory getMaterialSubCategory() {
-    return materialSubCategory;
-  }
+	public MaterialSubCategory getMaterialSubCategory() {
+		return materialSubCategory;
+	}
 
-  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
-  }
+	public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+		this.materialSubCategory = materialSubCategory;
+	}
 
-  public boolean isCoreTest() {
-    return coreTest;
-  }
+	public boolean isCoreTest() {
+		return coreTest;
+	}
 
-  public void setCoreTest(boolean coreTest) {
-    this.coreTest = coreTest;
-  }
+	public void setCoreTest(boolean coreTest) {
+		this.coreTest = coreTest;
+	}
 
-  public Test getTest() {
-    return test;
-  }
+	public Test getTest() {
+		return test;
+	}
 
-  public void setTest(Test test) {
-    this.test = test;
-  }
+	public void setTest(Test test) {
+		this.test = test;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public String getDescription() {
+		return description;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-  public String getTestProcedure() {
-    return testProcedure;
-  }
+	public String getTestProcedure() {
+		return testProcedure;
+	}
 
-  public void setTestProcedure(String testProcedure) {
-    this.testProcedure = testProcedure;
-  }
+	public void setTestProcedure(String testProcedure) {
+		this.testProcedure = testProcedure;
+	}
 
-  public String getPrefix() {
-    return prefix;
-  }
+	public String getPrefix() {
+		return prefix;
+	}
 
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
-  }
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-  public TestType getTestType() {
-    return testType;
-  }
+	public MainType getTestType() {
+		return testType;
+	}
 
-  public void setTestType(TestType testType) {
-    this.testType = testType;
-  }
+	public void setTestType(MainType testType) {
+		this.testType = testType;
+	}
 
-  public Format getFormat() {
-    return format;
-  }
+	public ReportFormat getReportFormat() {
+		return reportFormat;
+	}
 
-  public void setFormat(Format format) {
-    this.format = format;
-  }
-
-  public boolean isTrialExist() {
-    return isTrialExist;
-  }
-
-  public void setTrialExist(boolean isTrialExist) {
-    this.isTrialExist = isTrialExist;
-  }
-
-  public ReportFormat getReportFormat() {
-    return reportFormat;
-  }
-
-  public void setReportFormat(ReportFormat reportFormat) {
-    this.reportFormat = reportFormat;
-  }
+	public void setReportFormat(ReportFormat reportFormat) {
+		this.reportFormat = reportFormat;
+	}
 }

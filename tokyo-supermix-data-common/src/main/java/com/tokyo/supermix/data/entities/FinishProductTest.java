@@ -15,7 +15,6 @@ public class FinishProductTest extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
-  private double result;
   private Status status;
   @ManyToOne
   @JoinColumn(name = "finishProductSampleCode", nullable = false)
@@ -23,47 +22,46 @@ public class FinishProductTest extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
-
+  private Long noOfTrial;
+  @ManyToOne
+  @JoinColumn(name = "materialStateId", nullable = false)
+  private MaterialState materialState;
   public String getCode() {
     return code;
   }
-
   public void setCode(String code) {
     this.code = code;
   }
-
-  public double getResult() {
-    return result;
-  }
-
-  public void setResult(double result) {
-    this.result = result;
-  }
-
   public Status getStatus() {
     return status;
   }
-
   public void setStatus(Status status) {
     this.status = status;
   }
-
   public FinishProductSample getFinishProductSample() {
     return finishProductSample;
   }
-
   public void setFinishProductSample(FinishProductSample finishProductSample) {
     this.finishProductSample = finishProductSample;
   }
-
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
-
   public void setTestConfigure(TestConfigure testConfigure) {
     this.testConfigure = testConfigure;
   }
-
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
+  }
+  public MaterialState getMaterialState() {
+    return materialState;
+  }
+  public void setMaterialState(MaterialState materialState) {
+    this.materialState = materialState;
+  }
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
