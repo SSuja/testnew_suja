@@ -104,10 +104,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isexistByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(Long testId,
-      Long materialCategoryId, Long materialSubCategoryId) {
-    if (testConfigureRepository.existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(testId,
-        materialCategoryId, materialSubCategoryId)) {
+  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
+    if (testConfigureRepository.existsByTestIdAndMaterialSubCategoryId(testId,
+        materialSubCategoryId)) {
       return true;
     }
     return false;
@@ -191,4 +190,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     return testConfigure.getId();
   }
 
+  public boolean isUpdatedMaterialSubCategoryAndTest(Long id, Long testId,
+      Long materialSubCategoryId) {
+    if ((!getTestConfigureById(id).getTest().getId().equals(testId))
+        && (!getTestConfigureById(testId).getMaterialSubCategory().getId()
+            .equals(materialSubCategoryId))
+        && (isExistByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId))) {
+      return true;
+    }
+    return false;
+  }
 }

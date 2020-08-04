@@ -321,6 +321,8 @@ public class Constants {
       "Material Accepted Value Added Successfully";
   public static final String UPDATE_MATERIAL_ACCEPTED_VALUE_SUCCESS =
       "Material Accepted Value Updated Successfully";
+  public static final String MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED =
+      "Material Accepted Value is Already Depended";
   /*
    * Constants for Accepted Value validation key & Success messages
    */
@@ -331,6 +333,7 @@ public class Constants {
   public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";
   public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
   public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated Successfully";
+  public static final String ACCEPTED_VALUE_ALREADY_DEPENDED = "Accepted Value is Already Depended";
   /*
    * Constants for Material Test validation key & Success messages
    */
