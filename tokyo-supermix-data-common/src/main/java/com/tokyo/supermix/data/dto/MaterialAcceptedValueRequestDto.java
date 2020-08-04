@@ -1,15 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.Condition;
 
 public class MaterialAcceptedValueRequestDto {
   private Long id;
   private Double minValue;
   private Double maxValue;
-  @NotNull(message = "{materialAcceptedValueRequestDto.rawMaterialId.null}")
   private Long rawMaterialId;
-  @NotNull(message = "{materialAcceptedValueRequestDto.testConfigureId.null}")
   private Long testConfigureId;
   private Long testParameterId;
   private Long testEquationId;
