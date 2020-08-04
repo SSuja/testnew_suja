@@ -1,7 +1,7 @@
 package com.tokyo.supermix.data.entities.auth;
 
 import java.io.Serializable;
-
+import java.util.stream.Stream;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -79,4 +79,5 @@ public class UserPlantRole implements Serializable {
   public void setPlantRole(PlantRole plantRole) {
     this.plantRole = plantRole;
   }
+
 }
