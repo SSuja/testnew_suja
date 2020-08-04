@@ -20,7 +20,8 @@ public interface TestParameterService {
 
   public boolean isTestConfigureIdExist(Long id);
 
-  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation);
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation,
+      Long parameterId);
 
   public Page<TestParameter> searchTestParameter(Predicate predicate, int size, int page);
 
@@ -37,6 +38,10 @@ public interface TestParameterService {
   public TestParameterEquationDto getTestParameterEquation(Long testConfigureId);
 
   public Set<String> getAllOriLevel(Long testConfigId);
+
+  public boolean isParameterExists(Long testConfigureId, Long parameterId);
+
+  public boolean isUpdatedExists(Long id, Long testConfigureId, Long parameterId);
   
   public String checkEqutaionExistsForTest(Long testConfigureId);
 }

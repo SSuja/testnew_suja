@@ -1428,6 +1428,17 @@ public class ValidationFailureStatusCodes {
   @Value("${testParameterDto.abbreviation.null}")
   private String abbreviationIsNull;
 
+  @Value("${testParameterDto.abbreviation.alreadyExist}")
+  private String abbreviationAlreadyExit;
+
+  public String getAbbreviationAlreadyExit() {
+    return abbreviationAlreadyExit;
+  }
+
+  public void setAbbreviationAlreadyExit(String abbreviationAlreadyExit) {
+    this.abbreviationAlreadyExit = abbreviationAlreadyExit;
+  }
+
   public String getAbbreviationIsNull() {
     return abbreviationIsNull;
   }
