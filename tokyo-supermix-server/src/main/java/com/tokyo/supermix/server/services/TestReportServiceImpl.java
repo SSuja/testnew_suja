@@ -13,6 +13,7 @@ import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
+import com.tokyo.supermix.data.dto.report.AcceptedValueForSieveTest;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
@@ -372,40 +373,42 @@ public class TestReportServiceImpl implements TestReportService {
         testParameterRepository.findByTestConfigureIdAndInputMethods(
             finishProductTest.getTestConfigure().getId(), InputMethod.OBSERVE);
 
-//    if (!finishProductTest.getTestConfigure().isCoreTest()) {
-      concreteTestReportDto.setAddress(
-          finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
-      concreteTestReportDto.setPlantName(
-          finishProductTest.getFinishProductSample().getMixDesign().getPlant().getName());
-      concreteTestReportDto.setFaxNumber(
-          finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
+    // if (!finishProductTest.getTestConfigure().isCoreTest()) {
+    concreteTestReportDto.setAddress(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
+    concreteTestReportDto.setPlantName(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getName());
+    concreteTestReportDto.setFaxNumber(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
+    concreteTestReportDto
+        .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
+    if (finishProductTest.getFinishProductSample().getProject() != null) {
+      concreteTestReportDto.setCustomerName(
+          finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
       concreteTestReportDto
-          .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
-      if (finishProductTest.getFinishProductSample().getProject() != null) {
-        concreteTestReportDto.setCustomerName(
-            finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
-        concreteTestReportDto
-            .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
+          .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
+    }
+    concreteTestReportDto
+        .setTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
+    concreteTestReportDto
+        .setTargetSlump(finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
+    concreteTestReportDto
+        .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
+    concreteTestReportDto
+        .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
+    concreteTestReportDto
+        .setAgeOfCubeTest(finishProductTest.getTestConfigure().getTest().getName());
+    concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
+    for (TestParameter testParamter : testParamterList) {
+      if (testParamter.getType().equals(TestParameterType.INPUT)
+          && testParamter.getMixDesignField() == null) {
+        FinishProductParameterResult finishProductResult =
+            finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
+                testParamter.getId(), finishProductTestCode);
+        concreteTestReportDto.setAverageStrength(finishProductResult.getResult());
       }
-      concreteTestReportDto.setTargetGrade(
-          finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
-      concreteTestReportDto.setTargetSlump(
-          finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
-      concreteTestReportDto
-          .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
-      concreteTestReportDto
-          .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
-      concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
-      for (TestParameter testParamter : testParamterList) {
-        if (testParamter.getType().equals(TestParameterType.INPUT)
-            && testParamter.getMixDesignField() == null) {
-          FinishProductParameterResult finishProductResult =
-              finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
-                  testParamter.getId(), finishProductTestCode);
-          concreteTestReportDto.setAverageStrength(finishProductResult.getResult());
-        }
-      }
-   // }
+    }
+    // }
     return concreteTestReportDto;
   }
 
@@ -415,9 +418,13 @@ public class TestReportServiceImpl implements TestReportService {
     ArrayList<CubeTestReportDto> cubeTestReportDtoList = new ArrayList<CubeTestReportDto>();
     for (FinishProductTrial finishProductTrial : finishProductTrialList) {
       CubeTestReportDto cubeTestReportDto = new CubeTestReportDto();
-      cubeTestReportDto.setCubeNo(finishProductTrial.getTrialNo());
-      cubeTestReportDto.setStrengthValue(finishProductTrial.getValue());
-      cubeTestReportDtoList.add(cubeTestReportDto);
+      if (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT)
+          && finishProductTrial.getTestParameter().getMixDesignField() == null) {
+        cubeTestReportDto.setCubeNo(finishProductTrial.getTrialNo());
+        cubeTestReportDto.setStrengthValue(finishProductTrial.getValue());
+        cubeTestReportDtoList.add(cubeTestReportDto);
+      }
     }
     return cubeTestReportDtoList;
   }
@@ -527,18 +534,55 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestParameterLevelAndTestParameterTestConfigureId(level, testConfigId);
     for (ParameterResult parameterResult : parameterResultList) {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
-     if (parameterResult.getTestParameter().getName() != null) {
+      if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
-        sieveResultAndParameter.setParameter(parts[0].toString());
-     }
-     else {
-       sieveResultAndParameter.setParameter(parameterResult.getTestParameter().getParameter().getName());
-     }
-      sieveResultAndParameter.setVale(parameterResult.getValue());
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.MEASUREMENT)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
+          AcceptedValue acceptedValue = acceptedValueRepository
+              .findByTestParameterId(parameterResult.getTestParameter().getId());
+          sieveResultAndParameter.setParameter(parts[0].toString());
+          sieveResultAndParameter.setVale(acceptedValue.getMaxValue().toString() + "  -  "
+              + acceptedValue.getMinValue().toString());
+        } else {
+          sieveResultAndParameter.setParameter(parts[0].toString());
+          sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        }
+
+      } else {
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
+          TestEquation testEquation = testEquationRepository
+              .findByTestParameterId(parameterResult.getTestParameter().getId());
+          getAcceptedValueForSieveTestResult(testConfigId,
+              parameterResult.getTestParameter().getId(), testEquation.getId());
+        }
+        sieveResultAndParameter
+            .setParameter(parameterResult.getTestParameter().getParameter().getName());
+        sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+      }
       sieveResultAndParameterList.add(sieveResultAndParameter);
     }
-    
     return sieveResultAndParameterList;
+  }
+
+  public AcceptedValueForSieveTest getAcceptedValueForSieveTest(Long testParameterId) {
+    AcceptedValueForSieveTest acceptedValueForSieveTest = new AcceptedValueForSieveTest();
+    AcceptedValue acceptedValue = acceptedValueRepository.findByTestParameterId(testParameterId);
+    acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+    acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+    acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+    return acceptedValueForSieveTest;
+  }
+
+  public AcceptedValueForSieveTest getAcceptedValueForSieveTestResult(Long testConfigId,
+      Long testParaId, Long testEquationId) {
+    AcceptedValueForSieveTest acceptedValueForSieveTest = new AcceptedValueForSieveTest();
+    AcceptedValue acceptedValue = acceptedValueRepository
+        .findByTestConfigureIdAndTestEquationId(testConfigId, testEquationId);
+    acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+    acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+    acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+    return acceptedValueForSieveTest;
   }
 
   public FinishProductTestReportDetailDto getFinishProductTestDetailReport(

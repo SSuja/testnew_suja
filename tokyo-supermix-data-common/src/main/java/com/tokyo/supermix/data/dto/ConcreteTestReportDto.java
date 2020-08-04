@@ -13,7 +13,7 @@ public class ConcreteTestReportDto {
   private double targetSlump;
   private String dateOfTesting;
   private String dateOfCasting;
-  private Long ageOfCubeTest;
+  private String ageOfCubeTest;
   private double averageStrength;
   private List<CubeTestReportDto> CubeTestReports;
 
@@ -97,11 +97,11 @@ public class ConcreteTestReportDto {
     this.dateOfCasting = dateOfCasting;
   }
 
-  public Long getAgeOfCubeTest() {
+  public String getAgeOfCubeTest() {
     return ageOfCubeTest;
   }
 
-  public void setAgeOfCubeTest(Long ageOfCubeTest) {
+  public void setAgeOfCubeTest(String ageOfCubeTest) {
     this.ageOfCubeTest = ageOfCubeTest;
   }
 
