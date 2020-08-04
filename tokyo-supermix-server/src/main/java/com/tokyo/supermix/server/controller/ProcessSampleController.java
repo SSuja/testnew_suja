@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +69,11 @@ public class ProcessSampleController {
 
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getAllProcessSamplesByCurrentUserPermission(
-      @CurrentUser UserPrincipal currentUser, HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
-          mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser), ProcessSampleResponseDto.class),
+          mapper.map(processSampleService.getAllProcessSamplesByCurrentUser(currentUser),
+              ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

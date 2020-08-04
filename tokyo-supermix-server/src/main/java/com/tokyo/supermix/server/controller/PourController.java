@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,13 +133,12 @@ public class PourController {
 
   @GetMapping(value = EndpointURI.POUR_BY_PLANT)
   public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser,
-      HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       logger.debug("gat all pour");
       return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
-          mapper.map(pourService.getAllPourByPlant(currentUser), PourDtoResponse.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          mapper.map(pourService.getAllPourByPlant(currentUser), PourDtoResponse.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR)

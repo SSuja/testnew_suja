@@ -1,8 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
-import javax.servlet.http.HttpSession;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
 import com.tokyo.supermix.data.dto.MixDesignResponseDto;
@@ -155,21 +157,23 @@ public class MixDesignController {
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
-  
+
   @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-                mapper.map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
-                RestApiResponseStatus.OK), null, HttpStatus.OK);
-  }
-      if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN).contains(plantCode)) {
-          return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-                    mapper.map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
-                    RestApiResponseStatus.OK), null, HttpStatus.OK);
-      }
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-                validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS, mapper
+          .map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS, mapper
+          .map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

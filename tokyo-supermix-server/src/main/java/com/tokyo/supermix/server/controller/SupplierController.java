@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +61,8 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
   public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
-      HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
+      @PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
           mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -143,9 +141,8 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
   public ResponseEntity<Object> getSupplierBySupplierCategoryId(
-      @PathVariable Long suppilerCategoryId, HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
+      @PathVariable Long suppilerCategoryId,@PathVariable String plantCode) {
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
           mapper.map(supplierService.findBySupplierCategoryId(suppilerCategoryId),
               SupplierResponseDto.class),

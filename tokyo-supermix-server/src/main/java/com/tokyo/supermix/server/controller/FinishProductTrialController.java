@@ -1,8 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialRequestDto;
@@ -58,9 +60,8 @@ public class FinishProductTrialController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductTrialsByPlant(
-      @CurrentUser UserPrincipal currentUser,HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_TRIALS,
               mapper.map(finishProductTrialService.getAllFinishProductTrialsByPlant(currentUser),

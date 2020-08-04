@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueRequestDto;
@@ -146,13 +147,12 @@ public class FinishProductSampleIssueController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductSampleIssuesByPlant(
-      @CurrentUser UserPrincipal currentUser,HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-              mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(currentUser),
-                  FinishProductSampleIssueResponseDto.class),
+              mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(
+                  currentUser), FinishProductSampleIssueResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
