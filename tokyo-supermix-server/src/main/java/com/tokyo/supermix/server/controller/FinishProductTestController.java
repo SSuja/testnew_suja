@@ -168,4 +168,13 @@ public class FinishProductTestController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+
+  @PutMapping(value = EndpointURI.FINISH_PRODUCT_TEST_COMMENT)
+  public ResponseEntity<Object> updateFinishProductTestComment(
+      @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
+    finishProductTestService.updateFinishProductTestComment(
+        mapper.map(finishProductTestRequestDto, FinishProductTest.class));
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.FINISH_PRODUCT_TEST_COMMENT_UPDATED), HttpStatus.OK);
+  }
 }

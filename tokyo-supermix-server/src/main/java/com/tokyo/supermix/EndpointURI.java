@@ -537,6 +537,7 @@ public final class EndpointURI {
           + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   public static final String FINISH_PRODUCT_TEST_BY_PLANT = FINISH_PRODUCT_TEST + PLANT_WISE;
+  public static final String FINISH_PRODUCT_TEST_COMMENT = FINISH_PRODUCT_TEST + SLASH + "comment";
 
   /*
    * Employee apis
@@ -614,6 +615,9 @@ public final class EndpointURI {
       FINISH_PRODUCT_ACCEPTED_VALUE + ID;
   public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_PARAMETER =
       FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+
+  public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_CONFIGURE =
+      FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
   private EndpointURI() {}
 }

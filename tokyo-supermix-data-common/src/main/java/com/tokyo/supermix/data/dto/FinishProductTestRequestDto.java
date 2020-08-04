@@ -9,6 +9,7 @@ public class FinishProductTestRequestDto {
   private Long testConfigureId;
   private Long noOfTrial;
   private Long materialStateId;
+  private String comments;
 
   public String getCode() {
     return code;
@@ -56,5 +57,13 @@ public class FinishProductTestRequestDto {
 
   public void setMaterialStateId(Long materialStateId) {
     this.materialStateId = materialStateId;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
   }
 }

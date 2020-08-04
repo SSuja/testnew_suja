@@ -40,7 +40,7 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getAllMaterialTestByPlant(UserPrincipal currentUser);
 
-	public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj);
+  public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj);
 
-	public void updateMaterialTestComment(MaterialTest materialTest);
+  public void updateMaterialTestComment(MaterialTest materialTest);
 }
