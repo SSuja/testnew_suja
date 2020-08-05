@@ -80,6 +80,14 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     this.testConfigure = testConfigure;
   }
 
+  public TestEquation getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquation testEquation) {
+    this.testEquation = testEquation;
+  }
+
   public RawMaterial getRawMaterial() {
     return rawMaterial;
   }
@@ -96,39 +104,23 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     this.conditionRange = conditionRange;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public boolean isFinalResult() {
-    return finalResult;
-  }
-
-  public TestEquation getTestEquation() {
-    return testEquation;
-  }
-
-  public void setTestEquation(TestEquation testEquation) {
-    this.testEquation = testEquation;
-  }
-
-  public void setFinalResult(boolean finalResult) {
-    this.finalResult = finalResult;
-  }
-
-  public TestEquation getTestEquation() {
-    return testEquation;
-  }
-
-  public void setTestEquation(TestEquation testEquation) {
-    this.testEquation = testEquation;
-  }
-
   public TestParameter getTestParameter() {
     return testParameter;
   }
 
   public void setTestParameter(TestParameter testParameter) {
     this.testParameter = testParameter;
+  }
+
+  public boolean isFinalResult() {
+    return finalResult;
+  }
+
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }
