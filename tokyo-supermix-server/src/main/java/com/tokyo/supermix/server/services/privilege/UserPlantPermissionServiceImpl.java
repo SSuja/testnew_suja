@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
+import com.tokyo.supermix.data.enums.RoleType;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
@@ -216,7 +217,8 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     for (UserPlantPermission permission : userPlantPermissionList) {
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
-      UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserId(plantCode, userId);
+      UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserIdAndRoleType(plantCode, userId,RoleType.INDIVIDUAL);
+      if(userPlantRole!=null) {
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getPlantPermission().getPermission().getId());
@@ -231,7 +233,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
         subStatus = true;
       }
       rolePermissionDtoList.add(plantRolePlantPermissionRequestDto);
-    }
+    }}
     return subStatus;
   }
 
