@@ -8,9 +8,8 @@ public class FinishProductTestResponseDto {
   private FinishProductSampleResponseDto finishProductSample;
   private TestConfigureResponseDto testConfigure;
   private Long noOfTrial;
-  private MaterialStateDto materialStateDto;
+  private MaterialStateDto materialState;
   private String comments;
-
   public String getCode() {
     return code;
   }
@@ -51,12 +50,12 @@ public class FinishProductTestResponseDto {
     this.noOfTrial = noOfTrial;
   }
 
-  public MaterialStateDto getMaterialStateDto() {
-    return materialStateDto;
+  public MaterialStateDto getMaterialState() {
+    return materialState;
   }
 
-  public void setMaterialStateDto(MaterialStateDto materialStateDto) {
-    this.materialStateDto = materialStateDto;
+  public void setMaterialState(MaterialStateDto materialState) {
+    this.materialState = materialState;
   }
 
   public String getComments() {

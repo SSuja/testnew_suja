@@ -17,6 +17,7 @@ public class MixDesignRequestDto {
   private Double waterBinderRatio;
   private String plantCode;
   private Status status;
+  private Long materialCategoryId;
 
   public String getCode() {
     return code;
@@ -80,5 +81,13 @@ public class MixDesignRequestDto {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public Long getMaterialCategoryId() {
+    return materialCategoryId;
+  }
+
+  public void setMaterialCategoryId(Long materialCategoryId) {
+    this.materialCategoryId = materialCategoryId;
   }
 }

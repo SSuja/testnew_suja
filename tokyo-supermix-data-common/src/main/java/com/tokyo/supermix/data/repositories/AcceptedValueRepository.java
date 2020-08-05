@@ -19,4 +19,6 @@ public interface AcceptedValueRepository
 
   public AcceptedValue findByTestConfigureIdAndTestEquationId(Long testConfigureId,
       Long testEquationId);
+
+  AcceptedValue findByTestParameterId(Long testParameterId);
 }

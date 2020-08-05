@@ -35,6 +35,9 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   private RawMaterial rawMaterial;
   @Enumerated(EnumType.ORDINAL)
   private Condition conditionRange;
+  @ManyToOne
+  @JoinColumn(name = "testParameterId", nullable = true)
+  private TestParameter testParameter;
   private boolean finalResult;
 
   public Long getId() {
@@ -111,5 +114,21 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
 
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
+  }
+
+  public TestEquation getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquation testEquation) {
+    this.testEquation = testEquation;
+  }
+
+  public TestParameter getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameter testParameter) {
+    this.testParameter = testParameter;
   }
 }

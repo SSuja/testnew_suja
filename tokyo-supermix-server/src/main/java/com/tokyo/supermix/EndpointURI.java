@@ -140,6 +140,8 @@ public final class EndpointURI {
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
   public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
+  public static final String ACTIVE_RAW_MATERIALS =
+      BASE_API_PATH + "active" + SLASH + "raw-materials";
   /*
    * EquipmentPlantCalibration apis
    */
@@ -243,6 +245,8 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_BY_PLANT = MIX_DESIGN + PLANT_WISE;
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
+  public static final String GET_MIX_DESIGN_BY_MATERIAL_CATEGORY =
+      MIX_DESIGN + SLASH + "material-category" + SLASH + "{materialCategoryId}";
 
   /*
    * Test Parameter APIs
@@ -436,6 +440,8 @@ public final class EndpointURI {
       TEST_REPORT_DETAIL + SLASH + MATERIAL_TEST_CODE;
   public static final String CONCRETE_STRENGTH = BASE_API_PATH + SLASH + "concrete-type" + SLASH
       + "{concreteTestType}" + SLASH + "concrete-name" + SLASH + "{concreteTestName}";
+  public static final String FINISH_PRODUCT_TEST_DETAIL_REPORT =
+      TEST_REPORT + SLASH + "finish-product-test" + SLASH + "{finishProductTestCode}";
   /*
    * Finish Product Sample
    */

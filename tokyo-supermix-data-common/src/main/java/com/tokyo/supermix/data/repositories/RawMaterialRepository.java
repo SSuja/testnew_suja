@@ -12,4 +12,6 @@ public interface RawMaterialRepository
   List<RawMaterial> findByMaterialSubCategoryId(Long materialSubCategoryId);
 
   RawMaterial findByName(String name);
+
+  List<RawMaterial> findByActiveTrue();
 }
