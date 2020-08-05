@@ -28,6 +28,7 @@ public class RawMaterial extends DateAudit implements Serializable {
   private MaterialSubCategory materialSubCategory;
   private String description;
   private String prefix;
+  private boolean active;
 
   public Long getId() {
     return id;
@@ -79,5 +80,13 @@ public class RawMaterial extends DateAudit implements Serializable {
 
   public void setPrefix(String prefix) {
     this.prefix = prefix;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
   }
 }

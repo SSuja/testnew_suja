@@ -140,6 +140,8 @@ public final class EndpointURI {
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
   public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
+  public static final String ACTIVE_RAW_MATERIALS =
+      BASE_API_PATH + "active" + SLASH + "raw-materials";
   /*
    * EquipmentPlantCalibration apis
    */

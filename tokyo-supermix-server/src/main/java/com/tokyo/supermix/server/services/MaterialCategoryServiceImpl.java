@@ -65,4 +65,9 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
   public boolean isMainTypeExist(MainType mainType) {
     return materialCategoryRepository.existsByMainType(mainType);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isExistByNameAndMainType(String name, MainType mainType) {
+    return materialCategoryRepository.existsByNameAndMainType(name, mainType);
+  }
 }
