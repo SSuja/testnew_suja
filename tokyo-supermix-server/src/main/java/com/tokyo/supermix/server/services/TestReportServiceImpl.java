@@ -41,8 +41,11 @@ import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.data.entities.TestEquation;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -60,6 +63,8 @@ import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestEquationRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class TestReportServiceImpl implements TestReportService {
@@ -97,6 +102,8 @@ public class TestReportServiceImpl implements TestReportService {
   private FinishProductParameterResultRepository finishProductParameterResultRepository;
   @Autowired
   private TestParameterRepository testParameterRepository;
+  @Autowired
+  private TestEquationRepository testEquationRepository;
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
