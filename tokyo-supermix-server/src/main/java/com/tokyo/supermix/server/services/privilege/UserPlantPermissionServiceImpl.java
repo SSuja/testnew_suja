@@ -218,14 +218,16 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
       UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserIdAndRoleType(plantCode, userId,RoleType.INDIVIDUAL);
-      if(userPlantRole!=null) {
+     
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getPlantPermission().getPermission().getId());
       plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
       User user =userRepository.findById(userId).get();
+      if(userPlantRole!=null) {
       if(user.getUserType().name().equalsIgnoreCase(UserType.PLANT_USER.name())){
     	  plantRolePlantPermissionRequestDto.setPlantRoleId(userPlantRole.getPlantRole().getId());
+      }
       }
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);
@@ -233,7 +235,7 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
         subStatus = true;
       }
       rolePermissionDtoList.add(plantRolePlantPermissionRequestDto);
-    }}
+    }
     return subStatus;
   }
 
