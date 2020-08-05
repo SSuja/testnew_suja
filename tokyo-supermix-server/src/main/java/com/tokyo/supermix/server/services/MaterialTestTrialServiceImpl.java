@@ -123,7 +123,6 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
         MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
             .findByTestConfigureIdAndRawMaterialId(materialTest.getTestConfigure().getId(),
                 materialTest.getIncomingSample().getRawMaterial().getId());
-
         status = compareAverageSwitch(materialAcceptedValue.getMinValue(),
             materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
             materialAcceptedValue.getConditionRange(), materialTestResult.getResult(),

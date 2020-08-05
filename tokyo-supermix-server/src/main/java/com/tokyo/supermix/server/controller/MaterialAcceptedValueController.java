@@ -49,14 +49,14 @@ public class MaterialAcceptedValueController {
   public ResponseEntity<Object> createMaterialAcceptedValue(
       @Valid @RequestBody List<MaterialAcceptedValueRequestDto> materialAcceptedValueRequestDtoList) {
     for (MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto : materialAcceptedValueRequestDtoList) {
-      if (materialAcceptedValueService.isDuplicateEntryExist(
-          materialAcceptedValueRequestDto.getTestConfigureId(),
-          materialAcceptedValueRequestDto.getRawMaterialId())) {
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
-                validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
-            HttpStatus.BAD_REQUEST);
-      }
+//      if (materialAcceptedValueService.isDuplicateEntryExist(
+//          materialAcceptedValueRequestDto.getTestConfigureId(),
+//          materialAcceptedValueRequestDto.getRawMaterialId())) {
+//        return new ResponseEntity<>(
+//            new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
+//                validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
+//            HttpStatus.BAD_REQUEST);
+//      }
     }
     materialAcceptedValueService.saveAcceptedValue(
         mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));

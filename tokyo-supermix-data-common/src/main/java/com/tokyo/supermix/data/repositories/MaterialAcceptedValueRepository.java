@@ -13,10 +13,13 @@ public interface MaterialAcceptedValueRepository
 
   public boolean existsByTestConfigureIdAndRawMaterialId(Long testConfigureId, Long rawMaterialId);
 
- List<MaterialAcceptedValue> findByTestConfigureId(Long testConfigureId);
+  List<MaterialAcceptedValue> findByTestConfigureId(Long testConfigureId);
 
   boolean existsByRawMaterialId(Long rawMaterialId);
 
   MaterialAcceptedValue findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
       Long rawMaterialId);
+
+  MaterialAcceptedValue findByTestConfigureIdAndTestEquationId(Long testConfigureId,
+      Long testEquationId);
 }
