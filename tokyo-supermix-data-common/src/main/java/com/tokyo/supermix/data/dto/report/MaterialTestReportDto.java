@@ -6,7 +6,7 @@ import com.tokyo.supermix.data.enums.Status;
 
 public class MaterialTestReportDto {
   private String code;
-  private List<Double> average;
+  private List<MaterialResult> materialResults;
   private Long noOfTrial;
   private Status status;
   private Date date;
@@ -44,12 +44,12 @@ public class MaterialTestReportDto {
     this.date = date;
   }
 
-  public List<Double> getAverage() {
-    return average;
+  public List<MaterialResult> getMaterialResults() {
+    return materialResults;
   }
 
-  public void setAverage(List<Double> average) {
-    this.average = average;
+  public void setMaterialResults(List<MaterialResult> materialResults) {
+    this.materialResults = materialResults;
   }
 
   public String getCommment() {
