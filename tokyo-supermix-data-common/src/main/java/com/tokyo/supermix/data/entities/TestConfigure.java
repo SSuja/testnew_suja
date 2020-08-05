@@ -32,8 +32,6 @@ public class TestConfigure extends DateAudit implements Serializable {
   private MainType testType;
   @Enumerated(EnumType.ORDINAL)
   private ReportFormat reportFormat;
-  @Enumerated(EnumType.ORDINAL)
-  private AcceptedType acceptedType;
   @ManyToOne
   @JoinColumn(name = "testId", nullable = false)
   private Test test;
@@ -43,6 +41,8 @@ public class TestConfigure extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = true)
   private MaterialSubCategory materialSubCategory;
+  @Enumerated(EnumType.ORDINAL)
+  private AcceptedType acceptedType;
 
   public Long getId() {
     return id;

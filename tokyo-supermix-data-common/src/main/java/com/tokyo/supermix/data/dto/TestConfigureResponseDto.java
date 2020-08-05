@@ -14,6 +14,7 @@ public class TestConfigureResponseDto {
   private String prefix;
   private MainType testType;
   private ReportFormat reportFormat;
+  private String acceptedType;
 
   public Long getId() {
     return id;
@@ -93,5 +94,13 @@ public class TestConfigureResponseDto {
 
   public void setReportFormat(ReportFormat reportFormat) {
     this.reportFormat = reportFormat;
+  }
+
+  public String getAcceptedType() {
+    return acceptedType;
+  }
+
+  public void setAcceptedType(String acceptedType) {
+    this.acceptedType = acceptedType;
   }
 }
