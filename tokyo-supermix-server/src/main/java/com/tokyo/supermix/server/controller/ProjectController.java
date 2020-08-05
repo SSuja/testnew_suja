@@ -27,6 +27,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.CustomerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
 import com.tokyo.supermix.util.Constants;
@@ -43,6 +44,8 @@ public class ProjectController {
   private ProjectService projectService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CustomerService customerService;
   private static final Logger logger = Logger.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
@@ -65,7 +68,7 @@ public class ProjectController {
         mapper.map(projectService.getAllProjects(), ProjectResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
@@ -134,5 +137,17 @@ public class ProjectController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+
+  @GetMapping(value = EndpointURI.GET_PROJECTS_BY_CUSTOMER)
+  public ResponseEntity<Object> getProjectByCustomer(@PathVariable Long customerId) {
+    if (customerService.isCustomerExist(customerId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+          mapper.map(projectService.getAllProjectsByCustomer(customerId), ProjectResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
+        validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

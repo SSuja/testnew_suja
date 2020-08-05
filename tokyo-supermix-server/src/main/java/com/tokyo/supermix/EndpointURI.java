@@ -216,6 +216,9 @@ public final class EndpointURI {
   public static final String GET_PROJECTS_BY_PLANT_CODE =
       PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PROJECT_BY_PLANT = PROJECT + PLANT_WISE;
+
+  public static final String GET_PROJECTS_BY_CUSTOMER =
+      PROJECTS + SLASH + "customer" + SLASH + "{customerId}";
   /*
    * IncomingSample Apis
    */
