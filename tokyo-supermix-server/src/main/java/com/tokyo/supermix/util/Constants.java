@@ -42,7 +42,7 @@ public class Constants {
 	public static final String PLANT_NAME = "PlantName";
 	public static final String PLANT_ID = "PlantId";
 	public static final String PLANTS = "plants";
-	public static final String SESSION_PLANT = "MY_SESSION_PLANT";
+	public static final String ADMIN = "Admin";
 	/*
 	 * Constants for Plant validation key & Success messages
 	 */

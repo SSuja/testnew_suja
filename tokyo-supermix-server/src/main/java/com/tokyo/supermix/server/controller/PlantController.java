@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantDto;
@@ -78,34 +79,28 @@ public class PlantController {
   }
 
   @GetMapping(value = EndpointURI.PLANTS)
-  public ResponseEntity<Object> getAllPlants(@CurrentUser UserPrincipal currentUser,
-      HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
-      return new ResponseEntity<>(
-          new ContentResponse<>(Constants.PLANTS,
-              mapper.map(plantService.getAllPlants(currentUser), PlantDto.class), RestApiResponseStatus.OK),
-          null, HttpStatus.OK);
-    }
-    if (currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT)
-        .contains(plantCode)) {
+  public ResponseEntity<Object> getAllPlants(@CurrentUser UserPrincipal currentUser){
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
-          mapper.map(plantService.getPlantByCode(plantCode), PlantDto.class),
+          mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  }
 
   // get plant by id
   @GetMapping(value = EndpointURI.PLANT_BY_CODE)
-  public ResponseEntity<Object> getPlantByCode(@PathVariable String code) {
+  public ResponseEntity<Object> getPlantByCode(@PathVariable String code,@CurrentUser UserPrincipal currentUser) {
+    if (code.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
+          mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     if (plantService.isPlantExist(code)) {
-      logger.debug("Get plant by plantCode ");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
-          mapper.map(plantService.getPlantByCode(code), PlantDto.class), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT)
+        .contains(code)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
+          mapper.map(plantService.getPlantByCode(code), PlantDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);

@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services.privilege;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,13 +12,11 @@ import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionRequestDto;
 import com.tokyo.supermix.data.dto.privilege.PlantRolePlantPermissionResponseDto;
 import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDto;
-import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.PlantRolePlantPermission;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
-import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.enums.RoleType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
@@ -222,6 +221,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermissionRepository.save(plantRolePlantPermission);
     });
   }
+  
+  
 
   public List<PlantRolePlantPermissionResponseDto> getCombine(Long userId, String plantCode) {
 
@@ -230,58 +231,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return getPlantRolePermissionWithModule1ByRoleId(plantRoleId, userId, plantCode);
   }
 
-  private List<PlantRolePlantPermission> getPermission(Long userId, String plantCode) {
-
-    List<Long> plantRolePlantPermissionList = new ArrayList<>();
-    List<Long> plantRolePlantPermissionWholeList = new ArrayList<>();
-    List<UserPlantRole> userPlantRoleList =
-        userPlantRoleRepository.findByUserIdAndPlantRolePlantCode(userId, plantCode);
-    for (UserPlantRole userPlantRole : userPlantRoleList) {
-      if (userPlantRole.getRoleType().name().equalsIgnoreCase(RoleType.GROUP.name())) {
-        List<PlantRolePlantPermission> PlantRolePlantPermissionRepository =
-            plantRolePlantPermissionRepository
-                .findByPlantRoleIdAndStatus(userPlantRole.getPlantRole().getId(), true);
-        for (PlantRolePlantPermission plantRolePlantPermissionObj : PlantRolePlantPermissionRepository) {
-          plantRolePlantPermissionList
-              .add(plantRolePlantPermissionObj.getPlantPermission().getId());
-        }
-      } else {
-        List<UserPlantPermission> userPlantPermissionList =
-            userPlantPermissionRepository.findByUserIdAndStatus(userId, true);
-        for (UserPlantPermission userPlantPermission : userPlantPermissionList) {
-          plantRolePlantPermissionList.add(userPlantPermission.getPlantPermission().getId());
-        }
-      }
-    }
-    List<Long> listWithoutDuplicates =
-        plantRolePlantPermissionList.stream().distinct().collect(Collectors.toList());
-    Long plantRoleId = userPlantRoleRepository.findByUserId(userId).get(0).getPlantRole().getId();
-    List<PlantRolePlantPermission> wholePermission =
-        plantRolePlantPermissionRepository.findByPlantRoleId(plantRoleId);
-
-    for (PlantRolePlantPermission plantRolePlantPermissionObj : wholePermission) {
-      plantRolePlantPermissionWholeList
-          .add(plantRolePlantPermissionObj.getPlantPermission().getId());
-    }
-    plantRolePlantPermissionWholeList.removeAll(listWithoutDuplicates);
-    List<PlantRolePlantPermission> plantRolePlantPermissionSetremo = new ArrayList<>();
-    for (Long id : listWithoutDuplicates) {
-      PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
-      plantRolePlantPermission.setStatus(true);
-      PlantPermission plantPermission = plantPermissionRepository.findById(id).get();
-      plantRolePlantPermission.setPlantPermission(plantPermission);
-      plantRolePlantPermissionSetremo.add(plantRolePlantPermission);
-    }
-    for (Long id : plantRolePlantPermissionWholeList) {
-      PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
-      plantRolePlantPermission.setStatus(false);
-      PlantPermission plantPermission = plantPermissionRepository.findById(id).get();
-      plantRolePlantPermission.setPlantPermission(plantPermission);
-      plantRolePlantPermissionSetremo.add(plantRolePlantPermission);
-    }
-    return plantRolePlantPermissionSetremo;
-  }
-
+  
 
   private List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionWithModule1ByRoleId(
       Long plantRoleId, Long userId, String plantCode) {
@@ -324,7 +274,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       boolean subStatus = false;
       List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList =
           new ArrayList<PlantRolePlantPermissionRequestDto>();
-      List<PlantRolePlantPermission> plantRolePlantPermissionList = getPermission(userId, plantCode)
+      List<PlantRolePlantPermission> plantRolePlantPermissionList = getPrivilege(userId,plantCode)
           .stream().filter(obj -> obj.getPlantPermission().getPermission().getSubModule().getId()
               .equals(sub.getId()))
           .collect(Collectors.toList());
@@ -338,5 +288,30 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       }
     }
     return mainStatus;
+  }
+  private List<PlantRolePlantPermission> getPrivilege(Long userId,String plantCode) {
+    List<Long> plantroleIds =  userPlantRoleRepository.findByUserIdAndPlantRolePlantCode(userId,plantCode).stream()
+        .filter(u -> u.getRoleType().name().equalsIgnoreCase(RoleType.GROUP.name()))
+        .collect(Collectors.toList()).stream().map(u -> u.getPlantRole().getId())
+        .collect(Collectors.toList());
+  Set<PlantPermission> plantPermissionList1 = plantRolePlantPermissionRepository.findByPlantRoleIdInAndStatus(plantroleIds, true).stream().distinct().map(p->p.getPlantPermission()).collect(Collectors.toSet());
+  List<PlantPermission> plantPermissionList2 = plantPermissionRepository.findByPlantCode(plantCode);
+ List<PlantPermission> plantPermissionTrueList= plantPermissionList1.stream().collect(Collectors.toList());
+ plantPermissionList2.removeAll(plantPermissionTrueList);
+ List<PlantRolePlantPermission> wholePermission = new ArrayList<PlantRolePlantPermission>();
+ for (PlantPermission plantPermission : plantPermissionTrueList) {
+   PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
+   plantRolePlantPermission.setStatus(true);
+   plantRolePlantPermission.setPlantPermission(plantPermission);
+   wholePermission.add(plantRolePlantPermission);
+ }
+ for (PlantPermission plantPermission : plantPermissionList2) {
+   PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
+   plantRolePlantPermission.setStatus(false);
+   plantRolePlantPermission.setPlantPermission(plantPermission);
+   wholePermission.add(plantRolePlantPermission);
+ }
+ return wholePermission;
+ 
   }
 }

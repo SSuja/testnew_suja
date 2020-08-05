@@ -13,7 +13,7 @@ public final class EndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
-  private static final String PLANT_WISE = "/plant";
+  private static final String PLANT_WISE = "/plant-wise"+SLASH+"{plantCode}";
   /*
    * Plant apis
    */
@@ -21,9 +21,7 @@ public final class EndpointURI {
   public static final String PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String SEARCH_PLANT = PLANT + SEARCH;
-  public static final String PLANT_SESSION = BASE_API_PATH + SLASH +"current-plant"+ SLASH +"{plantCode}";
-  public static final String PLANT_SESSION_GET = BASE_API_PATH + SLASH +"session-get";
-
+  
   /*
    * Designation API
    */
