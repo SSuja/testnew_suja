@@ -124,6 +124,8 @@ public final class EndpointURI {
   public static final String GET_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY_AND_TEST_TYPE =
       TEST_CONFIGURE + SLASH + "material-sub-category" + SLASH + "{testType}" + SLASH
           + "{materialSubCategoryId}";
+  public static final String UPDATE_ACCEPTED_TYPE_TEST_CONFIGURE = TEST_CONFIGURE + SLASH
+      + "{testConfigureId}" + SLASH + "accepted-type" + SLASH + "{acceptedType}";
   /*
    * Material State
    */
