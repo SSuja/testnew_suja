@@ -21,7 +21,6 @@ import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
-import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -147,7 +146,7 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setValue(test.getValue());
         testParameterResponseDto.setMixDesignField(test.getMixDesignField());
         testParameterResponseDtoList.add(testParameterResponseDto);
-        
+
       }
     });
     List<ParameterEquation> parameterEquationList =
@@ -178,8 +177,16 @@ public class TestParameterServiceImpl implements TestParameterService {
     for (TestParameter testParameter : testParameterRepository
         .findByTestConfigureId(testConfigId)) {
       Level levels = new Level();
-      String[] parts = testParameter.getName().split("_");
-      levels.setLevel(parts[1]);
+      if (testParameter.getName() != null) {
+        String[] parts = testParameter.getName().split("_");
+        levels.setLevel(parts[1]);
+        testParameter.setLevel(parts[1]);
+        testParameterRepository.save(testParameter);
+      } else {
+        testParameter.setLevel("result");
+        levels.setLevel("result");
+        testParameterRepository.save(testParameter);
+      }
       levelList.add(levels);
     }
     return levelList;
@@ -213,15 +220,12 @@ public class TestParameterServiceImpl implements TestParameterService {
   }
 
   public String checkEqutaionExistsForTest(Long testConfigureId) {
-    String isEquationExists = " ";
+    String isEquationExists =Constants.CHECK_EQUATION_FALSE;
     List<TestParameter> testParam = testParameterRepository.findByTestConfigureId(testConfigureId);
     for (TestParameter testParameter : testParam) {
-      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))
-          || testParameter.getType().equals(TestParameterType.RESULT)) {
-        isEquationExists =
-            Constants.CHECK_EQUATION_TRUE;
-      } else {
-        isEquationExists = Constants.CHECK_EQUATION_FALSE;
+      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))){
+        isEquationExists = Constants.CHECK_EQUATION_TRUE;
+        break;
       }
     }
     return isEquationExists;

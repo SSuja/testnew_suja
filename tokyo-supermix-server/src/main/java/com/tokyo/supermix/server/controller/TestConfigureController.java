@@ -20,6 +20,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -193,5 +194,17 @@ public class TestConfigureController {
     logger.debug("No Test Configure record exist for given Material Sub Category");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.UPDATE_ACCEPTED_TYPE_TEST_CONFIGURE)
+  public ResponseEntity<Object> updateAcceptedTypeTestConfigure(@PathVariable Long testConfigureId,
+      @PathVariable AcceptedType acceptedType) {
+    TestConfigure testConfigure = testConfigureService.getTestConfigureById(testConfigureId);
+    testConfigure.setAcceptedType(acceptedType);
+    testConfigureService
+        .saveTestConfigure(mapper.map(testConfigure, TestConfigureRequestDto.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
+        HttpStatus.OK);
   }
 }

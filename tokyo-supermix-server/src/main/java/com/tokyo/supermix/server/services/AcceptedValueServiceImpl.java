@@ -80,7 +80,7 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   }
 
   @Transactional(readOnly = true)
-  public AcceptedValue findByTestConfigure(Long testConfigureId) {
+  public List<AcceptedValue> findByTestConfigure(Long testConfigureId) {
     return acceptedValueRepository.findByTestConfigureId(testConfigureId);
   }
 }

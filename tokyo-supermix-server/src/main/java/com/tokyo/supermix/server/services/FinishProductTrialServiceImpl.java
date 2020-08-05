@@ -86,10 +86,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository.existsById(id);
   }
 
-  public void updateMixDesignStatus(String mixDesignCode, Status status) {
+  public void updateMixDesignStatus(String mixDesignCode, Status status,
+      String finishProductTestCode) {
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
     MixDesign mixDesign = mixDesignRepository.findByCode(mixDesignCode);
     if (mixDesign.getStatus().equals(Status.NEW)) {
       mixDesign.setStatus(status);
+      mixDesign.setTargetSlump(roundDoubleValue(averageValue(finishProductTestCode)));
     }
     mixDesignRepository.save(mixDesign);
   }
@@ -137,6 +141,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository
         .findByFinishProductTestFinishProductSampleMixDesignPlantCode(plantCode);
   }
+
   @Transactional
   public void saveFinishproductResult(String finishProductTestCode) {
     FinishProductTest finishproductTest =
@@ -285,9 +290,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     finishProductTest.setStatus(status);
     finishProductTestRepository.save(finishProductTest);
     updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
-        status);
+        status, finishProductTestCode);
     emailNotification.sendFinishProductTestEmail(finishProductTest);
-    updateFinishProductSampleStatus(finishProductTest.getFinishProductSample().getCode(),status);
+    updateFinishProductSampleStatus(finishProductTest.getFinishProductSample().getCode(), status);
   }
 
   public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
@@ -299,9 +304,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         List<FinishProductAcceptedValue> finishProductAcceptedValueList =
             finishProductAcceptedValueRepository.findByTestParameterId(testParameter.getId());
         FinishProductParameterResult finishProductParameterResult =
-            finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(testParameterRepository
-                .findByTestConfigureIdAndInputMethods(testConfigureId, InputMethod.CALCULATION)
-                .get(0).getId(),finishProductTestCode);
+            finishProductParameterResultRepository
+                .findByTestParameterIdAndFinishProductTestCode(testParameterRepository
+                    .findByTestConfigureIdAndInputMethods(testConfigureId, InputMethod.CALCULATION)
+                    .get(0).getId(), finishProductTestCode);
         for (FinishProductAcceptedValue finishProductAcceptedValue : finishProductAcceptedValueList) {
           checkFinishproductAcceptedValue(finishProductAcceptedValue.getMinValue(),
               finishProductAcceptedValue.getMaxValue(), finishProductAcceptedValue.getValue(),

@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 
@@ -23,6 +24,7 @@ public class TestConfigureRequestDto {
   private boolean active;
   private boolean adminLevelEmailConfiguration;
   private ReportFormat reportFormat;
+  private AcceptedType acceptedType;
 
   public Long getId() {
     return id;
@@ -118,5 +120,13 @@ public class TestConfigureRequestDto {
 
   public void setReportFormat(ReportFormat reportFormat) {
     this.reportFormat = reportFormat;
+  }
+
+  public AcceptedType getAcceptedType() {
+    return acceptedType;
+  }
+
+  public void setAcceptedType(AcceptedType acceptedType) {
+    this.acceptedType = acceptedType;
   }
 }

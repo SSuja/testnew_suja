@@ -12,7 +12,7 @@ public class TestConfigureDto {
   private String description;
   private String testProcedure;
   private String prefix;
-  private AcceptedValueResponseDto acceptedValue;
+  private List<AcceptedValueResponseDto> acceptedValue;
   private List<MaterialAcceptedValueDto> materialAcceptedValue;
   private List<TestParameterResponseDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
@@ -75,11 +75,11 @@ public class TestConfigureDto {
     this.prefix = prefix;
   }
 
-  public AcceptedValueResponseDto getAcceptedValue() {
+  public List<AcceptedValueResponseDto> getAcceptedValue() {
     return acceptedValue;
   }
 
-  public void setAcceptedValue(AcceptedValueResponseDto acceptedValue) {
+  public void setAcceptedValue(List<AcceptedValueResponseDto> acceptedValue) {
     this.acceptedValue = acceptedValue;
   }
 

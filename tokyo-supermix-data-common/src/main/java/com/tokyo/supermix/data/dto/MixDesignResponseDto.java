@@ -15,6 +15,7 @@ public class MixDesignResponseDto {
   private Status status;
   private String createdAt;
   private String updatedAt;
+  private MaterialCategoryDto materialCategory;
 
   public String getCode() {
     return code;
@@ -102,5 +103,13 @@ public class MixDesignResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public MaterialCategoryDto getMaterialCategory() {
+    return materialCategory;
+  }
+
+  public void setMaterialCategory(MaterialCategoryDto materialCategory) {
+    this.materialCategory = materialCategory;
   }
 }

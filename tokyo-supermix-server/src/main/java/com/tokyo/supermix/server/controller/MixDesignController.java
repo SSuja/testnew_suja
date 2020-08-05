@@ -30,6 +30,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -47,6 +48,8 @@ public class MixDesignController {
   private PlantService plantService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  MaterialCategoryService materialCategoryService;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -175,5 +178,19 @@ public class MixDesignController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_MATERIAL_CATEGORY)
+  public ResponseEntity<Object> getMixDesignByPlant(@PathVariable Long materialCategoryId) {
+    if (materialCategoryService.isMaterialCategoryExist(materialCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORY_ID,
+          mapper.map(mixDesignService.getAllMixDesignByMaterialCategory(materialCategoryId),
+              MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No MixDesign record exist for given Plant Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_ID,
+          validationFailureStatusCodes.getMaterialCategoryNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

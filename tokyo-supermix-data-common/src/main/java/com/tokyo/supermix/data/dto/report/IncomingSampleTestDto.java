@@ -1,13 +1,14 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.sql.Date;
+import java.util.List;
 
 public class IncomingSampleTestDto {
   private String testName;
   private String status;
   private Double average;
   private Date date;
-  private AcceptedValueDto acceptanceCriteria;
+  private List<AcceptedValueDto> acceptanceCriteria;
 
   public String getTestName() {
     return testName;
@@ -33,11 +34,11 @@ public class IncomingSampleTestDto {
     this.average = average;
   }
 
-  public AcceptedValueDto getAcceptanceCriteria() {
+  public List<AcceptedValueDto> getAcceptanceCriteria() {
     return acceptanceCriteria;
   }
 
-  public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
+  public void setAcceptanceCriteria(List<AcceptedValueDto> acceptanceCriteria) {
     this.acceptanceCriteria = acceptanceCriteria;
   }
 

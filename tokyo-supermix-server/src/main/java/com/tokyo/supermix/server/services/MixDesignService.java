@@ -32,4 +32,6 @@ public interface MixDesignService {
   public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser);
 
   public List<MixDesign> getAllMixDesignByDecending();
+
+  public List<MixDesign> getAllMixDesignByMaterialCategory(Long materialCategoryId);
 }

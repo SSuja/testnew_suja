@@ -15,6 +15,7 @@ public class RawMaterialRequestDto {
   @NotNull(message = "{rawMaterialRequestDto.prefix.null}")
   @NotEmpty(message = "{rawMaterialRequestDto.prefix.empty}")
   private String prefix;
+  private boolean active;
 
   public Long getId() {
     return id;
@@ -62,5 +63,13 @@ public class RawMaterialRequestDto {
 
   public void setPrefix(String prefix) {
     this.prefix = prefix;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
   }
 }

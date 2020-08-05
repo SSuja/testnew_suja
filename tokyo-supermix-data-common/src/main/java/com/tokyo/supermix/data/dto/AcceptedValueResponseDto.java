@@ -11,6 +11,7 @@ public class AcceptedValueResponseDto {
   private TestEquationResponseDto testEquation;
   private Condition conditionRange;
   private boolean finalResult;
+  private TestParameterResponseDto testParameter;
 
   public TestEquationResponseDto getTestEquation() {
     return testEquation;
@@ -74,5 +75,13 @@ public class AcceptedValueResponseDto {
 
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
+  }
+
+  public TestParameterResponseDto getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameterResponseDto testParameter) {
+    this.testParameter = testParameter;
   }
 }

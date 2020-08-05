@@ -54,6 +54,20 @@ public class TestReportController {
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_DETAIL_REPORT)
+  public ResponseEntity<Object> getFinishProductTestReportDetails(
+      @PathVariable String finishProductTestCode) {
+    if (finishProductTestService.isFinishProductTestExists(finishProductTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+          mapper.map(testReportService.getFinishProductTestDetailReport(finishProductTestCode),
+              TestReportDetailDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+        validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
   public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
       @PathVariable String incomingSampleCode) {
