@@ -38,7 +38,6 @@ import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.entities.Supplier;
-import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.Status;
@@ -56,7 +55,6 @@ import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
-import com.tokyo.supermix.data.repositories.TestEquationRepository;
 
 @Service
 public class TestReportServiceImpl implements TestReportService {
@@ -88,8 +86,6 @@ public class TestReportServiceImpl implements TestReportService {
   FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   private MaterialTestResultRepository materialTestResultRepository;
-  @Autowired
-  private TestEquationRepository testEquationRepository;
   @Autowired
   private TestParameterService testParameterService;
 
@@ -225,25 +221,7 @@ public class TestReportServiceImpl implements TestReportService {
   private List<AcceptedValueDto> getMaterialAcceptedValueDto(Long testConfigureId,
       Long rawMaterialId) {
     List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
-    List<TestEquation> testEquation = testEquationRepository.findByTestConfigureId(testConfigureId);
     AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-    testEquation.forEach(equation -> {
-      MaterialAcceptedValue materialAcceptedValueList = materialAcceptedValueRepository
-          .findByTestConfigureIdAndTestEquationId(testConfigureId, equation.getId());
-      if (materialAcceptedValueList.getTestEquation() != null) {
-        if (materialAcceptedValueList.getConditionRange() == Condition.BETWEEN) {
-          acceptedValueDto.setCondition(materialAcceptedValueList.getConditionRange());
-          acceptedValueDto.setMaxValue(materialAcceptedValueList.getMaxValue());
-          acceptedValueDto.setMinValue(materialAcceptedValueList.getMinValue());
-        } else if (materialAcceptedValueList.getConditionRange() == Condition.EQUAL
-            || materialAcceptedValueList.getConditionRange() == Condition.GREATER_THAN
-            || materialAcceptedValueList.getConditionRange() == Condition.LESS_THAN) {
-          acceptedValueDto.setCondition(materialAcceptedValueList.getConditionRange());
-          acceptedValueDto.setValue(materialAcceptedValueList.getValue());
-        }
-        acceptedValueDtoList.add(acceptedValueDto);
-      }
-    });
     List<MaterialAcceptedValue> materialAcceptedValue =
         materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
     materialAcceptedValue.forEach(materialAccepted -> {
