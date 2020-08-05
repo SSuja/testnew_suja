@@ -104,6 +104,14 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
     return finalResult;
   }
 
+  public TestEquation getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquation testEquation) {
+    this.testEquation = testEquation;
+  }
+
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
   }
