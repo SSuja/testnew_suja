@@ -25,6 +25,9 @@ public class MixDesign extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
+  @ManyToOne
+  @JoinColumn(name = "materialCategoryId", nullable = false)
+  private MaterialCategory materialCategory;
 
   public String getCode() {
     return code;

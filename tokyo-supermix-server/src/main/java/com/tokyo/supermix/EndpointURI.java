@@ -245,6 +245,8 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_BY_PLANT = MIX_DESIGN + PLANT_WISE;
   public static final String GET_MIX_DESIGN_BY_STATUS =
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
+  public static final String GET_MIX_DESIGN_BY_MATERIAL_CATEGORY =
+      MIX_DESIGN + SLASH + "material-category" + SLASH + "{materialCategoryId}";
 
   /*
    * Test Parameter APIs

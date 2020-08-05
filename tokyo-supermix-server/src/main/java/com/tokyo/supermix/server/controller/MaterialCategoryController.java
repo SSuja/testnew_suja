@@ -26,7 +26,6 @@ import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class MaterialCategoryController {
