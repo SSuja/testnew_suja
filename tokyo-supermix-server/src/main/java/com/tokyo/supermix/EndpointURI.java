@@ -463,11 +463,11 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_ALL_RESULTS_REPORT =
       TEST_REPORT + SLASH + FINISH_PRODUCT_RESULTS;
   public static final String INCOMING_SAMPLE_SUMMARY_REPORT =
-      BASE_API_PATH + SLASH + "incoming-sample-summary-report" + SLASH + "{incomingSampleCode}"
+      BASE_API_PATH + "incoming-sample-summary-report" + SLASH + "{incomingSampleCode}"
           + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
-      BASE_API_PATH + SLASH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
-          + SLASH + "plant" + SLASH + "{plantCode}" + SLASH + "test-name" + SLASH + "{testName}";
+      BASE_API_PATH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}"
+          + SLASH + "test-name" + SLASH + "{testName}"+ SLASH + "plant" + SLASH + "{plantCode}" ;
   public static final String CONCRETE_TEST_REPORT =
       BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
   public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
