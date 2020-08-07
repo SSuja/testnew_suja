@@ -17,4 +17,7 @@ public interface PlantEquipmentRepository
   List<PlantEquipment> findByPlantCodeIn(List<String> plantCodes);
 
   List<PlantEquipment> findByCalibrationExistsTrueAndEquipmentId(Long equipmentId);
+
+  List<PlantEquipment> findByCalibrationExistsTrueAndEquipmentIdAndPlantCode(Long equipmentId,
+      String plantCode);
 }

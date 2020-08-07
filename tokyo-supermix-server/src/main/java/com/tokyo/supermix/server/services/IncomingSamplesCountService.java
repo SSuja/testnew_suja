@@ -14,6 +14,7 @@ public interface IncomingSamplesCountService {
   public List<StatusCountResponseDto> getCountByMaterialSubCategory(Long materialSubCategoryId,
       String plantCode);
 
-  public List<StatusCountResponseDto> getCountByMaterialCategory(Long materialCategoryId,
-      String plantCode);
+  public List<StatusCountResponseDto> getCountByMaterialCategory(Long materialCategoryId, String plantCode);
+  
+
 }
