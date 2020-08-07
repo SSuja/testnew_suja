@@ -12,12 +12,13 @@ import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 
 public interface TestReportService {
 
-  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode);
+  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode, String plantCode);
 
-  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode);
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode,
+      String plantCode);
 
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
-      String testName);
+      String testName, String plantCode);
 
   public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode);
 
