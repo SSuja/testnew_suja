@@ -8,6 +8,7 @@ import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.SeiveTestReportResponseDto;
+import com.tokyo.supermix.data.dto.report.SieveTestTrialDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 
 public interface TestReportService {
@@ -30,4 +31,6 @@ public interface TestReportService {
 
   public FinishProductTestReportDetailDto getFinishProductTestDetailReport(
       String finishProductTestCode);
+
+  public List<SieveTestTrialDto> getTrialResultGraph(String materialTestCode);
 }

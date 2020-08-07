@@ -129,4 +129,11 @@ public class TestReportController {
             testReportService.getSieveTestReport(materialTestCode), RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
+  @GetMapping(value = EndpointURI.SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getSeiveTestGraph(@PathVariable String materialTestCode) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.SIEVE_TEST,
+            testReportService.getTrialResultGraph(materialTestCode), RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
 }
