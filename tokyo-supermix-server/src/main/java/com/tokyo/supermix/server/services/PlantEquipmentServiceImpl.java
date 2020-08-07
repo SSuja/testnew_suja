@@ -75,4 +75,11 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
       Long equipmentId) {
     return plantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentId(equipmentId);
   }
+
+  @Override
+  public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentIdAndPlantCode(
+      Long equipmentId, String plantCode) {
+   
+    return plantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentIdAndPlantCode(equipmentId, plantCode);
+  }
 }
