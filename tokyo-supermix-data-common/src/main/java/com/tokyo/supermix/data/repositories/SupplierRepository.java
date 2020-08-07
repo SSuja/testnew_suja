@@ -11,11 +11,13 @@ public interface SupplierRepository
 
   boolean existsByPhoneNumber(String phoneNumber);
 
-  List<Supplier> findBySupplierCategoriesId(Long suppilerCategoryId);
+  List<Supplier> findBySupplierCategoriesIdAndPlantCode(Long suppilerCategoryId, String plantCode);
 
   List<Supplier> findByPlantCode(String plantCode);
 
   List<Supplier> findByPlantCodeIn(List<String> plantCodes);
+  
+  List<Supplier> findBySupplierCategoriesId(Long suppilerCategoryId);
 
   List<Supplier> findByPlantCodeAndSupplierCategoriesId(String plantCode, Long supplierCategoryId);
 

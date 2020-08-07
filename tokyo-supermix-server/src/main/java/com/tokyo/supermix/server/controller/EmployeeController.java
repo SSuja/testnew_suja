@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EmployeeRequestDto;
@@ -29,8 +31,10 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -43,6 +47,8 @@ public class EmployeeController {
   private EmployeeService employeeService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(EmployeeController.class);
 
   // Add Employee
@@ -111,14 +117,26 @@ public class EmployeeController {
         mapper.map(employeeService.getAllEmployees(), EmployeeResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser) {
-    logger.debug("get all employee");
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-        mapper.map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES, mapper
+          .map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
   public ResponseEntity<Object> getEmployeeSearch(
       @QuerydslPredicate(root = Employee.class) Predicate predicate,

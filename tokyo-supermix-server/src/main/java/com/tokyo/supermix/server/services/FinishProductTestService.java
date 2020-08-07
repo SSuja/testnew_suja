@@ -27,5 +27,6 @@ public interface FinishProductTestService {
 
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);
 
+  public  List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode);
   public void updateFinishProductTestComment(FinishProductTest finishProductTest);
 }

@@ -1,41 +1,20 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.tokyo.supermix.data.entities.auth.Role;
-import com.tokyo.supermix.data.entities.privilege.RolePermission;
-import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
-import com.tokyo.supermix.data.repositories.privilege.RolePermissionRepository;
 
 @Service
 public class RoleServiceImpl implements RoleService {
   @Autowired
   private RoleRepository roleRepository;
-  @Autowired
-  private PermissionRepository permissionRepository;
-  @Autowired
-  private RolePermissionRepository rolePermissionRepository;
   @Transactional
   public void createRole(Role role) {
-    Role roleObj =roleRepository.save(role);
-    setAllPermissionToRole(roleObj);
-  }
-  
-  private void setAllPermissionToRole(Role role){
-    permissionRepository.findAll().forEach(permission->{
-      RolePermission rolePermission = new RolePermission();
- //     rolePermission.setId(new RolePermissionPK(role.getId(),permission.getId()));
-      rolePermission.setPermission(permission);
-      rolePermission.setRole(role);
-      rolePermission.setStatus(true);
-      rolePermissionRepository.save(rolePermission);
-    });
+    roleRepository.save(role);
   }
 
   @Transactional(readOnly = true)

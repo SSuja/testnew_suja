@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
 import com.tokyo.supermix.data.dto.MixDesignResponseDto;
@@ -25,11 +28,15 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -45,6 +52,8 @@ public class MixDesignController {
   MaterialCategoryService materialCategoryService;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(MixDesignController.class);
 
   @PostMapping(value = EndpointURI.MIX_DESIGN)
@@ -150,6 +159,25 @@ public class MixDesignController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS, mapper
+          .map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS, mapper
+          .map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_MATERIAL_CATEGORY)

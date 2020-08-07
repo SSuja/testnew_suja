@@ -88,7 +88,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   public void updateMixDesignStatus(String mixDesignCode, Status status,
       String finishProductTestCode) {
-    FinishProductTest finishProductTest=finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
     MixDesign mixDesign = mixDesignRepository.findByCode(mixDesignCode);
     if (mixDesign.getStatus().equals(Status.NEW)) {
       mixDesign.setStatus(status);
@@ -133,6 +134,12 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     finishProductTestRepository.findById(finishProductTrial.getFinishProductTest().getCode()).get()
         .setStatus(Status.PROCESS);
     finishProductTrialRepository.save(finishProductTrial);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTrial> getAllFinishProductTrialsByPlantCode(String plantCode) {
+    return finishProductTrialRepository
+        .findByFinishProductTestFinishProductSampleMixDesignPlantCode(plantCode);
   }
 
   @Transactional
@@ -283,7 +290,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     finishProductTest.setStatus(status);
     finishProductTestRepository.save(finishProductTest);
     updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
-        status,finishProductTestCode);
+        status, finishProductTestCode);
+    emailNotification.sendFinishProductTestEmail(finishProductTest);
     updateFinishProductSampleStatus(finishProductTest.getFinishProductSample().getCode(), status);
   }
 

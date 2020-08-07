@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestTrialRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResponseDto;
@@ -29,8 +31,10 @@ import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -48,6 +52,8 @@ public class MaterialTestTrialController {
   private MaterialTestRepository materialTestRepository;
   @Autowired
   private MaterialTestService materialTestService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   // get all MaterialTestTrial
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIALS)
@@ -60,11 +66,22 @@ public class MaterialTestTrialController {
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_PLANT)
   public ResponseEntity<Object> getAllMaterialTestTrialByPlant(
-      @CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
-        mapper.map(materialTestTrialService.getAllMaterialTestTrialByplant(currentUser),
-            MaterialTestTrialResponseDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+          mapper.map(materialTestTrialService.getAllMaterialTestTrialByplant(currentUser),
+              MaterialTestTrialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+        PermissionConstants.VIEW_MATERIAL_TEST_TRIAL).contains(plantCode)) {
+      return new ResponseEntity<Object>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
+          mapper.map(materialTestTrialService.getMaterialTestTrialByPlantCode(plantCode),
+              MaterialTestTrialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   // post MaterialTestTrial

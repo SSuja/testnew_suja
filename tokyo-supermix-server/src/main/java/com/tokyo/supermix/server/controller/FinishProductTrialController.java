@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
@@ -26,8 +30,10 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductTrialService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin
@@ -38,6 +44,8 @@ public class FinishProductTrialController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private FinishProductTrialService finishProductTrialService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(FinishProductTrialController.class);
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIALS)
@@ -52,13 +60,26 @@ public class FinishProductTrialController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_PLANT)
   public ResponseEntity<Object> getAllFinishProductTrialsByPlant(
-      @CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.FINISH_PRODUCT_TRIALS,
-            mapper.map(finishProductTrialService.getAllFinishProductTrialsByPlant(currentUser),
-                FinishProductTrialResponseDto.class),
-            RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_TRIALS,
+              mapper.map(finishProductTrialService.getAllFinishProductTrialsByPlant(currentUser),
+                  FinishProductSampleIssueResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+        PermissionConstants.VIEW_FINISH_PRODUCT_TRAIL).contains(plantCode)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_TRIALS,
+              mapper.map(finishProductTrialService.getAllFinishProductTrialsByPlantCode(plantCode),
+                  FinishProductSampleIssueResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
