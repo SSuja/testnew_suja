@@ -18,6 +18,7 @@ import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.Status;
@@ -289,10 +290,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductTestRepository.findById(finishProductTestCode).get();
     finishProductTest.setStatus(status);
     finishProductTestRepository.save(finishProductTest);
-    updateMixDesignStatus(finishProductTest.getFinishProductSample().getMixDesign().getCode(),
-        status, finishProductTestCode);
-    emailNotification.sendFinishProductTestEmail(finishProductTest);
-    updateFinishProductSampleStatus(finishProductTest.getFinishProductSample().getCode(), status);
+    updateStatusAndValue(finishProductTestCode);
   }
 
   public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
@@ -317,4 +315,67 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       }
     }
   }
+
+  public void updateStatusAndValue(String finishProductTestCode) {
+    FinishProductTest finishproductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishproductTest.getFinishProductSample().getCode()).get();
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+    FinishProductParameterResult finishProductParameterResult =
+        finishProductParameterResultRepository
+            .findByTestParameterIdAndFinishProductTestCode(
+                testParameterRepository
+                    .findByTestConfigureIdAndInputMethods(
+                        finishproductTest.getTestConfigure().getId(), InputMethod.OBSERVE)
+                    .get(0).getId(),
+                finishProductTestCode);
+    if (finishproductTest.getTestConfigure().isCoreTest()
+        && finishproductTest.getTestConfigure().isName()
+        && finishproductTest.getFinishProductSample().getFinishProductTestType()
+            .equals(FinishProductTestType.POST_PRODUCTION)) {
+      if (finishproductTest.getStatus().equals(Status.PASS)) {
+        finishProductSample.setStatus(Status.PROCESS);
+        mixDesign.setStatus(Status.PROCESS);
+        mixDesign.setTargetSlump(finishProductParameterResult.getResult());
+      } else {
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        mixDesign.setStatus(finishproductTest.getStatus());
+      }
+    } else if (finishproductTest.getTestConfigure().isCoreTest()
+        && (!finishproductTest.getTestConfigure().isName())
+        && finishproductTest.getFinishProductSample().getFinishProductTestType()
+            .equals(FinishProductTestType.PRE_PRODUCTION)) {
+      finishProductSample.setStatus(finishproductTest.getStatus());
+      mixDesign.setStatus(finishproductTest.getStatus());
+    } else if (finishproductTest.getTestConfigure().isCoreTest()
+        && (finishproductTest.getTestConfigure().isName())
+        && finishproductTest.getFinishProductSample().getFinishProductTestType()
+            .equals(FinishProductTestType.PRE_PRODUCTION)) {
+      finishProductSample.setStatus(finishproductTest.getStatus());
+      mixDesign.setStatus(finishproductTest.getStatus());
+    } else if (!finishproductTest.getTestConfigure().isCoreTest()
+        && (finishproductTest.getTestConfigure().isName())
+        && finishproductTest.getFinishProductSample().getFinishProductTestType()
+            .equals(FinishProductTestType.PRE_PRODUCTION)) {
+      if (finishproductTest.getStatus().equals(Status.PASS)) {
+        finishProductSample.setStatus(Status.PROCESS);
+        mixDesign.setStatus(Status.PROCESS);
+        mixDesign.setTargetGrade(finishProductParameterResult.getResult());
+      } else {
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        mixDesign.setStatus(finishproductTest.getStatus());
+      }
+    } else if (!finishproductTest.getTestConfigure().isCoreTest()
+        && (finishproductTest.getTestConfigure().isName())
+        && finishproductTest.getFinishProductSample().getFinishProductTestType()
+            .equals(FinishProductTestType.POST_PRODUCTION)) {
+      finishProductSample.setStatus(Status.PROCESS);
+      mixDesign.setStatus(Status.PROCESS);
+    }
+    finishProductSampleRepository.save(finishProductSample);
+    mixDesignRepository.save(mixDesign);
+  }
+
 }

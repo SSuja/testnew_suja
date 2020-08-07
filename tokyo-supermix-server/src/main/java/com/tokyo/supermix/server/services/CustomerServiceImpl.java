@@ -32,27 +32,6 @@ public class CustomerServiceImpl implements CustomerService {
   @Autowired
   private PlantRepository plantRepository;
 
-  @Transactional(readOnly = true)
-  public List<CustomerResponseDto> getAllCustomersByCurrentUser(UserPrincipal currentUser) {
-    ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
-    List<Customer> customerList =
-        customerRepository.findByPlantCodeIn(currentUserPermissionPlantService
-            .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER));
-    for (Customer customer : customerList) {
-      CustomerResponseDto customerResponseDto = new CustomerResponseDto();
-      customerResponseDto.setId(customer.getId());
-      customerResponseDto.setAddress(customer.getAddress());
-      customerResponseDto.setCreatedAt(customer.getCreatedAt().toString());
-      customerResponseDto.setUpdatedAt(customer.getUpdatedAt().toString());
-      customerResponseDto.setName(customer.getName());
-      customerResponseDto.setPhoneNumber(customer.getPhoneNumber());
-      customerResponseDto.setEmail(customer.getEmail());
-      customerResponseDto.setPlants(getAllPlant(customer.getId()));
-      customerResponseDtoList.add(customerResponseDto);
-    }
-    return customerResponseDtoList;
-  }
-
   @Transactional
   public void saveCustomer(Customer customer, List<String> plantCodes) {
     List<Plant> plantList = new ArrayList<Plant>();
@@ -119,9 +98,11 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Transactional(readOnly = true)
-  public List<CustomerResponseDto> getCustomerByPlantCode(String plantCode) {
+  public List<CustomerResponseDto> getCustomerByPlantCode(UserPrincipal currentUser) {
     ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
-    List<Customer> customerList = customerRepository.findByPlantCode(plantCode);
+    List<Customer> customerList =
+        customerRepository.findByPlantCodeIn(currentUserPermissionPlantService
+            .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER));
     for (Customer customer : customerList) {
       CustomerResponseDto customerResponseDto = new CustomerResponseDto();
       customerResponseDto.setId(customer.getId());
@@ -174,7 +155,6 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional(readOnly = true)
   public List<Customer> getAllCustomers() {
-
     return customerRepository.findAll();
   }
 }

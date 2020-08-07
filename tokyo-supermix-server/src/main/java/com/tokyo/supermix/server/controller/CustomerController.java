@@ -53,22 +53,10 @@ public class CustomerController {
 
   @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
   public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getAllCustomersByCurrentUser(currentUser),
-              CustomerResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
-    }
-    if (currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER)
-        .contains(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+      @CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS, mapper
+        .map(customerService.getCustomerByPlantCode(currentUser), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.CUSTOMERS)
@@ -151,14 +139,14 @@ public class CustomerController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
-  public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
-    if (plantService.isPlantExist(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  }
+//  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
+//  public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
+//    if (plantService.isPlantExist(plantCode)) {
+//      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+//          mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
+//          RestApiResponseStatus.OK), HttpStatus.OK);
+//    }
+//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+//        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+//  }
 }

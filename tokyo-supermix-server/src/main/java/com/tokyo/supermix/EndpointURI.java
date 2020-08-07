@@ -475,6 +475,8 @@ public final class EndpointURI {
   public static final String CONCRETE_STRENGTHS = BASE_API_PATH + "concrete-strengths";
   public static final String SIEVE_TRIALS_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-sieve" + SLASH + "{materialTestCode}";
+  public static final String SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE =
+      BASE_API_PATH + "material-test-graph" + SLASH + "{materialTestCode}";
   /*
    * File Export
    */
