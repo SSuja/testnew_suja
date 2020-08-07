@@ -75,7 +75,7 @@ public class ProjectController {
   @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
           mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -158,7 +158,7 @@ public class ProjectController {
 
   @GetMapping(value = EndpointURI.GET_PROJECTS_BY_CUSTOMER)
   public ResponseEntity<Object> getProjectByCustomer(@PathVariable Long customerId) {
-    if (customerService.isCustomerExist(customerId)) {
+    if (projectService.isCustomerExistsByProject(customerId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
           mapper.map(projectService.getAllProjectsByCustomer(customerId), ProjectResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -167,3 +167,4 @@ public class ProjectController {
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
+
