@@ -29,7 +29,6 @@ import com.tokyo.supermix.server.services.RawMaterialService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-
 @RestController
 @CrossOrigin
 public class RawMaterialController {
@@ -59,7 +58,7 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
-   public ResponseEntity<Object> getAllRawMaterials() {
+  public ResponseEntity<Object> getAllRawMaterials() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
         mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -78,7 +77,7 @@ public class RawMaterialController {
   }
 
   @PutMapping(value = EndpointURI.RAW_MATERIAL)
-   public ResponseEntity<Object> updateRawMaterial(
+  public ResponseEntity<Object> updateRawMaterial(
       @Valid @RequestBody RawMaterialRequestDto rawMaterialRequestDto) {
     if (rawMaterialService.isRawMaterialExist(rawMaterialRequestDto.getId())) {
       if (rawMaterialService.isUpdatedNameExist(rawMaterialRequestDto.getId(),
@@ -117,5 +116,12 @@ public class RawMaterialController {
         new ContentResponse<>(Constants.RAW_MATERIAL,
             rawMaterialService.searchRawMaterial(predicate, page, size), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.ACTIVE_RAW_MATERIALS)
+  public ResponseEntity<Object> getAllActiveRawMaterials() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(rawMaterialService.getAllActiveRawMaterials(), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

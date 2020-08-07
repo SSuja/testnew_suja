@@ -22,7 +22,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional
   public void saveRawMaterial(RawMaterial rawMaterial) {
-    RawMaterial rawMaterialObj= rawMaterialRepository.save(rawMaterial);
+    RawMaterial rawMaterialObj = rawMaterialRepository.save(rawMaterial);
     if (rawMaterialObj != null) {
       emailNotification.sendRawmaterialCreationEmail(rawMaterial);
     }
@@ -61,9 +61,14 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     rawMaterialRepository.deleteById(id);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public Page<RawMaterial> searchRawMaterial(Predicate predicate, int page, int size) {
     return rawMaterialRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.Direction.ASC, "id"));
+  }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getAllActiveRawMaterials() {
+    return rawMaterialRepository.findByActiveTrue();
   }
 }

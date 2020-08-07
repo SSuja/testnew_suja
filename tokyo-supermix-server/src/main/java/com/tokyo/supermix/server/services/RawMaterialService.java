@@ -21,4 +21,6 @@ public interface RawMaterialService {
   public void deleteRawMaterial(Long id);
 
   public Page<RawMaterial> searchRawMaterial(Predicate predicate, int page, int size);
+
+  public List<RawMaterial> getAllActiveRawMaterials();
 }

@@ -5,24 +5,23 @@ import com.tokyo.supermix.data.dto.PlantDto;
 
 public class TestReportDetailDto {
   private String testName;
-  private String equation;
+  private List<String> equation;
   private PlantDto plant;
   private IncomingSampleReportDto incomingsample;
   private MaterialTestReportDto materialTest;
   private List<TestTrialDto> testTrials;
   private List<TrailValueDto> trailValues;
-  private AcceptedValueDto acceptanceCriteria;
-  
+  private List<AcceptedValueDto> acceptanceCriterias;
   public String getTestName() {
     return testName;
   }
   public void setTestName(String testName) {
     this.testName = testName;
   }
-  public String getEquation() {
+  public List<String> getEquation() {
     return equation;
   }
-  public void setEquation(String equation) {
+  public void setEquation(List<String> equation) {
     this.equation = equation;
   }
   public PlantDto getPlant() {
@@ -49,18 +48,16 @@ public class TestReportDetailDto {
   public void setTestTrials(List<TestTrialDto> testTrials) {
     this.testTrials = testTrials;
   }
-  public AcceptedValueDto getAcceptanceCriteria() {
-    return acceptanceCriteria;
-  }
-
-  public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
-    this.acceptanceCriteria = acceptanceCriteria;
-  }
   public List<TrailValueDto> getTrailValues() {
     return trailValues;
   }
   public void setTrailValues(List<TrailValueDto> trailValues) {
     this.trailValues = trailValues;
   }
-  
+  public List<AcceptedValueDto> getAcceptanceCriterias() {
+    return acceptanceCriterias;
+  }
+  public void setAcceptanceCriterias(List<AcceptedValueDto> acceptanceCriterias) {
+    this.acceptanceCriterias = acceptanceCriterias;
+  }
 }

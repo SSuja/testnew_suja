@@ -269,7 +269,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.EDIT_MATERIAL_ACCEPTED_VALUE)
         .antMatchers(HttpMethod.DELETE, EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_MATERIAL_ACCEPTED_VALUE)
-        
+
         // Test
         .antMatchers(HttpMethod.GET, EndpointURI.TEST_CONFIGURES)
         .hasAuthority(PermissionConstants.VIEW_TEST_CONFIGURE)
@@ -289,14 +289,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.TEST_PARAMETER_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_TEST_PARAMETER)
         // Incoming sample count
-        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY)
-        .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
-        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT)
-        .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
-        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY)
-        .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
-        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT)
-        .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
+        // .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY)
+        // .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
+        // .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SUB_CATEGORY_STATUS_COUNT)
+        // .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
+        // .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY)
+        // .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
+        // .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_CATEGORY_STATUS_COUNT)
+        // .hasAuthority(PermissionConstants.DASHBOARD_MATERIAL_COUNT_STATUS)
         // Parameter Equation
         .antMatchers(HttpMethod.GET, EndpointURI.PARAMETER_EQUATIONS)
         .hasAuthority(PermissionConstants.VIEW_PARAMETER_EQUATION)
@@ -325,14 +325,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.MIX_DESIGN_PROPORTION_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_MIX_DESIGN_PROPORTION)
         // mix design proportions
-//        .antMatchers(HttpMethod.GET, EndpointURI.FINISH_PRODUCT_TEST_BY_PLANT)
-//        .hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TEST)
-//        .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_TEST)
-//        .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TEST)
-//        .antMatchers(HttpMethod.PUT, EndpointURI.FINISH_PRODUCT_TEST)
-//        .hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TEST)
-//        .antMatchers(HttpMethod.DELETE, EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
-//        .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TEST)
+        // .antMatchers(HttpMethod.GET, EndpointURI.FINISH_PRODUCT_TEST_BY_PLANT)
+        // .hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TEST)
+        // .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_TEST)
+        // .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TEST)
+        // .antMatchers(HttpMethod.PUT, EndpointURI.FINISH_PRODUCT_TEST)
+        // .hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TEST)
+        // .antMatchers(HttpMethod.DELETE, EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
+        // .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TEST)
         // Accepted value
         .antMatchers(HttpMethod.GET, EndpointURI.ACCEPTED_VALUES)
         .hasAuthority(PermissionConstants.VIEW_ACCEPTED_VALUE)
@@ -360,7 +360,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.EDIT_MATERIAL_TEST_TRIAL)
         .antMatchers(HttpMethod.DELETE, EndpointURI.MATERIAL_TEST_TRIAL_BY_CODE)
         .hasAuthority(PermissionConstants.DELETE_MATERIAL_TEST_TRIAL)
-       
+
         // finish product sample issue
         .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE)
         .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE)
@@ -371,14 +371,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_SAMPLE_ISSUE)
         // finish product trail
-//        .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_TRIAL)
-//        .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TRAIL)
-//        .antMatchers(HttpMethod.GET, EndpointURI.FINISH_PRODUCT_TRIAL_BY_PLANT)
-//        .hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TRAIL)
-//        .antMatchers(HttpMethod.PUT, EndpointURI.FINISH_PRODUCT_TRIAL)
-//        .hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TRAIL)
-//        .antMatchers(HttpMethod.DELETE, EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
-//        .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TRAIL)
+        // .antMatchers(HttpMethod.POST, EndpointURI.FINISH_PRODUCT_TRIAL)
+        // .hasAuthority(PermissionConstants.CREATE_FINISH_PRODUCT_TRAIL)
+        // .antMatchers(HttpMethod.GET, EndpointURI.FINISH_PRODUCT_TRIAL_BY_PLANT)
+        // .hasAuthority(PermissionConstants.VIEW_FINISH_PRODUCT_TRAIL)
+        // .antMatchers(HttpMethod.PUT, EndpointURI.FINISH_PRODUCT_TRIAL)
+        // .hasAuthority(PermissionConstants.EDIT_FINISH_PRODUCT_TRAIL)
+        // .antMatchers(HttpMethod.DELETE, EndpointURI.FINISH_PRODUCT_TRIAL_BY_CODE)
+        // .hasAuthority(PermissionConstants.DELETE_FINISH_PRODUCT_TRAIL)
         // quality parameter
         .antMatchers(HttpMethod.POST, EndpointURI.QUALITY_PARAMETER)
         .hasAuthority(PermissionConstants.CREATE_QUALITY_PARAMETER)
@@ -394,19 +394,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.GET, EndpointURI.EXPORT_MIXDESIGN)
         .hasAuthority(PermissionConstants.VIEW_EXPORT_MIXDESIGN)
         // test Report
-//        .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
-//        .hasAuthority(PermissionConstants.MATERIAL_TEST_REPORT)
-//        .antMatchers(HttpMethod.GET, EndpointURI.CEMENT_REPORT_DETAIL)
-//        .hasAuthority(PermissionConstants.CEMENT_REPORT)
-//        .antMatchers(HttpMethod.GET, EndpointURI.ADMIXTURE_REPORT_DETAIL)
-//        .hasAuthority(PermissionConstants.ADMIXTURE_REPORT)
-//        .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
-//        .hasAuthority(PermissionConstants.INCOMING_SAMPLE_SUMMARY_REPORT)
-//        .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT)
-//        .hasAuthority(PermissionConstants.INCOMING_SAMPLE_DELIVERY_REPORT)
+        // .antMatchers(HttpMethod.GET, EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
+        // .hasAuthority(PermissionConstants.MATERIAL_TEST_REPORT)
+        // .antMatchers(HttpMethod.GET, EndpointURI.CEMENT_REPORT_DETAIL)
+        // .hasAuthority(PermissionConstants.CEMENT_REPORT)
+        // .antMatchers(HttpMethod.GET, EndpointURI.ADMIXTURE_REPORT_DETAIL)
+        // .hasAuthority(PermissionConstants.ADMIXTURE_REPORT)
+        // .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
+        // .hasAuthority(PermissionConstants.INCOMING_SAMPLE_SUMMARY_REPORT)
+        // .antMatchers(HttpMethod.GET, EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT)
+        // .hasAuthority(PermissionConstants.INCOMING_SAMPLE_DELIVERY_REPORT)
 
         // Role Permission
-         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION)
+        .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.ROLE_PERMISSION)
         .hasAuthority(PermissionConstants.EDIT_ROLE_PERMISSION)
         // Plant Role Plant Permission
         .antMatchers(HttpMethod.PUT, PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION)
@@ -434,45 +434,44 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.EDIT_USER_ROLE)
         .antMatchers(HttpMethod.DELETE, PrivilegeEndpointURI.USER_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_USER)
-        
-     // email points
+
+        // email points
         .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_POINTS)
-       .hasAuthority(PermissionConstants.GET_EMAIL_POINTS)
-       .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_POINT)
-       .hasAuthority(PermissionConstants.EDIT_EMAIL_POINTS)
-       
-    // email notification
-       .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_GROUP_BY_ADMIN_STATUS)
-      .hasAuthority(PermissionConstants.GET_EMAIL_GROUP)
-      .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_GROUP)
-      .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
-      .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_GROUP)
-      .hasAuthority(PermissionConstants.ADD_EMAIL_GROUP)
-      .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_GROUP_BY_ID)
-      .hasAuthority(PermissionConstants.DELETE_EMAIL_GROUP)
-      
-      // email group configuration
-      .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE)
-     .hasAuthority(PermissionConstants.GET_EMAIL_RECIPIENT)
-     .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_RECIPIENT)
-     .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
-     .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_RECIPIENT)
-     .hasAuthority(PermissionConstants.ADD_EMAIL_RECIPIENT)
-     .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_RECIPIENT_BY_ID)
-     .hasAuthority(PermissionConstants.DELETE_EMAIL_RECIPIENT)
-     
-     // notification days
-     .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_NOTIFICATIONS_BY_PLANT_CODE)
-    .hasAuthority(PermissionConstants.GET_NOTIFICATION_DAYS)
-    .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_NOTIFICATION)
-    .hasAuthority(PermissionConstants.EDIT_NOTIFICATION_DAYS)
-    .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_NOTIFICATION)
-    .hasAuthority(PermissionConstants.ADD_NOTIFICATION_DAYS)
-    .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_NOTIFICATION_BY_ID)
-    .hasAuthority(PermissionConstants.DELETE_NOTIFICATION_DAYS)
-         
-    .anyRequest().authenticated()
-    ;
+        .hasAuthority(PermissionConstants.GET_EMAIL_POINTS)
+        .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_POINT)
+        .hasAuthority(PermissionConstants.EDIT_EMAIL_POINTS)
+
+        // email notification
+        .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_GROUP_BY_ADMIN_STATUS)
+        .hasAuthority(PermissionConstants.GET_EMAIL_GROUP)
+        .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_GROUP)
+        .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
+        .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_GROUP)
+        .hasAuthority(PermissionConstants.ADD_EMAIL_GROUP)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_GROUP_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_EMAIL_GROUP)
+
+        // email group configuration
+        .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE)
+        .hasAuthority(PermissionConstants.GET_EMAIL_RECIPIENT)
+        .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_RECIPIENT)
+        .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
+        .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_RECIPIENT)
+        .hasAuthority(PermissionConstants.ADD_EMAIL_RECIPIENT)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_RECIPIENT_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_EMAIL_RECIPIENT)
+
+        // notification days
+        .antMatchers(HttpMethod.GET, EndpointURI.EMAIL_NOTIFICATIONS_BY_PLANT_CODE)
+        .hasAuthority(PermissionConstants.GET_NOTIFICATION_DAYS)
+        .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_NOTIFICATION)
+        .hasAuthority(PermissionConstants.EDIT_NOTIFICATION_DAYS)
+        .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_NOTIFICATION)
+        .hasAuthority(PermissionConstants.ADD_NOTIFICATION_DAYS)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_NOTIFICATION_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_NOTIFICATION_DAYS)
+
+        .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     http.headers().cacheControl();

@@ -32,6 +32,9 @@ public class AcceptedValue extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "testEquationId", nullable = true)
   private TestEquation testEquation;
+  @ManyToOne
+  @JoinColumn(name = "testParameterId", nullable = true)
+  private TestParameter testParameter;
   private boolean finalResult;
 
   public Long getId() {
@@ -100,5 +103,13 @@ public class AcceptedValue extends DateAudit implements Serializable {
 
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
+  }
+
+  public TestParameter getTestParameter() {
+    return testParameter;
+  }
+
+  public void setTestParameter(TestParameter testParameter) {
+    this.testParameter = testParameter;
   }
 }

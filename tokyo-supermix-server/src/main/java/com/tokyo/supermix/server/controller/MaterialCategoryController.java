@@ -26,7 +26,6 @@ import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class MaterialCategoryController {
@@ -42,7 +41,8 @@ public class MaterialCategoryController {
   @PostMapping(value = EndpointURI.MATERIAL_CATEGORY)
   public ResponseEntity<Object> createMaterialCategory(
       @Valid @RequestBody MaterialCategoryDto materialCategoryDto) {
-    if (materialCategoryService.isNameExist(materialCategoryDto.getName())) {
+    if (materialCategoryService.isExistByNameAndMainType(materialCategoryDto.getName(),
+        materialCategoryDto.getMainType())) {
       logger.debug("name is already exists: createMaterialCategory(), isNameExist: {}");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_NAME,
@@ -114,14 +114,13 @@ public class MaterialCategoryController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_ID,
         validationFailureStatusCodes.getMaterialCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_MAIN_TYPE)
   public ResponseEntity<Object> getMaterialCategoryByMainType(@PathVariable MainType mainType) {
     if (materialCategoryService.isMainTypeExist(mainType)) {
       logger.debug("Get Material Category By Main Type");
-      return new ResponseEntity<>(new ContentResponse<>(
-          Constants.MATERIAL_CATEGORY, mapper
-              .map(materialCategoryService.getByMainType(mainType), MaterialCategoryDto.class),
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORY,
+          mapper.map(materialCategoryService.getByMainType(mainType), MaterialCategoryDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_ID,

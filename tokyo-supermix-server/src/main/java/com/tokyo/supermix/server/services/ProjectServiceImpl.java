@@ -106,4 +106,9 @@ public class ProjectServiceImpl implements ProjectService {
   public List<Project> getAllProjects() {
     return projectRepository.findAll();
   }
+
+  @Transactional(readOnly = true)
+  public List<Project> getAllProjectsByCustomer(Long customerId) {
+    return projectRepository.findByCustomerId(customerId);
+  }
 }
