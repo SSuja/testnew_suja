@@ -15,6 +15,33 @@ public class TestConfigureResponseDto {
   private MainType testType;
   private ReportFormat reportFormat;
   private String acceptedType;
+  private boolean name;
+  private String createdAt;
+  private String updatedAt;
+
+  public String getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public boolean isName() {
+    return name;
+  }
+
+  public void setName(boolean name) {
+    this.name = name;
+  }
 
   public Long getId() {
     return id;

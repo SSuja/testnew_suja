@@ -30,4 +30,6 @@ public interface ProjectService {
   public List<Project> getProjectByPlantCode(String plantCode);
 
   public List<Project> getAllProjectsByCustomer(Long customerId);
+
+  public boolean isCustomerExistsByProject(Long customerId);
 }

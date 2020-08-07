@@ -25,6 +25,15 @@ public class TestConfigureRequestDto {
   private boolean adminLevelEmailConfiguration;
   private ReportFormat reportFormat;
   private AcceptedType acceptedType;
+  private boolean name;
+
+  public boolean isName() {
+    return name;
+  }
+
+  public void setName(boolean name) {
+    this.name = name;
+  }
 
   public Long getId() {
     return id;
