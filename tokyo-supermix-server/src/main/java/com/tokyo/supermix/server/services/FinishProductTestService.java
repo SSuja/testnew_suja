@@ -29,4 +29,6 @@ public interface FinishProductTestService {
 
   public  List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode);
   public void updateFinishProductTestComment(FinishProductTest finishProductTest);
+  
+  boolean isExistsByPlantCode(String plantCode);
 }

@@ -21,14 +21,14 @@ public interface TestReportService {
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
       String testName, String plantCode);
 
-  public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode);
+  public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode,String plantCode);
 
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
       String materialTestCode);
 
   public List<ConcreteStrengthDto> getConcreteStrengths(String plantCode);
 
-  public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode);
+  public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode,String plantCode);
 
   public FinishProductTestReportDetailDto getFinishProductTestDetailReport(
       String finishProductTestCode);

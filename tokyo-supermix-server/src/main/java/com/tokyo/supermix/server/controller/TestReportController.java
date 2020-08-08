@@ -97,10 +97,11 @@ public class TestReportController {
   }
 
   @GetMapping(value = EndpointURI.CONCRETE_TEST_REPORT)
-  public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode) {
+  public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode,
+      @PathVariable String plantCode) {
     if (finishProductTestService.isFinishProductTestExists(finishProductTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getConcreteTestReport(finishProductTestCode),
+          mapper.map(testReportService.getConcreteTestReport(finishProductTestCode, plantCode),
               ConcreteTestReportDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -123,12 +124,12 @@ public class TestReportController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.SIEVE_TRIALS_BY_MATERIAL_TEST_CODE)
-  public ResponseEntity<Object> getSeiveTest(@PathVariable String materialTestCode) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.SIEVE_TEST,
-            testReportService.getSieveTestReport(materialTestCode), RestApiResponseStatus.OK),
-        HttpStatus.OK);
+  @GetMapping(value = EndpointURI.SIEVE_TRIALS_BY_MATERIAL_TEST_CODE_PLANT_CODE)
+  public ResponseEntity<Object> getSeiveTest(@PathVariable String materialTestCode,
+      @PathVariable String plantCode) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
+        testReportService.getSieveTestReport(materialTestCode, plantCode),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE)
