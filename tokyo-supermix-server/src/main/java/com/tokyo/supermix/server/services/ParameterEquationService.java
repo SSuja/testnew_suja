@@ -28,4 +28,6 @@ public interface ParameterEquationService {
 
   public boolean isEquationExist(Long equationId);
 
+  public boolean isTestParameterExist(Long testParameterId);
+
 }
