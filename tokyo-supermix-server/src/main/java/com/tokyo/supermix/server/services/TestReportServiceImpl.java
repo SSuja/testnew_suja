@@ -621,9 +621,11 @@ public class TestReportServiceImpl implements TestReportService {
     AcceptedValueForSieveTest acceptedValueForSieveTest = new AcceptedValueForSieveTest();
     AcceptedValue acceptedValue = acceptedValueRepository
         .findByTestConfigureIdAndTestEquationId(testConfigId, testEquationId);
-    acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
-    acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
-    acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+    if (acceptedValue != null) {
+      acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+      acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+      acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+    }
     return acceptedValueForSieveTest;
   }
 
