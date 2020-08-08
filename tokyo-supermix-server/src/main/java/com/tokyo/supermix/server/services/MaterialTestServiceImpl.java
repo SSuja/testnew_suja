@@ -190,7 +190,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   private void calculateTest(Integer count, Integer failCount, Integer testSize,
       IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    if (count == testSize) {
+    if (count == testSize && testSize!=0) {
       updateStatusSample(Status.PASS, incomingSample, bodyMessage, materialTestObj);
     } else if (failCount == 1) {
       updateStatusSample(Status.FAIL, incomingSample, bodyMessage, materialTestObj);

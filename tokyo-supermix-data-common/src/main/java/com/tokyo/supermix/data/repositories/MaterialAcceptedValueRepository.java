@@ -22,4 +22,6 @@ public interface MaterialAcceptedValueRepository
 
   MaterialAcceptedValue findByTestConfigureIdAndTestEquationId(Long testConfigureId,
       Long testEquationId);
+  MaterialAcceptedValue findByTestConfigureIdAndRawMaterialIdAndTestEquationId(Long testConfigureId,
+      Long rawMaterialId,Long testEquationId);
 }
