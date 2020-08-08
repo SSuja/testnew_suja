@@ -13,22 +13,31 @@ import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 
 public interface TestReportService {
 
-  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode, String plantCode);
-
-  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode,
+  public TestReportDetailDto getMaterialTestDetailReportPlantWise(String materialTestCode,
       String plantCode);
 
-  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
-      String testName, String plantCode);
+  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode);
 
-  public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode,String plantCode);
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReportPlantWise(
+      String incomingSampleCode, String plantCode);
+
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode);
+
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReportPlantWise(
+      String incomingSampleCode, String testName, String plantCode);
+
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
+      String testName);
+
+  public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode,
+      String plantCode);
 
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
       String materialTestCode);
 
   public List<ConcreteStrengthDto> getConcreteStrengths(String plantCode);
 
-  public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode,String plantCode);
+  public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode, String plantCode);
 
   public FinishProductTestReportDetailDto getFinishProductTestDetailReport(
       String finishProductTestCode);
