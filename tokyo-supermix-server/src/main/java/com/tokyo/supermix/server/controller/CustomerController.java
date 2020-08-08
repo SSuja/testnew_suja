@@ -56,8 +56,7 @@ public class CustomerController {
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getAllCustomersByCurrentUser(currentUser),
-              CustomerResponseDto.class),
+          mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

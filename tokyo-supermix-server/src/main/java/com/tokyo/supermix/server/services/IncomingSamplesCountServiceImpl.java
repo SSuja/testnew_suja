@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.util.Constants;
 
 @Service
 public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountService {
@@ -24,13 +25,12 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
-
+   
   private LocalDateTime today = LocalDateTime.now();
   java.sql.Date sqlDate = java.sql.Date.valueOf(today.toLocalDate());
 
   @Transactional(readOnly = true)
-  public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(Long materialCategoryId,
-      String plantCode) {
+  public List<CountMaterialDto> getmaterialSampleCountByMaterialCategory(Long materialCategoryId,String plantCode) {
     List<CountMaterialDto> countMaterialDtoList = new ArrayList<CountMaterialDto>();
     List<MaterialSubCategory> materialSubCategories =
         materialSubCategoryRepository.findByMaterialCategoryId(materialCategoryId);
@@ -39,8 +39,11 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
           rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategory.getId());
       for (RawMaterial rawMaterial : rawMaterials) {
         Status status = null;
-        countMaterialDtoList
-            .add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status, plantCode));
+        if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+          countMaterialDtoList.add(setAdminFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));     
+        }else {
+        countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status, plantCode));
+      }
       }
     }
     return countMaterialDtoList;
@@ -54,8 +57,11 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
     for (RawMaterial rawMaterial : rawMaterialList) {
       Status status = null;
-      countMaterialDtoList
-          .add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status, plantCode));
+      if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        countMaterialDtoList.add(setAdminFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status));
+      }else {
+      countMaterialDtoList.add(setFieldsStatusCountMaterialDto(rawMaterial, sqlDate, status, plantCode));
+    }
     }
     return countMaterialDtoList;
   }
@@ -64,42 +70,57 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
       Status status, String plantCode) {
     CountMaterialDto countMaterialDto = new CountMaterialDto();
     countMaterialDto.setMaterialName(rawMaterial.getName());
-    countMaterialDto.setTotal(incomingSampleRepository
-        .findByRawMaterialIdAndDateAndPlantCode(rawMaterial.getId(), date, plantCode).size());
-    countMaterialDto.setNewCount(
-        incomingSampleRepository.findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.NEW,
-            rawMaterial.getId(), date, plantCode).size());
-    countMaterialDto.setPassCount(
-        incomingSampleRepository.findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.PASS,
-            rawMaterial.getId(), date, plantCode).size());
-    countMaterialDto.setFailCount(
-        incomingSampleRepository.findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.FAIL,
-            rawMaterial.getId(), date, plantCode).size());
-    countMaterialDto.setProcessCount(
-        incomingSampleRepository.findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.PROCESS,
-            rawMaterial.getId(), date, plantCode).size());
+    countMaterialDto.setTotal(
+        incomingSampleRepository.findByRawMaterialIdAndDateAndPlantCode(rawMaterial.getId(), date, plantCode).size());
+    countMaterialDto.setNewCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.NEW, rawMaterial.getId(), date, plantCode).size());
+    countMaterialDto.setPassCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.PASS, rawMaterial.getId(), date, plantCode).size());
+    countMaterialDto.setFailCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.FAIL, rawMaterial.getId(), date, plantCode).size());
+    countMaterialDto.setProcessCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDateAndPlantCode(Status.PROCESS, rawMaterial.getId(), date, plantCode).size());
     return countMaterialDto;
   }
-
+  private CountMaterialDto setAdminFieldsStatusCountMaterialDto(RawMaterial rawMaterial, Date date,
+      Status status) {
+    CountMaterialDto countMaterialDto = new CountMaterialDto();
+    countMaterialDto.setMaterialName(rawMaterial.getName());
+    countMaterialDto.setTotal(
+        incomingSampleRepository.findByRawMaterialIdAndDate(rawMaterial.getId(), date).size());
+    countMaterialDto.setNewCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.NEW, rawMaterial.getId(), date).size());
+    countMaterialDto.setPassCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.PASS, rawMaterial.getId(), date).size());
+    countMaterialDto.setFailCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.FAIL, rawMaterial.getId(), date).size());
+    countMaterialDto.setProcessCount(incomingSampleRepository
+        .findByStatusAndRawMaterialIdAndDate(Status.PROCESS, rawMaterial.getId(), date).size());
+    return countMaterialDto;
+  }
   @Transactional(readOnly = true)
-  public List<StatusCountResponseDto> getCountByMaterialSubCategory(Long materialSubCategoryId,
-      String plantCode) {
+  public List<StatusCountResponseDto> getCountByMaterialSubCategory(Long materialSubCategoryId, String plantCode) {
     List<StatusCountResponseDto> statusCountResponseDtoList =
         new ArrayList<StatusCountResponseDto>();
     List<RawMaterial> rawMaterialList =
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
     Status status = null;
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      statusCountResponseDtoList.add(setAdminFieldsStatusMaterialSubCategory(
+          rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status));
+       
+    }else {
     statusCountResponseDtoList.add(setFieldsStatusMaterialSubCategory(
         rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status, plantCode));
+    }
     return statusCountResponseDtoList;
   }
 
   private StatusCountResponseDto setFieldsStatusMaterialSubCategory(Long materialSubCategoryId,
       Date sqlDate, Status status, String plantCode) {
     StatusCountResponseDto statusCountResponseDto = new StatusCountResponseDto();
-    statusCountResponseDto.setTotal(
-        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(
-            materialSubCategoryId, sqlDate, plantCode).size());
+    statusCountResponseDto.setTotal(incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(materialSubCategoryId, sqlDate, plantCode).size());
     statusCountResponseDto.setNewCount(
         incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatusAndPlantCode(
             materialSubCategoryId, sqlDate, Status.NEW, plantCode).size());
@@ -115,10 +136,30 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
     return statusCountResponseDto;
 
   }
+  
+  private StatusCountResponseDto setAdminFieldsStatusMaterialSubCategory(Long materialSubCategoryId,
+      Date sqlDate, Status status) {
+    StatusCountResponseDto statusCountResponseDto = new StatusCountResponseDto();
+    statusCountResponseDto.setTotal(incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndDate(materialSubCategoryId, sqlDate).size());
+    statusCountResponseDto.setNewCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.NEW).size());
+    statusCountResponseDto.setPassCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.PASS).size());
+    statusCountResponseDto.setFailCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.FAIL).size());
+    statusCountResponseDto.setProcessCount(
+        incomingSampleRepository.findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
+            materialSubCategoryId, sqlDate, Status.PROCESS).size());
+    return statusCountResponseDto;
+
+  }
 
   @Override
-  public List<StatusCountResponseDto> getCountByMaterialCategory(Long materialCategoryId,
-      String plantCode) {
+  public List<StatusCountResponseDto> getCountByMaterialCategory(Long materialCategoryId,String plantCode) {
     List<StatusCountResponseDto> statusCountResponseDtoList =
         new ArrayList<StatusCountResponseDto>();
     List<MaterialSubCategory> materialSubCategories =
@@ -126,8 +167,14 @@ public class IncomingSamplesCountServiceImpl implements IncomingSamplesCountServ
     List<RawMaterial> rawMaterialList =
         rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategories.get(0).getId());
     Status status = null;
+    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      statusCountResponseDtoList.add(setAdminFieldsStatusMaterialSubCategory(
+          rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status));
+       
+    }else {
     statusCountResponseDtoList.add(setFieldsStatusMaterialSubCategory(
         rawMaterialList.get(0).getMaterialSubCategory().getId(), sqlDate, status, plantCode));
+    }
     return statusCountResponseDtoList;
   }
 

@@ -42,8 +42,8 @@ public final class EndpointURI {
   public static final String SUPPLIER = BASE_API_PATH + "supplier";
   public static final String SUPPLIERS = BASE_API_PATH + "suppliers";
   public static final String SUPPLIER_BY_ID = SUPPLIER + ID;
-  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
-      SUPPLIER + SLASH + "supplier-category" + SLASH + "{suppilerCategoryId}";
+  public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =BASE_API_PATH+
+      "supplier-category" + SLASH + "{suppilerCategoryId}"+ SLASH + "plant"+ SLASH +"{plantCode}";
   public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
@@ -392,18 +392,16 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLES_COUNT_BY_MATERIAL =
       BASE_API_PATH + "incoming-samples-count-by-material";
   public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_CATEGORY =
-      INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + "{materialCategoryName}" + SLASH + "plant"
-          + SLASH + "{plantCode}";
+      INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + "{materialCategoryName}"+SLASH+"{plantCode}";
+
   public static final String SUB_CATEGORY = "materialSubCategory";
   public static final String MATERIAL_SAMPLE_COUNT_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES_COUNT_BY_MATERIAL + SLASH + SUB_CATEGORY + SLASH
-          + "{materialSubCategoryName}" + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String MATERIAL_SUB_CATEGORY_STATUS_COUNT =
-      INCOMING_SAMPLES_COUNT + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryName}"
-          + SLASH + "plant" + SLASH + "{plantCode}";
+          + "{materialSubCategoryName}"+SLASH+"{plantCode}";
+  public static final String MATERIAL_SUB_CATEGORY_STATUS_COUNT = INCOMING_SAMPLES_COUNT + SLASH
+      + "material-sub-category" + SLASH + "{materialSubCategoryName}"+SLASH+"{plantCode}";
   public static final String MATERIAL_CATEGORY_STATUS_COUNT =
-      INCOMING_SAMPLES_COUNT + SLASH + "material-category" + SLASH + "{materialCategoryName}"
-          + SLASH + "plant" + SLASH + "{plantCode}";
+      INCOMING_SAMPLES_COUNT + SLASH + "material-category" + SLASH + "{materialCategoryName}"+SLASH+"{plantCode}";
 
   /*
    * qualityParameter
@@ -475,6 +473,8 @@ public final class EndpointURI {
   public static final String CONCRETE_STRENGTHS = BASE_API_PATH + "concrete-strengths";
   public static final String SIEVE_TRIALS_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-sieve" + SLASH + "{materialTestCode}";
+  public static final String SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE =
+      BASE_API_PATH + "material-test-graph" + SLASH + "{materialTestCode}";
   /*
    * File Export
    */
