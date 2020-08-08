@@ -18,8 +18,10 @@ public interface TestEquationService {
   public void deleteTestEquation(Long id);
 
   public void saveTestEquationAndTestEquationParameter(TestEquationDto testEquationDto);
-  
+
   public List<TestEquation> getByTestConfigure(Long testConfigureId);
 
   public List<TestEquation> getByEquation(Long equationId);
+
+  public boolean isEquationExists(Long equationId);
 }
