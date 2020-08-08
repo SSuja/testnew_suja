@@ -22,7 +22,8 @@ public interface MaterialTestRepository
 
   boolean existsByTestConfigureId(Long testConfigureId);
 
-  List<MaterialTest> findByTestConfigureId(Long testConfigureId);
+  List<MaterialTest> findByIncomingSamplePlantCodeAndTestConfigureId(String plantCode,
+      Long testConfigureId);
 
   List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 

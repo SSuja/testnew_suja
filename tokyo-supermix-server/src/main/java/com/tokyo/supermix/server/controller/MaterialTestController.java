@@ -168,10 +168,12 @@ public class MaterialTestController {
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE)
-  public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable Long testConfigureId) {
+  public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable String plantCode,
+      @PathVariable Long testConfigureId) {
     if (materialTestService.isMaterialTestByTestConfigureExists(testConfigureId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
-          mapper.map(materialTestService.getMaterialTestByTestConfigureId(testConfigureId),
+          mapper.map(
+              materialTestService.getMaterialTestByTestConfigureId(plantCode, testConfigureId),
               MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
