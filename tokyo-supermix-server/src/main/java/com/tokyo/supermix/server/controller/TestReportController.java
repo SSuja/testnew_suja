@@ -45,10 +45,19 @@ public class TestReportController {
   public ResponseEntity<Object> getMaterialTestReportDetails(@PathVariable String materialTestCode,
       @PathVariable String plantCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode, plantCode),
-              TestReportDetailDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode),
+                TestReportDetailDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper.map(testReportService.getMaterialTestDetailReportPlantWise(materialTestCode,
+                    plantCode), TestReportDetailDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
@@ -72,11 +81,19 @@ public class TestReportController {
   public ResponseEntity<Object> getIncomingSampleSummaryReportDetails(
       @PathVariable String incomingSampleCode, @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(
-              testReportService.getIncomingSampleSummaryReport(incomingSampleCode, plantCode),
-              IncomingSampleDeliveryReportDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
+                    IncomingSampleDeliveryReportDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getIncomingSampleSummaryReportPlantWise(incomingSampleCode,
+                plantCode), IncomingSampleDeliveryReportDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
@@ -87,10 +104,24 @@ public class TestReportController {
       @PathVariable String incomingSampleCode, @PathVariable String testName,
       @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getIncomingSampleDeliveryReports(incomingSampleCode,
-              testName, plantCode), IncomingSampleDeliveryReportDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper.map(testReportService.getIncomingSampleDeliveryReports(incomingSampleCode,
+                    testName), IncomingSampleDeliveryReportDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper
+                    .map(
+                        testReportService.getIncomingSampleDeliveryReportPlantWise(
+                            incomingSampleCode, testName, plantCode),
+                        IncomingSampleDeliveryReportDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);

@@ -183,7 +183,7 @@ public final class EndpointURI {
       TEST_CONFIGURE + SLASH + "testDetails" + ID;
   public static final String CUSTOMER_BY_PLANT = CUSTOMER + PLANT_WISE;
   public static final String PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID =
-      PLANT_EQUIPMENT + SLASH + "equipment" + SLASH + "{equipmentId}";
+      PLANT_EQUIPMENT + SLASH + "equipment" + SLASH + "{equipmentId}"+ SLASH + "{plantCode}";
   /*
    * Equation APIs
    */
