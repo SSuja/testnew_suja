@@ -42,11 +42,11 @@ public class TestReportController {
   private Mapper mapper;
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
-  public ResponseEntity<Object> getMaterialTestReportDetails(
-      @PathVariable String materialTestCode) {
+  public ResponseEntity<Object> getMaterialTestReportDetails(@PathVariable String materialTestCode,
+      @PathVariable String plantCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode),
+          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode, plantCode),
               TestReportDetailDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -69,11 +69,12 @@ public class TestReportController {
 
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
-  public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode) {
+  public ResponseEntity<Object> getIncomingSampleSummaryReportDetails(
+      @PathVariable String incomingSampleCode, @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
+          mapper.map(
+              testReportService.getIncomingSampleSummaryReport(incomingSampleCode, plantCode),
               IncomingSampleDeliveryReportDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -83,12 +84,12 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT)
   public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode, @PathVariable String testName) {
+      @PathVariable String incomingSampleCode, @PathVariable String testName,
+      @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(
-              testReportService.getIncomingSampleDeliveryReports(incomingSampleCode, testName),
-              IncomingSampleDeliveryReportDto.class),
+          mapper.map(testReportService.getIncomingSampleDeliveryReports(incomingSampleCode,
+              testName, plantCode), IncomingSampleDeliveryReportDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
@@ -115,10 +116,10 @@ public class TestReportController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.CONCRETE_STRENGTHS)
-  public ResponseEntity<Object> getConcreteResults() {
+  @GetMapping(value = EndpointURI.CONCRETE_STRENGTHS_BY_PLANT)
+  public ResponseEntity<Object> getConcreteResults(@PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH,
-        mapper.map(testReportService.getConcreteStrengths(), ConcreteStrengthDto.class),
+        mapper.map(testReportService.getConcreteStrengths(plantCode), ConcreteStrengthDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
@@ -129,6 +130,7 @@ public class TestReportController {
             testReportService.getSieveTestReport(materialTestCode), RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getSeiveTestGraph(@PathVariable String materialTestCode) {
     return new ResponseEntity<>(

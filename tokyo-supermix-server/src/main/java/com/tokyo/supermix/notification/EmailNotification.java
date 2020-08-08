@@ -3,11 +3,13 @@ package com.tokyo.supermix.notification;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
+import com.tokyo.supermix.data.entities.ConfirmationToken;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
@@ -567,5 +569,14 @@ public class EmailNotification {
           + ". Password is " + userDto.getPassword();
       emailService.sendMail(userDto.getEmail(), Constants.SUBJECT_NEW_USER, message);
     }
+  }
+
+  @Async
+  public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,HttpServletRequest request) {
+
+  String message=("To confirm your account, please click here : "
+  +"http://ec2-13-232-175-85.ap-south-1.compute.amazonaws.com/#/employee/confirmation/"+confirmationToken.getConfirmationToken());
+  emailService.sendMail(employee.getEmail(), Constants.SUBJECT_EMPLOYEE_CREATION, message); 
+   
   }
 }

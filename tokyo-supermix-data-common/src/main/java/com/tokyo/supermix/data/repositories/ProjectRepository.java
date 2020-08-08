@@ -16,4 +16,6 @@ public interface ProjectRepository
   List<Project> findByPlantCodeIn(List<String> plantCodes);
 
   List<Project> findByCustomerId(Long customerId);
+
+  boolean existsByCustomerId(Long customerId);
 }

@@ -206,7 +206,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (!status.equals(Status.PROCESS)) {
       try {
         emailNotification.sendTestEmail(materialTestObj);
-        generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
+        generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode(), incomingSample.getPlant().getCode());
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -217,7 +217,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (materialTestObj.getTestConfigure().getReportFormat().equals(ReportFormat.DELIVERY_REPORT)) {
       try {
         generateReportService.generatePdfDeliveryDetailReport(incomingSample.getCode(),
-            materialTestObj.getTestConfigure().getTest().getName());
+            materialTestObj.getTestConfigure().getTest().getName(), incomingSample.getPlant().getCode());
       } catch (Exception e) {
         e.printStackTrace();
       }

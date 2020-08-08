@@ -107,7 +107,8 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
-  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode) {
+  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode,
+      String plantCode) {
     TestReportDetailDto reportDto = new TestReportDetailDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     reportDto.setMaterialTest(getMaterialTestReport(materialTestCode));
@@ -258,7 +259,8 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Incoming Sample Summary Report
   @Transactional(readOnly = true)
-  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode) {
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode,
+      String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
     List<MaterialTest> materialTest =
@@ -366,7 +368,7 @@ public class TestReportServiceImpl implements TestReportService {
   // Incoming Sample Delivery Report for Moisture Test
   @Transactional(readOnly = true)
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
-      String testName) {
+      String testName,String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
     List<MaterialTest> materialTest = materialTestRepository
@@ -491,9 +493,9 @@ public class TestReportServiceImpl implements TestReportService {
     return finishProductTestRepository.existsByFinishProductSampleCode(finishProductSampleCode);
   }
 
-  public List<ConcreteStrengthDto> getConcreteStrengths() {
+  public List<ConcreteStrengthDto> getConcreteStrengths(String plantCode) {
     ArrayList<ConcreteStrengthDto> averageStrengthList = new ArrayList<ConcreteStrengthDto>();
-    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
+    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
       if (isFinishProductSampleExist(finishProductSample.getCode())) {

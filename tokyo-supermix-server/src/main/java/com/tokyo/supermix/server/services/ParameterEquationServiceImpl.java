@@ -94,4 +94,9 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId) {
     return parameterEquationRepository.findByTestParameterTestConfigureId(testConfigureId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isEquationExist(Long equationId) {
+    return parameterEquationRepository.existsByEquationId(equationId);
+  }
 }

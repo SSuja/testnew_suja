@@ -25,15 +25,21 @@ public class Constants {
   public static final String SUBJECT_MATRIAL_TEST = "Notification : About Matrial test result ";
   public static final String SUBJECT_CONCRETE_TEST = "Notification : About Concrete test result ";
   public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
-  public static final String SUBJECT_NEW_INCOMING_SAMPLE = "Notification : About Incoming Sample Creation ";
-  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE = "Notification : About Finish Product Sample Creation ";
-  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE = "Notification : About Finish Product Sample Issue Creation ";
-  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
+  public static final String SUBJECT_NEW_INCOMING_SAMPLE =
+      "Notification : About Incoming Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE =
+      "Notification : About Finish Product Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
+      "Notification : About Finish Product Sample Issue Creation ";
+  public static final String SUBJECT_PLANT_EQUIPMENT =
+      "Notification : About Plant Equipment Calibration ";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
-  public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
+  public static final String SUBJECT_PROCESS_SAMPLE =
+      "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
+  public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
   
 
 	// for sample counts
@@ -87,6 +93,7 @@ public class Constants {
 	public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
 	public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
 	public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
+	public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
 	/*
 	 * Constants for Pour validation key & Success messages
 	 */
@@ -138,6 +145,7 @@ public class Constants {
   public static final String ADD_EQUATION_SUCCESS = "Equation Added Successfully";
   public static final String DELETE_EQUATION_SUCCESS = "Equation Successfully Deleted";
   public static final String UPDATE_EQUATION_SUCCESS = "Equation Updated Successfully";
+  public static final String EQUATION_ALREADY_DEPENDED = "Equation is Already Depended";
   /*
    * Constants for Plant Equipment validation key & Success messages
    */

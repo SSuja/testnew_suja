@@ -339,9 +339,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSample.setStatus(Status.PROCESS);
         mixDesign.setStatus(Status.PROCESS);
         mixDesign.setTargetSlump(finishProductParameterResult.getResult());
+        finishProductSampleRepository.save(finishProductSample);
+        mixDesignRepository.save(mixDesign);
       } else {
         finishProductSample.setStatus(finishproductTest.getStatus());
         mixDesign.setStatus(finishproductTest.getStatus());
+        finishProductSampleRepository.save(finishProductSample);
+        mixDesignRepository.save(mixDesign);
       }
     } else if (finishproductTest.getTestConfigure().isCoreTest()
         && (!finishproductTest.getTestConfigure().isName())
@@ -349,12 +353,16 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
       finishProductSample.setStatus(finishproductTest.getStatus());
       mixDesign.setStatus(finishproductTest.getStatus());
+      finishProductSampleRepository.save(finishProductSample);
+      mixDesignRepository.save(mixDesign);
     } else if (finishproductTest.getTestConfigure().isCoreTest()
         && (finishproductTest.getTestConfigure().isName())
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
       finishProductSample.setStatus(finishproductTest.getStatus());
       mixDesign.setStatus(finishproductTest.getStatus());
+      finishProductSampleRepository.save(finishProductSample);
+      mixDesignRepository.save(mixDesign);
     } else if (!finishproductTest.getTestConfigure().isCoreTest()
         && (finishproductTest.getTestConfigure().isName())
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
@@ -363,9 +371,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSample.setStatus(Status.PROCESS);
         mixDesign.setStatus(Status.PROCESS);
         mixDesign.setTargetGrade(finishProductParameterResult.getResult());
+        finishProductSampleRepository.save(finishProductSample);
+        mixDesignRepository.save(mixDesign);
       } else {
         finishProductSample.setStatus(finishproductTest.getStatus());
         mixDesign.setStatus(finishproductTest.getStatus());
+        finishProductSampleRepository.save(finishProductSample);
+        mixDesignRepository.save(mixDesign);
       }
     } else if (!finishproductTest.getTestConfigure().isCoreTest()
         && (finishproductTest.getTestConfigure().isName())
@@ -373,9 +385,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             .equals(FinishProductTestType.POST_PRODUCTION)) {
       finishProductSample.setStatus(Status.PROCESS);
       mixDesign.setStatus(Status.PROCESS);
+      finishProductSampleRepository.save(finishProductSample);
+      mixDesignRepository.save(mixDesign);
     }
-    finishProductSampleRepository.save(finishProductSample);
-    mixDesignRepository.save(mixDesign);
   }
-
 }
