@@ -31,10 +31,10 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 	private EmailRecipientService emailRecipientService;
 
 	@Override
-	public void generatePdfSummaryDetailReport(String incomingSampleCode)
+	public void generatePdfSummaryDetailReport(String incomingSampleCode,String plantCode)
 			throws FileNotFoundException, JRException, MessagingException {
 		IncomingSampleDeliveryReportDto deliveryReport = testReportService
-				.getIncomingSampleSummaryReport(incomingSampleCode);
+				.getIncomingSampleSummaryReport(incomingSampleCode, plantCode);
 		List<IncomingSampleDeliveryReportDto> deliveryReports = new ArrayList<IncomingSampleDeliveryReportDto>();
 		deliveryReports.add(deliveryReport);
 		List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
@@ -58,10 +58,10 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 	}
 
 	@Override
-	public void generatePdfDeliveryDetailReport(String incomingSampleCode, String testName)
+	public void generatePdfDeliveryDetailReport(String incomingSampleCode, String testName, String plantCode)
 			throws FileNotFoundException, JRException, MessagingException {
 		IncomingSampleDeliveryReportDto deliveryReport = testReportService
-				.getIncomingSampleDeliveryReports(incomingSampleCode, testName);
+				.getIncomingSampleDeliveryReports(incomingSampleCode, testName, plantCode);
 		List<IncomingSampleDeliveryReportDto> deliveryReports = new ArrayList<IncomingSampleDeliveryReportDto>();
 		deliveryReports.add(deliveryReport);
 		List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();

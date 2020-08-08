@@ -43,10 +43,10 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
   public ResponseEntity<Object> getMaterialTestReportDetails(
-      @PathVariable String materialTestCode) {
+      @PathVariable String materialTestCode,@PathVariable String plantCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode),
+          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode, plantCode),
               TestReportDetailDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -69,11 +69,11 @@ public class TestReportController {
 
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
-  public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode) {
+  public ResponseEntity<Object> getIncomingSampleSummaryReportDetails(
+      @PathVariable String incomingSampleCode,@PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
+          mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode, plantCode),
               IncomingSampleDeliveryReportDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
@@ -83,11 +83,12 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT)
   public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode, @PathVariable String testName) {
+      @PathVariable String incomingSampleCode, @PathVariable String testName,@PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
           mapper.map(
-              testReportService.getIncomingSampleDeliveryReports(incomingSampleCode, testName),
+              testReportService.getIncomingSampleDeliveryReports(incomingSampleCode, testName,
+                  plantCode),
               IncomingSampleDeliveryReportDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
