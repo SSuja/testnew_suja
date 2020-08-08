@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -53,13 +54,13 @@ public class EmployeeController {
 
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto) {
+  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,HttpServletRequest request) {
     if (employeeService.isEmailExist(employeeDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    employeeService.createEmployee(mapper.map(employeeDto, Employee.class));
+    employeeService.createEmployee(mapper.map(employeeDto, Employee.class),request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -157,4 +158,12 @@ public class EmployeeController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+  @GetMapping(value = EndpointURI.EMPLOYEE_WITH_TOKEN)
+  public ResponseEntity<Object> getEmployeeBy(
+     @PathVariable String confirmationToken) {
+   employeeService.updateEmployeeWithConfirmation(confirmationToken);
+   return new ResponseEntity<>(
+       new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_VERIFICATION),
+       HttpStatus.OK);
+ }
 }

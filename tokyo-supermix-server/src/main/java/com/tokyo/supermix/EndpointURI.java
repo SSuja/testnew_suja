@@ -62,6 +62,8 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
+  public static final String EMPLOYEE_WITH_TOKEN =
+      EMPLOYEE + SLASH +"confirmation"+SLASH+ "{confirmationToken}";
   /*
    * Material Category APIs
    */

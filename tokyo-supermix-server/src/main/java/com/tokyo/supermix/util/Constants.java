@@ -34,6 +34,7 @@ public class Constants {
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
   public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
+  public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
   
 
 	// for sample counts
@@ -87,6 +88,7 @@ public class Constants {
 	public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
 	public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
 	public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
+	public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
 	/*
 	 * Constants for Pour validation key & Success messages
 	 */
