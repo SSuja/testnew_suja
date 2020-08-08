@@ -161,4 +161,15 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByMaterialCategoryId(
+      Long materialCategoryId) {
+    return finishProductSampleRepository.findByMixDesignMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialCategoryExist(Long materialCategoryId) {
+    return finishProductSampleRepository.existsByMixDesignMaterialCategoryId(materialCategoryId);
+  }
 }
