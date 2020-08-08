@@ -44,6 +44,16 @@ public class TestConfigure extends DateAudit implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private AcceptedType acceptedType;
 
+  private boolean name;
+
+  public boolean isName() {
+    return name;
+  }
+
+  public void setName(boolean name) {
+    this.name = name;
+  }
+
   public Long getId() {
     return id;
   }

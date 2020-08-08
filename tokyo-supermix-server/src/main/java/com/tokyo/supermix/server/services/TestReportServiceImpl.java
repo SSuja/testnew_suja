@@ -107,7 +107,8 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
-  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode) {
+  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode,
+      String plantCode) {
     TestReportDetailDto reportDto = new TestReportDetailDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     reportDto.setMaterialTest(getMaterialTestReport(materialTestCode));
@@ -258,7 +259,8 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Incoming Sample Summary Report
   @Transactional(readOnly = true)
-  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode) {
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode,
+      String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
     List<MaterialTest> materialTest =
@@ -366,7 +368,7 @@ public class TestReportServiceImpl implements TestReportService {
   // Incoming Sample Delivery Report for Moisture Test
   @Transactional(readOnly = true)
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
-      String testName) {
+      String testName,String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
     List<MaterialTest> materialTest = materialTestRepository
@@ -491,15 +493,17 @@ public class TestReportServiceImpl implements TestReportService {
     return finishProductTestRepository.existsByFinishProductSampleCode(finishProductSampleCode);
   }
 
-  public List<ConcreteStrengthDto> getConcreteStrengths() {
+  public List<ConcreteStrengthDto> getConcreteStrengths(String plantCode) {
     ArrayList<ConcreteStrengthDto> averageStrengthList = new ArrayList<ConcreteStrengthDto>();
-    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
+    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
-        averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
-        averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
-        averageStrengthList.add(averageStrength);
+        if (finishProductSample.getStatus().equals(Status.PASS)) {
+          averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
+          averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
+          averageStrengthList.add(averageStrength);
+        }
       }
     }
     return averageStrengthList;
@@ -507,14 +511,22 @@ public class TestReportServiceImpl implements TestReportService {
 
   public List<TestAndResult> getTestResults(String finishProductSampleCode) {
     ArrayList<TestAndResult> testAndResultList = new ArrayList<TestAndResult>();
-    List<FinishProductTest> finishProductTestList =
-        finishProductTestRepository.findByFinishProductSampleCode(finishProductSampleCode);
-    for (FinishProductTest finishProductTest : finishProductTestList) {
+    List<FinishProductParameterResult> finishProductParameterResultList =
+        finishProductParameterResultRepository
+            .findByFinishProductTestFinishProductSampleCode(finishProductSampleCode);
+    for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultList) {
       TestAndResult testAndResult = new TestAndResult();
-      if (!finishProductTest.getTestConfigure().isCoreTest()) {
-        testAndResult.setTestName(finishProductTest.getTestConfigure().getTest().getName());
-        // testAndResult.setResult(finishProductTest.getResult());
-        testAndResultList.add(testAndResult);
+      if (finishProductParameterResult.getTestParameter().getType() != null) {
+        if (finishProductParameterResult.getTestParameter().getInputMethods()
+            .equals(InputMethod.OBSERVE)
+            && finishProductParameterResult.getTestParameter().getType()
+                .equals(TestParameterType.INPUT)
+            && finishProductParameterResult.getTestParameter().getMixDesignField() == null) {
+          testAndResult.setTestName(finishProductParameterResult.getFinishProductTest()
+              .getTestConfigure().getTest().getName());
+          testAndResult.setResult(finishProductParameterResult.getResult());
+          testAndResultList.add(testAndResult);
+        }
       }
     }
     return testAndResultList;
@@ -535,23 +547,26 @@ public class TestReportServiceImpl implements TestReportService {
   public List<SieveTestTrialDto> getTrialResult(String materialTestCode) {
     ArrayList<SieveTestTrialDto> sieveTestTrialDtoList = new ArrayList<SieveTestTrialDto>();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+
     for (String level : testParameterService
         .getAllOriLevel(materialTest.getTestConfigure().getId())) {
-      System.out.println(level);
       SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
+
       sieveTestTrialDto.setSize(level);
       sieveTestTrialDto.setSieveResultAndParameter(
-          getParaAndResult(level, materialTest.getTestConfigure().getId()));
+          getParaAndResult(level, materialTest.getTestConfigure().getId(), materialTestCode));
       sieveTestTrialDtoList.add(sieveTestTrialDto);
     }
     return sieveTestTrialDtoList;
   }
 
-  public List<SieveResultAndParameter> getParaAndResult(String level, Long testConfigId) {
+  public List<SieveResultAndParameter> getParaAndResult(String level, Long testConfigId,
+      String materialTestCode) {
     ArrayList<SieveResultAndParameter> sieveResultAndParameterList =
         new ArrayList<SieveResultAndParameter>();
     List<ParameterResult> parameterResultList = parameterResultRepository
-        .findByTestParameterLevelAndTestParameterTestConfigureId(level, testConfigId);
+        .findByTestParameterLevelAndTestParameterTestConfigureIdAndMaterialTestCode(level,
+            testConfigId, materialTestCode);
     for (ParameterResult parameterResult : parameterResultList) {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
       if (parameterResult.getTestParameter().getName() != null) {
@@ -608,5 +623,67 @@ public class TestReportServiceImpl implements TestReportService {
   public FinishProductTestReportDetailDto getFinishProductTestDetailReport(
       String finishProductTestCode) {
     return null;
+  }
+
+  public List<SieveTestTrialDto> getTrialResultGraph(String materialTestCode) {
+    ArrayList<SieveTestTrialDto> sieveTestTrialDtoList = new ArrayList<SieveTestTrialDto>();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    for (String level : testParameterService
+        .getAllOriLevel(materialTest.getTestConfigure().getId())) {
+      SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
+      sieveTestTrialDto.setSize(level);
+      sieveTestTrialDto.setSieveResultAndParameter(
+          getParaAndResultGraph(level, materialTest.getTestConfigure().getId(), materialTestCode));
+      sieveTestTrialDtoList.add(sieveTestTrialDto);
+    }
+    return sieveTestTrialDtoList;
+  }
+
+  public List<SieveResultAndParameter> getParaAndResultGraph(String level, Long testConfigId,
+      String materialTestCode) {
+    ArrayList<SieveResultAndParameter> sieveResultAndParameterList =
+        new ArrayList<SieveResultAndParameter>();
+    List<ParameterResult> parameterResultList = parameterResultRepository
+        .findByTestParameterLevelAndTestParameterTestConfigureIdAndMaterialTestCode(level,
+            testConfigId, materialTestCode);
+    for (ParameterResult parameterResult : parameterResultList) {
+      SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
+      if (parameterResult.getTestParameter().getName() != null) {
+        String[] parts = parameterResult.getTestParameter().getName().split("_");
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.MEASUREMENT)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
+          sieveResultAndParameter.setParameter(parts[0].toString());
+          sieveResultAndParameter.setAcceptedValueForSieveTest(
+              getAcceptedValueForSieveTestGraph(parameterResult.getTestParameter().getId()));
+        }
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.INPUT)) {
+          sieveResultAndParameter.setParameter(parts[0].toString());
+          sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        }
+      } else {
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
+          TestEquation testEquation = testEquationRepository
+              .findByTestParameterId(parameterResult.getTestParameter().getId());
+          getAcceptedValueForSieveTestResult(testConfigId,
+              parameterResult.getTestParameter().getId(), testEquation.getId());
+        }
+        sieveResultAndParameter
+            .setParameter(parameterResult.getTestParameter().getParameter().getName());
+        sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+      }
+      sieveResultAndParameterList.add(sieveResultAndParameter);
+    }
+    return sieveResultAndParameterList;
+  }
+
+  public AcceptedValueForSieveTest getAcceptedValueForSieveTestGraph(Long testParameterId) {
+    AcceptedValueForSieveTest acceptedValueForSieveTest = new AcceptedValueForSieveTest();
+    AcceptedValue acceptedValue = acceptedValueRepository.findByTestParameterId(testParameterId);
+    acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+    acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+    acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+    return acceptedValueForSieveTest;
   }
 }
