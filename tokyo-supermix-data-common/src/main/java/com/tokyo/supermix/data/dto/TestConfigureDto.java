@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 
 public class TestConfigureDto {
@@ -11,6 +12,7 @@ public class TestConfigureDto {
   private boolean coreTest;
   private String description;
   private String testProcedure;
+  private AcceptedType acceptedType;
   private String prefix;
   private List<AcceptedValueResponseDto> acceptedValue;
   private List<MaterialAcceptedValueDto> materialAcceptedValue;
@@ -121,5 +123,13 @@ public class TestConfigureDto {
 
   public void setRawMaterialDto(List<MaterialAcceptedValueDto> rawMaterialDto) {
     this.rawMaterialDto = rawMaterialDto;
+  }
+
+  public AcceptedType getAcceptedType() {
+    return acceptedType;
+  }
+
+  public void setAcceptedType(AcceptedType acceptedType) {
+    this.acceptedType = acceptedType;
   }
 }
