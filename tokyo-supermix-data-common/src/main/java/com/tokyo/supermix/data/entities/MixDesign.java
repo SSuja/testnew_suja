@@ -96,4 +96,12 @@ public class MixDesign extends DateAudit implements Serializable {
   public void setStatus(Status status) {
     this.status = status;
   }
+
+  public MaterialCategory getMaterialCategory() {
+    return materialCategory;
+  }
+
+  public void setMaterialCategory(MaterialCategory materialCategory) {
+    this.materialCategory = materialCategory;
+  }
 }
