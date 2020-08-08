@@ -18,8 +18,8 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
 
   List<FinishProductTest> findByFinishProductSampleCode(String finishProductSampleCode);
 
-  List<FinishProductTest> findByFinishProductSampleCodeAndTestConfigureId(String finishProductSampleCode,
-      Long testConfigureId);
+  List<FinishProductTest> findByFinishProductSampleCodeAndTestConfigureId(
+      String finishProductSampleCode, Long testConfigureId);
 
   List<FinishProductTest> findByTestConfigureTestName(String testName);
 
@@ -31,4 +31,11 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
   boolean existsByFinishProductSampleCode(String finishProductSampleCode);
 
   List<FinishProductTest> findByFinishProductSampleMixDesignPlantCode(String plantCode);
+
+  FinishProductTest findByCodeAndFinishProductSampleMixDesignPlantCode(String finishProductTestCode,
+      String plantCode);
+
+  boolean existsByFinishProductSampleMixDesignPlantCode(String plantCode);
+  
+  
 }

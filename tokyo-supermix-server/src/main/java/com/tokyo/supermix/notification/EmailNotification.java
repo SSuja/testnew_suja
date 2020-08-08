@@ -3,11 +3,13 @@ package com.tokyo.supermix.notification;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
+import com.tokyo.supermix.data.entities.ConfirmationToken;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
@@ -567,5 +569,17 @@ public class EmailNotification {
           + ". Password is " + userDto.getPassword();
       emailService.sendMail(userDto.getEmail(), Constants.SUBJECT_NEW_USER, message);
     }
+  }
+
+  @Async
+  public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,HttpServletRequest request) {
+  String[] empStrings= { employee.getEmail()};
+
+String message="To confirm your account"+"<a href=http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+
+"/api/v1/employee/confirmation/"+confirmationToken.getConfirmationToken()+">"+"<button style={{background-color:"+"#008CBA"+"}}>Click here</button>"+"</a>";
+
+
+  emailService.sendMailWithFormat(empStrings, Constants.SUBJECT_EMPLOYEE_CREATION, message); 
+  
   }
 }

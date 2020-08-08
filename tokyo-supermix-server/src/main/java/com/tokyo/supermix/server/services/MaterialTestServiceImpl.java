@@ -108,8 +108,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId) {
-    return materialTestRepository.findByTestConfigureId(testConfigureId);
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId,
+      String plantCode) {
+    return materialTestRepository.findByTestConfigureIdAndIncomingSamplePlantCode(testConfigureId,
+        plantCode);
   }
 
   @Transactional(readOnly = true)
@@ -190,7 +192,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   private void calculateTest(Integer count, Integer failCount, Integer testSize,
       IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    if (count == testSize) {
+    if (count == testSize && testSize!=0) {
       updateStatusSample(Status.PASS, incomingSample, bodyMessage, materialTestObj);
     } else if (failCount == 1) {
       updateStatusSample(Status.FAIL, incomingSample, bodyMessage, materialTestObj);
@@ -206,7 +208,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (!status.equals(Status.PROCESS)) {
       try {
         emailNotification.sendTestEmail(materialTestObj);
-        generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode(), incomingSample.getPlant().getCode());
+        generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode(),
+            incomingSample.getPlant().getCode());
 
       } catch (Exception e) {
         e.printStackTrace();
@@ -217,7 +220,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (materialTestObj.getTestConfigure().getReportFormat().equals(ReportFormat.DELIVERY_REPORT)) {
       try {
         generateReportService.generatePdfDeliveryDetailReport(incomingSample.getCode(),
-            materialTestObj.getTestConfigure().getTest().getName(), incomingSample.getPlant().getCode());
+            materialTestObj.getTestConfigure().getTest().getName(),
+            incomingSample.getPlant().getCode());
       } catch (Exception e) {
         e.printStackTrace();
       }
