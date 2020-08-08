@@ -108,10 +108,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigureId(String plantCode,
-      Long testConfigureId) {
-    return materialTestRepository.findByIncomingSamplePlantCodeAndTestConfigureId(plantCode,
-        testConfigureId);
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId,
+      String plantCode) {
+    return materialTestRepository.findByTestConfigureIdAndIncomingSamplePlantCode(testConfigureId,
+        plantCode);
   }
 
   @Transactional(readOnly = true)

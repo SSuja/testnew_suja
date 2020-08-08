@@ -26,8 +26,8 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getMaterialTestByStatus(String status);
 
-  public List<MaterialTest> getMaterialTestByTestConfigureId(String plantCode,
-      Long testConfigureId);
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId,
+      String plantCode);
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
