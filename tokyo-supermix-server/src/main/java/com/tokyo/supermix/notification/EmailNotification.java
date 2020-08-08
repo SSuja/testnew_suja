@@ -573,10 +573,13 @@ public class EmailNotification {
 
   @Async
   public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,HttpServletRequest request) {
+  String[] empStrings= { employee.getEmail()};
 
-  String message=("To confirm your account, please click here : "
-  +"http://ec2-13-232-175-85.ap-south-1.compute.amazonaws.com/#/employee/confirmation/"+confirmationToken.getConfirmationToken());
-  emailService.sendMail(employee.getEmail(), Constants.SUBJECT_EMPLOYEE_CREATION, message); 
-   
+String message="To confirm your account"+"<a href=http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+
+"/api/v1/employee/confirmation/"+confirmationToken.getConfirmationToken()+">"+"<button style={{background-color:"+"#008CBA"+"}}>Click here</button>"+"</a>";
+
+
+  emailService.sendMailWithFormat(empStrings, Constants.SUBJECT_EMPLOYEE_CREATION, message); 
+  
   }
 }

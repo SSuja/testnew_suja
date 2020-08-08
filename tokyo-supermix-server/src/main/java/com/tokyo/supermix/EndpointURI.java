@@ -64,7 +64,7 @@ public final class EndpointURI {
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
   public static final String EMPLOYEE_WITH_TOKEN =
-      EMPLOYEE + SLASH +"confirmation"+SLASH+ "{confirmationToken}";
+      EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
   /*
    * Material Category APIs
    */
@@ -183,7 +183,7 @@ public final class EndpointURI {
       TEST_CONFIGURE + SLASH + "testDetails" + ID;
   public static final String CUSTOMER_BY_PLANT = CUSTOMER + PLANT_WISE;
   public static final String PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID =
-      PLANT_EQUIPMENT + SLASH + "equipment" + SLASH + "{equipmentId}";
+      PLANT_EQUIPMENT + SLASH + "equipment" + SLASH + "{equipmentId}"+ SLASH + "{plantCode}";
   /*
    * Equation APIs
    */
@@ -346,8 +346,8 @@ public final class EndpointURI {
       MATERIAL_TEST_TRIAL + "/material-test" + "/average" + "/{materialTestCode}";
   public static final String GET_MATERIAL_TEST_TRIAL_BY_PLANT =
       MATERIAL_TEST_TRIAL + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE =
-      MATERIAL_TEST_TRIAL + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE = MATERIAL_TEST_TRIAL + SLASH
+      + "test-configure" + SLASH + "{testConfigureId}" + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String MATERIAL_TEST_TRIAL_BY_PLANT = MATERIAL_TEST_TRIAL + PLANT_WISE;
 
   /*
@@ -372,6 +372,9 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
+  public static final String GET_FINISH_PRODUCT_BY_MATERIAL_CATEGORY =
+      FINISH_PRODUCT_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+
   /*
    * finish product sample issue apis
    * 
@@ -470,14 +473,15 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
       BASE_API_PATH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}" + SLASH
           + "test-name" + SLASH + "{testName}" + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String CONCRETE_TEST_REPORT =
-      BASE_API_PATH + "concrete-test-report" + SLASH + "{finishProductTestCode}";
+  public static final String CONCRETE_TEST_REPORT = BASE_API_PATH + "concrete-test-report" + SLASH
+      + "{finishProductTestCode}" + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-trials-wise" + SLASH + "{materialTestCode}";
   public static final String CONCRETE_STRENGTHS_BY_PLANT =
       BASE_API_PATH + "concrete-strengths" + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String SIEVE_TRIALS_BY_MATERIAL_TEST_CODE =
-      BASE_API_PATH + "material-test-sieve" + SLASH + "{materialTestCode}";
+  public static final String SIEVE_TRIALS_BY_MATERIAL_TEST_CODE_PLANT_CODE=
+      BASE_API_PATH + "material-test-sieve" + SLASH + "{materialTestCode}" + SLASH + "plant" + SLASH
+          + "{plantCode}";
   public static final String SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE =
       BASE_API_PATH + "material-test-graph" + SLASH + "{materialTestCode}";
   /*
