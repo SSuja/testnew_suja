@@ -45,8 +45,7 @@ public class TestEquationController {
   @PostMapping(value = EndpointURI.TEST_EQUATION)
   public ResponseEntity<Object> createTestEquation(
       @Valid @RequestBody TestEquationDto testEquationDto) {
-    if (testEquationService.isDuplicateEntry(testEquationDto.getTestConfigId(),
-        testEquationDto.getEquationId())) {
+    if (testEquationService.isTestParaneterExists(testEquationDto.getTestParameterId())) {
       logger.debug("Test Equation already exists: createTestEquation(), testEquation: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_EQUATION,
           validationFailureStatusCodes.getTestEquationAlreadyExist()), HttpStatus.BAD_REQUEST);

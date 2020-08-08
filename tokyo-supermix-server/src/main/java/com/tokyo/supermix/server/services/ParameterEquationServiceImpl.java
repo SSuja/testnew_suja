@@ -101,4 +101,9 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   public boolean isEquationExist(Long equationId) {
     return parameterEquationRepository.existsByEquationId(equationId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isTestParameterExist(Long testParameterId) {
+    return parameterEquationRepository.existsByTestParameterId(testParameterId);
+  }
 }
