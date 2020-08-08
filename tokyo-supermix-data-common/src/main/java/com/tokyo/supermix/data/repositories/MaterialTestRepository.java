@@ -47,4 +47,6 @@ public interface MaterialTestRepository
   List<MaterialTest> findByIncomingSamplePlantCodeIn(List<String> plantCodes);
 
   List<MaterialTest> findByIncomingSampleCodeContaining(String incomingSampleCode);
+
+  boolean existsByIncomingSamplePlantCode(String plantCode);
 }
