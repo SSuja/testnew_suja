@@ -26,7 +26,7 @@ public interface TestReportService {
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
       String materialTestCode);
 
-  public List<ConcreteStrengthDto> getConcreteStrengths();
+  public List<ConcreteStrengthDto> getConcreteStrengths(String plantCode);
 
   public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode);
 

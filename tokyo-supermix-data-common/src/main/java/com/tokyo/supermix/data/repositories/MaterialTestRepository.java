@@ -14,6 +14,8 @@ public interface MaterialTestRepository
 
   MaterialTest findByCode(String code);
 
+  MaterialTest findByCodeAndIncomingSamplePlantCode(String materialTestCode, String plantCode);
+
   boolean existsByStatus(String status);
 
   List<MaterialTest> findByStatus(String status);

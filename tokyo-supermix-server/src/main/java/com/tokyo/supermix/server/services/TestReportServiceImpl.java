@@ -493,9 +493,9 @@ public class TestReportServiceImpl implements TestReportService {
     return finishProductTestRepository.existsByFinishProductSampleCode(finishProductSampleCode);
   }
 
-  public List<ConcreteStrengthDto> getConcreteStrengths() {
+  public List<ConcreteStrengthDto> getConcreteStrengths(String plantCode) {
     ArrayList<ConcreteStrengthDto> averageStrengthList = new ArrayList<ConcreteStrengthDto>();
-    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
+    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
