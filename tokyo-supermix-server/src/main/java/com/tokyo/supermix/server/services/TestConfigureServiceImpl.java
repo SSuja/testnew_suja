@@ -139,6 +139,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
                       .findById(testConfigure.getMaterialSubCategory().getId()).get(),
                   MaterialSubCategoryResponseDto.class));
     }
+    testConfigureDto.setAcceptedType(testConfigure.getAcceptedType());
     testConfigureDto.setPrefix(testConfigure.getPrefix());
     testConfigureDto.setTestName(testConfigure.getTest().getName());
     testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());

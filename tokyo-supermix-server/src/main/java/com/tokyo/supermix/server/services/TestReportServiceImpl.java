@@ -107,8 +107,30 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Generate Test Report for Material Test Wise
   @Transactional(readOnly = true)
-  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode,
+  public TestReportDetailDto getMaterialTestDetailReportPlantWise(String materialTestCode,
       String plantCode) {
+    TestReportDetailDto reportDto = new TestReportDetailDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    reportDto.setMaterialTest(getMaterialTestReport(materialTestCode));
+    reportDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+    reportDto
+        .setIncomingsample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
+    reportDto.setTestTrials(getMaterialTestTrialDtoReport(materialTestCode));
+    reportDto.setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    if ((materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
+      reportDto.setAcceptanceCriterias(
+          getMaterialAcceptedValueDto(materialTest.getTestConfigure().getId(),
+              materialTest.getIncomingSample().getRawMaterial().getId()));
+    } else {
+      reportDto.setAcceptanceCriterias(
+          getAcceptedCriteriaDetails(materialTest.getTestConfigure().getId()));
+    }
+    reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
+    return reportDto;
+  }
+  
+  @Transactional(readOnly = true)
+  public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode) {
     TestReportDetailDto reportDto = new TestReportDetailDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     reportDto.setMaterialTest(getMaterialTestReport(materialTestCode));
@@ -259,8 +281,28 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Incoming Sample Summary Report
   @Transactional(readOnly = true)
-  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode,
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReportPlantWise(String incomingSampleCode,
       String plantCode) {
+    IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
+        new IncomingSampleDeliveryReportDto();
+    List<MaterialTest> materialTest =
+        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    incomingSampleDeliveryReportDto.setIncomingsample(
+        getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+    incomingSampleDeliveryReportDto
+        .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleTestDtos(getIncomingSampleTestDtoReport(incomingSampleCode));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
+    incomingSampleDeliveryReportDto.setSupplierReportDtos(
+        getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
+    return incomingSampleDeliveryReportDto;
+  }
+  
+  // Incoming Sample Summary Report
+  @Transactional(readOnly = true)
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
     List<MaterialTest> materialTest =
@@ -367,7 +409,7 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Incoming Sample Delivery Report for Moisture Test
   @Transactional(readOnly = true)
-  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReportPlantWise(String incomingSampleCode,
       String testName, String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
@@ -385,6 +427,27 @@ public class TestReportServiceImpl implements TestReportService {
         getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
   }
+  
+//Incoming Sample Delivery Report for Moisture Test
+ @Transactional(readOnly = true)
+ public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
+     String testName) {
+   IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
+       new IncomingSampleDeliveryReportDto();
+   List<MaterialTest> materialTest = materialTestRepository
+       .findByIncomingSampleCodeAndTestConfigureTestName(incomingSampleCode, testName);
+   incomingSampleDeliveryReportDto.setIncomingsample(
+       getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+   incomingSampleDeliveryReportDto
+       .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+   incomingSampleDeliveryReportDto
+       .setIncomingSampleTestDtos(getIncomingSampleDeliveryReport(incomingSampleCode, testName));
+   incomingSampleDeliveryReportDto
+       .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
+   incomingSampleDeliveryReportDto.setSupplierReportDtos(
+       getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
+   return incomingSampleDeliveryReportDto;
+ }
 
   // Concrete test report
   public ConcreteTestReportDto getConcreteTestReportByPlant(String finishProductTestCode,

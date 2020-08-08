@@ -34,7 +34,7 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 	public void generatePdfSummaryDetailReport(String incomingSampleCode,String plantCode)
 			throws FileNotFoundException, JRException, MessagingException {
 		IncomingSampleDeliveryReportDto deliveryReport = testReportService
-				.getIncomingSampleSummaryReport(incomingSampleCode, plantCode);
+				.getIncomingSampleSummaryReportPlantWise(incomingSampleCode, plantCode);
 		List<IncomingSampleDeliveryReportDto> deliveryReports = new ArrayList<IncomingSampleDeliveryReportDto>();
 		deliveryReports.add(deliveryReport);
 		List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
@@ -61,7 +61,7 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 	public void generatePdfDeliveryDetailReport(String incomingSampleCode, String testName, String plantCode)
 			throws FileNotFoundException, JRException, MessagingException {
 		IncomingSampleDeliveryReportDto deliveryReport = testReportService
-				.getIncomingSampleDeliveryReports(incomingSampleCode, testName, plantCode);
+				.getIncomingSampleDeliveryReportPlantWise(incomingSampleCode, testName, plantCode);
 		List<IncomingSampleDeliveryReportDto> deliveryReports = new ArrayList<IncomingSampleDeliveryReportDto>();
 		deliveryReports.add(deliveryReport);
 		List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();

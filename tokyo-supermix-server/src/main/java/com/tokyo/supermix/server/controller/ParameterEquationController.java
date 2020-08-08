@@ -113,14 +113,14 @@ public class ParameterEquationController {
   public ResponseEntity<Object> updateParameterEquation(
       @RequestBody ParameterEquationRequestDto parameterEquationRequestDto) {
     if (parameterEquationService.isParameterEquationExist(parameterEquationRequestDto.getId())) {
-//      if (parameterEquationService.isEquationIdAndTestParameterId(
-//          parameterEquationRequestDto.getEquation().getId(),
-//          parameterEquationRequestDto.getTestParameter().getId())) {
-//        return new ResponseEntity<>(
-//            new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
-//                validationFailureStatusCodes.getParameterEquationAlreadyExit()),
-//            HttpStatus.BAD_REQUEST);
-//      }
+      // if (parameterEquationService.isEquationIdAndTestParameterId(
+      // parameterEquationRequestDto.getEquation().getId(),
+      // parameterEquationRequestDto.getTestParameter().getId())) {
+      // return new ResponseEntity<>(
+      // new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
+      // validationFailureStatusCodes.getParameterEquationAlreadyExit()),
+      // HttpStatus.BAD_REQUEST);
+      // }
       parameterEquationService.updateParameterEquation(
           mapper.map(parameterEquationRequestDto, ParameterEquation.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
