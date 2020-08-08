@@ -108,10 +108,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId,
+  public List<MaterialTest> getMaterialTestByTestConfigureIdByPlant(Long testConfigureId,
       String plantCode) {
     return materialTestRepository.findByTestConfigureIdAndIncomingSamplePlantCode(testConfigureId,
         plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getMaterialTestByTestConfigureId(Long testConfigureId) {
+    return materialTestRepository.findByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -192,7 +197,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   private void calculateTest(Integer count, Integer failCount, Integer testSize,
       IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    if (count == testSize && testSize!=0) {
+    if (count == testSize && testSize != 0) {
       updateStatusSample(Status.PASS, incomingSample, bodyMessage, materialTestObj);
     } else if (failCount == 1) {
       updateStatusSample(Status.FAIL, incomingSample, bodyMessage, materialTestObj);

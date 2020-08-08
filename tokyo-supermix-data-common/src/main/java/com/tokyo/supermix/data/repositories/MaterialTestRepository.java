@@ -25,6 +25,8 @@ public interface MaterialTestRepository
   List<MaterialTest> findByTestConfigureIdAndIncomingSamplePlantCode(Long testConfigureId,
       String plantCode);
 
+  List<MaterialTest> findByTestConfigureId(Long testConfigureId);
+
   List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
   List<MaterialTest> findByIncomingSamplePlantCode(String plantCode);
