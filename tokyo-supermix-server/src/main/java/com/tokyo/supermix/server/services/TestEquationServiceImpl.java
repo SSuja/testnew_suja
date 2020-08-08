@@ -96,4 +96,9 @@ public class TestEquationServiceImpl implements TestEquationService {
     return testEquationRepository.existsByEquationId(equationId);
   }
 
+  @Transactional(readOnly = true)
+  public boolean isTestParaneterExists(Long testParameterId) {
+    return testEquationRepository.existsByTestParameterId(testParameterId);
+  }
+
 }

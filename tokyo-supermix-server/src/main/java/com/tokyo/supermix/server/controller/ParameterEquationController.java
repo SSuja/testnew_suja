@@ -46,10 +46,8 @@ public class ParameterEquationController {
   @PostMapping(value = EndpointURI.PARAMETER_EQUATION)
   public ResponseEntity<Object> createParameterEquation(
       @RequestBody ParameterEquationEleDto parameterEquationEleDto) {
-    if (parameterEquationService.isEquationIdAndTestParameterId(
-        parameterEquationEleDto.getEquationId(), parameterEquationEleDto.getTestParameterId(),
-        testParameterService.getTestParameterById(parameterEquationEleDto.getTestParameterId())
-            .getTestConfigure().getId())) {
+    if (parameterEquationService
+        .isTestParameterExist(parameterEquationEleDto.getTestParameterId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
               validationFailureStatusCodes.getParameterEquationAlreadyExit()),
