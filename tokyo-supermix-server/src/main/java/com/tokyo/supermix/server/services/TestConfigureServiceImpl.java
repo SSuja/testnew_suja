@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
+import com.tokyo.supermix.data.dto.FinishProductAcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
@@ -21,6 +22,7 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -42,6 +44,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EmailPointsService emailPointsService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private FinishProductAcceptedValueRepository finishProductAcceptedValueRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -156,6 +160,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testParameterRepository.findByTestConfigureId(id) != null) {
       testConfigureDto.setTestparameters(mapper
           .map(testParameterRepository.findByTestConfigureId(id), TestParameterResponseDto.class));
+    }
+    if (finishProductAcceptedValueRepository.existsByTestParameterTestConfigureId(id)) {
+      testConfigureDto.setFinishProductAcceptedValue(
+          mapper.map(finishProductAcceptedValueRepository.findByTestParameterTestConfigureId(id),
+              FinishProductAcceptedValueResponseDto.class));
     }
     return testConfigureDto;
   }
