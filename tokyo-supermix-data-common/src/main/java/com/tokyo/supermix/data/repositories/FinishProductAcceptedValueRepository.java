@@ -9,4 +9,6 @@ public interface FinishProductAcceptedValueRepository
   List<FinishProductAcceptedValue> findByTestParameterId(Long testParameterId);
 
   FinishProductAcceptedValue findByTestParameterTestConfigureId(Long testConfigureId);
+
+  boolean existsByTestParameterTestConfigureId(Long testConfigureId);
 }
