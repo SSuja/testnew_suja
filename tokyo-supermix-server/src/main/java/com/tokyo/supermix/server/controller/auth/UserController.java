@@ -29,6 +29,10 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.auth.UserService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
@@ -43,6 +47,10 @@ public class UserController {
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private ValidationFailureStatusCodes validationFailureStatusCodes;
   private static final Logger logger = Logger.getLogger(UserController.class);
 
   @PostMapping(value = PrivilegeEndpointURI.USER)
@@ -74,34 +82,47 @@ public class UserController {
             mapper.map(userService.getAllUsers(), UserResponseDto.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
+
   @GetMapping(value = PrivilegeEndpointURI.USER_BY_PLANT_BY_USERTYPE)
-  public ResponseEntity<Object> getAllUsersByUserTypeByPlant(@PathVariable UserType userType, @CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(PrivilegeConstants.USER,
-            mapper.map(userService.getAllUsersByUserTypeByplant(currentUser, userType), UserResponseDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllUsersByUserTypeByPlant(@PathVariable UserType userType,
+      @CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
+        mapper.map(userService.getAllUsersByUserTypeByplant(currentUser, userType),
+            UserResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = PrivilegeEndpointURI.USER_BY_USERTYPE)
   public ResponseEntity<Object> getAllUsersByUserType(@PathVariable UserType userType) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(PrivilegeConstants.USER,
-            mapper.map(userService.getAllUsersByUserType(userType), UserResponseDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
+        mapper.map(userService.getAllUsersByUserType(userType), UserResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+
   @GetMapping(value = PrivilegeEndpointURI.USER_BY_PLANT)
-  public ResponseEntity<Object> getAllUsersByPlant(@CurrentUser UserPrincipal currentUser) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(PrivilegeConstants.USER,
-            mapper.map(userService.getAllUsersByPlant(currentUser), UserResponseDto.class), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllUsersByPlant(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
+          mapper.map(userService.getAllUsers(), UserResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
+          mapper.map(userService.getUserByPlantCode(plantCode), UserResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = PrivilegeEndpointURI.USER_BY_ID)
   public ResponseEntity<Object> getUserById(@PathVariable Long id) {
     if (userService.isUserExist(id)) {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
-         userService.getUserDetailById(id), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          userService.getUserDetailById(id), RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("No User record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
