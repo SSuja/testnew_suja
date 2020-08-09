@@ -22,7 +22,9 @@ public interface MixDesignRepository
 
   List<MixDesign> findByPlantCodeIn(List<String> plantCodes);
 
-  List<MixDesign> findAllByOrderByCodeDesc();
+  List<MixDesign> findAllByOrderByUpdatedAtDesc();
 
   List<MixDesign> findByMaterialCategoryId(Long materialCategoryId);
+
+  List<MixDesign> findByPlantCodeOrderByUpdatedAtDesc(String plantCode);
 }

@@ -24,4 +24,6 @@ public interface TestEquationService {
   public List<TestEquation> getByEquation(Long equationId);
 
   public boolean isEquationExists(Long equationId);
+
+  public boolean isTestParaneterExists(Long testParameterId);
 }

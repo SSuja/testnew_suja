@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.ParameterEquationEleDto;
 import com.tokyo.supermix.data.dto.ParameterEquationElementDto;
+import com.tokyo.supermix.data.entities.Equation;
 import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.ParameterEquationElement;
 import com.tokyo.supermix.data.repositories.EquationRepository;
@@ -34,9 +35,10 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   @Transactional(readOnly = true)
   public boolean isEquationIdAndTestParameterId(Long equationId, Long testParameterId,
       Long testConfigureId) {
+    Equation equation = equationRepository.findById(equationId).get();
     return parameterEquationRepository
-        .existsByEquationIdAndTestParameterIdAndTestParameterTestConfigureId(equationId,
-            testParameterId, testConfigureId);
+        .existsByEquationFormulaAndTestParameterIdAndTestParameterTestConfigureId(
+            equation.getFormula(), testParameterId, testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -98,5 +100,10 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
   @Transactional(readOnly = true)
   public boolean isEquationExist(Long equationId) {
     return parameterEquationRepository.existsByEquationId(equationId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isTestParameterExist(Long testParameterId) {
+    return parameterEquationRepository.existsByTestParameterId(testParameterId);
   }
 }
