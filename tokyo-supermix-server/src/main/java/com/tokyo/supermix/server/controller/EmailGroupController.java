@@ -16,6 +16,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EmailGroupDto;
 import com.tokyo.supermix.data.dto.EmailGroupResponseDto;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -33,6 +34,8 @@ public class EmailGroupController {
   private EmailGroupService emailGroupService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  EmailGroupRepository emailGroupRepository;
 
   @GetMapping(value = EndpointURI.EMAIL_GROUPS)
   public ResponseEntity<Object> getAllEmailGroups() {
@@ -50,10 +53,20 @@ public class EmailGroupController {
 
   @PostMapping(value = EndpointURI.EMAIL_GROUP)
   public ResponseEntity<Object> createGroup(@RequestBody EmailGroupDto emailGroupDto) {
+    if(emailGroupDto.getPlantCode()==null && !emailGroupService.isEmailGroupName(emailGroupDto.getName())) {
+      emailGroupService.saveEmailGroup(emailGroupDto);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_GROUP_SUCCESS),
+          HttpStatus.OK);
+    }
+    if(!emailGroupService.isEmailGroupNameAndPlantCode(emailGroupDto.getName(),emailGroupDto.getPlantCode())) {
     emailGroupService.saveEmailGroup(emailGroupDto);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMAIL_GROUP_SUCCESS),
         HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL_GROUP,
+        validationFailureStatusCodes.getEmailGroupAlreadyExist()), HttpStatus.BAD_REQUEST);
   }
 
   @DeleteMapping(value = EndpointURI.EMAIL_GROUP_BY_ID)

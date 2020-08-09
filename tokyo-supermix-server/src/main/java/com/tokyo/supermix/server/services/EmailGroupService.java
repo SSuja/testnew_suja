@@ -17,19 +17,23 @@ public interface EmailGroupService {
 
   public void deleteEmailGroup(Long id);
 
-  //public boolean isEmailGroupNameExist(EmailNotifications emailNotifications);
+  // public boolean isEmailGroupNameExist(EmailNotifications emailNotifications);
 
   public boolean isEmailGroupExist(Long id);
-  
+
   public void updateStatus(Long emailPointsId);
 
   public boolean isEmailPointsStatus(EmailGroupDto emailGroupDto);
 
-  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatusAndSchedule(String plantCode, boolean status,
-      boolean schedule);
-  
-  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndAdminStatus(String plantCode, Boolean adminStatus);
+  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndStatusAndSchedule(String plantCode,
+      boolean status, boolean schedule);
+
+  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndAdminStatus(String plantCode,
+      Boolean adminStatus);
 
   public List<EmailGroup> getAllEmailGroupsByAdminStatus(Boolean adminStatus);
 
+  public boolean isEmailGroupNameAndPlantCode(String name, String plantCode);
+
+  public boolean isEmailGroupName(String name);
 }
