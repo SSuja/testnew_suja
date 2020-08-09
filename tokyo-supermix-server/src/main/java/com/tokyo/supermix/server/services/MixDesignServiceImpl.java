@@ -188,11 +188,16 @@ public class MixDesignServiceImpl implements MixDesignService {
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesignByDecending() {
-    return mixDesignRepository.findAllByOrderByCodeDesc();
+    return mixDesignRepository.findAllByOrderByUpdatedAtDesc();
   }
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesignByMaterialCategory(Long materialCategoryId) {
     return mixDesignRepository.findByMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode) {
+    return mixDesignRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 }
