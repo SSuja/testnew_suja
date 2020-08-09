@@ -17,7 +17,7 @@ public interface UserService {
 
   public boolean isUserExist(Long id);
 
-  public List<User> getAllUsers();
+  public List<UserResponseDto> getAllUsers();
 
   public List<User> getAllUsersByPlant(UserPrincipal currentUser);
   
@@ -40,4 +40,5 @@ public interface UserService {
   List<User> getAllUsersByUserTypeByplant(UserPrincipal currentUser,UserType userType);
   List<User> getAllUsersByUserType(UserType userType);
   public UserResponseDto getUserDetailById(Long id);
+  public List<UserResponseDto> getUserByPlantCode(String plantCode);
 }
