@@ -54,13 +54,14 @@ public class EmployeeController {
 
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,HttpServletRequest request) {
+  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
     if (employeeService.isEmailExist(employeeDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    employeeService.createEmployee(mapper.map(employeeDto, Employee.class),request);
+    employeeService.createEmployee(mapper.map(employeeDto, Employee.class), request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -158,12 +159,10 @@ public class EmployeeController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = EndpointURI.EMPLOYEE_WITH_TOKEN)
-  public ResponseEntity<Object> getEmployeeBy(
-     @PathVariable String confirmationToken) {
-   employeeService.updateEmployeeWithConfirmation(confirmationToken);
-   return new ResponseEntity<>(
-       new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_VERIFICATION),
-       HttpStatus.OK);
- }
+  public String getEmployeeBy(@PathVariable String confirmationToken) {
+    employeeService.updateEmployeeWithConfirmation(confirmationToken);
+    return "<div ><div style='display:flex,flexDirection:row'><div><img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/Green_tick.svg' alt='Verified Image Not Found' width='100' height='100'></div><div style='color:darkblue'><h1>Your Email Successfully Verified</h1></div></div></div>";
+  }
 }
