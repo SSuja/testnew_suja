@@ -1,7 +1,7 @@
 ---- designation
 INSERT INTO `tokyo-supermix`.`designation` (`id`, `description`, `name`,`created_at`, `updated_at`) VALUES ('1', 'Main Admin', 'Administrator', '2020-05-06 16:58:02', '2020-05-06 21:28:58');
 -- employee
-INSERT INTO `tokyo-supermix`.`employee` (`id`, `address`, `email`, `first_name`, `last_name`, `phone_number`, `designation_id`, `has_user`,`created_at`, `updated_at`) VALUES ('1', 'Colombo-12', 'tokyotester4@gmail.com', 'Tokyo', 'Tester', '0761452365', '1', 1, '2020-05-06 16:58:02', '2020-05-06 21:28:58');
+INSERT INTO `tokyo-supermix`.`employee` (`id`, `address`, `email`, `first_name`, `last_name`, `phone_number`, `designation_id`, `has_user`,`is_enabled`,`created_at`, `updated_at`) VALUES ('1', 'Colombo-12', 'tokyotester4@gmail.com', 'Tokyo', 'Tester', '0761452365', '1', 1,1, '2020-05-06 16:58:02', '2020-05-06 21:28:58');
 -- role
 INSERT INTO `tokyo-supermix`.`role` (`id`, `name`,`created_at`, `updated_at`) VALUES ('1', 'ADMIN', '2020-05-06 16:58:02', '2020-05-06 21:28:58');
 INSERT INTO `tokyo-supermix`.`role` (`id`, `name`,`created_at`, `updated_at`) VALUES ('2', 'USER', '2020-05-06 16:58:02', '2020-05-06 21:28:58');
