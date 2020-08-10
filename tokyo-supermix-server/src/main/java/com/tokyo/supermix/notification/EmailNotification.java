@@ -272,7 +272,7 @@ public class EmailNotification {
     if (employee.getPlant() != null) {
       String plantName = plantRepository.findById(employee.getPlant().getCode()).get().getName();
       if (employee.getEmail() != null) {
-        String mailBody = " Welcome to " + plantName + " and " + designationName;
+        String mailBody = " Welcome to " + plantName + " as " + designationName;
         emailService.sendMail(employee.getEmail(), Constants.SUBJECT_NEW_EMPLOYEE, mailBody);
       }
       EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
@@ -575,7 +575,7 @@ public class EmailNotification {
   public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,HttpServletRequest request) {
   String[] empStrings= { employee.getEmail()};
 
-String message="To confirm your account"+"<a href=http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+
+String message="To confirm your account "+"<a href=http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+
 "/api/v1/employee/confirmation/"+confirmationToken.getConfirmationToken()+">"+"<button style={{background-color:"+"#008CBA"+"}}>Click here</button>"+"</a>";
 
 
