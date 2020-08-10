@@ -447,6 +447,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAuthority(PermissionConstants.GET_EMAIL_GROUP)
         .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_GROUP)
         .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
+        .antMatchers(HttpMethod.PUT, EndpointURI.EMAIL_GROUP_EDIT_NAME)
+        .hasAuthority(PermissionConstants.UPDATE_EMAIL_GROUP)
         .antMatchers(HttpMethod.POST, EndpointURI.EMAIL_GROUP)
         .hasAuthority(PermissionConstants.ADD_EMAIL_GROUP)
         .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_GROUP_BY_ID)

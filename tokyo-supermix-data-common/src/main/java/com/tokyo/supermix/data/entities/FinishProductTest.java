@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,10 +24,19 @@ public class FinishProductTest extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   private Long noOfTrial;
+  private Date date;
   @ManyToOne
   @JoinColumn(name = "materialStateId", nullable = false)
   private MaterialState materialState;
   private String comments;
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
   public String getCode() {
     return code;

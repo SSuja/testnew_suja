@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.sql.Date;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestResponseDto {
@@ -10,6 +11,15 @@ public class FinishProductTestResponseDto {
   private Long noOfTrial;
   private MaterialStateDto materialState;
   private String comments;
+  private Date date;
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
   public String getCode() {
     return code;
   }
