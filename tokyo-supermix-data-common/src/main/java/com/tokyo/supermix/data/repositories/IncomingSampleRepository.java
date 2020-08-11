@@ -46,4 +46,9 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(
       Long materialSubCategoryId, Date sqlDate, String plantCode);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
+      Long materialSubCategoryId, String plantCode);
 }
