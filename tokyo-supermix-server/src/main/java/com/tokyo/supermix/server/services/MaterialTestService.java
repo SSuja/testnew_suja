@@ -46,4 +46,7 @@ public interface MaterialTestService {
   public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj);
 
   public void updateMaterialTestComment(MaterialTest materialTest);
+
+  public List<MaterialTest> getMaterialTestsByincomingSampleCodeAndPlantCode(
+      String incomingSampleCode, String plantCode);
 }

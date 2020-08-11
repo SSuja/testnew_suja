@@ -10,9 +10,18 @@ public class FinishProductAcceptedValueResponseDto {
   private Condition conditionRange;
   private boolean finalResult;
   private TestParameterResponseDto testParameter;
+  private TestEquationResponseDto testEquation;
 
   public Long getId() {
     return id;
+  }
+
+  public TestEquationResponseDto getTestEquation() {
+    return testEquation;
+  }
+
+  public void setTestEquation(TestEquationResponseDto testEquation) {
+    this.testEquation = testEquation;
   }
 
   public void setId(Long id) {
