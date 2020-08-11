@@ -62,7 +62,7 @@ public class SupplierController {
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
   public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
       @PathVariable String plantCode) {
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
           mapper.map(supplierService.getSuppliersByPlant(currentUser), SupplierResponseDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -82,7 +82,7 @@ public class SupplierController {
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
     if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
-          validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
+          validationFailureStatusCodes.getEmailAlreadyExists()), HttpStatus.BAD_REQUEST);
     }
     supplierService.createSupplier(mapper.map(supplierDto, Supplier.class),
         supplierDto.getSuppilerCategoryIds());
@@ -141,8 +141,8 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID)
   public ResponseEntity<Object> getSupplierBySupplierCategoryId(
-      @PathVariable Long suppilerCategoryId,@PathVariable String plantCode) {
-    if(plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      @PathVariable Long suppilerCategoryId, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER_CATEGORY,
           mapper.map(supplierService.findBySupplierCategoryId(suppilerCategoryId),
               SupplierResponseDto.class),
