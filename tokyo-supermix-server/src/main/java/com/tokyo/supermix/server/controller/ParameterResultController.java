@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.script.ScriptException;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
+import com.tokyo.supermix.data.dto.ParameterResultDto;
 import com.tokyo.supermix.data.dto.ParameterResultRequestDto;
 import com.tokyo.supermix.data.dto.ParameterResultResponseDto;
 import com.tokyo.supermix.data.entities.ParameterResult;
+import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -29,6 +33,7 @@ import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.ParameterResultService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -46,6 +51,8 @@ public class ParameterResultController {
   @Autowired
   private MaterialTestService materialTestService;
   @Autowired
+  TestParameterService testParameterService;
+  @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(ParameterResultController.class);
 
@@ -53,9 +60,20 @@ public class ParameterResultController {
   public ResponseEntity<Object> createParameterResult(
       @Valid @RequestBody List<MaterialParameterResultDto> materialParameterResultDtolist)
       throws ScriptException {
-    parameterResultService.saveParameterResults(materialParameterResultDtolist);
-    return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
-        Constants.PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED), HttpStatus.OK);
+    List<ParameterResultDto> li = materialParameterResultDtolist.get(0).parameterResults.stream()
+        .filter(parameterResult -> (parameterResult.getValue() == 0
+            && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+                .getInputMethods().equals(InputMethod.OBSERVE)
+            && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+                .getType().equals(TestParameterType.INPUT)))
+        .collect(Collectors.toList());
+    if (li.isEmpty()) {
+      parameterResultService.saveParameterResults(materialParameterResultDtolist);
+      return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.PARAMETER_VALUE_ADDED_AND_RESULT_UPDATED), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT,
+        validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.PARAMETER_RESULTS)
@@ -165,18 +183,18 @@ public class ParameterResultController {
     }
   }
 
-//  @GetMapping(value = EndpointURI.SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE)
-//  public ResponseEntity<Object> getSieveTestParameterResultByMaterialTestCode(
-//      @PathVariable String materialTestCode) {
-//    if (materialTestService.isMaterialTestExists(materialTestCode)) {
-//      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
-//          mapper.map(parameterResultService.getSieveTestResultsByMaterialTestCode(materialTestCode),
-//              SieveTestResultsDto.class),
-//          RestApiResponseStatus.OK), HttpStatus.OK);
-//    } else {
-//      logger.debug("No Parameter Result record exist for given Material Test code");
-//      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
-//          validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-//    }
-//  }
+  // @GetMapping(value = EndpointURI.SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE)
+  // public ResponseEntity<Object> getSieveTestParameterResultByMaterialTestCode(
+  // @PathVariable String materialTestCode) {
+  // if (materialTestService.isMaterialTestExists(materialTestCode)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
+  // mapper.map(parameterResultService.getSieveTestResultsByMaterialTestCode(materialTestCode),
+  // SieveTestResultsDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // } else {
+  // logger.debug("No Parameter Result record exist for given Material Test code");
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
+  // validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+  // }
+  // }
 }
