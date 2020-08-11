@@ -1,11 +1,14 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.MainType;
+
 public class MaterialSubCategoryResponseDto {
   private Long id;
   private String name;
   private String prefix;
   private Long materialCategoryId;
-  private String materialCategoryName; 
+  private String materialCategoryName;
+  private MainType materialCategoryMainType;
 
   public Long getId() {
     return id;
@@ -39,12 +42,19 @@ public class MaterialSubCategoryResponseDto {
     this.materialCategoryName = materialCategoryName;
   }
 
-public String getPrefix() {
-	return prefix;
-}
+  public String getPrefix() {
+    return prefix;
+  }
 
-public void setPrefix(String prefix) {
-	this.prefix = prefix;
-}
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
+  }
 
+  public MainType getMaterialCategoryMainType() {
+    return materialCategoryMainType;
+  }
+
+  public void setMaterialCategoryMainType(MainType materialCategoryMainType) {
+    this.materialCategoryMainType = materialCategoryMainType;
+  }
 }

@@ -30,4 +30,6 @@ public interface MaterialSubCategoryService {
 
   public Page<MaterialSubCategory> searchMaterialSubCategory(Predicate predicate, int size,
       int page);
+
+  public boolean isMaterialCategoryExist(String name, Long materialCategoryId);
 }
