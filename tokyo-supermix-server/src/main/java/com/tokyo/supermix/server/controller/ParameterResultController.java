@@ -25,8 +25,6 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
-import com.tokyo.supermix.data.repositories.ParameterResultRepository;
-import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -35,6 +33,7 @@ import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.MaterialTestTrialService;
 import com.tokyo.supermix.server.services.ParameterResultService;
 import com.tokyo.supermix.server.services.PlantService;
+import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -52,7 +51,7 @@ public class ParameterResultController {
   @Autowired
   private MaterialTestService materialTestService;
   @Autowired
-  TestParameterRepository testParameterRepository;
+  TestParameterService testParameterService;
   @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(ParameterResultController.class);
@@ -63,10 +62,10 @@ public class ParameterResultController {
       throws ScriptException {
     List<ParameterResultDto> li = materialParameterResultDtolist.get(0).parameterResults.stream()
         .filter(parameterResult -> (parameterResult.getValue() == 0
-            && testParameterRepository.getOne(parameterResult.getTestParameterId())
+            && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
                 .getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameterRepository.getOne(parameterResult.getTestParameterId()).getType()
-                .equals(TestParameterType.INPUT)))
+            && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+                .getType().equals(TestParameterType.INPUT)))
         .collect(Collectors.toList());
     if (li.isEmpty()) {
       parameterResultService.saveParameterResults(materialParameterResultDtolist);
