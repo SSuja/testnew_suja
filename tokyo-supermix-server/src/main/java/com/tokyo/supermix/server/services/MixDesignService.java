@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
+
+import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -17,7 +18,7 @@ public interface MixDesignService {
 
   public boolean isCodeExist(String code);
 
-  public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
+  public List<MixDesignResponseDto> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
       Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
       Double targetGradeEqual, Double targetWaterCementRetioMin, Double targetWaterCementRetioMax,
       Double targetWaterCementRetioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
