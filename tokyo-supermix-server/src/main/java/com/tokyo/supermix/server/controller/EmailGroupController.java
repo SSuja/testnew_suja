@@ -22,9 +22,8 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EmailGroupService;
-import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.ValidationFailureStatusCodes;    
 
 @CrossOrigin(origins = "*")
 @RestController

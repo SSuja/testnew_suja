@@ -227,8 +227,6 @@ public final class PermissionConstants {
   public static final String CREATE_UPLOAD_MIXDESIGN = "import";
   /* report */
   public static final String MATERIAL_TEST_REPORT = "material_test_report";
-  public static final String CEMENT_REPORT = "cement_report";
-  public static final String ADMIXTURE_REPORT = "admixture_report";
   public static final String INCOMING_SAMPLE_SUMMARY_REPORT = "incoming_sample_summary_report";
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT = "incoming_sample_delivery_report";
   /* email points */
