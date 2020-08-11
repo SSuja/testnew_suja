@@ -31,6 +31,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
+import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -48,6 +49,8 @@ public class IncomingSampleController {
   private Mapper mapper;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
@@ -178,5 +181,25 @@ public class IncomingSampleController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
+  public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
+      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode) {
+    if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId),
+                IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(incomingSampleService.getByMaterialSubCategoryPlantWise(
+                materialSubCategoryId, plantCode), IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
