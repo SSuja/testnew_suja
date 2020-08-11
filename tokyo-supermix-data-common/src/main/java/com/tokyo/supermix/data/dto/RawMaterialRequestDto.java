@@ -2,14 +2,13 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import com.tokyo.supermix.data.enums.Nature;
 
 public class RawMaterialRequestDto {
   private Long id;
   @NotNull(message = "{rawMaterialRequestDto.name.null}")
   @NotEmpty(message = "{rawMaterialRequestDto.name.empty}")
   private String name;
-  private Nature nature;
+  private Long materialStateId;
   private Long materialSubCategoryId;
   private String description;
   @NotNull(message = "{rawMaterialRequestDto.prefix.null}")
@@ -33,12 +32,12 @@ public class RawMaterialRequestDto {
     this.name = name;
   }
 
-  public Nature getNature() {
-    return nature;
+  public Long getMaterialStateId() {
+    return materialStateId;
   }
 
-  public void setNature(Nature nature) {
-    this.nature = nature;
+  public void setMaterialStateId(Long materialStateId) {
+    this.materialStateId = materialStateId;
   }
 
   public Long getMaterialSubCategoryId() {
