@@ -22,6 +22,7 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
@@ -49,13 +50,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
-    if(((emailPointsService.findByTestIdAndMaterialCategoryId(testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId())) != null) || ((emailPointsService.findByTestIdAndMaterialSubCategoryId(testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId())) != null)){
-              emailPointsService.createEmailPoints(testConfigureRequestDto);
-    }
+    emailPointsService.createEmailPoints(testConfigureRequestDto);
     return testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
         .getId();
   }
-
+  
   @Transactional(readOnly = true)
   public boolean isTestConfigureExist(Long id) {
     return testConfigureRepository.existsById(id);
