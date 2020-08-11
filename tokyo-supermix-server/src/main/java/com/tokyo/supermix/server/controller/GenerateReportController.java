@@ -24,9 +24,9 @@ public class GenerateReportController {
 	private static final Logger logger = Logger.getLogger(GenerateReportController.class);
 
 	@GetMapping(value = "summary-report/{code}")
-	public ResponseEntity<Object> generateSummaryReport(@PathVariable String code,@PathVariable String plantCode) {
+	public ResponseEntity<Object> generateSummaryReport(@PathVariable String code) {
 		try {
-			generateReportService.generatePdfSummaryDetailReport(code, plantCode);
+			generateReportService.generatePdfSummaryDetailReport(code);
 		} catch (FileNotFoundException e) {
 			logger.debug("FileNotFoundException");
 			e.printStackTrace();
