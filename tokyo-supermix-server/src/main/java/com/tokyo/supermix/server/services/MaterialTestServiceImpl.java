@@ -237,4 +237,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public void updateMaterialTestComment(MaterialTest materialTest) {
     materialTestRepository.save(materialTest);
   }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getMaterialTestsByincomingSampleCodeAndPlantCode(
+      String incomingSampleCode, String plantCode) {
+    return materialTestRepository.findByIncomingSampleCodeAndIncomingSamplePlantCode(incomingSampleCode, plantCode);
+  }
 }
