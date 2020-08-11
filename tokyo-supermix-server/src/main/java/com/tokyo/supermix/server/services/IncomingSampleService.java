@@ -14,8 +14,9 @@ public interface IncomingSampleService {
   public IncomingSample getIncomingSampleById(String code);
 
   public List<IncomingSample> getAllIncomingSamples();
-  
-  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(@CurrentUser UserPrincipal currentUser);
+
+  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(
+      @CurrentUser UserPrincipal currentUser);
 
   boolean isIncomingSampleExist(String code);
 
@@ -32,4 +33,9 @@ public interface IncomingSampleService {
   public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
 
   public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
+
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+      String plantCode);
+
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
 }
