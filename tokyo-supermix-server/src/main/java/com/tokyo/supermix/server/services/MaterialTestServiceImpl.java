@@ -213,9 +213,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (!status.equals(Status.PROCESS)) {
       try {
         emailNotification.sendTestEmail(materialTestObj);
-        generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode(),
-            incomingSample.getPlant().getCode());
-
+        generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
       } catch (Exception e) {
         e.printStackTrace();
       }
