@@ -2,8 +2,6 @@ package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
-import com.tokyo.supermix.data.enums.Nature;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "raw_material")
@@ -21,8 +18,9 @@ public class RawMaterial extends DateAudit implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  @Enumerated(EnumType.ORDINAL)
-  private Nature nature;
+  @ManyToOne
+  @JoinColumn(name = "materialStateId", nullable = false)
+  private MaterialState materialState;
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = false)
   private MaterialSubCategory materialSubCategory;
@@ -46,12 +44,12 @@ public class RawMaterial extends DateAudit implements Serializable {
     this.name = name;
   }
 
-  public Nature getNature() {
-    return nature;
+  public MaterialState getMaterialState() {
+    return materialState;
   }
 
-  public void setNature(Nature nature) {
-    this.nature = nature;
+  public void setMaterialState(MaterialState materialState) {
+    this.materialState = materialState;
   }
 
   public MaterialSubCategory getMaterialSubCategory() {

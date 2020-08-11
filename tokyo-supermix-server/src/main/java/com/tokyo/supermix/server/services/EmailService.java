@@ -1,11 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.io.FileNotFoundException;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import org.hibernate.pretty.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamSource;
@@ -88,24 +86,4 @@ public class EmailService {
     }
   }
   
-//  public void sendMailWithFormat(String to, String subject, String body) {
-//    SimpleMailMessage message = new SimpleMailMessage() {
-//      public void prepare(MimeMessage mimeMessage) throws Exception {
-//    
-//        message.setSubject(subject);
-//        message.setText(body);
-//      
-//        message.setTo(to);
-//        message.setSubject(subject);
-//      MimeMessageHelper helper = new MessageHelper(message, true);
-//        helper.setText("<html><body>"+ body + "</body></html>", true);
-//      }
-//    };
-//    try {
-//      mailSender.send(message);
-//    } catch (MailException ex) {
-//      System.err.println(ex.getMessage());
-//    }
-//  }
-
 }

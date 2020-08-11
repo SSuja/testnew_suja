@@ -11,6 +11,7 @@ public final class PrivilegeEndpointURI {
   private static final String ID = "/{id}";
   private static final String SEARCH = "/search";
   private static final String SERIALNO = "/{serialNo}";
+  private static final String PLANT_WISE = "/plant-wise" + SLASH + "{plantCode}";
   /*
    * Authentication
    * 
@@ -38,7 +39,7 @@ public final class PrivilegeEndpointURI {
   public static final String UPDATE_USER_STATUS_BY_ID =
       USER + SLASH + "{userId}" + SLASH + "status" + SLASH + "{status}";
   public static final String UPDATE_USER_ROLE = USER + SLASH + "role";
-  public static final String USER_BY_PLANT = USER + "/plant";
+  public static final String USER_BY_PLANT = USER + PLANT_WISE;
   public static final String USER_BY_PLANT_BY_USERTYPE = USER + "/plant"+SLASH+"{userType}";
   public static final String USER_BY_USERTYPE = USER +SLASH+"user-type"+SLASH+"{userType}";
   /*
