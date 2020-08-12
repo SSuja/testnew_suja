@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface MaterialTestRepository
@@ -14,11 +15,16 @@ public interface MaterialTestRepository
 
   MaterialTest findByCode(String code);
 
+  MaterialTest findByCodeAndIncomingSamplePlantCode(String materialTestCode, String plantCode);
+
   boolean existsByStatus(String status);
 
   List<MaterialTest> findByStatus(String status);
 
   boolean existsByTestConfigureId(Long testConfigureId);
+
+  List<MaterialTest> findByTestConfigureIdAndIncomingSamplePlantCode(Long testConfigureId,
+      String plantCode);
 
   List<MaterialTest> findByTestConfigureId(Long testConfigureId);
 
@@ -30,8 +36,11 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByIncomingSampleCodeAndStatus(String incomingSampleCode, Status status);
 
-  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestName(String incomingSampleCode,
-      String testName);
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureReportFormatAndIncomingSamplePlantCode(
+      String incomingSampleCode, ReportFormat reportFormat, String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureReportFormat(String incomingSampleCode,
+      ReportFormat reportFormat);
 
   boolean existsByIncomingSampleCodeAndStatusAndTestConfigureTestName(String incomingSampleCode,
       Status status, String testName);
@@ -44,4 +53,9 @@ public interface MaterialTestRepository
   List<MaterialTest> findByIncomingSamplePlantCodeIn(List<String> plantCodes);
 
   List<MaterialTest> findByIncomingSampleCodeContaining(String incomingSampleCode);
+
+  boolean existsByIncomingSamplePlantCode(String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndIncomingSamplePlantCode(String incomingSampleCode,
+      String plantCode);
 }

@@ -15,4 +15,6 @@ public interface MaterialCategoryRepository extends JpaRepository<MaterialCatego
   List<MaterialCategory> findByMainType(MainType mainType);
 
   boolean existsByMainType(MainType mainType);
+
+  boolean existsByNameAndMainType(String name, MainType mainType);
 }

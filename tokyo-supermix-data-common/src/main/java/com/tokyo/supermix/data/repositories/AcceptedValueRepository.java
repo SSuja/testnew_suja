@@ -10,10 +10,18 @@ public interface AcceptedValueRepository
     extends JpaRepository<AcceptedValue, Long>, QuerydslPredicateExecutor<AcceptedValue> {
   List<AcceptedValue> findByTestConfigure(TestConfigure testConfigure);
 
-  public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId);
+  public boolean existsByTestConfigureId(Long testConfigureId);
 
   public boolean existsByTestConfigureIdAndTestEquationId(Long testConfigureId,
       Long testEquationId);
 
-  AcceptedValue findByTestConfigureId(Long testConfigureId);
+  List<AcceptedValue> findByTestConfigureId(Long testConfigureId);
+
+  public AcceptedValue findByTestConfigureIdAndTestEquationId(Long testConfigureId,
+      Long testEquationId);
+
+  AcceptedValue findByTestParameterId(Long testParameterId);
+
+  public boolean existsByTestConfigureIdAndTestParameterId(Long testConfigureId,
+      Long testParameterId);
 }

@@ -13,4 +13,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, Query
 	boolean existsByEmail(String mail);
 	List<Employee> findByPlantCode(String plantCode);
 	List<Employee> findByPlantCodeIn(List<String> plantCodes);
+	Employee findByEmailIgnoreCase(String email);
 }

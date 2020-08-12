@@ -46,10 +46,8 @@ public class ParameterEquationController {
   @PostMapping(value = EndpointURI.PARAMETER_EQUATION)
   public ResponseEntity<Object> createParameterEquation(
       @RequestBody ParameterEquationEleDto parameterEquationEleDto) {
-    if (parameterEquationService.isEquationIdAndTestParameterId(
-        parameterEquationEleDto.getEquationId(), parameterEquationEleDto.getTestParameterId(),
-        testParameterService.getTestParameterById(parameterEquationEleDto.getTestParameterId())
-            .getTestConfigure().getId())) {
+    if (parameterEquationService
+        .isTestParameterExist(parameterEquationEleDto.getTestParameterId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
               validationFailureStatusCodes.getParameterEquationAlreadyExit()),
@@ -113,14 +111,14 @@ public class ParameterEquationController {
   public ResponseEntity<Object> updateParameterEquation(
       @RequestBody ParameterEquationRequestDto parameterEquationRequestDto) {
     if (parameterEquationService.isParameterEquationExist(parameterEquationRequestDto.getId())) {
-//      if (parameterEquationService.isEquationIdAndTestParameterId(
-//          parameterEquationRequestDto.getEquation().getId(),
-//          parameterEquationRequestDto.getTestParameter().getId())) {
-//        return new ResponseEntity<>(
-//            new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
-//                validationFailureStatusCodes.getParameterEquationAlreadyExit()),
-//            HttpStatus.BAD_REQUEST);
-//      }
+      // if (parameterEquationService.isEquationIdAndTestParameterId(
+      // parameterEquationRequestDto.getEquation().getId(),
+      // parameterEquationRequestDto.getTestParameter().getId())) {
+      // return new ResponseEntity<>(
+      // new ValidationFailureResponse(Constants.PARAMETER_EQUATION,
+      // validationFailureStatusCodes.getParameterEquationAlreadyExit()),
+      // HttpStatus.BAD_REQUEST);
+      // }
       parameterEquationService.updateParameterEquation(
           mapper.map(parameterEquationRequestDto, ParameterEquation.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

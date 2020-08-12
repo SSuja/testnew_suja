@@ -112,62 +112,66 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   public void getAverageAndStatus(String materialTestCode) {
     List<MaterialTestResult> materialTestResults =
         materialTestResultRepository.findByMaterialTestCode(materialTestCode);
-    materialTestResults.forEach(materialTestResult -> {
-      MaterialTest materialTest = materialTestRepository.getOne(materialTestCode);
-      if (materialTestResult.getTestEquation() == null) {
-        MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
-            .findByTestConfigureIdAndRawMaterialId(materialTest.getTestConfigure().getId(),
+    MaterialTest materialTest = materialTestRepository.getOne(materialTestCode);
+    int count = 0;
+    int imp = 0;
+    for (MaterialTestResult materialTestResult : materialTestResults) {
+      Status status = Status.FAIL;
+      Double average = materialTestResult.getResult();
+      if (materialAcceptedValueRepository
+          .findByTestConfigureId(materialTest.getTestConfigure().getId()).size() > 0) {
+        MaterialAcceptedValue materialAcceptedValue = (materialTestResult.getTestEquation() != null)
+            ? materialAcceptedValueRepository
+                .findByTestConfigureIdAndRawMaterialIdAndTestEquationId(
+                    materialTest.getTestConfigure().getId(),
+                    materialTest.getIncomingSample().getRawMaterial().getId(),
+                    materialTestResult.getTestEquation().getId())
+            : materialAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(
+                materialTest.getTestConfigure().getId(),
                 materialTest.getIncomingSample().getRawMaterial().getId());
-        compareAverage(materialAcceptedValue.getMinValue(), materialAcceptedValue.getMaxValue(),
-            materialAcceptedValue.getValue(), materialAcceptedValue.getConditionRange(),
-            materialTestResult.getResult(), materialTestCode);
+        if (materialAcceptedValue.isFinalResult()) {
+          imp++;
+          status = compareAverage(materialAcceptedValue.getMinValue(),
+              materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+              materialAcceptedValue.getConditionRange(), average, materialTestCode);
+        }
       } else {
-        List<AcceptedValue> acceptedValueslist =
-            acceptedValueRepository.findByTestConfigure(materialTest.getTestConfigure());
-        for (AcceptedValue acceptedValue : acceptedValueslist) {
-          Double average = materialTestResultRepository.findByTestEquationAndMaterialTestCode(
-              acceptedValue.getTestEquation(), materialTestCode).getResult();
-          compareAverage(acceptedValue.getMinValue(), acceptedValue.getMaxValue(),
+        AcceptedValue acceptedValue = (materialTestResult.getTestEquation() != null)
+            ? acceptedValueRepository.findByTestConfigureIdAndTestEquationId(
+                materialTest.getTestConfigure().getId(),
+                materialTestResult.getTestEquation().getId())
+            : acceptedValueRepository.findByTestConfigureId(materialTest.getTestConfigure().getId())
+                .get(0);
+        if (acceptedValue.isFinalResult()) {
+          imp++;
+          status = compareAverage(acceptedValue.getMinValue(), acceptedValue.getMaxValue(),
               acceptedValue.getValue(), acceptedValue.getConditionRange(), average,
               materialTestCode);
         }
       }
-    });
+      count = status.equals(Status.PASS) ? count + 1 : count;
+    }
+    updateMaterialTestStatus(materialTestCode, (count == imp) ? Status.PASS : Status.FAIL);
   }
 
-  private void compareAverage(Double minValue, Double maxValue, Double value, Condition condition,
+  private Status compareAverage(Double minValue, Double maxValue, Double value, Condition condition,
       Double average, String materialTestCode) {
-    if (condition == Condition.BETWEEN) {
-      if (minValue <= average && maxValue >= average) {
-        updateAverage(materialTestCode, Status.PASS);
-      } else {
-        updateAverage(materialTestCode, Status.FAIL);
-      }
-    } else if (condition == Condition.EQUAL) {
-      if (value.equals(average)) {
-        updateAverage(materialTestCode, Status.PASS);
-      } else {
-        updateAverage(materialTestCode, Status.FAIL);
-      }
-    } else if (condition == Condition.GREATER_THAN) {
-      if (value <= average) {
-        updateAverage(materialTestCode, Status.PASS);
-      } else {
-        updateAverage(materialTestCode, Status.FAIL);
-      }
-
-    } else if (condition == Condition.LESS_THAN) {
-      if (value >= average) {
-        updateAverage(materialTestCode, Status.PASS);
-      } else {
-        updateAverage(materialTestCode, Status.FAIL);
-      }
+    switch (condition) {
+      case BETWEEN:
+        return (minValue <= average && maxValue >= average) ? Status.PASS : Status.FAIL;
+      case EQUAL:
+        return value.equals(average) ? Status.PASS : Status.FAIL;
+      case GREATER_THAN:
+        return value <= average ? Status.PASS : Status.FAIL;
+      case LESS_THAN:
+        return value >= average ? Status.PASS : Status.FAIL;
+      default:
+        return Status.FAIL;
     }
-
   }
 
   @Transactional
-  public MaterialTest updateAverage(String code, Status status) {
+  public MaterialTest updateMaterialTestStatus(String code, Status status) {
     MaterialTest materialTest = materialTestRepository.findByCode(code);
     materialTest.setStatus(status);
     materialTestRepository.save(materialTest);

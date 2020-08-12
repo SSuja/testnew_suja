@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QMixDesign;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -30,6 +33,8 @@ public class MixDesignServiceImpl implements MixDesignService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesigns() {
@@ -86,7 +91,7 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Transactional(readOnly = true)
-  public Page<MixDesign> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
+  public List<MixDesignResponseDto> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
       Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
       Double targetGradeEqual, Double waterCementRatioMin, Double waterCementRatioMax,
       Double waterCementRatioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
@@ -161,8 +166,10 @@ public class MixDesignServiceImpl implements MixDesignService {
         && waterBinderRatioMin == null) {
       booleanBuilder.and(QMixDesign.mixDesign.waterBinderRatio.eq(waterBinderRatioEqual));
     }
-    return mixDesignRepository.findAll(booleanBuilder.getValue(),
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+    List<MixDesign> mixDesignList = new ArrayList<>();
+    mixDesignRepository.findAll(booleanBuilder.getValue(),
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code"))).stream().filter(mixDesigns -> mixDesignList.add(mixDesigns)).collect(Collectors.toList());
+    return mapper.map(mixDesignList, MixDesignResponseDto.class);
   }
 
   @Transactional(readOnly = true)
@@ -188,6 +195,16 @@ public class MixDesignServiceImpl implements MixDesignService {
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesignByDecending() {
-    return mixDesignRepository.findAllByOrderByCodeDesc();
+    return mixDesignRepository.findAllByOrderByUpdatedAtDesc();
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getAllMixDesignByMaterialCategory(Long materialCategoryId) {
+    return mixDesignRepository.findByMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode) {
+    return mixDesignRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 }

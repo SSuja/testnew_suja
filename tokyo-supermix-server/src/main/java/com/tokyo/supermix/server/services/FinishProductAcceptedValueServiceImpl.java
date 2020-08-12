@@ -36,7 +36,7 @@ public class FinishProductAcceptedValueServiceImpl implements FinishProductAccep
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteFinishProductAcceptedValue(Long id) {
-       finishProductAcceptedValueRepository.deleteById(id);
+    finishProductAcceptedValueRepository.deleteById(id);
   }
 
   @Transactional(readOnly = true)
@@ -45,4 +45,14 @@ public class FinishProductAcceptedValueServiceImpl implements FinishProductAccep
     return finishProductAcceptedValueRepository.findByTestParameterId(testParameterId);
   }
 
+  @Transactional(readOnly = true)
+  public FinishProductAcceptedValue getByAcceptedValueByTestConfigure(Long testConfigureId) {
+    return finishProductAcceptedValueRepository.findByTestParameterTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isTestParameterAndTestconfigure(Long testConfigureId, Long testParameterId) {
+    return finishProductAcceptedValueRepository
+        .existsByTestParameterTestConfigureIdAndTestParameterId(testConfigureId, testParameterId);
+  }
 }

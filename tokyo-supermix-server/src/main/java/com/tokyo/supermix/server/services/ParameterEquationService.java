@@ -26,4 +26,7 @@ public interface ParameterEquationService {
 
   public List<ParameterEquation> getParameterEquationsByTestConfigureId(Long testConfigureId);
 
+  public boolean isEquationExist(Long equationId);
+
+  public boolean isTestParameterExist(Long testParameterId);
 }

@@ -1,11 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.io.FileNotFoundException;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamSource;
@@ -87,5 +85,5 @@ public class EmailService {
       System.err.println(ex.getMessage());
     }
   }
-
+  
 }

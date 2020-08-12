@@ -68,9 +68,14 @@ public class TestParameterServiceImpl implements TestParameterService {
     return testParameterRepository.existsByTestConfigureId(id);
   }
 
-  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation) {
-    return testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
-        abbreviation);
+  @Transactional(readOnly = true)
+  public boolean isDuplicateTestParameterEntryExist(Long testConfigureId, String abbreviation,
+      Long parameterId) {
+    if (testParameterRepository.existsByTestConfigureIdAndAbbreviationAndParameterId(
+        testConfigureId, abbreviation, parameterId)) {
+      return true;
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)
@@ -139,7 +144,9 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setInputMethods(test.getInputMethods());
         testParameterResponseDto.setUnit(test.getUnit());
         testParameterResponseDto.setValue(test.getValue());
+        testParameterResponseDto.setMixDesignField(test.getMixDesignField());
         testParameterResponseDtoList.add(testParameterResponseDto);
+
       }
     });
     List<ParameterEquation> parameterEquationList =
@@ -170,7 +177,16 @@ public class TestParameterServiceImpl implements TestParameterService {
     for (TestParameter testParameter : testParameterRepository
         .findByTestConfigureId(testConfigId)) {
       Level levels = new Level();
-      levels.setLevel(testParameter.getLevel());
+      if (testParameter.getName() != null) {
+        String[] parts = testParameter.getName().split("_");
+        levels.setLevel(parts[1]);
+        testParameter.setLevel(parts[1]);
+        testParameterRepository.save(testParameter);
+      } else {
+        testParameter.setLevel("result");
+        levels.setLevel("result");
+        testParameterRepository.save(testParameter);
+      }
       levelList.add(levels);
     }
     return levelList;
@@ -186,15 +202,30 @@ public class TestParameterServiceImpl implements TestParameterService {
     return oriList;
   }
 
+  @Transactional(readOnly = true)
+  public boolean isParameterExists(Long testConfigureId, Long parameterId) {
+    if (testParameterRepository.existsByTestConfigureIdAndParameterId(testConfigureId,
+        parameterId)) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean isUpdatedExists(Long id, Long testConfigureId, Long parameterId) {
+    if ((!getTestParameterById(id).getParameter().getId().equals(parameterId))
+        && (isParameterExists(parameterId, testConfigureId))) {
+      return true;
+    }
+    return false;
+  }
+
   public String checkEqutaionExistsForTest(Long testConfigureId) {
-    String isEquationExists = " ";
+    String isEquationExists =Constants.CHECK_EQUATION_FALSE;
     List<TestParameter> testParam = testParameterRepository.findByTestConfigureId(testConfigureId);
     for (TestParameter testParameter : testParam) {
-      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))) {
-        isEquationExists =
-            Constants.CHECK_EQUATION_TRUE + "  " + Constants.ADD_TEST_PARAMETER_SUCCESS;
-      } else {
-        isEquationExists = Constants.CHECK_EQUATION_FALSE + Constants.ADD_TEST_PARAMETER_SUCCESS;
+      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))){
+        isEquationExists = Constants.CHECK_EQUATION_TRUE;
+        break;
       }
     }
     return isEquationExists;

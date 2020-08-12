@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 
@@ -15,7 +16,7 @@ public class TestConfigureRequestDto {
   private String testProcedure;
   @NotNull(message = "{testConfigureRequestDto.prefix.null}")
   @NotEmpty(message = "{testConfigureRequestDto.prefix.empty}")
-  @Pattern(regexp = "^[a-zA-Z0-9\\s-]+$*",
+  @Pattern(regexp = "^[a-zA-Z0-9\\s_.-]+$*",
       message = "{testConfigureRequestDto.prefix.specialcharacter}")
   private String prefix;
   private Long materialCategoryId;
@@ -23,6 +24,16 @@ public class TestConfigureRequestDto {
   private boolean active;
   private boolean adminLevelEmailConfiguration;
   private ReportFormat reportFormat;
+  private AcceptedType acceptedType;
+  private boolean name;
+
+  public boolean isName() {
+    return name;
+  }
+
+  public void setName(boolean name) {
+    this.name = name;
+  }
 
   public Long getId() {
     return id;
@@ -118,5 +129,13 @@ public class TestConfigureRequestDto {
 
   public void setReportFormat(ReportFormat reportFormat) {
     this.reportFormat = reportFormat;
+  }
+
+  public AcceptedType getAcceptedType() {
+    return acceptedType;
+  }
+
+  public void setAcceptedType(AcceptedType acceptedType) {
+    this.acceptedType = acceptedType;
   }
 }

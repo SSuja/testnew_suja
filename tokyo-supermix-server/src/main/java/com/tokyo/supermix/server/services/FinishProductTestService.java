@@ -21,11 +21,14 @@ public interface FinishProductTestService {
   boolean isFinishProductTestExistsByTestConfigure(Long testConfigureId);
 
   boolean isDuplicateEntry(String finishProductSampleCode, Long testConfigureId);
-  
-  List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(String finishProductSampleCode,
-      Long testConfigureId);
+
+  List<FinishProductTest> getFinishProductTestByFinishProductSampleCodeAndTestConfigureId(
+      String finishProductSampleCode, Long testConfigureId);
 
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);
 
   public  List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode);
+  public void updateFinishProductTestComment(FinishProductTest finishProductTest);
+  
+  boolean isExistsByPlantCode(String plantCode);
 }

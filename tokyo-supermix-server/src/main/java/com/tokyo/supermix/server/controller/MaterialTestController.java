@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -52,6 +52,8 @@ public class MaterialTestController {
   Mapper mapper;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private PlantRepository plantRepository;
   private static final Logger logger = Logger.getLogger(MaterialTestController.class);
 
   // create material tests
@@ -121,17 +123,26 @@ public class MaterialTestController {
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE)
   public ResponseEntity<Object> getMaterialTestByIncomingSampleCode(
-      @PathVariable String incomingSampleCode) {
+      @PathVariable String incomingSampleCode, @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLE_CODE,
-          mapper.map(materialTestService.findByIncomingSampleCode(incomingSampleCode),
-              MaterialTestResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    } else {
-      logger.debug("No Material Test record exist for given Incoming Sample Code");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
-          validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+            mapper.map(materialTestService.findByIncomingSampleCode(incomingSampleCode),
+                MaterialTestResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      if (plantRepository.existsByCode(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+            mapper.map(materialTestService.getMaterialTestsByincomingSampleCodeAndPlantCode(
+                incomingSampleCode, plantCode), MaterialTestResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
+    logger.debug("No Material Test record exist for given Incoming Sample Code");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_TEST)
@@ -167,16 +178,26 @@ public class MaterialTestController {
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE)
-  public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable Long testConfigureId) {
+  public ResponseEntity<Object> getMaterialTestByTestConfigure(@PathVariable Long testConfigureId,
+      @PathVariable String plantCode) {
     if (materialTestService.isMaterialTestByTestConfigureExists(testConfigureId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
-          mapper.map(materialTestService.getMaterialTestByTestConfigureId(testConfigureId),
-              MaterialTestResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+            mapper.map(materialTestService.getMaterialTestByTestConfigureId(testConfigureId),
+                MaterialTestResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      if (plantRepository.existsByCode(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT_ID,
+            mapper.map(materialTestService.getMaterialTestByTestConfigureIdByPlant(testConfigureId,
+                plantCode), MaterialTestResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
-        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   // get material test by TestConfigureTestType
@@ -197,9 +218,8 @@ public class MaterialTestController {
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT)
   public ResponseEntity<Object> getAllMaterialTestsByPlant(@CurrentUser UserPrincipal currentUser,
-      HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
           mapper.map(materialTestService.getAllMaterialTestByPlant(currentUser),
               MaterialTestResponseDto.class),

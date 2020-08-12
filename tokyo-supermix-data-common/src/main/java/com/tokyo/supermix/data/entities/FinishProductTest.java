@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,46 +24,77 @@ public class FinishProductTest extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   private Long noOfTrial;
+  private Date date;
   @ManyToOne
   @JoinColumn(name = "materialStateId", nullable = false)
   private MaterialState materialState;
+  private String comments;
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
   public String getCode() {
     return code;
   }
+
   public void setCode(String code) {
     this.code = code;
   }
+
   public Status getStatus() {
     return status;
   }
+
   public void setStatus(Status status) {
     this.status = status;
   }
+
   public FinishProductSample getFinishProductSample() {
     return finishProductSample;
   }
+
   public void setFinishProductSample(FinishProductSample finishProductSample) {
     this.finishProductSample = finishProductSample;
   }
+
   public TestConfigure getTestConfigure() {
     return testConfigure;
   }
+
   public void setTestConfigure(TestConfigure testConfigure) {
     this.testConfigure = testConfigure;
   }
+
   public Long getNoOfTrial() {
     return noOfTrial;
   }
+
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
   }
+
   public MaterialState getMaterialState() {
     return materialState;
   }
+
   public void setMaterialState(MaterialState materialState) {
     this.materialState = materialState;
   }
+
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
   }
 }

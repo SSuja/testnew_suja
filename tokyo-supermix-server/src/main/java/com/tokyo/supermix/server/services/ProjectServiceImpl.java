@@ -49,7 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setCode(codePrefix + String.format("%03d", maxNumberFromCode(projectList) + 1));
       }
     }
-    Project projectObj = projectRepository.save(project); 
+    Project projectObj = projectRepository.save(project);
     if (projectObj != null)
       emailNotification.sendProjectEmail(projectObj);
   }
@@ -105,5 +105,15 @@ public class ProjectServiceImpl implements ProjectService {
   @Transactional(readOnly = true)
   public List<Project> getAllProjects() {
     return projectRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public List<Project> getAllProjectsByCustomer(Long customerId) {
+    return projectRepository.findByCustomerId(customerId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isCustomerExistsByProject(Long customerId) {
+    return projectRepository.existsByCustomerId(customerId);
   }
 }

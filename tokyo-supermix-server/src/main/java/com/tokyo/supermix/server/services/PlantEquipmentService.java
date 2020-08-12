@@ -26,4 +26,7 @@ public interface PlantEquipmentService {
 
   public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentId(
       Long equipmentId);
+
+  public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentIdAndPlantCode(
+      Long equipmentId, String code);
 }

@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -45,6 +45,8 @@ public class MixDesignController {
   private PlantService plantService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  MaterialCategoryService materialCategoryService;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -155,21 +157,38 @@ public class MixDesignController {
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
-  
+
   @GetMapping(value = EndpointURI.MIX_DESIGN_BY_PLANT)
-  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
+  public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-                mapper.map(mixDesignService.getAllMixDesignByPlant(currentUser), MixDesignResponseDto.class),
-                RestApiResponseStatus.OK), null, HttpStatus.OK);
+          mapper.map(mixDesignService.getAllMixDesignByDecending(), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    if (currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN)
+        .contains(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+          mapper.map(mixDesignService.getAllPlantCodeOrderByUpdatedAtDesc(plantCode),
+              MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-      if(currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MIX_DESIGN).contains(plantCode)) {
-          return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
-                    mapper.map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
-                    RestApiResponseStatus.OK), null, HttpStatus.OK);
-      }
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-                validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_MATERIAL_CATEGORY)
+  public ResponseEntity<Object> getMixDesignByPlant(@PathVariable Long materialCategoryId) {
+    if (materialCategoryService.isMaterialCategoryExist(materialCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORY_ID,
+          mapper.map(mixDesignService.getAllMixDesignByMaterialCategory(materialCategoryId),
+              MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No MixDesign record exist for given Plant Code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_ID,
+          validationFailureStatusCodes.getMaterialCategoryNotExist()), HttpStatus.BAD_REQUEST);
+    }
   }
 }

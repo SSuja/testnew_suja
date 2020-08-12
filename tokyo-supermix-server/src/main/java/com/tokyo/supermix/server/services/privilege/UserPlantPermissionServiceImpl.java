@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
+import com.tokyo.supermix.data.enums.RoleType;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
@@ -216,14 +217,17 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
     for (UserPlantPermission permission : userPlantPermissionList) {
       PlantRolePlantPermissionRequestDto plantRolePlantPermissionRequestDto =
           new PlantRolePlantPermissionRequestDto();
-      UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserId(plantCode, userId);
+      UserPlantRole userPlantRole = userPlantRoleRepository.findByPlantRolePlantCodeAndUserIdAndRoleType(plantCode, userId,RoleType.INDIVIDUAL);
+     
       plantRolePlantPermissionRequestDto
           .setPermissionName(permission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRequestDto.setPlantPermissionId(permission.getPlantPermission().getPermission().getId());
       plantRolePlantPermissionRequestDto.setStatus(permission.getStatus());
       User user =userRepository.findById(userId).get();
+      if(userPlantRole!=null) {
       if(user.getUserType().name().equalsIgnoreCase(UserType.PLANT_USER.name())){
     	  plantRolePlantPermissionRequestDto.setPlantRoleId(userPlantRole.getPlantRole().getId());
+      }
       }
       plantRolePlantPermissionRequestDto.setSubModuleId(subModuleId);
       plantRolePlantPermissionRequestDto.setMainModuleId(mainModuleId);

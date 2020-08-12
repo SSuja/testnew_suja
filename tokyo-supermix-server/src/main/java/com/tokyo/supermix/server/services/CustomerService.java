@@ -1,3 +1,4 @@
+  
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import com.tokyo.supermix.security.UserPrincipal;
 public interface CustomerService {
   public void saveCustomer(Customer customer, List<String> plantCodes);
 
-  public List<Customer> getAllCustomersByCurrentUser(UserPrincipal currentUser);
+  public List<CustomerResponseDto> getAllCustomersByCurrentUser(UserPrincipal currentUser);
 
   public List<Customer> getAllCustomers();
   
@@ -18,11 +19,11 @@ public interface CustomerService {
 
   public boolean isEmailExist(String email);
 
-  public List<Customer> getCustomerByPlantCode(String plantCode);
+  public  List<CustomerResponseDto> getCustomerByPlantCode(String plantCode);
 
   boolean isCustomerExist(Long id);
 
-  public Customer getCustomerById(Long id);
+  public CustomerResponseDto getCustomerById(Long id);
 
   public boolean isUpdatedCustomerEmailExist(Long id, String email);
 

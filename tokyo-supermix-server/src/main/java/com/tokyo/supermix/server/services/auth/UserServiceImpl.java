@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
@@ -28,6 +29,7 @@ import com.tokyo.supermix.data.repositories.auth.UserRoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -57,6 +59,9 @@ public class UserServiceImpl implements UserService {
   private Mapper mapper;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private  EmployeeService employeeService;
+
 
   @Transactional
   public UserCredentialDto saveUser(User user, List<Long> roles) {
@@ -134,8 +139,23 @@ public class UserServiceImpl implements UserService {
   }
 
   @Transactional(readOnly = true)
-  public List<User> getAllUsers() {
-    return userRepository.findAll();
+  public List<UserResponseDto> getAllUsers() {
+    ArrayList<UserResponseDto> UserResponseDtoList = new ArrayList<UserResponseDto>();
+    List<User> userList = userRepository.findAll();
+    for (User user : userList) {
+      UserResponseDto userResponseDto = new UserResponseDto();
+      userResponseDto.setId(user.getId());
+      userResponseDto.setUserName(user.getUserName());
+     userResponseDto.setEmployee(mapper.map(employeeService.getEmployeeById(user.getEmployee().getId()),EmployeeResponseDto.class));
+      userResponseDto.setUserType(user.getUserType().name());
+      userResponseDto.setCreatedAt(user.getCreatedAt().toString());
+      userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
+      userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());   
+      userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());   
+      UserResponseDtoList.add(userResponseDto );
+    }
+    return UserResponseDtoList;
+
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -220,9 +240,28 @@ public class UserServiceImpl implements UserService {
     if (userResponseDto.getUserType().equalsIgnoreCase(UserType.PLANT_USER.name())) {
       userResponseDto.setPlantRoles(userPlantRoleService.getRolesByUserId(id));
     } else {
-
       userResponseDto.setRoles(userRoleService.getRolesByUserId(id));
     }
     return userResponseDto;
+  }
+
+  @Override
+  public List<UserResponseDto> getUserByPlantCode(String plantCode) {
+        
+    ArrayList<UserResponseDto> UserResponseDtoList = new ArrayList<UserResponseDto>();
+    List<User> userList = userRepository.findByEmployeePlantCode(plantCode);
+    for (User user : userList) {
+      UserResponseDto userResponseDto = new UserResponseDto();
+      userResponseDto.setId(user.getId());
+      userResponseDto.setUserName(user.getUserName());
+     userResponseDto.setEmployee(mapper.map(employeeService.getEmployeeById(user.getEmployee().getId()),EmployeeResponseDto.class));
+      userResponseDto.setUserType(user.getUserType().name());
+      userResponseDto.setCreatedAt(user.getCreatedAt().toString());
+      userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
+      userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());   
+      userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());   
+      UserResponseDtoList.add(userResponseDto );
+    }
+    return UserResponseDtoList;
   }
 }

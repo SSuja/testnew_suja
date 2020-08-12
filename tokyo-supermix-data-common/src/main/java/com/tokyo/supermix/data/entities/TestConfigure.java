@@ -13,115 +13,136 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_configure")
 public class TestConfigure extends DateAudit implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private boolean coreTest;
-	private String description;
-	private String testProcedure;
-	private String prefix;
-	@Enumerated(EnumType.ORDINAL)
-	private MainType testType;
-	@Enumerated(EnumType.ORDINAL)
-	private ReportFormat reportFormat;
-	@ManyToOne
-	@JoinColumn(name = "testId", nullable = false)
-	private Test test;
-	@ManyToOne
-	@JoinColumn(name = "materialCategoryId", nullable = false)
-	private MaterialCategory materialCategory;
-	@ManyToOne
-	@JoinColumn(name = "materialSubCategoryId", nullable = true)
-	private MaterialSubCategory materialSubCategory;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+  private boolean coreTest;
+  private String description;
+  private String testProcedure;
+  private String prefix;
+  @Enumerated(EnumType.ORDINAL)
+  private MainType testType;
+  @Enumerated(EnumType.ORDINAL)
+  private ReportFormat reportFormat;
+  @ManyToOne
+  @JoinColumn(name = "testId", nullable = false)
+  private Test test;
+  @ManyToOne
+  @JoinColumn(name = "materialCategoryId", nullable = false)
+  private MaterialCategory materialCategory;
+  @ManyToOne
+  @JoinColumn(name = "materialSubCategoryId", nullable = true)
+  private MaterialSubCategory materialSubCategory;
+  @Enumerated(EnumType.ORDINAL)
+  private AcceptedType acceptedType;
 
-	public Long getId() {
-		return id;
-	}
+  private boolean name;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public boolean isName() {
+    return name;
+  }
 
-	public MaterialCategory getMaterialCategory() {
-		return materialCategory;
-	}
+  public void setName(boolean name) {
+    this.name = name;
+  }
 
-	public void setMaterialCategory(MaterialCategory materialCategory) {
-		this.materialCategory = materialCategory;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public MaterialSubCategory getMaterialSubCategory() {
-		return materialSubCategory;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
-		this.materialSubCategory = materialSubCategory;
-	}
+  public MaterialCategory getMaterialCategory() {
+    return materialCategory;
+  }
 
-	public boolean isCoreTest() {
-		return coreTest;
-	}
+  public void setMaterialCategory(MaterialCategory materialCategory) {
+    this.materialCategory = materialCategory;
+  }
 
-	public void setCoreTest(boolean coreTest) {
-		this.coreTest = coreTest;
-	}
+  public MaterialSubCategory getMaterialSubCategory() {
+    return materialSubCategory;
+  }
 
-	public Test getTest() {
-		return test;
-	}
+  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+    this.materialSubCategory = materialSubCategory;
+  }
 
-	public void setTest(Test test) {
-		this.test = test;
-	}
+  public boolean isCoreTest() {
+    return coreTest;
+  }
 
-	public String getDescription() {
-		return description;
-	}
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public Test getTest() {
+    return test;
+  }
 
-	public String getTestProcedure() {
-		return testProcedure;
-	}
+  public void setTest(Test test) {
+    this.test = test;
+  }
 
-	public void setTestProcedure(String testProcedure) {
-		this.testProcedure = testProcedure;
-	}
+  public String getDescription() {
+    return description;
+  }
 
-	public String getPrefix() {
-		return prefix;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public void setPrefix(String prefix) {
-		this.prefix = prefix;
-	}
+  public String getTestProcedure() {
+    return testProcedure;
+  }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+  public void setTestProcedure(String testProcedure) {
+    this.testProcedure = testProcedure;
+  }
 
-	public MainType getTestType() {
-		return testType;
-	}
+  public String getPrefix() {
+    return prefix;
+  }
 
-	public void setTestType(MainType testType) {
-		this.testType = testType;
-	}
+  public void setPrefix(String prefix) {
+    this.prefix = prefix;
+  }
 
-	public ReportFormat getReportFormat() {
-		return reportFormat;
-	}
+  public static long getSerialversionuid() {
+    return serialVersionUID;
+  }
 
-	public void setReportFormat(ReportFormat reportFormat) {
-		this.reportFormat = reportFormat;
-	}
+  public MainType getTestType() {
+    return testType;
+  }
+
+  public void setTestType(MainType testType) {
+    this.testType = testType;
+  }
+
+  public ReportFormat getReportFormat() {
+    return reportFormat;
+  }
+
+  public void setReportFormat(ReportFormat reportFormat) {
+    this.reportFormat = reportFormat;
+  }
+
+  public AcceptedType getAcceptedType() {
+    return acceptedType;
+  }
+
+  public void setAcceptedType(AcceptedType acceptedType) {
+    this.acceptedType = acceptedType;
+  }
 }

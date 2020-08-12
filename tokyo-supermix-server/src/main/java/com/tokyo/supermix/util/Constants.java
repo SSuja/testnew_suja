@@ -25,15 +25,21 @@ public class Constants {
   public static final String SUBJECT_MATRIAL_TEST = "Notification : About Matrial test result ";
   public static final String SUBJECT_CONCRETE_TEST = "Notification : About Concrete test result ";
   public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
-  public static final String SUBJECT_NEW_INCOMING_SAMPLE = "Notification : About Incoming Sample Creation ";
-  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE = "Notification : About Finish Product Sample Creation ";
-  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE = "Notification : About Finish Product Sample Issue Creation ";
-  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment Calibration ";
+  public static final String SUBJECT_NEW_INCOMING_SAMPLE =
+      "Notification : About Incoming Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE =
+      "Notification : About Finish Product Sample Creation ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
+      "Notification : About Finish Product Sample Issue Creation ";
+  public static final String SUBJECT_PLANT_EQUIPMENT =
+      "Notification : About Plant Equipment Calibration ";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
-  public static final String SUBJECT_PROCESS_SAMPLE = "Notification : About Process Sample Creation";
+  public static final String SUBJECT_PROCESS_SAMPLE =
+      "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
+  public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
   
 
 	// for sample counts
@@ -42,7 +48,7 @@ public class Constants {
 	public static final String PLANT_NAME = "PlantName";
 	public static final String PLANT_ID = "PlantId";
 	public static final String PLANTS = "plants";
-	public static final String SESSION_PLANT = "MY_SESSION_PLANT";
+	public static final String ADMIN = "Admin";
 	/*
 	 * Constants for Plant validation key & Success messages
 	 */
@@ -87,6 +93,7 @@ public class Constants {
 	public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
 	public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
 	public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
+	public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
 	/*
 	 * Constants for Pour validation key & Success messages
 	 */
@@ -138,6 +145,7 @@ public class Constants {
   public static final String ADD_EQUATION_SUCCESS = "Equation Added Successfully";
   public static final String DELETE_EQUATION_SUCCESS = "Equation Successfully Deleted";
   public static final String UPDATE_EQUATION_SUCCESS = "Equation Updated Successfully";
+  public static final String EQUATION_ALREADY_DEPENDED = "Equation is Already Depended";
   /*
    * Constants for Plant Equipment validation key & Success messages
    */
@@ -270,8 +278,8 @@ public class Constants {
   public static final String TEST_PARAMETER_DELETED = "Test Parameter Successfully Deleted";
   public static final String UPDATE_TEST_PARAMETER_SUCCESS = "Test Parameter Updated Successfully";
   public static final String ABBREVIATION = "abbreviation";
-  public static final String CHECK_EQUATION_TRUE = "Test has Equation";
-  public static final String CHECK_EQUATION_FALSE = "Test hasn't Equation";
+  public static final String CHECK_EQUATION_TRUE = "TRUE";
+  public static final String CHECK_EQUATION_FALSE = "FALSE";
 
   /*
    * Constants for Process Sample validation key & Success messages
@@ -318,6 +326,8 @@ public class Constants {
       "Material Accepted Value Added Successfully";
   public static final String UPDATE_MATERIAL_ACCEPTED_VALUE_SUCCESS =
       "Material Accepted Value Updated Successfully";
+  public static final String MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED =
+      "Material Accepted Value is Already Depended";
   /*
    * Constants for Accepted Value validation key & Success messages
    */
@@ -328,6 +338,7 @@ public class Constants {
   public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";
   public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
   public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated Successfully";
+  public static final String ACCEPTED_VALUE_ALREADY_DEPENDED = "Accepted Value is Already Depended";
   /*
    * Constants for Material Test validation key & Success messages
    */
@@ -505,6 +516,7 @@ public class Constants {
   public static final String UPDATE_FINISH_PRODUCT_TEST_SUCCESS =
       "Finish Product Updated Successfully";
   public static final String FINISH_PRODUCT_TEST_STATUS = "finishProductTestStatus";
+  public static final String FINISH_PRODUCT_TEST_COMMENT_UPDATED = "Test Comment is Updated";
 
   public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
   public static final String EMAIL_RECIPIENT = "emailRecipient";

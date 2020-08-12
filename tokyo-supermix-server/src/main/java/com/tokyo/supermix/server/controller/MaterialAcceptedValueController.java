@@ -24,6 +24,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialAcceptedValueService;
+import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -37,6 +38,8 @@ public class MaterialAcceptedValueController {
   @Autowired
   private TestConfigureService testConfigureService;
   @Autowired
+  private MaterialTestService materialTestService;
+  @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
@@ -46,12 +49,13 @@ public class MaterialAcceptedValueController {
   public ResponseEntity<Object> createMaterialAcceptedValue(
       @Valid @RequestBody List<MaterialAcceptedValueRequestDto> materialAcceptedValueRequestDtoList) {
     for (MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto : materialAcceptedValueRequestDtoList) {
-      if (materialAcceptedValueService.isDuplicateEntryExist(
+      if (materialAcceptedValueService.isTestConfigureIdAndRawMaterialIdAndTestParameterId(
           materialAcceptedValueRequestDto.getTestConfigureId(),
-          materialAcceptedValueRequestDto.getRawMaterialId())) {
+          materialAcceptedValueRequestDto.getRawMaterialId(),
+          materialAcceptedValueRequestDto.getTestParameterId())) {
         return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
-                validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
+            new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+                validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
     }
@@ -105,14 +109,25 @@ public class MaterialAcceptedValueController {
       @Valid @RequestBody MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto) {
     if (materialAcceptedValueService
         .isMaterialAcceptedValueExist(materialAcceptedValueRequestDto.getId())) {
-      if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
-          materialAcceptedValueRequestDto.getId(),
-          materialAcceptedValueRequestDto.getRawMaterialId())) {
+      if (materialTestService.isMaterialTestByTestConfigureExists(
+          materialAcceptedValueRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+            Constants.MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
+      } else {
+        if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
+            materialAcceptedValueRequestDto.getId(),
+            materialAcceptedValueRequestDto.getTestConfigureId(),
+            materialAcceptedValueRequestDto.getRawMaterialId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+                  validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+              HttpStatus.BAD_REQUEST);
+        }
         materialAcceptedValueService.updateMaterialAcceptedValue(
             mapper.map(materialAcceptedValueRequestDto, MaterialAcceptedValue.class));
+        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+            Constants.UPDATE_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
       }
-      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-          Constants.UPDATE_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
         validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);

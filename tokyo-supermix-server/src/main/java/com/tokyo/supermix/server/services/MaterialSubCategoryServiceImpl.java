@@ -79,4 +79,10 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
     return materialSubCategoryRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
   }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialCategoryExist(String name, Long materialCategoryId) {
+    return materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name,
+        materialCategoryId);
+  }
 }

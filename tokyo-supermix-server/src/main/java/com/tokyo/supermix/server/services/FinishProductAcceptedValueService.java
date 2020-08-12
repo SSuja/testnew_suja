@@ -17,4 +17,8 @@ public interface FinishProductAcceptedValueService {
 
   public List<FinishProductAcceptedValue> getFinishProductAcceptedValueByTestParameter(
       Long testParameterId);
+
+  public FinishProductAcceptedValue getByAcceptedValueByTestConfigure(Long testConfigureId);
+
+  public boolean isTestParameterAndTestconfigure(Long testConfigureId, Long testParameterId);
 }

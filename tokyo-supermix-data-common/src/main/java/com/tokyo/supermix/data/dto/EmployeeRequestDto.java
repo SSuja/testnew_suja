@@ -22,6 +22,7 @@ public class EmployeeRequestDto {
   private String plantCode;
   private Long designationId;
   private boolean hasUser;
+  private boolean isEnabled;
 
   public Long getId() {
     return id;
@@ -93,6 +94,14 @@ public class EmployeeRequestDto {
 
   public void setHasUser(Boolean hasUser) {
     this.hasUser = hasUser;
+  }
+
+  public boolean isEnabled() {
+    return isEnabled;
+  }
+
+  public void setEnabled(boolean isEnabled) {
+    this.isEnabled = isEnabled;
   }
 
 }

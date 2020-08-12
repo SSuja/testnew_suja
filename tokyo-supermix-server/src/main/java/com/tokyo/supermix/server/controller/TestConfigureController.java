@@ -20,6 +20,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -48,9 +49,8 @@ public class TestConfigureController {
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   public ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
-    if (testConfigureService.isexistByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(
-        testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId(),
-        testConfigureRequestDto.getMaterialSubCategoryId())) {
+    if (testConfigureService.isExistByTestIdAndMaterialSubCategoryId(
+        testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -82,8 +82,8 @@ public class TestConfigureController {
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
-      if (testConfigureService.isexistByTestIdAndMaterialCategoryIdAndMaterialSubCategoryId(
-          testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId(),
+      if (testConfigureService.isUpdatedMaterialSubCategoryAndTest(testConfigureRequestDto.getId(),
+          testConfigureRequestDto.getTestId(),
           testConfigureRequestDto.getMaterialSubCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_CONFIGURE,
@@ -147,9 +147,9 @@ public class TestConfigureController {
   @GetMapping(value = EndpointURI.GET_TEST_DETAILS_BY_CONFIGURE_ID)
   public ResponseEntity<Object> getTestDetailsById(@PathVariable Long id) {
     if (testConfigureService.isTestConfigureExist(id)) {
-        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
-            testConfigureService.getTestConfigureDetailsByConfigureId(id),
-            RestApiResponseStatus.OK), HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+          testConfigureService.getTestConfigureDetailsByConfigureId(id), RestApiResponseStatus.OK),
+          HttpStatus.OK);
     }
     logger.debug("No Test record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
@@ -194,5 +194,17 @@ public class TestConfigureController {
     logger.debug("No Test Configure record exist for given Material Sub Category");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.UPDATE_ACCEPTED_TYPE_TEST_CONFIGURE)
+  public ResponseEntity<Object> updateAcceptedTypeTestConfigure(@PathVariable Long testConfigureId,
+      @PathVariable AcceptedType acceptedType) {
+    TestConfigure testConfigure = testConfigureService.getTestConfigureById(testConfigureId);
+    testConfigure.setAcceptedType(acceptedType);
+    testConfigureService
+        .saveTestConfigure(mapper.map(testConfigure, TestConfigureRequestDto.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
+        HttpStatus.OK);
   }
 }

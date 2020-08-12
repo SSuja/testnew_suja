@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
@@ -30,6 +31,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
+import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -48,6 +50,8 @@ public class IncomingSampleController {
   @Autowired
   private PlantService plantService;
   @Autowired
+  private MaterialSubCategoryService materialSubCategoryService;
+  @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
 
@@ -60,9 +64,8 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getIncomingSamplesByUserPermission(
-      @CurrentUser UserPrincipal currentUser, HttpSession session) {
-    String plantCode = (String)session.getAttribute(Constants.SESSION_PLANT);
-    if(plantCode == null) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
           mapper.map(incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser),
               IncomingSampleResponseDto.class),
@@ -178,5 +181,25 @@ public class IncomingSampleController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
+  public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
+      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode) {
+    if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId),
+                IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(incomingSampleService.getByMaterialSubCategoryPlantWise(
+                materialSubCategoryId, plantCode), IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

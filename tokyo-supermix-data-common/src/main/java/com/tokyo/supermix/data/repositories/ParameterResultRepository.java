@@ -29,6 +29,6 @@ public interface ParameterResultRepository extends JpaRepository<ParameterResult
 
   List<ParameterResult> findByTestParameterTestConfigureId(Long testConfigureId);
 
-  List<ParameterResult> findByTestParameterLevelAndTestParameterTestConfigureId(String level,
-      Long testConfigureId);
+  List<ParameterResult> findByTestParameterLevelAndTestParameterTestConfigureIdAndMaterialTestCode(
+      String level, Long testConfigureId, String materialTestCode);
 }

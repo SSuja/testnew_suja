@@ -112,4 +112,14 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode) {
     return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCode(plantCode);
   }
+
+  @Transactional
+  public void updateFinishProductTestComment(FinishProductTest finishProductTest) {
+    finishProductTestRepository.save(finishProductTest);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistsByPlantCode(String plantCode) {
+    return finishProductTestRepository.existsByFinishProductSampleMixDesignPlantCode(plantCode);
+  }
 }

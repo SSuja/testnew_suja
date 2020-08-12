@@ -14,6 +14,15 @@ public class EmployeeResponseDto {
   private boolean hasUser;
   private String createdAt;
   private String updatedAt;
+  private boolean isEnabled;
+
+  public boolean isEnabled() {
+    return isEnabled;
+  }
+
+  public void setEnabled(boolean isEnabled) {
+    this.isEnabled = isEnabled;
+  }
 
   public Long getId() {
     return id;

@@ -14,4 +14,8 @@ public interface TestEquationRepository extends JpaRepository<TestEquation, Long
   public List<TestEquation> findByEquationId(Long equationId);
 
   TestEquation findByTestParameterId(Long testParameterId);
+
+  boolean existsByEquationId(Long equationId);
+
+  boolean existsByTestParameterId(Long testParameterId);
 }

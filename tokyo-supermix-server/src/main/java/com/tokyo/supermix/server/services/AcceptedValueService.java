@@ -29,4 +29,8 @@ public interface AcceptedValueService {
 
   public Page<AcceptedValue> searchAcceptedValue(Predicate predicate, int size, int page);
 
+  public List<AcceptedValue> findByTestConfigure(Long testConfigureId);
+
+  public boolean isAcceptedValueByTestConfigureIdAndTestParameter(Long testConfigureId,
+      Long testParameterId);
 }

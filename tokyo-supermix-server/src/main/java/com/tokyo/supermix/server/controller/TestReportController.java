@@ -13,7 +13,9 @@ import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
@@ -35,33 +37,66 @@ public class TestReportController {
   private IncomingSampleService incomingSampleService;
   @Autowired
   private FinishProductTestService finishProductTestService;
-
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  PlantRepository plantRepository;
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
-  public ResponseEntity<Object> getMaterialTestReportDetails(
-      @PathVariable String materialTestCode) {
+  public ResponseEntity<Object> getMaterialTestReportDetails(@PathVariable String materialTestCode,
+      @PathVariable String plantCode) {
     if (materialTestService.isMaterialTestExists(materialTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode),
-              TestReportDetailDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getMaterialTestDetailReport(materialTestCode),
+                TestReportDetailDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper.map(testReportService.getMaterialTestDetailReportPlantWise(materialTestCode,
+                    plantCode), TestReportDetailDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
-  public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode) {
-    if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_DETAIL_REPORT)
+  public ResponseEntity<Object> getFinishProductTestReportDetails(
+      @PathVariable String finishProductTestCode) {
+    if (finishProductTestService.isFinishProductTestExists(finishProductTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
-              IncomingSampleDeliveryReportDto.class),
+          mapper.map(testReportService.getFinishProductTestDetailReport(finishProductTestCode),
+              TestReportDetailDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+        validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
+  }
+
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SUMMARY_REPORT)
+  public ResponseEntity<Object> getIncomingSampleSummaryReportDetails(
+      @PathVariable String incomingSampleCode, @PathVariable String plantCode) {
+    if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
+                    IncomingSampleDeliveryReportDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getIncomingSampleSummaryReportPlantWise(incomingSampleCode,
+                plantCode), IncomingSampleDeliveryReportDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
@@ -69,25 +104,50 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT)
   public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode, @PathVariable String testName) {
+      @PathVariable String incomingSampleCode, @PathVariable ReportFormat reportFormat,
+      @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(
-              testReportService.getIncomingSampleDeliveryReports(incomingSampleCode, testName),
-              IncomingSampleDeliveryReportDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getIncomingSampleDeliveryReports(incomingSampleCode,
+                reportFormat), IncomingSampleDeliveryReportDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper
+                    .map(
+                        testReportService.getIncomingSampleDeliveryReportPlantWise(
+                            incomingSampleCode, reportFormat, plantCode),
+                        IncomingSampleDeliveryReportDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.CONCRETE_TEST_REPORT)
-  public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode) {
+  public ResponseEntity<Object> getConcreteTestReport(@PathVariable String finishProductTestCode,
+      @PathVariable String plantCode) {
     if (finishProductTestService.isFinishProductTestExists(finishProductTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
-          mapper.map(testReportService.getConcreteTestReport(finishProductTestCode),
-              ConcreteTestReportDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getConcreteTestReport(finishProductTestCode),
+                ConcreteTestReportDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      if (plantRepository.existsByCode(plantCode)) {
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.TEST_REPORT,
+                mapper.map(testReportService.getConcreteTestReportByPlant(finishProductTestCode,
+                    plantCode), ConcreteTestReportDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
         validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
@@ -101,18 +161,46 @@ public class TestReportController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.CONCRETE_STRENGTHS)
-  public ResponseEntity<Object> getConcreteResults() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH,
-        mapper.map(testReportService.getConcreteStrengths(), ConcreteStrengthDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+  @GetMapping(value = EndpointURI.CONCRETE_STRENGTHS_BY_PLANT)
+  public ResponseEntity<Object> getConcreteResults(@PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH,
+          mapper.map(testReportService.getConcreteStrengths(), ConcreteStrengthDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    if (plantRepository.existsByCode(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CONCRETE_STRENGTH, mapper
+          .map(testReportService.getConcreteStrengthsByPlant(plantCode), ConcreteStrengthDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.SIEVE_TRIALS_BY_MATERIAL_TEST_CODE)
-  public ResponseEntity<Object> getSeiveTest(@PathVariable String materialTestCode) {
+  @GetMapping(value = EndpointURI.SIEVE_TRIALS_BY_MATERIAL_TEST_CODE_PLANT_CODE)
+  public ResponseEntity<Object> getSeiveTest(@PathVariable String materialTestCode,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.SIEVE_TEST,
+              testReportService.getSieveTestReport(materialTestCode), RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+    if (plantRepository.existsByCode(plantCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SIEVE_TEST,
+          testReportService.getSieveTestReportByPlant(materialTestCode, plantCode),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SIEVE_TEST_GRAPH_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getSeiveTestGraph(@PathVariable String materialTestCode) {
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.SIEVE_TEST,
-            testReportService.getSieveTestReport(materialTestCode), RestApiResponseStatus.OK),
+            testReportService.getTrialResultGraph(materialTestCode), RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
 }

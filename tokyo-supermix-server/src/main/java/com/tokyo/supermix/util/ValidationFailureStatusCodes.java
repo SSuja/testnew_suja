@@ -167,6 +167,17 @@ public class ValidationFailureStatusCodes {
   @Value("${supplierRequestDto.email.null}")
   private String emailIsNull;
 
+  @Value("${supplierRequestDto.email.alreadyExist}")
+  private String emailAlreadyExists;
+
+  public String getEmailAlreadyExists() {
+    return emailAlreadyExists;
+  }
+
+  public void setEmailAlreadyExists(String emailAlreadyExists) {
+    this.emailAlreadyExists = emailAlreadyExists;
+  }
+
   public void setSupplierAlreadyExist(String supplierAlreadyExist) {
     this.supplierAlreadyExist = supplierAlreadyExist;
   }
@@ -296,11 +307,11 @@ public class ValidationFailureStatusCodes {
   }
 
   public String getEmailAlreadyExist() {
-    return emailAlreadyExist;
+    return emailAlreadyExists;
   }
 
   public void setEmailAlreadyExist(String emailAlreadyExist) {
-    this.emailAlreadyExist = emailAlreadyExist;
+    this.emailAlreadyExists = emailAlreadyExist;
   }
 
   public void setCustomerEmailIsEmpty(String customerEmailIsEmpty) {
@@ -762,12 +773,8 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.parameter.alreadyExist}")
   private String parameterAlreadyExist;
 
-
-
   @Value("${parameterDto.name.null}")
   private String nameIsNull;
-
-
 
   public String getNameIsNull() {
     return nameIsNull;
@@ -1081,8 +1088,6 @@ public class ValidationFailureStatusCodes {
     this.testParameterAlreadyExist = testParameterAlreadyExist;
   }
 
-
-
   // for ProcessSample
   @Value("${validation.processSample.alreadyExist}")
   private String processSampleAlreadyExist;
@@ -1228,15 +1233,15 @@ public class ValidationFailureStatusCodes {
   // for acceptedValue
   @Value("${validation.acceptedValue.notExists}")
   private String acceptedValueNotExist;
-  @Value("${validation.acceptedValue.alreadyTestIdExists}")
-  private String acceptedValueTestIdAlreadyExist;
+  @Value("${validation.acceptedValue.alreadyExists}")
+  private String acceptedValueAlreadyExist;
 
-  public String getAcceptedValueTestIdAlreadyExist() {
-    return acceptedValueTestIdAlreadyExist;
+  public String getAcceptedValueAlreadyExist() {
+    return acceptedValueAlreadyExist;
   }
 
-  public void setAcceptedValueTestIdAlreadyExist(String acceptedValueTestIdAlreadyExist) {
-    this.acceptedValueTestIdAlreadyExist = acceptedValueTestIdAlreadyExist;
+  public void setAcceptedValueAlreadyExist(String acceptedValueAlreadyExist) {
+    this.acceptedValueAlreadyExist = acceptedValueAlreadyExist;
   }
 
   public String getAcceptedValueNotExist() {
@@ -1428,6 +1433,17 @@ public class ValidationFailureStatusCodes {
   @Value("${testParameterDto.abbreviation.null}")
   private String abbreviationIsNull;
 
+  @Value("${testParameterDto.abbreviation.alreadyExist}")
+  private String abbreviationAlreadyExit;
+
+  public String getAbbreviationAlreadyExit() {
+    return abbreviationAlreadyExit;
+  }
+
+  public void setAbbreviationAlreadyExit(String abbreviationAlreadyExit) {
+    this.abbreviationAlreadyExit = abbreviationAlreadyExit;
+  }
+
   public String getAbbreviationIsNull() {
     return abbreviationIsNull;
   }
@@ -1571,7 +1587,6 @@ public class ValidationFailureStatusCodes {
     this.emailNotificationDaysNotExist = emailNotificationDaysNotExist;
   }
 
-
   @Value("${validation.emailGroup.alreadyExist}")
   private String emailGroupAlreadyExist;
 
@@ -1653,4 +1668,3 @@ public class ValidationFailureStatusCodes {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
 }
-

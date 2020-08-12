@@ -51,7 +51,7 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
 
   @Transactional(readOnly = true)
   public boolean isAcceptedValueByTestConfigureId(Long testConfigureId) {
-    return acceptedValueRepository.existsAcceptedValueByTestConfigureId(testConfigureId);
+    return acceptedValueRepository.existsByTestConfigureId(testConfigureId);
   }
 
   @Transactional(readOnly = true)
@@ -77,5 +77,17 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   public Page<AcceptedValue> searchAcceptedValue(Predicate predicate, int size, int page) {
     return acceptedValueRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+  }
+
+  @Transactional(readOnly = true)
+  public List<AcceptedValue> findByTestConfigure(Long testConfigureId) {
+    return acceptedValueRepository.findByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAcceptedValueByTestConfigureIdAndTestParameter(Long testConfigureId,
+      Long testParameterId) {
+    return acceptedValueRepository.existsByTestConfigureIdAndTestParameterId(testConfigureId,
+        testParameterId);
   }
 }

@@ -32,8 +32,6 @@ public class PlantRole implements Serializable {
   private Set<PlantRolePlantPermission> plantRolePlantPermissions;
   @OneToMany(mappedBy = "plantRole")
   private Set<UserPlantRole> userPlantRoles;
-  @OneToMany(mappedBy = "plantRole")
-  Set<PlantAccessLevel> plantAccessLevel;
 
   public Long getId() {
     return id;
@@ -82,14 +80,6 @@ public class PlantRole implements Serializable {
 
   public void setUserPlantRoles(Set<UserPlantRole> userPlantRoles) {
     this.userPlantRoles = userPlantRoles;
-  }
-
-  public Set<PlantAccessLevel> getPlantAccessLevel() {
-    return plantAccessLevel;
-  }
-
-  public void setPlantAccessLevel(Set<PlantAccessLevel> plantAccessLevel) {
-    this.plantAccessLevel = plantAccessLevel;
   }
 
   public static long getSerialversionuid() {

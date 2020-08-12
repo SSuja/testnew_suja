@@ -30,16 +30,13 @@ public class EmailGroupServiceImpl implements EmailGroupService {
     return emailGroupRepository.findBySchedule(schedule);
   }
 
-  @Transactional 
+  @Transactional
   public void saveEmailGroup(EmailGroupDto emailGroupDto) {
-    System.out.println("MailGroupConstance.MIX_DESIGN_EMAIL_GROUP "+MailGroupConstance.MIX_DESIGN_EMAIL_GROUP);
-    System.out.println("emailGroup.getEmailPoints().getName() "+emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName());
-    if (emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName().equalsIgnoreCase(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP)
-        || emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName().equalsIgnoreCase(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP)) {
-      emailGroupDto.setSchedule(true);
-    } else {
-      emailGroupDto.setSchedule(false);
-    }
+    boolean status = (emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get()
+        .getName().equalsIgnoreCase(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP)
+        || emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName()
+            .equalsIgnoreCase(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP)) ? true : false;
+    emailGroupDto.setSchedule(status);
     emailGroupRepository.save(mapper.map(emailGroupDto, EmailGroup.class));
   }
 
@@ -89,12 +86,24 @@ public class EmailGroupServiceImpl implements EmailGroupService {
   }
 
   @Transactional(readOnly = true)
-  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndAdminStatus(String plantCode, Boolean adminStatus) {
-    return emailGroupRepository.findByPlantCodeAndEmailPointsAdminLevelEmailConfiguration(plantCode, adminStatus);
+  public List<EmailGroup> getAllEmailGroupsByPlantCodeAndAdminStatus(String plantCode,
+      Boolean adminStatus) {
+    return emailGroupRepository.findByPlantCodeAndEmailPointsAdminLevelEmailConfiguration(plantCode,
+        adminStatus);
   }
 
   @Transactional(readOnly = true)
   public List<EmailGroup> getAllEmailGroupsByAdminStatus(Boolean adminStatus) {
     return emailGroupRepository.findByEmailPointsAdminLevelEmailConfiguration(adminStatus);
+  }
+
+  @Override
+  public boolean isEmailGroupNameAndPlantCode(String name, String plantCode) {
+    return emailGroupRepository.existsByNameAndPlantCode(name, plantCode);
+  }
+
+  @Override
+  public boolean isEmailGroupName(String name) {
+    return emailGroupRepository.existsByName(name);
   }
 }

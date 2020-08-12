@@ -25,7 +25,10 @@ public interface MaterialAcceptedValueService {
 
   boolean isDuplicateEntryExist(Long testConfigureId, Long rawMaterialId);
 
-  public boolean isUpdatedRawMaterialIdExist(Long id, Long rawMaterialId);
+  public boolean isUpdatedRawMaterialIdExist(Long id, Long testConfigureId, Long rawMaterialId);
 
   boolean isRawMaterialIdExist(Long rawMaterialId);
+
+  public boolean isTestConfigureIdAndRawMaterialIdAndTestParameterId(Long testConfigureId,
+      Long rawMaterialId, Long testParameterId);
 }

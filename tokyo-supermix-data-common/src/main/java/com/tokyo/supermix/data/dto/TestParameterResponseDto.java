@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.entities.Unit;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class TestParameterResponseDto {
@@ -17,6 +18,16 @@ public class TestParameterResponseDto {
   private boolean acceptedCriteria;
   private InputMethod inputMethods;
   private String level;
+  private String name;
+  private MixDesignField mixDesignField;
+
+  public MixDesignField getMixDesignField() {
+    return mixDesignField;
+  }
+
+  public void setMixDesignField(MixDesignField mixDesignField) {
+    this.mixDesignField = mixDesignField;
+  }
 
   public Long getId() {
     return id;
@@ -105,5 +116,12 @@ public class TestParameterResponseDto {
   public void setLevel(String level) {
     this.level = level;
   }
-  
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 }

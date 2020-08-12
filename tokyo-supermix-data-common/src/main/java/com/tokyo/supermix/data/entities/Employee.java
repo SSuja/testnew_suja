@@ -23,6 +23,7 @@ public class Employee extends DateAudit implements Serializable {
   private String phoneNumber;
   private String address;
   private Boolean hasUser;
+  private boolean isEnabled;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = true)
   private Plant plant;
@@ -104,5 +105,13 @@ public class Employee extends DateAudit implements Serializable {
 
   public void setHasUser(Boolean hasUser) {
     this.hasUser = hasUser;
+  }
+
+  public boolean isEnabled() {
+    return isEnabled;
+  }
+
+  public void setEnabled(boolean isEnabled) {
+    this.isEnabled = isEnabled;
   }
 }

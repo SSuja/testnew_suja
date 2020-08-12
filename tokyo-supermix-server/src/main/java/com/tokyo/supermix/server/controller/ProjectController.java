@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.CustomerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -48,6 +48,7 @@ public class ProjectController {
   private PlantService plantService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  private CustomerService customerService;
   private static final Logger logger = Logger.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
@@ -73,9 +74,8 @@ public class ProjectController {
 
   @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser,
-      HttpSession session) {
-    String plantCode = (String) session.getAttribute(Constants.SESSION_PLANT);
-    if (plantCode == null) {
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
           mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -154,4 +154,17 @@ public class ProjectController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+
+  @GetMapping(value = EndpointURI.GET_PROJECTS_BY_CUSTOMER)
+  public ResponseEntity<Object> getProjectByCustomer(@PathVariable Long customerId) {
+    if (projectService.isCustomerExistsByProject(customerId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+          mapper.map(projectService.getAllProjectsByCustomer(customerId), ProjectResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
+        validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
+

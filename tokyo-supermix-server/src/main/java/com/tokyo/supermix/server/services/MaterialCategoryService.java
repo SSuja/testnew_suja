@@ -24,4 +24,6 @@ public interface MaterialCategoryService {
   public List<MaterialCategory> getByMainType(MainType mainType);
 
   public boolean isMainTypeExist(MainType mainType);
+
+  public boolean isExistByNameAndMainType(String name, MainType mainType);
 }

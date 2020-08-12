@@ -40,9 +40,9 @@ public class GenerateReportController {
 	}
 
 	@GetMapping(value = "delivery-report/{code}")
-	public ResponseEntity<Object> generateDeliveryReport(@PathVariable String code) {
+	public ResponseEntity<Object> generateDeliveryReport(@PathVariable String code,@PathVariable String plantCode) {
 		try {
-			generateReportService.generatePdfDeliveryDetailReport(code, Constants.DELIVERY_REPORT_MOISTURE_TEST);
+			generateReportService.generatePdfDeliveryDetailReport(code, Constants.DELIVERY_REPORT_MOISTURE_TEST, plantCode);
 		} catch (FileNotFoundException e) {
 			logger.debug("FileNotFoundException");
 			e.printStackTrace();
