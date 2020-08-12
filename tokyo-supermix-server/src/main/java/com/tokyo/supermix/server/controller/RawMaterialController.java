@@ -25,6 +25,7 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.RawMaterialService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -34,7 +35,8 @@ import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 public class RawMaterialController {
   @Autowired
   private RawMaterialService rawMaterialService;
-
+  @Autowired
+  private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
 
@@ -123,5 +125,17 @@ public class RawMaterialController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
         mapper.map(rawMaterialService.getAllActiveRawMaterials(), RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_BY_MATERIAL_SUB_CATEGORY)
+  public ResponseEntity<Object> getByMaterialSubCategory(@PathVariable Long materialSubCategoryId) {
+    if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+          mapper.map(rawMaterialService.getByMaterialSubCategoryId(materialSubCategoryId),
+              RawMaterialResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
+        validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
 }
