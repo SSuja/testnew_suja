@@ -61,7 +61,7 @@ public class ParameterResultController {
       @Valid @RequestBody List<MaterialParameterResultDto> materialParameterResultDtolist)
       throws ScriptException {
     List<ParameterResultDto> li = materialParameterResultDtolist.get(0).parameterResults.stream()
-        .filter(parameterResult -> (parameterResult.getValue() == 0
+        .filter(parameterResult -> (parameterResult.getValue() == null
             && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
                 .getInputMethods().equals(InputMethod.OBSERVE)
             && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
