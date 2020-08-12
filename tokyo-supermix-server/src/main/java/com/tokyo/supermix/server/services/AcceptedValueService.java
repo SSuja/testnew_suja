@@ -31,4 +31,6 @@ public interface AcceptedValueService {
 
   public List<AcceptedValue> findByTestConfigure(Long testConfigureId);
 
+  public boolean isAcceptedValueByTestConfigureIdAndTestParameter(Long testConfigureId,
+      Long testParameterId);
 }

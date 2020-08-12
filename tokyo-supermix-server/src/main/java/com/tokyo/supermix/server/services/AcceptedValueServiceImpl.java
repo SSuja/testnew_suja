@@ -83,4 +83,11 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   public List<AcceptedValue> findByTestConfigure(Long testConfigureId) {
     return acceptedValueRepository.findByTestConfigureId(testConfigureId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isAcceptedValueByTestConfigureIdAndTestParameter(Long testConfigureId,
+      Long testParameterId) {
+    return acceptedValueRepository.existsByTestConfigureIdAndTestParameterId(testConfigureId,
+        testParameterId);
+  }
 }
