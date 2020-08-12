@@ -18,6 +18,7 @@ public class TestConfigureResponseDto {
   private boolean name;
   private String createdAt;
   private String updatedAt;
+  private RawMaterialResponseDto rawMaterial;
 
   public String getCreatedAt() {
     return createdAt;
@@ -129,5 +130,13 @@ public class TestConfigureResponseDto {
 
   public void setAcceptedType(String acceptedType) {
     this.acceptedType = acceptedType;
+  }
+
+  public RawMaterialResponseDto getRawMaterial() {
+    return rawMaterial;
+  }
+
+  public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
+    this.rawMaterial = rawMaterial;
   }
 }

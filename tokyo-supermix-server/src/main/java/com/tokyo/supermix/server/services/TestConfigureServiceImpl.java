@@ -13,6 +13,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductAcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
+import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
@@ -25,6 +26,7 @@ import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
@@ -38,6 +40,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private TestParameterRepository testParameterRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
+  @Autowired
+  private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -108,9 +112,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
-    if (testConfigureRepository.existsByTestIdAndMaterialSubCategoryId(testId,
-        materialSubCategoryId)) {
+  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId,
+      Long rawMaterialId) {
+    if (testConfigureRepository.existsByTestIdAndMaterialSubCategoryIdAndRawMaterialId(testId,
+        materialSubCategoryId, rawMaterialId)) {
       return true;
     }
     return false;
@@ -142,6 +147,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
                   materialSubCategoryRepository
                       .findById(testConfigure.getMaterialSubCategory().getId()).get(),
                   MaterialSubCategoryResponseDto.class));
+    }
+    if (testConfigure.getRawMaterial() != null) {
+      testConfigureDto.setRawMaterial(
+          mapper.map(rawMaterialRepository.findById(testConfigure.getRawMaterial().getId()).get(),
+              RawMaterialResponseDto.class));
     }
     testConfigureDto.setAcceptedType(testConfigure.getAcceptedType());
     testConfigureDto.setPrefix(testConfigure.getPrefix());
@@ -201,11 +211,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   public boolean isUpdatedMaterialSubCategoryAndTest(Long id, Long testId,
-      Long materialSubCategoryId) {
+      Long materialSubCategoryId, Long rawMaterialId) {
     if ((!getTestConfigureById(id).getTest().getId().equals(testId))
         && (!getTestConfigureById(testId).getMaterialSubCategory().getId()
             .equals(materialSubCategoryId))
-        && (isExistByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId))) {
+        && (!getTestConfigureById(id).getRawMaterial().getId().equals(rawMaterialId))
+        && (isExistByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId,
+            rawMaterialId))) {
       return true;
     }
     return false;

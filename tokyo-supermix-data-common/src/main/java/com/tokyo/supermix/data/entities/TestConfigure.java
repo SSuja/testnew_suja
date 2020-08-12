@@ -41,6 +41,9 @@ public class TestConfigure extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialSubCategoryId", nullable = true)
   private MaterialSubCategory materialSubCategory;
+  @ManyToOne
+  @JoinColumn(name = "rawMaterialId", nullable = true)
+  private RawMaterial rawMaterial;
   @Enumerated(EnumType.ORDINAL)
   private AcceptedType acceptedType;
 
@@ -144,5 +147,13 @@ public class TestConfigure extends DateAudit implements Serializable {
 
   public void setAcceptedType(AcceptedType acceptedType) {
     this.acceptedType = acceptedType;
+  }
+
+  public RawMaterial getRawMaterial() {
+    return rawMaterial;
+  }
+
+  public void setRawMaterial(RawMaterial rawMaterial) {
+    this.rawMaterial = rawMaterial;
   }
 }
