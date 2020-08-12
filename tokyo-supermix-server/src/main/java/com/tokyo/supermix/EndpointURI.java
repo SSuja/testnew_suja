@@ -102,6 +102,7 @@ public final class EndpointURI {
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
       MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
   public static final String MATERIAL_SUB_CATEGORY_SEARCH = MATERIAL_SUB_CATEGORY + SEARCH;
+
   /*
    * Equipment APIs
    */
@@ -145,6 +146,8 @@ public final class EndpointURI {
   public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
   public static final String ACTIVE_RAW_MATERIALS =
       BASE_API_PATH + "active" + SLASH + "raw-materials";
+  public static final String GET_BY_MATERIAL_SUB_CATEGORY =
+      RAW_MATERIAL + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
   /*
    * EquipmentPlantCalibration apis
    */

@@ -50,7 +50,8 @@ public class TestConfigureController {
   public ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isExistByTestIdAndMaterialSubCategoryId(
-        testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId())) {
+        testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId(),
+        testConfigureRequestDto.getRawMaterialId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -83,8 +84,8 @@ public class TestConfigureController {
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
       if (testConfigureService.isUpdatedMaterialSubCategoryAndTest(testConfigureRequestDto.getId(),
-          testConfigureRequestDto.getTestId(),
-          testConfigureRequestDto.getMaterialSubCategoryId())) {
+          testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId(),
+          testConfigureRequestDto.getRawMaterialId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_CONFIGURE,
                 validationFailureStatusCodes.getTestConfigureAlreadyExist()),

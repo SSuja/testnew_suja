@@ -21,6 +21,7 @@ public class TestConfigureRequestDto {
   private String prefix;
   private Long materialCategoryId;
   private Long materialSubCategoryId;
+  private Long rawMaterialId;
   private boolean active;
   private boolean adminLevelEmailConfiguration;
   private ReportFormat reportFormat;
@@ -137,5 +138,13 @@ public class TestConfigureRequestDto {
 
   public void setAcceptedType(AcceptedType acceptedType) {
     this.acceptedType = acceptedType;
+  }
+
+  public Long getRawMaterialId() {
+    return rawMaterialId;
+  }
+
+  public void setRawMaterialId(Long rawMaterialId) {
+    this.rawMaterialId = rawMaterialId;
   }
 }
