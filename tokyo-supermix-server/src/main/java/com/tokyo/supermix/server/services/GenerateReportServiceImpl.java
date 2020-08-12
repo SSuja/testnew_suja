@@ -64,24 +64,24 @@ public class GenerateReportServiceImpl implements GenerateReportService {
   @Override
   public void generatePdfDeliveryDetailReport(String incomingSampleCode, String testName,
       String plantCode) throws FileNotFoundException, JRException, MessagingException {
-    IncomingSampleDeliveryReportDto deliveryReport = testReportService
-        .getIncomingSampleDeliveryReportPlantWise(incomingSampleCode, testName, plantCode);
-    List<IncomingSampleDeliveryReportDto> deliveryReports =
-        new ArrayList<IncomingSampleDeliveryReportDto>();
-    deliveryReports.add(deliveryReport);
-    List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
-    Map<String, Object> params = new HashMap<>();
-    params.put("datasource1", deliveryReports);
-    params.put("datasource2", incomingSampleTestDtos);
-    params.put("reportTitle", "DELIVERY DETAILS REPORT OF INCOMING SAMPLE");
-    InputStream inputStream =
-        getClass().getClassLoader().getResourceAsStream("delivery_report.jrxml");
-    byte[] fileByte = generateReportPdf(inputStream, params);
-    List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-        MailGroupConstance.CREATE_DELIVERY_REPORT, deliveryReport.getPlant().getCode());
-    reciepientList.add(deliveryReport.getSupplierReportDtos().getEmail());
-    emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
-        Constants.SUBJECT_OF_DELIVERY_REPORT, Constants.BODY_FOR_REPORT, fileByte,
-        Constants.DELIVERY_REPORT);
+//    IncomingSampleDeliveryReportDto deliveryReport = testReportService
+//        .getIncomingSampleDeliveryReportPlantWise(incomingSampleCode, testName, plantCode);
+//    List<IncomingSampleDeliveryReportDto> deliveryReports =
+//        new ArrayList<IncomingSampleDeliveryReportDto>();
+//    deliveryReports.add(deliveryReport);
+//    List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
+//    Map<String, Object> params = new HashMap<>();
+//    params.put("datasource1", deliveryReports);
+//    params.put("datasource2", incomingSampleTestDtos);
+//    params.put("reportTitle", "DELIVERY DETAILS REPORT OF INCOMING SAMPLE");
+//    InputStream inputStream =
+//        getClass().getClassLoader().getResourceAsStream("delivery_report.jrxml");
+//    byte[] fileByte = generateReportPdf(inputStream, params);
+//    List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+//        MailGroupConstance.CREATE_DELIVERY_REPORT, deliveryReport.getPlant().getCode());
+//    reciepientList.add(deliveryReport.getSupplierReportDtos().getEmail());
+//    emailService.sendEmailWithAttachment(reciepientList.toArray(new String[reciepientList.size()]),
+//        Constants.SUBJECT_OF_DELIVERY_REPORT, Constants.BODY_FOR_REPORT, fileByte,
+//        Constants.DELIVERY_REPORT);
   }
 }
