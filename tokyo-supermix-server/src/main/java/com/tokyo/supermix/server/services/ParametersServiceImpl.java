@@ -75,4 +75,9 @@ public class ParametersServiceImpl implements ParameterService {
   public List<Parameter> getAllParametersByDecending() {
     return parameterRepository.findAllByOrderByIdDesc();
   }
+
+  @Override
+  public boolean isParameterNameAndParameterTypeExists(String name, ParameterType parameterType) {
+    return parameterRepository.existsByNameAndParameterType(name, parameterType);
+  }
 }

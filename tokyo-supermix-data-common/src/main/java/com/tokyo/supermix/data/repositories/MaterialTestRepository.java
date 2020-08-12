@@ -58,4 +58,10 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByIncomingSampleCodeAndIncomingSamplePlantCode(String incomingSampleCode,
       String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureId(String incomingSampleCode,
+      Long testConfigId);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
+      String incomingSampleCode, Long testConfigId, String plantCode);
 }
