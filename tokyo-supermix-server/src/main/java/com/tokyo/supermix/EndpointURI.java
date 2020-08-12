@@ -330,6 +330,8 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_BY_STATUS = MATERIAL_TESTS + "/status" + STATUS;
   public static final String MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}" + PLANT_WISE;
+  public static final String MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE_AND_TEST =
+      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}"+SLASH+"test"+SLASH+"{testConfigId}" + PLANT_WISE;
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
