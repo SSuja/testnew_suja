@@ -477,7 +477,7 @@ public final class EndpointURI {
           + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_DELIVERY_REPORT =
       BASE_API_PATH + "incoming-sample-delivery-report" + SLASH + "{incomingSampleCode}" + SLASH
-          + "test-name" + SLASH + "{testName}" + SLASH + "plant" + SLASH + "{plantCode}";
+          + "{reportFormat}" + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String CONCRETE_TEST_REPORT = BASE_API_PATH + "concrete-test-report" + SLASH
       + "{finishProductTestCode}" + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String MATERIAL_TEST_TRIALS_WISE_BY_MATERIAL_TEST_CODE =

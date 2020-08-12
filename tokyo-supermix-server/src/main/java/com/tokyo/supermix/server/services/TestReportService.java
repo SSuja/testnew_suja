@@ -10,6 +10,7 @@ import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.SeiveTestReportResponseDto;
 import com.tokyo.supermix.data.dto.report.SieveTestTrialDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
+import com.tokyo.supermix.data.enums.ReportFormat;
 
 public interface TestReportService {
 
@@ -24,10 +25,10 @@ public interface TestReportService {
   public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode);
 
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReportPlantWise(
-      String incomingSampleCode, String testName, String plantCode);
+      String incomingSampleCode, ReportFormat reportFormat, String plantCode);
 
   public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
-      String testName);
+      ReportFormat reportFormat);
 
   public ConcreteTestReportDto getConcreteTestReportByPlant(String finishProductTestCode,
       String plantCode);

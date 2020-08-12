@@ -46,6 +46,7 @@ import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -128,7 +129,7 @@ public class TestReportServiceImpl implements TestReportService {
     reportDto.setTrailValues(getTrailValueDtoList(materialTestCode));
     return reportDto;
   }
-  
+
   @Transactional(readOnly = true)
   public TestReportDetailDto getMaterialTestDetailReport(String materialTestCode) {
     TestReportDetailDto reportDto = new TestReportDetailDto();
@@ -281,12 +282,12 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Incoming Sample Summary Report
   @Transactional(readOnly = true)
-  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReportPlantWise(String incomingSampleCode,
-      String plantCode) {
+  public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReportPlantWise(
+      String incomingSampleCode, String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
-    List<MaterialTest> materialTest =
-        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    List<MaterialTest> materialTest = materialTestRepository
+        .findByIncomingSampleCodeAndIncomingSamplePlantCode(incomingSampleCode, plantCode);
     incomingSampleDeliveryReportDto.setIncomingsample(
         getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
     incomingSampleDeliveryReportDto
@@ -299,7 +300,7 @@ public class TestReportServiceImpl implements TestReportService {
         getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
   }
-  
+
   // Incoming Sample Summary Report
   @Transactional(readOnly = true)
   public IncomingSampleDeliveryReportDto getIncomingSampleSummaryReport(String incomingSampleCode) {
@@ -343,10 +344,10 @@ public class TestReportServiceImpl implements TestReportService {
   }
 
   private List<IncomingSampleTestDto> getIncomingSampleDeliveryReport(String incomingSampleCode,
-      String testName) {
+      ReportFormat reportFormat) {
     List<IncomingSampleTestDto> incomingSampleTestDtoList = new ArrayList<IncomingSampleTestDto>();
     materialTestRepository
-        .findByIncomingSampleCodeAndTestConfigureTestName(incomingSampleCode, testName)
+        .findByIncomingSampleCodeAndTestConfigureReportFormat(incomingSampleCode, reportFormat)
         .forEach(test -> {
           IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
           incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
@@ -409,45 +410,46 @@ public class TestReportServiceImpl implements TestReportService {
 
   // Incoming Sample Delivery Report for Moisture Test
   @Transactional(readOnly = true)
-  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReportPlantWise(String incomingSampleCode,
-      String testName, String plantCode) {
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReportPlantWise(
+      String incomingSampleCode, ReportFormat reportFormat, String plantCode) {
     IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
         new IncomingSampleDeliveryReportDto();
     List<MaterialTest> materialTest = materialTestRepository
-        .findByIncomingSampleCodeAndTestConfigureTestName(incomingSampleCode, testName);
+        .findByIncomingSampleCodeAndTestConfigureReportFormatAndIncomingSamplePlantCode(
+            incomingSampleCode, reportFormat, plantCode);
     incomingSampleDeliveryReportDto.setIncomingsample(
         getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
     incomingSampleDeliveryReportDto
         .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
-    incomingSampleDeliveryReportDto
-        .setIncomingSampleTestDtos(getIncomingSampleDeliveryReport(incomingSampleCode, testName));
+    incomingSampleDeliveryReportDto.setIncomingSampleTestDtos(
+        getIncomingSampleDeliveryReport(incomingSampleCode, reportFormat));
     incomingSampleDeliveryReportDto
         .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
     incomingSampleDeliveryReportDto.setSupplierReportDtos(
         getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
     return incomingSampleDeliveryReportDto;
   }
-  
-//Incoming Sample Delivery Report for Moisture Test
- @Transactional(readOnly = true)
- public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
-     String testName) {
-   IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
-       new IncomingSampleDeliveryReportDto();
-   List<MaterialTest> materialTest = materialTestRepository
-       .findByIncomingSampleCodeAndTestConfigureTestName(incomingSampleCode, testName);
-   incomingSampleDeliveryReportDto.setIncomingsample(
-       getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
-   incomingSampleDeliveryReportDto
-       .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
-   incomingSampleDeliveryReportDto
-       .setIncomingSampleTestDtos(getIncomingSampleDeliveryReport(incomingSampleCode, testName));
-   incomingSampleDeliveryReportDto
-       .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
-   incomingSampleDeliveryReportDto.setSupplierReportDtos(
-       getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
-   return incomingSampleDeliveryReportDto;
- }
+
+  // Incoming Sample Delivery Report for Moisture Test
+  @Transactional(readOnly = true)
+  public IncomingSampleDeliveryReportDto getIncomingSampleDeliveryReports(String incomingSampleCode,
+      ReportFormat reportFormat) {
+    IncomingSampleDeliveryReportDto incomingSampleDeliveryReportDto =
+        new IncomingSampleDeliveryReportDto();
+    List<MaterialTest> materialTest = materialTestRepository
+        .findByIncomingSampleCodeAndTestConfigureReportFormat(incomingSampleCode, reportFormat);
+    incomingSampleDeliveryReportDto.setIncomingsample(
+        getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+    incomingSampleDeliveryReportDto
+        .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+    incomingSampleDeliveryReportDto.setIncomingSampleTestDtos(
+        getIncomingSampleDeliveryReport(incomingSampleCode, reportFormat));
+    incomingSampleDeliveryReportDto
+        .setIncomingSampleStatusCounts(getIncomingSampleStatusCount(incomingSampleCode));
+    incomingSampleDeliveryReportDto.setSupplierReportDtos(
+        getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
+    return incomingSampleDeliveryReportDto;
+  }
 
   // Concrete test report
   public ConcreteTestReportDto getConcreteTestReportByPlant(String finishProductTestCode,
@@ -498,47 +500,49 @@ public class TestReportServiceImpl implements TestReportService {
     }
     return concreteTestReportDto;
   }
+
   public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode) {
     ConcreteTestReportDto concreteTestReportDto = new ConcreteTestReportDto();
-      FinishProductTest finishProductTest = finishProductTestRepository.findById(finishProductTestCode).get();
-      List<TestParameter> testParamterList =
-          testParameterRepository.findByTestConfigureIdAndInputMethods(
-              finishProductTest.getTestConfigure().getId(), InputMethod.OBSERVE);
-      // if (!finishProductTest.getTestConfigure().isCoreTest()) {
-      concreteTestReportDto.setAddress(
-          finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
-      concreteTestReportDto.setPlantName(
-          finishProductTest.getFinishProductSample().getMixDesign().getPlant().getName());
-      concreteTestReportDto.setFaxNumber(
-          finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    List<TestParameter> testParamterList =
+        testParameterRepository.findByTestConfigureIdAndInputMethods(
+            finishProductTest.getTestConfigure().getId(), InputMethod.OBSERVE);
+    // if (!finishProductTest.getTestConfigure().isCoreTest()) {
+    concreteTestReportDto.setAddress(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getAddress());
+    concreteTestReportDto.setPlantName(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getName());
+    concreteTestReportDto.setFaxNumber(
+        finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
+    concreteTestReportDto
+        .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
+    if (finishProductTest.getFinishProductSample().getProject() != null) {
+      concreteTestReportDto.setCustomerName(
+          finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
       concreteTestReportDto
-          .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
-      if (finishProductTest.getFinishProductSample().getProject() != null) {
-        concreteTestReportDto.setCustomerName(
-            finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
-        concreteTestReportDto
-            .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
+          .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
+    }
+    concreteTestReportDto
+        .setTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
+    concreteTestReportDto
+        .setTargetSlump(finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
+    concreteTestReportDto
+        .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
+    concreteTestReportDto
+        .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
+    concreteTestReportDto
+        .setAgeOfCubeTest(finishProductTest.getTestConfigure().getTest().getName());
+    concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
+    for (TestParameter testParamter : testParamterList) {
+      if (testParamter.getType().equals(TestParameterType.INPUT)
+          && testParamter.getMixDesignField() == null) {
+        FinishProductParameterResult finishProductResult =
+            finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
+                testParamter.getId(), finishProductTestCode);
+        concreteTestReportDto.setAverageStrength(finishProductResult.getResult());
       }
-      concreteTestReportDto.setTargetGrade(
-          finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
-      concreteTestReportDto.setTargetSlump(
-          finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
-      concreteTestReportDto
-          .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
-      concreteTestReportDto
-          .setDateOfTesting(finishProductTest.getFinishProductSample().getUpdatedAt().toString());
-      concreteTestReportDto
-          .setAgeOfCubeTest(finishProductTest.getTestConfigure().getTest().getName());
-      concreteTestReportDto.setCubeTestReports(getCubeTestRepots(finishProductTestCode));
-      for (TestParameter testParamter : testParamterList) {
-        if (testParamter.getType().equals(TestParameterType.INPUT)
-            && testParamter.getMixDesignField() == null) {
-          FinishProductParameterResult finishProductResult =
-              finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
-                  testParamter.getId(), finishProductTestCode);
-          concreteTestReportDto.setAverageStrength(finishProductResult.getResult());
-        }
-      }
+    }
     return concreteTestReportDto;
   }
 
@@ -617,11 +621,10 @@ public class TestReportServiceImpl implements TestReportService {
     }
     return averageStrengthList;
   }
-  
+
   public List<ConcreteStrengthDto> getConcreteStrengths() {
     ArrayList<ConcreteStrengthDto> averageStrengthList = new ArrayList<ConcreteStrengthDto>();
-    List<FinishProductSample> finishProductSampleList =
-        finishProductSampleRepository.findAll();
+    List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
@@ -658,7 +661,8 @@ public class TestReportServiceImpl implements TestReportService {
     return testAndResultList;
   }
 
-  public SeiveTestReportResponseDto getSieveTestReportByPlant(String materialTestCode, String plantCode) {
+  public SeiveTestReportResponseDto getSieveTestReportByPlant(String materialTestCode,
+      String plantCode) {
     SeiveTestReportResponseDto seiveTestReportResponseDto = new SeiveTestReportResponseDto();
     if (materialTestRepository.existsByCode(materialTestCode)
         && materialTestRepository.existsByIncomingSamplePlantCode(plantCode)) {
@@ -673,15 +677,15 @@ public class TestReportServiceImpl implements TestReportService {
     return seiveTestReportResponseDto;
 
   }
+
   public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode) {
-    SeiveTestReportResponseDto seiveTestReportResponseDto = new SeiveTestReportResponseDto(); 
-      MaterialTest materialTest =
-          materialTestRepository.findByCode(materialTestCode);
-      seiveTestReportResponseDto
-          .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-      seiveTestReportResponseDto.setIncomingSample(
-          mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
-      seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
+    SeiveTestReportResponseDto seiveTestReportResponseDto = new SeiveTestReportResponseDto();
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    seiveTestReportResponseDto
+        .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
+    seiveTestReportResponseDto.setIncomingSample(
+        mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
+    seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     return seiveTestReportResponseDto;
 
   }

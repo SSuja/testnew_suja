@@ -13,6 +13,7 @@ import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -103,23 +104,21 @@ public class TestReportController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_DELIVERY_REPORT)
   public ResponseEntity<Object> getIncomingSampleDeliveryReportDetails(
-      @PathVariable String incomingSampleCode, @PathVariable String testName,
+      @PathVariable String incomingSampleCode, @PathVariable ReportFormat reportFormat,
       @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
       if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-        return new ResponseEntity<>(
-            new ContentResponse<>(Constants.TEST_REPORT,
-                mapper.map(testReportService.getIncomingSampleDeliveryReports(incomingSampleCode,
-                    testName), IncomingSampleDeliveryReportDto.class),
-                RestApiResponseStatus.OK),
-            HttpStatus.OK);
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            mapper.map(testReportService.getIncomingSampleDeliveryReports(incomingSampleCode,
+                reportFormat), IncomingSampleDeliveryReportDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(
             new ContentResponse<>(Constants.TEST_REPORT,
                 mapper
                     .map(
                         testReportService.getIncomingSampleDeliveryReportPlantWise(
-                            incomingSampleCode, testName, plantCode),
+                            incomingSampleCode, reportFormat, plantCode),
                         IncomingSampleDeliveryReportDto.class),
                 RestApiResponseStatus.OK),
             HttpStatus.OK);
