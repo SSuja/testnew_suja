@@ -1233,15 +1233,15 @@ public class ValidationFailureStatusCodes {
   // for acceptedValue
   @Value("${validation.acceptedValue.notExists}")
   private String acceptedValueNotExist;
-  @Value("${validation.acceptedValue.alreadyTestIdExists}")
-  private String acceptedValueTestIdAlreadyExist;
+  @Value("${validation.acceptedValue.alreadyExists}")
+  private String acceptedValueAlreadyExist;
 
-  public String getAcceptedValueTestIdAlreadyExist() {
-    return acceptedValueTestIdAlreadyExist;
+  public String getAcceptedValueAlreadyExist() {
+    return acceptedValueAlreadyExist;
   }
 
-  public void setAcceptedValueTestIdAlreadyExist(String acceptedValueTestIdAlreadyExist) {
-    this.acceptedValueTestIdAlreadyExist = acceptedValueTestIdAlreadyExist;
+  public void setAcceptedValueAlreadyExist(String acceptedValueAlreadyExist) {
+    this.acceptedValueAlreadyExist = acceptedValueAlreadyExist;
   }
 
   public String getAcceptedValueNotExist() {

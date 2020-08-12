@@ -28,4 +28,7 @@ public interface MaterialAcceptedValueService {
   public boolean isUpdatedRawMaterialIdExist(Long id, Long testConfigureId, Long rawMaterialId);
 
   boolean isRawMaterialIdExist(Long rawMaterialId);
+
+  public boolean isTestConfigureIdAndRawMaterialIdAndTestParameterId(Long testConfigureId,
+      Long rawMaterialId, Long testParameterId);
 }
