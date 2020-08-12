@@ -49,6 +49,14 @@ public class AcceptedValueController {
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
   public ResponseEntity<Object> createAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
+    if (acceptedValueService.isAcceptedValueByTestConfigureIdAndTestParameter(
+        acceptedValueRequestDto.getTestConfigureId(),
+        acceptedValueRequestDto.getTestParameterId())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+              validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+          HttpStatus.BAD_REQUEST);
+    }
     acceptedValueService
         .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));
     return new ResponseEntity<>(
@@ -102,7 +110,7 @@ public class AcceptedValueController {
             acceptedValueRequestDto.getId(), acceptedValueRequestDto.getTestConfigureId())) {
           return new ResponseEntity<>(
               new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-                  validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
+                  validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
               HttpStatus.BAD_REQUEST);
         }
         acceptedValueService

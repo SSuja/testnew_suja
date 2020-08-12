@@ -49,4 +49,10 @@ public class FinishProductAcceptedValueServiceImpl implements FinishProductAccep
   public FinishProductAcceptedValue getByAcceptedValueByTestConfigure(Long testConfigureId) {
     return finishProductAcceptedValueRepository.findByTestParameterTestConfigureId(testConfigureId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isTestParameterAndTestconfigure(Long testConfigureId, Long testParameterId) {
+    return finishProductAcceptedValueRepository
+        .existsByTestParameterTestConfigureIdAndTestParameterId(testConfigureId, testParameterId);
+  }
 }

@@ -72,4 +72,12 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   public boolean isRawMaterialIdExist(Long rawMaterialId) {
     return materialAcceptedValueRepository.existsByRawMaterialId(rawMaterialId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isTestConfigureIdAndRawMaterialIdAndTestParameterId(Long testConfigureId,
+      Long rawMaterialId, Long testParameterId) {
+    return materialAcceptedValueRepository
+        .existsByTestConfigureIdAndRawMaterialIdAndTestParameterId(testConfigureId, rawMaterialId,
+            testParameterId);
+  }
 }
