@@ -222,9 +222,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     }
     if (materialTestObj.getTestConfigure().getReportFormat().equals(ReportFormat.DELIVERY_REPORT)) {
       try {
-        generateReportService.generatePdfDeliveryDetailReport(incomingSample.getCode(),
-            materialTestObj.getTestConfigure().getTest().getName(),
-            incomingSample.getPlant().getCode());
+        generateReportService.generatePdfDeliveryDetailReport(incomingSample.getCode());
       } catch (Exception e) {
         e.printStackTrace();
       }
