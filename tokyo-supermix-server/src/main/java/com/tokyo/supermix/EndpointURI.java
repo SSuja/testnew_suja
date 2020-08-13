@@ -225,6 +225,9 @@ public final class EndpointURI {
 
   public static final String GET_PROJECTS_BY_CUSTOMER =
       PROJECTS + SLASH + "customer" + SLASH + "{customerId}";
+
+  public static final String GET_PROJECTS_BY_CUSTOMER_PLANT_WISE =
+      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;
   /*
    * IncomingSample Apis
    */
@@ -331,7 +334,8 @@ public final class EndpointURI {
   public static final String MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}" + PLANT_WISE;
   public static final String MATERIAL_TEST_BY_INCOMING_SAMPLE_CODE_AND_TEST =
-      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}"+SLASH+"test"+SLASH+"{testConfigId}" + PLANT_WISE;
+      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}" + SLASH + "test"
+          + SLASH + "{testConfigId}" + PLANT_WISE;
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
