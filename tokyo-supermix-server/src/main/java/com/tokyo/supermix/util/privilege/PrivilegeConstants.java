@@ -49,7 +49,7 @@ public class PrivilegeConstants {
   public static final String PLANT_PERMISSIONS = "plantPermissions";
   public static final String PLANT_PERMISSION_NAME = "plantPermissionName";
 
-  public static final String ADD_PLANT_ROLE_SUCCESS = "Successfully added plantRole";
+  public static final String ADD_PLANT_ROLE_SUCCESS = "Successfully Added Plant Role";
   public static final String UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS =
       "Plant Permissions Updated Successfully";
   public static final String PLANT_ROLE_PLANT_PERMISSIONS = "plantRolePlantPermissions";
