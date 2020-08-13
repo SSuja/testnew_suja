@@ -184,6 +184,8 @@ public class TestReportServiceImpl implements TestReportService {
         materialResult.setAverage(results.getResult());
         materialResults.add(materialResult);
       } else {
+        materialResult
+            .setTestName(results.getMaterialTest().getTestConfigure().getTest().getName());
         materialResult.setAverage(results.getResult());
         materialResults.add(materialResult);
       }
