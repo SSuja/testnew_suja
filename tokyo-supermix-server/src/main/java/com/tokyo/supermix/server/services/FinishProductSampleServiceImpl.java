@@ -51,6 +51,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       } else if (mixDesign.getStatus().equals(Status.PASS)) {
         codePrefix = plantPrefix + "-PO-";
       }
+      mixDesign.setCheckDepend(true);
       List<FinishProductSample> finishProductSampleList =
           finishProductSampleRepository.findByCodeContaining(codePrefix);
       if (finishProductSampleList.size() == 0) {

@@ -16,6 +16,15 @@ public class MixDesignResponseDto {
   private String createdAt;
   private String updatedAt;
   private MaterialCategoryDto materialCategory;
+  private boolean checkDepend;
+
+  public boolean isCheckDepend() {
+    return checkDepend;
+  }
+
+  public void setCheckDepend(boolean checkDepend) {
+    this.checkDepend = checkDepend;
+  }
 
   public String getCode() {
     return code;

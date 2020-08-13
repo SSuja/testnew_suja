@@ -10,6 +10,15 @@ public class MaterialAcceptedValueDto {
   private Double value;
   private Condition conditionRange;
   private String testName;
+  private boolean finalResult;
+
+  public boolean isFinalResult() {
+    return finalResult;
+  }
+
+  public void setFinalResult(boolean finalResult) {
+    this.finalResult = finalResult;
+  }
 
   public String getMaterialName() {
     return materialName;
