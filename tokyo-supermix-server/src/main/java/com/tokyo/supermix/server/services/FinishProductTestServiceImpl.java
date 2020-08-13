@@ -34,8 +34,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       if (finishProductTestList.size() == 0) {
         finishProductTest.setCode(prefix + String.format("%04d", 1));
       } else {
+
         finishProductTest
-            .setCode(prefix + String.format("%03d", maxNumberFromCode(finishProductTestList) + 1));
+            .setCode(prefix + String.format("%04d", maxNumberFromCode(finishProductTestList) + 1));
       }
     }
     finishProductTestRepository.save(finishProductTest);

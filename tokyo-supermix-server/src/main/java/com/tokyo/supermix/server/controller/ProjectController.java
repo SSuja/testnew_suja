@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.dto.ProjectRequestDto;
 import com.tokyo.supermix.data.dto.ProjectResponseDto;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -46,6 +47,8 @@ public class ProjectController {
   private ProjectService projectService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private PlantRepository plantRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private CustomerService customerService;
@@ -166,5 +169,28 @@ public class ProjectController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.CUSTOMER,
         validationFailureStatusCodes.getCustomerNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.GET_PROJECTS_BY_CUSTOMER_PLANT_WISE)
+  public ResponseEntity<Object> getProjectsByCustomerIdAndPlant(@PathVariable Long customerId,
+      @PathVariable String plantCode) {
+    if (projectService.isCustomerExistsByProject(customerId)) {
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS, mapper
+            .map(projectService.getAllProjectsByCustomer(customerId), ProjectResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      if (plantRepository.existsByCode(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+            mapper.map(projectService.getAllProjectsByCustomerAndPlant(customerId, plantCode),
+                ProjectResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
 }
 

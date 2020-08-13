@@ -336,11 +336,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.POST_PRODUCTION)) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
-        finishProductSample.setStatus(Status.PROCESS);
-        mixDesign.setStatus(Status.PROCESS);
-        mixDesign.setTargetSlump(finishProductParameterResult.getResult());
+        finishProductSample.setStatus(finishproductTest.getStatus());
         finishProductSampleRepository.save(finishProductSample);
-        mixDesignRepository.save(mixDesign);
       } else {
         finishProductSample.setStatus(finishproductTest.getStatus());
         mixDesign.setStatus(finishproductTest.getStatus());
@@ -352,27 +349,16 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
       finishProductSample.setStatus(finishproductTest.getStatus());
-      mixDesign.setStatus(finishproductTest.getStatus());
       finishProductSampleRepository.save(finishProductSample);
-      mixDesignRepository.save(mixDesign);
     } else if (finishproductTest.getTestConfigure().isCoreTest()
         && (finishproductTest.getTestConfigure().isName())
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
-      finishProductSample.setStatus(finishproductTest.getStatus());
-      mixDesign.setStatus(finishproductTest.getStatus());
-      finishProductSampleRepository.save(finishProductSample);
-      mixDesignRepository.save(mixDesign);
-    } else if (!finishproductTest.getTestConfigure().isCoreTest()
-        && (finishproductTest.getTestConfigure().isName())
-        && finishproductTest.getFinishProductSample().getFinishProductTestType()
-            .equals(FinishProductTestType.PRE_PRODUCTION)) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
-        finishProductSample.setStatus(Status.PROCESS);
-        mixDesign.setStatus(Status.PROCESS);
-        mixDesign.setTargetGrade(finishProductParameterResult.getResult());
-        finishProductSampleRepository.save(finishProductSample);
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        mixDesign.setTargetGrade(finishProductParameterResult.getResult());;
         mixDesignRepository.save(mixDesign);
+        finishProductSampleRepository.save(finishProductSample);
       } else {
         finishProductSample.setStatus(finishproductTest.getStatus());
         mixDesign.setStatus(finishproductTest.getStatus());
@@ -382,11 +368,32 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     } else if (!finishproductTest.getTestConfigure().isCoreTest()
         && (finishproductTest.getTestConfigure().isName())
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
+            .equals(FinishProductTestType.PRE_PRODUCTION)) {
+      if (finishproductTest.getStatus().equals(Status.PASS)) {
+        mixDesign.setTargetSlump(finishProductParameterResult.getResult());
+        mixDesign.setStatus(finishproductTest.getStatus());
+        mixDesignRepository.save(mixDesign);
+        finishProductSample.setStatus(Status.PROCESS);
+        finishProductSampleRepository.save(finishProductSample);
+      } else {
+        mixDesign.setStatus(finishproductTest.getStatus());
+        mixDesignRepository.save(mixDesign);
+        finishProductSample.setStatus(Status.FAIL);
+        finishProductSampleRepository.save(finishProductSample);
+      }
+    } else if (!finishproductTest.getTestConfigure().isCoreTest()
+        && (finishproductTest.getTestConfigure().isName())
+        && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.POST_PRODUCTION)) {
-      finishProductSample.setStatus(Status.PROCESS);
-      mixDesign.setStatus(Status.PROCESS);
-      finishProductSampleRepository.save(finishProductSample);
-      mixDesignRepository.save(mixDesign);
+      if (finishproductTest.getStatus().equals(Status.PASS)) {
+        finishProductSample.setStatus(Status.PROCESS);
+        finishProductSampleRepository.save(finishProductSample);
+      } else {
+        mixDesign.setStatus(finishproductTest.getStatus());
+        mixDesignRepository.save(mixDesign);
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        finishProductSampleRepository.save(finishProductSample);
+      }
     }
   }
 }
