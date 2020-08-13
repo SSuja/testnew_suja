@@ -627,12 +627,18 @@ public class TestReportServiceImpl implements TestReportService {
     List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
+
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
-        if (finishProductSample.getStatus().equals(Status.PASS)) {
-          averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
+      //  if (finishProductSample.getStatus().equals(Status.PASS)) {
+          FinishProductTest finishProductTest = finishProductTestRepository
+              .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
+          if (!(!finishProductTest.getTestConfigure().isCoreTest()
+              && finishProductTest.getTestConfigure().isName())) {
+            averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
+          }
           averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
           averageStrengthList.add(averageStrength);
-        }
+        //}
       }
     }
     return averageStrengthList;
@@ -651,10 +657,13 @@ public class TestReportServiceImpl implements TestReportService {
             && finishProductParameterResult.getTestParameter().getType()
                 .equals(TestParameterType.INPUT)
             && finishProductParameterResult.getTestParameter().getMixDesignField() == null) {
-          testAndResult.setTestName(finishProductParameterResult.getFinishProductTest()
-              .getTestConfigure().getTest().getName());
-          testAndResult.setResult(finishProductParameterResult.getResult());
-          testAndResultList.add(testAndResult);
+          if (!(!finishProductParameterResult.getTestParameter().getTestConfigure().isCoreTest()
+              && finishProductParameterResult.getTestParameter().getTestConfigure().isName())) {
+            testAndResult.setTestName(finishProductParameterResult.getFinishProductTest()
+                .getTestConfigure().getTest().getName());
+            testAndResult.setResult(finishProductParameterResult.getResult());
+            testAndResultList.add(testAndResult);
+          }
         }
       }
     }
