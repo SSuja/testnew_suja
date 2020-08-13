@@ -7,6 +7,15 @@ public class AcceptedValueDto {
   private Condition condition;
   private Double maxValue;
   private Double value;
+  private String material;
+
+  public String getMaterial() {
+    return material;
+  }
+
+  public void setMaterial(String material) {
+    this.material = material;
+  }
 
   public Double getMinValue() {
     return minValue;

@@ -91,7 +91,6 @@ public class MaterialSubCategoryController {
               validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
-
     materialSubCategoryService.saveMaterialSubCategory(
         mapper.map(materialSubCategoryRequestDto, MaterialSubCategory.class));
     return new ResponseEntity<>(
@@ -104,8 +103,9 @@ public class MaterialSubCategoryController {
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
     if (materialSubCategoryService
         .isMaterialSubCategoryExist(materialSubCategoryRequestDto.getId())) {
-      if (materialSubCategoryService.isUpdatedMaterialSubCategoryNameExist(
-          materialSubCategoryRequestDto.getId(), materialSubCategoryRequestDto.getName())) {
+      if (materialSubCategoryService.isMaterialCategoryExist(
+          materialSubCategoryRequestDto.getName(),
+          materialSubCategoryRequestDto.getMaterialCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_NAME,
                 validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
