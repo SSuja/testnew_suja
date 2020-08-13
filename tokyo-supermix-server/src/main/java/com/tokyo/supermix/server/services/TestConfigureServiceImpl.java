@@ -53,7 +53,12 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
-    emailPointsService.createEmailPoints(testConfigureRequestDto);
+    if (testConfigureRequestDto.getMaterialSubCategoryId() != null && (emailPointsService.findByTestIdAndMaterialSubCategoryId(testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId())) == null) {
+      emailPointsService.createEmailPoints(testConfigureRequestDto);
+}
+else if(testConfigureRequestDto.getMaterialSubCategoryId() == null && emailPointsService.findByTestIdAndMaterialCategoryId(testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId()) == null){
+emailPointsService.createEmailPoints(testConfigureRequestDto);
+}
     return testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
         .getId();
   }

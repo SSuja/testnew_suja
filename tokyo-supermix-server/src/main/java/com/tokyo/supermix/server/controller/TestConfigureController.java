@@ -202,8 +202,7 @@ public class TestConfigureController {
       @PathVariable AcceptedType acceptedType) {
     TestConfigure testConfigure = testConfigureService.getTestConfigureById(testConfigureId);
     testConfigure.setAcceptedType(acceptedType);
-    testConfigureService
-        .saveTestConfigure(mapper.map(testConfigure, TestConfigureRequestDto.class));
+    testConfigureService.updateTestConfigure(testConfigure);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
         HttpStatus.OK);
