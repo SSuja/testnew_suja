@@ -6,7 +6,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,12 +50,11 @@ public class MixDesignFileStorageController {
   }
 
   @PostMapping(value = EndpointURI.UPLOAD_MIXDESIGN)
-  public ResponseEntity<Object> uploadMultipartFile(@RequestParam("file") MultipartFile file,
-      Model model) {
+  public ResponseEntity<Object> uploadMultipartFile(@RequestParam("file") MultipartFile file) {
     fileStorageService.uploadCsv(file);
     fileStorageService.importMixDesgin(file);
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);
   }
 }
