@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.Status;
@@ -15,10 +16,18 @@ public class FinishProductSampleRequestDto {
   @NotEmpty(message = "{finishProductSampleRequestDto.mixDesignCode.empty}")
   private String mixDesignCode;
   private Status status;
+  private Date date;
   private String projectCode;
-
   public String getCode() {
     return code;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public void setCode(String code) {
