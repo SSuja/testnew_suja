@@ -59,6 +59,12 @@ public class MaterialAcceptedValueController {
             HttpStatus.BAD_REQUEST);
       }
     }
+
+    if (materialAcceptedValueService.isCheckValidation(
+        mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class))) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
+    }
     materialAcceptedValueService.saveAcceptedValue(
         mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

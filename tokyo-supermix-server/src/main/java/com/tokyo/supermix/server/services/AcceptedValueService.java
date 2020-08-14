@@ -33,4 +33,6 @@ public interface AcceptedValueService {
 
   public boolean isAcceptedValueByTestConfigureIdAndTestParameter(Long testConfigureId,
       Long testParameterId);
+
+  public boolean isCheckValidation(AcceptedValue acceptedValue);
 }
