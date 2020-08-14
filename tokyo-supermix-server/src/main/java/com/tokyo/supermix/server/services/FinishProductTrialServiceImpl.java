@@ -359,7 +359,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         mixDesign.setTargetGrade(finishProductParameterResult.getResult());;
         mixDesignRepository.save(mixDesign);
         finishProductSampleRepository.save(finishProductSample);
-      } else {
+      } 
+      else {
         finishProductSample.setStatus(finishproductTest.getStatus());
         mixDesign.setStatus(finishproductTest.getStatus());
         finishProductSampleRepository.save(finishProductSample);
@@ -371,7 +372,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
         mixDesign.setTargetSlump(finishProductParameterResult.getResult());
-        mixDesign.setStatus(finishproductTest.getStatus());
+        mixDesign.setStatus(Status.PROCESS);
         mixDesignRepository.save(mixDesign);
         finishProductSample.setStatus(Status.PROCESS);
         finishProductSampleRepository.save(finishProductSample);

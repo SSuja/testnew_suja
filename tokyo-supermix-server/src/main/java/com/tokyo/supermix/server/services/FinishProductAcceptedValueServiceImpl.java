@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 
 @Service
@@ -54,5 +56,20 @@ public class FinishProductAcceptedValueServiceImpl implements FinishProductAccep
   public boolean isTestParameterAndTestconfigure(Long testConfigureId, Long testParameterId) {
     return finishProductAcceptedValueRepository
         .existsByTestParameterTestConfigureIdAndTestParameterId(testConfigureId, testParameterId);
+  }
+  @Transactional(readOnly = true)
+  public boolean isCheckValidation(FinishProductAcceptedValue finishProductAcceptedValue) {
+    if (finishProductAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+      if (finishProductAcceptedValue.getMaxValue() == null || finishProductAcceptedValue.getMinValue() == null) {
+        return true;
+      }
+    } else if (finishProductAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+        || finishProductAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+        || finishProductAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
+      if (finishProductAcceptedValue.getValue() == null) {
+        return true;
+      }
+    }
+    return false;
   }
 }

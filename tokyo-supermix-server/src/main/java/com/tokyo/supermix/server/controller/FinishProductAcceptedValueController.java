@@ -55,6 +55,11 @@ public class FinishProductAcceptedValueController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
           validationFailureStatusCodes.getAcceptedValueAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
+    if (finishProductAcceptedValueService.isCheckValidation(
+        mapper.map(finishProductAcceptedValueRequestDto, FinishProductAcceptedValue.class))) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueNotNull()), HttpStatus.BAD_REQUEST);
+    }
     finishProductAcceptedValueService.saveFinishProductAcceptedValue(
         mapper.map(finishProductAcceptedValueRequestDto, FinishProductAcceptedValue.class));
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

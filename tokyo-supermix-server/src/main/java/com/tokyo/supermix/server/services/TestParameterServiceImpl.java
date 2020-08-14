@@ -146,6 +146,7 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setValue(test.getValue());
         testParameterResponseDto.setMixDesignField(test.getMixDesignField());
         testParameterResponseDto.setAcceptedCriteria(test.isAcceptedCriteria());
+        testParameterResponseDto.setName(test.getName());
         testParameterResponseDtoList.add(testParameterResponseDto);
 
       }

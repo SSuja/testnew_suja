@@ -33,7 +33,7 @@ public class TestServiceImpl implements TestService {
 
 	@Transactional(readOnly = true)
 	public List<Test> getAllTests() {
-		return testRepository.findAll();
+		return testRepository.findAllByOrderByIdDesc();
 	}
 
 	@Transactional(propagation = Propagation.NEVER)
