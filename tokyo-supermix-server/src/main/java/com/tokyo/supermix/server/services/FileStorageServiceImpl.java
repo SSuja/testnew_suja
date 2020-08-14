@@ -47,6 +47,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Transactional
   public void uploadCsv(MultipartFile file) {
     Path path = Paths.get("C://Users/Import");
+//    Path path = Paths.get("/home/ubuntu/Import");
     try {
       Files.createDirectories(path);
     } catch (IOException e1) {
@@ -75,6 +76,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Transactional
   public void importMixDesgin(MultipartFile file) {
     Path path = Paths.get("C://Users/Import");
+//    Path path = Paths.get("/home/ubuntu/Import");
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
