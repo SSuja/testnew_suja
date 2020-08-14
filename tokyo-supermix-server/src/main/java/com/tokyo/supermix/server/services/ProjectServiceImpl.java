@@ -113,6 +113,11 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   @Transactional(readOnly = true)
+  public List<Project> getAllProjectsByCustomerAndPlant(Long customerId, String plantCode) {
+    return projectRepository.findByCustomerIdAndPlantCode(customerId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
   public boolean isCustomerExistsByProject(Long customerId) {
     return projectRepository.existsByCustomerId(customerId);
   }
