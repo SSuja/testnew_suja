@@ -197,6 +197,7 @@ emailPointsService.createEmailPoints(testConfigureRequestDto);
       materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
       materialAcceptedValueDto
           .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
+      materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
       materialAcceptedValueDtoList.add(materialAcceptedValueDto);
     }
     return materialAcceptedValueDtoList;
