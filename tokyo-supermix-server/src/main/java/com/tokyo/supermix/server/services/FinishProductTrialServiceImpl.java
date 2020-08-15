@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.Condition;
@@ -289,7 +290,11 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     finishProductTest.setStatus(status);
-    finishProductTestRepository.save(finishProductTest);
+    FinishProductTest finishProductTestObj = finishProductTestRepository.save(finishProductTest);
+    if (finishProductTestObj != null) {
+      emailNotification.sendFinishProductTestEmail(finishProductTestObj);
+    }
+    
     updateStatusAndValue(finishProductTestCode);
   }
 
