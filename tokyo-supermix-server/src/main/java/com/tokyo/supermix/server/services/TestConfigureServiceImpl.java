@@ -203,7 +203,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
       materialAcceptedValueDto
           .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
+      materialAcceptedValueDto.setName(materialAcceptedValue.getTestParameter().getName());
       materialAcceptedValueDtoList.add(materialAcceptedValueDto);
+
     }
     return materialAcceptedValueDtoList;
   }
