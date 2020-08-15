@@ -32,7 +32,7 @@ public class TestParameter extends DateAudit implements Serializable {
   @JoinColumn(name = "parameterId", nullable = true)
   private Parameter parameter;
   @ManyToOne
-  @JoinColumn(name = "unitId", nullable = true)
+  @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
   @Size(max = 2)
   private String abbreviation;
