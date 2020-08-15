@@ -1,5 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.EquipmentType;
+
 public class PlantEquipmentResponseDto {
   private String serialNo;
   private String brandName;
@@ -10,6 +12,15 @@ public class PlantEquipmentResponseDto {
   private PlantDto plant;
   private Long equipmentId;
   private boolean calibrationExists;
+  private EquipmentType equipmentEquipmentType;
+
+  public EquipmentType getEquipmentEquipmentType() {
+    return equipmentEquipmentType;
+  }
+
+  public void setEquipmentEquipmentType(EquipmentType equipmentEquipmentType) {
+    this.equipmentEquipmentType = equipmentEquipmentType;
+  }
 
   public String getSerialNo() {
     return serialNo;
