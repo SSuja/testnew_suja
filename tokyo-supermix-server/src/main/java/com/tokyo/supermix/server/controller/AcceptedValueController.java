@@ -52,10 +52,13 @@ public class AcceptedValueController {
     if (acceptedValueService.isAcceptedValueByTestConfigureIdAndTestParameter(
         acceptedValueRequestDto.getTestConfigureId(),
         acceptedValueRequestDto.getTestParameterId())) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
-              validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
-          HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    if (acceptedValueService
+        .isCheckValidation(mapper.map(acceptedValueRequestDto, AcceptedValue.class))) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueNotNull()), HttpStatus.BAD_REQUEST);
     }
     acceptedValueService
         .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));

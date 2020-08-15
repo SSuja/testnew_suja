@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,10 +16,12 @@ import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -40,6 +43,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private GenerateReportService generateReportService;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -47,24 +52,17 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String prefix =
           testConfigureRepository.getOne(materialTest.getTestConfigure().getId()).getPrefix();
       List<MaterialTest> materialTestList = materialTestRepository.findByCodeContaining(prefix);
-      if (materialTestList.size() == 0) {
-        materialTest.setCode(prefix + String.format("%04d", 1));
-      } else {
-        materialTest
-            .setCode(prefix + String.format("%04d", maxNumberFromCode(materialTestList) + 1));
-      }
+      materialTest.setCode(materialTestList.size() == 0 ? prefix + String.format("%04d", 1)
+          : prefix + String.format("%04d", maxNumberFromCode(materialTestList) + 1));
     }
     materialTest.setStatus(Status.PROCESS);
     String codePrefix = materialTest.getIncomingSample().getCode();
     String subPrefix = codePrefix + "-SP-";
     List<MaterialTest> materialTestTrialList =
         materialTestRepository.findByIncomingSampleCode(codePrefix);
-    if (materialTestTrialList.size() == 0) {
-      materialTest.setSpecimenCode(subPrefix + String.format("%02d", 1));
-    } else {
-      materialTest
-          .setSpecimenCode(subPrefix + String.format("%02d", materialTestTrialList.size() + 1));
-    }
+    String specimenCode = (materialTestTrialList.size() == 0) ? subPrefix + String.format("%02d", 1)
+        : subPrefix + String.format("%02d", materialTestTrialList.size() + 1);
+    materialTest.setSpecimenCode(specimenCode);
     materialTestRepository.save(materialTest);
     return materialTest.getCode();
   }
@@ -172,12 +170,26 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     Integer count = 0;
     String bodyMessage = "";
     Integer failCount = 0;
-    List<TestConfigure> testConfigureList =
-        testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(
-            incomingSample.getRawMaterial().getMaterialSubCategory().getId());
+    List<TestConfigure> RawtestConfigureList = new ArrayList<>();
+    if (testConfigureRepository.existsByRawMaterialId(incomingSample.getRawMaterial().getId())) {
+      RawtestConfigureList = testConfigureRepository
+          .findByRawMaterialIdAndCoreTestTrue(incomingSample.getRawMaterial().getId());
+    }
+
+    List<TestConfigure> SubtestConfigureList = testConfigureRepository
+        .findByMaterialSubCategoryIdAndCoreTestTrue(
+            incomingSample.getRawMaterial().getMaterialSubCategory().getId())
+        .stream()
+        .filter(testConfigure -> testConfigure.getRawMaterial() == null
+            && getMaterialAcceptedForTest(testConfigure,
+                incomingSample.getRawMaterial().getId()) == true)
+        .collect(Collectors.toList());
+    if (!RawtestConfigureList.isEmpty()) {
+      SubtestConfigureList.addAll(RawtestConfigureList);
+    }
     List<MaterialTest> materialTestList =
         materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
-    for (TestConfigure testConfigure : testConfigureList) {
+    for (TestConfigure testConfigure : SubtestConfigureList) {
       for (MaterialTest materialTest : materialTestList) {
         if (testConfigure.getTest().getName()
             .equalsIgnoreCase(materialTest.getTestConfigure().getTest().getName())
@@ -191,19 +203,24 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         failCount++;
       }
     }
-    calculateTest(count, failCount, testConfigureList.size(), incomingSample, bodyMessage,
+    calculateTest(count, failCount, SubtestConfigureList.size(), incomingSample, bodyMessage,
         materialTestObj);
   }
 
   private void calculateTest(Integer count, Integer failCount, Integer testSize,
       IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    if (count == testSize && testSize != 0) {
-      updateStatusSample(Status.PASS, incomingSample, bodyMessage, materialTestObj);
-    } else if (failCount == 1) {
-      updateStatusSample(Status.FAIL, incomingSample, bodyMessage, materialTestObj);
-    } else {
-      updateStatusSample(Status.PROCESS, incomingSample, bodyMessage, materialTestObj);
-    }
+    updateStatusSample(
+        (count == testSize && testSize != 0) ? Status.PASS
+            : (failCount == 1) ? Status.FAIL : Status.PROCESS,
+        incomingSample, bodyMessage, materialTestObj);
+  }
+
+  public boolean getMaterialAcceptedForTest(TestConfigure testConfigure, Long rawMaterialId) {
+    return (testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL))
+        ? (materialAcceptedValueRepository
+            .existsByTestConfigureIdAndRawMaterialId(testConfigure.getId(), rawMaterialId)) ? true
+                : false
+        : true;
   }
 
   private void updateStatusSample(Status status, IncomingSample incomingSample, String bodyMessage,

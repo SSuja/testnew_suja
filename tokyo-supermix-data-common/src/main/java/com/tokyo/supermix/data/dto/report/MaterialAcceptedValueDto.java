@@ -11,6 +11,16 @@ public class MaterialAcceptedValueDto {
   private Condition conditionRange;
   private String testName;
   private boolean finalResult;
+  private String parameter;
+  
+
+  public String getParameter() {
+    return parameter;
+  }
+
+  public void setParameter(String parameter) {
+    this.parameter = parameter;
+  }
 
   public boolean isFinalResult() {
     return finalResult;
