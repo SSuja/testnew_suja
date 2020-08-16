@@ -349,8 +349,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
-        finishProductSample.setStatus(Status.PROCESS);
-        mixDesign.setStatus(Status.PROCESS);
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        mixDesign.setStatus(finishproductTest.getStatus());
         mixDesignRepository.save(mixDesign);
         finishProductSampleRepository.save(finishProductSample);
       } else {
