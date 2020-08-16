@@ -62,7 +62,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             codePrefix + String.format("%04d", maxNumberFromCode(finishProductSampleList) + 1));
       }
     }
-
     finishProductSample.setStatus(Status.NEW);
     if (finishProductSample != null) {
       emailNotification.sendFinishProductSampleEmail(finishProductSample);
@@ -72,6 +71,10 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     } else if (mixDesign.getStatus().equals(Status.PASS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
     }
+    finishProductSampleRepository.save(finishProductSample);
+  }
+  @Transactional()
+  public void updateFinishProductSample(FinishProductSample finishProductSample) {
     finishProductSampleRepository.save(finishProductSample);
   }
 
