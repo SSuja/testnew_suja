@@ -646,7 +646,9 @@ public class TestReportServiceImpl implements TestReportService {
       ParameterResult parameterResult =
           parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(testParameterId,
               materialTestTrial.getCode());
-      abbrevationAndValueDto.setValue(parameterResult.getValue());
+      if (parameterResult.getValue() != null) {
+        abbrevationAndValueDto.setValue(parameterResult.getValue());
+      }
       abbrevationAndValueDtoList.add(abbrevationAndValueDto);
     }
     return abbrevationAndValueDtoList;
@@ -680,16 +682,16 @@ public class TestReportServiceImpl implements TestReportService {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
 
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
-      //  if (finishProductSample.getStatus().equals(Status.PASS)) {
-          FinishProductTest finishProductTest = finishProductTestRepository
-              .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
-          if (!(!finishProductTest.getTestConfigure().isCoreTest()
-              && finishProductTest.getTestConfigure().isName())) {
-            averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
-          }
-          averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
-          averageStrengthList.add(averageStrength);
-        //}
+        // if (finishProductSample.getStatus().equals(Status.PASS)) {
+        FinishProductTest finishProductTest = finishProductTestRepository
+            .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
+        if (!(!finishProductTest.getTestConfigure().isCoreTest()
+            && finishProductTest.getTestConfigure().isName())) {
+          averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
+        }
+        averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
+        averageStrengthList.add(averageStrength);
+        // }
       }
     }
     return averageStrengthList;
