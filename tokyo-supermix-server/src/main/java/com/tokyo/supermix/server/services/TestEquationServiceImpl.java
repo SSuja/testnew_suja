@@ -101,4 +101,8 @@ public class TestEquationServiceImpl implements TestEquationService {
     return testEquationRepository.existsByTestParameterId(testParameterId);
   }
 
+  @Transactional(readOnly = true)
+  public TestEquation getByTestParameter(Long testParameterId) {
+    return testEquationRepository.findByTestParameterId(testParameterId);
+  }
 }
