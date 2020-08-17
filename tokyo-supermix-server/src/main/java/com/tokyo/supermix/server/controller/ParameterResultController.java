@@ -25,6 +25,7 @@ import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -54,6 +55,8 @@ public class ParameterResultController {
   TestParameterService testParameterService;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  ParameterResultRepository parameterResultRepository;
   private static final Logger logger = Logger.getLogger(ParameterResultController.class);
 
   @PostMapping(value = EndpointURI.PARAMETER_RESULT)
@@ -183,18 +186,18 @@ public class ParameterResultController {
     }
   }
 
-  // @GetMapping(value = EndpointURI.SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE)
-  // public ResponseEntity<Object> getSieveTestParameterResultByMaterialTestCode(
-  // @PathVariable String materialTestCode) {
-  // if (materialTestService.isMaterialTestExists(materialTestCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
-  // mapper.map(parameterResultService.getSieveTestResultsByMaterialTestCode(materialTestCode),
-  // SieveTestResultsDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // } else {
-  // logger.debug("No Parameter Result record exist for given Material Test code");
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
-  // validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
-  // }
-  // }
+  @GetMapping(value = EndpointURI.PARAMETER_RESULT_VIEW_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> getParameterResultByMaterialTestCodeNew(
+      @PathVariable String materialTestCode) {
+    if (materialTestService.isMaterialTestExists(materialTestCode)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_CODE,
+          parameterResultService.findResultsByMaterialTestCode(materialTestCode),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No Parameter Result record exist for given Material Test code");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
+          validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
+
 }

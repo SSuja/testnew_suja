@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.script.ScriptEngine;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
+import com.tokyo.supermix.data.dto.ParameterResultDetails;
+import com.tokyo.supermix.data.dto.ParameterResultViewResponseDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
@@ -292,5 +295,37 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         materialTestResultRepository.save(materialTestResults);
       }
     }
+  }
+
+  public List<ParameterResultViewResponseDto> findResultsByMaterialTestCode(
+      String materialTestCode) {
+    List<ParameterResultViewResponseDto> parameterResultViewResponseDtoList = new ArrayList<>();
+    materialTestTrialRepository.findByMaterialTestCode(materialTestCode)
+        .forEach(materialTestTrial -> {
+          ParameterResultViewResponseDto parameterResultViewResponseDto =
+              new ParameterResultViewResponseDto();
+          parameterResultViewResponseDto.setMaterialTestTrialCode(materialTestTrial.getCode());
+          parameterResultViewResponseDto
+              .setMaterialTestTrialTrialNo(materialTestTrial.getTrialNo());
+          List<ParameterResultDetails> parameterResultList = new ArrayList<>();
+          parameterResultRepository.findByMaterialTestTrialCode(materialTestTrial.getCode())
+              .forEach(parameterResult -> {
+                ParameterResultDetails parameterResultDto = new ParameterResultDetails();
+                parameterResultDto.setTestParameterId(parameterResult.getId());
+                parameterResultDto.setTestParameterAbbrebation(
+                    parameterResult.getTestParameter().getAbbreviation());
+                parameterResultDto.setTestParameterInputMethod(
+                    parameterResult.getTestParameter().getInputMethods().toString());
+                parameterResultDto
+                    .setTestParameterType(parameterResult.getTestParameter().getType().toString());
+                parameterResultDto.setTestParameterName(
+                    parameterResult.getTestParameter().getParameter().getName());
+                parameterResultDto.setValue(parameterResult.getValue());
+                parameterResultList.add(parameterResultDto);
+              });
+          parameterResultViewResponseDto.setParameterResult(parameterResultList);
+          parameterResultViewResponseDtoList.add(parameterResultViewResponseDto);
+        });
+    return parameterResultViewResponseDtoList;
   }
 }
