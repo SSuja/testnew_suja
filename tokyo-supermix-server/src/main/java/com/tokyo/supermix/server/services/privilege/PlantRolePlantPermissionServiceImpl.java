@@ -224,17 +224,13 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermissionRepository.save(plantRolePlantPermission);
     });
   }
-  
-  
 
   public List<PlantRolePlantPermissionResponseDto> getCombine(Long userId, String plantCode) {
-
     Long plantRoleId = userPlantRoleRepository.findByUserId(userId).get(0).getPlantRole().getId();
-
     return getPlantRolePermissionWithModule1ByRoleId(plantRoleId, userId, plantCode);
   }
 
-  
+
 
   private List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionWithModule1ByRoleId(
       Long plantRoleId, Long userId, String plantCode) {
@@ -277,7 +273,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       boolean subStatus = false;
       List<PlantRolePlantPermissionRequestDto> rolePermissionDtoList =
           new ArrayList<PlantRolePlantPermissionRequestDto>();
-      List<PlantRolePlantPermission> plantRolePlantPermissionList = getPrivilege(userId,plantCode)
+      List<PlantRolePlantPermission> plantRolePlantPermissionList = getPrivilege(userId, plantCode)
           .stream().filter(obj -> obj.getPlantPermission().getPermission().getSubModule().getId()
               .equals(sub.getId()))
           .collect(Collectors.toList());
@@ -292,43 +288,42 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     }
     return mainStatus;
   }
-  private List<PlantRolePlantPermission> getPrivilege(Long userId,String plantCode) {
-  
-   List<UserPlantRole> userplantRoleList =userPlantRoleRepository.findByUserIdAndPlantRolePlantCode(userId,plantCode);
-   Set<PlantPermission> plantPermissionList1 =new HashSet<PlantPermission>();
-   if (userplantRoleList.stream().anyMatch(u -> u.getRoleType().equals(RoleType.GROUP))) {
-    List<Long> plantroleIds =  userplantRoleList.stream()
-        .filter(u -> u.getRoleType().name().equalsIgnoreCase(RoleType.GROUP.name()))
-        .collect(Collectors.toList()).stream().map(u -> u.getPlantRole().getId())
-        .collect(Collectors.toList());
-   
-   plantPermissionList1 =
-        plantRolePlantPermissionRepository.findByPlantRoleIdInAndStatus(plantroleIds, true).stream()
-            .distinct().map(p -> p.getPlantPermission()).collect(Collectors.toSet());
-   }
-    Set<PlantPermission> plantPermissionListUser =new HashSet<PlantPermission>();
+
+  private List<PlantRolePlantPermission> getPrivilege(Long userId, String plantCode) {
+    List<UserPlantRole> userplantRoleList =
+        userPlantRoleRepository.findByUserIdAndPlantRolePlantCode(userId, plantCode);
+    Set<PlantPermission> plantPermissionList1 = new HashSet<PlantPermission>();
+    if (userplantRoleList.stream().anyMatch(u -> u.getRoleType().equals(RoleType.GROUP))) {
+      List<Long> plantroleIds = userplantRoleList.stream()
+          .filter(u -> u.getRoleType().name().equalsIgnoreCase(RoleType.GROUP.name()))
+          .collect(Collectors.toList()).stream().map(u -> u.getPlantRole().getId())
+          .collect(Collectors.toList());
+      plantPermissionList1 =
+          plantRolePlantPermissionRepository.findByPlantRoleIdInAndStatus(plantroleIds, true)
+              .stream().distinct().map(p -> p.getPlantPermission()).collect(Collectors.toSet());
+    }
+    Set<PlantPermission> plantPermissionListUser = new HashSet<PlantPermission>();
     if (userplantRoleList.stream().anyMatch(u -> u.getRoleType().equals(RoleType.INDIVIDUAL))) {
-
-     plantPermissionListUser = userPlantPermissionRepository.findByUserIdAndPlantPermissionPlantCodeAndStatus(userId, plantCode, true).stream()
-        .distinct().map(p -> p.getPlantPermission()).collect(Collectors.toSet());;
+      plantPermissionListUser = userPlantPermissionRepository
+          .findByUserIdAndPlantPermissionPlantCodeAndStatus(userId, plantCode, true).stream()
+          .distinct().map(p -> p.getPlantPermission()).collect(Collectors.toSet());;
+    }
+    Set<PlantPermission> plantPermissionListTrue = new HashSet<PlantPermission>();
+    Stream.of(plantPermissionList1, plantPermissionListUser)
+        .forEach(plantPermissionListTrue::addAll);
+    List<PlantPermission> plantPermissionListDefault =
+        plantPermissionRepository.findByPlantCode(plantCode);
+    List<PlantPermission> plantPermissionTrueList =
+        plantPermissionListTrue.stream().collect(Collectors.toList());
+    plantPermissionListDefault.removeAll(plantPermissionTrueList);
+    List<PlantRolePlantPermission> wholePermission = new ArrayList<PlantRolePlantPermission>();
+    wholePermission.addAll(getUserPrivilage(plantPermissionTrueList, true));
+    wholePermission.addAll(getUserPrivilage(plantPermissionListDefault, false));
+    return wholePermission;
   }
-    Set<PlantPermission> plantPermissionListTrue =new HashSet<PlantPermission>();
-    Stream.of(plantPermissionList1, plantPermissionListUser).forEach(plantPermissionListTrue::addAll);
-     
 
-    
-  List<PlantPermission> plantPermissionListDefault = plantPermissionRepository.findByPlantCode(plantCode);
- List<PlantPermission> plantPermissionTrueList= plantPermissionListTrue.stream().collect(Collectors.toList());
- plantPermissionListDefault.removeAll(plantPermissionTrueList);
- List<PlantRolePlantPermission> wholePermission = new ArrayList<PlantRolePlantPermission>();
- wholePermission.addAll(getUserPrivilage(plantPermissionTrueList, true));
- wholePermission.addAll(getUserPrivilage(plantPermissionListDefault, false));
-
- return wholePermission;
- 
-  }
-  
-  private List<PlantRolePlantPermission> getUserPrivilage(List<PlantPermission> plantPermissionList, boolean status){
+  private List<PlantRolePlantPermission> getUserPrivilage(List<PlantPermission> plantPermissionList,
+      boolean status) {
     List<PlantRolePlantPermission> wholePermission = new ArrayList<PlantRolePlantPermission>();
     for (PlantPermission plantPermission : plantPermissionList) {
       PlantRolePlantPermission plantRolePlantPermission = new PlantRolePlantPermission();
@@ -337,6 +332,14 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       wholePermission.add(plantRolePlantPermission);
     }
     return wholePermission;
-    
+
+  }
+
+  @Transactional
+  public void UpdatePlantRolePlantPermission(Long plantRoleId, Boolean status) {
+    List<PlantRolePlantPermission> plantRolePlantPermissionList =
+        plantRolePlantPermissionRepository.findByPlantRoleId(plantRoleId);
+    plantRolePlantPermissionList.stream().forEach(plantRolePlantPermission -> plantRolePlantPermission.setStatus(status));
+    plantRolePlantPermissionRepository.saveAll(plantRolePlantPermissionList);
   }
 }
