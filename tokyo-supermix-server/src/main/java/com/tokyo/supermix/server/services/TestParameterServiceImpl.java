@@ -148,7 +148,6 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setAcceptedCriteria(test.isAcceptedCriteria());
         testParameterResponseDto.setName(test.getName());
         testParameterResponseDtoList.add(testParameterResponseDto);
-
       }
     });
     List<ParameterEquation> parameterEquationList =
@@ -206,30 +205,41 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public boolean isParameterExists(Long testConfigureId, Long parameterId) {
-    if (testParameterRepository.existsByTestConfigureIdAndParameterId(testConfigureId,
-        parameterId)) {
-      return true;
-    }
-    return false;
+    return testParameterRepository.existsByTestConfigureIdAndParameterId(testConfigureId,
+        parameterId);
   }
 
-  public boolean isUpdatedExists(Long id, Long testConfigureId, Long parameterId) {
-    if ((!getTestParameterById(id).getParameter().getId().equals(parameterId))
-        && (isParameterExists(parameterId, testConfigureId))) {
+  public boolean isUpdatedAbbreviationExists(Long id, Long testConfigureId, String abbreviation) {
+    if ((!getTestParameterById(id).getAbbreviation().equalsIgnoreCase(abbreviation))
+        && (isTestConfigureAndAbbreviationExist(testConfigureId, abbreviation))) {
       return true;
     }
     return false;
   }
 
   public String checkEqutaionExistsForTest(Long testConfigureId) {
-    String isEquationExists =Constants.CHECK_EQUATION_FALSE;
+    String isEquationExists = Constants.CHECK_EQUATION_FALSE;
     List<TestParameter> testParam = testParameterRepository.findByTestConfigureId(testConfigureId);
     for (TestParameter testParameter : testParam) {
-      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))){
+      if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION))) {
         isEquationExists = Constants.CHECK_EQUATION_TRUE;
         break;
       }
     }
     return isEquationExists;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isTestConfigureAndAbbreviationExist(Long testConfigureId, String abbreviation) {
+    return testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
+        abbreviation);
+  }
+
+  public boolean isUpdatedParameterExists(Long id, Long testConfigureId, Long parameterId) {
+    if ((!getTestParameterById(id).getParameter().getId().equals(parameterId))
+        && (isParameterExists(testConfigureId, parameterId))) {
+      return true;
+    }
+    return false;
   }
 }

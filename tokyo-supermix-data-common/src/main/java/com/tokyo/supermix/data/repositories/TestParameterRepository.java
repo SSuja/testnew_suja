@@ -36,4 +36,5 @@ public interface TestParameterRepository
 
   TestParameter findByMixDesignField(MixDesignField mixDesignField);
 
+  public boolean existsByTestConfigureIdAndAbbreviation(Long testConfigureId, String abbreviation);
 }

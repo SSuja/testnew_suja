@@ -1072,6 +1072,9 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.testParameter.alreadyExist}")
   private String testParameterAlreadyExist;
 
+  @Value("${testParameterRequestDto.abbreviation.alreadyExist}")
+  private String abbreviationAlreadyExist;
+
   public String getTestParameterNotExist() {
     return testParameterNotExist;
   }
@@ -1086,6 +1089,14 @@ public class ValidationFailureStatusCodes {
 
   public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
     this.testParameterAlreadyExist = testParameterAlreadyExist;
+  }
+
+  public String getAbbreviationAlreadyExist() {
+    return abbreviationAlreadyExist;
+  }
+
+  public void setAbbreviationAlreadyExist(String abbreviationAlreadyExist) {
+    this.abbreviationAlreadyExist = abbreviationAlreadyExist;
   }
 
   // for ProcessSample
@@ -1237,7 +1248,7 @@ public class ValidationFailureStatusCodes {
   private String acceptedValueAlreadyExist;
   @Value("${validation.acceptedValue.notNull}")
   private String acceptedValueNotNull;
-  
+
 
   public String getAcceptedValueNotNull() {
     return acceptedValueNotNull;
