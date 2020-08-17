@@ -69,14 +69,14 @@ public class EmployeeController {
 
   // Delete Employee
   @DeleteMapping(value = EndpointURI.EMPLOYEE_BY_ID)
-  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {    
+  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {  
     if (employeeService.isEmployeeExist(id)) {
+    if(!(employeeService.getEmployeeById(id).isEnabled())) {
       logger.debug("delete employee by id");
       employeeService.deleteEmployee(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.EMPLOYEE_DELETED), HttpStatus.OK);
-    }
-    if(employeeService.getEmployeeById(id).isEnabled()) {
+    }    
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ENABLE,
           validationFailureStatusCodes.getEmployeeIsEnableIsTrue()), HttpStatus.BAD_REQUEST);
     }
