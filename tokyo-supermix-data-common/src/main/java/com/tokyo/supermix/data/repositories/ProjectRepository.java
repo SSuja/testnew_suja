@@ -7,7 +7,6 @@ import com.tokyo.supermix.data.entities.Project;
 
 public interface ProjectRepository
     extends JpaRepository<Project, String>, QuerydslPredicateExecutor<Project> {
-  boolean existsByName(String name);
 
   List<Project> findByPlantCode(String plantCode);
 
