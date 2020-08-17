@@ -226,7 +226,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public boolean isUpdatedMaterialSubCategoryAndTest(Long id, Long testId,
       Long materialSubCategoryId, Long rawMaterialId) {
     if ((!getTestConfigureById(id).getTest().getId().equals(testId))
-        && (!getTestConfigureById(testId).getMaterialSubCategory().getId()
+        && (!getTestConfigureById(id).getMaterialSubCategory().getId()
             .equals(materialSubCategoryId))
         && (!getTestConfigureById(id).getRawMaterial().getId().equals(rawMaterialId))
         && (isExistByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId,

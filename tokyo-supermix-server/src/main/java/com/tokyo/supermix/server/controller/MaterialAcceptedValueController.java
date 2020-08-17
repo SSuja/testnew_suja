@@ -125,8 +125,8 @@ public class MaterialAcceptedValueController {
             materialAcceptedValueRequestDto.getTestConfigureId(),
             materialAcceptedValueRequestDto.getRawMaterialId())) {
           return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-                  validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+              new ValidationFailureResponse(Constants.RAW_MATERIAL,
+                  validationFailureStatusCodes.getRawMaterialAlreadyExist()),
               HttpStatus.BAD_REQUEST);
         }
         materialAcceptedValueService.updateMaterialAcceptedValue(

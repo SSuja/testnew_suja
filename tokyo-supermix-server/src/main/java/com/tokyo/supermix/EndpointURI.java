@@ -618,6 +618,8 @@ public final class EndpointURI {
       TEST_EQUATION + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String TEST_EQUATION_BY_EQUATION_ID =
       TEST_EQUATION + SLASH + "equation" + SLASH + "{equationId}";
+  public static final String TEST_EQUATION_BY_TEST_PARAMETER_ID =
+      TEST_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   /*
    * Test Equation Parameter
    */

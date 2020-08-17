@@ -11,8 +11,6 @@ import com.tokyo.supermix.security.UserPrincipal;
 public interface ProjectService {
   public void saveProject(Project project);
 
-  public boolean isNameExist(String name);
-
   public List<Project> getAllProjects();
 
   public List<Project> getAllProjectsByPlant(UserPrincipal currentUser);
@@ -22,8 +20,6 @@ public interface ProjectService {
   public void deleteProject(String code);
 
   public Project getProjectByCode(String code);
-
-  public boolean isUpdatedProjectExist(String code, String name);
 
   public Page<Project> searchProject(Predicate predicate, int size, int page);
 

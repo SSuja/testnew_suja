@@ -41,7 +41,11 @@ public interface TestParameterService {
 
   public boolean isParameterExists(Long testConfigureId, Long parameterId);
 
-  public boolean isUpdatedExists(Long id, Long testConfigureId, Long parameterId);
-  
+  public boolean isUpdatedAbbreviationExists(Long id, Long testConfigureId, String abbreviation);
+
   public String checkEqutaionExistsForTest(Long testConfigureId);
+
+  public boolean isTestConfigureAndAbbreviationExist(Long testConfigureId, String abbreviation);
+
+  public boolean isUpdatedParameterExists(Long id, Long testConfigureId, Long parameterId);
 }
