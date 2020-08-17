@@ -11,7 +11,7 @@ import com.tokyo.supermix.security.UserPrincipal;
 public interface EmployeeService {
   public void createEmployee(Employee employee,HttpServletRequest request);
 
-  public void updateEmployee(Employee employee);
+  public void updateEmployee(Employee employee, HttpServletRequest request);
 
   public boolean isEmailExist(String email);
 

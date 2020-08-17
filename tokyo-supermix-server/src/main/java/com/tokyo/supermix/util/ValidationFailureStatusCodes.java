@@ -373,6 +373,8 @@ public class ValidationFailureStatusCodes {
 
   @Value("${employeeDto.firstName.empty")
   private String employeeFirstNameIsEmpty;
+  @Value("${validation.employee.employeeIsEnableIsTrue}")
+  private String employeeIsEnableIsTrue;
 
   public String getEmployeeNotExist() {
     return employeeNotExist;
@@ -404,6 +406,15 @@ public class ValidationFailureStatusCodes {
 
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+  }
+
+  
+  public String getEmployeeIsEnableIsTrue() {
+    return employeeIsEnableIsTrue;
+  }
+
+  public void setEmployeeIsEnableIsTrue(String employeeIsEnableIsTrue) {
+    this.employeeIsEnableIsTrue = employeeIsEnableIsTrue;
   }
 
   // unit

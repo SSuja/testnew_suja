@@ -56,6 +56,7 @@ import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailGroupConstance;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 
 @Configuration
 public class EmailNotification {
@@ -104,7 +105,6 @@ public class EmailNotification {
   @Autowired
   private PlantRoleRepository plantRoleRepository;
 
-
   @Scheduled(cron = "${mail.notificationTime.plantEquipment}")
   public void alertForEquipmentCalibration() {
     final LocalDateTime today = LocalDateTime.now();
@@ -139,8 +139,8 @@ public class EmailNotification {
   public void notifyStrengthTestForMixdesign() {
     final LocalDateTime today = LocalDateTime.now();
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
-      long noOfDays = ChronoUnit.DAYS.between(
-          finishProductSample.getDate().toLocalDate(), today.toLocalDate());
+      long noOfDays =
+          ChronoUnit.DAYS.between(finishProductSample.getDate().toLocalDate(), today.toLocalDate());
       String plantCode = finishProductSampleRepository.findById(finishProductSample.getCode()).get()
           .getMixDesign().getPlant().getCode();
       List<NotificationDays> notificationDaysList = emailNotificationDaysService
@@ -154,7 +154,8 @@ public class EmailNotification {
   }
 
   private void sendMixDesignEmail(FinishProductSample finishProductSample, long noOfDays) {
-    String mailBody = "Today is the " +noOfDays+"th" +" day for the Finish Product Sample - "+finishProductSample.getWorkOrderNo()+ " to conduct the Test.";
+    String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample - "
+        + finishProductSample.getWorkOrderNo() + " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
         MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
         finishProductSample.getMixDesign().getPlant().getCode());
@@ -400,8 +401,8 @@ public class EmailNotification {
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_CUSTOMER);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Customer, " + customer.getName() + " is newly  "
-            +customer.getAddress()+".";
+        String mailBody =
+            "Customer, " + customer.getName() + " is newly  " + customer.getAddress() + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -568,14 +569,20 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,HttpServletRequest request) {
-  String[] empStrings= { employee.getEmail()};
+  public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,
+      HttpServletRequest request) {
+    String[] empStrings = {employee.getEmail()};
+    String message = "To confirm your account " + "<a href=http://" + request.getServerName() + ":"
+        + request.getServerPort() + request.getContextPath() + "/api/v1/employee/confirmation/"
+        + confirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
+        + "#008CBA" + "}}>Click here</button>" + "</a>";
+    emailService.sendMailWithFormat(empStrings, Constants.SUBJECT_EMPLOYEE_CREATION, message);
+  }
 
-String message="To confirm your account "+"<a href=http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+
-"/api/v1/employee/confirmation/"+confirmationToken.getConfirmationToken()+">"+"<button style={{background-color:"+"#008CBA"+"}}>Click here</button>"+"</a>";
+  @Async
+  public void sendForgotConformation(User user, String token) {
+    emailService.sendMail(user.getEmail(), Constants.SUBJECT_FORGOT_PASSWORD,
+        PrivilegeConstants.MESSAGE_OF_FORGOT_PASSWORD + token);
 
-
-  emailService.sendMailWithFormat(empStrings, Constants.SUBJECT_EMPLOYEE_CREATION, message); 
-  
   }
 }

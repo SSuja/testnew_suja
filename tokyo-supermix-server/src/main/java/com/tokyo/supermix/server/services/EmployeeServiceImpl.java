@@ -1,13 +1,13 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.ConfirmationToken;
@@ -29,19 +29,19 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Autowired
   private EmailNotification emailNotification;
 
- 
+
   @Autowired
   private ConfirmationTokenRepository confirmationTokenRepository;
 
   @Transactional()
-  public void createEmployee(Employee employee,HttpServletRequest request) {
+  public void createEmployee(Employee employee, HttpServletRequest request) {
     employee.setHasUser(false);
-    Employee employeeObj =employeeRepository.save(employee);
+    Employee employeeObj = employeeRepository.save(employee);
     ConfirmationToken confirmationToken = new ConfirmationToken(employee);
     confirmationTokenRepository.save(confirmationToken);
-       if(employeeObj != null) {
-    emailNotification.sendEmployeeEmail(employeeObj);
-    emailNotification.sendEmployeeConformation(employeeObj, confirmationToken,request);
+    if (employeeObj != null) {
+      emailNotification.sendEmployeeEmail(employeeObj);
+      emailNotification.sendEmployeeConformation(employeeObj, confirmationToken, request);
     }
   }
 
@@ -50,8 +50,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     return employeeRepository.existsByEmail(email);
   }
 
-  @Transactional()
+  @Transactional(propagation = Propagation.NEVER)
   public void deleteEmployee(Long id) {
+    if(confirmationTokenRepository.findByEmployeeId(id) != null && employeeRepository.findById(id).get().isEnabled() == false) {
+      confirmationTokenRepository.deleteById(confirmationTokenRepository.findByEmployeeId(id).getTokenid());
+    }
     employeeRepository.deleteById(id);
   }
 
@@ -72,12 +75,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Transactional()
   public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser) {
-    return  currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())
-        && currentUser.getRoles().contains(1L) 
-            ? employeeRepository.findAll().stream().filter(employee -> employee.isEnabled()).collect(Collectors.toList())
-              : employeeRepository.findByPlantCodeIn(
+    return currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())
+        && currentUser.getRoles().contains(1L)
+            ? employeeRepository.findAll()
+            : employeeRepository.findByPlantCodeIn(
                 currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-                    PermissionConstants.VIEW_EMPLOYEE));        
+                    PermissionConstants.VIEW_EMPLOYEE));
   }
 
   @Override
@@ -96,26 +99,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Transactional(readOnly = true)
   public List<Employee> getEmployeeByPlantCode(String plantCode) {
-    return employeeRepository.findByPlantCode(plantCode).stream().filter(employee -> employee.isEnabled()).collect(Collectors.toList());
+    return employeeRepository.findByPlantCode(plantCode);
   }
 
-  @Override
-  public void updateEmployee(Employee employee) {
-    employeeRepository.save(employee);
+  @Transactional
+  public void updateEmployee(Employee employee, HttpServletRequest request) {
+    if (!employee.getEmail().equals(employeeRepository.findById(employee.getId()).get().getEmail())
+        && employee.isEnabled() == false) {
+      Employee employeeObj = employeeRepository.save(employee);
+      ConfirmationToken confirmationToken = new ConfirmationToken(employee);
+      confirmationToken
+          .setTokenid(confirmationTokenRepository.findByEmployeeId(employee.getId()).getTokenid());
+      confirmationTokenRepository.save(confirmationToken);
+      emailNotification.sendEmployeeEmail(employeeObj);
+      emailNotification.sendEmployeeConformation(employeeObj, confirmationToken, request);
+    } else {
+      employeeRepository.save(employee);
+    }
   }
 
   @Override
   public void updateEmployeeWithConfirmation(String confirmationToken) {
     ConfirmationToken token =
         confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
     if (token != null) {
       Employee employee = employeeRepository.findByEmailIgnoreCase(token.getEmployee().getEmail());
       employee.setEnabled(true);
       employeeRepository.save(employee);
     }
-
   }
-
-  
 }
