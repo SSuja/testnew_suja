@@ -94,6 +94,7 @@ public class Constants {
 	public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
 	public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
 	public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
+	public static final String EMPLOYEE_ENABLE = "employeeEnable";
 	/*
 	 * Constants for Pour validation key & Success messages
 	 */

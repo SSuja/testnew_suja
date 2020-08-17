@@ -6,4 +6,6 @@ import com.tokyo.supermix.data.entities.ConfirmationToken;
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Long> {
   ConfirmationToken findByConfirmationToken(String confirmationToken);
 
+  ConfirmationToken findByEmployeeId(Long id);
+
 }
