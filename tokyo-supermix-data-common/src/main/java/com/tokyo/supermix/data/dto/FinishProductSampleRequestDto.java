@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleRequestDto {
@@ -18,6 +19,15 @@ public class FinishProductSampleRequestDto {
   private Status status;
   private Date date;
   private String projectCode;
+  private FinishProductTestType finishProductTestType;
+  public FinishProductTestType getFinishProductTestType() {
+    return finishProductTestType;
+  }
+
+  public void setFinishProductTestType(FinishProductTestType finishProductTestType) {
+    this.finishProductTestType = finishProductTestType;
+  }
+
   public String getCode() {
     return code;
   }

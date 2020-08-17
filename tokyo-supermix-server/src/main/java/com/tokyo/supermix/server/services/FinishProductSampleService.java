@@ -42,5 +42,8 @@ public interface FinishProductSampleService {
 
   public List<FinishProductSample> getFinishProductSamplesByMaterialCategoryId(
       Long materialCategoryId);
+
   public boolean isMaterialCategoryExist(Long materialCategoryId);
+
+  public void updateFinishProductSample(FinishProductSample finishProductSample);
 }
