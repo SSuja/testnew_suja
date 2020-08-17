@@ -28,7 +28,6 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
-import com.tokyo.supermix.server.services.CustomerService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.ProjectService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -51,17 +50,12 @@ public class ProjectController {
   private PlantRepository plantRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private CustomerService customerService;
+
   private static final Logger logger = Logger.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
   public ResponseEntity<Object> createProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
-    if (projectService.isNameExist(projectRequestDto.getName())) {
-      logger.debug("name is already exists: createProject(), isNameExist: {}");
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_NAME,
-          validationFailureStatusCodes.getProjectAlreadyExist()), HttpStatus.BAD_REQUEST);
-    }
     projectService.saveProject(mapper.map(projectRequestDto, Project.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PROJECT_SUCCESS),
@@ -123,11 +117,6 @@ public class ProjectController {
   public ResponseEntity<Object> updateProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
     if (projectService.isProjectExist(projectRequestDto.getCode())) {
-      if (projectService.isUpdatedProjectExist(projectRequestDto.getCode(),
-          projectRequestDto.getName())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_NAME,
-            validationFailureStatusCodes.getProjectAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
       projectService.saveProject(mapper.map(projectRequestDto, Project.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PROJECT_SUCCESS),
