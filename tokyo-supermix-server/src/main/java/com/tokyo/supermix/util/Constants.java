@@ -86,16 +86,7 @@ public class Constants {
   public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier Updated Successfully";
   public static final String DELETE_SUPPLIER_SUCCESS = "Supplier Successfully Deleted";
   public static final String SUPPLIER = "Supplier";
-  /*
-   * Constants for Employee validation key & Success messages
-   */
-  public static final String EMPLOYEE_ID = "employeeId";
-  public static final String EMPLOYEES = "employees";
-  public static final String EMPLOYEE = "employee";
-  public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
-  public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
-  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
-  public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
+
   /*
    * Constants for Pour validation key & Success messages
    */
@@ -112,6 +103,18 @@ public class Constants {
   public static final String ADD_UNIT_SUCCESS = "Unit Added Successfully";
   public static final String UNIT_DELETED = "Unit Successfully Deleted";
   public static final String UNIT_UPDATED_SUCCESS = "Unit Updated Successfully";
+
+  /*
+   * Constants for Employee validation key & Success messages
+   */
+  public static final String EMPLOYEE_ID = "employeeId";
+  public static final String EMPLOYEES = "employees";
+  public static final String EMPLOYEE = "employee";
+  public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
+  public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
+  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
+  public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
+  public static final String EMPLOYEE_ENABLE = "employeeEnable";
 
   /*
    * Constants for Parameter validation key & Success messages

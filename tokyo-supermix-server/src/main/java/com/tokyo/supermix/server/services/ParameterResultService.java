@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.MaterialParameterResultDto;
+import com.tokyo.supermix.data.dto.ParameterResultViewResponseDto;
 import com.tokyo.supermix.data.entities.ParameterResult;
 
 public interface ParameterResultService {
@@ -26,4 +27,6 @@ public interface ParameterResultService {
 
   public void saveParameterResults(List<MaterialParameterResultDto> materialParameterResultDtolist);
 
+  public List<ParameterResultViewResponseDto> findResultsByMaterialTestCode(
+      String materialTestCode);
 }
