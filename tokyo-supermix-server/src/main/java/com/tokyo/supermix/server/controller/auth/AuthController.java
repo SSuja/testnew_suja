@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.controller.auth;
 
 import java.util.UUID;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.auth.JwtAuthenticationDtoResponse;
 import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
@@ -21,21 +24,18 @@ import com.tokyo.supermix.data.dto.auth.ResetPasswordDto;
 import com.tokyo.supermix.data.dto.auth.UserRequestDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.server.services.auth.AuthService;
 import com.tokyo.supermix.server.services.auth.UserService;
-import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
 public class AuthController {
-  @Autowired
-  private EmailService emailService;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -44,6 +44,8 @@ public class AuthController {
   private AuthService authService;
   @Autowired
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
+  @Autowired
+  private EmailNotification emailNotification;
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNIN)
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
@@ -102,8 +104,7 @@ public class AuthController {
       if (user != null) {
         final String token = UUID.randomUUID().toString();
         authService.createForgotPasswordToken(token, user);
-        emailService.sendMail(userEmail, Constants.SUBJECT_FORGOT_PASSWORD,
-            PrivilegeConstants.MESSAGE_OF_FORGOT_PASSWORD + token);
+        emailNotification.sendForgotConformation(user, token);
         return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
             PrivilegeConstants.GENERATE_PASSWORD_SUCCESS), HttpStatus.OK);
       }

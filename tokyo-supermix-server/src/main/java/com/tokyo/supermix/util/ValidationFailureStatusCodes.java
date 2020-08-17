@@ -1246,6 +1246,17 @@ public class ValidationFailureStatusCodes {
   private String acceptedValueNotExist;
   @Value("${validation.acceptedValue.alreadyExists}")
   private String acceptedValueAlreadyExist;
+  @Value("${validation.acceptedValue.notNull}")
+  private String acceptedValueNotNull;
+  
+
+  public String getAcceptedValueNotNull() {
+    return acceptedValueNotNull;
+  }
+
+  public void setAcceptedValueNotNull(String acceptedValueNotNull) {
+    this.acceptedValueNotNull = acceptedValueNotNull;
+  }
 
   public String getAcceptedValueAlreadyExist() {
     return acceptedValueAlreadyExist;

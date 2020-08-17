@@ -21,4 +21,6 @@ public interface FinishProductAcceptedValueService {
   public FinishProductAcceptedValue getByAcceptedValueByTestConfigure(Long testConfigureId);
 
   public boolean isTestParameterAndTestconfigure(Long testConfigureId, Long testParameterId);
+
+  public boolean isCheckValidation(FinishProductAcceptedValue finishProductAcceptedValue);
 }

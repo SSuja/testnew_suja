@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 
 @Service
@@ -79,5 +80,24 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     return materialAcceptedValueRepository
         .existsByTestConfigureIdAndRawMaterialIdAndTestParameterId(testConfigureId, rawMaterialId,
             testParameterId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isCheckValidation(List<MaterialAcceptedValue> materialAcceptedValueList) {
+    for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
+      if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+        if (materialAcceptedValue.getMaxValue() == null
+            || materialAcceptedValue.getMinValue() == null) {
+          return true;
+        }
+      } else if (materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+          || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+          || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
+        if (materialAcceptedValue.getValue() == null) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
