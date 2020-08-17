@@ -796,8 +796,8 @@ public class TestReportServiceImpl implements TestReportService {
             && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
           TestEquation testEquation = testEquationRepository
               .findByTestParameterId(parameterResult.getTestParameter().getId());
-          getAcceptedValueForSieveTestResult(testConfigId,
-              parameterResult.getTestParameter().getId(), testEquation.getId());
+          sieveResultAndParameter.setAcceptedValueForSieveTest(getAcceptedValueForSieveTestResult(
+              testConfigId, parameterResult.getTestParameter().getId(), testEquation.getId()));
         }
         sieveResultAndParameter
             .setParameter(parameterResult.getTestParameter().getParameter().getName());
