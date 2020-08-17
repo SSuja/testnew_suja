@@ -40,5 +40,8 @@ public interface PlantRolePlantPermissionServices {
 
   public List<PlantResponseDto> getByPlantRoleIdAndPermissionNameAndStatus(Long plantRoleId,
       String permissionName, Boolean status);
-  public List<PlantRolePlantPermissionResponseDto> getCombine(Long userId ,String plantCode);
+  public List<PlantRolePlantPermissionResponseDto> getCombine(Long userId, String plantCode);
+  
+  public void UpdatePlantRolePlantPermission(Long plantRoleId, Boolean status);
+
 }
