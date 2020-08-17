@@ -145,7 +145,7 @@ public class FinishProductSampleController {
                 validationFailureStatusCodes.getFinishProductSampleAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
-      finishProductSampleService.saveFinishProductSample(
+      finishProductSampleService.updateFinishProductSample(
           mapper.map(finishProductSampleRequestDto, FinishProductSample.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_FINISH_PRODUCT_SAMPLE_SUCCESS), HttpStatus.OK);

@@ -46,7 +46,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       String plantPrefix = mixDesignRepository.getOne(finishProductSample.getMixDesign().getCode())
           .getPlant().getCode();
       String codePrefix = "";
-      if (mixDesign.getStatus().equals(Status.NEW)) {
+      if (mixDesign.getStatus().equals(Status.NEW)
+          || mixDesign.getStatus().equals(Status.PROCESS)) {
         codePrefix = plantPrefix + "-PP-";
       } else if (mixDesign.getStatus().equals(Status.PASS)) {
         codePrefix = plantPrefix + "-PO-";
@@ -61,19 +62,19 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             codePrefix + String.format("%04d", maxNumberFromCode(finishProductSampleList) + 1));
       }
     }
-
     finishProductSample.setStatus(Status.NEW);
-    FinishProductSample finishProductSampleObj =
-        finishProductSampleRepository.save(finishProductSample);
-    if (finishProductSampleObj != null) {
-      emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
+    if (finishProductSample != null) {
+      emailNotification.sendFinishProductSampleEmail(finishProductSample);
     }
-
-    if (mixDesign.getStatus().equals(Status.NEW)) {
+    if (mixDesign.getStatus().equals(Status.NEW) || mixDesign.getStatus().equals(Status.PROCESS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
     } else if (mixDesign.getStatus().equals(Status.PASS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
     }
+    finishProductSampleRepository.save(finishProductSample);
+  }
+  @Transactional()
+  public void updateFinishProductSample(FinishProductSample finishProductSample) {
     finishProductSampleRepository.save(finishProductSample);
   }
 
