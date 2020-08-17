@@ -749,13 +749,11 @@ public class TestReportServiceImpl implements TestReportService {
         mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
     seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     return seiveTestReportResponseDto;
-
   }
 
   public List<SieveTestTrialDto> getTrialResult(String materialTestCode) {
     ArrayList<SieveTestTrialDto> sieveTestTrialDtoList = new ArrayList<SieveTestTrialDto>();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-
     for (String level : testParameterService
         .getAllOriLevel(materialTest.getTestConfigure().getId())) {
       SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
@@ -796,8 +794,8 @@ public class TestReportServiceImpl implements TestReportService {
             && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
           TestEquation testEquation = testEquationRepository
               .findByTestParameterId(parameterResult.getTestParameter().getId());
-          getAcceptedValueForSieveTestResult(testConfigId,
-              parameterResult.getTestParameter().getId(), testEquation.getId());
+          sieveResultAndParameter.setAcceptedValueForSieveTest(getAcceptedValueForSieveTestResult(
+              testConfigId, parameterResult.getTestParameter().getId(), testEquation.getId()));
         }
         sieveResultAndParameter
             .setParameter(parameterResult.getTestParameter().getParameter().getName());
