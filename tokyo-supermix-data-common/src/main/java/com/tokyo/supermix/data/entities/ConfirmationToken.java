@@ -18,15 +18,10 @@ import javax.persistence.TemporalType;
 public class ConfirmationToken {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
- 
-  private long tokenid;
-
- 
+  private long tokenid; 
   private String confirmationToken;
-
   @Temporal(TemporalType.TIMESTAMP)
   private Date createdDate;
-
   @OneToOne(targetEntity = Employee.class, fetch = FetchType.EAGER)
   @JoinColumn(nullable = false, name = "employee_id")
   private Employee employee;
@@ -35,8 +30,6 @@ public class ConfirmationToken {
       this.employee = employee;
       createdDate = new Date();
       confirmationToken = UUID.randomUUID().toString();
-  
-
   }
 
   public long getTokenid() {
