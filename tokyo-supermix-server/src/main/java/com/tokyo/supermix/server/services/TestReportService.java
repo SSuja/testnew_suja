@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.FinishProductTestReportDetailDto;
+import com.tokyo.supermix.data.dto.IncomingSampleJasperDeliveryDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
@@ -32,6 +33,7 @@ public interface TestReportService {
 
   public ConcreteTestReportDto getConcreteTestReportByPlant(String finishProductTestCode,
       String plantCode);
+
   public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode);
 
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
@@ -50,4 +52,11 @@ public interface TestReportService {
   public List<SieveTestTrialDto> getTrialResultGraph(String materialTestCode);
 
   public List<ConcreteStrengthDto> getConcreteStrengths();
+
+  public IncomingSampleJasperDeliveryDto getIncomingSampleJasperSummaryReport1(
+      String incomingSampleCode);
+
+  public IncomingSampleJasperDeliveryDto getIncomingSampleDeliveryReports1(
+      String incomingSampleCode, ReportFormat reportFormat);
+
 }
