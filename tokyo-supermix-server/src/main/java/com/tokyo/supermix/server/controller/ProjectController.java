@@ -58,8 +58,8 @@ public class ProjectController {
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
     if (projectService.isNameAndCustomerIdAndProjectExist(projectRequestDto.getName(),
         projectRequestDto.getCustomerId(), projectRequestDto.getPlantCode())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-          validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT,
+          validationFailureStatusCodes.getProjectAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     projectService.saveProject(mapper.map(projectRequestDto, Project.class));
     return new ResponseEntity<>(
