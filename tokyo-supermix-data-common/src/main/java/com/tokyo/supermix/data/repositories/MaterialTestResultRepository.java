@@ -12,4 +12,6 @@ public interface MaterialTestResultRepository extends JpaRepository<MaterialTest
       String materialTestCode);
 
   public List<MaterialTestResult> findByMaterialTestCode(String materialTestCode);
+
+  public boolean existsByTestEquationEquationId(Long equationId);
 }
