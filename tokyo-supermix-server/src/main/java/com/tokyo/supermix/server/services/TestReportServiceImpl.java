@@ -243,6 +243,7 @@ public class TestReportServiceImpl implements TestReportService {
     List<AcceptedValue> acceptedValueList =
         acceptedValueRepository.findByTestConfigureId(testConfigureId);
     acceptedValueList.forEach(values -> {
+      if(values.isFinalResult()) {
       AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
       if (values.getConditionRange() == Condition.BETWEEN) {
         acceptedValueDtos.setCondition(values.getConditionRange());
@@ -255,6 +256,7 @@ public class TestReportServiceImpl implements TestReportService {
         acceptedValueDtos.setCondition(values.getConditionRange());
       }
       acceptedValueDtoList.add(acceptedValueDtos);
+      }
     });
     return acceptedValueDtoList;
   }
@@ -276,7 +278,9 @@ public class TestReportServiceImpl implements TestReportService {
     List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
         .findByTestConfigureIdAndTestConfigureRawMaterialId(testConfigureId, rawMaterialId);
     materialAcceptedValues.forEach(materialAccepted -> {
+      if(materialAccepted.isFinalResult()) {
       AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
+      
       if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
         acceptedValueDto.setCondition(materialAccepted.getConditionRange());
         acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
@@ -287,7 +291,9 @@ public class TestReportServiceImpl implements TestReportService {
         acceptedValueDto.setCondition(materialAccepted.getConditionRange());
         acceptedValueDto.setValue(materialAccepted.getValue());
       }
+      
       acceptedValueDtoList.add(acceptedValueDto);
+      }
     });
     return acceptedValueDtoList;
   }
@@ -301,6 +307,7 @@ public class TestReportServiceImpl implements TestReportService {
     materialAcceptedValues.forEach(materialAccepted -> {
       if (materialTestList.get(0).getIncomingSample().getRawMaterial().getId() == materialAccepted
           .getRawMaterial().getId()) {
+        if(materialAccepted.isFinalResult()) {
         AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
         if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -315,6 +322,7 @@ public class TestReportServiceImpl implements TestReportService {
           acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
         }
         acceptedValueDtoList.add(acceptedValueDto);
+        }
       }
 
     });
