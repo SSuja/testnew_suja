@@ -65,6 +65,9 @@ public final class EndpointURI {
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
   public static final String EMPLOYEE_WITH_TOKEN =
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
+  public static final String EXPORT_EMPLOYEE = EMPLOYEE + SLASH + "CSV" + SLASH + "download";
+  public static final String UPLOAD_EMPLOYEE = EMPLOYEE + SLASH + "CSV" + SLASH + "upload";
+  
   /*
    * Material Category APIs
    */
@@ -173,6 +176,9 @@ public final class EndpointURI {
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
       PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PLANT_EQUIPMENTS_BY_PLANT = PLANT_EQUIPMENT + PLANT_WISE;
+  public static final String EXPORT_PLANT_EQUIPMENT = PLANT_EQUIPMENT + SLASH + "CSV" + SLASH + "download";
+  public static final String UPLOAD_PLANT_EQUIPMENT = PLANT_EQUIPMENT + SLASH + "CSV" + SLASH + "upload";
+  
   /*
    * Customer apis
    */
