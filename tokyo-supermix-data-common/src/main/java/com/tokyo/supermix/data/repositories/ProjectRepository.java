@@ -17,6 +17,9 @@ public interface ProjectRepository
   List<Project> findByCustomerId(Long customerId);
 
   boolean existsByCustomerId(Long customerId);
-  
-  List<Project> findByCustomerIdAndPlantCode(Long customerId,String plantCode);
+
+  List<Project> findByCustomerIdAndPlantCode(Long customerId, String plantCode);
+
+  public boolean existsByNameAndCustomerIdAndPlantCode(String name, Long customerId,
+      String plantCode);
 }
