@@ -65,8 +65,6 @@ public final class EndpointURI {
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
   public static final String EMPLOYEE_WITH_TOKEN =
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
-  public static final String EXPORT_EMPLOYEE = EMPLOYEE + SLASH + "CSV" + SLASH + "download";
-  public static final String UPLOAD_EMPLOYEE = EMPLOYEE + SLASH + "CSV" + SLASH + "upload";
   
   /*
    * Material Category APIs
