@@ -117,7 +117,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
 
   @Transactional(readOnly = true)
   public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode) {
-    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCode(plantCode);
+    return finishProductTestRepository
+        .findByFinishProductSampleMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 
   @Transactional
@@ -163,8 +164,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
             finishProductTestDto.setStatus(Status.NEW);
             finishProductTestDto.setTestName(testConfigure.getTest().getName());
             finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
-            finishProductTestDto
-                .setMainType(testConfigure.getTestType());
+            finishProductTestDto.setMainType(testConfigure.getTestType());
           }
           finishProductTestDtoList.add(finishProductTestDto);
         });

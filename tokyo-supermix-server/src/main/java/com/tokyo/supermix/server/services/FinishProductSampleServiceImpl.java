@@ -144,7 +144,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
-    return finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
+    return finishProductSampleRepository.findByMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 
   @Transactional(readOnly = true)
@@ -159,7 +159,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser) {
-    return finishProductSampleRepository.findByMixDesignPlantCodeIn(
+    return finishProductSampleRepository.findByMixDesignPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
   }

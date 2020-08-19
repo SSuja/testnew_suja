@@ -676,9 +676,12 @@ public class TestReportServiceImpl implements TestReportService {
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
-        if (finishProductSample.getStatus().equals(Status.PASS)) {
+        FinishProductTest finishProductTest = finishProductTestRepository
+            .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
           averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
-          averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
+          if (!(!finishProductTest.getTestConfigure().isCoreTest()
+              && finishProductTest.getTestConfigure().isName())) {
+            averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
           averageStrengthList.add(averageStrength);
         }
       }
@@ -691,9 +694,7 @@ public class TestReportServiceImpl implements TestReportService {
     List<FinishProductSample> finishProductSampleList = finishProductSampleRepository.findAll();
     for (FinishProductSample finishProductSample : finishProductSampleList) {
       ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
-
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
-        // if (finishProductSample.getStatus().equals(Status.PASS)) {
         FinishProductTest finishProductTest = finishProductTestRepository
             .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
         if (!(!finishProductTest.getTestConfigure().isCoreTest()
@@ -702,7 +703,6 @@ public class TestReportServiceImpl implements TestReportService {
         }
         averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
         averageStrengthList.add(averageStrength);
-        // }
       }
     }
     return averageStrengthList;
