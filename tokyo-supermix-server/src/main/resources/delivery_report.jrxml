@@ -16,12 +16,16 @@
 		<field name="testName" class="java.lang.String"/>
 		<field name="average" class="java.lang.Double"/>
 		<field name="status" class="java.lang.String"/>
-		
+		<field name="acceptanceCriteria.minValue" class="java.lang.Double"/>
+		<field name="acceptanceCriteria.maxValue" class="java.lang.Double"/>
 		<field name="date" class="java.sql.Date"/>
 	</subDataset>
 	<parameter name="datasource1" class="java.util.List"/>
 	<parameter name="datasource2" class="java.util.List"/>
 	<parameter name="reportTitle" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
 	<background>
 		<band/>
 	</background>
@@ -227,24 +231,6 @@
 							</textElement>
 							<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 						</textField>
-						<textField>
-							<reportElement x="272" y="2" width="44" height="45" uuid="994c1696-6144-408c-b419-95c3c6b8362a">
-								<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a9814d-ecb4-424f-aea8-cad246f112b5"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Times New Roman" size="11"/>
-							</textElement>
-							
-						</textField>
-						<textField>
-							<reportElement x="331" y="2" width="54" height="45" uuid="bae8d898-8399-4ca2-a4d1-35572e85bc5e">
-								<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a9814d-ecb4-424f-aea8-cad246f112b5"/>
-							</reportElement>
-							<textElement textAlignment="Center" verticalAlignment="Middle">
-								<font fontName="Times New Roman" size="11"/>
-							</textElement>
-							
-						</textField>
 						<staticText>
 							<reportElement x="322" y="2" width="3" height="45" uuid="46757c46-ff64-460b-98ee-70b9f2be5ec5"/>
 							<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -282,6 +268,27 @@
 						<line>
 							<reportElement x="468" y="2" width="1" height="46" uuid="280da0fe-473d-405f-943d-5072d1d3943c"/>
 						</line>
+						<frame>
+							<reportElement x="272" y="2" width="113" height="45" uuid="246996fb-ee46-4a11-912d-1666b01e35c5"/>
+							<textField>
+								<reportElement x="0" y="0" width="44" height="45" uuid="994c1696-6144-408c-b419-95c3c6b8362a">
+									<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a9814d-ecb4-424f-aea8-cad246f112b5"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{acceptanceCriteria.minValue}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="59" y="0" width="54" height="45" uuid="bae8d898-8399-4ca2-a4d1-35572e85bc5e">
+									<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a9814d-ecb4-424f-aea8-cad246f112b5"/>
+								</reportElement>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{acceptanceCriteria.maxValue}]]></textFieldExpression>
+							</textField>
+						</frame>
 					</jr:listContents>
 				</jr:list>
 			</componentElement>
