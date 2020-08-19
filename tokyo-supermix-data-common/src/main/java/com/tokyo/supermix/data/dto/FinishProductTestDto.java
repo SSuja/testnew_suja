@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductTestDto {
@@ -9,6 +10,24 @@ public class FinishProductTestDto {
   private String createdDate;
   private String updatedDate;
   private String testName;
+  private String finishProductSampleCode;
+  private MainType mainType;
+
+  public String getFinishProductSampleCode() {
+    return finishProductSampleCode;
+  }
+
+  public void setFinishProductSampleCode(String finishProductSampleCode) {
+    this.finishProductSampleCode = finishProductSampleCode;
+  }
+
+  public MainType getMainType() {
+    return mainType;
+  }
+
+  public void setMainType(MainType mainType) {
+    this.mainType = mainType;
+  }
 
   public Status getStatus() {
     return status;

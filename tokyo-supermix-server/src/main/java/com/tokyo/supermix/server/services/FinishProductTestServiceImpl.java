@@ -151,6 +151,10 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
                   finishProductTestDto.setStatus(finishProductTest.getStatus());
                   finishProductTestDto
                       .setTestName(finishProductTest.getTestConfigure().getTest().getName());
+                  finishProductTestDto.setFinishProductSampleCode(
+                      finishProductTest.getFinishProductSample().getCode());
+                  finishProductTestDto
+                      .setMainType(finishProductTest.getTestConfigure().getTestType());
                 }
               });
           if (!(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
@@ -158,6 +162,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
             finishProductTestDto.setTestConfigId(testConfigure.getId());
             finishProductTestDto.setStatus(Status.NEW);
             finishProductTestDto.setTestName(testConfigure.getTest().getName());
+            finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+            finishProductTestDto
+                .setMainType(testConfigure.getTestType());
           }
           finishProductTestDtoList.add(finishProductTestDto);
         });
