@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
@@ -61,8 +60,7 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   }
 
   public boolean isUpdatedRawMaterialIdExist(Long id, Long testConfigureId, Long rawMaterialId) {
-    if ((!getMaterialAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId)
-        && (!getMaterialAcceptedValueById(id).getRawMaterial().getId().equals(rawMaterialId)))
+    if ((!getMaterialAcceptedValueById(id).getRawMaterial().getId().equals(rawMaterialId))
         && (isDuplicateEntryExist(testConfigureId, rawMaterialId))) {
       return true;
     }

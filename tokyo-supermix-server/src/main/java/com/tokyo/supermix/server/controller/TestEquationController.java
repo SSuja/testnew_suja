@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquationService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.TestEquationService;
+import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -35,6 +36,8 @@ public class TestEquationController {
   private TestConfigureService testConfigureService;
   @Autowired
   private EquationService equationService;
+  @Autowired
+  private TestParameterService testParameterService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -119,5 +122,19 @@ public class TestEquationController {
     logger.debug("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
         validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.TEST_EQUATION_BY_TEST_PARAMETER_ID)
+  public ResponseEntity<Object> getByTestParameter(@PathVariable Long testParameterId) {
+    if (testParameterService.isTestParameterExist(testParameterId)) {
+      logger.debug("Test Parameter id is found");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
+          mapper.map(testEquationService.getByTestParameter(testParameterId),
+              TestEquationResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
+        validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

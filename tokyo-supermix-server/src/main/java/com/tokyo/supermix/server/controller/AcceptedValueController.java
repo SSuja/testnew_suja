@@ -109,13 +109,6 @@ public class AcceptedValueController {
         return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
             Constants.ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
       } else {
-        if (acceptedValueService.isUpdatedAcceptedValueTestConfigureIdExist(
-            acceptedValueRequestDto.getId(), acceptedValueRequestDto.getTestConfigureId())) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-                  validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
         acceptedValueService
             .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));
         return new ResponseEntity<>(

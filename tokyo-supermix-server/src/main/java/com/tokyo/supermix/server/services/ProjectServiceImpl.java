@@ -28,11 +28,6 @@ public class ProjectServiceImpl implements ProjectService {
   private EmailNotification emailNotification;
 
   @Transactional(readOnly = true)
-  public boolean isNameExist(String name) {
-    return projectRepository.existsByName(name);
-  }
-
-  @Transactional(readOnly = true)
   public List<Project> getAllProjectsByPlant(UserPrincipal currentUser) {
     return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT));
@@ -83,13 +78,6 @@ public class ProjectServiceImpl implements ProjectService {
     projectRepository.deleteById(code);
   }
 
-  public boolean isUpdatedProjectExist(String code, String name) {
-    if ((!getProjectByCode(code).getName().equalsIgnoreCase(name)) && (isNameExist(name))) {
-      return true;
-    }
-    return false;
-  }
-
   @Transactional(readOnly = true)
   public Page<Project> searchProject(Predicate predicate, int size, int page) {
     return projectRepository.findAll(predicate,
@@ -120,5 +108,10 @@ public class ProjectServiceImpl implements ProjectService {
   @Transactional(readOnly = true)
   public boolean isCustomerExistsByProject(Long customerId) {
     return projectRepository.existsByCustomerId(customerId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId, String plantCode) {
+    return projectRepository.existsByNameAndCustomerIdAndPlantCode(name, customerId, plantCode);
   }
 }

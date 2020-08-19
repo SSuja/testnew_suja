@@ -40,77 +40,81 @@ public class Constants {
       "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
   public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
-  
 
-	// for sample counts
-	public static final String SAMPLE_COUNTS = "sampleCounts";
-	// for plants
-	public static final String PLANT_NAME = "PlantName";
-	public static final String PLANT_ID = "PlantId";
-	public static final String PLANTS = "plants";
-	public static final String ADMIN = "Admin";
-	/*
-	 * Constants for Plant validation key & Success messages
-	 */
-	public static final String ADD_PLANT_SUCCESS = "Plant Added Successfully";
-	public static final String UPDATE_PLANT_SUCCESS = "Plant Updated Successfully";
-	public static final String NO_DATA_FOUND = "No Data Found";
-	public static final String PLANT_DELETED = "Plant Successfully Deleted";
-	public static final String PLANT = "plant";
-	/*
-	 * Constants for Designation validation key & Success messages
-	 */
-	public static final String DESIGNATION_NAME = "designationName";
-	public static final String DESIGNATION = "designation";
-	public static final String DESIGNATIONS = "designations";
-	public static final String ADD_DESIGNATION_SUCCESS = "Designation Added Successfully";
-	public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
-	public static final String UPDATE_DESIGNATION_SUCCESS = "Designation Updated Successfully";
-	/*
-	 * Constants for Supplier Category validation key & Success messages
-	 */
-	public static final String SUPPLIER_CATEGORY = "supplierCategory";
-	public static final String SUPPLIER_CATEGORY_NAME = "category";
-	public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category Added Successfully";
-	public static final String DELETE_SUPPLIER_CATEGORY_SCCESS = "Supplier Category Successfully Deleted";
-	public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category Updated Successfully";
-	/*
-	 * Constants for Supplier validation key & Success messages
-	 */
-	public static final String SUPPLIER_NAME = "name";
-	public static final String EMAIL = "email";
-	public static final String PHONE_NUMBER = "phoneNumber";
-	public static final String ADD_SUPPLIER_SUCCESS = "Supplier Added Successfully";
-	public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier Updated Successfully";
-	public static final String DELETE_SUPPLIER_SUCCESS = "Supplier Successfully Deleted";
-	public static final String SUPPLIER = "Supplier";
-	/*
-	 * Constants for Employee validation key & Success messages
-	 */
-	public static final String EMPLOYEE_ID = "employeeId";
-	public static final String EMPLOYEES = "employees";
-	public static final String EMPLOYEE = "employee";
-	public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
-	public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
-	public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
-	public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
-	public static final String EMPLOYEE_ENABLE = "employeeEnable";
-	/*
-	 * Constants for Pour validation key & Success messages
-	 */
-	public static final String POUR = "pour";
-	public static final String POURS = "pours";
-	public static final String ADD_POUR_SUCCESS = "Pour Added Successfully";
-	public static final String POUR_DELETED = "Pour Succeessfully Deleted";
-	public static final String UPDATE_POUR_SUCCESS = "Pour Updated Successfully";
-	/*
-	 * Constants for Unit validation key & Success messages
-	 */
-	public static final String UNIT = "unit";
-	public static final String UNITS = "units";
-	public static final String ADD_UNIT_SUCCESS = "Unit Added Successfully";
-	public static final String UNIT_DELETED = "Unit Successfully Deleted";
-	public static final String UNIT_UPDATED_SUCCESS = "Unit Updated Successfully";
+
+  // for sample counts
+  public static final String SAMPLE_COUNTS = "sampleCounts";
+  // for plants
+  public static final String PLANT_NAME = "PlantName";
+  public static final String PLANT_ID = "PlantId";
+  public static final String PLANTS = "plants";
+  public static final String ADMIN = "Admin";
+  /*
+   * Constants for Plant validation key & Success messages
+   */
+  public static final String ADD_PLANT_SUCCESS = "Plant Added Successfully";
+  public static final String UPDATE_PLANT_SUCCESS = "Plant Updated Successfully";
+  public static final String NO_DATA_FOUND = "No Data Found";
+  public static final String PLANT_DELETED = "Plant Successfully Deleted";
+  public static final String PLANT = "plant";
+  /*
+   * Constants for Designation validation key & Success messages
+   */
+  public static final String DESIGNATION_NAME = "designationName";
+  public static final String DESIGNATION = "designation";
+  public static final String DESIGNATIONS = "designations";
+  public static final String ADD_DESIGNATION_SUCCESS = "Designation Added Successfully";
+  public static final String DESIGNATION_DELETED = "Designation Successfully Deleted";
+  public static final String UPDATE_DESIGNATION_SUCCESS = "Designation Updated Successfully";
+  /*
+   * Constants for Supplier Category validation key & Success messages
+   */
+  public static final String SUPPLIER_CATEGORY = "supplierCategory";
+  public static final String SUPPLIER_CATEGORY_NAME = "category";
+  public static final String ADD_SUPPLIER_CATEGORY_SUCCESS = "Supplier Category Added Successfully";
+  public static final String DELETE_SUPPLIER_CATEGORY_SCCESS =
+      "Supplier Category Successfully Deleted";
+  public static final String UPDATE_SUPPLIER_CATEGORY_SUCCESS =
+      "Supplier Category Updated Successfully";
+  /*
+   * Constants for Supplier validation key & Success messages
+   */
+  public static final String SUPPLIER_NAME = "name";
+  public static final String EMAIL = "email";
+  public static final String PHONE_NUMBER = "phoneNumber";
+  public static final String ADD_SUPPLIER_SUCCESS = "Supplier Added Successfully";
+  public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier Updated Successfully";
+  public static final String DELETE_SUPPLIER_SUCCESS = "Supplier Successfully Deleted";
+  public static final String SUPPLIER = "Supplier";
+
+  /*
+   * Constants for Pour validation key & Success messages
+   */
+  public static final String POUR = "pour";
+  public static final String POURS = "pours";
+  public static final String ADD_POUR_SUCCESS = "Pour Added Successfully";
+  public static final String POUR_DELETED = "Pour Succeessfully Deleted";
+  public static final String UPDATE_POUR_SUCCESS = "Pour Updated Successfully";
+  /*
+   * Constants for Unit validation key & Success messages
+   */
+  public static final String UNIT = "unit";
+  public static final String UNITS = "units";
+  public static final String ADD_UNIT_SUCCESS = "Unit Added Successfully";
+  public static final String UNIT_DELETED = "Unit Successfully Deleted";
+  public static final String UNIT_UPDATED_SUCCESS = "Unit Updated Successfully";
+
+  /*
+   * Constants for Employee validation key & Success messages
+   */
+  public static final String EMPLOYEE_ID = "employeeId";
+  public static final String EMPLOYEES = "employees";
+  public static final String EMPLOYEE = "employee";
+  public static final String EMPLOYEE_DELETED = "Employee Successfully Deleted";
+  public static final String ADD_EMPLOYEE_SUCCESS = "Employee Added Successfully";
+  public static final String UPDATE_EMPLOYEE_SUCCESS = "Employee Updated Successfully";
+  public static final String UPDATE_EMPLOYEE_VERIFICATION = "Your Email Successfully Verified";
+  public static final String EMPLOYEE_ENABLE = "employeeEnable";
 
   /*
    * Constants for Parameter validation key & Success messages
@@ -198,6 +202,7 @@ public class Constants {
   public static final String ADD_TEST_CONFIGURE_SUCCESS = "Test Configure Added Successfully";
   public static final String UPDATE_TEST_CONFIGURE_SUCCESS = "Test Configure Updated Successfully";
   public static final String DELETE_TEST_CONFIGURE_SCCESS = "Test Configure Successfully Deleted";
+  public static final String TEST_CONFIGURE_ALREADY_DEPENDED = "Test Configure Already Depended";
   /*
    * Constants for Material State validation key & Success messages
    */

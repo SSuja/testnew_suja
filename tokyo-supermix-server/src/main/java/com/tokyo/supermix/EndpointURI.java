@@ -319,6 +319,8 @@ public final class EndpointURI {
       PARAMETER_RESULT + SLASH + "matrial-test" + SLASH + "{materialTestCode}";
   public static final String SIEVETEST_PARAMETER_RESULT_BY_MATERIAL_TEST_CODE = PARAMETER_RESULT
       + SLASH + "matrial-test" + SLASH + "sieve-test" + SLASH + "{materialTestCode}";
+  public static final String PARAMETER_RESULT_VIEW_BY_MATERIAL_TEST_CODE =
+      PARAMETER_RESULT + SLASH + "result-view" + SLASH + "{materialTestCode}";
 
   /*
    * Material Tests
@@ -616,6 +618,8 @@ public final class EndpointURI {
       TEST_EQUATION + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String TEST_EQUATION_BY_EQUATION_ID =
       TEST_EQUATION + SLASH + "equation" + SLASH + "{equationId}";
+  public static final String TEST_EQUATION_BY_TEST_PARAMETER_ID =
+      TEST_EQUATION + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   /*
    * Test Equation Parameter
    */
