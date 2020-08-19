@@ -6,9 +6,18 @@ import java.util.List;
 public class IncomingSampleTestDto {
   private String testName;
   private String status;
+  private String comment;
   private Double average;
   private Date date;
   private List<AcceptedValueDto> acceptanceCriteria;
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
   public String getTestName() {
     return testName;
