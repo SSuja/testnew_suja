@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -23,6 +26,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private FinishProductSampleRepository finishProductSampleRepository;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -104,9 +109,10 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
 
   @Transactional(readOnly = true)
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
-    return finishProductTestRepository.findByFinishProductSampleMixDesignPlantCodeInOrderByUpdatedAtDesc(
-        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
+    return finishProductTestRepository
+        .findByFinishProductSampleMixDesignPlantCodeInOrderByUpdatedAtDesc(
+            currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+                PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
   }
 
   @Transactional(readOnly = true)
@@ -123,4 +129,39 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   public boolean isExistsByPlantCode(String plantCode) {
     return finishProductTestRepository.existsByFinishProductSampleMixDesignPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTestDto> getFinishProductTestByFinishProductSample(
+      String finishProductSampleCode) {
+    ArrayList<FinishProductTestDto> finishProductTestDtoList =
+        new ArrayList<FinishProductTestDto>();
+    testConfigureRepository.findByMaterialCategoryId(finishProductSampleRepository
+        .findById(finishProductSampleCode).get().getMixDesign().getMaterialCategory().getId())
+        .forEach(testConfigure -> {
+          FinishProductTestDto finishProductTestDto = new FinishProductTestDto();
+          finishProductTestRepository.findByTestConfigureId(testConfigure.getId())
+              .forEach(finishProductTest -> {
+                if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
+                    finishProductSampleCode, testConfigure.getId())) {
+                  finishProductTestDto.setCreatedDate(finishProductTest.getCreatedAt().toString());
+                  finishProductTestDto.setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                  finishProductTestDto
+                      .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                  finishProductTestDto.setFinishproductTestCode(finishProductTest.getCode());
+                  finishProductTestDto.setStatus(finishProductTest.getStatus());
+                  finishProductTestDto
+                      .setTestName(finishProductTest.getTestConfigure().getTest().getName());
+                }
+              });
+          if (!(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
+              finishProductSampleCode, testConfigure.getId()))) {
+            finishProductTestDto.setTestConfigId(testConfigure.getId());
+            finishProductTestDto.setStatus(Status.NEW);
+            finishProductTestDto.setTestName(testConfigure.getTest().getName());
+          }
+          finishProductTestDtoList.add(finishProductTestDto);
+        });
+    return finishProductTestDtoList;
+  }
+
 }

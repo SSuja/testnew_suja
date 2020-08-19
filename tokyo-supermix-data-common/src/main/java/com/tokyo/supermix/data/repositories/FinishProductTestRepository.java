@@ -37,4 +37,5 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
       String plantCode);
 
   boolean existsByFinishProductSampleMixDesignPlantCode(String plantCode);
+
 }
