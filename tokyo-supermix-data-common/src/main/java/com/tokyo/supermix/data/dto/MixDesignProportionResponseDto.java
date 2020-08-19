@@ -8,6 +8,15 @@ public class MixDesignProportionResponseDto {
   private String mixDesignCode;
   private Long rawMaterialId;
   private String rawMaterialName;
+  private String rawMaterialSubCategoryName;
+
+  public String getRawMaterialSubCategoryName() {
+    return rawMaterialSubCategoryName;
+  }
+
+  public void setRawMaterialSubCategoryName(String rawMaterialSubCategoryName) {
+    this.rawMaterialSubCategoryName = rawMaterialSubCategoryName;
+  }
 
   public Long getId() {
     return id;
@@ -33,7 +42,7 @@ public class MixDesignProportionResponseDto {
     this.unitId = unitId;
   }
 
-  
+
   public String getUnit() {
     return unit;
   }
