@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -27,8 +28,12 @@ public interface FinishProductTestService {
 
   public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser);
 
-  public  List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode);
+  public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode);
+
   public void updateFinishProductTestComment(FinishProductTest finishProductTest);
-  
+
   boolean isExistsByPlantCode(String plantCode);
+
+  public List<FinishProductTestDto> getFinishProductTestByFinishProductSample(
+      String finishProductSampleCode);
 }

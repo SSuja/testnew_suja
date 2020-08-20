@@ -29,4 +29,6 @@ public interface TestConfigureRepository
   List<TestConfigure> findByRawMaterialIdAndCoreTestTrue(Long rawMaterialId);
  
   boolean existsByRawMaterialId(Long rawMaterialId);
+  
+  List<TestConfigure> findByMaterialCategoryId(Long materialCategoryId);
 }
