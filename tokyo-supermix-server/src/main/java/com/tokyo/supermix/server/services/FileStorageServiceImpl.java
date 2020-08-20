@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.opencsv.CSVReader;
+import com.tokyo.supermix.config.FileStorageProperties;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.entities.Employee;
@@ -81,11 +82,12 @@ public class FileStorageServiceImpl implements FileStorageService {
   private EquipmentRepository equipmentRepository;
   @Autowired
   private EmployeeService employeeService;
+  @Autowired
+  private FileStorageProperties fileStorageProperties;
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     try {
       Files.createDirectories(path);
     } catch (IOException e1) {
@@ -113,8 +115,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importMixDesgin(MultipartFile file) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
@@ -172,8 +173,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importCustomer(MultipartFile file) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
@@ -212,8 +212,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importSupplier(MultipartFile file) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
@@ -255,8 +254,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importEmployee(MultipartFile file, HttpServletRequest request) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
@@ -294,8 +292,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importProject(MultipartFile file) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
@@ -332,8 +329,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   @Transactional
   public void importPlantEquipment(MultipartFile file) {
-    // Path path = Paths.get("C://Users/Import");
-    Path path = Paths.get("/home/ubuntu/Import");
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
     CSVReader csvReader = null;
