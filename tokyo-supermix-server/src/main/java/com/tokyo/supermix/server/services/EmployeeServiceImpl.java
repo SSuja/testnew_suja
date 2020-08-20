@@ -52,7 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteEmployee(Long id) {
-    if(confirmationTokenRepository.findByEmployeeId(id) != null && employeeRepository.findById(id).get().isEnabled() == false) {
+    if(confirmationTokenRepository.findByEmployeeId(id) != null) {
       confirmationTokenRepository.deleteById(confirmationTokenRepository.findByEmployeeId(id).getTokenid());
     }
     employeeRepository.deleteById(id);
