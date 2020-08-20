@@ -34,13 +34,13 @@ public class MixDesignFileStorageController {
   public ResponseEntity<Object> downloadXLSProfile(HttpServletResponse response)
       throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
-    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.WORK_SHEET);
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.MIXDESIGN_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     MixDesignLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     MixDesignFillManager.fillReport(worksheet, startRowIndex, startColIndex,
         mixDesignProportionRepository.getMixDesign());
-    String fileName = FileStorageConstants.FILE_NAME;
+    String fileName = FileStorageConstants.MIXDESIGN_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");
     EnrollWriter.write(response, worksheet);

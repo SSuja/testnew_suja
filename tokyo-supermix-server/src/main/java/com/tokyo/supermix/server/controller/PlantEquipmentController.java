@@ -1,7 +1,10 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
@@ -15,8 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.config.export.EnrollWriter;
+import com.tokyo.supermix.config.export.PlantEquipmentFillManager;
+import com.tokyo.supermix.config.export.PlantEquipmentLayouter;
 import com.tokyo.supermix.data.dto.PlantEquipmentRequestDto;
 import com.tokyo.supermix.data.dto.PlantEquipmentResponseDto;
 import com.tokyo.supermix.data.entities.PlantEquipment;
@@ -27,10 +34,12 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.FileStorageService;
 import com.tokyo.supermix.server.services.PlantEquipmentService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.FileStorageConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -46,6 +55,8 @@ public class PlantEquipmentController {
   private PlantEquipmentService plantEquipmentService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(PlantEquipmentController.class);
@@ -189,5 +200,33 @@ public class PlantEquipmentController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.EXPORT_PLANT_EQUIPMENT)
+  public ResponseEntity<Object> exportPlantEquiment(HttpServletResponse response)
+      throws ClassNotFoundException {
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.PLANT_EQUIPMENT_WORK_SHEET);
+    int startRowIndex = 0;
+    int startColIndex = 0;
+    PlantEquipmentLayouter.buildReport(worksheet, startRowIndex, startColIndex);
+    PlantEquipmentFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+        plantEquipmentService.getAllPlantEquipments());
+    String fileName = FileStorageConstants.PLANT_EQUIPMENT_FILE_NAME;
+    response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+    response.setContentType("application/vnd.ms-excel");
+    EnrollWriter.write(response, worksheet);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        HttpStatus.OK);
+  }
+  
+  @PostMapping(value = EndpointURI.UPLOAD_PLANT_EQUIPMENT)
+  public ResponseEntity<Object> uploadPlantEquipment(@RequestParam("file") MultipartFile file) {
+    fileStorageService.uploadCsv(file);
+    fileStorageService.importPlantEquipment(file);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
+        HttpStatus.OK);
   }
 }
