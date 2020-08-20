@@ -655,6 +655,20 @@ public final class EndpointURI {
 
   public static final String GET_FINISH_PRODUCT_ACCEPTED_VALUE_BY_TEST_CONFIGURE =
       FINISH_PRODUCT_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  
+  /*
+   * Export & Import
+   */
+  public static final String EXPORT_CUSTOMER = BASE_API_PATH + SLASH + "customer" + SLASH + "download";
+  public static final String IMPORT_CUSTOMER = BASE_API_PATH + SLASH + "customer" + SLASH + "upload";
+  public static final String EXPORT_SUPPLIER = BASE_API_PATH + SLASH + "supplier" + SLASH + "download";
+  public static final String IMPORT_SUPPLIER = BASE_API_PATH + SLASH + "supplier" + SLASH + "upload";
+  public static final String EXPORT_EMPLOYEE = BASE_API_PATH + SLASH + "employee" + SLASH + "download";
+  public static final String IMPORT_EMPLOYEE = BASE_API_PATH + SLASH + "employee" + SLASH + "upload";
+  public static final String EXPORT_PROJECT = BASE_API_PATH + SLASH + "project" + SLASH + "download";
+  public static final String IMPORT_PROJECT = BASE_API_PATH + SLASH + "project" + SLASH + "upload";
+  public static final String EXPORT_PLANT_EQUIPMENT = PLANT_EQUIPMENT + SLASH + "CSV" + SLASH + "download";
+  public static final String UPLOAD_PLANT_EQUIPMENT = PLANT_EQUIPMENT + SLASH + "CSV" + SLASH + "upload";
 
   private EndpointURI() {}
 }

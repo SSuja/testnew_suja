@@ -22,4 +22,6 @@ public interface ProjectRepository
 
   public boolean existsByNameAndCustomerIdAndPlantCode(String name, Long customerId,
       String plantCode);
+
+  Project findByCode(String code);
 }
