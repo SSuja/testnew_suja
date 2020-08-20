@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -74,9 +75,12 @@ public class FileStorageServiceImpl implements FileStorageService {
   private DesignationRepository designationRepository;
   @Autowired
   private ProjectRepository projectRepository;
+  @Autowired
   private PlantEquipmentRepository plantEquipmentRepository;
   @Autowired
   private EquipmentRepository equipmentRepository;
+  @Autowired
+  private EmployeeService employeeService;
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
@@ -250,7 +254,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   }
 
   @Transactional
-  public void importEmployee(MultipartFile file) {
+  public void importEmployee(MultipartFile file, HttpServletRequest request) {
     // Path path = Paths.get("C://Users/Import");
     Path path = Paths.get("/home/ubuntu/Import");
     String csvFilename = path + file.getOriginalFilename();
@@ -279,7 +283,7 @@ public class FileStorageServiceImpl implements FileStorageService {
           Plant plant = plantRepository.findByName(row[6]);
           employee.setPlant(plant);
           employee.setHasUser(Boolean.FALSE);
-          employeeRepository.save(employee);
+          employeeService.createEmployee(employee, request);
         }
       }
       csvReader.close();

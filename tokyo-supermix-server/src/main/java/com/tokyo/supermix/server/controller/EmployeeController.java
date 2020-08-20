@@ -79,7 +79,7 @@ public class EmployeeController {
 
   // Delete Employee
   @DeleteMapping(value = EndpointURI.EMPLOYEE_BY_ID)
-  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {  
+  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
     if (employeeService.isEmployeeExist(id)) {
       logger.debug("delete employee by id");
       employeeService.deleteEmployee(id);
@@ -105,7 +105,8 @@ public class EmployeeController {
 
   // Update Employee
   @PutMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto, HttpServletRequest request) {
+  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
     if (employeeService.isEmployeeExist(employeeDto.getId())) {
       if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
           employeeDto.getEmail())) {
@@ -175,7 +176,7 @@ public class EmployeeController {
     employeeService.updateEmployeeWithConfirmation(confirmationToken);
     return "<div ><div style='display:flex,flexDirection:row'><div><img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/Green_tick.svg' alt='Verified Image Not Found' width='100' height='100'></div><div style='color:darkblue'><h1>Your Email Successfully Verified</h1></div></div></div>";
   }
-  
+
   @GetMapping(value = EndpointURI.EXPORT_EMPLOYEE)
   public ResponseEntity<Object> exportEmployee(HttpServletResponse response)
       throws ClassNotFoundException {
@@ -196,9 +197,10 @@ public class EmployeeController {
   }
 
   @PostMapping(value = EndpointURI.IMPORT_EMPLOYEE)
-  public ResponseEntity<Object> uploadCustomer(@RequestParam("file") MultipartFile file) {
+  public ResponseEntity<Object> uploadCustomer(@RequestParam("file") MultipartFile file,
+      HttpServletRequest request) {
     fileStorageService.uploadCsv(file);
-    fileStorageService.importEmployee(file);
+    fileStorageService.importEmployee(file, request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);

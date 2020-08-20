@@ -17,7 +17,6 @@ public class SupplierLayouter {
     worksheet.setColumnWidth(3, 5000);
     worksheet.setColumnWidth(4, 5000);
     worksheet.setColumnWidth(5, 5000);
-    worksheet.setColumnWidth(6, 5000);
     // Build the title and date headers
     buildTitle(worksheet, startRowIndex, startColIndex);
     // Build the column headers
@@ -50,7 +49,7 @@ public class SupplierLayouter {
     cellTitle.setCellValue("Supplier Details");
     cellTitle.setCellStyle(cellStyleTitle);
     // Create merged region for the report title
-    worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
+    worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
   }
 
   /**
@@ -81,9 +80,10 @@ public class SupplierLayouter {
     rowHeader.setHeight((short) 500);
     // Create the column headers
 
-    HSSFCell cell1 = rowHeader.createCell(startColIndex + 0);
-    cell1.setCellValue("Id");
-    cell1.setCellStyle(headerCellStyle);
+
+    HSSFCell cell5 = rowHeader.createCell(startColIndex + 0);
+    cell5.setCellValue("Email");
+    cell5.setCellStyle(headerCellStyle);
 
     HSSFCell cell2 = rowHeader.createCell(startColIndex + 1);
     cell2.setCellValue("Name");
@@ -96,16 +96,12 @@ public class SupplierLayouter {
     HSSFCell cell4 = rowHeader.createCell(startColIndex + 3);
     cell4.setCellValue("Phone No");
     cell4.setCellStyle(headerCellStyle);
-    
-    HSSFCell cell5 = rowHeader.createCell(startColIndex + 4);
-    cell5.setCellValue("Email");
-    cell5.setCellStyle(headerCellStyle);
 
-    HSSFCell cell6 = rowHeader.createCell(startColIndex + 5);
+    HSSFCell cell6 = rowHeader.createCell(startColIndex + 4);
     cell6.setCellValue("Plant");
     cell6.setCellStyle(headerCellStyle);
 
-    HSSFCell cell7 = rowHeader.createCell(startColIndex + 6);
+    HSSFCell cell7 = rowHeader.createCell(startColIndex + 5);
     cell7.setCellValue("Supplier Category");
     cell7.setCellStyle(headerCellStyle);
   }

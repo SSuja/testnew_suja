@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileStorageService {
@@ -11,7 +12,7 @@ public interface FileStorageService {
 
   public void importSupplier(MultipartFile file);
 
-  public void importEmployee(MultipartFile file);
+  public void importEmployee(MultipartFile file,HttpServletRequest request);
 
   public void importProject(MultipartFile file);
 

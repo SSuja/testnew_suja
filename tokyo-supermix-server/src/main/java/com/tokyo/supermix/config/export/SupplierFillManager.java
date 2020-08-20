@@ -36,9 +36,9 @@ public class SupplierFillManager {
       HSSFRow row = worksheet.createRow((short) i + 1);
 
       // Retrieve the id value
-      HSSFCell cell1 = row.createCell(startColIndex + 0);
-      cell1.setCellValue(suppliers.get(i - 1).getId());
-      cell1.setCellStyle(bodyCellStyle);
+      HSSFCell cell5 = row.createCell(startColIndex + 0);
+      cell5.setCellValue(suppliers.get(i - 1).getEmail());
+      cell5.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell2 = row.createCell(startColIndex + 1);
@@ -56,17 +56,12 @@ public class SupplierFillManager {
       cell4.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
-      HSSFCell cell5 = row.createCell(startColIndex + 4);
-      cell5.setCellValue(suppliers.get(i - 1).getEmail());
-      cell5.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell6 = row.createCell(startColIndex + 5);
+      HSSFCell cell6 = row.createCell(startColIndex + 4);
       cell6.setCellValue(suppliers.get(i - 1).getPlant().getName());
       cell6.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
-      HSSFCell cell7 = row.createCell(startColIndex + 6);
+      HSSFCell cell7 = row.createCell(startColIndex + 5);
       List<String> arrayList = new ArrayList<>();
       List<SupplierCategory> supplierCategories = suppliers.get(i - 1).getSupplierCategories();
       for (SupplierCategory supplierCategory : supplierCategories) {
