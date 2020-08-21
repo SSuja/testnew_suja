@@ -229,13 +229,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     incomingSampleRepository.save(incomingSample);
     if (!status.equals(Status.PROCESS)) {
       try {
-        emailNotification.sendTestEmail(materialTestObj);
         generateReportService.generatePdfSummaryDetailReport(incomingSample.getCode());
       } catch (Exception e) {
         e.printStackTrace();
       }
-    } else {
-      emailNotification.sendTestEmail(materialTestObj);
     }
     if (materialTestObj.getTestConfigure().getReportFormat().equals(ReportFormat.DELIVERY_REPORT)) {
       try {
