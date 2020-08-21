@@ -115,7 +115,7 @@ public class SupplierController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
             validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      supplierService.createSupplier(mapper.map(supplierDto, Supplier.class),
+      supplierService.updateSupplier(mapper.map(supplierDto, Supplier.class),
           supplierDto.getSuppilerCategoryIds());
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SUPPLIER_SUCCESS),

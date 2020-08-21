@@ -54,7 +54,11 @@ public class SupplierServiceImpl implements SupplierService {
   }
 
   @Transactional
-  public void updateSupplier(Supplier supplier) {
+  public void updateSupplier(Supplier supplier, List<Long> supplierCategoryIds) {
+    List<SupplierCategory> supplierList = new ArrayList<SupplierCategory>();
+    supplierCategoryIds
+        .forEach(id -> supplierList.add(supplierCategoryRepository.findById(id).get()));
+    supplier.setSupplierCategories(supplierList);
     supplierRepository.save(supplier);
   }
 
@@ -99,7 +103,8 @@ public class SupplierServiceImpl implements SupplierService {
   }
 
   @Transactional(readOnly = true)
-  public List<Supplier> findBySupplierCategoryIdAndPlantCode(Long suppilerCategoryId, String plantCode) {
+  public List<Supplier> findBySupplierCategoryIdAndPlantCode(Long suppilerCategoryId,
+      String plantCode) {
     return supplierRepository.findBySupplierCategoriesIdAndPlantCode(suppilerCategoryId, plantCode);
   }
 
@@ -114,7 +119,7 @@ public class SupplierServiceImpl implements SupplierService {
     return supplierRepository.findByPlantCode(plantCode);
   }
 
-   @Transactional(readOnly = true)
+  @Transactional(readOnly = true)
   public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId) {
     return supplierRepository.findBySupplierCategoriesId(suppilerCategoryId);
   }
