@@ -24,7 +24,6 @@ import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
-import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -41,8 +40,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private GenerateReportService generateReportService;
-  @Autowired
-  private EmailNotification emailNotification;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
