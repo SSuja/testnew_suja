@@ -318,15 +318,14 @@ public class EmailNotification {
 
   @Async
   public void sendFinishProductSampleEmail(FinishProductSample finishProductSample) {
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        finishProductSample.getMixDesign().getPlant().getCode(),
-        MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
+        mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        MixDesign mixDesign =
-            mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
         String mailBody = "Finish Product sample created for mix design of " + mixDesign.getCode()
-            + " to the grade" + mixDesign.getTargetGrade() + " and Slump"
+            + " to the grade " + mixDesign.getTargetGrade() + " and Slump"
             + mixDesign.getTargetSlump();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
