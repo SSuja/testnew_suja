@@ -57,9 +57,15 @@ public class EmailPointsServiceImpl implements EmailPointsService {
 
   @Transactional
   public void updateEmailPointStatus(EmailPoints emailPoints) {
-    emailPoints.setName(emailPointsRepository.findById(emailPoints.getId()).get().getName());
-    if (emailPointsRepository.findById(emailPoints.getId()).get().getName().equalsIgnoreCase(MailGroupConstance.CREATE_PLANT)
-        || emailPointsRepository.findById(emailPoints.getId()).get().getName().equalsIgnoreCase(MailGroupConstance.CREATE_RAW_MATERIAL)) {
+    EmailPoints emailPoint = emailPointsRepository.findById(emailPoints.getId()).get();
+    emailPoints.setName(emailPoint.getName());
+    emailPoints.setMaterialCategory(emailPoint.getMaterialCategory());
+    emailPoints.setMaterialSubCategory(emailPoint.getMaterialSubCategory());
+    emailPoints.setTest(emailPoint.getTest());
+    if (emailPointsRepository.findById(emailPoints.getId()).get().getName()
+        .equalsIgnoreCase(MailGroupConstance.CREATE_PLANT)
+        || emailPointsRepository.findById(emailPoints.getId()).get().getName()
+            .equalsIgnoreCase(MailGroupConstance.CREATE_RAW_MATERIAL)) {
       emailPoints.setAdminLevelEmailConfiguration(true);
     } else {
       emailPoints.setAdminLevelEmailConfiguration(false);
@@ -107,24 +113,27 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   }
 
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) { 
-    Long emailPointId = emailPointsRepository.findByMaterialSubCategoryIdAndTestId(materialSubCategoryId, testId).getId();
+  public void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
+    Long emailPointId = emailPointsRepository
+        .findByMaterialSubCategoryIdAndTestId(materialSubCategoryId, testId).getId();
     emailPointsRepository.deleteById(emailPointId);
   }
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId) {
-    Long emailPointId = emailPointsRepository.findByMaterialCategoryIdAndTestId(materialCategoryId, testId).getId();
+    Long emailPointId =
+        emailPointsRepository.findByMaterialCategoryIdAndTestId(materialCategoryId, testId).getId();
     emailPointsRepository.deleteById(emailPointId);
   }
 
   @Transactional(readOnly = true)
   public EmailPoints findByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId) {
-    return emailPointsRepository.findByTestIdAndMaterialCategoryId(testId,materialCategoryId);
+    return emailPointsRepository.findByTestIdAndMaterialCategoryId(testId, materialCategoryId);
   }
 
   @Transactional(readOnly = true)
   public EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
-    return emailPointsRepository.findByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId);
+    return emailPointsRepository.findByTestIdAndMaterialSubCategoryId(testId,
+        materialSubCategoryId);
   }
 }
