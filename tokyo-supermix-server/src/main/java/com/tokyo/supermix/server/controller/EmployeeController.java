@@ -1,9 +1,12 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
@@ -17,9 +20,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.config.export.EmployeeFillManager;
+import com.tokyo.supermix.config.export.EmployeeLayouter;
+import com.tokyo.supermix.config.export.EnrollWriter;
 import com.tokyo.supermix.data.dto.EmployeeRequestDto;
 import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.entities.Employee;
@@ -31,9 +37,11 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmployeeService;
+import com.tokyo.supermix.server.services.FileStorageService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.FileStorageConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -48,6 +56,8 @@ public class EmployeeController {
   private EmployeeService employeeService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(EmployeeController.class);
@@ -168,5 +178,34 @@ public class EmployeeController {
   public String getEmployeeBy(@PathVariable String confirmationToken) {
     employeeService.updateEmployeeWithConfirmation(confirmationToken);
     return "<div ><div style='display:flex,flexDirection:row'><div><img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/Green_tick.svg' alt='Verified Image Not Found' width='100' height='100'></div><div style='color:darkblue'><h1>Your Email Successfully Verified</h1></div></div></div>";
+  }
+  
+  @GetMapping(value = EndpointURI.EXPORT_EMPLOYEE)
+  public ResponseEntity<Object> exportEmployee(HttpServletResponse response)
+      throws ClassNotFoundException {
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.EMPLOYEE_WORK_SHEET);
+    int startRowIndex = 0;
+    int startColIndex = 0;
+    EmployeeLayouter.buildReport(worksheet, startRowIndex, startColIndex);
+    EmployeeFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+        employeeService.getAllEmployees());
+    String fileName = FileStorageConstants.EMPLOYEE_FILE_NAME;
+    response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+    response.setContentType("application/vnd.ms-excel");
+    EnrollWriter.write(response, worksheet);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        HttpStatus.OK);
+  }
+
+  @PostMapping(value = EndpointURI.IMPORT_EMPLOYEE)
+  public ResponseEntity<Object> uploadCustomer(@RequestParam("file") MultipartFile file,
+      HttpServletRequest request) {
+    fileStorageService.uploadCsv(file);
+    fileStorageService.importEmployee(file, request);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
+        HttpStatus.OK);
   }
 }
