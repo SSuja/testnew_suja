@@ -324,7 +324,7 @@ public class EmailNotification {
         mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Finish Product sample created for mix design of " + mixDesign.getCode()
+        String mailBody = "Finish Product sample created for mix design - " + mixDesign.getCode()
             + " to the grade " + mixDesign.getTargetGrade() + " and Slump "
             + mixDesign.getTargetSlump();
         List<String> reciepientList =
@@ -401,7 +401,7 @@ public class EmailNotification {
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         String mailBody =
-            "Customer, " + customer.getName() + " is newly  " + customer.getAddress() + ".";
+            "Customer, " + customer.getName() + " newly added from " + customer.getAddress() + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
