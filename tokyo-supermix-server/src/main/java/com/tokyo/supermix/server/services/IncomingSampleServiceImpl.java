@@ -119,12 +119,12 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode) {
-    return incomingSampleRepository.findByPlantCode(plantCode);
+    return incomingSampleRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser) {
-    return incomingSampleRepository.findByPlantCodeIn(
+    return incomingSampleRepository.findByPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_INCOMING_SAMPLE));
   }
