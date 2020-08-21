@@ -20,17 +20,19 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   List<FinishProductSample> findByEquipmentId(Long id);
 
-  List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
+  List<FinishProductSample> findByMixDesignPlantCodeOrderByUpdatedAtDesc(String plantCode);
 
   List<FinishProductSample> findByStatus(Status status);
 
   boolean existsByStatus(Status status);
 
-  List<FinishProductSample> findByMixDesignPlantCodeIn(List<String> plantCodes);
+  List<FinishProductSample> findByMixDesignPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes);
 
   List<FinishProductSample> findByCodeContaining(String code);
 
   List<FinishProductSample> findByMixDesignMaterialCategoryId(Long materialCategoryId);
 
   boolean existsByMixDesignMaterialCategoryId(Long materialCategoryId);
+  
+  List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
 }

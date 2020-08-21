@@ -177,4 +177,13 @@ public class FinishProductTestController {
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.FINISH_PRODUCT_TEST_COMMENT_UPDATED), HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE)
+  public ResponseEntity<Object> getFinishproductTestsByFinishProductSample(
+      @PathVariable String finishProductSampleCode) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
+        finishProductTestService.getFinishProductTestByFinishProductSample(finishProductSampleCode),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+
+  }
 }

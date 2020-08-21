@@ -67,6 +67,11 @@ public class ProjectController {
   @PostMapping(value = EndpointURI.PROJECT)
   public ResponseEntity<Object> createProject(
       @Valid @RequestBody ProjectRequestDto projectRequestDto) {
+    if (projectService.isNameAndCustomerIdAndProjectExist(projectRequestDto.getName(),
+        projectRequestDto.getCustomerId(), projectRequestDto.getPlantCode())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT,
+          validationFailureStatusCodes.getProjectAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     projectService.saveProject(mapper.map(projectRequestDto, Project.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PROJECT_SUCCESS),

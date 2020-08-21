@@ -570,6 +570,8 @@ public final class EndpointURI {
 
   public static final String FINISH_PRODUCT_TEST_BY_PLANT = FINISH_PRODUCT_TEST + PLANT_WISE;
   public static final String FINISH_PRODUCT_TEST_COMMENT = FINISH_PRODUCT_TEST + SLASH + "comment";
+  public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE =
+      FINISH_PRODUCT_TEST + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}";
 
   /*
    * Employee apis
