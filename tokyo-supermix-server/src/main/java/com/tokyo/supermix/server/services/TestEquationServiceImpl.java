@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +56,7 @@ public class TestEquationServiceImpl implements TestEquationService {
   }
 
   @Transactional(propagation = Propagation.NEVER)
+  @Modifying(clearAutomatically = true)
   public void deleteTestEquation(Long id) {
     testEquationRepository.deleteById(id);
   }
