@@ -401,7 +401,7 @@ public class EmailNotification {
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         String mailBody =
-            "Customer, " + customer.getName() + " is newly  " + customer.getAddress() + ".";
+            "Customer " + customer.getName() + " newly added from " + customer.getAddress() + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
