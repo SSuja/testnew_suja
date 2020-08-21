@@ -24,8 +24,6 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquationService;
-import com.tokyo.supermix.server.services.ParameterEquationService;
-import com.tokyo.supermix.server.services.TestEquationService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -38,10 +36,6 @@ public class EquationController {
   private Mapper mapper;
   @Autowired
   private EquationService equationService;
-  @Autowired
-  private TestEquationService testEquationService;
-  @Autowired
-  private ParameterEquationService parameterEquationService;
 
   private static final Logger logger = Logger.getLogger(EquationController.class);
 
@@ -90,29 +84,10 @@ public class EquationController {
   public ResponseEntity<Object> updateEquation(
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
     if (equationService.isEquationExist(equationRequestDto.getId())) {
-      if (equationRequestDto.getEquationType().equals(EquationType.INPUT)) {
-        if (parameterEquationService.isEquationExist(equationRequestDto.getId())) {
-          return new ResponseEntity<>(
-              new BasicResponse<>(RestApiResponseStatus.OK, Constants.EQUATION_ALREADY_DEPENDED),
-              HttpStatus.OK);
-        } else {
-          equationService.saveEquation(mapper.map(equationRequestDto, Equation.class));
-          return new ResponseEntity<>(
-              new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EQUATION_SUCCESS),
-              HttpStatus.OK);
-        }
-      } else {
-        if (testEquationService.isEquationExists(equationRequestDto.getId())) {
-          return new ResponseEntity<>(
-              new BasicResponse<>(RestApiResponseStatus.OK, Constants.EQUATION_ALREADY_DEPENDED),
-              HttpStatus.OK);
-        } else {
-          equationService.saveEquation(mapper.map(equationRequestDto, Equation.class));
-          return new ResponseEntity<>(
-              new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EQUATION_SUCCESS),
-              HttpStatus.OK);
-        }
-      }
+      equationService.saveEquation(mapper.map(equationRequestDto, Equation.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EQUATION_SUCCESS),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
         validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
