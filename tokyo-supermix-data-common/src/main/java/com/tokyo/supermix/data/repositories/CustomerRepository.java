@@ -14,4 +14,6 @@ public interface CustomerRepository
   List<Customer> findByPlantCode(String plantCode);
 
   List<Customer> findByPlantCodeIn(List<String> plantCodes);
+
+  Customer findByName(String name);
 }

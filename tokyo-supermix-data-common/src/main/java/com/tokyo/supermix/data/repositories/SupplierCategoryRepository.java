@@ -5,4 +5,6 @@ import com.tokyo.supermix.data.entities.SupplierCategory;
 
 public interface SupplierCategoryRepository extends JpaRepository<SupplierCategory, Long> {
   boolean existsByCategory(String category);
+
+  SupplierCategory findByCategory(String category);
 }
