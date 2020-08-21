@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
+import com.tokyo.supermix.data.dto.AcceptedValueJasperDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.CubeTestReportDto;
 import com.tokyo.supermix.data.dto.FinishProductTestReportDetailDto;
+import com.tokyo.supermix.data.dto.IncomingSampleJasperDeliveryDto;
+import com.tokyo.supermix.data.dto.IncomingSampleJasperTestDto;
 import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
@@ -893,5 +896,197 @@ public class TestReportServiceImpl implements TestReportService {
     acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
     acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
     return acceptedValueForSieveTest;
+  }
+
+  @Transactional(readOnly = true)
+  public IncomingSampleJasperDeliveryDto getIncomingSampleDeliveryReports1(
+      String incomingSampleCode, ReportFormat reportFormat) {
+    IncomingSampleJasperDeliveryDto incomingSampleJasperDeliveryDto =
+        new IncomingSampleJasperDeliveryDto();
+    List<MaterialTest> materialTest = materialTestRepository
+        .findByIncomingSampleCodeAndTestConfigureReportFormat(incomingSampleCode, reportFormat);
+    incomingSampleJasperDeliveryDto.setIncomingsample(
+        getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+    incomingSampleJasperDeliveryDto
+        .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+    incomingSampleJasperDeliveryDto.setIncomingSampleTestDtos(
+        getIncomingSampleDeliveryReport1(incomingSampleCode, reportFormat));
+
+    incomingSampleJasperDeliveryDto.setSupplierReportDtos(
+        getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
+    return incomingSampleJasperDeliveryDto;
+  }
+
+  private List<IncomingSampleJasperTestDto> getIncomingSampleDeliveryReport1(
+      String incomingSampleCode, ReportFormat reportFormat) {
+    List<IncomingSampleJasperTestDto> incomingSampleTestDtoList =
+        new ArrayList<IncomingSampleJasperTestDto>();
+    materialTestRepository
+        .findByIncomingSampleCodeAndTestConfigureReportFormat(incomingSampleCode, reportFormat)
+        .forEach(test -> {
+          IncomingSampleJasperTestDto incomingSampleJasperTestDto =
+              new IncomingSampleJasperTestDto();
+          incomingSampleJasperTestDto.setTestName(test.getTestConfigure().getTest().getName());
+          List<MaterialTestResult> materialTestResult =
+              materialTestResultRepository.findByMaterialTestCode(test.getCode());
+          incomingSampleJasperTestDto.setAverage(materialTestResult.get(0).getResult());
+          incomingSampleJasperTestDto.setStatus(test.getStatus().name());
+          incomingSampleJasperTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
+          if ((test.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
+            if (test.getTestConfigure().getRawMaterial() != null) {
+              incomingSampleJasperTestDto.setAcceptanceCriteria(
+                  getMaterialAcceptedValueDtoNEW(test.getTestConfigure().getId(),
+                      test.getIncomingSample().getRawMaterial().getId()));
+            } else {
+              incomingSampleJasperTestDto.setAcceptanceCriteria(
+                  getMaterialValueIsNullNew(test.getTestConfigure().getId()));
+            }
+          } else {
+            incomingSampleJasperTestDto.setAcceptanceCriteria(
+                getAcceptedCriteriaDetailsNew(test.getTestConfigure().getId()));
+          }
+          incomingSampleTestDtoList.add(incomingSampleJasperTestDto);
+        });
+    return incomingSampleTestDtoList;
+  }
+
+
+
+  @Transactional(readOnly = true)
+  public IncomingSampleJasperDeliveryDto getIncomingSampleJasperSummaryReport1(
+      String incomingSampleCode) {
+    IncomingSampleJasperDeliveryDto incomingSampleJasperDeliveryDto =
+        new IncomingSampleJasperDeliveryDto();
+    List<MaterialTest> materialTest =
+        materialTestRepository.findByIncomingSampleCode(incomingSampleCode);
+    incomingSampleJasperDeliveryDto.setIncomingsample(
+        getIncomingSampleDetails(materialTest.get(0).getIncomingSample().getCode()));
+    incomingSampleJasperDeliveryDto
+        .setPlant(mapper.map(materialTest.get(0).getIncomingSample().getPlant(), PlantDto.class));
+    incomingSampleJasperDeliveryDto
+        .setIncomingSampleTestDtos(getIncomingSampleTestDtoReport1(incomingSampleCode));
+    incomingSampleJasperDeliveryDto.setSupplierReportDtos(
+        getSupplierReport(materialTest.get(0).getIncomingSample().getSupplier().getId()));
+    return incomingSampleJasperDeliveryDto;
+  }
+
+  private List<IncomingSampleJasperTestDto> getIncomingSampleTestDtoReport1(
+      String incomingSampleCode) {
+    List<IncomingSampleJasperTestDto> incomingSampleJasperTestDtoList =
+        new ArrayList<IncomingSampleJasperTestDto>();
+    materialTestRepository.findByIncomingSampleCode(incomingSampleCode).forEach(test -> {
+      IncomingSampleJasperTestDto incomingSampleJasperTestDto = new IncomingSampleJasperTestDto();
+      incomingSampleJasperTestDto.setTestName(test.getTestConfigure().getTest().getName());
+      List<MaterialTestResult> materialTestResult =
+          materialTestResultRepository.findByMaterialTestCode(test.getCode());
+      incomingSampleJasperTestDto.setAverage(materialTestResult.get(0).getResult());
+      incomingSampleJasperTestDto.setStatus(test.getStatus().name());
+      incomingSampleJasperTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
+
+      if ((test.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
+        if (test.getTestConfigure().getRawMaterial() != null) {
+          incomingSampleJasperTestDto.setAcceptanceCriteria(getMaterialAcceptedValueDtoNEW(
+              test.getTestConfigure().getId(), test.getIncomingSample().getRawMaterial().getId()));
+        } else {
+          incomingSampleJasperTestDto
+              .setAcceptanceCriteria(getMaterialValueIsNullNew(test.getTestConfigure().getId()));
+        }
+      } else {
+        incomingSampleJasperTestDto
+            .setAcceptanceCriteria(getAcceptedCriteriaDetailsNew(test.getTestConfigure().getId()));
+      }
+      incomingSampleJasperTestDtoList.add(incomingSampleJasperTestDto);
+    });
+    return incomingSampleJasperTestDtoList;
+  }
+
+  private AcceptedValueJasperDto getAcceptedCriteriaDetailsNew(Long testConfigureId) {
+    List<AcceptedValue> acceptedValueList =
+        acceptedValueRepository.findByTestConfigureId(testConfigureId);
+    AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
+    acceptedValueList.forEach(values -> {
+      if (values.getConditionRange() == Condition.BETWEEN) {
+        acceptedValueDtos.setCondition(values.getConditionRange());
+        acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
+        acceptedValueDtos.setMinValue(values.getMinValue().toString());
+      } else if (values.getConditionRange() == Condition.EQUAL) {
+        acceptedValueDtos.setMinValue("Equal to");
+        acceptedValueDtos.setMaxValue(values.getValue().toString());
+        acceptedValueDtos.setCondition(values.getConditionRange());
+      } else if (values.getConditionRange() == Condition.GREATER_THAN) {
+        acceptedValueDtos.setMinValue("Greater than");
+        acceptedValueDtos.setMaxValue(values.getValue().toString());
+        acceptedValueDtos.setCondition(values.getConditionRange());
+      } else if (values.getConditionRange() == Condition.LESS_THAN) {
+        acceptedValueDtos.setMinValue("Less than");
+        acceptedValueDtos.setMaxValue(values.getValue().toString());
+        acceptedValueDtos.setCondition(values.getConditionRange());
+      }
+    });
+    return acceptedValueDtos;
+  }
+
+  private AcceptedValueJasperDto getMaterialValueIsNullNew(Long testConfigureId) {
+    List<MaterialAcceptedValue> materialAcceptedValues =
+        materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
+    List<MaterialTest> materialTestList =
+        materialTestRepository.findByTestConfigureId(testConfigureId);
+    AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
+    materialAcceptedValues.forEach(values -> {
+      if (materialTestList.get(0).getIncomingSample().getRawMaterial().getId() == values
+          .getRawMaterial().getId()) {
+        if (values.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
+          acceptedValueDtos.setMinValue(values.getMinValue().toString());
+          acceptedValueDtos.setMaterial(values.getRawMaterial().getName());
+        }  else if (values.getConditionRange() == Condition.EQUAL) {
+          acceptedValueDtos.setMinValue("Equal to");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.GREATER_THAN) {
+          acceptedValueDtos.setMinValue("Greater than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDtos.setMinValue("Less than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }   
+      }
+    });
+    return acceptedValueDtos;
+  }
+
+  private AcceptedValueJasperDto getMaterialAcceptedValueDtoNEW(Long testConfigureId,
+      Long rawMaterialId) {
+      List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
+        .findByTestConfigureIdAndTestConfigureRawMaterialId(testConfigureId, rawMaterialId);
+      AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
+      materialAcceptedValues.forEach(values -> {
+        if (values.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
+          acceptedValueDtos.setMinValue(values.getMinValue().toString());
+        }  else if (values.getConditionRange() == Condition.EQUAL) {
+          acceptedValueDtos.setMinValue("Equal to");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.GREATER_THAN) {
+          acceptedValueDtos.setMinValue("Greater than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDtos.setMinValue("Less than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }   
+      
+    });
+    return acceptedValueDtos;
   }
 }

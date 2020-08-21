@@ -9,8 +9,8 @@ import java.util.Map;
 import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
-import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
+import com.tokyo.supermix.data.dto.IncomingSampleJasperDeliveryDto;
+import com.tokyo.supermix.data.dto.IncomingSampleJasperTestDto;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailGroupConstance;
@@ -34,15 +34,15 @@ public class GenerateReportServiceImpl implements GenerateReportService {
   @Override
   public void generatePdfSummaryDetailReport(String incomingSampleCode)
       throws FileNotFoundException, JRException, MessagingException {
-    IncomingSampleDeliveryReportDto deliveryReport =
-        testReportService.getIncomingSampleSummaryReport(incomingSampleCode);
-    List<IncomingSampleDeliveryReportDto> deliveryReports =
-        new ArrayList<IncomingSampleDeliveryReportDto>();
+    IncomingSampleJasperDeliveryDto deliveryReport =
+        testReportService.getIncomingSampleJasperSummaryReport1(incomingSampleCode);
+    List<IncomingSampleJasperDeliveryDto> deliveryReports =
+        new ArrayList<IncomingSampleJasperDeliveryDto>();
     deliveryReports.add(deliveryReport);
-    List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
+    List<IncomingSampleJasperTestDto> incomingSampleJasperDeliveryDto = deliveryReport.getIncomingSampleTestDtos();
     Map<String, Object> params = new HashMap<>();
     params.put("datasource1", deliveryReports);
-    params.put("datasource2", incomingSampleTestDtos);
+    params.put("datasource2", incomingSampleJasperDeliveryDto);
     params.put("reportTitle", "SUMMARY DETAILS REPORT OF INCOMING SAMPLE");
     InputStream inputStream =
         getClass().getClassLoader().getResourceAsStream("summary_report.jrxml");
@@ -64,15 +64,15 @@ public class GenerateReportServiceImpl implements GenerateReportService {
 
   @Override
   public void generatePdfDeliveryDetailReport(String incomingSampleCode) throws FileNotFoundException, JRException, MessagingException {
-    IncomingSampleDeliveryReportDto deliveryReport = testReportService
-        .getIncomingSampleDeliveryReports(incomingSampleCode,ReportFormat.DELIVERY_REPORT);
-    List<IncomingSampleDeliveryReportDto> deliveryReports =
-        new ArrayList<IncomingSampleDeliveryReportDto>();
+    IncomingSampleJasperDeliveryDto deliveryReport = testReportService
+        .getIncomingSampleDeliveryReports1(incomingSampleCode,ReportFormat.DELIVERY_REPORT);
+    List<IncomingSampleJasperDeliveryDto> deliveryReports =
+        new ArrayList<IncomingSampleJasperDeliveryDto>();
     deliveryReports.add(deliveryReport);
-    List<IncomingSampleTestDto> incomingSampleTestDtos = deliveryReport.getIncomingSampleTestDtos();
+    List<IncomingSampleJasperTestDto> incomingSampleJasperDeliveryDto = deliveryReport.getIncomingSampleTestDtos();
     Map<String, Object> params = new HashMap<>();
     params.put("datasource1", deliveryReports);
-    params.put("datasource2", incomingSampleTestDtos);
+    params.put("datasource2", incomingSampleJasperDeliveryDto);
     params.put("reportTitle", "DELIVERY DETAILS REPORT OF INCOMING SAMPLE");
     InputStream inputStream =
         getClass().getClassLoader().getResourceAsStream("delivery_report.jrxml");
