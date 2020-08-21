@@ -8,7 +8,7 @@ public class IncomingSampleJasperTestDto {
   private String status;
   private Double average;
   private Date date;
-  private AcceptedValueDto acceptanceCriteria;
+  private AcceptedValueJasperDto acceptanceCriteria;
 
   public String getTestName() {
     return testName;
@@ -42,12 +42,13 @@ public class IncomingSampleJasperTestDto {
     this.date = date;
   }
 
-  public AcceptedValueDto getAcceptanceCriteria() {
+  public AcceptedValueJasperDto getAcceptanceCriteria() {
     return acceptanceCriteria;
   }
 
-  public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
+  public void setAcceptanceCriteria(AcceptedValueJasperDto acceptanceCriteria) {
     this.acceptanceCriteria = acceptanceCriteria;
   }
 
+ 
 }
