@@ -1,8 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
@@ -16,9 +19,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.config.export.CustomerFillManager;
+import com.tokyo.supermix.config.export.CustomerLayouter;
+import com.tokyo.supermix.config.export.EnrollWriter;
 import com.tokyo.supermix.data.dto.CustomerRequestDto;
 import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.entities.Customer;
@@ -30,9 +36,11 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.CustomerService;
+import com.tokyo.supermix.server.services.FileStorageService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.FileStorageConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -47,6 +55,8 @@ public class CustomerController {
   private CustomerService customerService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(CustomerController.class);
@@ -159,5 +169,33 @@ public class CustomerController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+  
+  @GetMapping(value = EndpointURI.EXPORT_CUSTOMER)
+  public ResponseEntity<Object> exportCustomer(HttpServletResponse response)
+      throws ClassNotFoundException {
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.CUSTOMER_WORK_SHEET);
+    int startRowIndex = 0;
+    int startColIndex = 0;
+    CustomerLayouter.buildReport(worksheet, startRowIndex, startColIndex);
+    CustomerFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+        customerService.getAllCustomers());
+    String fileName = FileStorageConstants.CUSTOMER_FILE_NAME;
+    response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+    response.setContentType("application/vnd.ms-excel");
+    EnrollWriter.write(response, worksheet);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        HttpStatus.OK);
+  }
+  
+  @PostMapping(value = EndpointURI.IMPORT_CUSTOMER)
+  public ResponseEntity<Object> uploadCustomer(@RequestParam("file") MultipartFile file) {
+    fileStorageService.uploadCsv(file);
+    fileStorageService.importCustomer(file);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
+        HttpStatus.OK);
   }
 }

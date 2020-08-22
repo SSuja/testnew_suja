@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.config.EnrollWriter;
-import com.tokyo.supermix.config.MixDesignFillManager;
-import com.tokyo.supermix.config.MixDesignLayouter;
+import com.tokyo.supermix.config.export.EnrollWriter;
+import com.tokyo.supermix.config.export.MixDesignFillManager;
+import com.tokyo.supermix.config.export.MixDesignLayouter;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -34,13 +34,13 @@ public class MixDesignFileStorageController {
   public ResponseEntity<Object> downloadXLSProfile(HttpServletResponse response)
       throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
-    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.WORK_SHEET);
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.MIXDESIGN_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     MixDesignLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     MixDesignFillManager.fillReport(worksheet, startRowIndex, startColIndex,
         mixDesignProportionRepository.getMixDesign());
-    String fileName = FileStorageConstants.FILE_NAME;
+    String fileName = FileStorageConstants.MIXDESIGN_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");
     EnrollWriter.write(response, worksheet);
