@@ -11,7 +11,7 @@ public interface FinishProductTrialService {
 
   public FinishProductTrial getFinishProductTrialByCode(Long id);
 
-  public void saveFinishProductTrial(FinishProductTrial finishProductTrial);
+  public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrial);
 
   public void deleteFinishProductTrial(Long id);
 
