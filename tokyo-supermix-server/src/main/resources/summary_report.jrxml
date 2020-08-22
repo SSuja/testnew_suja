@@ -16,8 +16,8 @@
 		<field name="testName" class="java.lang.String"/>
 		<field name="average" class="java.lang.Double"/>
 		<field name="status" class="java.lang.String"/>
-		
-
+		<field name="acceptanceCriteria.minValue" class="java.lang.String"/>
+		<field name="acceptanceCriteria.maxValue" class="java.lang.String"/>
 		<field name="date" class="java.sql.Date"/>
 	</subDataset>
 	<parameter name="datasource1" class="java.util.List"/>
@@ -253,7 +253,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="Times New Roman" size="11"/>
 							</textElement>
-							
+							<textFieldExpression><![CDATA[$F{acceptanceCriteria.minValue}]]></textFieldExpression>
 						</textField>
 						<textField>
 							<reportElement x="331" y="2" width="54" height="45" uuid="bae8d898-8399-4ca2-a4d1-35572e85bc5e">
@@ -262,7 +262,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="Times New Roman" size="11"/>
 							</textElement>
-							
+							<textFieldExpression><![CDATA[$F{acceptanceCriteria.maxValue}]]></textFieldExpression>
 						</textField>
 						<staticText>
 							<reportElement x="322" y="2" width="3" height="45" uuid="46757c46-ff64-460b-98ee-70b9f2be5ec5"/>

@@ -109,4 +109,9 @@ public class ProjectServiceImpl implements ProjectService {
   public boolean isCustomerExistsByProject(Long customerId) {
     return projectRepository.existsByCustomerId(customerId);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId, String plantCode) {
+    return projectRepository.existsByNameAndCustomerIdAndPlantCode(name, customerId, plantCode);
+  }
 }

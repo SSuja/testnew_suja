@@ -28,5 +28,8 @@ public interface ProjectService {
   public List<Project> getAllProjectsByCustomer(Long customerId);
 
   public boolean isCustomerExistsByProject(Long customerId);
+
   public List<Project> getAllProjectsByCustomerAndPlant(Long customerId, String plantCode);
+
+  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId,String plantCode);
 }

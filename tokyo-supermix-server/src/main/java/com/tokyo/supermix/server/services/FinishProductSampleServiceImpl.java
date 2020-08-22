@@ -63,15 +63,15 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       }
     }
     finishProductSample.setStatus(Status.NEW);
-    if (finishProductSample != null) {
-      emailNotification.sendFinishProductSampleEmail(finishProductSample);
-    }
     if (mixDesign.getStatus().equals(Status.NEW) || mixDesign.getStatus().equals(Status.PROCESS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
     } else if (mixDesign.getStatus().equals(Status.PASS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
     }
-    finishProductSampleRepository.save(finishProductSample);
+    FinishProductSample finishProductSampleObj =  finishProductSampleRepository.save(finishProductSample);       
+    if (finishProductSampleObj != null) {
+      emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
+    }
   }
   @Transactional()
   public void updateFinishProductSample(FinishProductSample finishProductSample) {
@@ -144,7 +144,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
-    return finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
+    return finishProductSampleRepository.findByMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 
   @Transactional(readOnly = true)
@@ -159,7 +159,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser) {
-    return finishProductSampleRepository.findByMixDesignPlantCodeIn(
+    return finishProductSampleRepository.findByMixDesignPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
   }
