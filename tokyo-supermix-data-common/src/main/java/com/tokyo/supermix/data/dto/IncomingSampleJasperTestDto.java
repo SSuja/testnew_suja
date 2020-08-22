@@ -1,15 +1,14 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 
 public class IncomingSampleJasperTestDto {
   private String testName;
   private String status;
   private Double average;
   private Date date;
-  private AcceptedValueDto acceptanceCriteria;
-
+  private AcceptedValueJasperDto acceptanceCriteria;
+  
   public String getTestName() {
     return testName;
   }
@@ -42,6 +41,7 @@ public class IncomingSampleJasperTestDto {
     this.date = date;
   }
 
+<<<<<<< HEAD
   public AcceptedValueDto getAcceptanceCriteria() {
     return acceptanceCriteria;
   }
@@ -51,3 +51,15 @@ public class IncomingSampleJasperTestDto {
   }
 
 }
+=======
+  public AcceptedValueJasperDto getAcceptanceCriteria() {
+    return acceptanceCriteria;
+  }
+
+  public void setAcceptanceCriteria(AcceptedValueJasperDto acceptanceCriteria) {
+    this.acceptanceCriteria = acceptanceCriteria;
+  }
+
+  
+}
+>>>>>>> 53bca6f8aa899dae5c483e0d42f0694262370345

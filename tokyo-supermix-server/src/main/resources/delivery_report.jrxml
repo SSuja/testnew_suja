@@ -16,8 +16,8 @@
 		<field name="testName" class="java.lang.String"/>
 		<field name="average" class="java.lang.Double"/>
 		<field name="status" class="java.lang.String"/>
-		<field name="acceptanceCriteria.minValue" class="java.lang.Double"/>
-		<field name="acceptanceCriteria.maxValue" class="java.lang.Double"/>
+		<field name="acceptanceCriteria.minValue" class="java.lang.String"/>
+		<field name="acceptanceCriteria.maxValue" class="java.lang.String"/>		
 		<field name="date" class="java.sql.Date"/>
 	</subDataset>
 	<parameter name="datasource1" class="java.util.List"/>
@@ -230,6 +230,24 @@
 								<font fontName="Times New Roman" size="11"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="272" y="2" width="44" height="45" uuid="994c1696-6144-408c-b419-95c3c6b8362a">
+								<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a9814d-ecb4-424f-aea8-cad246f112b5"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Times New Roman" size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{acceptanceCriteria.minValue}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="331" y="2" width="54" height="45" uuid="bae8d898-8399-4ca2-a4d1-35572e85bc5e">
+								<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40a9814d-ecb4-424f-aea8-cad246f112b5"/>
+							</reportElement>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font fontName="Times New Roman" size="11"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{acceptanceCriteria.maxValue}]]></textFieldExpression>
 						</textField>
 						<staticText>
 							<reportElement x="322" y="2" width="3" height="45" uuid="46757c46-ff64-460b-98ee-70b9f2be5ec5"/>

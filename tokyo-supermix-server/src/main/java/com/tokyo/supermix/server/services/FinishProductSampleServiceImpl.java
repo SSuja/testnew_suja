@@ -68,12 +68,11 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     } else if (mixDesign.getStatus().equals(Status.PASS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
     }
-    FinishProductSample finishProductSampleObj = finishProductSampleRepository.save(finishProductSample);
+    FinishProductSample finishProductSampleObj =  finishProductSampleRepository.save(finishProductSample);       
     if (finishProductSampleObj != null) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
   }
-  
   @Transactional()
   public void updateFinishProductSample(FinishProductSample finishProductSample) {
     finishProductSampleRepository.save(finishProductSample);

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AbbrevationAndValueDto;
+import com.tokyo.supermix.data.dto.AcceptedValueJasperDto;
 import com.tokyo.supermix.data.dto.ConcreteTestReportDto;
 import com.tokyo.supermix.data.dto.CubeTestReportDto;
 import com.tokyo.supermix.data.dto.FinishProductTestReportDetailDto;
@@ -967,6 +968,8 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleTestDtoList;
   }
 
+
+
   @Transactional(readOnly = true)
   public IncomingSampleJasperDeliveryDto getIncomingSampleJasperSummaryReport1(
       String incomingSampleCode) {
@@ -1014,72 +1017,93 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleJasperTestDtoList;
   }
 
-  private AcceptedValueDto getAcceptedCriteriaDetailsNew(Long testConfigureId) {
-    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
+  private AcceptedValueJasperDto getAcceptedCriteriaDetailsNew(Long testConfigureId) {
     List<AcceptedValue> acceptedValueList =
         acceptedValueRepository.findByTestConfigureId(testConfigureId);
-    AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
+    AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
     acceptedValueList.forEach(values -> {
       if (values.getConditionRange() == Condition.BETWEEN) {
         acceptedValueDtos.setCondition(values.getConditionRange());
-        acceptedValueDtos.setMaxValue(values.getMaxValue());
-        acceptedValueDtos.setMinValue(values.getMinValue());
-      } else if (values.getConditionRange() == Condition.EQUAL
-          || values.getConditionRange() == Condition.GREATER_THAN
-          || values.getConditionRange() == Condition.LESS_THAN) {
-        acceptedValueDtos.setValue(values.getValue());
+        acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
+        acceptedValueDtos.setMinValue(values.getMinValue().toString());
+      } else if (values.getConditionRange() == Condition.EQUAL) {
+        acceptedValueDtos.setMinValue("Equal to");
+        acceptedValueDtos.setMaxValue(values.getValue().toString());
+        acceptedValueDtos.setCondition(values.getConditionRange());
+      } else if (values.getConditionRange() == Condition.GREATER_THAN) {
+        acceptedValueDtos.setMinValue("Greater than");
+        acceptedValueDtos.setMaxValue(values.getValue().toString());
+        acceptedValueDtos.setCondition(values.getConditionRange());
+      } else if (values.getConditionRange() == Condition.LESS_THAN) {
+        acceptedValueDtos.setMinValue("Less than");
+        acceptedValueDtos.setMaxValue(values.getValue().toString());
         acceptedValueDtos.setCondition(values.getConditionRange());
       }
     });
     return acceptedValueDtos;
   }
 
-  private AcceptedValueDto getMaterialValueIsNullNew(Long testConfigureId) {
-    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
+  private AcceptedValueJasperDto getMaterialValueIsNullNew(Long testConfigureId) {
     List<MaterialAcceptedValue> materialAcceptedValues =
         materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
     List<MaterialTest> materialTestList =
         materialTestRepository.findByTestConfigureId(testConfigureId);
-    AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-    materialAcceptedValues.forEach(materialAccepted -> {
-      if (materialTestList.get(0).getIncomingSample().getRawMaterial().getId() == materialAccepted
+    AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
+    materialAcceptedValues.forEach(values -> {
+      if (materialTestList.get(0).getIncomingSample().getRawMaterial().getId() == values
           .getRawMaterial().getId()) {
-        if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
-          acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-          acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
-          acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-          acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
-        } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-            || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-            || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
-          acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-          acceptedValueDto.setValue(materialAccepted.getValue());
-          acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
-        }
+        if (values.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
+          acceptedValueDtos.setMinValue(values.getMinValue().toString());
+          acceptedValueDtos.setMaterial(values.getRawMaterial().getName());
+        }  else if (values.getConditionRange() == Condition.EQUAL) {
+          acceptedValueDtos.setMinValue("Equal to");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.GREATER_THAN) {
+          acceptedValueDtos.setMinValue("Greater than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDtos.setMinValue("Less than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }   
       }
-
     });
-    return acceptedValueDto;
+    return acceptedValueDtos;
   }
 
-  private AcceptedValueDto getMaterialAcceptedValueDtoNEW(Long testConfigureId,
+  private AcceptedValueJasperDto getMaterialAcceptedValueDtoNEW(Long testConfigureId,
       Long rawMaterialId) {
-    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
-    List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
+      List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
         .findByTestConfigureIdAndTestConfigureRawMaterialId(testConfigureId, rawMaterialId);
-    AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-    materialAcceptedValues.forEach(materialAccepted -> {
-      if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
-        acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-        acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
-        acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-      } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-          || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-          || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
-        acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-        acceptedValueDto.setValue(materialAccepted.getValue());
-      }
+      AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
+      materialAcceptedValues.forEach(values -> {
+        if (values.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
+          acceptedValueDtos.setMinValue(values.getMinValue().toString());
+        }  else if (values.getConditionRange() == Condition.EQUAL) {
+          acceptedValueDtos.setMinValue("Equal to");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.GREATER_THAN) {
+          acceptedValueDtos.setMinValue("Greater than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }
+        else if ( values.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDtos.setMinValue("Less than");
+          acceptedValueDtos.setMaxValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+            }   
+      
     });
-    return acceptedValueDto;
+    return acceptedValueDtos;
   }
 }
