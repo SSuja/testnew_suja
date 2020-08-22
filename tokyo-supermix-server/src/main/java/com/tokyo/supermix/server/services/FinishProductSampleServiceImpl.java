@@ -73,7 +73,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
   }
-
   @Transactional()
   public void updateFinishProductSample(FinishProductSample finishProductSample) {
     finishProductSampleRepository.save(finishProductSample);

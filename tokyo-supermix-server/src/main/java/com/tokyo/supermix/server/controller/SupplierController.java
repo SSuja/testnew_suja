@@ -104,7 +104,6 @@ public class SupplierController {
 
   @PutMapping(value = EndpointURI.SUPPLIER)
   public ResponseEntity<Object> updateSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
-
     if (supplierService.isSupplierExist(supplierDto.getId())) {
       if (supplierService.isUpdatedEmailExist(supplierDto.getId(), supplierDto.getEmail())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,

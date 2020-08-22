@@ -47,7 +47,5 @@ public class IncomingSampleJasperTestDto {
 
   public void setAcceptanceCriteria(AcceptedValueJasperDto acceptanceCriteria) {
     this.acceptanceCriteria = acceptanceCriteria;
-  }
-
-  
+  } 
 }

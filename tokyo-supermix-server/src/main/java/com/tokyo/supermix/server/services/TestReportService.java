@@ -33,6 +33,7 @@ public interface TestReportService {
 
   public ConcreteTestReportDto getConcreteTestReportByPlant(String finishProductTestCode,
       String plantCode);
+
   public ConcreteTestReportDto getConcreteTestReport(String finishProductTestCode);
 
   public List<MaterialTestTrialResultDto> getMaterialTestTrailByMaterialTestCode(
