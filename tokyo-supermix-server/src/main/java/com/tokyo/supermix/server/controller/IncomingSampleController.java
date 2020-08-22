@@ -202,4 +202,11 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_TEST_ID)
+  public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable Long testId) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getIncomingSampleBytestId(testId),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 }

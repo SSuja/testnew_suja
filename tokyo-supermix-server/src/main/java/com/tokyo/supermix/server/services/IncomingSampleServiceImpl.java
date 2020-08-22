@@ -11,10 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -30,6 +35,12 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  Mapper mapper;
 
   @Transactional
   public void createIncomingSample(IncomingSample incomingSample) {
@@ -139,5 +150,20 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   @Transactional(readOnly = true)
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
     return incomingSampleRepository.findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Override
+  public List<IncomingSampleResponseDto> getIncomingSampleBytestId(Long testId) {
+
+    List<MaterialAcceptedValue> materialAcceptedValueList = materialAcceptedValueRepository
+        .findByTestConfigureId(testConfigureRepository.findByTestId(testId).getId());
+    List<IncomingSampleResponseDto> IncomingSampleResponseDtolist =
+        new ArrayList<IncomingSampleResponseDto>();
+    materialAcceptedValueList.forEach(materialAcceptedValue -> {
+      List<IncomingSampleResponseDto> incomingSampleList = incomingSampleRepository
+          .findByRawMaterialId(materialAcceptedValue.getRawMaterial().getId());
+      IncomingSampleResponseDtolist.addAll(incomingSampleList);
+    });
+    return IncomingSampleResponseDtolist;
   }
 }

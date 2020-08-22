@@ -247,6 +247,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_PLANT = INCOMING_SAMPLE + PLANT_WISE;
   public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String INCOMING_SAMPLES_BY_TEST_ID =
+      INCOMING_SAMPLES + SLASH + "test" + SLASH + "{testId}";
   /*
    * Mix design apis
    * 

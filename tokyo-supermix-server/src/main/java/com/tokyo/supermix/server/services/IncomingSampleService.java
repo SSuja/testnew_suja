@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.security.CurrentUser;
@@ -38,4 +39,6 @@ public interface IncomingSampleService {
       String plantCode);
 
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
+  
+  public List<IncomingSampleResponseDto> getIncomingSampleBytestId(Long testId);
 }

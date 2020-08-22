@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 
@@ -51,4 +52,6 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
       Long materialSubCategoryId, String plantCode);
+  
+  List<IncomingSampleResponseDto> findByRawMaterialId(Long RawMaterialId);
 }
