@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto.report;
 
 public class MaterialResult {
   private String testParameterName;
+  private String testName;
   private Double average;
 
   public String getTestParameterName() {
@@ -18,5 +19,13 @@ public class MaterialResult {
 
   public void setAverage(Double average) {
     this.average = average;
+  }
+
+  public String getTestName() {
+    return testName;
+  }
+
+  public void setTestName(String testName) {
+    this.testName = testName;
   }
 }

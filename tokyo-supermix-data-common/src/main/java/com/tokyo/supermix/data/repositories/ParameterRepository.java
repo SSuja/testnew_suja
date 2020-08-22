@@ -15,4 +15,6 @@ public interface ParameterRepository
   boolean existsByParameterType(ParameterType parameterType);
 
   List<Parameter> findAllByOrderByIdDesc();
+  
+  boolean existsByNameAndParameterType(String name,ParameterType parameterType);
 }

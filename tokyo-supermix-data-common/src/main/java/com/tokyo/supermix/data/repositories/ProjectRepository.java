@@ -7,7 +7,6 @@ import com.tokyo.supermix.data.entities.Project;
 
 public interface ProjectRepository
     extends JpaRepository<Project, String>, QuerydslPredicateExecutor<Project> {
-  boolean existsByName(String name);
 
   List<Project> findByPlantCode(String plantCode);
 
@@ -18,4 +17,10 @@ public interface ProjectRepository
   List<Project> findByCustomerId(Long customerId);
 
   boolean existsByCustomerId(Long customerId);
+
+  List<Project> findByCustomerIdAndPlantCode(Long customerId, String plantCode);
+
+  public boolean existsByNameAndCustomerIdAndPlantCode(String name, Long customerId,
+      String plantCode);
+  Project findByCode(String code);
 }

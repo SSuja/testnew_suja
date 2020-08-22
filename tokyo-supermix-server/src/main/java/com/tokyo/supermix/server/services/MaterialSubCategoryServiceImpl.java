@@ -48,10 +48,12 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
     return materialSubCategoryRepository.existsByName(name);
   }
 
-  @Transactional(readOnly = true)
-  public boolean isUpdatedMaterialSubCategoryNameExist(Long id, String name) {
+  public boolean isUpdatedMaterialSubCategoryNameExist(Long id, String name,
+      Long materialCategoryId) {
     if ((!getMaterialSubCategoryById(id).getName().equalsIgnoreCase(name))
-        && (isMaterialSubCategoryNameExist(name))) {
+        && (!getMaterialSubCategoryById(id).getMaterialCategory().getId()
+            .equals(materialCategoryId))
+        && (isMaterialCategoryExist(name, materialCategoryId))) {
       return true;
     }
     return false;
@@ -82,7 +84,9 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 
   @Transactional(readOnly = true)
   public boolean isMaterialCategoryExist(String name, Long materialCategoryId) {
-    return materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name,
-        materialCategoryId);
+    if (materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name, materialCategoryId)) {
+      return true;
+    }
+    return false;
   }
 }

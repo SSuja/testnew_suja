@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.sql.Date;
 import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 
@@ -10,10 +11,19 @@ public class FinishProductSampleResponseDto {
   private EquipmentDto equipment;
   private MixDesignResponseDto mixDesign;
   private Status status;
+  private Date date;
   private String createdAt;
   private String updatedAt;
   private ProjectResponseDto project;
   private FinishProductTestType finishProductTestType;
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
 
   public String getCode() {
     return code;

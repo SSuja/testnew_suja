@@ -9,13 +9,14 @@ import com.tokyo.supermix.data.entities.FinishProductTrial;
 public interface FinishProductTrialRepository extends JpaRepository<FinishProductTrial, Long> {
 
 
-  List<FinishProductTrial> findByFinishProductTestCode(String finishProductTestCode);
+  List<FinishProductTrial> findByFinishProductTestCodeOrderByUpdatedAtDesc(
+      String finishProductTestCode);
 
   boolean existsByFinishProductTestCode(String finishProductTestCode);
 
   List<FinishProductTrial> findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
       List<String> plantCodes);
-  
+
   List<FinishProductTrial> findByFinishProductTestFinishProductSampleMixDesignPlantCode(
       String plantCode);
 }

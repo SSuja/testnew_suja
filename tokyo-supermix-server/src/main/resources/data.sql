@@ -329,7 +329,7 @@ INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_c
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('8', 0, 'Employee Creation', 0);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('9', 0, 'Incoming Sample Creation', 0);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('10', 0, 'Finish Product Sample Creation', 0);
-INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('11', 0, 'Finish Product Sample Issue For Customer', 0);
+INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('11', 0, 'Finish Product Sample Issue', 0);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('12', 0, 'Customer Creation', 1);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('13', 0, 'Process Sample Creation', 0);
 INSERT INTO `tokyo-supermix`.email_points (id, active, name, admin_level_email_configuration) VALUES ('14', 0, 'Mix Design Creation', 0);

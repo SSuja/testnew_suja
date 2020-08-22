@@ -23,4 +23,6 @@ public interface RawMaterialService {
   public Page<RawMaterial> searchRawMaterial(Predicate predicate, int page, int size);
 
   public List<RawMaterial> getAllActiveRawMaterials();
+
+  public List<RawMaterial> getByMaterialSubCategoryId(Long materialSubCategoryId);
 }

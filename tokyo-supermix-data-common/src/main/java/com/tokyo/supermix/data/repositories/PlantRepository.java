@@ -13,6 +13,8 @@ public interface PlantRepository
   boolean existsByCode(String code);
 
   Plant findPlantByCode(String code);
-  
+
   List<Plant> findByCodeIn(List<String> plantCodes);
+
+  Plant findByName(String name);
 }

@@ -11,8 +11,6 @@ import com.tokyo.supermix.security.UserPrincipal;
 public interface ProjectService {
   public void saveProject(Project project);
 
-  public boolean isNameExist(String name);
-
   public List<Project> getAllProjects();
 
   public List<Project> getAllProjectsByPlant(UserPrincipal currentUser);
@@ -23,8 +21,6 @@ public interface ProjectService {
 
   public Project getProjectByCode(String code);
 
-  public boolean isUpdatedProjectExist(String code, String name);
-
   public Page<Project> searchProject(Predicate predicate, int size, int page);
 
   public List<Project> getProjectByPlantCode(String plantCode);
@@ -32,4 +28,8 @@ public interface ProjectService {
   public List<Project> getAllProjectsByCustomer(Long customerId);
 
   public boolean isCustomerExistsByProject(Long customerId);
+
+  public List<Project> getAllProjectsByCustomerAndPlant(Long customerId, String plantCode);
+
+  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId,String plantCode);
 }

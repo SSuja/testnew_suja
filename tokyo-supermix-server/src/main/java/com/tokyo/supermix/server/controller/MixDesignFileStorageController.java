@@ -6,7 +6,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.tokyo.supermix.EndpointURI;
-import com.tokyo.supermix.config.EnrollWriter;
-import com.tokyo.supermix.config.MixDesignFillManager;
-import com.tokyo.supermix.config.MixDesignLayouter;
+import com.tokyo.supermix.config.export.EnrollWriter;
+import com.tokyo.supermix.config.export.MixDesignFillManager;
+import com.tokyo.supermix.config.export.MixDesignLayouter;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -35,13 +34,13 @@ public class MixDesignFileStorageController {
   public ResponseEntity<Object> downloadXLSProfile(HttpServletResponse response)
       throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
-    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.WORK_SHEET);
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.MIXDESIGN_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     MixDesignLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     MixDesignFillManager.fillReport(worksheet, startRowIndex, startColIndex,
         mixDesignProportionRepository.getMixDesign());
-    String fileName = FileStorageConstants.FILE_NAME;
+    String fileName = FileStorageConstants.MIXDESIGN_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");
     EnrollWriter.write(response, worksheet);
@@ -51,12 +50,11 @@ public class MixDesignFileStorageController {
   }
 
   @PostMapping(value = EndpointURI.UPLOAD_MIXDESIGN)
-  public ResponseEntity<Object> uploadMultipartFile(@RequestParam("file") MultipartFile file,
-      Model model) {
+  public ResponseEntity<Object> uploadMultipartFile(@RequestParam("file") MultipartFile file) {
     fileStorageService.uploadCsv(file);
     fileStorageService.importMixDesgin(file);
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);
   }
 }

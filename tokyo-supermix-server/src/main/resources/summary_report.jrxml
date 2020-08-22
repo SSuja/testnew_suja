@@ -16,8 +16,8 @@
 		<field name="testName" class="java.lang.String"/>
 		<field name="average" class="java.lang.Double"/>
 		<field name="status" class="java.lang.String"/>
-		<field name="acceptanceCriteria.minValue" class="java.lang.Double"/>
-		<field name="acceptanceCriteria.maxValue" class="java.lang.Double"/>
+		<field name="acceptanceCriteria.minValue" class="java.lang.String"/>
+		<field name="acceptanceCriteria.maxValue" class="java.lang.String"/>
 		<field name="date" class="java.sql.Date"/>
 	</subDataset>
 	<parameter name="datasource1" class="java.util.List"/>

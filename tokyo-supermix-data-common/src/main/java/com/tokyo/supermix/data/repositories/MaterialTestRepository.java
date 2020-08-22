@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface MaterialTestRepository
@@ -35,8 +36,11 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByIncomingSampleCodeAndStatus(String incomingSampleCode, Status status);
 
-  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureTestName(String incomingSampleCode,
-      String testName);
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureReportFormatAndIncomingSamplePlantCode(
+      String incomingSampleCode, ReportFormat reportFormat, String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureReportFormat(String incomingSampleCode,
+      ReportFormat reportFormat);
 
   boolean existsByIncomingSampleCodeAndStatusAndTestConfigureTestName(String incomingSampleCode,
       Status status, String testName);
@@ -51,4 +55,16 @@ public interface MaterialTestRepository
   List<MaterialTest> findByIncomingSampleCodeContaining(String incomingSampleCode);
 
   boolean existsByIncomingSamplePlantCode(String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndIncomingSamplePlantCode(String incomingSampleCode,
+      String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureId(String incomingSampleCode,
+      Long testConfigId);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
+      String incomingSampleCode, Long testConfigId, String plantCode);
+
+  List<MaterialTest> findByTestConfigureIdAndIncomingSampleRawMaterialId(Long testConfigureId,
+      Long rawMaterialId);
 }

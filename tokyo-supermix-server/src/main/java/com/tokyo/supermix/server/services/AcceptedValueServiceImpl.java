@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 
 @Service
@@ -82,5 +83,28 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   @Transactional(readOnly = true)
   public List<AcceptedValue> findByTestConfigure(Long testConfigureId) {
     return acceptedValueRepository.findByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAcceptedValueByTestConfigureIdAndTestParameter(Long testConfigureId,
+      Long testParameterId) {
+    return acceptedValueRepository.existsByTestConfigureIdAndTestParameterId(testConfigureId,
+        testParameterId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isCheckValidation(AcceptedValue acceptedValue) {
+    if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+      if (acceptedValue.getMaxValue() == null || acceptedValue.getMinValue() == null) {
+        return true;
+      }
+    } else if (acceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+        || acceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+        || acceptedValue.getConditionRange().equals(Condition.EQUAL)) {
+      if (acceptedValue.getValue() == null) {
+        return true;
+      }
+    }
+    return false;
   }
 }

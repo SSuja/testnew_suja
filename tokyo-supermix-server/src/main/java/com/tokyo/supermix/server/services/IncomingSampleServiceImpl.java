@@ -50,7 +50,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
     incomingSample.setDate(date);
     IncomingSample incomingSampleObj = incomingSampleRepository.save(incomingSample);
-    if ( incomingSampleObj!= null) {
+    if (incomingSampleObj != null) {
       emailNotification.sendIncomingSampleEmail(incomingSampleObj);
     }
   }
@@ -119,13 +119,25 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode) {
-    return incomingSampleRepository.findByPlantCode(plantCode);
+    return incomingSampleRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser) {
-    return incomingSampleRepository.findByPlantCodeIn(
+    return incomingSampleRepository.findByPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_INCOMING_SAMPLE));
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+      String plantCode) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
+    return incomingSampleRepository.findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
   }
 }

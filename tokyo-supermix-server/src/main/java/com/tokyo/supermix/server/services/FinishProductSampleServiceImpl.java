@@ -46,11 +46,13 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       String plantPrefix = mixDesignRepository.getOne(finishProductSample.getMixDesign().getCode())
           .getPlant().getCode();
       String codePrefix = "";
-      if (mixDesign.getStatus().equals(Status.NEW)) {
+      if (mixDesign.getStatus().equals(Status.NEW)
+          || mixDesign.getStatus().equals(Status.PROCESS)) {
         codePrefix = plantPrefix + "-PP-";
       } else if (mixDesign.getStatus().equals(Status.PASS)) {
         codePrefix = plantPrefix + "-PO-";
       }
+      mixDesign.setCheckDepend(true);
       List<FinishProductSample> finishProductSampleList =
           finishProductSampleRepository.findByCodeContaining(codePrefix);
       if (finishProductSampleList.size() == 0) {
@@ -60,19 +62,19 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             codePrefix + String.format("%04d", maxNumberFromCode(finishProductSampleList) + 1));
       }
     }
-
     finishProductSample.setStatus(Status.NEW);
-    FinishProductSample finishProductSampleObj =
-        finishProductSampleRepository.save(finishProductSample);
-    if (finishProductSampleObj != null) {
-      emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
-    }
-
-    if (mixDesign.getStatus().equals(Status.NEW)) {
+    if (mixDesign.getStatus().equals(Status.NEW) || mixDesign.getStatus().equals(Status.PROCESS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
     } else if (mixDesign.getStatus().equals(Status.PASS)) {
       finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
     }
+    FinishProductSample finishProductSampleObj =  finishProductSampleRepository.save(finishProductSample);       
+    if (finishProductSampleObj != null) {
+      emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
+    }
+  }
+  @Transactional()
+  public void updateFinishProductSample(FinishProductSample finishProductSample) {
     finishProductSampleRepository.save(finishProductSample);
   }
 
@@ -142,7 +144,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
-    return finishProductSampleRepository.findByMixDesignPlantCode(plantCode);
+    return finishProductSampleRepository.findByMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
 
   @Transactional(readOnly = true)
@@ -157,7 +159,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser) {
-    return finishProductSampleRepository.findByMixDesignPlantCodeIn(
+    return finishProductSampleRepository.findByMixDesignPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
   }

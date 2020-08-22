@@ -373,6 +373,8 @@ public class ValidationFailureStatusCodes {
 
   @Value("${employeeDto.firstName.empty")
   private String employeeFirstNameIsEmpty;
+  @Value("${validation.employee.employeeIsEnableIsTrue}")
+  private String employeeIsEnableIsTrue;
 
   public String getEmployeeNotExist() {
     return employeeNotExist;
@@ -404,6 +406,15 @@ public class ValidationFailureStatusCodes {
 
   public void setEmployeeFirstNameIsEmpty(String employeeFirstNameIsEmpty) {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
+  }
+
+  
+  public String getEmployeeIsEnableIsTrue() {
+    return employeeIsEnableIsTrue;
+  }
+
+  public void setEmployeeIsEnableIsTrue(String employeeIsEnableIsTrue) {
+    this.employeeIsEnableIsTrue = employeeIsEnableIsTrue;
   }
 
   // unit
@@ -1072,6 +1083,9 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.testParameter.alreadyExist}")
   private String testParameterAlreadyExist;
 
+  @Value("${testParameterRequestDto.abbreviation.alreadyExist}")
+  private String abbreviationAlreadyExist;
+
   public String getTestParameterNotExist() {
     return testParameterNotExist;
   }
@@ -1086,6 +1100,14 @@ public class ValidationFailureStatusCodes {
 
   public void setTestParameterAlreadyExist(String testParameterAlreadyExist) {
     this.testParameterAlreadyExist = testParameterAlreadyExist;
+  }
+
+  public String getAbbreviationAlreadyExist() {
+    return abbreviationAlreadyExist;
+  }
+
+  public void setAbbreviationAlreadyExist(String abbreviationAlreadyExist) {
+    this.abbreviationAlreadyExist = abbreviationAlreadyExist;
   }
 
   // for ProcessSample
@@ -1233,15 +1255,26 @@ public class ValidationFailureStatusCodes {
   // for acceptedValue
   @Value("${validation.acceptedValue.notExists}")
   private String acceptedValueNotExist;
-  @Value("${validation.acceptedValue.alreadyTestIdExists}")
-  private String acceptedValueTestIdAlreadyExist;
+  @Value("${validation.acceptedValue.alreadyExists}")
+  private String acceptedValueAlreadyExist;
+  @Value("${validation.acceptedValue.notNull}")
+  private String acceptedValueNotNull;
 
-  public String getAcceptedValueTestIdAlreadyExist() {
-    return acceptedValueTestIdAlreadyExist;
+
+  public String getAcceptedValueNotNull() {
+    return acceptedValueNotNull;
   }
 
-  public void setAcceptedValueTestIdAlreadyExist(String acceptedValueTestIdAlreadyExist) {
-    this.acceptedValueTestIdAlreadyExist = acceptedValueTestIdAlreadyExist;
+  public void setAcceptedValueNotNull(String acceptedValueNotNull) {
+    this.acceptedValueNotNull = acceptedValueNotNull;
+  }
+
+  public String getAcceptedValueAlreadyExist() {
+    return acceptedValueAlreadyExist;
+  }
+
+  public void setAcceptedValueAlreadyExist(String acceptedValueAlreadyExist) {
+    this.acceptedValueAlreadyExist = acceptedValueAlreadyExist;
   }
 
   public String getAcceptedValueNotExist() {

@@ -17,9 +17,10 @@ public class FinishProductParameterResultServiceImpl
   public List<FinishProductParameterResult> getallFinishProductParameterResults() {
     return finishProductParameterResultRepository.findAll();
   }
+
   @Transactional(readOnly = true)
   public List<FinishProductParameterResult> getFinishProductResult(String finishProductTestCode) {
     return finishProductParameterResultRepository
-        .findByFinishProductTestCode(finishProductTestCode);
+        .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode);
   }
 }

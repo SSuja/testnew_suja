@@ -17,6 +17,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductAcceptedValueRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductAcceptedValueResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -46,6 +47,19 @@ public class FinishProductAcceptedValueController {
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_ACCEPTED_VALUE)
   public ResponseEntity<Object> createFinishProductAcceptedValue(
       @Valid @RequestBody FinishProductAcceptedValueRequestDto finishProductAcceptedValueRequestDto) {
+    TestParameter testParameter = testParameterService
+        .getTestParameterById(finishProductAcceptedValueRequestDto.getTestParameterId());
+    if (finishProductAcceptedValueService.isTestParameterAndTestconfigure(
+        testParameter.getTestConfigure().getId(),
+        finishProductAcceptedValueRequestDto.getTestParameterId())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    if (finishProductAcceptedValueService.isCheckValidation(
+        mapper.map(finishProductAcceptedValueRequestDto, FinishProductAcceptedValue.class))) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueNotNull()), HttpStatus.BAD_REQUEST);
+    }
     finishProductAcceptedValueService.saveFinishProductAcceptedValue(
         mapper.map(finishProductAcceptedValueRequestDto, FinishProductAcceptedValue.class));
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

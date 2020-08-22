@@ -10,7 +10,8 @@ public interface TestConfigureRepository
     extends JpaRepository<TestConfigure, Long>, QuerydslPredicateExecutor<TestConfigure> {
   List<TestConfigure> findByCoreTest(boolean coreTest);
 
-  boolean existsByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
+  boolean existsByTestIdAndMaterialSubCategoryIdAndRawMaterialId(Long testId,
+      Long materialSubCategoryId, Long rawMaterialId);
 
   List<TestConfigure> findByTestType(MainType testType);
 
@@ -24,4 +25,10 @@ public interface TestConfigureRepository
       MainType testType);
 
   TestConfigure findByMaterialCategoryName(String materialCategoryName);
+  
+  List<TestConfigure> findByRawMaterialIdAndCoreTestTrue(Long rawMaterialId);
+ 
+  boolean existsByRawMaterialId(Long rawMaterialId);
+  
+  List<TestConfigure> findByMaterialCategoryId(Long materialCategoryId);
 }

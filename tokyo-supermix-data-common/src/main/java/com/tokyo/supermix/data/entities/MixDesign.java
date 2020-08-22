@@ -28,6 +28,15 @@ public class MixDesign extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialCategoryId", nullable = false)
   private MaterialCategory materialCategory;
+  private boolean checkDepend;
+
+  public boolean isCheckDepend() {
+    return checkDepend;
+  }
+
+  public void setCheckDepend(boolean checkDepend) {
+    this.checkDepend = checkDepend;
+  }
 
   public String getCode() {
     return code;

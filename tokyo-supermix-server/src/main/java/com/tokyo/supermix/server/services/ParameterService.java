@@ -28,4 +28,6 @@ public interface ParameterService {
   public boolean isParameterTypeExists(ParameterType parameterType);
   
   public List<Parameter> getAllParametersByDecending();
+  
+  public boolean isParameterNameAndParameterTypeExists(String name,ParameterType parameterType);
 }

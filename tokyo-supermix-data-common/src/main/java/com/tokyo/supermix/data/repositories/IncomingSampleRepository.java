@@ -30,7 +30,7 @@ public interface IncomingSampleRepository
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
       Long materialSubCategoryId, Date date, Status status);
 
-  List<IncomingSample> findByPlantCode(String plantCode);
+  List<IncomingSample> findByPlantCodeOrderByUpdatedAtDesc(String plantCode);
 
   List<IncomingSample> findByCodeContaining(String code);
 
@@ -39,11 +39,16 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByStatusAndRawMaterialIdAndDate(Status status, Long id, Date sqlDate);
 
-  List<IncomingSample> findByPlantCodeIn(List<String> permissionPlantCodeByCurrentUser);
+  List<IncomingSample> findByPlantCodeInOrderByUpdatedAtDesc(List<String> permissionPlantCodeByCurrentUser);
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndStatusAndPlantCode(
       Long materialSubCategoryId, Date sqlDate, Status status, String plantCode);
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(
       Long materialSubCategoryId, Date sqlDate, String plantCode);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
+      Long materialSubCategoryId, String plantCode);
 }

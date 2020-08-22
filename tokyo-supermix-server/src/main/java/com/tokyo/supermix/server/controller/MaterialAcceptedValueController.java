@@ -49,14 +49,21 @@ public class MaterialAcceptedValueController {
   public ResponseEntity<Object> createMaterialAcceptedValue(
       @Valid @RequestBody List<MaterialAcceptedValueRequestDto> materialAcceptedValueRequestDtoList) {
     for (MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto : materialAcceptedValueRequestDtoList) {
-//      if (materialAcceptedValueService.isDuplicateEntryExist(
-//          materialAcceptedValueRequestDto.getTestConfigureId(),
-//          materialAcceptedValueRequestDto.getRawMaterialId())) {
-//        return new ResponseEntity<>(
-//            new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
-//                validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
-//            HttpStatus.BAD_REQUEST);
-//      }
+      if (materialAcceptedValueService.isTestConfigureIdAndRawMaterialIdAndTestParameterId(
+          materialAcceptedValueRequestDto.getTestConfigureId(),
+          materialAcceptedValueRequestDto.getRawMaterialId(),
+          materialAcceptedValueRequestDto.getTestParameterId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+                validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+    }
+
+    if (materialAcceptedValueService.isCheckValidation(
+        mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class))) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+          validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
     materialAcceptedValueService.saveAcceptedValue(
         mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
@@ -118,8 +125,8 @@ public class MaterialAcceptedValueController {
             materialAcceptedValueRequestDto.getTestConfigureId(),
             materialAcceptedValueRequestDto.getRawMaterialId())) {
           return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-                  validationFailureStatusCodes.getAcceptedValueTestIdAlreadyExist()),
+              new ValidationFailureResponse(Constants.RAW_MATERIAL,
+                  validationFailureStatusCodes.getRawMaterialAlreadyExist()),
               HttpStatus.BAD_REQUEST);
         }
         materialAcceptedValueService.updateMaterialAcceptedValue(

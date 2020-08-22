@@ -56,6 +56,7 @@ import com.tokyo.supermix.server.services.EmailRecipientService;
 import com.tokyo.supermix.server.services.EmailService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.MailGroupConstance;
+import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 
 @Configuration
 public class EmailNotification {
@@ -104,7 +105,6 @@ public class EmailNotification {
   @Autowired
   private PlantRoleRepository plantRoleRepository;
 
-
   @Scheduled(cron = "${mail.notificationTime.plantEquipment}")
   public void alertForEquipmentCalibration() {
     final LocalDateTime today = LocalDateTime.now();
@@ -117,31 +117,30 @@ public class EmailNotification {
           .getByEmailGroup(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP, plantCode);
       notificationDaysList.forEach(notificationday -> {
         if (noOfDays == notificationday.getDays()) {
-          sendEquipmentMail(calibration);
+          sendEquipmentMail(calibration, noOfDays);
         }
       });
     });
   }
 
-  private void sendEquipmentMail(PlantEquipmentCalibration calibration) {
+  private void sendEquipmentMail(PlantEquipmentCalibration calibration, long noOfDays) {
     List<String> equipmentCalibrationEmailList =
         emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
             MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP,
             calibration.getPlantEquipment().getPlant().getCode());
-
     emailService.sendMail(
         equipmentCalibrationEmailList.toArray(new String[equipmentCalibrationEmailList.size()]),
         Constants.SUBJECT_EQUIPMENT_CALIBRATION,
         "Calibration Due date for the " + calibration.getPlantEquipment().getEquipment().getName()
-            + " remaining day" + calibration.getPlantEquipment().getPlant().getName());
+            + " remaining day - " + noOfDays);
   }
 
   @Scheduled(cron = "${mail.notificationTime.strengthTestMixDesign}")
   public void notifyStrengthTestForMixdesign() {
     final LocalDateTime today = LocalDateTime.now();
     finishProductSampleRepository.findAll().forEach(finishProductSample -> {
-      long noOfDays = ChronoUnit.DAYS.between(
-          finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
+      long noOfDays =
+          ChronoUnit.DAYS.between(finishProductSample.getDate().toLocalDate(), today.toLocalDate());
       String plantCode = finishProductSampleRepository.findById(finishProductSample.getCode()).get()
           .getMixDesign().getPlant().getCode();
       List<NotificationDays> notificationDaysList = emailNotificationDaysService
@@ -155,9 +154,8 @@ public class EmailNotification {
   }
 
   private void sendMixDesignEmail(FinishProductSample finishProductSample, long noOfDays) {
-    String mailBody = "The work order no is " + finishProductSample.getWorkOrderNo()
-        + ", created on " + finishProductSample.getDate() + "." + " reached " + noOfDays + "days "
-        + " Please test" + noOfDays + " days strength.";
+    String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample - "
+        + finishProductSample.getWorkOrderNo() + " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
         MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
         finishProductSample.getMixDesign().getPlant().getCode());
@@ -173,8 +171,7 @@ public class EmailNotification {
         customerRepository.findById(project.getCustomer().getId()).get().getName();
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-
-        String mailBody = project.getName() + " Project is Newly added for " + customerName + ".";
+        String mailBody = project.getName() + " Project is newly added for " + customerName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -255,7 +252,7 @@ public class EmailNotification {
         }
         String supplierCategories = categories.replaceAll(",$", ".");
         String mailBody =
-            "Supplier " + supplier.getName() + " Newly created under the " + supplierCategories;
+            "Supplier " + supplier.getName() + " newly created under the " + supplierCategories;
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -308,8 +305,8 @@ public class EmailNotification {
             supplierRepository.findById(incomingSample.getSupplier().getId()).get().getName();
         String rawMaterialName =
             rawMaterialRepository.findById(incomingSample.getRawMaterial().getId()).get().getName();
-        String mailBody = " New Incoming sample is created for  " + rawMaterialName
-            + " from the supplier " + suplierName + ".";
+        String mailBody = "New Incoming sample is created for  " + rawMaterialName
+            + " from the Supplier " + suplierName + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -321,15 +318,14 @@ public class EmailNotification {
 
   @Async
   public void sendFinishProductSampleEmail(FinishProductSample finishProductSample) {
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        finishProductSample.getMixDesign().getPlant().getCode(),
-        MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
+        mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        MixDesign mixDesign =
-            mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
-        String mailBody = "Finish Product sample created for mix design of " + mixDesign.getCode()
-            + " to the grade" + mixDesign.getTargetGrade() + " and Slump"
+        String mailBody = "Finish Product sample created for mix design - " + mixDesign.getCode()
+            + " to the grade " + mixDesign.getTargetGrade() + " and Slump"
             + mixDesign.getTargetSlump();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
@@ -404,8 +400,8 @@ public class EmailNotification {
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_CUSTOMER);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Customer, " + customer.getName() + " having email id "
-            + customer.getEmail() + " created ";
+        String mailBody =
+            "Customer " + customer.getName() + " newly added from " + customer.getAddress() + ".";
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -443,7 +439,7 @@ public class EmailNotification {
         String IncomingSample = incomingSampleRepository
             .findById(processSample.getIncomingSample().getCode()).get().getCode();
         String mailBody = "Material Load  is arrived from " + supplierName
-            + " for the Passed Incoming sample " + IncomingSample + ", " + rawMaterialName;
+            + " for the Passed Incoming sample - " + IncomingSample + ", " + rawMaterialName;
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotificationAndPlantCode(MailGroupConstance.CREATE_PROCESS_SAMPLE,
                 processSample.getIncomingSample().getPlant().getCode());
@@ -486,7 +482,7 @@ public class EmailNotification {
         if (plantEquipmentCalibration.getSupplier() != null) {
           String supplierName = supplierRepository
               .findById(plantEquipmentCalibration.getSupplier().getId()).get().getName();
-          String mailBody = equipmentName + " is calibrated by "
+          String mailBody = equipmentName + " is Calibrated by "
               + plantEquipmentCalibration.getCalibrationType() + " by the supplier," + supplierName
               + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
@@ -497,7 +493,7 @@ public class EmailNotification {
         } else {
           String userName = userRepository.findById(plantEquipmentCalibration.getUser().getId())
               .get().getUserName();
-          String mailBody = equipmentName + " is calibrated by "
+          String mailBody = equipmentName + " is Calibrated by "
               + plantEquipmentCalibration.getCalibrationType() + " by the user," + userName
               + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
@@ -572,14 +568,20 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,HttpServletRequest request) {
-  String[] empStrings= { employee.getEmail()};
+  public void sendEmployeeConformation(Employee employee, ConfirmationToken confirmationToken,
+      HttpServletRequest request) {
+    String[] empStrings = {employee.getEmail()};
+    String message = "To confirm your account " + "<a href=http://" + request.getServerName() + ":"
+        + request.getServerPort() + request.getContextPath() + "/api/v1/employee/confirmation/"
+        + confirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
+        + "#008CBA" + "}}>Click here</button>" + "</a>";
+    emailService.sendMailWithFormat(empStrings, Constants.SUBJECT_EMPLOYEE_CREATION, message);
+  }
 
-String message="To confirm your account "+"<a href=http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+
-"/api/v1/employee/confirmation/"+confirmationToken.getConfirmationToken()+">"+"<button style={{background-color:"+"#008CBA"+"}}>Click here</button>"+"</a>";
+  @Async
+  public void sendForgotConformation(User user, String token) {
+    emailService.sendMail(user.getEmail(), Constants.SUBJECT_FORGOT_PASSWORD,
+        PrivilegeConstants.MESSAGE_OF_FORGOT_PASSWORD + token);
 
-
-  emailService.sendMailWithFormat(empStrings, Constants.SUBJECT_EMPLOYEE_CREATION, message); 
-  
   }
 }

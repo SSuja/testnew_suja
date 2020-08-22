@@ -167,4 +167,14 @@ public class PlantRolePlantPermissionController {
         plantRolePlantPermissionServices.getCombine(userId, plantCode),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  @PutMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSIONS_BY_PLANT_ROLE_ID_AND_STATUS)
+  public ResponseEntity<Object> updateAllPlantPrivilage(@PathVariable Long plantRoleId,@PathVariable Boolean status ) {
+    if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
+    plantRolePlantPermissionServices.UpdatePlantRolePlantPermission(plantRoleId,status);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
+        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
