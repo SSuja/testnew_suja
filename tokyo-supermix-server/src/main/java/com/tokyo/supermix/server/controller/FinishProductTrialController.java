@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-
+import java.util.stream.Collectors;
+import javax.script.ScriptException;
 import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
@@ -21,8 +22,12 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialResponseDto;
+import com.tokyo.supermix.data.dto.ParameterResultDto;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -30,6 +35,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductTrialService;
+import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -46,6 +52,8 @@ public class FinishProductTrialController {
   private FinishProductTrialService finishProductTrialService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private TestParameterService testParameterService;
   private static final Logger logger = Logger.getLogger(FinishProductTrialController.class);
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIALS)
@@ -84,12 +92,26 @@ public class FinishProductTrialController {
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
   public ResponseEntity<Object> saveFinishProductTrial(
-      @Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList) {
-    for (FinishProductTrialRequestDto finishProductTrialRequestDto : finishProductTrialRequestDtoList) {
+      @Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList)
+      throws ScriptException {
+    List<FinishProductTrialRequestDto> li = finishProductTrialRequestDtoList.stream()
+        .filter(finish -> (finish.getValue() == null
+            && testParameterService.getTestParameterById(finish.getTestParameterId())
+                .getInputMethods().equals(InputMethod.OBSERVE)
+            && testParameterService.getTestParameterById(finish.getTestParameterId()).getType()
+                .equals(TestParameterType.INPUT)
+            && testParameterService.getTestParameterById(finish.getTestParameterId())
+                .getMixDesignField() == null))
+        .collect(Collectors.toList());
+    if ((li.isEmpty())) {
       finishProductTrialService.saveFinishProductTrial(
-          mapper.map(finishProductTrialRequestDto, FinishProductTrial.class));
+          mapper.map(finishProductTrialRequestDtoList, FinishProductTrial.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_TRIAL_SUCCESS),
+          HttpStatus.OK);
     }
-    return null;
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
+        validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE)
