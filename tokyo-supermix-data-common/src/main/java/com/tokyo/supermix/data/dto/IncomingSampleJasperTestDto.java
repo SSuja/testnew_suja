@@ -41,25 +41,11 @@ public class IncomingSampleJasperTestDto {
     this.date = date;
   }
 
-<<<<<<< HEAD
-  public AcceptedValueDto getAcceptanceCriteria() {
-    return acceptanceCriteria;
-  }
-
-  public void setAcceptanceCriteria(AcceptedValueDto acceptanceCriteria) {
-    this.acceptanceCriteria = acceptanceCriteria;
-  }
-
-}
-=======
   public AcceptedValueJasperDto getAcceptanceCriteria() {
     return acceptanceCriteria;
   }
 
   public void setAcceptanceCriteria(AcceptedValueJasperDto acceptanceCriteria) {
     this.acceptanceCriteria = acceptanceCriteria;
-  }
-
-  
+  } 
 }
->>>>>>> 53bca6f8aa899dae5c483e0d42f0694262370345
