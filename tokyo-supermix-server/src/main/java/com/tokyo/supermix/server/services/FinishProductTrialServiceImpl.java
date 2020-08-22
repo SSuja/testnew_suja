@@ -74,8 +74,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository.findById(id).get();
   }
 
-  public void saveFinishProductTrial(FinishProductTrial finishProductTrial) {
-    finishProductTrialRepository.save(finishProductTrial);
+  public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrial) {
+    finishProductTrialRepository.saveAll(finishProductTrial);
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -410,6 +410,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSample.setStatus(Status.PROCESS);
         finishProductSampleRepository.save(finishProductSample);
       } else {
+        mixDesign.setStatus(finishproductTest.getStatus());
+        mixDesignRepository.save(mixDesign);
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        finishProductSampleRepository.save(finishProductSample);
+      }
+    } else if (!finishproductTest.getTestConfigure().isCoreTest()
+        && (!finishproductTest.getTestConfigure().isName())) {
+      if (finishproductTest.getStatus().equals(Status.FAIL)) {
         mixDesign.setStatus(finishproductTest.getStatus());
         mixDesignRepository.save(mixDesign);
         finishProductSample.setStatus(finishproductTest.getStatus());
