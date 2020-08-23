@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.AccepetedValueDto;
+import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
@@ -65,7 +68,6 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
     return false;
   }
 
-
   public boolean isUpdatedAcceptedValueTestConfigureIdExist(Long id, Long testConfigureId) {
     if ((!getAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
         && (isAcceptedValueByTestConfigureId(testConfigureId))) {
@@ -106,5 +108,48 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
       }
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public AcceptedValueMainDto findByTestConfigureId(Long testConfigureId) {
+    AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
+    AcceptedValue acceptedValueNew =
+        acceptedValueRepository.findByTestConfigureId(testConfigureId).get(0);
+    acceptedValueMainDto.setTestConfigureId(testConfigureId);
+    acceptedValueMainDto
+        .setMaterialCategoryId(acceptedValueNew.getTestConfigure().getMaterialCategory().getId());
+    acceptedValueMainDto.setMaterialSubCategoryId(
+        acceptedValueNew.getTestConfigure().getMaterialSubCategory().getId());
+    acceptedValueMainDto.setMaterialCategoryName(
+        acceptedValueNew.getTestConfigure().getMaterialSubCategory().getName());
+    acceptedValueMainDto.setMaterialSubCategoryName(
+        acceptedValueNew.getTestConfigure().getMaterialSubCategory().getName());
+    acceptedValueMainDto.setTestName(acceptedValueNew.getTestConfigure().getTest().getName());
+    List<AccepetedValueDto> accepetedValueDtolist = new ArrayList<>();
+    acceptedValueRepository.findByTestConfigureId(testConfigureId).stream()
+        .forEach(acceptedValue -> {
+          AccepetedValueDto accepetedValueDto = new AccepetedValueDto();
+          accepetedValueDto.setId(acceptedValue.getId());
+          accepetedValueDto.setConditionRange(acceptedValue.getConditionRange().toString());
+          accepetedValueDto.setMinValue(acceptedValue.getMinValue());
+          accepetedValueDto.setMaxValue(acceptedValue.getMaxValue());
+          accepetedValueDto.setFinalResult(acceptedValue.isFinalResult());
+          accepetedValueDto.setValue(acceptedValue.getValue());
+          if (acceptedValue.getTestEquation() != null) {
+            accepetedValueDto
+                .setTestEquationId(acceptedValue.getTestEquation().getEquation().getId());
+          }
+          accepetedValueDto
+              .setParameterName(acceptedValue.getTestParameter().getParameter().getName());
+          accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
+          accepetedValueDtolist.add(accepetedValueDto);
+        });
+    acceptedValueMainDto.setAccepetedValueDto(accepetedValueDtolist);
+    return acceptedValueMainDto;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId) {
+    return acceptedValueRepository.existsByTestConfigureId(testConfigureId);
   }
 }
