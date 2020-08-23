@@ -20,7 +20,7 @@ public class PlantRoleServiceImpl implements PlantRoleService {
   @Autowired
   private RoleRepository roleRepository;
 
-  @Transactional
+
   public PlantRole savePlantRole(String plantCode, Long roleId) {
     Plant plant = plantRepository.getOne(plantCode);
     Role role = roleRepository.getOne(roleId);

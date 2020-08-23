@@ -210,7 +210,6 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return plantResponseDtolist;
   }
 
-  @Transactional
   public void createPlantRolePlantPermission(PlantRole plantRole) {
     List<PlantPermission> plantPermissionList =
         plantPermissionRepository.findByPlantCode(plantRole.getPlant().getCode());
@@ -219,8 +218,6 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermission.setPlantPermission(plantPermission);
       plantRolePlantPermission.setStatus(false);
       plantRolePlantPermission.setPlantRole(plantRole);
-      System.out.println("plantroleplant permission save method --"
-          + plantRolePlantPermission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRepository.save(plantRolePlantPermission);
     });
   }
@@ -339,7 +336,8 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
   public void UpdatePlantRolePlantPermission(Long plantRoleId, Boolean status) {
     List<PlantRolePlantPermission> plantRolePlantPermissionList =
         plantRolePlantPermissionRepository.findByPlantRoleId(plantRoleId);
-    plantRolePlantPermissionList.stream().forEach(plantRolePlantPermission -> plantRolePlantPermission.setStatus(status));
+    plantRolePlantPermissionList.stream()
+        .forEach(plantRolePlantPermission -> plantRolePlantPermission.setStatus(status));
     plantRolePlantPermissionRepository.saveAll(plantRolePlantPermissionList);
   }
 }

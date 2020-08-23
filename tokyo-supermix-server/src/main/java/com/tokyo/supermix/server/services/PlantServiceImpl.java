@@ -10,10 +10,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
+import com.tokyo.supermix.server.services.privilege.PlantRoleService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -24,11 +27,18 @@ public class PlantServiceImpl implements PlantService {
   private EmailNotification emailNotification;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  @Transactional
+  @Autowired
+  private PlantRoleService plantRoleService;
+  @Autowired
+  private PlantPermissionService plantPermissionService;
+
   public Plant savePlant(Plant plant) { 
     Plant plantObj = plantRepository.save(plant);
     if (plantObj != null) {
       emailNotification.sendPlantCreationEmail(plantObj);
+      PlantRole plantRoleObj = plantRoleService.savePlantRole(plant.getCode(), 1L);
+      plantRoleService.savePlantRole(plant.getCode(), 2L);
+      plantPermissionService.savePlantPermission(plantObj, plantRoleObj);
     }
     return plantRepository.save(plant);
   }
