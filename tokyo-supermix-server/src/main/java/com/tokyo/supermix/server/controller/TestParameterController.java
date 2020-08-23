@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.script.ScriptException;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,33 +46,41 @@ public class TestParameterController {
 
   @PostMapping(value = EndpointURI.TEST_PARAMETER)
   public ResponseEntity<Object> createTestParameter(
-      @Valid @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList) {
-    for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
-      if ((testParameterRequestDto.getParameterId() != null)
-          && (testParameterRequestDto.getQualityParameterId() == null)) {
-        if (testParameterService.isAbbreviationNull(testParameterRequestDto.getAbbreviation())) {
-          return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
-              validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
+      @Valid @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList)
+      throws ScriptException {
+    List<TestParameterRequestDto> listTestParameter = testParameterRequestDtoList
+        .stream().filter(testPara -> (testPara.getInputMethods() == null)
+            || (testPara.getType() == null) || (testPara.getUnitId() == null))
+        .collect(Collectors.toList());
+    if (listTestParameter.isEmpty()) {
+      for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
+        if ((testParameterRequestDto.getParameterId() != null)
+            && (testParameterRequestDto.getQualityParameterId() == null)) {
+          if (testParameterService.isAbbreviationNull(testParameterRequestDto.getAbbreviation())) {
+            return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+                validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
+          }
+        }
+        if (testParameterService.isDuplicateTestParameterEntryExist(
+            testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getAbbreviation(),
+            testParameterRequestDto.getParameterId())) {
+          logger.debug("");
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_PARAMETER,
+                  validationFailureStatusCodes.getTestParameterAlreadyExist()),
+              HttpStatus.BAD_REQUEST);
         }
       }
-      if (testParameterService.isDuplicateTestParameterEntryExist(
-          testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getAbbreviation(),
-          testParameterRequestDto.getParameterId())) {
-        logger.debug("");
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.TEST_PARAMETER,
-                validationFailureStatusCodes.getTestParameterAlreadyExist()),
-            HttpStatus.BAD_REQUEST);
-      }
       testParameterService
-          .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
+          .saveTestParameterAll(mapper.map(testParameterRequestDtoList, TestParameter.class));
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+          testParameterService.checkEqutaionExistsForTest(
+              testParameterRequestDtoList.get(0).getTestConfigureId()),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.TEST_CONFIGURE,
-            testParameterService.checkEqutaionExistsForTest(
-                testParameterRequestDtoList.get(0).getTestConfigureId()),
-            RestApiResponseStatus.OK),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
+        validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
+
   }
 
   @GetMapping(value = EndpointURI.TEST_PARAMETERS)
@@ -135,10 +145,8 @@ public class TestParameterController {
       }
       if (testParameterService.isUpdatedParameterExists(testParameterRequestDto.getId(),
           testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getParameterId())) {
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.PARAMETER,
-                validationFailureStatusCodes.getParameterAlreadyExist()),
-            HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+            validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       testParameterService
           .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));

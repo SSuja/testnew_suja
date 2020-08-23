@@ -8,6 +8,8 @@ import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.entities.TestParameter;
 
 public interface TestParameterService {
+  public void saveTestParameterAll(List<TestParameter> testParameter);
+
   public void saveTestParameter(TestParameter testParameter);
 
   public List<TestParameter> getAllTestParameters();
