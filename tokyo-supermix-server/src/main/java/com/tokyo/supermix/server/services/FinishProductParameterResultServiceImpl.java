@@ -19,7 +19,7 @@ public class FinishProductParameterResultServiceImpl
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductParameterResult> getFinishProductResult(String finishProductTestCode) {
+  public List<FinishProductParameterResult> getFinishProductResultsByFinishProductTestCode(String finishProductTestCode) {
     return finishProductParameterResultRepository
         .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode);
   }
