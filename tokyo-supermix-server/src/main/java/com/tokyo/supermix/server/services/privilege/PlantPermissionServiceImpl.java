@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.Permission;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
@@ -30,6 +31,8 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
   private MainModuleRepository mainModuleRepository;
   @Autowired
   private SubModuleRepository subModuleRepository;
+  @Autowired
+  private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
 
   @Transactional(readOnly = true)
   public List<String> getPlantsByPermissionName(String permissionName) {
@@ -74,8 +77,8 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionSubModuleDto.setSubModule(sub.getName());
       plantPermissionSubModuleDto.setSubModuleId(sub.getId());
       plantPermissionSubModuleDto.setMainModuleId(mainModuleId);
-      plantPermissionSubModuleDto.setPrivilages(
-          getPlantPermissionsBySubModuleId(sub.getId(), mainModuleId));
+      plantPermissionSubModuleDto
+          .setPrivilages(getPlantPermissionsBySubModuleId(sub.getId(), mainModuleId));
       SubModuleRolePermissionDtoList.add(plantPermissionSubModuleDto);
     }
     return SubModuleRolePermissionDtoList;
@@ -99,8 +102,8 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
     return plantPermissionResponseDtos;
   }
 
-  @Transactional
-  public void savePlantPermission(Plant plant) {
+  @Async
+  public void savePlantPermission(Plant plant, PlantRole plantRole) {
     List<Permission> permissions = permissionRepository.findAll();
     for (Permission permission : permissions) {
       PlantPermission plantPermission = new PlantPermission();
@@ -108,6 +111,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermission.setPlant(plant);
       plantPermissionRepository.save(plantPermission);
     }
+    plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRole);
   }
 
   @Transactional(readOnly = true)
@@ -139,9 +143,9 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
 
     return getPlantPermissionsByMainModule1(mainModuleRepository.findAll(), plantCode);
   }
-  
+
   private List<PlantRolePlantPermissionResponseDto> getPlantPermissionsByMainModule1(
-      List<MainModule> findAll , String plantCode) {
+      List<MainModule> findAll, String plantCode) {
     List<PlantRolePlantPermissionResponseDto> plantPermissionMainModuleDtolist =
         new ArrayList<PlantRolePlantPermissionResponseDto>();
     mainModuleRepository.findAll().forEach(main -> {
@@ -150,15 +154,15 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionMainModuleDto.setMainModule(main.getName());
       plantPermissionMainModuleDto.setMainModuleId(main.getId());
       List<SubModule> subModuleList = subModuleRepository.findByMainModuleId(main.getId());
-      plantPermissionMainModuleDto
-          .setSubModules(getPlantPermissionSubModulesByMainModuleId1(subModuleList, main.getId() ,plantCode));;
+      plantPermissionMainModuleDto.setSubModules(
+          getPlantPermissionSubModulesByMainModuleId1(subModuleList, main.getId(), plantCode));;
       plantPermissionMainModuleDtolist.add(plantPermissionMainModuleDto);
     });
     return plantPermissionMainModuleDtolist;
   }
 
   private List<SubModulePlantRolePlantPermissionDto> getPlantPermissionSubModulesByMainModuleId1(
-      List<SubModule> subModuleList, Long mainModuleId, String plantCode ) {
+      List<SubModule> subModuleList, Long mainModuleId, String plantCode) {
     List<SubModulePlantRolePlantPermissionDto> SubModuleRolePermissionDtoList =
         new ArrayList<SubModulePlantRolePlantPermissionDto>();
     for (SubModule sub : subModuleList) {
@@ -167,19 +171,19 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermissionSubModuleDto.setSubModule(sub.getName());
       plantPermissionSubModuleDto.setSubModuleId(sub.getId());
       plantPermissionSubModuleDto.setMainModuleId(mainModuleId);
-      plantPermissionSubModuleDto.setPrivilages(
-          getPlantPermissionsBySubModuleId1(sub.getId(), mainModuleId ,plantCode));
+      plantPermissionSubModuleDto
+          .setPrivilages(getPlantPermissionsBySubModuleId1(sub.getId(), mainModuleId, plantCode));
       SubModuleRolePermissionDtoList.add(plantPermissionSubModuleDto);
     }
     return SubModuleRolePermissionDtoList;
   }
 
   private List<PlantRolePlantPermissionRequestDto> getPlantPermissionsBySubModuleId1(
-      Long subModuleId, Long mainModuleId, String plantCode ) {
+      Long subModuleId, Long mainModuleId, String plantCode) {
     List<PlantRolePlantPermissionRequestDto> plantPermissionResponseDtos =
         new ArrayList<PlantRolePlantPermissionRequestDto>();
     List<PlantPermission> plantPermissions =
-        plantPermissionRepository.findByPlantCodeAndPermissionSubModuleId(plantCode,subModuleId);
+        plantPermissionRepository.findByPlantCodeAndPermissionSubModuleId(plantCode, subModuleId);
     for (PlantPermission plantPermission : plantPermissions) {
       PlantRolePlantPermissionRequestDto plantPermissionResponseDto =
           new PlantRolePlantPermissionRequestDto();
