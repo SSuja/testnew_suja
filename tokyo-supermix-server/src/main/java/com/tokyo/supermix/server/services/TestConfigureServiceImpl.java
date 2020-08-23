@@ -10,23 +10,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
-import com.tokyo.supermix.data.dto.FinishProductAcceptedValueResponseDto;
-import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
-import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
+import com.tokyo.supermix.data.dto.AcceptedValuesDto;
+import com.tokyo.supermix.data.dto.FinishProductAcceptedValuesDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
-import com.tokyo.supermix.data.dto.TestParameterResponseDto;
+import com.tokyo.supermix.data.dto.TestParametersDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
-import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
+import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
-import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
@@ -38,10 +34,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private TestParameterRepository testParameterRepository;
-  @Autowired
-  private MaterialSubCategoryRepository materialSubCategoryRepository;
-  @Autowired
-  private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private Mapper mapper;
   @Autowired
@@ -145,44 +137,28 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id) {
+  public TestConfigureDto getTestConfigureDetailsByConfigureId(Long testConfigId) {
     TestConfigureDto testConfigureDto = new TestConfigureDto();
-    TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-    if (testConfigure.getMaterialSubCategory() != null) {
-      testConfigureDto
-          .setMaterialSubCategory(
-              mapper.map(
-                  materialSubCategoryRepository
-                      .findById(testConfigure.getMaterialSubCategory().getId()).get(),
-                  MaterialSubCategoryResponseDto.class));
-    }
-    if (testConfigure.getRawMaterial() != null) {
-      testConfigureDto.setRawMaterial(
-          mapper.map(rawMaterialRepository.findById(testConfigure.getRawMaterial().getId()).get(),
-              RawMaterialResponseDto.class));
-    }
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigId).get();
     testConfigureDto.setAcceptedType(testConfigure.getAcceptedType());
     testConfigureDto.setPrefix(testConfigure.getPrefix());
     testConfigureDto.setTestName(testConfigure.getTest().getName());
     testConfigureDto.setTestProcedure(testConfigure.getTestProcedure());
     testConfigureDto.setTestType(testConfigure.getTestType());
-    if (materialAcceptedValueRepository.findByTestConfigureId(id) != null) {
-      testConfigureDto.setMaterialAcceptedValue(getMaterialAcceptedValue(id));
+    if (materialAcceptedValueRepository.findByTestConfigureId(testConfigId) != null) {
+      testConfigureDto.setMaterialAcceptedValue(getMaterialAcceptedValue(testConfigId));
     }
-    if (acceptedValueRepository.findByTestConfigureId(id) != null) {
-      testConfigureDto.setAcceptedValue(mapper
-          .map(acceptedValueRepository.findByTestConfigureId(id), AcceptedValueResponseDto.class));
+    if (acceptedValueRepository.findByTestConfigureId(testConfigId) != null) {
+      testConfigureDto.setAcceptedValue(getAcceptedValuesByTestConfigId(testConfigId));
     }
     testConfigureDto.setCoreTest(testConfigure.isCoreTest());
     testConfigureDto.setDescription(testConfigure.getDescription());
-    if (testParameterRepository.findByTestConfigureId(id) != null) {
-      testConfigureDto.setTestparameters(mapper
-          .map(testParameterRepository.findByTestConfigureId(id), TestParameterResponseDto.class));
+    if (testParameterRepository.findByTestConfigureId(testConfigId) != null) {
+      testConfigureDto.setTestparameters(getTestParametersByTestConfigId(testConfigId));
     }
-    if (finishProductAcceptedValueRepository.existsByTestParameterTestConfigureId(id)) {
+    if (finishProductAcceptedValueRepository.existsByTestParameterTestConfigureId(testConfigId)) {
       testConfigureDto.setFinishProductAcceptedValue(
-          mapper.map(finishProductAcceptedValueRepository.findByTestParameterTestConfigureId(id),
-              FinishProductAcceptedValueResponseDto.class));
+          getFinishProductAcceptedValuesByTestConfigId(testConfigId));
     }
     return testConfigureDto;
   }
@@ -190,24 +166,76 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public List<MaterialAcceptedValueDto> getMaterialAcceptedValue(Long testConfigId) {
     ArrayList<MaterialAcceptedValueDto> materialAcceptedValueDtoList =
         new ArrayList<MaterialAcceptedValueDto>();
-    List<MaterialAcceptedValue> materialAcceptedValueList =
-        materialAcceptedValueRepository.findByTestConfigureId(testConfigId);
-    for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
-      MaterialAcceptedValueDto materialAcceptedValueDto = new MaterialAcceptedValueDto();
-      materialAcceptedValueDto.setMaterialName(materialAcceptedValue.getRawMaterial().getName());
-      materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
-      materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
-      materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
-      materialAcceptedValueDto
-          .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
-      materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
-      materialAcceptedValueDto
-          .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
-      materialAcceptedValueDto.setName(materialAcceptedValue.getTestParameter().getName());
-      materialAcceptedValueDtoList.add(materialAcceptedValueDto);
+    materialAcceptedValueRepository.findByTestConfigureId(testConfigId)
+        .forEach(materialAcceptedValue -> {
+          MaterialAcceptedValueDto materialAcceptedValueDto = new MaterialAcceptedValueDto();
+          materialAcceptedValueDto
+              .setMaterialName(materialAcceptedValue.getRawMaterial().getName());
+          materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
+          materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
+          materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
+          materialAcceptedValueDto
+              .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
+          materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
+          materialAcceptedValueDto
+              .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
+          materialAcceptedValueDto.setName(materialAcceptedValue.getTestParameter().getName());
+          materialAcceptedValueDtoList.add(materialAcceptedValueDto);
 
-    }
+        });
     return materialAcceptedValueDtoList;
+  }
+
+  public List<AcceptedValuesDto> getAcceptedValuesByTestConfigId(Long testConfigId) {
+    ArrayList<AcceptedValuesDto> acceptedValuesDtoList = new ArrayList<AcceptedValuesDto>();
+    acceptedValueRepository.findByTestConfigureId(testConfigId).forEach(acceptedValue -> {
+      AcceptedValuesDto acceptedValuesDto = new AcceptedValuesDto();
+      acceptedValuesDto.setConditionRange(acceptedValue.getConditionRange());
+      acceptedValuesDto.setFinalResult(acceptedValue.isFinalResult());
+      acceptedValuesDto.setMaxValue(acceptedValue.getMaxValue());
+      acceptedValuesDto.setMinValue(acceptedValue.getMinValue());
+      acceptedValuesDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+      acceptedValuesDto
+          .setTestParameterParameterName(acceptedValue.getTestParameter().getParameter().getName());
+      acceptedValuesDto.setValue(acceptedValue.getValue());
+      acceptedValuesDtoList.add(acceptedValuesDto);
+    });
+    return acceptedValuesDtoList;
+  }
+
+  public FinishProductAcceptedValuesDto getFinishProductAcceptedValuesByTestConfigId(
+      Long testConfigId) {
+    FinishProductAcceptedValuesDto acceptedValuesDto = new FinishProductAcceptedValuesDto();
+    FinishProductAcceptedValue finishProductAcceptedValue =
+        finishProductAcceptedValueRepository.findByTestParameterTestConfigureId(testConfigId);
+    acceptedValuesDto.setConditionRange(finishProductAcceptedValue.getConditionRange());
+    acceptedValuesDto.setFinalResult(finishProductAcceptedValue.isFinalResult());
+    acceptedValuesDto.setMaxValue(finishProductAcceptedValue.getMaxValue());
+    acceptedValuesDto.setMinValue(finishProductAcceptedValue.getMinValue());
+    acceptedValuesDto.setTestParameterName(finishProductAcceptedValue.getTestParameter().getName());
+    acceptedValuesDto.setTestParameterParameterName(
+        finishProductAcceptedValue.getTestParameter().getParameter().getName());
+    acceptedValuesDto.setValue(finishProductAcceptedValue.getValue());
+    return acceptedValuesDto;
+  }
+
+  public List<TestParametersDto> getTestParametersByTestConfigId(Long testConfigId) {
+    ArrayList<TestParametersDto> testParametersDtoList = new ArrayList<TestParametersDto>();
+    testParameterRepository.findByTestConfigureId(testConfigId).forEach(testPara -> {
+      TestParametersDto testParametersDto = new TestParametersDto();
+      testParametersDto.setAbbreviation(testPara.getAbbreviation());
+      testParametersDto.setAcceptedCriteria(testPara.isAcceptedCriteria());
+      testParametersDto.setMixDesignField(testPara.getMixDesignField());
+      testParametersDto.setName(testPara.getName());
+      testParametersDto.setParameterName(testPara.getParameter().getName());
+      testParametersDto.setType(testPara.getType());
+      testParametersDto.setUnit(testPara.getUnit());
+      testParametersDto.setValue(testPara.getValue());
+      testParametersDto.setInputMethods(testPara.getInputMethods());
+      testParametersDtoList.add(testParametersDto);
+    });
+    return testParametersDtoList;
+
   }
 
   @Transactional(readOnly = true)

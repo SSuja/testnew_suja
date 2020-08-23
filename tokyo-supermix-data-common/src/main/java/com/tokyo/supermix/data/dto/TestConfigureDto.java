@@ -14,14 +14,14 @@ public class TestConfigureDto {
   private String testProcedure;
   private AcceptedType acceptedType;
   private String prefix;
-  private List<AcceptedValueResponseDto> acceptedValue;
+  private List<AcceptedValuesDto> acceptedValue;
   private List<MaterialAcceptedValueDto> materialAcceptedValue;
-  private List<TestParameterResponseDto> testparameters;
+  private List<TestParametersDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
   private RawMaterialResponseDto rawMaterial;
   private List<TestEquationResponseDto> testEquations;
   private List<MaterialAcceptedValueDto> rawMaterialDto;
-  private FinishProductAcceptedValueResponseDto finishProductAcceptedValue;
+  private FinishProductAcceptedValuesDto finishProductAcceptedValue;
 
   public Long getId() {
     return id;
@@ -87,11 +87,11 @@ public class TestConfigureDto {
     this.prefix = prefix;
   }
 
-  public List<AcceptedValueResponseDto> getAcceptedValue() {
+  public List<AcceptedValuesDto> getAcceptedValue() {
     return acceptedValue;
   }
 
-  public void setAcceptedValue(List<AcceptedValueResponseDto> acceptedValue) {
+  public void setAcceptedValue(List<AcceptedValuesDto> acceptedValue) {
     this.acceptedValue = acceptedValue;
   }
 
@@ -103,11 +103,11 @@ public class TestConfigureDto {
     this.materialAcceptedValue = materialAcceptedValue;
   }
 
-  public List<TestParameterResponseDto> getTestparameters() {
+  public List<TestParametersDto> getTestparameters() {
     return testparameters;
   }
 
-  public void setTestparameters(List<TestParameterResponseDto> testparameters) {
+  public void setTestparameters(List<TestParametersDto> testparameters) {
     this.testparameters = testparameters;
   }
 
@@ -117,6 +117,14 @@ public class TestConfigureDto {
 
   public void setMaterialSubCategory(MaterialSubCategoryResponseDto materialSubCategory) {
     this.materialSubCategory = materialSubCategory;
+  }
+
+  public RawMaterialResponseDto getRawMaterial() {
+    return rawMaterial;
+  }
+
+  public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
+    this.rawMaterial = rawMaterial;
   }
 
   public List<TestEquationResponseDto> getTestEquations() {
@@ -135,20 +143,12 @@ public class TestConfigureDto {
     this.rawMaterialDto = rawMaterialDto;
   }
 
-  public FinishProductAcceptedValueResponseDto getFinishProductAcceptedValue() {
+  public FinishProductAcceptedValuesDto getFinishProductAcceptedValue() {
     return finishProductAcceptedValue;
   }
 
   public void setFinishProductAcceptedValue(
-      FinishProductAcceptedValueResponseDto finishProductAcceptedValue) {
+      FinishProductAcceptedValuesDto finishProductAcceptedValue) {
     this.finishProductAcceptedValue = finishProductAcceptedValue;
-  }
-
-  public RawMaterialResponseDto getRawMaterial() {
-    return rawMaterial;
-  }
-
-  public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
-    this.rawMaterial = rawMaterial;
   }
 }
