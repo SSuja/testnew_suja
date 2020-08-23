@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
+import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 
@@ -33,4 +33,8 @@ public interface MaterialAcceptedValueService {
       Long rawMaterialId, Long testParameterId);
 
   public boolean isCheckValidation(List<MaterialAcceptedValue> materialAcceptedValueList);
+
+  public AcceptedValueMainDto findByTestConfigureId(Long testConfigureId);
+
+  public boolean ExistsTestConfigureId(Long testConfigureId);
 }

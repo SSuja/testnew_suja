@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 
@@ -35,4 +36,8 @@ public interface AcceptedValueService {
       Long testParameterId);
 
   public boolean isCheckValidation(AcceptedValue acceptedValue);
+
+  public AcceptedValueMainDto findByTestConfigureId(Long testConfigureId);
+
+  public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId);
 }
