@@ -396,18 +396,21 @@ public class EmailNotification {
 
   @Async
   public void sendCustomerCreationEmail(Customer customer) {
-    EmailGroup emailGroup =
-        emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_CUSTOMER);
-    if (emailGroup != null) {
-      if (emailGroup.isStatus()) {
-        String mailBody =
-            "Customer " + customer.getName() + " newly added from " + customer.getAddress() + ".";
-        List<String> reciepientList =
-            emailRecipientService.getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
-        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_CUSTOMER, mailBody);
+    customer.getPlant().forEach(plant -> {
+      EmailGroup emailGroup = emailGroupRepository
+          .findByPlantCodeAndEmailPointsName(plant.getCode(), MailGroupConstance.CREATE_CUSTOMER);
+      if (emailGroup != null) {
+        if (emailGroup.isStatus()) {
+          String mailBody =
+              "Customer " + customer.getName() + " newly added from " + customer.getAddress() + ".";
+          List<String> reciepientList = emailRecipientService
+              .getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
+          emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+              Constants.SUBJECT_CUSTOMER, mailBody);
+
+        }
       }
-    }
+    });
   }
 
   @Async
