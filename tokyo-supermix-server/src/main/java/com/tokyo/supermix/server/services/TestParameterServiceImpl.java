@@ -39,8 +39,8 @@ public class TestParameterServiceImpl implements TestParameterService {
   private Mapper mapper;
 
   @Transactional
-  public void saveTestParameter(TestParameter testParameter) {
-    testParameterRepository.save(testParameter);
+  public void saveTestParameterAll(List<TestParameter> testParameter) {
+    testParameterRepository.saveAll(testParameter);
   }
 
   @Transactional(readOnly = true)
@@ -241,5 +241,10 @@ public class TestParameterServiceImpl implements TestParameterService {
       return true;
     }
     return false;
+  }
+
+  @Transactional
+  public void saveTestParameter(TestParameter testParameter) {
+    testParameterRepository.save(testParameter);
   }
 }
