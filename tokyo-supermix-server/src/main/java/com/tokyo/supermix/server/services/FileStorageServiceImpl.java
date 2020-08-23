@@ -352,8 +352,7 @@ public class FileStorageServiceImpl implements FileStorageService {
           plantEquipment.setModelName(row[4]);
           Equipment equipment = equipmentRepository.findByName(row[5]);
           plantEquipment.setEquipment(equipment);
-          Plant plant = new Plant();
-          plant.setName((row[6]));
+          Plant plant = plantRepository.findByName(row[6]);
           plantEquipment.setPlant(plant);
           plantEquipmentRepository.save(plantEquipment);
         }
