@@ -12,6 +12,8 @@ public class AccepetedValueDto {
   @Nullable
   private Long testEquationId;
   @Nullable
+  private String testEquationFormula;
+  @Nullable
   private Long materialId;
   @Nullable
   private String materialName;
@@ -115,5 +117,11 @@ public class AccepetedValueDto {
   public void setTestParameterName(String testParameterName) {
     this.testParameterName = testParameterName;
   }
+  public String getTestEquationFormula() {
+    return testEquationFormula;
+  }
 
+  public void setTestEquationFormula(String testEquationFormula) {
+    this.testEquationFormula = testEquationFormula;
+  }
 }

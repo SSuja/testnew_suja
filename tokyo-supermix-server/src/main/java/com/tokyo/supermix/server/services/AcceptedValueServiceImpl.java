@@ -135,6 +135,8 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
           if (acceptedValue.getTestEquation() != null) {
             accepetedValueDto
                 .setTestEquationId(acceptedValue.getTestEquation().getEquation().getId());
+            accepetedValueDto
+            .setTestEquationFormula(acceptedValue.getTestEquation().getEquation().getFormula());
           }
           accepetedValueDto
               .setParameterName(acceptedValue.getTestParameter().getParameter().getName());

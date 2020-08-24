@@ -126,6 +126,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           if (acceptedValue.getTestEquation() != null) {
             accepetedValueDto
                 .setTestEquationId(acceptedValue.getTestEquation().getEquation().getId());
+            accepetedValueDto
+            .setTestEquationFormula(acceptedValue.getTestEquation().getEquation().getFormula());
           }
           if (acceptedValue.getRawMaterial() != null) {
             accepetedValueDto.setMaterialId(acceptedValue.getRawMaterial().getId());
