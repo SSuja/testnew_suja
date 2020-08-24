@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.enums.Condition;
 
 public class FinishProductAcceptedValuesDto {
+  private Long id;
   private Double minValue;
   private Double maxValue;
   private Double value;
@@ -10,6 +11,23 @@ public class FinishProductAcceptedValuesDto {
   private boolean finalResult;
   private String testParameterName;
   private String testParameterParameterName;
+  private Long testParameterId;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Long getTestParameterId() {
+    return testParameterId;
+  }
+
+  public void setTestParameterId(Long testParameterId) {
+    this.testParameterId = testParameterId;
+  }
 
   public Double getMinValue() {
     return minValue;
