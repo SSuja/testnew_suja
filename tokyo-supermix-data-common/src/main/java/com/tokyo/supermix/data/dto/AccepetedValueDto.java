@@ -12,10 +12,14 @@ public class AccepetedValueDto {
   @Nullable
   private Long testEquationId;
   @Nullable
+  private String testEquationFormula;
+  @Nullable
   private Long materialId;
   @Nullable
   private String materialName;
   private Long testParameterId;
+  @Nullable
+  private String testParameterName;
   private String parameterName;
 
   public Long getId() {
@@ -106,4 +110,18 @@ public class AccepetedValueDto {
     this.finalResult = finalResult;
   }
 
+  public String getTestParameterName() {
+    return testParameterName;
+  }
+
+  public void setTestParameterName(String testParameterName) {
+    this.testParameterName = testParameterName;
+  }
+  public String getTestEquationFormula() {
+    return testEquationFormula;
+  }
+
+  public void setTestEquationFormula(String testEquationFormula) {
+    this.testEquationFormula = testEquationFormula;
+  }
 }

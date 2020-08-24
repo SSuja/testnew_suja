@@ -22,6 +22,8 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
 
   @Autowired
   private AcceptedValueRepository acceptedValueRepository;
+  @Autowired
+  private TestConfigureService testConfigureService;
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -113,18 +115,13 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   @Transactional(readOnly = true)
   public AcceptedValueMainDto findByTestConfigureId(Long testConfigureId) {
     AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
-    AcceptedValue acceptedValueNew =
-        acceptedValueRepository.findByTestConfigureId(testConfigureId).get(0);
-    acceptedValueMainDto.setTestConfigureId(testConfigureId);
-    acceptedValueMainDto
-        .setMaterialCategoryId(acceptedValueNew.getTestConfigure().getMaterialCategory().getId());
-    acceptedValueMainDto.setMaterialSubCategoryId(
-        acceptedValueNew.getTestConfigure().getMaterialSubCategory().getId());
-    acceptedValueMainDto.setMaterialCategoryName(
-        acceptedValueNew.getTestConfigure().getMaterialSubCategory().getName());
-    acceptedValueMainDto.setMaterialSubCategoryName(
-        acceptedValueNew.getTestConfigure().getMaterialSubCategory().getName());
-    acceptedValueMainDto.setTestName(acceptedValueNew.getTestConfigure().getTest().getName());
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigureId));
+    acceptedValueMainDto.setAccepetedValueDto(getAccepetedValueDtoList(testConfigureId));
+    return acceptedValueMainDto;
+  }
+
+  private List<AccepetedValueDto> getAccepetedValueDtoList(Long testConfigureId) {
     List<AccepetedValueDto> accepetedValueDtolist = new ArrayList<>();
     acceptedValueRepository.findByTestConfigureId(testConfigureId).stream()
         .forEach(acceptedValue -> {
@@ -138,14 +135,18 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
           if (acceptedValue.getTestEquation() != null) {
             accepetedValueDto
                 .setTestEquationId(acceptedValue.getTestEquation().getEquation().getId());
+            accepetedValueDto
+            .setTestEquationFormula(acceptedValue.getTestEquation().getEquation().getFormula());
           }
           accepetedValueDto
               .setParameterName(acceptedValue.getTestParameter().getParameter().getName());
           accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
+          if (acceptedValue.getTestParameter().getName() != null) {
+            accepetedValueDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+          }
           accepetedValueDtolist.add(accepetedValueDto);
         });
-    acceptedValueMainDto.setAccepetedValueDto(accepetedValueDtolist);
-    return acceptedValueMainDto;
+    return accepetedValueDtolist;
   }
 
   @Transactional(readOnly = true)
