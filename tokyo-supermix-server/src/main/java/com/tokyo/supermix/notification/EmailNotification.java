@@ -208,7 +208,7 @@ public class EmailNotification {
             + average + "</b></li><li> Status <b>" + materialTest.getStatus() + "</b></li></ul>";
 
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_MATRIAL_TEST, mailBody);
+            Constants.SUBJECT_MATERIAL_TEST, mailBody);
       }
     }
   }
@@ -357,7 +357,7 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendPlantEquipmentCalibrationEmail(PlantEquipment plantequipment) {
+  public void sendPlantEquipmentEmail(PlantEquipment plantequipment) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
     String plantName =
