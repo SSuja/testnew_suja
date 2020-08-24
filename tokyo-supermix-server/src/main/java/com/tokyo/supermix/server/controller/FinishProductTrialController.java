@@ -23,6 +23,7 @@ import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductTrialResponseDto;
 import com.tokyo.supermix.data.dto.ParameterResultDto;
+import com.tokyo.supermix.data.dto.FinishProductTestTrialDto;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.TestParameterType;
@@ -155,8 +156,8 @@ public class FinishProductTrialController {
       @PathVariable String finishProductTestCode) {
     if (finishProductTrialService.isFinishProductTestExists(finishProductTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
-          mapper.map(finishProductTrialService.getFinishProductTrialsByFinishProductTestCode(
-              finishProductTestCode), FinishProductTrialResponseDto.class),
+          mapper.map(finishProductTrialService
+              .getFinishProductTrialsByFinishProductTestCode(finishProductTestCode), FinishProductTestTrialDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
