@@ -178,9 +178,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
           materialAcceptedValueDto
               .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
           materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
-          materialAcceptedValueDto
-              .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
-          materialAcceptedValueDto.setName(materialAcceptedValue.getTestParameter().getName());
+          if (materialAcceptedValue.getTestParameter() != null) {
+            materialAcceptedValueDto
+                .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
+            materialAcceptedValueDto.setName(materialAcceptedValue.getTestParameter().getName());
+          }
           materialAcceptedValueDtoList.add(materialAcceptedValueDto);
 
         });
@@ -264,8 +266,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     }
     return false;
   }
-  public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId){
-    TestConfigureResDto testConfigureResDto=new TestConfigureResDto();
+
+  public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId) {
+    TestConfigureResDto testConfigureResDto = new TestConfigureResDto();
     TestConfigure testConfigure = testConfigureRepository.getOne(testConfigureId);
     testConfigureResDto.setTestConfigureId(testConfigureId);
     testConfigureResDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
@@ -276,7 +279,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     testConfigureResDto.setTestName(testConfigure.getTest().getName());
     testConfigureResDto.setAcceptedType(testConfigure.getAcceptedType().toString());
     testConfigureResDto.setTestType(testConfigure.getTestType().toString());
-    if(testConfigure.getRawMaterial()!= null) {
+    if (testConfigure.getRawMaterial() != null) {
       testConfigureResDto.setRawMaterialId(testConfigure.getRawMaterial().getId());
       testConfigureResDto.setRawMaterialName(testConfigure.getRawMaterial().getName());
     }
