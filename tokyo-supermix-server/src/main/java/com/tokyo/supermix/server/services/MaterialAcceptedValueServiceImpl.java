@@ -17,6 +17,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
 
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private TestConfigureService testConfigureService;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -104,19 +106,13 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   @Transactional(readOnly = true)
   public AcceptedValueMainDto findByTestConfigureId(Long testConfigureId) {
     AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
-    MaterialAcceptedValue materialmaterialAcceptedValueCom =
-        materialAcceptedValueRepository.findByTestConfigureId(testConfigureId).get(0);
-    acceptedValueMainDto.setTestConfigureId(testConfigureId);
-    acceptedValueMainDto.setMaterialCategoryId(
-        materialmaterialAcceptedValueCom.getTestConfigure().getMaterialCategory().getId());
-    acceptedValueMainDto.setMaterialSubCategoryId(
-        materialmaterialAcceptedValueCom.getTestConfigure().getMaterialSubCategory().getId());
-    acceptedValueMainDto.setMaterialCategoryName(
-        materialmaterialAcceptedValueCom.getTestConfigure().getMaterialSubCategory().getName());
-    acceptedValueMainDto.setMaterialSubCategoryName(
-        materialmaterialAcceptedValueCom.getTestConfigure().getMaterialSubCategory().getName());
-    acceptedValueMainDto
-        .setTestName(materialmaterialAcceptedValueCom.getTestConfigure().getTest().getName());
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigureId));
+    acceptedValueMainDto.setAccepetedValueDto(getMaterialAccepetedValueDtoList(testConfigureId));
+    return acceptedValueMainDto;
+  }
+
+  private List<AccepetedValueDto> getMaterialAccepetedValueDtoList(Long testConfigureId) {
     List<AccepetedValueDto> accepetedValueDtolist = new ArrayList<>();
     materialAcceptedValueRepository.findByTestConfigureId(testConfigureId).stream()
         .forEach(acceptedValue -> {
@@ -138,11 +134,14 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           accepetedValueDto
               .setParameterName(acceptedValue.getTestParameter().getParameter().getName());
           accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
+          if (acceptedValue.getTestParameter().getName() != null) {
+            accepetedValueDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+          }
           accepetedValueDtolist.add(accepetedValueDto);
         });
-    acceptedValueMainDto.setAccepetedValueDto(accepetedValueDtolist);
-    return acceptedValueMainDto;
+    return accepetedValueDtolist;
   }
+
 
   @Transactional(readOnly = true)
   public boolean ExistsTestConfigureId(Long testConfigureId) {

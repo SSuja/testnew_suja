@@ -16,6 +16,7 @@ import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
+import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
@@ -234,5 +235,23 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       return true;
     }
     return false;
+  }
+  public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId){
+    TestConfigureResDto acceptedValueMainDto=new TestConfigureResDto();
+    TestConfigure testConfigure = testConfigureRepository.getOne(testConfigureId);
+    acceptedValueMainDto.setTestConfigureId(testConfigureId);
+    acceptedValueMainDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
+    acceptedValueMainDto.setMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId());
+    acceptedValueMainDto.setMaterialCategoryName(testConfigure.getMaterialCategory().getName());
+    acceptedValueMainDto
+        .setMaterialSubCategoryName(testConfigure.getMaterialSubCategory().getName());
+    acceptedValueMainDto.setTestName(testConfigure.getTest().getName());
+    acceptedValueMainDto.setAcceptedType(testConfigure.getAcceptedType().toString());
+    acceptedValueMainDto.setTestType(testConfigure.getTestType().toString());
+    if(testConfigure.getRawMaterial()!= null) {
+      acceptedValueMainDto.setRawMaterialId(testConfigure.getRawMaterial().getId());
+      acceptedValueMainDto.setRawMaterialName(testConfigure.getRawMaterial().getName());
+    }
+    return acceptedValueMainDto;
   }
 }

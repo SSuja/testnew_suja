@@ -16,6 +16,8 @@ public class AccepetedValueDto {
   @Nullable
   private String materialName;
   private Long testParameterId;
+  @Nullable
+  private String testParameterName;
   private String parameterName;
 
   public Long getId() {
@@ -104,6 +106,14 @@ public class AccepetedValueDto {
 
   public void setFinalResult(boolean finalResult) {
     this.finalResult = finalResult;
+  }
+
+  public String getTestParameterName() {
+    return testParameterName;
+  }
+
+  public void setTestParameterName(String testParameterName) {
+    this.testParameterName = testParameterName;
   }
 
 }
