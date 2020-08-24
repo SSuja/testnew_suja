@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
+import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 
@@ -43,4 +44,5 @@ public interface TestConfigureService {
 
   public boolean isUpdatedMaterialSubCategoryAndTest(Long id, Long testId,
       Long materialSubCategoryId, Long rawMaterialId);
+  public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId);
 }
