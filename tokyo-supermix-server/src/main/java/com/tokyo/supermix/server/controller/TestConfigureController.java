@@ -156,13 +156,13 @@ public class TestConfigureController {
   }
 
   @GetMapping(value = EndpointURI.GET_TEST_DETAILS_BY_CONFIGURE_ID)
-  public ResponseEntity<Object> getTestDetailsById(@PathVariable Long id) {
-    if (testConfigureService.isTestConfigureExist(id)) {
+  public ResponseEntity<Object> getTestConfigAllDetailsByTestConfigId(
+      @PathVariable Long testConfigId) {
+    if (testConfigureService.isTestConfigureExist(testConfigId)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
-          testConfigureService.getTestConfigureDetailsByConfigureId(id), RestApiResponseStatus.OK),
-          HttpStatus.OK);
+          testConfigureService.getTestConfigureDetailsByConfigureId(testConfigId),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Test record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
