@@ -29,7 +29,7 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   public void savePlantEquipment(PlantEquipment plantequipment) {
     PlantEquipment plantequipmentObj = plantEquipmentRepository.save(plantequipment);
     if (plantequipmentObj != null)
-      emailNotification.sendPlantEquipmentCalibrationEmail(plantequipmentObj);
+      emailNotification.sendPlantEquipmentEmail(plantequipmentObj);
   }
 
   @Transactional(readOnly = true)
