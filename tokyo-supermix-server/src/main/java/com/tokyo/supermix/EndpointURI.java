@@ -183,7 +183,7 @@ public final class EndpointURI {
   public static final String GET_CUSTOMERS_BY_PLANT_CODE =
       CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
-      TEST_CONFIGURE + SLASH + "testDetails" + ID;
+      TEST_CONFIGURE + SLASH + "testDetails" + SLASH + "{testConfigId}";
   public static final String CUSTOMER_BY_PLANT = CUSTOMER + PLANT_WISE;
   public static final String PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID =
       PLANT_EQUIPMENT + SLASH + "equipment" + SLASH + "{equipmentId}" + SLASH + "{plantCode}";
