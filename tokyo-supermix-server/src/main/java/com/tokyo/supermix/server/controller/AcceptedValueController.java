@@ -142,4 +142,17 @@ public class AcceptedValueController {
         acceptedValueService.searchAcceptedValue(predicate, size, page), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getAcceptedValueByTestIdNew(@PathVariable Long testConfigureId) {
+    if (acceptedValueService.existsAcceptedValueByTestConfigureId(testConfigureId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+          acceptedValueService.findByTestConfigureId(testConfigureId), RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    } else {
+      logger.debug("No AcceptedValue record exist for given Test type id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+          validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
 }
