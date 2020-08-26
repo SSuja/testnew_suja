@@ -23,6 +23,7 @@ public class EmailService {
 
   public void sendMail(String to, String subject, String body) {
     SimpleMailMessage message = new SimpleMailMessage();
+    message.setFrom(preConfiguredMessage.getFrom());
     message.setTo(to);
     message.setSubject(subject);
     message.setText(body);
@@ -31,6 +32,7 @@ public class EmailService {
 
   public void sendMail(String[] to, String subject, String body) {
     SimpleMailMessage message = new SimpleMailMessage();
+    message.setFrom(preConfiguredMessage.getFrom());
     message.setTo(to);
     message.setSubject(subject);
     message.setText(body);
@@ -57,6 +59,7 @@ public class EmailService {
       public void prepare(MimeMessage mimeMessage) throws Exception {
         mimeMessage.setRecipients(Message.RecipientType.TO, convertStringArraytoString(toAddress));
         mimeMessage.setSubject(subject);
+        mimeMessage.setFrom(preConfiguredMessage.getFrom());
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         final InputStreamSource attachment = new ByteArrayResource(byteArray);
         helper.addAttachment(filename, attachment);
@@ -75,6 +78,7 @@ public class EmailService {
       public void prepare(MimeMessage mimeMessage) throws Exception {
         mimeMessage.setRecipients(Message.RecipientType.TO, convertStringArraytoString(to));
         mimeMessage.setSubject(subject);
+        mimeMessage.setFrom(preConfiguredMessage.getFrom());
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         helper.setText("<html><body>"+ body + "</body></html>", true);
       }

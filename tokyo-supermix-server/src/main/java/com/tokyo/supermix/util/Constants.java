@@ -22,8 +22,8 @@ public class Constants {
   public static final String DELIVERY_REPORT_MOISTURE_TEST = "Moisture Test";
   public static final String SUBJECT_NEW_PROJECT = "Notification : About Project Creation ";
   public static final String SUBJECT_NEW_SUPPLIER = "Notification : About Supplier Creation ";
-  public static final String SUBJECT_MATRIAL_TEST = "Notification : About Matrial test result ";
-  public static final String SUBJECT_CONCRETE_TEST = "Notification : About Concrete test result ";
+  public static final String SUBJECT_MATERIAL_TEST = "Notification : About Material Test Result ";
+  public static final String SUBJECT_CONCRETE_TEST = "Notification : About Concrete Test Result ";
   public static final String SUBJECT_NEW_EMPLOYEE = "Notification : About Employee Creation ";
   public static final String SUBJECT_NEW_INCOMING_SAMPLE =
       "Notification : About Incoming Sample Creation ";
@@ -32,7 +32,7 @@ public class Constants {
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
       "Notification : About Finish Product Sample Issue Creation ";
   public static final String SUBJECT_PLANT_EQUIPMENT =
-      "Notification : About Plant Equipment Calibration ";
+      "Notification : About Plant Equipment";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
