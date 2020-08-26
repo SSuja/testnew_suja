@@ -129,7 +129,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository
         .findByFinishProductTestFinishProductSampleMixDesignPlantCodeIn(
             currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-                PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
+                PermissionConstants.VIEW_FINISH_PRODUCT_TRAIL));
   }
 
   @Transactional

@@ -20,7 +20,6 @@ public class TestConfigureDto {
   private MaterialSubCategoryResponseDto materialSubCategory;
   private RawMaterialResponseDto rawMaterial;
   private List<TestEquationResponseDto> testEquations;
-  private List<MaterialAcceptedValueDto> rawMaterialDto;
   private FinishProductAcceptedValuesDto finishProductAcceptedValue;
 
   public Long getId() {
@@ -133,14 +132,6 @@ public class TestConfigureDto {
 
   public void setTestEquations(List<TestEquationResponseDto> testEquations) {
     this.testEquations = testEquations;
-  }
-
-  public List<MaterialAcceptedValueDto> getRawMaterialDto() {
-    return rawMaterialDto;
-  }
-
-  public void setRawMaterialDto(List<MaterialAcceptedValueDto> rawMaterialDto) {
-    this.rawMaterialDto = rawMaterialDto;
   }
 
   public FinishProductAcceptedValuesDto getFinishProductAcceptedValue() {

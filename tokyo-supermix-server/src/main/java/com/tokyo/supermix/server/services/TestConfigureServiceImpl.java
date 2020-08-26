@@ -238,7 +238,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       testParametersDtoList.add(testParametersDto);
     });
     return testParametersDtoList;
-
   }
 
   @Transactional(readOnly = true)

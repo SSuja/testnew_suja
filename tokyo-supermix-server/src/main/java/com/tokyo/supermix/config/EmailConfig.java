@@ -8,13 +8,12 @@ import org.springframework.mail.SimpleMailMessage;
 @Configuration
 public class EmailConfig {
 	@Autowired
-	private MailNotifyConstants mailNotifyConstants;
+	private MailProperty mailProperty;
 
 	@Bean
 	public SimpleMailMessage emailTemplate() {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(mailNotifyConstants.getAdmin());
-		message.setSubject("Important mail");
+		message.setFrom(mailProperty.getUserName());
 		return message;
 	}
 }
