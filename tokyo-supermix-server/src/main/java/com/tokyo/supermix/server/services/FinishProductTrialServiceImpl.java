@@ -334,14 +334,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         .findById(finishproductTest.getFinishProductSample().getCode()).get();
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
-    List<FinishProductParameterResult> finishProductParameterResult =
-        finishProductParameterResultRepository
-            .findByTestParameterIdAndFinishProductTestCodeOrderByUpdatedAtDesc(
-                testParameterRepository
-                    .findByTestConfigureIdAndInputMethods(
-                        finishproductTest.getTestConfigure().getId(), InputMethod.OBSERVE)
-                    .get(0).getId(),
-                finishProductTestCode);
     if (finishproductTest.getTestConfigure().isCoreTest()
         && finishproductTest.getTestConfigure().isName()
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
@@ -377,7 +369,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       if (finishproductTest.getStatus().equals(Status.PASS)) {
         finishProductSample.setStatus(finishproductTest.getStatus());
         mixDesign.setStatus(finishproductTest.getStatus());
-        mixDesign.setTargetGrade(finishProductParameterResult.get(0).getResult());;
+        mixDesign.setTargetGrade(roundDoubleValue(averageValue(finishProductTestCode)));
         mixDesignRepository.save(mixDesign);
         finishProductSampleRepository.save(finishProductSample);
       } else {
@@ -391,7 +383,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         && finishproductTest.getFinishProductSample().getFinishProductTestType()
             .equals(FinishProductTestType.PRE_PRODUCTION)) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
-        mixDesign.setTargetSlump(finishProductParameterResult.get(0).getResult());
+        mixDesign.setTargetSlump(roundDoubleValue(averageValue(finishProductTestCode)));
         mixDesign.setStatus(Status.PROCESS);
         mixDesignRepository.save(mixDesign);
         finishProductSample.setStatus(Status.PROCESS);

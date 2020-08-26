@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductAcceptedValueRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductAcceptedValueResponseDto;
+import com.tokyo.supermix.data.dto.FinishProductAcceptedValuesDto;
 import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -151,7 +152,7 @@ public class FinishProductAcceptedValueController {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.FINISH_PRODUCT_ACCEPTED_VALUE,
               mapper.map(finishProductAcceptedValueService.getByAcceptedValueByTestConfigure(
-                  testConfigureId), FinishProductAcceptedValueResponseDto.class),
+                  testConfigureId), FinishProductAcceptedValuesDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     } else {
