@@ -1,10 +1,13 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.AccepetedValueDto;
+import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
@@ -15,6 +18,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
 
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private TestConfigureService testConfigureService;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -97,5 +102,51 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       }
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public AcceptedValueMainDto findByTestConfigureId(Long testConfigureId) {
+    AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigureId));
+    acceptedValueMainDto.setAccepetedValueDto(getMaterialAccepetedValueDtoList(testConfigureId));
+    return acceptedValueMainDto;
+  }
+
+  private List<AccepetedValueDto> getMaterialAccepetedValueDtoList(Long testConfigureId) {
+    List<AccepetedValueDto> accepetedValueDtolist = new ArrayList<>();
+    materialAcceptedValueRepository.findByTestConfigureId(testConfigureId).stream()
+        .forEach(acceptedValue -> {
+          AccepetedValueDto accepetedValueDto = new AccepetedValueDto();
+          accepetedValueDto.setId(acceptedValue.getId());
+          accepetedValueDto.setConditionRange(acceptedValue.getConditionRange().toString());
+          accepetedValueDto.setMinValue(acceptedValue.getMinValue());
+          accepetedValueDto.setMaxValue(acceptedValue.getMaxValue());
+          accepetedValueDto.setFinalResult(acceptedValue.isFinalResult());
+          accepetedValueDto.setValue(acceptedValue.getValue());
+          if (acceptedValue.getTestEquation() != null) {
+            accepetedValueDto.setTestEquationId(acceptedValue.getTestEquation().getId());
+            accepetedValueDto
+                .setTestEquationFormula(acceptedValue.getTestEquation().getEquation().getFormula());
+          }
+          if (acceptedValue.getRawMaterial() != null) {
+            accepetedValueDto.setMaterialId(acceptedValue.getRawMaterial().getId());
+            accepetedValueDto.setMaterialName(acceptedValue.getRawMaterial().getName());
+          }
+          accepetedValueDto
+              .setParameterName(acceptedValue.getTestParameter().getParameter().getName());
+          accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
+          if (acceptedValue.getTestParameter().getName() != null) {
+            accepetedValueDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+          }
+          accepetedValueDtolist.add(accepetedValueDto);
+        });
+    return accepetedValueDtolist;
+  }
+
+
+  @Transactional(readOnly = true)
+  public boolean ExistsTestConfigureId(Long testConfigureId) {
+    return materialAcceptedValueRepository.existsByTestConfigureId(testConfigureId);
   }
 }

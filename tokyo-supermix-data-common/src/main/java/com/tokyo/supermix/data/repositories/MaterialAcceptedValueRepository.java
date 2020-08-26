@@ -31,4 +31,7 @@ public interface MaterialAcceptedValueRepository
 
   public boolean existsByTestConfigureIdAndRawMaterialIdAndTestParameterId(Long testConfigureId,
       Long rawMaterialId, Long testParameterId);
+
+  public boolean existsByTestConfigureId(Long testConfigureId);
+
 }

@@ -157,4 +157,18 @@ public class MaterialAcceptedValueController {
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
+
+  @GetMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getAcceptedValueByTestConfigureId(
+      @PathVariable Long testConfigureId) {
+    if (materialAcceptedValueService.ExistsTestConfigureId(testConfigureId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+          materialAcceptedValueService.findByTestConfigureId(testConfigureId),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No AcceptedValue record exist for given Test type id");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+          validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
 }
