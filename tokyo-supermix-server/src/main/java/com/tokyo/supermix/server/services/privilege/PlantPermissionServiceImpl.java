@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
 import com.tokyo.supermix.data.entities.privilege.Permission;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
+import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.repositories.auth.PermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
@@ -30,6 +31,9 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
   private MainModuleRepository mainModuleRepository;
   @Autowired
   private SubModuleRepository subModuleRepository;
+  @Autowired
+  private PlantRolePlantPermissionServices plantRolePlantPermissionServices;
+
 
   @Transactional(readOnly = true)
   public List<String> getPlantsByPermissionName(String permissionName) {
@@ -99,8 +103,8 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
     return plantPermissionResponseDtos;
   }
 
-  @Transactional
-  public void savePlantPermission(Plant plant) {
+  @Async
+  public void savePlantPermission(Plant plant, PlantRole plantRole) {
     List<Permission> permissions = permissionRepository.findAll();
     for (Permission permission : permissions) {
       PlantPermission plantPermission = new PlantPermission();
@@ -108,6 +112,7 @@ public class PlantPermissionServiceImpl implements PlantPermissionService {
       plantPermission.setPlant(plant);
       plantPermissionRepository.save(plantPermission);
     }
+    plantRolePlantPermissionServices.createPlantRolePlantPermission(plantRole);
   }
 
   @Transactional(readOnly = true)

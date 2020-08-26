@@ -210,8 +210,7 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
     return plantResponseDtolist;
   }
 
-  @Transactional
-  public void createPlantRolePlantPermission(PlantRole plantRole) {
+   public void createPlantRolePlantPermission(PlantRole plantRole) {
     List<PlantPermission> plantPermissionList =
         plantPermissionRepository.findByPlantCode(plantRole.getPlant().getCode());
     plantPermissionList.forEach(plantPermission -> {
@@ -219,8 +218,6 @@ public class PlantRolePlantPermissionServiceImpl implements PlantRolePlantPermis
       plantRolePlantPermission.setPlantPermission(plantPermission);
       plantRolePlantPermission.setStatus(false);
       plantRolePlantPermission.setPlantRole(plantRole);
-      System.out.println("plantroleplant permission save method --"
-          + plantRolePlantPermission.getPlantPermission().getPermission().getName());
       plantRolePlantPermissionRepository.save(plantRolePlantPermission);
     });
   }
