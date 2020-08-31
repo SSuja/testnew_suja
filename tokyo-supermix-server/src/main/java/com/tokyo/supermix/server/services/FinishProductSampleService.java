@@ -40,10 +40,5 @@ public interface FinishProductSampleService {
 
   public boolean isFinishProductSampleStatusExist(Status status);
 
-  public List<FinishProductSample> getFinishProductSamplesByMaterialCategoryId(
-      Long materialCategoryId);
-
-  public boolean isMaterialCategoryExist(Long materialCategoryId);
-
   public void updateFinishProductSample(FinishProductSample finishProductSample);
 }

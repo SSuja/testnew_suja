@@ -56,24 +56,24 @@ public class MixDesignFillManager {
       cell2.setCellStyle(cellStyle);
 
       // Retrieve the id value
-      HSSFCell cell3 = row.createCell(startColIndex + 2);
-      cell3.setCellValue(list.get(i - 1).getMixDesign().getTargetGrade());
-      cell3.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell4 = row.createCell(startColIndex + 3);
-      cell4.setCellValue(list.get(i - 1).getMixDesign().getTargetSlump());
-      cell4.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell5 = row.createCell(startColIndex + 4);
-      cell5.setCellValue(list.get(i - 1).getMixDesign().getWaterBinderRatio());
-      cell5.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell6 = row.createCell(startColIndex + 5);
-      cell6.setCellValue(list.get(i - 1).getMixDesign().getWaterCementRatio());
-      cell6.setCellStyle(bodyCellStyle);
+//      HSSFCell cell3 = row.createCell(startColIndex + 2);
+//      cell3.setCellValue(list.get(i - 1).getMixDesign().getTargetGrade());
+//      cell3.setCellStyle(bodyCellStyle);
+//
+//      // Retrieve the id value
+//      HSSFCell cell4 = row.createCell(startColIndex + 3);
+//      cell4.setCellValue(list.get(i - 1).getMixDesign().getTargetSlump());
+//      cell4.setCellStyle(bodyCellStyle);
+//
+//      // Retrieve the id value
+//      HSSFCell cell5 = row.createCell(startColIndex + 4);
+//      cell5.setCellValue(list.get(i - 1).getMixDesign().getWaterBinderRatio());
+//      cell5.setCellStyle(bodyCellStyle);
+//
+//      // Retrieve the id value
+//      HSSFCell cell6 = row.createCell(startColIndex + 5);
+//      cell6.setCellValue(list.get(i - 1).getMixDesign().getWaterCementRatio());
+//      cell6.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell7 = row.createCell(startColIndex + 6);
@@ -86,9 +86,9 @@ public class MixDesignFillManager {
       cell8.setCellStyle(bodyCellStyle);
       
    // Retrieve the id value
-      HSSFCell cell9 = row.createCell(startColIndex + 8);
-      cell9.setCellValue(list.get(i - 1).getMixDesign().getMaterialCategory().getName());
-      cell9.setCellStyle(bodyCellStyle);
+      // HSSFCell cell9 = row.createCell(startColIndex + 8);
+      // cell9.setCellValue(list.get(i - 1).getMixDesign().getMaterialCategory().getName());
+      // cell9.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell10 = row.createCell(startColIndex + 9);

@@ -135,17 +135,17 @@ public class FileStorageServiceImpl implements FileStorageService {
       while ((row = csvReader.readNext()) != null) {
         if (mixDesignRepository.findByCode(row[0]) == null) {
           mixDesign.setCode(row[0]);
-          mixDesign.setDate(Date.valueOf(row[1].toString()));
-          mixDesign.setTargetGrade(Double.valueOf(row[2]));
-          mixDesign.setTargetSlump(Double.valueOf(row[3]));
-          mixDesign.setWaterBinderRatio(Double.valueOf(row[4]));
-          mixDesign.setWaterCementRatio(Double.valueOf(row[5]));
-          Plant plant = new Plant();
-          plant.setCode((row[6]));
-          mixDesign.setPlant(plant);
-          mixDesign.setStatus(Status.valueOf(row[7]));
-          MaterialCategory materialCategory = materialCategoryRepository.findByName(row[8]);
-          mixDesign.setMaterialCategory(materialCategory);
+//          mixDesign.setDate(Date.valueOf(row[1].toString()));
+//          mixDesign.setTargetGrade(Double.valueOf(row[2]));
+//          mixDesign.setTargetSlump(Double.valueOf(row[3]));
+//          mixDesign.setWaterBinderRatio(Double.valueOf(row[4]));
+//          mixDesign.setWaterCementRatio(Double.valueOf(row[5]));
+//          Plant plant = new Plant();
+//          plant.setCode((row[6]));
+//          mixDesign.setPlant(plant);
+//          mixDesign.setStatus(Status.valueOf(row[7]));
+//          MaterialCategory materialCategory = materialCategoryRepository.findByName(row[8]);
+//          mixDesign.setMaterialCategory(materialCategory);
           mixDesignRepository.save(mixDesign);
 
         }

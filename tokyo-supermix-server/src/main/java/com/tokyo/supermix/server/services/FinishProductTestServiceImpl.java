@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.entities.FinishProductTest;
-import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -26,8 +24,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  @Autowired
-  private FinishProductSampleRepository finishProductSampleRepository;
+//  @Autowired
+//  private FinishProductSampleRepository finishProductSampleRepository;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -136,38 +134,38 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       String finishProductSampleCode) {
     ArrayList<FinishProductTestDto> finishProductTestDtoList =
         new ArrayList<FinishProductTestDto>();
-    testConfigureRepository.findByMaterialCategoryId(finishProductSampleRepository
-        .findById(finishProductSampleCode).get().getMixDesign().getMaterialCategory().getId())
-        .forEach(testConfigure -> {
-          FinishProductTestDto finishProductTestDto = new FinishProductTestDto();
-          finishProductTestRepository.findByTestConfigureId(testConfigure.getId())
-              .forEach(finishProductTest -> {
-                if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
-                    finishProductSampleCode, testConfigure.getId())) {
-                  finishProductTestDto.setCreatedDate(finishProductTest.getCreatedAt().toString());
-                  finishProductTestDto.setUpdatedDate(finishProductTest.getUpdatedAt().toString());
-                  finishProductTestDto
-                      .setTestConfigId(finishProductTest.getTestConfigure().getId());
-                  finishProductTestDto.setFinishproductTestCode(finishProductTest.getCode());
-                  finishProductTestDto.setStatus(finishProductTest.getStatus());
-                  finishProductTestDto
-                      .setTestName(finishProductTest.getTestConfigure().getTest().getName());
-                  finishProductTestDto.setFinishProductSampleCode(
-                      finishProductTest.getFinishProductSample().getCode());
-                  finishProductTestDto
-                      .setMainType(finishProductTest.getTestConfigure().getTestType());
-                }
-              });
-          if (!(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
-              finishProductSampleCode, testConfigure.getId()))) {
-            finishProductTestDto.setTestConfigId(testConfigure.getId());
-            finishProductTestDto.setStatus(Status.NEW);
-            finishProductTestDto.setTestName(testConfigure.getTest().getName());
-            finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
-            finishProductTestDto.setMainType(testConfigure.getTestType());
-          }
-          finishProductTestDtoList.add(finishProductTestDto);
-        });
+//    testConfigureRepository.findByMaterialCategoryId(finishProductSampleRepository
+//        .findById(finishProductSampleCode).get().getMixDesign().getMaterialCategory().getId())
+//        .forEach(testConfigure -> {
+//          FinishProductTestDto finishProductTestDto = new FinishProductTestDto();
+//          finishProductTestRepository.findByTestConfigureId(testConfigure.getId())
+//              .forEach(finishProductTest -> {
+//                if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
+//                    finishProductSampleCode, testConfigure.getId())) {
+//                  finishProductTestDto.setCreatedDate(finishProductTest.getCreatedAt().toString());
+//                  finishProductTestDto.setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+//                  finishProductTestDto
+//                      .setTestConfigId(finishProductTest.getTestConfigure().getId());
+//                  finishProductTestDto.setFinishproductTestCode(finishProductTest.getCode());
+//                  finishProductTestDto.setStatus(finishProductTest.getStatus());
+//                  finishProductTestDto
+//                      .setTestName(finishProductTest.getTestConfigure().getTest().getName());
+//                  finishProductTestDto.setFinishProductSampleCode(
+//                      finishProductTest.getFinishProductSample().getCode());
+//                  finishProductTestDto
+//                      .setMainType(finishProductTest.getTestConfigure().getTestType());
+//                }
+//              });
+//          if (!(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
+//              finishProductSampleCode, testConfigure.getId()))) {
+//            finishProductTestDto.setTestConfigId(testConfigure.getId());
+//            finishProductTestDto.setStatus(Status.NEW);
+//            finishProductTestDto.setTestName(testConfigure.getTest().getName());
+//            finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+//            finishProductTestDto.setMainType(testConfigure.getTestType());
+//          }
+//          finishProductTestDtoList.add(finishProductTestDto);
+//        });
     return finishProductTestDtoList;
   }
 

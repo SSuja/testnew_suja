@@ -207,21 +207,4 @@ public class FinishProductSampleController {
           HttpStatus.BAD_REQUEST);
     }
   }
-
-  @GetMapping(value = EndpointURI.GET_FINISH_PRODUCT_BY_MATERIAL_CATEGORY)
-  public ResponseEntity<Object> getFinishProductSampleByMaterialCategory(
-      @PathVariable Long materialCategoryId) {
-    if (finishProductSampleService.isMaterialCategoryExist(materialCategoryId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-          mapper.map(finishProductSampleService.getFinishProductSamplesByMaterialCategoryId(
-              materialCategoryId), FinishProductSampleResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    } else {
-      logger.debug("No Finish Product Sample record exist for given Status");
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLES,
-              validationFailureStatusCodes.getFinishProductSampleNotExist()),
-          HttpStatus.BAD_REQUEST);
-    }
-  }
 }

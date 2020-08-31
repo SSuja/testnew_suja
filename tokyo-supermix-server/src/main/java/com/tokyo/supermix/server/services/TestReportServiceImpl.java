@@ -539,10 +539,10 @@ public class TestReportServiceImpl implements TestReportService {
         concreteTestReportDto
             .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
       }
-      concreteTestReportDto.setTargetGrade(
-          finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
-      concreteTestReportDto.setTargetSlump(
-          finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
+//      concreteTestReportDto.setTargetGrade(
+//          finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
+//      concreteTestReportDto.setTargetSlump(
+//          finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
       concreteTestReportDto
           .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
       concreteTestReportDto
@@ -588,10 +588,10 @@ public class TestReportServiceImpl implements TestReportService {
       concreteTestReportDto
           .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
     }
-    concreteTestReportDto
-        .setTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
-    concreteTestReportDto
-        .setTargetSlump(finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
+//    concreteTestReportDto
+//        .setTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
+//    concreteTestReportDto
+//        .setTargetSlump(finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
     concreteTestReportDto
         .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
     concreteTestReportDto
