@@ -3,15 +3,11 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
-import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 
 @Entity
@@ -20,7 +16,6 @@ public class FinishProductSample extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   private String code;
-  private String workOrderNo;
   private String finishProductCode;
   private Date date;
   @ManyToOne
@@ -30,11 +25,6 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
   private Status status;
-  @OneToOne
-  @JoinColumn(name = "projectCode", nullable = true)
-  private Project project;
-  @Enumerated(EnumType.ORDINAL)
-  private FinishProductTestType finishProductTestType;
 
   public String getCode() {
     return code;
@@ -42,30 +32,6 @@ public class FinishProductSample extends DateAudit implements Serializable {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public String getWorkOrderNo() {
-    return workOrderNo;
-  }
-
-  public void setWorkOrderNo(String workOrderNo) {
-    this.workOrderNo = workOrderNo;
-  }
-
-  public Equipment getEquipment() {
-    return equipment;
-  }
-
-  public void setEquipment(Equipment equipment) {
-    this.equipment = equipment;
-  }
-
-  public MixDesign getMixDesign() {
-    return mixDesign;
-  }
-
-  public void setMixDesign(MixDesign mixDesign) {
-    this.mixDesign = mixDesign;
   }
 
   public String getFinishProductCode() {
@@ -84,8 +50,20 @@ public class FinishProductSample extends DateAudit implements Serializable {
     this.date = date;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
+  public Equipment getEquipment() {
+    return equipment;
+  }
+
+  public void setEquipment(Equipment equipment) {
+    this.equipment = equipment;
+  }
+
+  public MixDesign getMixDesign() {
+    return mixDesign;
+  }
+
+  public void setMixDesign(MixDesign mixDesign) {
+    this.mixDesign = mixDesign;
   }
 
   public Status getStatus() {
@@ -96,19 +74,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
     this.status = status;
   }
 
-  public Project getProject() {
-    return project;
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
-
-  public void setProject(Project project) {
-    this.project = project;
-  }
-
-  public FinishProductTestType getFinishProductTestType() {
-    return finishProductTestType;
-  }
-
-  public void setFinishProductTestType(FinishProductTestType finishProductTestType) {
-    this.finishProductTestType = finishProductTestType;
-  } 
 }

@@ -533,12 +533,12 @@ public class TestReportServiceImpl implements TestReportService {
           finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
       concreteTestReportDto
           .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
-      if (finishProductTest.getFinishProductSample().getProject() != null) {
-        concreteTestReportDto.setCustomerName(
-            finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
-        concreteTestReportDto
-            .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
-      }
+//      if (finishProductTest.getFinishProductSample().getProject() != null) {
+//        concreteTestReportDto.setCustomerName(
+//            finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
+//        concreteTestReportDto
+//            .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
+//      }
       // concreteTestReportDto.setTargetGrade(
       // finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
       // concreteTestReportDto.setTargetSlump(
@@ -581,12 +581,12 @@ public class TestReportServiceImpl implements TestReportService {
         finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
     concreteTestReportDto
         .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
-    if (finishProductTest.getFinishProductSample().getProject() != null) {
-      concreteTestReportDto.setCustomerName(
-          finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
-      concreteTestReportDto
-          .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
-    }
+    // if (finishProductTest.getFinishProductSample().getProject() != null) {
+    // concreteTestReportDto.setCustomerName(
+    // finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
+    // concreteTestReportDto
+    // .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
+    // }
     // concreteTestReportDto
     // .setTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
     // concreteTestReportDto
