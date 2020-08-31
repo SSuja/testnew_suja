@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,10 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.InputMethod;
-import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 @Entity
@@ -41,8 +38,6 @@ public class TestParameter extends DateAudit implements Serializable {
   private Double value;
   private String name;
   private String groupKey;
-  @Enumerated(EnumType.ORDINAL)
-  private MixDesignField mixDesignField;
   @ManyToOne
   @JoinColumn(name = "qualityParameterId", nullable = true)
   private QualityParameter qualityParameter;
@@ -50,14 +45,6 @@ public class TestParameter extends DateAudit implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private InputMethod inputMethods;
   private String level;
-
-  public String getLevel() {
-    return level;
-  }
-
-  public void setLevel(String level) {
-    this.level = level;
-  }
 
   public Long getId() {
     return id;
@@ -99,14 +86,6 @@ public class TestParameter extends DateAudit implements Serializable {
     this.abbreviation = abbreviation;
   }
 
-  public Double getValue() {
-    return value;
-  }
-
-  public void setValue(Double value) {
-    this.value = value;
-  }
-
   public TestParameterType getType() {
     return type;
   }
@@ -115,32 +94,12 @@ public class TestParameter extends DateAudit implements Serializable {
     this.type = type;
   }
 
-  public QualityParameter getQualityParameter() {
-    return qualityParameter;
+  public Double getValue() {
+    return value;
   }
 
-  public void setQualityParameter(QualityParameter qualityParameter) {
-    this.qualityParameter = qualityParameter;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public boolean isAcceptedCriteria() {
-    return acceptedCriteria;
-  }
-
-  public void setAcceptedCriteria(boolean acceptedCriteria) {
-    this.acceptedCriteria = acceptedCriteria;
-  }
-
-  public InputMethod getInputMethods() {
-    return inputMethods;
-  }
-
-  public void setInputMethods(InputMethod inputMethods) {
-    this.inputMethods = inputMethods;
+  public void setValue(Double value) {
+    this.value = value;
   }
 
   public String getName() {
@@ -159,11 +118,39 @@ public class TestParameter extends DateAudit implements Serializable {
     this.groupKey = groupKey;
   }
 
-  public MixDesignField getMixDesignField() {
-    return mixDesignField;
+  public QualityParameter getQualityParameter() {
+    return qualityParameter;
   }
 
-  public void setMixDesignField(MixDesignField mixDesignField) {
-    this.mixDesignField = mixDesignField;
+  public void setQualityParameter(QualityParameter qualityParameter) {
+    this.qualityParameter = qualityParameter;
+  }
+
+  public boolean isAcceptedCriteria() {
+    return acceptedCriteria;
+  }
+
+  public void setAcceptedCriteria(boolean acceptedCriteria) {
+    this.acceptedCriteria = acceptedCriteria;
+  }
+
+  public InputMethod getInputMethods() {
+    return inputMethods;
+  }
+
+  public void setInputMethods(InputMethod inputMethods) {
+    this.inputMethods = inputMethods;
+  }
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }

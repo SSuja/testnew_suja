@@ -2,7 +2,6 @@ package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.entities.Unit;
 import com.tokyo.supermix.data.enums.InputMethod;
-import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class TestParametersDto {
@@ -15,7 +14,6 @@ public class TestParametersDto {
   private InputMethod inputMethods;
   private String level;
   private String name;
-  private MixDesignField mixDesignField;
 
   public String getParameterName() {
     return parameterName;
@@ -87,13 +85,5 @@ public class TestParametersDto {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public MixDesignField getMixDesignField() {
-    return mixDesignField;
-  }
-
-  public void setMixDesignField(MixDesignField mixDesignField) {
-    this.mixDesignField = mixDesignField;
   }
 }

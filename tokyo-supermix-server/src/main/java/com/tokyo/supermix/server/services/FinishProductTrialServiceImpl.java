@@ -150,8 +150,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     FinishProductParameterResult finishProductParameterResult = new FinishProductParameterResult();
     for (TestParameter testParameter : testParameterList) {
       if (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-          && testParameter.getType().equals(TestParameterType.INPUT)
-          && testParameter.getMixDesignField() == null) {
+          && testParameter.getType().equals(TestParameterType.INPUT)) {
         finishProductParameterResult.setFinishProductTest(finishproductTest);
         finishProductParameterResult.setTestParameter(testParameter);
         finishProductParameterResult
@@ -173,8 +172,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     FinishProductParameterResult finishProductParameterResult = new FinishProductParameterResult();
     for (TestParameter testParameter : testParameterList) {
       if (testParameter.getInputMethods().equals(InputMethod.CALCULATION)
-          && testParameter.getType().equals(TestParameterType.RESULT)
-          && testParameter.getMixDesignField() == null) {
+          && testParameter.getType().equals(TestParameterType.RESULT)) {
         finishProductParameterResult.setFinishProductTest(finishproductTest);
         finishProductParameterResult.setTestParameter(testParameter);
         finishProductParameterResult.setResult(getFinishProductResult(finishProductTestCode));
@@ -191,8 +189,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
         .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode)) {
       if (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT)
-          && finishProductTrial.getTestParameter().getMixDesignField() == null) {
+          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT)) {
         trialValue.add(finishProductTrial.getValue());
       }
     }

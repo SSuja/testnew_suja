@@ -228,7 +228,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       TestParametersDto testParametersDto = new TestParametersDto();
       testParametersDto.setAbbreviation(testPara.getAbbreviation());
       testParametersDto.setAcceptedCriteria(testPara.isAcceptedCriteria());
-      testParametersDto.setMixDesignField(testPara.getMixDesignField());
       testParametersDto.setName(testPara.getName());
       testParametersDto.setParameterName(testPara.getParameter().getName());
       testParametersDto.setType(testPara.getType());
