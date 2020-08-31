@@ -26,6 +26,7 @@ public class FinishProductTest extends DateAudit implements Serializable {
   private Long noOfTrial;
   private Date date;
   private String comments;
+  private String specimenCode;
 
   public String getCode() {
     return code;
@@ -81,6 +82,14 @@ public class FinishProductTest extends DateAudit implements Serializable {
 
   public void setComments(String comments) {
     this.comments = comments;
+  }
+
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
+
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
   }
 
   public static long getSerialversionuid() {
