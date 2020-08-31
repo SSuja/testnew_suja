@@ -11,18 +11,15 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AcceptedValuesDto;
-import com.tokyo.supermix.data.dto.FinishProductAcceptedValuesDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParametersDto;
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
-import com.tokyo.supermix.data.entities.FinishProductAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.FinishProductAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
@@ -41,8 +38,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EmailPointsService emailPointsService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
-  @Autowired
-  private FinishProductAcceptedValueRepository finishProductAcceptedValueRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -157,10 +152,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testParameterRepository.findByTestConfigureId(testConfigId) != null) {
       testConfigureDto.setTestparameters(getTestParametersByTestConfigId(testConfigId));
     }
-    if (finishProductAcceptedValueRepository.existsByTestParameterTestConfigureId(testConfigId)) {
-      testConfigureDto.setFinishProductAcceptedValue(
-          getFinishProductAcceptedValuesByTestConfigId(testConfigId));
-    }
     return testConfigureDto;
   }
 
@@ -204,22 +195,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       acceptedValuesDtoList.add(acceptedValuesDto);
     });
     return acceptedValuesDtoList;
-  }
-
-  public FinishProductAcceptedValuesDto getFinishProductAcceptedValuesByTestConfigId(
-      Long testConfigId) {
-    FinishProductAcceptedValuesDto acceptedValuesDto = new FinishProductAcceptedValuesDto();
-    FinishProductAcceptedValue finishProductAcceptedValue =
-        finishProductAcceptedValueRepository.findByTestParameterTestConfigureId(testConfigId);
-    acceptedValuesDto.setConditionRange(finishProductAcceptedValue.getConditionRange());
-    acceptedValuesDto.setFinalResult(finishProductAcceptedValue.isFinalResult());
-    acceptedValuesDto.setMaxValue(finishProductAcceptedValue.getMaxValue());
-    acceptedValuesDto.setMinValue(finishProductAcceptedValue.getMinValue());
-    acceptedValuesDto.setTestParameterName(finishProductAcceptedValue.getTestParameter().getName());
-    acceptedValuesDto.setTestParameterParameterName(
-        finishProductAcceptedValue.getTestParameter().getParameter().getName());
-    acceptedValuesDto.setValue(finishProductAcceptedValue.getValue());
-    return acceptedValuesDto;
   }
 
   public List<TestParametersDto> getTestParametersByTestConfigId(Long testConfigId) {
