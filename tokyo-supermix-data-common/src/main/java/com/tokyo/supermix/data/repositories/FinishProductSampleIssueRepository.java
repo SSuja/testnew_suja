@@ -8,9 +8,7 @@ import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 public interface FinishProductSampleIssueRepository
     extends JpaRepository<FinishProductSampleIssue, String>,
     QuerydslPredicateExecutor<FinishProductSampleIssue> {
-  FinishProductSampleIssue findByFinishProductSampleCode(String finishProductSampleCode);
-
-  List<FinishProductSampleIssue> findByFinishProductSampleMixDesignPlantCode(String plantCode);
+ // List<FinishProductSampleIssue> findByFinishProductSampleMixDesignPlantCode(String plantCode);
 
   List<FinishProductSampleIssue> findByProjectPlantCodeIn(List<String> plantCodes);
 

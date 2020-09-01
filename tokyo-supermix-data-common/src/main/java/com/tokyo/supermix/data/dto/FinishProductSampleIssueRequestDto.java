@@ -8,18 +8,10 @@ public class FinishProductSampleIssueRequestDto {
   @NotEmpty(message = "{finishProductSampleIssueRequestDto.truckNo.empty}")
   @NotNull(message = "{finishProductSampleIssueRequestDto.truckNo.null}")
   private String truckNo;
-  private String finishProductSampleCode;
   private ProjectRequestDto project;
   private Long pourId;
   private String workOrderNumber;
-
-  public String getWorkOrderNumber() {
-    return workOrderNumber;
-  }
-
-  public void setWorkOrderNumber(String workOrderNumber) {
-    this.workOrderNumber = workOrderNumber;
-  }
+  private String mixDesignCode;
 
   public String getCode() {
     return code;
@@ -35,14 +27,6 @@ public class FinishProductSampleIssueRequestDto {
 
   public void setTruckNo(String truckNo) {
     this.truckNo = truckNo;
-  }
-
-  public String getFinishProductSampleCode() {
-    return finishProductSampleCode;
-  }
-
-  public void setFinishProductSampleCode(String finishProductSampleCode) {
-    this.finishProductSampleCode = finishProductSampleCode;
   }
 
   public ProjectRequestDto getProject() {
@@ -61,4 +45,19 @@ public class FinishProductSampleIssueRequestDto {
     this.pourId = pourId;
   }
 
+  public String getWorkOrderNumber() {
+    return workOrderNumber;
+  }
+
+  public String getMixDesignCode() {
+    return mixDesignCode;
+  }
+
+  public void setMixDesignCode(String mixDesignCode) {
+    this.mixDesignCode = mixDesignCode;
+  }
+
+  public void setWorkOrderNumber(String workOrderNumber) {
+    this.workOrderNumber = workOrderNumber;
+  }
 }

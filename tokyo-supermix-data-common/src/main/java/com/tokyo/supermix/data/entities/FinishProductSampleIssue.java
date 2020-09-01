@@ -17,15 +17,15 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
   private String code;
   private String truckNo;
   @ManyToOne
-  @JoinColumn(name = "finishProductSampleCode", nullable = false)
-  private FinishProductSample finishProductSample;
-  @ManyToOne
   @JoinColumn(name = "projectCode", nullable = false)
   private Project project;
   @OneToOne
   @JoinColumn(name = "pourId", nullable = true)
   private Pour pour;
   private String workOrderNumber;
+  @ManyToOne
+  @JoinColumn(name = "mixDesignCode", nullable = false)
+  private MixDesign mixDesign;
 
   public String getCode() {
     return code;
@@ -41,14 +41,6 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
 
   public void setTruckNo(String truckNo) {
     this.truckNo = truckNo;
-  }
-
-  public FinishProductSample getFinishProductSample() {
-    return finishProductSample;
-  }
-
-  public void setFinishProductSample(FinishProductSample finishProductSample) {
-    this.finishProductSample = finishProductSample;
   }
 
   public Project getProject() {
@@ -73,6 +65,14 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
 
   public void setWorkOrderNumber(String workOrderNumber) {
     this.workOrderNumber = workOrderNumber;
+  }
+
+  public MixDesign getMixDesign() {
+    return mixDesign;
+  }
+
+  public void setMixDesign(MixDesign mixDesign) {
+    this.mixDesign = mixDesign;
   }
 
   public static long getSerialversionuid() {

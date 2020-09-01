@@ -40,8 +40,7 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   @Transactional
   public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
     if (finishProductSampleIssue.getCode() == null) {
-      String codePrefix = finishProductSampleRepository
-          .getOne(finishProductSampleIssue.getFinishProductSample().getCode()).getCode();
+      String codePrefix = "";
       List<FinishProductSampleIssue> finishProductSampleIssueList =
           finishProductSampleIssueRepository.findByCodeContaining(codePrefix);
       if (finishProductSampleIssueList.size() == 0) {
@@ -96,8 +95,9 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode) {
-    return finishProductSampleIssueRepository
-        .findByFinishProductSampleMixDesignPlantCode(plantCode);
+    return null;
+    // return finishProductSampleIssueRepository
+    // .findByFinishProductSampleMixDesignPlantCode(plantCode);
   }
 
   @Override
