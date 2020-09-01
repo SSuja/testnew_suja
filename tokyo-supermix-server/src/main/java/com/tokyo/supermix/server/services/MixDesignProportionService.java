@@ -21,6 +21,5 @@ public interface MixDesignProportionService {
 
   public Page<MixDesignProportion> searchMixDesignProportion(String rawMaterialName1,
       String rawMaterialName2, String rawMaterialName3, String rawMaterialName4,
-      String rawMaterialName5, int page, int size, String mixDesignCode, Double targetGrade,
-      Double targetSlump);
+      String rawMaterialName5, int page, int size, String mixDesignCode);
 }

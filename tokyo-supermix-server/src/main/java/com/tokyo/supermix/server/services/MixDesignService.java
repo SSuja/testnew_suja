@@ -1,8 +1,8 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
-import com.tokyo.supermix.data.dto.MixDesignResponseDto;
+import org.springframework.data.domain.Page;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -18,12 +18,6 @@ public interface MixDesignService {
 
   public boolean isCodeExist(String code);
 
-  public List<MixDesignResponseDto> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
-      Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
-      Double targetGradeEqual, Double targetWaterCementRetioMin, Double targetWaterCementRetioMax,
-      Double targetWaterCementRetioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
-      Double waterBinderRatioEqual, String plantCode, int page, int size);
-
   public List<MixDesign> getMixDesignByPlantCode(String plantCode);
 
   public List<MixDesign> getMixDesignByStatus(Status status);
@@ -35,4 +29,6 @@ public interface MixDesignService {
   public List<MixDesign> getAllMixDesignByDecending();
 
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode);
+
+  public Page<MixDesign> searchMixDesign(Predicate predicate, int size, int page);
 }
