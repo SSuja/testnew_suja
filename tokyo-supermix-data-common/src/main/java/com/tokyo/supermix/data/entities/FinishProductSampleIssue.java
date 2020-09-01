@@ -23,6 +23,9 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
   @JoinColumn(name = "pourId", nullable = true)
   private Pour pour;
   private String workOrderNumber;
+  @ManyToOne
+  @JoinColumn(name = "mixDesignCode", nullable = false)
+  private MixDesign mixDesign;
 
   public String getCode() {
     return code;
@@ -62,6 +65,14 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
 
   public void setWorkOrderNumber(String workOrderNumber) {
     this.workOrderNumber = workOrderNumber;
+  }
+
+  public MixDesign getMixDesign() {
+    return mixDesign;
+  }
+
+  public void setMixDesign(MixDesign mixDesign) {
+    this.mixDesign = mixDesign;
   }
 
   public static long getSerialversionuid() {

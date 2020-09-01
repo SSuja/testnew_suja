@@ -11,6 +11,7 @@ public class FinishProductSampleIssueRequestDto {
   private ProjectRequestDto project;
   private Long pourId;
   private String workOrderNumber;
+  private String mixDesignCode;
 
   public String getCode() {
     return code;
@@ -46,6 +47,14 @@ public class FinishProductSampleIssueRequestDto {
 
   public String getWorkOrderNumber() {
     return workOrderNumber;
+  }
+
+  public String getMixDesignCode() {
+    return mixDesignCode;
+  }
+
+  public void setMixDesignCode(String mixDesignCode) {
+    this.mixDesignCode = mixDesignCode;
   }
 
   public void setWorkOrderNumber(String workOrderNumber) {

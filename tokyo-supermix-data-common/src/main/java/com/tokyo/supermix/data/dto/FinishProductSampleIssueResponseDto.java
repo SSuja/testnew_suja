@@ -8,6 +8,7 @@ public class FinishProductSampleIssueResponseDto {
   private String createdAt;
   private String updatedAt;
   private String workOrderNumber;
+  private MixDesignResponseDto mixDesign;
 
   public String getCode() {
     return code;
@@ -63,5 +64,13 @@ public class FinishProductSampleIssueResponseDto {
 
   public void setWorkOrderNumber(String workOrderNumber) {
     this.workOrderNumber = workOrderNumber;
+  }
+
+  public MixDesignResponseDto getMixDesign() {
+    return mixDesign;
+  }
+
+  public void setMixDesign(MixDesignResponseDto mixDesign) {
+    this.mixDesign = mixDesign;
   }
 }
