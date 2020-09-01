@@ -17,9 +17,6 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
   private String code;
   private String truckNo;
   @ManyToOne
-  @JoinColumn(name = "finishProductSampleCode", nullable = false)
-  private FinishProductSample finishProductSample;
-  @ManyToOne
   @JoinColumn(name = "projectCode", nullable = false)
   private Project project;
   @OneToOne
@@ -41,14 +38,6 @@ public class FinishProductSampleIssue extends DateAudit implements Serializable 
 
   public void setTruckNo(String truckNo) {
     this.truckNo = truckNo;
-  }
-
-  public FinishProductSample getFinishProductSample() {
-    return finishProductSample;
-  }
-
-  public void setFinishProductSample(FinishProductSample finishProductSample) {
-    this.finishProductSample = finishProductSample;
   }
 
   public Project getProject() {

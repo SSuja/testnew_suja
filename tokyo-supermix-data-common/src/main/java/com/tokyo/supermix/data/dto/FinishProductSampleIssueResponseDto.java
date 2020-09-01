@@ -3,20 +3,11 @@ package com.tokyo.supermix.data.dto;
 public class FinishProductSampleIssueResponseDto {
   private String code;
   private String truckNo;
-  private FinishProductSampleResponseDto finishProductSample;
   private ProjectResponseDto project;
   private PourDtoResponse pour;
   private String createdAt;
   private String updatedAt;
   private String workOrderNumber;
-
-  public String getWorkOrderNumber() {
-    return workOrderNumber;
-  }
-
-  public void setWorkOrderNumber(String workOrderNumber) {
-    this.workOrderNumber = workOrderNumber;
-  }
 
   public String getCode() {
     return code;
@@ -32,14 +23,6 @@ public class FinishProductSampleIssueResponseDto {
 
   public void setTruckNo(String truckNo) {
     this.truckNo = truckNo;
-  }
-
-  public FinishProductSampleResponseDto getFinishProductSample() {
-    return finishProductSample;
-  }
-
-  public void setFinishProductSample(FinishProductSampleResponseDto finishProductSample) {
-    this.finishProductSample = finishProductSample;
   }
 
   public ProjectResponseDto getProject() {
@@ -72,5 +55,13 @@ public class FinishProductSampleIssueResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public String getWorkOrderNumber() {
+    return workOrderNumber;
+  }
+
+  public void setWorkOrderNumber(String workOrderNumber) {
+    this.workOrderNumber = workOrderNumber;
   }
 }
