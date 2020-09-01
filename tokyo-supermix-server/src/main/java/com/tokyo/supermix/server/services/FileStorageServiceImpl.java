@@ -23,7 +23,6 @@ import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.Equipment;
-import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.entities.Plant;
@@ -38,7 +37,6 @@ import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
-import com.tokyo.supermix.data.repositories.MaterialCategoryRepository;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
@@ -57,8 +55,6 @@ public class FileStorageServiceImpl implements FileStorageService {
   private MixDesignProportionRepository mixDesignProportionRepository;
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
-  @Autowired
-  private MaterialCategoryRepository materialCategoryRepository;
   @Autowired
   private UnitRepository unitRepository;
   @Autowired
@@ -135,17 +131,12 @@ public class FileStorageServiceImpl implements FileStorageService {
       while ((row = csvReader.readNext()) != null) {
         if (mixDesignRepository.findByCode(row[0]) == null) {
           mixDesign.setCode(row[0]);
-//          mixDesign.setDate(Date.valueOf(row[1].toString()));
-//          mixDesign.setTargetGrade(Double.valueOf(row[2]));
-//          mixDesign.setTargetSlump(Double.valueOf(row[3]));
-//          mixDesign.setWaterBinderRatio(Double.valueOf(row[4]));
-//          mixDesign.setWaterCementRatio(Double.valueOf(row[5]));
-//          Plant plant = new Plant();
-//          plant.setCode((row[6]));
-//          mixDesign.setPlant(plant);
-//          mixDesign.setStatus(Status.valueOf(row[7]));
-//          MaterialCategory materialCategory = materialCategoryRepository.findByName(row[8]);
-//          mixDesign.setMaterialCategory(materialCategory);
+          mixDesign.setDate(Date.valueOf(row[1].toString()));
+          Plant plant = plantRepository.findByName(row[2]);
+          mixDesign.setPlant(plant);
+          mixDesign.setStatus(Status.valueOf(row[3]));
+          RawMaterial rawMaterial = rawMaterialRepository.findByName(row[4]);
+          mixDesign.setRawMaterial(rawMaterial);
           mixDesignRepository.save(mixDesign);
 
         }
@@ -154,13 +145,12 @@ public class FileStorageServiceImpl implements FileStorageService {
           mixDesignNew = mixDesignRepository.findByCode(mixDesign.getCode());
         }
         MixDesignProportion mixDesignProportion = new MixDesignProportion();
-        RawMaterial rawMaterial = rawMaterialRepository.findByName(row[9]);
+        RawMaterial rawMaterial = rawMaterialRepository.findByName(row[5]);
         mixDesignProportion.setRawMaterial(rawMaterial);
         mixDesignProportion.setMixDesign(mixDesignNew);
-        mixDesignProportion.setQuantity(Long.valueOf(row[10]));
-        Unit unit = unitRepository.findByUnit(row[11]);
+        mixDesignProportion.setQuantity(Long.valueOf(row[6]));
+        Unit unit = unitRepository.findByUnit(row[7]);
         mixDesignProportion.setUnit(unit);
-
         mixDesignProportions.add(mixDesignProportion);
         mixDesignProportionRepository.save(mixDesignProportion);
       }

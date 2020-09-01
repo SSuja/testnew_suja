@@ -25,9 +25,6 @@ public class MixDesignLayouter {
     worksheet.setColumnWidth(5, 5000);
     worksheet.setColumnWidth(6, 5000);
     worksheet.setColumnWidth(7, 5000);
-    worksheet.setColumnWidth(8, 5000);
-    worksheet.setColumnWidth(9, 5000);
-    worksheet.setColumnWidth(10, 5000);
     // Build the title and date headers
     buildTitle(worksheet, startRowIndex, startColIndex);
     // Build the column headers
@@ -60,7 +57,7 @@ public class MixDesignLayouter {
     cellTitle.setCellValue("MixDesign & MixDesign Proportion Details");
     cellTitle.setCellStyle(cellStyleTitle);
     // Create merged region for the report title
-    worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 11));
+    worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 7));
 
     // Create date header
     HSSFRow dateTitle = worksheet.createRow((short) startRowIndex + 1);
@@ -107,43 +104,27 @@ public class MixDesignLayouter {
     cell2.setCellStyle(headerCellStyle);
 
     HSSFCell cell3 = rowHeader.createCell(startColIndex + 2);
-    cell3.setCellValue("Target Grade");
+    cell3.setCellValue("Plant");
     cell3.setCellStyle(headerCellStyle);
 
     HSSFCell cell4 = rowHeader.createCell(startColIndex + 3);
-    cell4.setCellValue("Target Slump");
+    cell4.setCellValue("Status");
     cell4.setCellStyle(headerCellStyle);
 
     HSSFCell cell5 = rowHeader.createCell(startColIndex + 4);
-    cell5.setCellValue("Water Binder Radio");
+    cell5.setCellValue("Material");
     cell5.setCellStyle(headerCellStyle);
 
     HSSFCell cell6 = rowHeader.createCell(startColIndex + 5);
-    cell6.setCellValue("Water Cement Radio");
+    cell6.setCellValue("Raw Material");
     cell6.setCellStyle(headerCellStyle);
 
     HSSFCell cell7 = rowHeader.createCell(startColIndex + 6);
-    cell7.setCellValue("Plant");
+    cell7.setCellValue("Quanity");
     cell7.setCellStyle(headerCellStyle);
 
     HSSFCell cell8 = rowHeader.createCell(startColIndex + 7);
-    cell8.setCellValue("Status");
+    cell8.setCellValue("Unit");
     cell8.setCellStyle(headerCellStyle);
-    
-    HSSFCell cell9 = rowHeader.createCell(startColIndex + 8);
-    cell9.setCellValue("Material Category");
-    cell9.setCellStyle(headerCellStyle);
-
-    HSSFCell cell10 = rowHeader.createCell(startColIndex + 9);
-    cell10.setCellValue("Raw Material");
-    cell10.setCellStyle(headerCellStyle);
-
-    HSSFCell cell11 = rowHeader.createCell(startColIndex + 10);
-    cell11.setCellValue("Quanity");
-    cell11.setCellStyle(headerCellStyle);
-
-    HSSFCell cell12= rowHeader.createCell(startColIndex + 11);
-    cell12.setCellValue("Unit");
-    cell12.setCellStyle(headerCellStyle);
   }
 }

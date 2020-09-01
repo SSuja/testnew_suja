@@ -56,55 +56,34 @@ public class MixDesignFillManager {
       cell2.setCellStyle(cellStyle);
 
       // Retrieve the id value
-//      HSSFCell cell3 = row.createCell(startColIndex + 2);
-//      cell3.setCellValue(list.get(i - 1).getMixDesign().getTargetGrade());
-//      cell3.setCellStyle(bodyCellStyle);
-//
-//      // Retrieve the id value
-//      HSSFCell cell4 = row.createCell(startColIndex + 3);
-//      cell4.setCellValue(list.get(i - 1).getMixDesign().getTargetSlump());
-//      cell4.setCellStyle(bodyCellStyle);
-//
-//      // Retrieve the id value
-//      HSSFCell cell5 = row.createCell(startColIndex + 4);
-//      cell5.setCellValue(list.get(i - 1).getMixDesign().getWaterBinderRatio());
-//      cell5.setCellStyle(bodyCellStyle);
-//
-//      // Retrieve the id value
-//      HSSFCell cell6 = row.createCell(startColIndex + 5);
-//      cell6.setCellValue(list.get(i - 1).getMixDesign().getWaterCementRatio());
-//      cell6.setCellStyle(bodyCellStyle);
+      HSSFCell cell3 = row.createCell(startColIndex + 2);
+      cell3.setCellValue(list.get(i - 1).getMixDesign().getPlant().getName());
+      cell3.setCellStyle(bodyCellStyle);
+
+      // Retrieve the id value
+      HSSFCell cell4 = row.createCell(startColIndex + 3);
+      cell4.setCellValue(String.valueOf(list.get(i - 1).getMixDesign().getStatus().name()));
+      cell4.setCellStyle(bodyCellStyle);
+
+      // Retrieve the id value
+      HSSFCell cell5 = row.createCell(startColIndex + 4);
+      cell5.setCellValue(list.get(i - 1).getMixDesign().getRawMaterial().getName());
+      cell5.setCellStyle(bodyCellStyle);
+
+      // Retrieve the id value
+      HSSFCell cell6 = row.createCell(startColIndex + 5);
+      cell6.setCellValue(list.get(i - 1).getRawMaterial().getName());
+      cell6.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell7 = row.createCell(startColIndex + 6);
-      cell7.setCellValue(list.get(i - 1).getMixDesign().getPlant().getCode());
+      cell7.setCellValue(list.get(i - 1).getQuantity());
       cell7.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value
       HSSFCell cell8 = row.createCell(startColIndex + 7);
-      cell8.setCellValue(String.valueOf(list.get(i-1).getMixDesign().getStatus().name()));
+      cell8.setCellValue(list.get(i - 1).getUnit().getUnit());
       cell8.setCellStyle(bodyCellStyle);
-      
-   // Retrieve the id value
-      // HSSFCell cell9 = row.createCell(startColIndex + 8);
-      // cell9.setCellValue(list.get(i - 1).getMixDesign().getMaterialCategory().getName());
-      // cell9.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell10 = row.createCell(startColIndex + 9);
-      cell10.setCellValue(list.get(i - 1).getRawMaterial().getName());
-      cell10.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell11 = row.createCell(startColIndex + 10);
-      cell11.setCellValue(list.get(i - 1).getQuantity());
-      cell11.setCellStyle(bodyCellStyle);
-
-      // Retrieve the id value
-      HSSFCell cell12 = row.createCell(startColIndex + 11);
-      cell12.setCellValue(list.get(i - 1).getUnit().getUnit());
-      cell12.setCellStyle(bodyCellStyle);
     }
   }
 }
-
