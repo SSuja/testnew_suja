@@ -11,6 +11,7 @@ import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -24,6 +25,8 @@ public class MixDesignServiceImpl implements MixDesignService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private RawMaterialRepository rawMaterialRepository;
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesigns() {
@@ -33,7 +36,9 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional
   public String saveMixDesign(MixDesign mixDesign) {
     if (mixDesign.getCode() == null) {
-      String codePrefix = mixDesign.getPlant().getCode() + "-" + "G" + "-";
+      String rawMaterialName =
+          rawMaterialRepository.findById(mixDesign.getRawMaterial().getId()).get().getName();
+      String codePrefix = rawMaterialName + "-";
       List<MixDesign> mixDesignList = mixDesignRepository.findByCodeContaining(codePrefix);
       if (mixDesignList.size() == 0) {
         mixDesign.setCode(codePrefix + String.format("%03d", 1));

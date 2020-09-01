@@ -12,7 +12,8 @@ public class MixDesignResponseDto {
   private String createdAt;
   private String updatedAt;
   private boolean checkDepend;
-  private RawMaterialResponseDto rawMaterial;
+  private String rawMaterialName;
+  private Long rawMaterialId;
 
   public String getCode() {
     return code;
@@ -78,11 +79,19 @@ public class MixDesignResponseDto {
     this.checkDepend = checkDepend;
   }
 
-  public RawMaterialResponseDto getRawMaterial() {
-    return rawMaterial;
+  public String getRawMaterialName() {
+    return rawMaterialName;
   }
 
-  public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
-    this.rawMaterial = rawMaterial;
+  public void setRawMaterialName(String rawMaterialName) {
+    this.rawMaterialName = rawMaterialName;
+  }
+
+  public Long getRawMaterialId() {
+    return rawMaterialId;
+  }
+
+  public void setRawMaterialId(Long rawMaterialId) {
+    this.rawMaterialId = rawMaterialId;
   }
 }
