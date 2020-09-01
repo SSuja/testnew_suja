@@ -155,7 +155,8 @@ public class EmailNotification {
 
   private void sendMixDesignEmail(FinishProductSample finishProductSample, long noOfDays) {
     String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample - "
-        + finishProductSample.getWorkOrderNo() + " to conduct the Test.";
+    //    + finishProductSample.getWorkOrderNo() +
+      +  " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
         MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
         finishProductSample.getMixDesign().getPlant().getCode());
