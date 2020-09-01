@@ -155,7 +155,8 @@ public class EmailNotification {
 
   private void sendMixDesignEmail(FinishProductSample finishProductSample, long noOfDays) {
     String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample - "
-        + finishProductSample.getWorkOrderNo() + " to conduct the Test.";
+    //    + finishProductSample.getWorkOrderNo() +
+      +  " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
         MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
         finishProductSample.getMixDesign().getPlant().getCode());
@@ -324,9 +325,7 @@ public class EmailNotification {
         mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Finish Product sample created for mix design - " + mixDesign.getCode()
-            + " to the grade " + mixDesign.getTargetGrade() + " and Slump"
-            + mixDesign.getTargetSlump();
+        String mailBody = "Finish Product sample created for mix design - " + mixDesign.getCode();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -458,8 +457,7 @@ public class EmailNotification {
         mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_MIX_DESIGN);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "New Mix Design - " + mixDesign.getCode() + " added to the Grade "
-            + mixDesign.getTargetGrade() + " and Slump " + mixDesign.getTargetSlump() + ".";
+        String mailBody = "New Mix Design - " + mixDesign.getCode();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 MailGroupConstance.CREATE_MIX_DESIGN, mixDesign.getPlant().getCode());

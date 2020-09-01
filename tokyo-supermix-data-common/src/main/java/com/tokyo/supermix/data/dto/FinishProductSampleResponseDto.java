@@ -1,12 +1,10 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleResponseDto {
   private String code;
-  private String workOrderNo;
   private String finishProductCode;
   private EquipmentDto equipment;
   private MixDesignResponseDto mixDesign;
@@ -14,16 +12,6 @@ public class FinishProductSampleResponseDto {
   private Date date;
   private String createdAt;
   private String updatedAt;
-  private ProjectResponseDto project;
-  private FinishProductTestType finishProductTestType;
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
 
   public String getCode() {
     return code;
@@ -31,14 +19,6 @@ public class FinishProductSampleResponseDto {
 
   public void setCode(String code) {
     this.code = code;
-  }
-
-  public String getWorkOrderNo() {
-    return workOrderNo;
-  }
-
-  public void setWorkOrderNo(String workOrderNo) {
-    this.workOrderNo = workOrderNo;
   }
 
   public String getFinishProductCode() {
@@ -73,6 +53,14 @@ public class FinishProductSampleResponseDto {
     this.status = status;
   }
 
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
   public String getCreatedAt() {
     return createdAt;
   }
@@ -87,21 +75,5 @@ public class FinishProductSampleResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  public ProjectResponseDto getProject() {
-    return project;
-  }
-
-  public void setProject(ProjectResponseDto project) {
-    this.project = project;
-  }
-
-  public FinishProductTestType getFinishProductTestType() {
-    return finishProductTestType;
-  }
-
-  public void setFinishProductTestType(FinishProductTestType finishProductTestType) {
-    this.finishProductTestType = finishProductTestType;
   }
 }

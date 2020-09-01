@@ -100,9 +100,7 @@ public class FinishProductTrialController {
             && testParameterService.getTestParameterById(finish.getTestParameterId())
                 .getInputMethods().equals(InputMethod.OBSERVE)
             && testParameterService.getTestParameterById(finish.getTestParameterId()).getType()
-                .equals(TestParameterType.INPUT)
-            && testParameterService.getTestParameterById(finish.getTestParameterId())
-                .getMixDesignField() == null))
+                .equals(TestParameterType.INPUT)))
         .collect(Collectors.toList());
     if ((li.isEmpty())) {
       finishProductTrialService.saveFinishProductTrial(
@@ -156,8 +154,8 @@ public class FinishProductTrialController {
       @PathVariable String finishProductTestCode) {
     if (finishProductTrialService.isFinishProductTestExists(finishProductTestCode)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
-          mapper.map(finishProductTrialService
-              .getFinishProductTrialsByFinishProductTestCode(finishProductTestCode), FinishProductTestTrialDto.class),
+          mapper.map(finishProductTrialService.getFinishProductTrialsByFinishProductTestCode(
+              finishProductTestCode), FinishProductTestTrialDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,

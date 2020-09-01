@@ -9,17 +9,8 @@ public class FinishProductTestRequestDto {
   private String finishProductSampleCode;
   private Long testConfigureId;
   private Long noOfTrial;
-  private Long materialStateId;
   private Date date;
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
-  private String comments;
+  private String specimenCode;
 
   public String getCode() {
     return code;
@@ -61,19 +52,19 @@ public class FinishProductTestRequestDto {
     this.noOfTrial = noOfTrial;
   }
 
-  public Long getMaterialStateId() {
-    return materialStateId;
+  public Date getDate() {
+    return date;
   }
 
-  public void setMaterialStateId(Long materialStateId) {
-    this.materialStateId = materialStateId;
+  public void setDate(Date date) {
+    this.date = date;
   }
 
-  public String getComments() {
-    return comments;
+  public String getSpecimenCode() {
+    return specimenCode;
   }
 
-  public void setComments(String comments) {
-    this.comments = comments;
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
   }
 }

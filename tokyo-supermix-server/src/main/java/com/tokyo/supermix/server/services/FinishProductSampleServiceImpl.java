@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MixDesign;
-import com.tokyo.supermix.data.enums.FinishProductTestType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
@@ -63,11 +62,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       }
     }
     finishProductSample.setStatus(Status.NEW);
-    if (mixDesign.getStatus().equals(Status.NEW) || mixDesign.getStatus().equals(Status.PROCESS)) {
-      finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
-    } else if (mixDesign.getStatus().equals(Status.PASS)) {
-      finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
-    }
+    // if (mixDesign.getStatus().equals(Status.NEW) || mixDesign.getStatus().equals(Status.PROCESS))
+    // {
+    // finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
+    // } else if (mixDesign.getStatus().equals(Status.PASS)) {
+    // finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
+    // }
     FinishProductSample finishProductSampleObj =  finishProductSampleRepository.save(finishProductSample);       
     if (finishProductSampleObj != null) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
@@ -164,14 +164,4 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
   }
 
-  @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSamplesByMaterialCategoryId(
-      Long materialCategoryId) {
-    return finishProductSampleRepository.findByMixDesignMaterialCategoryId(materialCategoryId);
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isMaterialCategoryExist(Long materialCategoryId) {
-    return finishProductSampleRepository.existsByMixDesignMaterialCategoryId(materialCategoryId);
-  }
 }

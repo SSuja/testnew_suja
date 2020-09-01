@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.InputMethod;
-import com.tokyo.supermix.data.enums.MixDesignField;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class FinishProductTestTrialDto {
@@ -9,7 +8,6 @@ public class FinishProductTestTrialDto {
   private double value;
   private InputMethod testParameterInputMethods;
   private TestParameterType testParameterType;
-  private MixDesignField testParameterMixDesignField;
   private Long finishProductTestNoOfTrial;
 
   public Long getTrialNo() {
@@ -42,14 +40,6 @@ public class FinishProductTestTrialDto {
 
   public void setTestParameterType(TestParameterType testParameterType) {
     this.testParameterType = testParameterType;
-  }
-
-  public MixDesignField getTestParameterMixDesignField() {
-    return testParameterMixDesignField;
-  }
-
-  public void setTestParameterMixDesignField(MixDesignField testParameterMixDesignField) {
-    this.testParameterMixDesignField = testParameterMixDesignField;
   }
 
   public Long getFinishProductTestNoOfTrial() {

@@ -11,6 +11,15 @@ public class FinishProductSampleIssueRequestDto {
   private String finishProductSampleCode;
   private ProjectRequestDto project;
   private Long pourId;
+  private String workOrderNumber;
+
+  public String getWorkOrderNumber() {
+    return workOrderNumber;
+  }
+
+  public void setWorkOrderNumber(String workOrderNumber) {
+    this.workOrderNumber = workOrderNumber;
+  }
 
   public String getCode() {
     return code;

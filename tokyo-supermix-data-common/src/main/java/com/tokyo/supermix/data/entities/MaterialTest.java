@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.enums.TestLevel;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_test")
@@ -22,17 +21,12 @@ public class MaterialTest extends DateAudit implements Serializable {
   private String comment;
   @Enumerated(EnumType.ORDINAL)
   private Status status;
-  @Enumerated(EnumType.ORDINAL)
-  private TestLevel testLevel;
   @ManyToOne
   @JoinColumn(name = "incomingSampleCode", nullable = false)
   private IncomingSample incomingSample;
   @ManyToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
-  @ManyToOne
-  @JoinColumn(name = "materialStateId", nullable = false)
-  private MaterialState materialState;
   private String specimenCode;
 
   public String getCode() {
@@ -67,14 +61,6 @@ public class MaterialTest extends DateAudit implements Serializable {
     this.status = status;
   }
 
-  public TestLevel getTestLevel() {
-    return testLevel;
-  }
-
-  public void setTestLevel(TestLevel testLevel) {
-    this.testLevel = testLevel;
-  }
-
   public IncomingSample getIncomingSample() {
     return incomingSample;
   }
@@ -89,14 +75,6 @@ public class MaterialTest extends DateAudit implements Serializable {
 
   public void setTestConfigure(TestConfigure testConfigure) {
     this.testConfigure = testConfigure;
-  }
-
-  public MaterialState getMaterialState() {
-    return materialState;
-  }
-
-  public void setMaterialState(MaterialState materialState) {
-    this.materialState = materialState;
   }
 
   public String getSpecimenCode() {

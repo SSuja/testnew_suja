@@ -8,6 +8,7 @@ public class RawMaterialResponseDto {
   private String description;
   private String prefix;
   private boolean active;
+  private PlantDto plant;
 
   public Long getId() {
     return id;
@@ -63,5 +64,13 @@ public class RawMaterialResponseDto {
 
   public void setActive(boolean active) {
     this.active = active;
+  }
+
+  public PlantDto getPlant() {
+    return plant;
+  }
+
+  public void setPlant(PlantDto plant) {
+    this.plant = plant;
   }
 }

@@ -5,26 +5,14 @@ import com.tokyo.supermix.data.enums.Status;
 
 public class MixDesignResponseDto {
   private String code;
-  private Double targetGrade;
   private Date date;
-  private Double targetSlump;
-  private Double waterCementRatio;
-  private Double waterBinderRatio;
   private String plantCode;
   private String plantName;
   private Status status;
   private String createdAt;
   private String updatedAt;
-  private MaterialCategoryDto materialCategory;
   private boolean checkDepend;
-
-  public boolean isCheckDepend() {
-    return checkDepend;
-  }
-
-  public void setCheckDepend(boolean checkDepend) {
-    this.checkDepend = checkDepend;
-  }
+  private RawMaterialResponseDto rawMaterial;
 
   public String getCode() {
     return code;
@@ -34,44 +22,12 @@ public class MixDesignResponseDto {
     this.code = code;
   }
 
-  public Double getTargetGrade() {
-    return targetGrade;
-  }
-
-  public void setTargetGrade(Double targetGrade) {
-    this.targetGrade = targetGrade;
-  }
-
   public Date getDate() {
     return date;
   }
 
   public void setDate(Date date) {
     this.date = date;
-  }
-
-  public Double getTargetSlump() {
-    return targetSlump;
-  }
-
-  public void setTargetSlump(Double targetSlump) {
-    this.targetSlump = targetSlump;
-  }
-
-  public Double getWaterCementRatio() {
-    return waterCementRatio;
-  }
-
-  public void setWaterCementRatio(Double waterCementRatio) {
-    this.waterCementRatio = waterCementRatio;
-  }
-
-  public Double getWaterBinderRatio() {
-    return waterBinderRatio;
-  }
-
-  public void setWaterBinderRatio(Double waterBinderRatio) {
-    this.waterBinderRatio = waterBinderRatio;
   }
 
   public String getPlantCode() {
@@ -114,11 +70,19 @@ public class MixDesignResponseDto {
     this.updatedAt = updatedAt;
   }
 
-  public MaterialCategoryDto getMaterialCategory() {
-    return materialCategory;
+  public boolean isCheckDepend() {
+    return checkDepend;
   }
 
-  public void setMaterialCategory(MaterialCategoryDto materialCategory) {
-    this.materialCategory = materialCategory;
+  public void setCheckDepend(boolean checkDepend) {
+    this.checkDepend = checkDepend;
+  }
+
+  public RawMaterialResponseDto getRawMaterial() {
+    return rawMaterial;
+  }
+
+  public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
+    this.rawMaterial = rawMaterial;
   }
 }

@@ -24,7 +24,5 @@ public interface MixDesignRepository
 
   List<MixDesign> findAllByOrderByUpdatedAtDesc();
 
-  List<MixDesign> findByMaterialCategoryId(Long materialCategoryId);
-
   List<MixDesign> findByPlantCodeOrderByUpdatedAtDesc(String plantCode);
 }

@@ -34,7 +34,5 @@ public interface MixDesignService {
 
   public List<MixDesign> getAllMixDesignByDecending();
 
-  public List<MixDesign> getAllMixDesignByMaterialCategory(Long materialCategoryId);
-
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode);
 }

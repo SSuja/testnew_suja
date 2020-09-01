@@ -8,6 +8,15 @@ public class FinishProductSampleIssueResponseDto {
   private PourDtoResponse pour;
   private String createdAt;
   private String updatedAt;
+  private String workOrderNumber;
+
+  public String getWorkOrderNumber() {
+    return workOrderNumber;
+  }
+
+  public void setWorkOrderNumber(String workOrderNumber) {
+    this.workOrderNumber = workOrderNumber;
+  }
 
   public String getCode() {
     return code;

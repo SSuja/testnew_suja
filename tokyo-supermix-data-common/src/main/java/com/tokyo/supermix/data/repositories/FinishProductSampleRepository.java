@@ -30,9 +30,5 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   List<FinishProductSample> findByCodeContaining(String code);
 
-  List<FinishProductSample> findByMixDesignMaterialCategoryId(Long materialCategoryId);
-
-  boolean existsByMixDesignMaterialCategoryId(Long materialCategoryId);
-  
   List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
 }

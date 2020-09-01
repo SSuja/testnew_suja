@@ -9,16 +9,9 @@ public class FinishProductTestResponseDto {
   private FinishProductSampleResponseDto finishProductSample;
   private TestConfigureResponseDto testConfigure;
   private Long noOfTrial;
-  private MaterialStateDto materialState;
   private String comments;
   private Date date;
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
+  private String specimenCode;
 
   public String getCode() {
     return code;
@@ -60,19 +53,27 @@ public class FinishProductTestResponseDto {
     this.noOfTrial = noOfTrial;
   }
 
-  public MaterialStateDto getMaterialState() {
-    return materialState;
-  }
-
-  public void setMaterialState(MaterialStateDto materialState) {
-    this.materialState = materialState;
-  }
-
   public String getComments() {
     return comments;
   }
 
   public void setComments(String comments) {
     this.comments = comments;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
+
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
   }
 }

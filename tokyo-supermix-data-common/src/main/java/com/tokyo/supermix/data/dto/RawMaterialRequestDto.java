@@ -15,6 +15,7 @@ public class RawMaterialRequestDto {
   @NotEmpty(message = "{rawMaterialRequestDto.prefix.empty}")
   private String prefix;
   private boolean active;
+  private String plantCode;
 
   public Long getId() {
     return id;
@@ -70,5 +71,13 @@ public class RawMaterialRequestDto {
 
   public void setActive(boolean active) {
     this.active = active;
+  }
+
+  public String getPlantCode() {
+    return plantCode;
+  }
+
+  public void setPlantCode(String plantCode) {
+    this.plantCode = plantCode;
   }
 }

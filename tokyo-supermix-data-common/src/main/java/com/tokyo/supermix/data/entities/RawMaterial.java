@@ -27,6 +27,17 @@ public class RawMaterial extends DateAudit implements Serializable {
   private String description;
   private String prefix;
   private boolean active;
+  @ManyToOne
+  @JoinColumn(name = "plantCode", nullable = true)
+  private Plant plant;
+
+  public Plant getPlant() {
+    return plant;
+  }
+
+  public void setPlant(Plant plant) {
+    this.plant = plant;
+  }
 
   public Long getId() {
     return id;
