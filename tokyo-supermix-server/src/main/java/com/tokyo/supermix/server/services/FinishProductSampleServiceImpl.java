@@ -42,15 +42,9 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     if (finishProductSample.getCode() == null) {
-      String plantPrefix = mixDesignRepository.getOne(finishProductSample.getMixDesign().getCode())
-          .getPlant().getCode();
-      String codePrefix = "";
-      if (mixDesign.getStatus().equals(Status.NEW)
-          || mixDesign.getStatus().equals(Status.PROCESS)) {
-        codePrefix = plantPrefix + "-PP-";
-      } else if (mixDesign.getStatus().equals(Status.PASS)) {
-        codePrefix = plantPrefix + "-PO-";
-      }
+      String rawMaterialName = mixDesignRepository
+          .getOne(finishProductSample.getMixDesign().getCode()).getRawMaterial().getName();
+      String codePrefix = rawMaterialName + "-PP-";
       mixDesign.setCheckDepend(true);
       List<FinishProductSample> finishProductSampleList =
           finishProductSampleRepository.findByCodeContaining(codePrefix);
@@ -62,17 +56,13 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       }
     }
     finishProductSample.setStatus(Status.NEW);
-    // if (mixDesign.getStatus().equals(Status.NEW) || mixDesign.getStatus().equals(Status.PROCESS))
-    // {
-    // finishProductSample.setFinishProductTestType(FinishProductTestType.PRE_PRODUCTION);
-    // } else if (mixDesign.getStatus().equals(Status.PASS)) {
-    // finishProductSample.setFinishProductTestType(FinishProductTestType.POST_PRODUCTION);
-    // }
-    FinishProductSample finishProductSampleObj =  finishProductSampleRepository.save(finishProductSample);       
+    FinishProductSample finishProductSampleObj =
+        finishProductSampleRepository.save(finishProductSample);
     if (finishProductSampleObj != null) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
   }
+
   @Transactional()
   public void updateFinishProductSample(FinishProductSample finishProductSample) {
     finishProductSampleRepository.save(finishProductSample);

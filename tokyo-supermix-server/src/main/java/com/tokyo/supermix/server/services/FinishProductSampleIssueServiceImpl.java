@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
-import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -26,11 +26,11 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public FinishProductSampleIssueRepository finishProductSampleIssueRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  @Autowired
-  private FinishProductSampleRepository finishProductSampleRepository;
 
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private MixDesignRepository mixDesignRepository;
 
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
@@ -40,14 +40,16 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   @Transactional
   public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
     if (finishProductSampleIssue.getCode() == null) {
-      String codePrefix = "";
+      String rawMaterialName = mixDesignRepository
+          .getOne(finishProductSampleIssue.getMixDesign().getCode()).getRawMaterial().getName();
+      String codePrefix = rawMaterialName + "-PO-";
       List<FinishProductSampleIssue> finishProductSampleIssueList =
           finishProductSampleIssueRepository.findByCodeContaining(codePrefix);
       if (finishProductSampleIssueList.size() == 0) {
-        finishProductSampleIssue.setCode(codePrefix + String.format("%02d", 1));
+        finishProductSampleIssue.setCode(codePrefix + String.format("%04d", 1));
       } else {
         finishProductSampleIssue.setCode(codePrefix
-            + String.format("%02d", maxNumberFromCode(finishProductSampleIssueList) + 1));
+            + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
       }
     }
     FinishProductSampleIssue finishProductSampleIssueObj =
@@ -95,9 +97,7 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode) {
-    return null;
-    // return finishProductSampleIssueRepository
-    // .findByFinishProductSampleMixDesignPlantCode(plantCode);
+    return finishProductSampleIssueRepository.findByMixDesignPlantCode(plantCode);
   }
 
   @Override

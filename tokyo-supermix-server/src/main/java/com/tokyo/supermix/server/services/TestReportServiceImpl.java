@@ -533,16 +533,6 @@ public class TestReportServiceImpl implements TestReportService {
           finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
       concreteTestReportDto
           .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
-//      if (finishProductTest.getFinishProductSample().getProject() != null) {
-//        concreteTestReportDto.setCustomerName(
-//            finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
-//        concreteTestReportDto
-//            .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
-//      }
-      // concreteTestReportDto.setTargetGrade(
-      // finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
-      // concreteTestReportDto.setTargetSlump(
-      // finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
       concreteTestReportDto
           .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
       concreteTestReportDto
@@ -552,14 +542,12 @@ public class TestReportServiceImpl implements TestReportService {
       concreteTestReportDto.setCubeTestReports(
           getCubeTestRepots(finishProductTestCode, finishProductTest.getNoOfTrial()));
       for (TestParameter testParamter : testParamterList) {
-        if (testParamter.getType().equals(TestParameterType.INPUT)) {
-          List<FinishProductParameterResult> finishProductResult =
-              finishProductParameterResultRepository
-                  .findByTestParameterIdAndFinishProductTestCodeOrderByUpdatedAtDesc(
-                      testParamter.getId(), finishProductTestCode);
-          for (int i = 0; i < 2; i++) {
-            concreteTestReportDto.setAverageStrength(finishProductResult.get(0).getResult());
-          }
+        List<FinishProductParameterResult> finishProductResult =
+            finishProductParameterResultRepository
+                .findByTestParameterIdAndFinishProductTestCodeOrderByUpdatedAtDesc(
+                    testParamter.getId(), finishProductTestCode);
+        for (int i = 0; i < 2; i++) {
+          concreteTestReportDto.setAverageStrength(finishProductResult.get(i).getResult());
         }
       }
     }
@@ -581,16 +569,6 @@ public class TestReportServiceImpl implements TestReportService {
         finishProductTest.getFinishProductSample().getMixDesign().getPlant().getFaxNumber());
     concreteTestReportDto
         .setReportNo(finishProductTest.getFinishProductSample().getFinishProductCode());
-    // if (finishProductTest.getFinishProductSample().getProject() != null) {
-    // concreteTestReportDto.setCustomerName(
-    // finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
-    // concreteTestReportDto
-    // .setProjectName(finishProductTest.getFinishProductSample().getProject().getName());
-    // }
-    // concreteTestReportDto
-    // .setTargetGrade(finishProductTest.getFinishProductSample().getMixDesign().getTargetGrade());
-    // concreteTestReportDto
-    // .setTargetSlump(finishProductTest.getFinishProductSample().getMixDesign().getTargetSlump());
     concreteTestReportDto
         .setDateOfCasting(finishProductTest.getFinishProductSample().getCreatedAt().toString());
     concreteTestReportDto
@@ -600,14 +578,12 @@ public class TestReportServiceImpl implements TestReportService {
     concreteTestReportDto.setCubeTestReports(
         getCubeTestRepots(finishProductTestCode, finishProductTest.getNoOfTrial()));
     for (TestParameter testParamter : testParamterList) {
-      if (testParamter.getType().equals(TestParameterType.INPUT)) {
-        List<FinishProductParameterResult> finishProductResult =
-            finishProductParameterResultRepository
-                .findByTestParameterIdAndFinishProductTestCodeOrderByUpdatedAtDesc(
-                    testParamter.getId(), finishProductTestCode);
-        concreteTestReportDto.setAverageStrength(finishProductResult.get(0).getResult());
+      List<FinishProductParameterResult> finishProductResult =
+          finishProductParameterResultRepository
+              .findByTestParameterIdAndFinishProductTestCodeOrderByUpdatedAtDesc(
+                  testParamter.getId(), finishProductTestCode);
+      concreteTestReportDto.setAverageStrength(finishProductResult.get(0).getResult());
 
-      }
     }
     return concreteTestReportDto;
   }
@@ -619,8 +595,11 @@ public class TestReportServiceImpl implements TestReportService {
     List<Long> cubNo = new ArrayList<Long>();
     List<Double> trialValue = new ArrayList<Double>();
     for (FinishProductTrial finishProductTrial : finishProductTrialList) {
-      if (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT)) {
+      if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT)
+          || (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+              && finishProductTrial.getTestParameter().getType()
+                  .equals(TestParameterType.RESULT)))) {
         cubNo.add(finishProductTrial.getTrialNo());
         trialValue.add(finishProductTrial.getValue());
       }
@@ -705,8 +684,7 @@ public class TestReportServiceImpl implements TestReportService {
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
         FinishProductTest finishProductTest = finishProductTestRepository
             .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
-        if (!(!finishProductTest.getTestConfigure().isCoreTest()
-            && finishProductTest.getTestConfigure().isName())) {
+        if (finishProductTest.getTestConfigure().isCoreTest()) {
           ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
           averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
           averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
@@ -728,8 +706,7 @@ public class TestReportServiceImpl implements TestReportService {
             .equals(InputMethod.OBSERVE)
             && finishProductParameterResult.getTestParameter().getType()
                 .equals(TestParameterType.INPUT)) {
-          if (!(!finishProductParameterResult.getTestParameter().getTestConfigure().isCoreTest()
-              && finishProductParameterResult.getTestParameter().getTestConfigure().isName())) {
+          if (finishProductParameterResult.getTestParameter().getTestConfigure().isCoreTest()) {
             TestAndResult testAndResult = new TestAndResult();
             testAndResult.setTestName(finishProductParameterResult.getFinishProductTest()
                 .getTestConfigure().getTest().getName());
@@ -1094,7 +1071,6 @@ public class TestReportServiceImpl implements TestReportService {
         acceptedValueDtos.setMaxValue(values.getValue().toString());
         acceptedValueDtos.setCondition(values.getConditionRange());
       }
-
     });
     return acceptedValueDtos;
   }
