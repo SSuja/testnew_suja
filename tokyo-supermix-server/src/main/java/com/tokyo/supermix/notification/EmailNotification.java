@@ -154,8 +154,7 @@ public class EmailNotification {
   }
 
   private void sendMixDesignEmail(FinishProductSample finishProductSample, long noOfDays) {
-    String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample - "
-    // + finishProductSample.getWorkOrderNo() +
+    String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample "
         + " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
         MailGroupConstance.MIX_DESIGN_EMAIL_GROUP,
@@ -337,22 +336,25 @@ public class EmailNotification {
 
   @Async
   public void sendFinishProductSampleIssueEmail(FinishProductSampleIssue finishProductSampleIssue) {
-    // EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-    // finishProductSampleIssue.getFinishProductSample().getMixDesign().getPlant().getCode(),
-    // MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
-    // if (emailGroup != null) {
-    // if (emailGroup.isStatus()) {
-    // String customerName = customerRepository
-    // .findById(finishProductSampleIssue.getProject().getCustomer().getId()).get().getName();
-    // String mailBody = "Finish product deliveried for Finish Product sample of "
-    // + finishProductSampleIssue.getCode() + " by " + customerName;
-    // List<String> reciepientList =
-    // emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-    // emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
-    // emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-    // Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE, mailBody);
-    // }
-    // }
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        finishProductSampleIssue.getMixDesign().getPlant().getCode(),
+        MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
+    if (emailGroup != null) {
+      if (emailGroup.isStatus()) {
+        String customerName = customerRepository
+            .findById(finishProductSampleIssue.getProject().getCustomer().getId()).get().getName();
+        String RawMaterialName =
+            mixDesignRepository.findByCode(finishProductSampleIssue.getMixDesign().getCode())
+                .getRawMaterial().getName();
+        String mailBody = "Finish product " + RawMaterialName + " is deliveried for the customer, "
+            + customerName;
+        List<String> reciepientList =
+            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
+        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+            Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE, mailBody);
+      }
+    }
   }
 
   @Async
@@ -457,7 +459,7 @@ public class EmailNotification {
         mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_MIX_DESIGN);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "New Mix Design - " + mixDesign.getCode();
+        String mailBody = "New Mix Design - " + mixDesign.getCode() + " is created for the Finish Good " + mixDesign.getRawMaterial().getName();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 MailGroupConstance.CREATE_MIX_DESIGN, mixDesign.getPlant().getCode());
