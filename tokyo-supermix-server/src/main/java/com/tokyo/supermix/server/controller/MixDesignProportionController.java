@@ -129,13 +129,10 @@ public class MixDesignProportionController {
       @RequestParam(name = "rawMaterialName3", required = false) String rawMaterialName3,
       @RequestParam(name = "rawMaterialName4", required = false) String rawMaterialName4,
       @RequestParam(name = "rawMaterialName5", required = false) String rawMaterialName5,
-      @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
-      @RequestParam(name = "targetGrade", required = false) Double targetGrade,
-      @RequestParam(name = "targetSlump", required = false) Double targetSlump) {
+      @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode) {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTIONS,
         mixDesignProportionService.searchMixDesignProportion(rawMaterialName1, rawMaterialName2,
-            rawMaterialName3, rawMaterialName4, rawMaterialName5, page, size, mixDesignCode,
-            targetGrade, targetSlump),
+            rawMaterialName3, rawMaterialName4, rawMaterialName5, page, size, mixDesignCode),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 }

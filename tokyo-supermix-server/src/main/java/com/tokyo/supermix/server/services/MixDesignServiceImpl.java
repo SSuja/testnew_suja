@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.dto.MixDesignResponseDto;
+import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
@@ -83,93 +86,6 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Transactional(readOnly = true)
-  public List<MixDesignResponseDto> searchMixDesign(Double targetSlumpMin, Double targetSlumpMax,
-      Double targetSlumpEqual, Double targetGradeMin, Double targetGradeMax,
-      Double targetGradeEqual, Double waterCementRatioMin, Double waterCementRatioMax,
-      Double waterCementRatioEqual, Double waterBinderRatioMin, Double waterBinderRatioMax,
-      Double waterBinderRatioEqual, String plantName, int page, int size) {
-    return null;
-    // BooleanBuilder booleanBuilder = new BooleanBuilder();
-    // if (plantName != null && !plantName.isEmpty()) {
-    // booleanBuilder.and(QMixDesign.mixDesign.plant.name.eq(plantName));
-    // }
-    // if (targetSlumpMin != null && targetSlumpMin != 0 && targetSlumpMax == null
-    // && targetSlumpEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetSlump.gt(targetSlumpMin));
-    // }
-    // if (targetSlumpMax != null && targetSlumpMax != 0 && targetSlumpMin == null
-    // && targetSlumpEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetSlump.lt(targetSlumpMax));
-    // }
-    // if (targetSlumpMin != null && targetSlumpMin != 0 && targetSlumpMax != null
-    // && targetSlumpMax != null && targetSlumpEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetSlump.between(targetSlumpMin, targetSlumpMax));
-    // }
-    // if (targetSlumpEqual != null && targetSlumpEqual != 0 && targetSlumpMax == null
-    // && targetSlumpMin == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetSlump.eq(targetSlumpEqual));
-    // }
-    // if (targetGradeMin != null && targetGradeMin != 0 && targetGradeMax == null
-    // && targetGradeEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetGrade.gt(targetGradeMin));
-    // }
-    // if (targetGradeMax != null && targetGradeMax != 0 && targetGradeMin == null
-    // && targetGradeEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetGrade.lt(targetGradeMax));
-    // }
-    // if (targetGradeMin != null && targetGradeMin != 0 && targetGradeMax != null
-    // && targetGradeMax != null && targetGradeEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetGrade.between(targetGradeMin, targetGradeMax));
-    // }
-    // if (targetGradeEqual != null && targetGradeEqual != 0 && targetGradeMax == null
-    // && targetGradeMin == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.targetGrade.eq(targetGradeEqual));
-    // }
-    // if (waterCementRatioMin != null && waterCementRatioMin != 0 && waterCementRatioMax == null
-    // && waterCementRatioEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.gt(waterCementRatioMin));
-    // }
-    // if (waterCementRatioMax != null && waterCementRatioMax != 0 && waterCementRatioMin == null
-    // && waterCementRatioEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.lt(waterCementRatioMax));
-    // }
-    // if (waterCementRatioMin != null && waterCementRatioMin != 0 && waterCementRatioMax != null
-    // && waterCementRatioMax != null && waterCementRatioEqual == null) {
-    // booleanBuilder.and(
-    // QMixDesign.mixDesign.waterCementRatio.between(waterCementRatioMin, waterCementRatioMax));
-    // }
-    // if (waterCementRatioEqual != null && waterCementRatioEqual != 0 && waterCementRatioMax ==
-    // null
-    // && waterCementRatioMin == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.waterCementRatio.eq(waterCementRatioEqual));
-    // }
-    // if (waterBinderRatioMin != null && waterBinderRatioMin != 0 && waterBinderRatioMax == null
-    // && waterBinderRatioEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.waterBinderRatio.gt(waterBinderRatioMin));
-    // }
-    // if (waterBinderRatioMax != null && waterBinderRatioMax != 0 && waterBinderRatioMin == null
-    // && waterBinderRatioEqual == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.waterBinderRatio.lt(waterBinderRatioMax));
-    // }
-    // if (waterBinderRatioMin != null && waterBinderRatioMin != 0 && waterBinderRatioMax != null
-    // && waterBinderRatioMax != null && waterBinderRatioEqual == null) {
-    // booleanBuilder.and(
-    // QMixDesign.mixDesign.waterBinderRatio.between(waterBinderRatioMin, waterBinderRatioMax));
-    // }
-    // if (waterBinderRatioEqual != null && waterBinderRatioEqual != 0 && waterBinderRatioMax ==
-    // null
-    // && waterBinderRatioMin == null) {
-    // booleanBuilder.and(QMixDesign.mixDesign.waterBinderRatio.eq(waterBinderRatioEqual));
-    // }
-    // List<MixDesign> mixDesignList = new ArrayList<>();
-    // mixDesignRepository
-    // .findAll(booleanBuilder.getValue(),
-    // PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")))
-    // .stream().filter(mixDesigns -> mixDesignList.add(mixDesigns)).collect(Collectors.toList());
-    // return mapper.map(mixDesignList, MixDesignResponseDto.class);
-  }
-
-  @Transactional(readOnly = true)
   public List<MixDesign> getMixDesignByPlantCode(String plantCode) {
     return mixDesignRepository.findByPlantCode(plantCode);
   }
@@ -208,5 +124,10 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional(readOnly = true)
   public boolean isRawMaterialExists(Long rawMaterialId) {
     return mixDesignRepository.existsByRawMaterialId(rawMaterialId);
+  }
+  
+  public Page<MixDesign> searchMixDesign(Predicate predicate, int size, int page) {
+    return mixDesignRepository.findAll(predicate,
+        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   }
 }
