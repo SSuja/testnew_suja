@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
@@ -17,6 +18,8 @@ public class FinishProductTestResultDto {
   private InputMethod testParameterInputMethods;
   private TestParameterType testParameterTypeType;
   private Date finishProductTestDate;
+  private AcceptedType finishProductTestTestConfigureTestAcceptedType;
+  private Long finishProductTestFinishProductSampleMixDesignRawMaterialId;
 
   public double getResult() {
     return result;
@@ -108,4 +111,23 @@ public class FinishProductTestResultDto {
     this.finishProductTestDate = finishProductTestDate;
   }
 
+  public AcceptedType getFinishProductTestTestConfigureTestAcceptedType() {
+    return finishProductTestTestConfigureTestAcceptedType;
+  }
+
+  public void setFinishProductTestTestConfigureTestAcceptedType(
+      AcceptedType finishProductTestTestConfigureTestAcceptedType) {
+    this.finishProductTestTestConfigureTestAcceptedType =
+        finishProductTestTestConfigureTestAcceptedType;
+  }
+
+  public Long getFinishProductTestFinishProductSampleMixDesignRawMaterialId() {
+    return finishProductTestFinishProductSampleMixDesignRawMaterialId;
+  }
+
+  public void setFinishProductTestFinishProductSampleMixDesignRawMaterialId(
+      Long finishProductTestFinishProductSampleMixDesignRawMaterialId) {
+    this.finishProductTestFinishProductSampleMixDesignRawMaterialId =
+        finishProductTestFinishProductSampleMixDesignRawMaterialId;
+  }
 }
