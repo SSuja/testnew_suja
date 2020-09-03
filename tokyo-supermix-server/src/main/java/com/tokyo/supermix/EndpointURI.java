@@ -378,7 +378,7 @@ public final class EndpointURI {
    */
   public static final String FINISH_PRODUCT_SAMPLE = BASE_API_PATH + "finish-product-sample";
   public static final String FINISH_PRODUCT_SAMPLES = BASE_API_PATH + "finish-product-samples";
-  public static final String FINISH_PRODUCT_SAMPLE_BY_ID = FINISH_PRODUCT_SAMPLE + ID;
+  public static final String FINISH_PRODUCT_SAMPLE_BY_ID = FINISH_PRODUCT_SAMPLE + SLASH + "{code}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_MIX_DESIGN_CODE =
       FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
@@ -442,10 +442,10 @@ public final class EndpointURI {
   public static final String MATERIAL_ACCEPTED_VALUES = BASE_API_PATH + "material-accepted-values";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_ID = MATERIAL_ACCEPTED_VALUE + ID;
   public static final String MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
-      MATERIAL_ACCEPTED_VALUE + "/dto"+"/test-configure" + "/{testConfigureId}";
+      MATERIAL_ACCEPTED_VALUE + "/dto" + "/test-configure" + "/{testConfigureId}";
   public static final String SEARCH_MATERIAL_ACCEPTED_VALUE = MATERIAL_ACCEPTED_VALUE + SEARCH;
   public static final String MATERIAL_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID =
-      MATERIAL_ACCEPTED_VALUE  + "/test-configure" + "/{testConfigureId}";
+      MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   /*
    * AcceptedValue
    */
@@ -453,7 +453,7 @@ public final class EndpointURI {
   public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
   public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
-      ACCEPTED_VALUE + SLASH +"dto"+SLASH + "test-configure" + SLASH + "{testConfigureId}";
+      ACCEPTED_VALUE + SLASH + "dto" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
   public static final String GET_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
