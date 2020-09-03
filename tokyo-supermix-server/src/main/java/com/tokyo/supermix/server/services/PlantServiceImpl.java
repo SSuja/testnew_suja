@@ -32,7 +32,7 @@ public class PlantServiceImpl implements PlantService {
   @Autowired
   private PlantPermissionService plantPermissionService;
 
-  public Plant savePlant(Plant plant) { 
+  public Plant savePlant(Plant plant) {
     Plant plantObj = plantRepository.save(plant);
     if (plantObj != null) {
       emailNotification.sendPlantCreationEmail(plantObj);
@@ -50,8 +50,8 @@ public class PlantServiceImpl implements PlantService {
 
   @Transactional(readOnly = true)
   public List<Plant> getAllPlants(UserPrincipal currentUser) {
-      return plantRepository.findByCodeIn(currentUserPermissionPlantService
-          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT));
+    return plantRepository.findByCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT));
   }
 
   @Transactional(readOnly = true)
@@ -85,9 +85,11 @@ public class PlantServiceImpl implements PlantService {
 
   @Transactional
   public Plant editPlant(Plant plant) {
-    plantRoleService.getAllPlantRolesByPlantCode(plant.getCode()).forEach(plantRoles -> {
-      plantRoles.setName(plant.getName().toUpperCase() + "_" + plantRoles.getRole().getName());
-    });
+    if (!(plantRepository.findById(plant.getCode()).get().getName().equals(plant.getName()))) {
+      plantRoleService.getAllPlantRolesByPlantCode(plant.getCode()).forEach(plantRoles -> {
+        plantRoles.setName(plant.getName().toUpperCase() + "_" + plantRoles.getRole().getName());
+      });
+    }
     return plantRepository.save(plant);
   }
 }
