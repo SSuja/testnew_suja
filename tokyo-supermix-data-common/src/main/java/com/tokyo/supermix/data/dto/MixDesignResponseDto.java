@@ -14,6 +14,7 @@ public class MixDesignResponseDto {
   private boolean checkDepend;
   private String rawMaterialName;
   private Long rawMaterialId;
+  private Long rawMaterialMaterialSubCategoryId;
 
   public String getCode() {
     return code;
@@ -93,5 +94,13 @@ public class MixDesignResponseDto {
 
   public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
+  }
+
+  public Long getRawMaterialMaterialSubCategoryId() {
+    return rawMaterialMaterialSubCategoryId;
+  }
+
+  public void setRawMaterialMaterialSubCategoryId(Long rawMaterialMaterialSubCategoryId) {
+    this.rawMaterialMaterialSubCategoryId = rawMaterialMaterialSubCategoryId;
   }
 }

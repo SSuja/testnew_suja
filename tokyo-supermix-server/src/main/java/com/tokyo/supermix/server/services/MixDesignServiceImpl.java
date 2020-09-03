@@ -199,4 +199,14 @@ public class MixDesignServiceImpl implements MixDesignService {
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode) {
     return mixDesignRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getMixDesignsByRawMaterialId(Long rawMaterialId) {
+    return mixDesignRepository.findByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialExists(Long rawMaterialId) {
+    return mixDesignRepository.existsByRawMaterialId(rawMaterialId);
+  }
 }
