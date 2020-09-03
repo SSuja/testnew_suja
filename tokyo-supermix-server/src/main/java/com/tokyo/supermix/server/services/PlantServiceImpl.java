@@ -83,4 +83,11 @@ public class PlantServiceImpl implements PlantService {
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   }
 
+  @Transactional
+  public Plant editPlant(Plant plant) {
+    plantRoleService.getAllPlantRolesByPlantCode(plant.getCode()).forEach(plantRoles -> {
+      plantRoles.setName(plant.getName().toUpperCase() + "_" + plantRoles.getRole().getName());
+    });
+    return plantRepository.save(plant);
+  }
 }

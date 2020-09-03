@@ -22,4 +22,6 @@ public interface PlantService {
   public void deletePlant(String code);
 
   public Page<Plant> searchPlant(Predicate predicate, int size, int page);
+  
+  public Plant editPlant(Plant plant);
 }
