@@ -97,7 +97,7 @@ public class PlantController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
             validationFailureStatusCodes.getPlantAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      plantService.savePlant(mapper.map(plantDto, Plant.class));
+      plantService.editPlant(mapper.map(plantDto, Plant.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PLANT_SUCCESS),
           HttpStatus.OK);
