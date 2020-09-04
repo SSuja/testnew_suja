@@ -128,7 +128,7 @@ public class TestReportServiceImpl implements TestReportService {
                 materialTest.getIncomingSample().getRawMaterial().getId()));
       } else {
         reportDto.setAcceptanceCriterias(
-            getMaterialValueIsNull(materialTest.getTestConfigure().getId()));
+            getMaterialValueIsNull(materialTest.getTestConfigure().getId(), materialTestCode));
       }
     } else {
       reportDto.setAcceptanceCriterias(
@@ -155,7 +155,7 @@ public class TestReportServiceImpl implements TestReportService {
                 materialTest.getIncomingSample().getRawMaterial().getId()));
       } else {
         reportDto.setAcceptanceCriterias(
-            getMaterialValueIsNull(materialTest.getTestConfigure().getId()));
+            getMaterialValueIsNull(materialTest.getTestConfigure().getId(), materialTestCode));
       }
     } else {
       reportDto.setAcceptanceCriterias(
@@ -283,7 +283,6 @@ public class TestReportServiceImpl implements TestReportService {
     materialAcceptedValues.forEach(materialAccepted -> {
       if (materialAccepted.isFinalResult()) {
         AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-
         if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDto.setCondition(materialAccepted.getConditionRange());
           acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
@@ -300,14 +299,14 @@ public class TestReportServiceImpl implements TestReportService {
     return acceptedValueDtoList;
   }
 
-  private List<AcceptedValueDto> getMaterialValueIsNull(Long testConfigureId) {
+  private List<AcceptedValueDto> getMaterialValueIsNull(Long testConfigureId,
+      String materialTestCode) {
     List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
     List<MaterialAcceptedValue> materialAcceptedValues =
         materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
-    List<MaterialTest> materialTestList =
-        materialTestRepository.findByTestConfigureId(testConfigureId);
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     materialAcceptedValues.forEach(materialAccepted -> {
-      if (materialTestList.get(0).getIncomingSample().getRawMaterial().getId() == materialAccepted
+      if (materialTest.getIncomingSample().getRawMaterial().getId() == materialAccepted
           .getRawMaterial().getId()) {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
@@ -326,7 +325,6 @@ public class TestReportServiceImpl implements TestReportService {
           acceptedValueDtoList.add(acceptedValueDto);
         }
       }
-
     });
     return acceptedValueDtoList;
   }
@@ -388,8 +386,8 @@ public class TestReportServiceImpl implements TestReportService {
           incomingSampleTestDto.setAcceptanceCriteria(getMaterialAcceptedValueDto(
               test.getTestConfigure().getId(), test.getIncomingSample().getRawMaterial().getId()));
         } else {
-          incomingSampleTestDto
-              .setAcceptanceCriteria(getMaterialValueIsNull(test.getTestConfigure().getId()));
+          incomingSampleTestDto.setAcceptanceCriteria(
+              getMaterialValueIsNull(test.getTestConfigure().getId(), test.getCode()));
         }
       } else {
         incomingSampleTestDto
@@ -420,8 +418,8 @@ public class TestReportServiceImpl implements TestReportService {
                   getMaterialAcceptedValueDto(test.getTestConfigure().getId(),
                       test.getIncomingSample().getRawMaterial().getId()));
             } else {
-              incomingSampleTestDto
-                  .setAcceptanceCriteria(getMaterialValueIsNull(test.getTestConfigure().getId()));
+              incomingSampleTestDto.setAcceptanceCriteria(
+                  getMaterialValueIsNull(test.getTestConfigure().getId(), test.getCode()));
             }
           } else {
             incomingSampleTestDto
