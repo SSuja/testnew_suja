@@ -163,4 +163,27 @@ public class RawMaterialController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.RAW_MATERIALS_BY_MATERIAL_SUBCATORY_AND_PLANT)
+  public ResponseEntity<Object> getRawMaterialsBySubCategoryAndCurrentUserPermission(
+      @CurrentUser UserPrincipal currentUser, @PathVariable Long materialSubCategoryId,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(rawMaterialService.getRawMaterialsByMaterialSubCategoryAndPlantCode(
+              materialSubCategoryId, plantCode), RawMaterialResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    } else {
+      if (currentUserPermissionPlantService
+          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_RAW_MATERIAL)
+          .contains(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+            mapper.map(rawMaterialService.getRawMaterialsByMaterialSubCategoryAndPlantCode(
+                materialSubCategoryId, plantCode), RawMaterialResponseDto.class),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }

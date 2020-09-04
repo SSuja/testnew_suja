@@ -16,4 +16,7 @@ public interface RawMaterialRepository
   List<RawMaterial> findByActiveTrue();
 
   List<RawMaterial> findByPlantCodeOrPlantNull(String plantCode);
+
+  List<RawMaterial> findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(Long materialSubCategoryId,
+      String plantCode);
 }
