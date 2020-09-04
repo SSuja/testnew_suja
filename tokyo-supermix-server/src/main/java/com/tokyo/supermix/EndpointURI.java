@@ -148,6 +148,7 @@ public final class EndpointURI {
       BASE_API_PATH + "active" + SLASH + "raw-materials";
   public static final String GET_BY_MATERIAL_SUB_CATEGORY =
       RAW_MATERIAL + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}";
+  public static final String RAW_MATERIALS_BY_PLANT = RAW_MATERIAL + PLANT_WISE;
   /*
    * EquipmentPlantCalibration apis
    */
@@ -262,6 +263,8 @@ public final class EndpointURI {
       MIX_DESIGN + SLASH + "status" + SLASH + "{status}";
   public static final String GET_MIX_DESIGN_BY_MATERIAL_CATEGORY =
       MIX_DESIGN + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+  public static final String GET_MIX_DESIGN_BY_RAW_MATERIAL =
+      MIX_DESIGN + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
 
   /*
    * Test Parameter APIs

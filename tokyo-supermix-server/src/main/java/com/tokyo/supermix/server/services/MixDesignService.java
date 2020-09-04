@@ -29,6 +29,10 @@ public interface MixDesignService {
   public List<MixDesign> getAllMixDesignByDecending();
 
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode);
+  
+  public List<MixDesign> getMixDesignsByRawMaterialId(Long rawMaterialId);
+  
+  public boolean isRawMaterialExists(Long rawMaterialId);
 
   public Page<MixDesign> searchMixDesign(Predicate predicate, int size, int page);
 }

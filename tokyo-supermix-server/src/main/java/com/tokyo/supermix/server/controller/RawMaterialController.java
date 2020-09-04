@@ -25,10 +25,14 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.RawMaterialService;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @RestController
 @CrossOrigin
@@ -39,10 +43,10 @@ public class RawMaterialController {
   private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(RawMaterialController.class);
 
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
@@ -137,5 +141,26 @@ public class RawMaterialController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.RAW_MATERIALS_BY_PLANT)
+  public ResponseEntity<Object> getRawMaterialsByCurrentUserPermission(
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    } else {
+      if (currentUserPermissionPlantService
+          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_RAW_MATERIAL)
+          .contains(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+            mapper.map(rawMaterialService.getRawMaterialsByPlantCode(plantCode),
+                RawMaterialResponseDto.class),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

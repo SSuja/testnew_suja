@@ -14,4 +14,6 @@ public interface RawMaterialRepository
   RawMaterial findByName(String name);
 
   List<RawMaterial> findByActiveTrue();
+
+  List<RawMaterial> findByPlantCodeOrPlantNull(String plantCode);
 }

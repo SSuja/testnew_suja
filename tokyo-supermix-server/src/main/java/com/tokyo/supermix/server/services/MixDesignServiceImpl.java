@@ -117,6 +117,15 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Transactional(readOnly = true)
+  public List<MixDesign> getMixDesignsByRawMaterialId(Long rawMaterialId) {
+    return mixDesignRepository.findByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialExists(Long rawMaterialId) {
+    return mixDesignRepository.existsByRawMaterialId(rawMaterialId);
+  }
+  
   public Page<MixDesign> searchMixDesign(Predicate predicate, int size, int page) {
     return mixDesignRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));

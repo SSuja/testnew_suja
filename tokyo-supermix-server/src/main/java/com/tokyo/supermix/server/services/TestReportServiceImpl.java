@@ -665,8 +665,7 @@ public class TestReportServiceImpl implements TestReportService {
       if (isFinishProductSampleExist(finishProductSample.getCode())) {
         FinishProductTest finishProductTest = finishProductTestRepository
             .findByFinishProductSampleCode(finishProductSample.getCode()).get(0);
-        if (!(!finishProductTest.getTestConfigure().isCoreTest()
-            && finishProductTest.getTestConfigure().isName())) {
+        if (finishProductTest.getTestConfigure().isCoreTest()) {
           ConcreteStrengthDto averageStrength = new ConcreteStrengthDto();
           averageStrength.setCubeCode(finishProductSample.getFinishProductCode());
           averageStrength.setTestAndResult(getTestResults(finishProductSample.getCode()));
@@ -702,10 +701,14 @@ public class TestReportServiceImpl implements TestReportService {
             .findByFinishProductTestFinishProductSampleCode(finishProductSampleCode);
     for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultList) {
       if (finishProductParameterResult.getTestParameter().getType() != null) {
-        if (finishProductParameterResult.getTestParameter().getInputMethods()
+        if ((finishProductParameterResult.getTestParameter().getInputMethods()
             .equals(InputMethod.OBSERVE)
             && finishProductParameterResult.getTestParameter().getType()
-                .equals(TestParameterType.INPUT)) {
+                .equals(TestParameterType.INPUT))
+            || (finishProductParameterResult.getTestParameter().getInputMethods()
+                .equals(InputMethod.OBSERVE)
+                && finishProductParameterResult.getTestParameter().getType()
+                    .equals(TestParameterType.RESULT))) {
           if (finishProductParameterResult.getTestParameter().getTestConfigure().isCoreTest()) {
             TestAndResult testAndResult = new TestAndResult();
             testAndResult.setTestName(finishProductParameterResult.getFinishProductTest()
@@ -752,7 +755,6 @@ public class TestReportServiceImpl implements TestReportService {
     for (String level : testParameterService
         .getAllOriLevel(materialTest.getTestConfigure().getId())) {
       SieveTestTrialDto sieveTestTrialDto = new SieveTestTrialDto();
-
       sieveTestTrialDto.setSize(level);
       sieveTestTrialDto.setSieveResultAndParameter(
           getParaAndResult(level, materialTest.getTestConfigure().getId(), materialTestCode));

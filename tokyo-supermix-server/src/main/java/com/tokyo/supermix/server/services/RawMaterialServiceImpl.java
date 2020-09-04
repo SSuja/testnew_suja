@@ -76,4 +76,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   public List<RawMaterial> getByMaterialSubCategoryId(Long materialSubCategoryId) {
     return rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
   }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode) {
+      return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode);
+  }
 }

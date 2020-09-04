@@ -160,4 +160,18 @@ public class MixDesignController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_RAW_MATERIAL)
+  public ResponseEntity<Object> getMixDesignsByRawMaterialId(@PathVariable Long rawMaterialId) {
+    if (mixDesignService.isRawMaterialExists(rawMaterialId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGNS,
+          mapper.map(mixDesignService.getMixDesignsByRawMaterialId(rawMaterialId),
+              MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      logger.debug("No MixDesign record exist for given rawMaterialId");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
+          validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
+    }
+  }
 }

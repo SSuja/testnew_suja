@@ -25,4 +25,6 @@ public interface RawMaterialService {
   public List<RawMaterial> getAllActiveRawMaterials();
 
   public List<RawMaterial> getByMaterialSubCategoryId(Long materialSubCategoryId);
+  
+  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode);
 }
