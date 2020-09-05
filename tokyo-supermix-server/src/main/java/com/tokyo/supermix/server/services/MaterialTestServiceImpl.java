@@ -266,4 +266,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(incomingSampleCode,
             testConfigId, plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getMaterialTestByPlant(String plantCode) {
+   
+    return materialTestRepository.findByIncomingSamplePlantCode(plantCode);
+  }
 }

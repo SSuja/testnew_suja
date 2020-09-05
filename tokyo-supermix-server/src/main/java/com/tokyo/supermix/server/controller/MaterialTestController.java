@@ -272,4 +272,25 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
+  public ResponseEntity<Object> getMaterialTestByPlantCode(
+          @PathVariable String plantCode) {
+        if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      if (plantRepository.existsByCode(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(
+                materialTestService.getMaterialTestByPlant(plantCode),
+                MaterialTestResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+    
+    
+  }
 }

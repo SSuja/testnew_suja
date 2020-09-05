@@ -55,4 +55,6 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getMaterialTestsByIncomingSampleCodeAndTestConfigIdAndPlantCode(
       String incomingSampleCode, Long testConfigId, String plantCode);
+  
+  public List<MaterialTest> getMaterialTestByPlant(String plantCode);
 }
