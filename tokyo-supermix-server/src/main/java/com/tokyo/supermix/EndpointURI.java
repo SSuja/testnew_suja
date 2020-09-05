@@ -344,7 +344,7 @@ public final class EndpointURI {
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}" + SLASH + "test"
           + SLASH + "{testConfigId}" + PLANT_WISE;
   public static final String MATERIAL_TEST_BY_PLANT_CODE =
-      MATERIAL_TEST +PLANT_WISE;
+      MATERIAL_TEST + SLASH + "incoming-sample" +PLANT_WISE;
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
