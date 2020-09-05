@@ -773,13 +773,15 @@ public class TestReportServiceImpl implements TestReportService {
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
         if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
-            && parameterResult.getTestParameter().getType().equals(TestParameterType.INPUT)
-            && (parameterResult.getTestParameter().isAcceptedCriteria())) {
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)
+            && parameterResult.getTestParameter().isAcceptedCriteria()) {
           AcceptedValue acceptedValue = acceptedValueRepository
               .findByTestParameterId(parameterResult.getTestParameter().getId());
-          sieveResultAndParameter.setParameter(parts[0].toString());
-          sieveResultAndParameter.setVale(acceptedValue.getMaxValue().toString() + "  -  "
-              + acceptedValue.getMinValue().toString());
+          if (acceptedValue.isFinalResult()) {
+            sieveResultAndParameter.setParameter(parts[0].toString());
+            sieveResultAndParameter.setVale(acceptedValue.getMaxValue().toString() + "  -  "
+                + acceptedValue.getMinValue().toString());
+          }
         } else {
           sieveResultAndParameter.setParameter(parts[0].toString());
           sieveResultAndParameter.setVale(parameterResult.getValue().toString());
@@ -855,7 +857,7 @@ public class TestReportServiceImpl implements TestReportService {
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
         if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
-            && parameterResult.getTestParameter().getType().equals(TestParameterType.INPUT)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)
             && (parameterResult.getTestParameter().isAcceptedCriteria())) {
           sieveResultAndParameter.setParameter(parts[0].toString());
           sieveResultAndParameter.setAcceptedValueForSieveTest(
