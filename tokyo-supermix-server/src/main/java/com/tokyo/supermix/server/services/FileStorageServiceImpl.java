@@ -210,31 +210,33 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
+
+
     String[] row = null;
     try {
       row = csvReader.readNext();
       row = csvReader.readNext();
       // Import the data to DB
       while ((row = csvReader.readNext()) != null) {
-        if (supplierRepository.findByEmail(row[0]) == null) {
-          Supplier supplier = new Supplier();
-          List<SupplierCategory> supplierCategories = new ArrayList<SupplierCategory>();
-          supplier.setEmail(row[0]);
-          supplier.setName(row[1]);
-          supplier.setAddress(row[2]);
-          supplier.setPhoneNumber(row[3]);
-          Plant plant = plantRepository.findByName(row[4]);
-          supplier.setPlant(plant);
-          String[] categories = row[5].split(",");
-          for (int i = 0; i < categories.length; i++) {
-            SupplierCategory supplierCategory =
-                supplierCategoryRepository.findByCategory(categories[i]);
-            supplierCategories.add(supplierCategory);
-          }
-          supplier.setSupplierCategories(supplierCategories);
-          supplierRepository.save(supplier);
+        // if (supplierRepository.findByEmail(row[0]) == null) {
+        Supplier supplier = new Supplier();
+        List<SupplierCategory> supplierCategories = new ArrayList<SupplierCategory>();
+        supplier.setEmail(row[0]);
+        supplier.setName(row[1]);
+        supplier.setAddress(row[2]);
+        supplier.setPhoneNumber(row[3]);
+        Plant plant = plantRepository.findByName(row[4]);
+        supplier.setPlant(plant);
+        String[] categories = row[5].split(",");
+        for (int i = 0; i < categories.length; i++) {
+          SupplierCategory supplierCategory =
+              supplierCategoryRepository.findByCategory(categories[i]);
+          supplierCategories.add(supplierCategory);
         }
+        supplier.setSupplierCategories(supplierCategories);
+        supplierRepository.save(supplier);
       }
+      // }
       csvReader.close();
     } catch (IOException e) {
       e.printStackTrace();

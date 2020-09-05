@@ -772,8 +772,9 @@ public class TestReportServiceImpl implements TestReportService {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
-        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.MEASUREMENT)
-            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.INPUT)
+            && (parameterResult.getTestParameter().isAcceptedCriteria())) {
           AcceptedValue acceptedValue = acceptedValueRepository
               .findByTestParameterId(parameterResult.getTestParameter().getId());
           sieveResultAndParameter.setParameter(parts[0].toString());
@@ -853,8 +854,9 @@ public class TestReportServiceImpl implements TestReportService {
       SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
-        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.MEASUREMENT)
-            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
+        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
+            && parameterResult.getTestParameter().getType().equals(TestParameterType.INPUT)
+            && (parameterResult.getTestParameter().isAcceptedCriteria())) {
           sieveResultAndParameter.setParameter(parts[0].toString());
           sieveResultAndParameter.setAcceptedValueForSieveTest(
               getAcceptedValueForSieveTestGraph(parameterResult.getTestParameter().getId()));
