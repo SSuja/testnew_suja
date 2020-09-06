@@ -769,37 +769,44 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestParameterLevelAndTestParameterTestConfigureIdAndMaterialTestCode(level,
             testConfigId, materialTestCode);
     for (ParameterResult parameterResult : parameterResultList) {
-      SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
-        if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
-            && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)
-            && parameterResult.getTestParameter().isAcceptedCriteria()) {
-          AcceptedValue acceptedValue = acceptedValueRepository
-              .findByTestParameterId(parameterResult.getTestParameter().getId());
+        SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
+        sieveResultAndParameter.setParameter(parts[0].toString());
+        sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        sieveResultAndParameterList.add(sieveResultAndParameter);
+        AcceptedValue acceptedValue = acceptedValueRepository
+            .findByTestParameterIdAndTestConfigureId(parameterResult.getTestParameter().getId(),
+                parameterResult.getTestParameter().getTestConfigure().getId());
+        if (acceptedValue != null)
           if (acceptedValue.isFinalResult()) {
-            sieveResultAndParameter.setParameter(parts[0].toString());
-            sieveResultAndParameter.setVale(acceptedValue.getMaxValue().toString() + "  -  "
-                + acceptedValue.getMinValue().toString());
+            SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
+            String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
+            sieveResultAndParameterAcc
+                .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
+            if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+              sieveResultAndParameterAcc.setVale(acceptedValue.getMaxValue().toString() + " - "
+                  + acceptedValue.getMinValue().toString());
+            } else {
+              sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
+            }
+            sieveResultAndParameterList.add(sieveResultAndParameterAcc);
           }
-        } else {
-          sieveResultAndParameter.setParameter(parts[0].toString());
-          sieveResultAndParameter.setVale(parameterResult.getValue().toString());
-        }
-
       } else {
+        SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
         if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
             && parameterResult.getTestParameter().getType().equals(TestParameterType.RESULT)) {
           TestEquation testEquation = testEquationRepository
               .findByTestParameterId(parameterResult.getTestParameter().getId());
           sieveResultAndParameter.setAcceptedValueForSieveTest(getAcceptedValueForSieveTestResult(
               testConfigId, parameterResult.getTestParameter().getId(), testEquation.getId()));
+
         }
         sieveResultAndParameter
             .setParameter(parameterResult.getTestParameter().getParameter().getName());
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        sieveResultAndParameterList.add(sieveResultAndParameter);
       }
-      sieveResultAndParameterList.add(sieveResultAndParameter);
     }
     return sieveResultAndParameterList;
   }
@@ -944,8 +951,6 @@ public class TestReportServiceImpl implements TestReportService {
         });
     return incomingSampleTestDtoList;
   }
-
-
 
   @Transactional(readOnly = true)
   public IncomingSampleJasperDeliveryDto getIncomingSampleJasperSummaryReport1(
