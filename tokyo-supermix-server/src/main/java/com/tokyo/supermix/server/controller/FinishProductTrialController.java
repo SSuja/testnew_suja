@@ -95,12 +95,22 @@ public class FinishProductTrialController {
         .filter(finish -> (finish.getValue() == null
             && testParameterService.getTestParameterById(finish.getTestParameterId())
                 .getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameterService.getTestParameterById(finish.getTestParameterId()).getType()
-                .equals(TestParameterType.INPUT)))
+            && (testParameterService.getTestParameterById(finish.getTestParameterId()).getType()
+                .equals(TestParameterType.INPUT)
+                || testParameterService.getTestParameterById(finish.getTestParameterId()).getType()
+                    .equals(TestParameterType.RESULT))))
         .collect(Collectors.toList());
     if ((li.isEmpty())) {
-      finishProductTrialService.saveFinishProductTrial(
-          mapper.map(finishProductTrialRequestDtoList, FinishProductTrial.class));
+      if (!(finishProductTrialService
+          .getEquationCheck(finishProductTrialRequestDtoList.get(0).getFinishProductTestCode()))) {
+        finishProductTrialService.saveFinishProductTrial(
+            mapper.map(finishProductTrialRequestDtoList, FinishProductTrial.class));
+      } else {
+        finishProductTrialService.saveAverageCalculationFinishProductTrials(
+            mapper.map(finishProductTrialRequestDtoList, FinishProductTrial.class));
+        finishProductTrialService.saveAverageCalculationResult(
+            finishProductTrialRequestDtoList.get(0).getFinishProductTestCode());
+      }
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_FINISH_PRODUCT_TRIAL_SUCCESS),
           HttpStatus.OK);
