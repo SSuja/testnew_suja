@@ -54,6 +54,7 @@ public class MaterialSubCategoryController {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(materialSubCategoryService.getCountMaterialSubCategory());
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
             mapper.map(materialSubCategoryService.getAllMaterialSubCategories(pageable),
