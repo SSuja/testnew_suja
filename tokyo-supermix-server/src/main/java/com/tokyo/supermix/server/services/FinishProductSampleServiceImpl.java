@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -133,8 +134,10 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode) {
-    return finishProductSampleRepository.findByMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode);
+  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode,
+      Pageable pageable) {
+    return finishProductSampleRepository
+        .findByMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable).toList();
   }
 
   @Transactional(readOnly = true)
@@ -148,10 +151,21 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser) {
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser,
+      Pageable pageable) {
     return finishProductSampleRepository.findByMixDesignPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE));
+            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
+        pageable).toList();
   }
 
+  @Transactional(readOnly = true)
+  public Long getCountFinishProductSample() {
+    return finishProductSampleRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountFinishProductSampleByPlantCode(String plantCode) {
+    return finishProductSampleRepository.countByMixDesignPlantCode(plantCode);
+  }
 }

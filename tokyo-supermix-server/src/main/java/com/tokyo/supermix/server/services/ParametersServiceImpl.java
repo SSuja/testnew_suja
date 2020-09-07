@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -73,11 +74,21 @@ public class ParametersServiceImpl implements ParameterService {
 
   @Transactional(readOnly = true)
   public List<Parameter> getAllParametersByDecending() {
-    return parameterRepository.findAllByOrderByIdDesc();
+    return parameterRepository.findByOrderByIdDesc();
   }
 
   @Override
   public boolean isParameterNameAndParameterTypeExists(String name, ParameterType parameterType) {
     return parameterRepository.existsByNameAndParameterType(name, parameterType);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountParameters() {
+      return parameterRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public List<Parameter> getAllParametersByDecending(Pageable pageable) {
+       return parameterRepository.findAllByOrderByIdDesc(pageable);
   }
 }

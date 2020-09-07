@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,8 +40,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public List<RawMaterial> getAllRawMaterials() {
-    return rawMaterialRepository.findAll();
+  public List<RawMaterial> getAllRawMaterials(Pageable pageable) {
+    return rawMaterialRepository.findAll(pageable).toList();
   }
 
   @Transactional(readOnly = true)
@@ -78,8 +79,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode) {
-    return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode);
+  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
+    return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
   }
 
   @Transactional(readOnly = true)
@@ -87,5 +88,15 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       Long materialSubCategoryId, String plantCode) {
     return rawMaterialRepository
         .findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(materialSubCategoryId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public Long countRawMaterials() {
+    return rawMaterialRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long countRawMaterialByPlant(String plantCode) {
+    return rawMaterialRepository.countByPlantCode(plantCode);
   }
 }
