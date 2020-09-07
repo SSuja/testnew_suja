@@ -7,8 +7,6 @@ import com.tokyo.supermix.data.entities.FinishProductTrial;
 
 @Repository
 public interface FinishProductTrialRepository extends JpaRepository<FinishProductTrial, Long> {
-
-
   List<FinishProductTrial> findByFinishProductTestCodeOrderByUpdatedAtDesc(
       String finishProductTestCode);
 
@@ -19,4 +17,10 @@ public interface FinishProductTrialRepository extends JpaRepository<FinishProduc
 
   List<FinishProductTrial> findByFinishProductTestFinishProductSampleMixDesignPlantCode(
       String plantCode);
+
+  List<FinishProductTrial> findByFinishProductTestCodeAndTrialNo(String finishProductTestCode,
+      Long trialNo);
+
+  List<FinishProductTrial> findByFinishProductTestCode(String finishProductTestCode);
+
 }

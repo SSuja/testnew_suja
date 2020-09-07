@@ -27,5 +27,12 @@ public interface FinishProductTrialService {
   public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial);
 
   public List<FinishProductTrial> getAllFinishProductTrialsByPlantCode(String plantCode);
+
+  public void saveAverageCalculationResult(String finishProductCode);
+
+
+  public void saveAverageCalculationFinishProductTrials(List<FinishProductTrial> finishProductTrialList);
+
+  public boolean getEquationCheck(String finishProductTestCode);
 }
 
