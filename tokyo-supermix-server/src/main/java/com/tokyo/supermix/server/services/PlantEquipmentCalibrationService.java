@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -30,4 +31,12 @@ public interface PlantEquipmentCalibrationService {
   public Date getLastDueDateByPlantEquipmentSerialNo(String plantEquipmentSerialNo);
   
   public boolean existsByPlantEquipmentSerialNo(String plantEquipmentSerialNo);
+  
+  public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration(Pageable pageable);
+
+  public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationByPlantCode(String plantCode, Pageable pageable);
+
+  public Long getCountPlantEquipmentCalibration();
+
+  public Long getCountPlantEquipmentCalibrationByPlantCode(String plantCode);
 }

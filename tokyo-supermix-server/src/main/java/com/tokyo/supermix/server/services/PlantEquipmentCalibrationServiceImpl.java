@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -94,5 +95,30 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
   public boolean existsByPlantEquipmentSerialNo(String plantEquipmentSerialNo) {
     return plantEquipmentCalibrationRepository
         .existsByPlantEquipmentSerialNo(plantEquipmentSerialNo);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration(Pageable pageable) {
+  
+    return plantEquipmentCalibrationRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationByPlantCode(String plantCode,
+      Pageable pageable) {
+  
+    return plantEquipmentCalibrationRepository.findAllByPlantEquipmentPlantCode(plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountPlantEquipmentCalibration() {
+   
+    return plantEquipmentCalibrationRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountPlantEquipmentCalibrationByPlantCode(String plantCode) {
+  
+    return plantEquipmentCalibrationRepository.countByPlantEquipmentPlantCode(plantCode);
   }
 }
