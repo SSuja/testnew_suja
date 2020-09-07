@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -29,4 +30,12 @@ public interface PlantEquipmentService {
 
   public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentIdAndPlantCode(
       Long equipmentId, String code);
+  
+  public List<PlantEquipment> getAllPlantEquipment(Pageable pageable);
+
+  public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode, Pageable pageable);
+
+  public Long getCountPlantEquipment();
+
+  public Long getCountPlantEquipmentByPlantCode(String plantCode);
 }

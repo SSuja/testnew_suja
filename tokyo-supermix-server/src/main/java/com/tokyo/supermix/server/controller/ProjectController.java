@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,8 @@ import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -87,18 +91,25 @@ public class ProjectController {
 
   @GetMapping(value = EndpointURI.PROJECT_BY_PLANT)
   public ResponseEntity<Object> getProjects(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode) {
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-          mapper.map(projectService.getAllProjectsByPlant(currentUser), ProjectResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      pagination.setTotalRecords(projectService.getCountProject());
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PROJECTS,
+          mapper.map(projectService.getAllProjectsByPlant(currentUser, pageable),
+              ProjectResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT)
         .contains(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
-          mapper.map(projectService.getProjectByPlantCode(plantCode), ProjectResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      pagination.setTotalRecords(projectService.getCountProjectByPlantCode(plantCode));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PROJECTS, mapper
+          .map(projectService.getProjectByPlantCode(plantCode, pageable), ProjectResponseDto.class),
+          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -36,9 +37,10 @@ public class SupplierServiceImpl implements SupplierService {
   }
 
   @Override
-  public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser) {
-    return supplierRepository.findByPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER));
+  public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser, Pageable pageable) {
+    return supplierRepository.findAllByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER),
+        pageable);
   }
 
   @Transactional
@@ -115,8 +117,8 @@ public class SupplierServiceImpl implements SupplierService {
   }
 
   @Transactional(readOnly = true)
-  public List<Supplier> getSupplierByPlantCode(String plantCode) {
-    return supplierRepository.findByPlantCode(plantCode);
+  public List<Supplier> getSupplierByPlantCode(String plantCode, Pageable pageable) {
+    return supplierRepository.findAllByPlantCode(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
@@ -134,5 +136,15 @@ public class SupplierServiceImpl implements SupplierService {
   public boolean isPlantCodeAndSupplierCategoryIdExist(String plantCode, Long supplierCategoryId) {
     return supplierRepository.existsByPlantCodeAndSupplierCategoriesId(plantCode,
         supplierCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountSupplier() {
+    return supplierRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountSupplierByPlantCode(String plantCode) {
+    return supplierRepository.countByPlantCode(plantCode);
   }
 }

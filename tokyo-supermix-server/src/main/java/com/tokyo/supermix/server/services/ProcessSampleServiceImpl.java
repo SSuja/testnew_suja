@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -104,8 +105,30 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<ProcessSample> getAllProcessSamplesByCurrentUser(UserPrincipal currentUser) {
+  public List<ProcessSample> getAllProcessSamplesByCurrentUser(UserPrincipal currentUser,
+      Pageable pageable) {
     return processSampleRepository.findByIncomingSamplePlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROCESS_SAMPLE));
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROCESS_SAMPLE),
+        pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<ProcessSample> getAllProcessSample(Pageable pageable) {
+    return processSampleRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<ProcessSample> getProcessSampleByPlantCode(String plantCode, Pageable pageable) {
+    return processSampleRepository.findAllByIncomingSamplePlantCode(plantCode, pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountProcessSample() {
+    return processSampleRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountProcessSampleByPlantCode(String plantCode) {
+    return processSampleRepository.countByIncomingSamplePlantCode(plantCode);
   }
 }
