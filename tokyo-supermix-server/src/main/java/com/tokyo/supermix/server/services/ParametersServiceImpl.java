@@ -74,7 +74,7 @@ public class ParametersServiceImpl implements ParameterService {
 
   @Transactional(readOnly = true)
   public List<Parameter> getAllParametersByDecending() {
-    return parameterRepository.findAllByOrderByIdDesc();
+    return parameterRepository.findByOrderByIdDesc();
   }
 
   @Override
