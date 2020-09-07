@@ -24,4 +24,6 @@ public interface AcceptedValueRepository
 
   public boolean existsByTestConfigureIdAndTestParameterId(Long testConfigureId,
       Long testParameterId);
+
+  AcceptedValue findByTestParameterIdAndTestConfigureId(Long testParameterId, Long testConfigureId);
 }
