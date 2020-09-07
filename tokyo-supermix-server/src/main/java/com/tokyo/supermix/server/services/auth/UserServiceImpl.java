@@ -7,6 +7,7 @@ import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
 import org.passay.PasswordGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -246,22 +247,44 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<UserResponseDto> getUserByPlantCode(String plantCode) {
-        
-    ArrayList<UserResponseDto> UserResponseDtoList = new ArrayList<UserResponseDto>();
-    List<User> userList = userRepository.findByEmployeePlantCode(plantCode);
-    for (User user : userList) {
-      UserResponseDto userResponseDto = new UserResponseDto();
-      userResponseDto.setId(user.getId());
-      userResponseDto.setUserName(user.getUserName());
-     userResponseDto.setEmployee(mapper.map(employeeService.getEmployeeById(user.getEmployee().getId()),EmployeeResponseDto.class));
-      userResponseDto.setUserType(user.getUserType().name());
-      userResponseDto.setCreatedAt(user.getCreatedAt().toString());
-      userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
-      userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());   
-      userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());   
-      UserResponseDtoList.add(userResponseDto );
-    }
-    return UserResponseDtoList;
+  public List<UserResponseDto> getUserByPlantCode(String plantCode, Pageable pageable) {
+    ArrayList<UserResponseDto> userResponseDtoList = new ArrayList<UserResponseDto>();
+    List<User> userList = userRepository.findAllByEmployeePlantCode(plantCode, pageable);
+    userListGetterSetter(userList, userResponseDtoList);
+    return userResponseDtoList;
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountUser() {
+    return userRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public List<UserResponseDto> getAllUsersByPagination(Pageable pageable) {
+    ArrayList<UserResponseDto> userResponseDtoList = new ArrayList<UserResponseDto>();
+    List<User> userList = userRepository.findAll(pageable).toList();
+    userListGetterSetter(userList, userResponseDtoList);
+    return userResponseDtoList;
+  }
+
+  private void userListGetterSetter(List<User> userList,  ArrayList<UserResponseDto> userResponseDtoList) {
+  for (User user : userList) {
+  UserResponseDto userResponseDto = new UserResponseDto();
+  userResponseDto.setId(user.getId());
+  userResponseDto.setUserName(user.getUserName());
+ userResponseDto.setEmployee(mapper.map(employeeService.getEmployeeById(user.getEmployee().getId()),EmployeeResponseDto.class));
+  userResponseDto.setUserType(user.getUserType().name());
+  userResponseDto.setCreatedAt(user.getCreatedAt().toString());
+  userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
+  userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());   
+  userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());   
+  userResponseDtoList.add(userResponseDto );
+}
+    
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountUserByPlantCode(String plantCode) {
+    return userRepository.countByEmployeePlantCode(plantCode);
   }
 }

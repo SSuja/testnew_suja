@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller.auth;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.auth.GenerateUserDto;
@@ -25,7 +28,9 @@ import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.auth.UserService;
@@ -101,18 +106,24 @@ public class UserController {
 
   @GetMapping(value = PrivilegeEndpointURI.USER_BY_PLANT)
   public ResponseEntity<Object> getAllUsersByPlant(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode) {
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
-          mapper.map(userService.getAllUsers(), UserResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      pagination.setTotalRecords(userService.getCountUser());
+      return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USER,
+          mapper.map(userService.getAllUsersByPagination(pageable), UserResponseDto.class),
+          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER)
         .contains(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
-          mapper.map(userService.getUserByPlantCode(plantCode), UserResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      pagination.setTotalRecords(userService.getCountUserByPlantCode(plantCode));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USER,
+          mapper.map(userService.getUserByPlantCode(plantCode,pageable), UserResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
