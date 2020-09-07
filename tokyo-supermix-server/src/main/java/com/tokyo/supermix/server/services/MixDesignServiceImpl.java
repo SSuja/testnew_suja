@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -108,7 +109,7 @@ public class MixDesignServiceImpl implements MixDesignService {
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesignByDecending() {
-    return mixDesignRepository.findAllByOrderByUpdatedAtDesc();
+    return mixDesignRepository.findAll(Sort.by(Sort.Direction.DESC, "code"));
   }
 
   @Transactional(readOnly = true)
@@ -125,9 +126,29 @@ public class MixDesignServiceImpl implements MixDesignService {
   public boolean isRawMaterialExists(Long rawMaterialId) {
     return mixDesignRepository.existsByRawMaterialId(rawMaterialId);
   }
-  
+
   public Page<MixDesign> searchMixDesign(Predicate predicate, int size, int page) {
     return mixDesignRepository.findAll(predicate,
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getAllMixDesign(Pageable pageable) {
+    return mixDesignRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getMixDesignByPlantCode(String plantCode, Pageable pageable) {
+    return mixDesignRepository.findAllByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountMixDesign() {
+    return mixDesignRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountMixDesignByPlantCode(String plantCode) {
+    return mixDesignRepository.countByPlantCode(plantCode);
   }
 }

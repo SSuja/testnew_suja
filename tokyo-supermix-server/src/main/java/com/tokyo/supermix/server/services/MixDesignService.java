@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
@@ -26,13 +27,21 @@ public interface MixDesignService {
 
   public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser);
 
-  public List<MixDesign> getAllMixDesignByDecending();
+   public List<MixDesign> getAllMixDesignByDecending();
 
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode);
-  
+
   public List<MixDesign> getMixDesignsByRawMaterialId(Long rawMaterialId);
-  
+
   public boolean isRawMaterialExists(Long rawMaterialId);
 
   public Page<MixDesign> searchMixDesign(Predicate predicate, int size, int page);
+
+  public List<MixDesign> getAllMixDesign(Pageable pageable);
+
+  public List<MixDesign> getMixDesignByPlantCode(String plantCode, Pageable pageable);
+
+  public Long getCountMixDesign();
+
+  public Long getCountMixDesignByPlantCode(String plantCode);
 }
