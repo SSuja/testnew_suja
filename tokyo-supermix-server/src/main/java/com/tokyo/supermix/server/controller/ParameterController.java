@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.ParameterService;
 import com.tokyo.supermix.util.Constants;
@@ -41,11 +45,22 @@ public class ParameterController {
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(ParameterController.class);
 
+//  @GetMapping(value = EndpointURI.PARAMETERS)
+//  public ResponseEntity<Object> getAllParameters() {
+//    return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
+//        mapper.map(parameterService.getAllParametersByDecending(), ParameterDto.class),
+//        RestApiResponseStatus.OK), null, HttpStatus.OK);
+//  }
+
   @GetMapping(value = EndpointURI.PARAMETERS)
-  public ResponseEntity<Object> getAllParameters() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
-        mapper.map(parameterService.getAllParametersByDecending(), ParameterDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllParameters( @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(parameterService.getCountParameters());
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PARAMETERS,
+        mapper.map(parameterService.getAllParametersByDecending(pageable), ParameterDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
   @PostMapping(value = EndpointURI.PARAMETER)
