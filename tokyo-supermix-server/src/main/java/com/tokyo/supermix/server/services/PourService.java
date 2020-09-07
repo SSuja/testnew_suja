@@ -33,5 +33,9 @@ public interface PourService {
 
   public Long getCountPourByPlantCode(String plantCode);
 
-  public  List<Pour> getPoursByPlantCode(String plantCode, Pageable pageable);
+  public List<Pour> getPoursByPlantCode(String plantCode, Pageable pageable);
+
+  public List<Pour> getPourNameByPlantCode(String plantCode, String name);
+
+  public List<Pour> getPourName(String name);
 }

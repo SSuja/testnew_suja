@@ -137,7 +137,7 @@ public class PourController {
 
   @GetMapping(value = EndpointURI.POUR_BY_PLANT)
   public ResponseEntity<Object> getAllPourByPlant(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode,  @RequestParam(name = "page") int page,
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
       @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -147,7 +147,7 @@ public class PourController {
       logger.debug("gat all pour");
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.POUR,
           mapper.map(pourService.getAllPourByPlant(currentUser, pageable), PourDtoResponse.class),
-          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR)
@@ -155,10 +155,23 @@ public class PourController {
       pagination.setTotalRecords(pourService.getCountPourByPlantCode(plantCode));
       logger.debug("gat all pour");
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.POUR,
-          mapper.map(pourService.getPoursByPlantCode(plantCode,pageable), PourDtoResponse.class),
+          mapper.map(pourService.getPoursByPlantCode(plantCode, pageable), PourDtoResponse.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.GET_POURS_BY_PLANT)
+  public ResponseEntity<Object> getPourNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
+          mapper.map(pourService.getPourName(name), PourDtoResponse.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
+        mapper.map(pourService.getPourNameByPlantCode(plantCode, name), PourDtoResponse.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
