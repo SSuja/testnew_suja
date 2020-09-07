@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.RawMaterial;
 
@@ -12,7 +13,7 @@ public interface RawMaterialService {
 
   public boolean isRawMaterialExist(Long id);
 
-  public List<RawMaterial> getAllRawMaterials();
+  public List<RawMaterial> getAllRawMaterials(Pageable pageable);
 
   public RawMaterial getRawMaterialById(Long id);
 
@@ -26,8 +27,12 @@ public interface RawMaterialService {
 
   public List<RawMaterial> getByMaterialSubCategoryId(Long materialSubCategoryId);
 
-  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode);
+  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable);
 
   public List<RawMaterial> getRawMaterialsByMaterialSubCategoryAndPlantCode(
       Long materialSubCategoryId, String plantCode);
+
+  public Long countRawMaterials();
+
+  public Long countRawMaterialByPlant(String plantCode);
 }
