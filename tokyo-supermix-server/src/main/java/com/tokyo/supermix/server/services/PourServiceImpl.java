@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,8 +74,23 @@ public class PourServiceImpl implements PourService {
   }
 
   @Transactional(readOnly = true)
-  public List<Pour> getAllPourByPlant(UserPrincipal currentUser) {
+  public List<Pour> getAllPourByPlant(UserPrincipal currentUser, Pageable pageable) {
     return pourRepository.findByProjectPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR));
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR), pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountPour() {
+    return pourRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountPourByPlantCode(String plantCode) {
+    return pourRepository.countByProjectPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Pour> getPoursByPlantCode(String plantCode, Pageable pageable) {
+    return pourRepository.findAllByProjectPlantCode(plantCode,pageable);
   }
 }

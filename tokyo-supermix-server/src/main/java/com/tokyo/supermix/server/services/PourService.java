@@ -3,7 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Pour;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -27,5 +27,11 @@ public interface PourService {
 
   public List<Pour> getPoursByPlantCode(String plantCode);
 
-  public List<Pour> getAllPourByPlant(UserPrincipal currentUser);
+  public List<Pour> getAllPourByPlant(UserPrincipal currentUser, Pageable pageable);
+
+  public Long getCountPour();
+
+  public Long getCountPourByPlantCode(String plantCode);
+
+  public  List<Pour> getPoursByPlantCode(String plantCode, Pageable pageable);
 }
