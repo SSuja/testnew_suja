@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,17 +114,22 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser) {
+  public List<FinishProductTest> getAllFinishProductTestByPlant(UserPrincipal currentUser,
+      Pageable pageable) {
     return finishProductTestRepository
         .findByFinishProductSampleMixDesignPlantCodeInOrderByUpdatedAtDesc(
             currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-                PermissionConstants.VIEW_FINISH_PRODUCT_TEST));
+                PermissionConstants.VIEW_FINISH_PRODUCT_TEST),
+            pageable)
+        .toList();
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode) {
+  public List<FinishProductTest> getAllFinishProductTestByPlant(String plantCode,
+      Pageable pageable) {
     return finishProductTestRepository
-        .findByFinishProductSampleMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode);
+        .findByFinishProductSampleMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
+        .toList();
   }
 
   @Transactional
@@ -178,4 +184,13 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     return finishProductTestDtoList;
   }
 
+  @Transactional(readOnly = true)
+  public Long getCountFinishProductTest() {
+    return finishProductTestRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountFinishProductTestByPlant(String plantCode) {
+    return finishProductTestRepository.countByFinishProductSampleMixDesignPlantCode(plantCode);
+  }
 }
