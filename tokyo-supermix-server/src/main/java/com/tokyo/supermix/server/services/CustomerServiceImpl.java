@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -119,9 +120,9 @@ public class CustomerServiceImpl implements CustomerService {
   }
 
   @Transactional(readOnly = true)
-  public List<CustomerResponseDto> getCustomerByPlantCode(String plantCode) {
+  public List<CustomerResponseDto> getCustomerByPlantCode(String plantCode, Pageable pageable) {
     ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
-    List<Customer> customerList = customerRepository.findByPlantCode(plantCode);
+    List<Customer> customerList = customerRepository.findAllByPlantCode(plantCode, pageable);
     for (Customer customer : customerList) {
       CustomerResponseDto customerResponseDto = new CustomerResponseDto();
       customerResponseDto.setId(customer.getId());
@@ -138,9 +139,9 @@ public class CustomerServiceImpl implements CustomerService {
 
   }
 
-  public List<CustomerResponseDto> getAllCustomer() {
+  public List<CustomerResponseDto> getAllCustomer(Pageable pageable) {
     ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
-    List<Customer> customerList = getAllCustomers();
+    List<Customer> customerList = customerRepository.findAll(pageable).toList();
     for (Customer customer : customerList) {
       CustomerResponseDto customerResponseDto = new CustomerResponseDto();
       customerResponseDto.setId(customer.getId());
@@ -176,5 +177,15 @@ public class CustomerServiceImpl implements CustomerService {
   public List<Customer> getAllCustomers() {
 
     return customerRepository.findAll();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountCustomer() {
+    return customerRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountCustomerByPlantCode(String plantCode) {
+    return customerRepository.countByPlantCode(plantCode);
   }
 }
