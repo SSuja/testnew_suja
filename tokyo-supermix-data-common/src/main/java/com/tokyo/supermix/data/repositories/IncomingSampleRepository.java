@@ -2,13 +2,16 @@ package com.tokyo.supermix.data.repositories;
 
 import java.sql.Date;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 
-public interface IncomingSampleRepository
-    extends JpaRepository<IncomingSample, String>, QuerydslPredicateExecutor<IncomingSample> {
+public interface IncomingSampleRepository extends JpaRepository<IncomingSample, String>,
+    QuerydslPredicateExecutor<IncomingSample>, PagingAndSortingRepository<IncomingSample, String> {
   boolean existsByCode(String code);
 
   IncomingSample findIncomingSampleByCode(String code);
@@ -30,7 +33,7 @@ public interface IncomingSampleRepository
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndStatus(
       Long materialSubCategoryId, Date date, Status status);
 
-  List<IncomingSample> findByPlantCodeOrderByUpdatedAtDesc(String plantCode);
+  // List<IncomingSample> findByPlantCodeOrderByUpdatedAtDesc(String plantCode);
 
   List<IncomingSample> findByCodeContaining(String code);
 
@@ -39,7 +42,8 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByStatusAndRawMaterialIdAndDate(Status status, Long id, Date sqlDate);
 
-  List<IncomingSample> findByPlantCodeInOrderByUpdatedAtDesc(List<String> permissionPlantCodeByCurrentUser);
+  // List<IncomingSample> findByPlantCodeInOrderByUpdatedAtDesc(List<String>
+  // permissionPlantCodeByCurrentUser);
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndStatusAndPlantCode(
       Long materialSubCategoryId, Date sqlDate, Status status, String plantCode);
@@ -51,4 +55,13 @@ public interface IncomingSampleRepository
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
       Long materialSubCategoryId, String plantCode);
+
+  List<IncomingSample> findAllByPlantCodeInOrderByUpdatedAtDesc(
+      List<String> permissionPlantCodeByCurrentUser, Pageable pageable);
+
+  List<IncomingSample> findByPlantCodeOrderByUpdatedAtDesc(String plantCode,Pageable pageable);
+
+  Page<IncomingSample> findAll(Pageable pageable);
+
+  Long countByPlantCode(String plantCode);
 }

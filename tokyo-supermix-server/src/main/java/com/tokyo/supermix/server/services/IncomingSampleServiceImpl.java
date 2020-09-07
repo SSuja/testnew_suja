@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -118,15 +119,15 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode) {
-    return incomingSampleRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode);
+  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode,Pageable pageable) {
+    return incomingSampleRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser) {
-    return incomingSampleRepository.findByPlantCodeInOrderByUpdatedAtDesc(
+  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser,Pageable pageable) {
+    return incomingSampleRepository.findAllByPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_INCOMING_SAMPLE));
+            PermissionConstants.VIEW_INCOMING_SAMPLE),pageable);
   }
 
   @Transactional(readOnly = true)
@@ -140,4 +141,15 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
     return incomingSampleRepository.findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
   }
+
+  @Transactional(readOnly = true)
+  public Long getCountIncomingSample() {
+    return incomingSampleRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountIncomingSampleByPlantCode(String plantCode) {
+    return  incomingSampleRepository.countByPlantCode(plantCode);
+  }
+
 }
