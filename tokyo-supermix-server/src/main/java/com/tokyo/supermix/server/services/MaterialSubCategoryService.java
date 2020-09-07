@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
@@ -33,4 +34,8 @@ public interface MaterialSubCategoryService {
       int page);
 
   public boolean isMaterialCategoryExist(String name, Long materialCategoryId);
+
+  public List<MaterialSubCategory> getAllMaterialSubCategories(Pageable pageable);
+
+  public Long getCountMaterialSubCategory();
 }

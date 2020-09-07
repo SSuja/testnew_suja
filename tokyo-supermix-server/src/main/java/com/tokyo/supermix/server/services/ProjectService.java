@@ -3,7 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -13,7 +13,7 @@ public interface ProjectService {
 
   public List<Project> getAllProjects();
 
-  public List<Project> getAllProjectsByPlant(UserPrincipal currentUser);
+  public List<Project> getAllProjectsByPlant(UserPrincipal currentUser, Pageable pageable);
 
   public boolean isProjectExist(String code);
 
@@ -32,4 +32,10 @@ public interface ProjectService {
   public List<Project> getAllProjectsByCustomerAndPlant(Long customerId, String plantCode);
 
   public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId,String plantCode);
+
+  public Long getCountProject();
+
+  public Long getCountProjectByPlantCode(String plantCode);
+
+  public List<Project> getProjectByPlantCode(String plantCode, Pageable pageable);
 }

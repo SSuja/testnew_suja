@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -28,9 +29,9 @@ public class ProjectServiceImpl implements ProjectService {
   private EmailNotification emailNotification;
 
   @Transactional(readOnly = true)
-  public List<Project> getAllProjectsByPlant(UserPrincipal currentUser) {
+  public List<Project> getAllProjectsByPlant(UserPrincipal currentUser, Pageable pageable) {
     return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT));
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT),pageable);
   }
 
   @Transactional
@@ -111,7 +112,23 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId, String plantCode) {
+  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId,
+      String plantCode) {
     return projectRepository.existsByNameAndCustomerIdAndPlantCode(name, customerId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountProject() {
+    return projectRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountProjectByPlantCode(String plantCode) {
+    return projectRepository.countByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Project> getProjectByPlantCode(String plantCode, Pageable pageable) {
+    return projectRepository.findAllByPlantCode(plantCode, pageable);
   }
 }

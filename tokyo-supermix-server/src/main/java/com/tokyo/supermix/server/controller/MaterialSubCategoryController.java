@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
@@ -45,13 +49,18 @@ public class MaterialSubCategoryController {
   private static final Logger logger = Logger.getLogger(MaterialSubCategoryController.class);
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
-  public ResponseEntity<Object> getMaterialSubCategory() {
+  public ResponseEntity<Object> getMaterialSubCategory(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(materialSubCategoryService.getCountMaterialSubCategory());
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
-            mapper.map(materialSubCategoryService.getMaterialSubCategories(),
+        new PaginatedContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
+            mapper.map(materialSubCategoryService.getAllMaterialSubCategories(pageable),
                 MaterialSubCategoryResponseDto.class),
-            RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+            RestApiResponseStatus.OK, pagination),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY_BY_ID)
