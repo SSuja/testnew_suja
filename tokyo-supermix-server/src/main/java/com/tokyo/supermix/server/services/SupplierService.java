@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -9,7 +10,7 @@ import com.tokyo.supermix.security.UserPrincipal;
 public interface SupplierService {
   public List<Supplier> getSuppliers();
 
-  public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser);
+  // public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser);
 
   public void createSupplier(Supplier supplier, List<Long> supplierCategoryIds);
 
@@ -34,7 +35,7 @@ public interface SupplierService {
 
   public Page<Supplier> searchSupplier(Predicate predicate, int page, int size);
 
-  public List<Supplier> getSupplierByPlantCode(String plantCode);
+  // public List<Supplier> getSupplierByPlantCode(String plantCode);
 
   public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId);
 
@@ -42,4 +43,12 @@ public interface SupplierService {
       Long supplierCategoryId);
 
   public boolean isPlantCodeAndSupplierCategoryIdExist(String plantCode, Long supplierCategoryId);
+
+  public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser, Pageable pageable);
+
+  public List<Supplier> getSupplierByPlantCode(String plantCode, Pageable pageable);
+
+  public Long getCountSupplier();
+
+  public Long getCountSupplierByPlantCode(String plantCode);
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -271,5 +272,29 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public List<MaterialTest> getMaterialTestByPlant(String plantCode) {
    
     return materialTestRepository.findByIncomingSamplePlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getAllMaterialTests(Pageable pageable) {
+    
+     return materialTestRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getMaterialTestByPlant(String plantCode, Pageable pageable) {
+  
+    return materialTestRepository.findAllByIncomingSamplePlantCode(plantCode,pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountMaterialTest() {
+
+    return materialTestRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountMaterialTestByPlantCode(String plantCode) {
+  
+    return materialTestRepository.countByIncomingSamplePlantCode(plantCode);
   }
 }

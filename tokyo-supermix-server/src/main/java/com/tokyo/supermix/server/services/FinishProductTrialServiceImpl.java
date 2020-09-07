@@ -3,6 +3,9 @@ package com.tokyo.supermix.server.services;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -61,6 +64,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   AcceptedValueRepository acceptedValueRepository;
+  @Autowired
+  TestParameterService testParameterService;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -141,17 +146,31 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         testParameterRepository.findByTestConfigureId(testConfigure.getId());
     FinishProductParameterResult finishProductParameterResult = new FinishProductParameterResult();
     for (TestParameter testParameter : testParameterList) {
-      if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-          && testParameter.getType().equals(TestParameterType.INPUT))
-          || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-              && testParameter.getType().equals(TestParameterType.RESULT))) {
-        finishProductParameterResult.setFinishProductTest(finishproductTest);
-        finishProductParameterResult.setTestParameter(testParameter);
-        finishProductParameterResult
-            .setResult(roundDoubleValue(averageValue(finishProductTestCode)));
+      if (testParameterService.checkEqutaionExistsForTest(
+          testParameter.getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
+        if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+            && testParameter.getType().equals(TestParameterType.RESULT))) {
+          finishProductParameterResult.setFinishProductTest(finishproductTest);
+          finishProductParameterResult.setTestParameter(testParameter);
+          finishProductParameterResult
+              .setResult(roundDoubleValue(averageValue(finishProductTestCode)));
+        }
+      }
+      if (testParameterService.checkEqutaionExistsForTest(
+          testParameter.getTestConfigure().getId()) == Constants.CHECK_EQUATION_FALSE) {
+        if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+            && testParameter.getType().equals(TestParameterType.INPUT))
+            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                && testParameter.getType().equals(TestParameterType.RESULT))) {
+          finishProductParameterResult.setFinishProductTest(finishproductTest);
+          finishProductParameterResult.setTestParameter(testParameter);
+          finishProductParameterResult
+              .setResult(roundDoubleValue(averageValue(finishProductTestCode)));
+        }
       }
     }
     finishProductParameterResultRepository.save(finishProductParameterResult);
+
     checkAcceptedValue(testConfigure.getId(), finishProductTestCode);
   }
 
@@ -160,14 +179,27 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductTestRepository.findById(finishProductTestCode).get();
     Long noOfTrial = finishProductTest.getNoOfTrial();
     List<Double> trialValue = new ArrayList<Double>();
-    for (FinishProductTrial finishProductTrial : finishProductTrialRepository
-        .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode)) {
-      if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT))
-          || (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-              && finishProductTrial.getTestParameter().getType()
-                  .equals(TestParameterType.RESULT))) {
-        trialValue.add(finishProductTrial.getValue());
+    if (testParameterService.checkEqutaionExistsForTest(
+        finishProductTest.getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
+      for (FinishProductTrial finishProductTrial : finishProductTrialRepository
+          .findByFinishProductTestCode(finishProductTestCode)) {
+        if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
+            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
+          trialValue.add(finishProductTrial.getValue());
+        }
+      }
+    }
+    if (testParameterService.checkEqutaionExistsForTest(
+        finishProductTest.getTestConfigure().getId()) == Constants.CHECK_EQUATION_FALSE) {
+      for (FinishProductTrial finishProductTrial : finishProductTrialRepository
+          .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode)) {
+        if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT))
+            || (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+                && finishProductTrial.getTestParameter().getType()
+                    .equals(TestParameterType.RESULT))) {
+          trialValue.add(finishProductTrial.getValue());
+        }
       }
     }
     double sumOfValue = 0.0;
@@ -177,15 +209,33 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return (sumOfValue / noOfTrial);
   }
 
-  public String getFormula(String finishProductTestCode) {
-    List<FinishProductTrial> finishProductTrialList = finishProductTrialRepository
-        .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode);
+  @Transactional
+  public void saveAverageCalculationFinishProductTrials(List<FinishProductTrial> finishProductTrialList) {
+    finishProductTrialRepository.saveAll(finishProductTrialList);
+  }
+
+  @Transactional
+  public void saveAverageCalculationResult(String finishProductCode) {
+    for (FinishProductTrial finishProductTrial : finishProductTrialRepository
+        .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductCode)) {
+      if (finishProductTrial.getTestParameter() != null) {
+        TestParameter testParameter =
+            testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
+        if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+            && testParameter.getType().equals(TestParameterType.RESULT))) {
+          finishProductTrial.setValue(getFinishProductResult(finishProductCode,
+              testParameter.getTestConfigure().getId(), finishProductTrial.getTrialNo()));
+          finishProductTrialRepository.save(finishProductTrial);
+        }
+      }
+    }
+  }
+
+  public String getFormula(Long testConfigId) {
     String equation = " ";
-    for (FinishProductTrial finishProductTrial : finishProductTrialList) {
-      equation = testEquationRepository
-          .findByTestConfigureId(
-              finishProductTrial.getFinishProductTest().getTestConfigure().getId())
-          .get(0).getEquation().getFormula();
+    if (!(testEquationRepository.findByTestConfigureId(testConfigId).isEmpty())) {
+      equation = testEquationRepository.findByTestConfigureId(testConfigId).get(0).getEquation()
+          .getFormula();
     }
     return equation;
   }
@@ -231,6 +281,32 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     updateFinishProductSampleAndMixDesignStatus(finishProductTestCode);
   }
 
+  public double getFinishProductResult(String finishProductTestCode, Long testConfigId,
+      Long trialNo) {
+    ScriptEngineManager engineManager = new ScriptEngineManager();
+    ScriptEngine engine = engineManager.getEngineByName("JavaScript");
+    double finishProductResult = 0.0;
+    for (FinishProductTrial finishProductTrial : finishProductTrialRepository
+        .findByFinishProductTestCodeAndTrialNo(finishProductTestCode, trialNo)) {
+      if (finishProductTrial.getTestParameter() != null) {
+        TestParameter testParameter =
+            testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
+        if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+            && testParameter.getType().equals(TestParameterType.INPUT))
+            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                && testParameter.getType().equals(TestParameterType.RESULT))) {
+          engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
+        }
+      }
+    }
+    try {
+      finishProductResult = (double) engine.eval(getFormula(testConfigId));
+    } catch (ScriptException e) {
+      e.printStackTrace();
+    }
+    return roundDoubleValue(finishProductResult);
+  }
+
   public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
@@ -264,7 +340,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         .findById(finishproductTest.getFinishProductSample().getCode()).get();
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
-    if (finishproductTest.getTestConfigure().isCoreTest()) {
+    List<TestConfigure> configureList =
+        testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(
+            mixDesign.getRawMaterial().getMaterialSubCategory().getId());
+    List<FinishProductTest> finishTest =
+        finishProductTestRepository.findByTestConfigureMaterialSubCategoryIdAndStatus(
+            mixDesign.getRawMaterial().getMaterialSubCategory().getId(), Status.PASS);
+    if ((finishTest.size() == configureList.size() || (finishTest.size() > configureList.size()))) {
       finishProductSample.setStatus(finishproductTest.getStatus());
       finishProductSampleRepository.save(finishProductSample);
       mixDesign.setStatus(finishproductTest.getStatus());
@@ -273,5 +355,25 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       finishProductSample.setStatus(Status.PROCESS);
       finishProductSampleRepository.save(finishProductSample);
     }
+    if (finishproductTest.getTestConfigure().isCoreTest()) {
+      if (finishproductTest.getStatus().equals(Status.FAIL)) {
+        finishProductSample.setStatus(finishproductTest.getStatus());
+        finishProductSampleRepository.save(finishProductSample);
+        mixDesign.setStatus(finishproductTest.getStatus());
+        mixDesignRepository.save(mixDesign);
+      }
+    } else {
+      finishProductSample.setStatus(Status.PROCESS);
+      finishProductSampleRepository.save(finishProductSample);
+    }
+  }
+
+  public boolean getEquationCheck(String finishProductTestCode) {
+    if (testParameterService
+        .checkEqutaionExistsForTest(finishProductTestRepository.findById(finishProductTestCode)
+            .get().getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
+      return true;
+    }
+    return false;
   }
 }

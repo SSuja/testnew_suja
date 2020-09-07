@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -76,10 +77,33 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
     return plantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentId(equipmentId);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentIdAndPlantCode(
       Long equipmentId, String plantCode) {
-   
+  
     return plantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentIdAndPlantCode(equipmentId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantEquipment> getAllPlantEquipment(Pageable pageable) {
+    
+    return plantEquipmentRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode, Pageable pageable) {
+    return plantEquipmentRepository.findAllByPlantCode(plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountPlantEquipment() {
+    
+    return plantEquipmentRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountPlantEquipmentByPlantCode(String plantCode) {
+    
+    return plantEquipmentRepository.countByPlantCode(plantCode);
   }
 }
