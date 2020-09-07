@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,9 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
@@ -64,10 +68,17 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
-  public ResponseEntity<Object> getAllRawMaterials() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
-        mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getAllRawMaterials(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
+            mapper.map(rawMaterialService.getAllRawMaterials(pageable),
+                RawMaterialResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIAL_BY_ID)
@@ -145,19 +156,30 @@ public class RawMaterialController {
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS_BY_PLANT)
   public ResponseEntity<Object> getRawMaterialsByCurrentUserPermission(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
-          mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      pagination.setTotalRecords(rawMaterialService.countRawMaterials());
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
+              mapper.map(rawMaterialService.getAllRawMaterials(pageable),
+                  RawMaterialResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
     } else {
       if (currentUserPermissionPlantService
           .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_RAW_MATERIAL)
           .contains(plantCode)) {
-        return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
-            mapper.map(rawMaterialService.getRawMaterialsByPlantCode(plantCode),
-                RawMaterialResponseDto.class),
-            RestApiResponseStatus.OK), null, HttpStatus.OK);
+        pagination.setTotalRecords(rawMaterialService.countRawMaterialByPlant(plantCode));
+        return new ResponseEntity<>(
+            new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
+                mapper.map(rawMaterialService.getRawMaterialsByPlantCode(plantCode, pageable),
+                    RawMaterialResponseDto.class),
+                RestApiResponseStatus.OK, pagination),
+            HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
