@@ -144,7 +144,7 @@ public class EmployeeController {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(employeeService.getCountEmployee());
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EMPLOYEES, mapper
-          .map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
+          .map(employeeService.getAllEmployeesByPlant(currentUser,pageable), EmployeeResponseDto.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService

@@ -76,7 +76,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Transactional()
-  public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser) {
+  public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser, Pageable pageable) {
     return currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())
         && currentUser.getRoles().contains(1L)
             ? employeeRepository.findAll()

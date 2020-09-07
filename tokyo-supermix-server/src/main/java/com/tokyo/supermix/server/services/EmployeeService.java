@@ -25,7 +25,7 @@ public interface EmployeeService {
 
   public List<Employee> getAllEmployees();
 
-  public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser);
+  public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser, Pageable pageable);
 
   public Page<Employee> searchEmployee(Predicate predicate, int size, int page);
 
