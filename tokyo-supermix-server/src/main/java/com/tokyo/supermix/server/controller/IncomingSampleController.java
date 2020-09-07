@@ -1,9 +1,10 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
@@ -27,12 +27,13 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
-import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -48,8 +49,6 @@ public class IncomingSampleController {
   @Autowired
   private Mapper mapper;
   @Autowired
-  private PlantService plantService;
-  @Autowired
   private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
@@ -64,20 +63,32 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getIncomingSamplesByUserPermission(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-          mapper.map(incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser),
-              IncomingSampleResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      pagination.setTotalRecords(incomingSampleService.getCountIncomingSample());
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(
+                  incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser, pageable),
+                  IncomingSampleResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
         .contains(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-          mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
-              IncomingSampleResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
+      pagination
+          .setTotalRecords(incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode, pageable),
+                  IncomingSampleResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -171,17 +182,17 @@ public class IncomingSampleController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
-  public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
-    if (plantService.isPlantExist(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-          mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
-              IncomingSampleResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  }
+  // @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
+  // public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
+  // if (plantService.isPlantExist(plantCode)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+  // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
+  // IncomingSampleResponseDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  // }
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
