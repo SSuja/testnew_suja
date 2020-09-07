@@ -2,11 +2,12 @@ package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +33,13 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.CustomerService;
 import com.tokyo.supermix.server.services.FileStorageService;
-import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.FileStorageConstants;
@@ -54,8 +56,6 @@ public class CustomerController {
   @Autowired
   private CustomerService customerService;
   @Autowired
-  private PlantService plantService;
-  @Autowired
   private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
@@ -63,29 +63,36 @@ public class CustomerController {
 
   @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
   public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      pagination.setTotalRecords(customerService.getCountCustomer());
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.CUSTOMERS,
+              customerService.getAllCustomer(pageable), RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER)
         .contains(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      pagination.setTotalRecords(customerService.getCountCustomerByPlantCode(plantCode));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.CUSTOMERS,
+          customerService.getCustomerByPlantCode(plantCode, pageable), RestApiResponseStatus.OK,
+          pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.CUSTOMERS)
-  public ResponseEntity<Object> getAllCustomers() {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
-  }
+  // @GetMapping(value = EndpointURI.CUSTOMERS)
+  // public ResponseEntity<Object> getAllCustomers() {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+  // mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
+  // RestApiResponseStatus.OK), null, HttpStatus.OK);
+  // }
 
   @PostMapping(value = EndpointURI.CUSTOMER)
   public ResponseEntity<Object> saveCustomer(
@@ -160,17 +167,17 @@ public class CustomerController {
         null, HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
-  public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
-    if (plantService.isPlantExist(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-          mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  }
-  
+  // @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
+  // public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
+  // if (plantService.isPlantExist(plantCode)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+  // mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  // }
+
   @GetMapping(value = EndpointURI.EXPORT_CUSTOMER)
   public ResponseEntity<Object> exportCustomer(HttpServletResponse response)
       throws ClassNotFoundException {
@@ -189,7 +196,7 @@ public class CustomerController {
         new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
         HttpStatus.OK);
   }
-  
+
   @PostMapping(value = EndpointURI.IMPORT_CUSTOMER)
   public ResponseEntity<Object> uploadCustomer(@RequestParam("file") MultipartFile file) {
     fileStorageService.uploadCsv(file);
