@@ -188,4 +188,20 @@ public class CustomerServiceImpl implements CustomerService {
   public Long getCountCustomerByPlantCode(String plantCode) {
     return customerRepository.countByPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<Customer> getCustomerNameByPlantCode(String plantCode, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return customerRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Customer> getCustomerName(String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return customerRepository.findByNameStartsWith(name);
+  }
 }

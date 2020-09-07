@@ -94,6 +94,7 @@ public class CustomerController {
   // RestApiResponseStatus.OK), null, HttpStatus.OK);
   // }
 
+
   @PostMapping(value = EndpointURI.CUSTOMER)
   public ResponseEntity<Object> saveCustomer(
       @Valid @RequestBody CustomerRequestDto customerRequestDto) {
@@ -204,5 +205,18 @@ public class CustomerController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
+  public ResponseEntity<Object> getCustomerNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+          mapper.map(customerService.getCustomerName(name), CustomerResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
+        mapper.map(customerService.getCustomerNameByPlantCode(plantCode, name), CustomerResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
