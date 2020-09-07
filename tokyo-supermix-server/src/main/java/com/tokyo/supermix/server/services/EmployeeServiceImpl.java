@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -52,8 +53,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteEmployee(Long id) {
-    if(confirmationTokenRepository.findByEmployeeId(id) != null) {
-      confirmationTokenRepository.deleteById(confirmationTokenRepository.findByEmployeeId(id).getTokenid());
+    if (confirmationTokenRepository.findByEmployeeId(id) != null) {
+      confirmationTokenRepository
+          .deleteById(confirmationTokenRepository.findByEmployeeId(id).getTokenid());
     }
     employeeRepository.deleteById(id);
   }
@@ -98,8 +100,8 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Transactional(readOnly = true)
-  public List<Employee> getEmployeeByPlantCode(String plantCode) {
-    return employeeRepository.findByPlantCode(plantCode);
+  public List<Employee> getEmployeeByPlantCode(String plantCode, Pageable pageable) {
+    return employeeRepository.findAllByPlantCode(plantCode, pageable);
   }
 
   @Transactional
@@ -127,5 +129,20 @@ public class EmployeeServiceImpl implements EmployeeService {
       employee.setEnabled(true);
       employeeRepository.save(employee);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountEmployee() {
+    return employeeRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountEmployeeByPlantCode(String plantCode) {
+    return employeeRepository.countByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Employee> getEmployeeByPlantCode(String plantCode) {
+    return employeeRepository.findByPlantCode(plantCode);
   }
 }

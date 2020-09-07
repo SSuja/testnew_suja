@@ -3,11 +3,12 @@ package com.tokyo.supermix.server.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,8 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -79,7 +82,7 @@ public class EmployeeController {
 
   // Delete Employee
   @DeleteMapping(value = EndpointURI.EMPLOYEE_BY_ID)
-  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {  
+  public ResponseEntity<Object> deleteEmployee(@PathVariable Long id) {
     if (employeeService.isEmployeeExist(id)) {
       logger.debug("delete employee by id");
       employeeService.deleteEmployee(id);
@@ -105,7 +108,8 @@ public class EmployeeController {
 
   // Update Employee
   @PutMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto, HttpServletRequest request) {
+  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
     if (employeeService.isEmployeeExist(employeeDto.getId())) {
       if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
           employeeDto.getEmail())) {
@@ -132,18 +136,25 @@ public class EmployeeController {
 
   @GetMapping(value = EndpointURI.EMPLOYEE_BY_PLANT)
   public ResponseEntity<Object> getAllEmployees(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode) {
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES, mapper
+      pagination.setTotalRecords(employeeService.getCountEmployee());
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EMPLOYEES, mapper
           .map(employeeService.getAllEmployeesByPlant(currentUser), EmployeeResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_EMPLOYEE)
         .contains(plantCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
-          mapper.map(employeeService.getEmployeeByPlantCode(plantCode), EmployeeResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+      pagination.setTotalRecords(employeeService.getCountEmployeeByPlantCode(plantCode));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getEmployeeByPlantCode(plantCode, pageable),
+              EmployeeResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -175,7 +186,7 @@ public class EmployeeController {
     employeeService.updateEmployeeWithConfirmation(confirmationToken);
     return "<div ><div style='display:flex,flexDirection:row'><div><img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/Green_tick.svg' alt='Verified Image Not Found' width='100' height='100'></div><div style='color:darkblue'><h1>Your Email Successfully Verified</h1></div></div></div>";
   }
-  
+
   @GetMapping(value = EndpointURI.EXPORT_EMPLOYEE)
   public ResponseEntity<Object> exportEmployee(HttpServletResponse response)
       throws ClassNotFoundException {
