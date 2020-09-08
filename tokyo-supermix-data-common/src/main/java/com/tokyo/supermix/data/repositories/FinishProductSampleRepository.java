@@ -1,15 +1,19 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 
 @Repository
 public interface FinishProductSampleRepository extends JpaRepository<FinishProductSample, String>,
-    QuerydslPredicateExecutor<FinishProductSample> {
+    QuerydslPredicateExecutor<FinishProductSample>,
+    PagingAndSortingRepository<FinishProductSample, String> {
   boolean existsByFinishProductCode(String code);
 
   boolean existsByMixDesignCode(String code);
@@ -20,13 +24,15 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   List<FinishProductSample> findByEquipmentId(Long id);
 
-  List<FinishProductSample> findByMixDesignPlantCodeOrderByUpdatedAtDesc(String plantCode);
+  Page<FinishProductSample> findByMixDesignPlantCodeOrderByUpdatedAtDesc(String plantCode,
+      Pageable pageable);
 
   List<FinishProductSample> findByStatus(Status status);
 
   boolean existsByStatus(Status status);
 
-  List<FinishProductSample> findByMixDesignPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes);
+  Page<FinishProductSample> findByMixDesignPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes,
+      Pageable pageable);
 
   List<FinishProductSample> findByCodeContaining(String code);
 
@@ -34,4 +40,9 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryId(
       Long materialSubCategoryId);
+
+  List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(
+      Long materialSubCategoryId, String plantCode);
+
+  Long countByMixDesignPlantCode(String plantCode);
 }

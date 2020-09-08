@@ -23,4 +23,8 @@ public interface EmployeeRepository
   Long countByPlantCode(String plantCode);
 
   List<Employee> findAllByPlantCode(String plantCode, Pageable pageable);
+
+  List<Employee> findByPlantCodeAndFirstNameStartsWith(String plantCode, String firstName);
+
+  List<Employee> findByFirstNameStartsWith(String firstName);
 }

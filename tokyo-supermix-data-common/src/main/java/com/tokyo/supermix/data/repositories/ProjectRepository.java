@@ -13,7 +13,7 @@ public interface ProjectRepository
 
   List<Project> findByCodeContaining(String code);
 
-  List<Project> findByPlantCodeIn(List<String> plantCodes,Pageable pageable);
+  List<Project> findByPlantCodeIn(List<String> plantCodes, Pageable pageable);
 
   List<Project> findByCustomerId(Long customerId);
 
@@ -23,9 +23,14 @@ public interface ProjectRepository
 
   public boolean existsByNameAndCustomerIdAndPlantCode(String name, Long customerId,
       String plantCode);
+
   Project findByCode(String code);
 
   Long countByPlantCode(String plantCode);
 
   List<Project> findAllByPlantCode(String plantCode, Pageable pageable);
+
+  List<Project> findByPlantCodeAndNameStartsWith(String plantCode, String name);
+
+  List<Project> findByNameStartsWith(String name);
 }

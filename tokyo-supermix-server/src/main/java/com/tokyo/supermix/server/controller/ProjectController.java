@@ -109,7 +109,7 @@ public class ProjectController {
       pagination.setTotalRecords(projectService.getCountProjectByPlantCode(plantCode));
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PROJECTS, mapper
           .map(projectService.getProjectByPlantCode(plantCode, pageable), ProjectResponseDto.class),
-          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -236,5 +236,17 @@ public class ProjectController {
         HttpStatus.OK);
   }
 
+  @GetMapping(value = EndpointURI.GET_PROJECT_BY_NAME)
+  public ResponseEntity<Object> getProjectNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS,
+          mapper.map(projectService.getProjectName(name), ProjectResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PROJECTS, mapper
+        .map(projectService.getProjectNameByPlantCode(plantCode, name), ProjectResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 }
 

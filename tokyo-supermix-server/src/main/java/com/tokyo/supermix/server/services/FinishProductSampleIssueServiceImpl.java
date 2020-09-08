@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -96,15 +97,28 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode) {
-    return finishProductSampleIssueRepository.findByMixDesignPlantCode(plantCode);
+  public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode,
+      Pageable pageable) {
+    return finishProductSampleIssueRepository.findByMixDesignPlantCode(plantCode, pageable)
+        .toList();
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(
-      UserPrincipal currentUser) {
+      UserPrincipal currentUser, Pageable pageable) {
     return finishProductSampleIssueRepository.findByProjectPlantCodeIn(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE));
+            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE),
+        pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public Long countFinishProductSampleIssue() {
+    return finishProductSampleIssueRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public Long countFinishProductSampleIssueByPlant(String plantCode) {
+    return finishProductSampleIssueRepository.countByMixDesignPlantCode(plantCode);
   }
 }

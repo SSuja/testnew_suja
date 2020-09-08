@@ -68,6 +68,8 @@ public final class EndpointURI {
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
   public static final String EMPLOYEE_WITH_TOKEN =
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
+  public static final String GET_EMPLOYEES_BY_PLANT =
+      EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
   /*
    * Material Category APIs
    */
@@ -86,6 +88,7 @@ public final class EndpointURI {
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String POUR_BY_PLANT = POUR + PLANT_WISE;
+  public static final String GET_POURS_BY_PLANT = POURS + PLANT_WISE_SEARCH + SLASH + "name";
   /*
    * Unit apis
    */
@@ -154,6 +157,8 @@ public final class EndpointURI {
   public static final String RAW_MATERIALS_BY_PLANT = RAW_MATERIAL + PLANT_WISE;
   public static final String RAW_MATERIALS_BY_MATERIAL_SUBCATORY_AND_PLANT = RAW_MATERIAL + SLASH
       + "material-sub-category" + SLASH + "{materialSubCategoryId}" + PLANT_WISE;
+  public static final String GET_RAW_MATERIALS_BY_PLANT =
+      RAW_MATERIAL + PLANT_WISE_SEARCH + SLASH + "name";
   /*
    * EquipmentPlantCalibration apis
    */
@@ -234,6 +239,8 @@ public final class EndpointURI {
 
   public static final String GET_PROJECTS_BY_CUSTOMER_PLANT_WISE =
       PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;
+  public static final String GET_PROJECT_BY_NAME =
+      PROJECTS + PLANT_WISE_SEARCH + SLASH + "projectName";
   /*
    * IncomingSample Apis
    */
@@ -272,6 +279,10 @@ public final class EndpointURI {
       MIX_DESIGN + SLASH + "material-category" + SLASH + "{materialCategoryId}";
   public static final String GET_MIX_DESIGN_BY_RAW_MATERIAL =
       MIX_DESIGN + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String GET_MIX_DESIGNS_BY_PLANT =
+      MIX_DESIGN + PLANT_WISE_SEARCH + SLASH + "code";
+  public static final String GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS =
+      MIX_DESIGN + "search" + SLASH + "{rawMaterialId}" + SLASH + "{status}" + SLASH + "code";
 
   /*
    * Test Parameter APIs
@@ -402,6 +413,9 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
   public static final String GET_FINISH_PRODUCT_BY_MATERIAL_CATEGORY =
       FINISH_PRODUCT_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+  public static final String RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT =
+      FINISH_PRODUCT_SAMPLE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}"
+          + PLANT_WISE;
 
   /*
    * finish product sample issue apis

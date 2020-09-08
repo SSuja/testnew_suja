@@ -70,4 +70,21 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
   public boolean isExistByNameAndMainType(String name, MainType mainType) {
     return materialCategoryRepository.existsByNameAndMainType(name, mainType);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (materialCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getMaterialCategoryById(id).getPrefix().equalsIgnoreCase(prefix))
+        && materialCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
 }

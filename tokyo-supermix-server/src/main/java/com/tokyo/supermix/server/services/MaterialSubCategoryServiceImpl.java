@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -92,12 +91,20 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialSubCategory> getAllMaterialSubCategories(Pageable pageable) {
-    return materialSubCategoryRepository.findAll(pageable).toList();
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (materialSubCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)
-  public Long getCountMaterialSubCategory() {
-    return materialSubCategoryRepository.count();
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getMaterialSubCategoryById(id).getPrefix().equalsIgnoreCase(prefix))
+        && materialSubCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
   }
+
 }

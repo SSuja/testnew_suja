@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.enums.ParameterType;
@@ -30,4 +31,9 @@ public interface ParameterService {
   public List<Parameter> getAllParametersByDecending();
   
   public boolean isParameterNameAndParameterTypeExists(String name,ParameterType parameterType);
+  
+
+  public List<Parameter> getAllParametersByDecending(Pageable pageable);
+  
+  public Long getCountParameters();
 }

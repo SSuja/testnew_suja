@@ -91,6 +91,22 @@ public class PourServiceImpl implements PourService {
 
   @Transactional(readOnly = true)
   public List<Pour> getPoursByPlantCode(String plantCode, Pageable pageable) {
-    return pourRepository.findAllByProjectPlantCode(plantCode,pageable);
+    return pourRepository.findAllByProjectPlantCode(plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Pour> getPourNameByPlantCode(String plantCode, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return pourRepository.findByProjectPlantCodeAndNameStartsWith(plantCode, name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Pour> getPourName(String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return pourRepository.findByNameStartsWith(name);
   }
 }
