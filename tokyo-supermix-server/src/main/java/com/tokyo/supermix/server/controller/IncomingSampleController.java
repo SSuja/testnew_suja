@@ -213,4 +213,18 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.GET_INCOMING_SAMPLE_BY_PLANT_CODE)
+  public ResponseEntity<Object> getCustomerNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "code") String code) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES, mapper
+          .map(incomingSampleService.getIncomingSampleCode(code), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+        mapper.map(incomingSampleService.getIncomingSampleCodeByPlantCode(plantCode, code),
+            IncomingSampleResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 }

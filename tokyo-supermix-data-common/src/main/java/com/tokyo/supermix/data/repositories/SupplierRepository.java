@@ -29,8 +29,11 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long>,
 
   List<Supplier> findAllByPlantCodeIn(List<String> plantCodes, Pageable pageable);
 
-  List<Supplier> findAllByPlantCode(String plantCode,Pageable pageable);
-  
+  List<Supplier> findAllByPlantCode(String plantCode, Pageable pageable);
+
   Long countByPlantCode(String plantCode);
 
+  List<Supplier> findByPlantCodeAndNameStartsWith(String plantCode, String supplierName);
+    
+  List<Supplier> findByNameStartsWith(String supplierName);
 }
