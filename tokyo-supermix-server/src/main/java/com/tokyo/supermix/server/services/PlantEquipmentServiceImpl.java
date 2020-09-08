@@ -2,15 +2,13 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.PlantEquipment;
+import com.tokyo.supermix.data.entities.QPlantEquipment;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -54,9 +52,29 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   }
 
   @Transactional(readOnly = true)
-  public Page<PlantEquipment> searchPlantEquipment(Predicate predicate, int page, int size) {
-    return plantEquipmentRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "serialNo")));
+  public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName, String modelName,String plantName,
+      BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode) {
+    
+    if (serialNo != null && !serialNo.isEmpty()) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
+    }
+
+    if (brandName != null && !brandName.isEmpty()) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.brandName.startsWithIgnoreCase(brandName));
+    }
+
+    if (serialNo != null && !modelName.isEmpty()) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.modelName.startsWithIgnoreCase(modelName));
+    }
+
+    if (serialNo != null && !serialNo.isEmpty()) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if(!plantCode.equals("ADMIN")) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
+      }
+    return plantEquipmentRepository.findAll(booleanBuilder, pageable).toList();
+   
   }
 
   @Transactional(readOnly = true)

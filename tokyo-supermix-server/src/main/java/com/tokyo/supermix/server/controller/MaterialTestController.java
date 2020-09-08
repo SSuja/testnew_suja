@@ -162,7 +162,8 @@ public class MaterialTestController {
     Pagination pagination= new Pagination(0, 0, 0, 0l); 
     BooleanBuilder booleanBuilder = new BooleanBuilder(); 
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      pagination.setTotalRecords(materialTestService.getCountMaterialTest());   
+      pagination.setTotalRecords(plantCode.equalsIgnoreCase(Constants.ADMIN) ?
+          materialTestService.getCountMaterialTest() : materialTestService.getCountMaterialTestByPlantCode(plantCode));   
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
         mapper.map(
             materialTestService.searchMaterialTest(incomingSampleCode, status, supplierName, testName,

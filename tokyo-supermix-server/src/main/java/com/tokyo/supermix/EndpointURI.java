@@ -180,7 +180,7 @@ public final class EndpointURI {
   public static final String PLANT_EQUIPMENT = BASE_API_PATH + "plantequipment";
   public static final String PLANT_EQUIPMENTS = BASE_API_PATH + "plantequipments";
   public static final String PLANTEQUIPMENT_BY_SERIALNO = PLANT_EQUIPMENT + SERIALNO;
-  public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH;
+  public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH+ SLASH + "{plantCode}";
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
       PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PLANT_EQUIPMENTS_BY_PLANT = PLANT_EQUIPMENT + PLANT_WISE;
@@ -361,7 +361,7 @@ public final class EndpointURI {
           + SLASH + "{testConfigId}" + PLANT_WISE;
   public static final String MATERIAL_TEST_BY_PLANT_CODE =
       MATERIAL_TEST + SLASH + "incoming-sample" + PLANT_WISE;
-  public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
+  public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH+ SLASH + "{plantCode}";
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
 
