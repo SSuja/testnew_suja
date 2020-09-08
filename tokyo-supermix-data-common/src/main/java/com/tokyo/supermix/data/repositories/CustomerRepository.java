@@ -25,4 +25,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>,
   List<Customer> findAllByPlantCode(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
+
+  List<Customer> findByPlantCodeAndNameStartsWith(String plantCode, String customerName);
+
+  List<Customer> findByNameStartsWith(String customerName);
 }

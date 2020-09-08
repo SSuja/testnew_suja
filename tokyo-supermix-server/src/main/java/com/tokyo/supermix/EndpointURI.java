@@ -186,7 +186,7 @@ public final class EndpointURI {
   public static final String CUSTOMER_BY_ID = CUSTOMER + ID;
   public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
   public static final String GET_CUSTOMERS_BY_PLANT_CODE =
-      CUSTOMERS + SLASH + "plant" + SLASH + "{plantCode}";
+      CUSTOMERS + PLANT_WISE_SEARCH + SLASH + "customerName";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
       TEST_CONFIGURE + SLASH + "testDetails" + SLASH + "{testConfigId}";
   public static final String CUSTOMER_BY_PLANT = CUSTOMER + PLANT_WISE;
@@ -232,7 +232,9 @@ public final class EndpointURI {
       PROJECTS + SLASH + "customer" + SLASH + "{customerId}";
 
   public static final String GET_PROJECTS_BY_CUSTOMER_PLANT_WISE =
-      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;
+      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;  
+  public static final String GET_PROJECT_BY_NAME =
+      PROJECTS + PLANT_WISE_SEARCH + SLASH + "projectName";
   /*
    * IncomingSample Apis
    */

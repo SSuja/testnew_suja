@@ -31,7 +31,8 @@ public class ProjectServiceImpl implements ProjectService {
   @Transactional(readOnly = true)
   public List<Project> getAllProjectsByPlant(UserPrincipal currentUser, Pageable pageable) {
     return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT),pageable);
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT),
+        pageable);
   }
 
   @Transactional
@@ -130,5 +131,21 @@ public class ProjectServiceImpl implements ProjectService {
   @Transactional(readOnly = true)
   public List<Project> getProjectByPlantCode(String plantCode, Pageable pageable) {
     return projectRepository.findAllByPlantCode(plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Project> getProjectNameByPlantCode(String plantCode, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return projectRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Project> getProjectName(String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return projectRepository.findByNameStartsWith(name);
   }
 }

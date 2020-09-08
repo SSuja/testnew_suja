@@ -43,4 +43,8 @@ public interface CustomerService {
   public Long getCountCustomer();
 
   public Long getCountCustomerByPlantCode(String plantCode);
+
+  public List<Customer> getCustomerNameByPlantCode(String plantCode, String name);
+
+  public List<Customer> getCustomerName(String name);
 }
