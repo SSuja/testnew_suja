@@ -60,7 +60,7 @@ public final class EndpointURI {
   public static final String EMPLOYEE = BASE_API_PATH + "employee";
   public static final String EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
-  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
+  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH + SLASH + "{plantCode}";
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
@@ -80,10 +80,10 @@ public final class EndpointURI {
   public static final String POUR = BASE_API_PATH + "pour";
   public static final String POURS = BASE_API_PATH + "pours";
   public static final String POUR_BY_ID = POUR + ID;
-  public static final String POUR_SEARCH = POUR + SEARCH;
+  public static final String POUR_SEARCH = POURS + PLANT_WISE_SEARCH + SLASH + "pourName";
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
-  public static final String POUR_BY_PLANT = POUR + PLANT_WISE;
+  public static final String POUR_BY_PLANT = POUR + PLANT_WISE ;
   /*
    * Unit apis
    */
