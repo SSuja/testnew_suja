@@ -8,7 +8,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.CustomerFillManager;
 import com.tokyo.supermix.config.export.CustomerLayouter;
@@ -86,13 +85,6 @@ public class CustomerController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-  // @GetMapping(value = EndpointURI.CUSTOMERS)
-  // public ResponseEntity<Object> getAllCustomers() {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-  // mapper.map(customerService.getAllCustomer(), CustomerResponseDto.class),
-  // RestApiResponseStatus.OK), null, HttpStatus.OK);
-  // }
 
 
   @PostMapping(value = EndpointURI.CUSTOMER)
@@ -159,25 +151,22 @@ public class CustomerController {
   }
 
   @GetMapping(value = EndpointURI.CUSTOMER_SEARCH)
-  public ResponseEntity<Object> getCustomerSearch(
-      @QuerydslPredicate(root = Customer.class) Predicate predicate,
+  public ResponseEntity<Object> searchMaterialTest(@PathVariable String plantCode,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "email", required = false) String email,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "address", required = false) String address,
+      @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.CUSTOMERS,
-            customerService.searchCustomer(predicate, page, size), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.CUSTOMERS,
+        customerService.searchCustomerByPlantCode(name, email, plantName, address, phoneNumber,
+            booleanBuilder, plantCode, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
-
-  // @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
-  // public ResponseEntity<Object> getCustomerByPlantCode(@PathVariable String plantCode) {
-  // if (plantService.isPlantExist(plantCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-  // mapper.map(customerService.getCustomerByPlantCode(plantCode), CustomerResponseDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
 
   @GetMapping(value = EndpointURI.EXPORT_CUSTOMER)
   public ResponseEntity<Object> exportCustomer(HttpServletResponse response)
@@ -216,7 +205,8 @@ public class CustomerController {
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ContentResponse<>(Constants.CUSTOMERS,
-        mapper.map(customerService.getCustomerNameByPlantCode(plantCode, name), CustomerResponseDto.class),
+        mapper.map(customerService.getCustomerNameByPlantCode(plantCode, name),
+            CustomerResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

@@ -1,25 +1,28 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Plant;
+import com.tokyo.supermix.data.entities.QCustomer;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -32,6 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
   private EmailNotification emailNotification;
   @Autowired
   private PlantRepository plantRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<CustomerResponseDto> getAllCustomersByCurrentUser(UserPrincipal currentUser) {
@@ -113,11 +118,10 @@ public class CustomerServiceImpl implements CustomerService {
     return false;
   }
 
-  @Transactional(readOnly = true)
-  public Page<Customer> searchCustomer(Predicate predicate, int page, int size) {
-    return customerRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
+  // @Transactional(readOnly = true)
+  // public Iterable<Customer> searchCustomer(Predicate predicate) {
+  // return customerRepository.findAll(predicate, Sort.by(Sort.Direction.ASC, "id"));
+  // }
 
   @Transactional(readOnly = true)
   public List<CustomerResponseDto> getCustomerByPlantCode(String plantCode, Pageable pageable) {
@@ -203,5 +207,39 @@ public class CustomerServiceImpl implements CustomerService {
       return null;
     }
     return customerRepository.findByNameStartsWith(name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<CustomerResponseDto> searchCustomerByPlantCode(String name, String email,
+      String plantName, String phoneNumber, String address, BooleanBuilder booleanBuilder,
+      String plantCode, Pageable pageable, Pagination pagination) {
+    Plant plant = new Plant();
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QCustomer.customer.name.contains(name));
+    }
+    if (email != null && !email.isEmpty()) {
+      booleanBuilder.and(QCustomer.customer.email.contains(email));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      plant.setName(plantName);
+      booleanBuilder.and(QCustomer.customer.plant.contains(plant));
+    }
+    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+      booleanBuilder.and(QCustomer.customer.phoneNumber.contains(phoneNumber));
+    }
+    if (address != null && !address.isEmpty()) {
+      booleanBuilder.and(QCustomer.customer.address.contains(address));
+    }
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      plant.setCode(plantCode);
+      booleanBuilder.and(QCustomer.customer.plant.contains(plant));
+    }
+    List<Customer> customerList = new ArrayList<>();
+    customerRepository.findAll(booleanBuilder, pageable).stream()
+        .filter(customers -> customerList.add(customers)).collect(Collectors.toList());
+    pagination.setTotalRecords(
+        ((Collection<Customer>) customerRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(customerList, CustomerResponseDto.class);
   }
 }

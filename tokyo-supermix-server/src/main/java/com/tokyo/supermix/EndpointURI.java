@@ -183,7 +183,7 @@ public final class EndpointURI {
   public static final String CUSTOMER = BASE_API_PATH + "customer";
   public static final String CUSTOMERS = BASE_API_PATH + "customers";
   public static final String CUSTOMER_BY_ID = CUSTOMER + ID;
-  public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
+  public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH+ SLASH + "{plantCode}";
   public static final String GET_CUSTOMERS_BY_PLANT_CODE =
       CUSTOMERS + PLANT_WISE_SEARCH + SLASH + "customerName";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
