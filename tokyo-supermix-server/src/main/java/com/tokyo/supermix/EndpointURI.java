@@ -281,6 +281,8 @@ public final class EndpointURI {
       MIX_DESIGN + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
   public static final String GET_MIX_DESIGNS_BY_PLANT =
       MIX_DESIGN + PLANT_WISE_SEARCH + SLASH + "code";
+  public static final String GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS =
+      MIX_DESIGN + "search" + SLASH + "{rawMaterialId}" + SLASH + "{status}" + SLASH + "code";
 
   /*
    * Test Parameter APIs

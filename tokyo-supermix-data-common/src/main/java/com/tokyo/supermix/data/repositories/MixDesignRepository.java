@@ -40,4 +40,7 @@ public interface MixDesignRepository extends JpaRepository<MixDesign, String>,
   List<MixDesign> findByPlantCodeAndCodeStartsWith(String plantCode, String code);
 
   List<MixDesign> findByCodeStartsWith(String code);
+
+  List<MixDesign> findByRawMaterialIdAndStatusAndCodeStartsWith(Long rawMaterialId, Status status,
+      String code);
 }

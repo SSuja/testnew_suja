@@ -167,4 +167,13 @@ public class MixDesignServiceImpl implements MixDesignService {
     }
     return mixDesignRepository.findByCodeStartsWith(code);
   }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getCodeAndRawMaterialId(Long rawMaterialId, Status status, String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeStartsWith(rawMaterialId, status,
+        code);
+  }
 }
