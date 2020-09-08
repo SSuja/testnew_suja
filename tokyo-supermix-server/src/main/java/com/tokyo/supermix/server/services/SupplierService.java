@@ -40,7 +40,7 @@ public interface SupplierService {
   public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId);
 
   public List<Supplier> getByPlantCodeAndSupplierCategoryId(String plantCode,
-      Long supplierCategoryId);
+      Long supplierCategoryId,String name);
 
   public boolean isPlantCodeAndSupplierCategoryIdExist(String plantCode, Long supplierCategoryId);
 

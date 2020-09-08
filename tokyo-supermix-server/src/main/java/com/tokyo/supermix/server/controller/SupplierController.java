@@ -193,12 +193,13 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY)
   public ResponseEntity<Object> getSupplierByPlantCodeAndSupplierCategoryId(
-      @PathVariable String plantCode, @PathVariable Long supplierCategoryId) {
+      @PathVariable String plantCode, @PathVariable Long supplierCategoryId,
+      @RequestParam(name = "name") String name) {
     if (supplierService.isPlantCodeAndSupplierCategoryIdExist(plantCode, supplierCategoryId)) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.SUPPLIER,
               mapper.map(supplierService.getByPlantCodeAndSupplierCategoryId(plantCode,
-                  supplierCategoryId), SupplierResponseDto.class),
+                  supplierCategoryId, name), SupplierResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
@@ -255,27 +256,17 @@ public class SupplierController {
       @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
       @RequestParam(name = "email", required = false) String email,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
-    Pagination pagination= new Pagination(0, 0, 0, 0l); 
-    BooleanBuilder booleanBuilder = new BooleanBuilder(); 
-    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-    pagination.setTotalRecords(supplierService.getCountSupplier());
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.SUPPLIER,
-            mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
-                booleanBuilder,pageable,plantCode), SupplierResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
-    }
-    pagination.setTotalRecords(supplierService.getCountSupplierByPlantCode(plantCode));
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.SUPPLIER,
-              mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
-                  booleanBuilder,pageable,plantCode), SupplierResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          null, HttpStatus.OK); 
-    
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    pagination.setTotalRecords(
+        plantCode.equalsIgnoreCase(Constants.ADMIN) ? supplierService.getCountSupplier()
+            : supplierService.getCountSupplierByPlantCode(plantCode));
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
+        mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
+            booleanBuilder, pageable, plantCode), SupplierResponseDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+
   }
 }
