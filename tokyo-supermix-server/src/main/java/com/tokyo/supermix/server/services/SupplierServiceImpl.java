@@ -3,14 +3,12 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.entities.QSupplier;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
@@ -110,11 +108,6 @@ public class SupplierServiceImpl implements SupplierService {
     return supplierRepository.findBySupplierCategoriesIdAndPlantCode(suppilerCategoryId, plantCode);
   }
 
-  @Transactional(readOnly = true)
-  public Page<Supplier> searchSupplier(Predicate predicate, int page, int size) {
-    return supplierRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
 
   @Transactional(readOnly = true)
   public List<Supplier> getSupplierByPlantCode(String plantCode, Pageable pageable) {
@@ -163,4 +156,24 @@ public class SupplierServiceImpl implements SupplierService {
     }
     return supplierRepository.findByNameStartsWith(name);
   }
+
+  @Transactional(readOnly = true)
+  public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
+      String email, String plantName, BooleanBuilder booleanBuilder) {
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.name.contains(name));
+    }
+    if (address != null && !address.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.address.contains(address));
+    }
+    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.phoneNumber.contains(phoneNumber));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.plant.name.contains(plantName));
+    }
+    return (List<Supplier>) supplierRepository.findAll(booleanBuilder);
+
+  }
+
 }
