@@ -16,102 +16,120 @@ import com.tokyo.supermix.notification.EmailNotification;
 
 @Service
 public class RawMaterialServiceImpl implements RawMaterialService {
-	@Autowired
-	private RawMaterialRepository rawMaterialRepository;
-	@Autowired
-	private EmailNotification emailNotification;
+  @Autowired
+  private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private EmailNotification emailNotification;
 
-	@Transactional
-	public void saveRawMaterial(RawMaterial rawMaterial) {
-		RawMaterial rawMaterialObj = rawMaterialRepository.save(rawMaterial);
-		if (rawMaterialObj != null) {
-			emailNotification.sendRawmaterialCreationEmail(rawMaterial);
-		}
-	}
+  @Transactional
+  public void saveRawMaterial(RawMaterial rawMaterial) {
+    RawMaterial rawMaterialObj = rawMaterialRepository.save(rawMaterial);
+    if (rawMaterialObj != null) {
+      emailNotification.sendRawmaterialCreationEmail(rawMaterial);
+    }
+  }
 
-	@Transactional(readOnly = true)
-	public boolean isRawMaterialNameExist(String name) {
-		return rawMaterialRepository.existsByName(name);
-	}
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialNameExist(String name) {
+    return rawMaterialRepository.existsByName(name);
+  }
 
-	@Transactional(readOnly = true)
-	public boolean isRawMaterialExist(Long id) {
-		return rawMaterialRepository.existsById(id);
-	}
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialExist(Long id) {
+    return rawMaterialRepository.existsById(id);
+  }
 
-	@Transactional(readOnly = true)
-	public List<RawMaterial> getAllRawMaterials(Pageable pageable) {
-		return rawMaterialRepository.findAll(pageable).toList();
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getAllRawMaterials(Pageable pageable) {
+    return rawMaterialRepository.findAll(pageable).toList();
+  }
 
-	@Transactional(readOnly = true)
-	public RawMaterial getRawMaterialById(Long id) {
-		return rawMaterialRepository.findById(id).get();
-	}
+  @Transactional(readOnly = true)
+  public RawMaterial getRawMaterialById(Long id) {
+    return rawMaterialRepository.findById(id).get();
+  }
 
-	public boolean isUpdatedNameExist(Long id, String name) {
-		if ((!getRawMaterialById(id).getName().equalsIgnoreCase(name)) && (isRawMaterialNameExist(name))) {
-			return true;
-		}
-		return false;
-	}
+  public boolean isUpdatedNameExist(Long id, String name) {
+    if ((!getRawMaterialById(id).getName().equalsIgnoreCase(name))
+        && (isRawMaterialNameExist(name))) {
+      return true;
+    }
+    return false;
+  }
 
-	@Transactional(propagation = Propagation.NEVER)
-	public void deleteRawMaterial(Long id) {
-		rawMaterialRepository.deleteById(id);
-	}
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteRawMaterial(Long id) {
+    rawMaterialRepository.deleteById(id);
+  }
 
-	@Transactional(readOnly = true)
-	public Page<RawMaterial> searchRawMaterial(Predicate predicate, int page, int size) {
-		return rawMaterialRepository.findAll(predicate, PageRequest.of(page, size, Sort.Direction.ASC, "id"));
-	}
+  @Transactional(readOnly = true)
+  public Page<RawMaterial> searchRawMaterial(Predicate predicate, int page, int size) {
+    return rawMaterialRepository.findAll(predicate,
+        PageRequest.of(page, size, Sort.Direction.ASC, "id"));
+  }
 
-	@Transactional(readOnly = true)
-	public List<RawMaterial> getAllActiveRawMaterials() {
-		return rawMaterialRepository.findByActiveTrue();
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getAllActiveRawMaterials() {
+    return rawMaterialRepository.findByActiveTrue();
+  }
 
-	@Transactional(readOnly = true)
-	public List<RawMaterial> getByMaterialSubCategoryId(Long materialSubCategoryId) {
-		return rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getByMaterialSubCategoryId(Long materialSubCategoryId) {
+    return rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
+  }
 
-	@Transactional(readOnly = true)
-	public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
-		return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
+    return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
+  }
 
-	@Transactional(readOnly = true)
-	public List<RawMaterial> getRawMaterialsByMaterialSubCategoryAndPlantCode(Long materialSubCategoryId,
-			String plantCode) {
-		return rawMaterialRepository.findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(materialSubCategoryId,
-				plantCode);
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getRawMaterialsByMaterialSubCategoryAndPlantCode(
+      Long materialSubCategoryId, String plantCode) {
+    return rawMaterialRepository
+        .findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(materialSubCategoryId, plantCode);
+  }
 
-	@Transactional(readOnly = true)
-	public Long countRawMaterials() {
-		return rawMaterialRepository.count();
-	}
+  @Transactional(readOnly = true)
+  public Long countRawMaterials() {
+    return rawMaterialRepository.count();
+  }
 
-	@Transactional(readOnly = true)
-	public Long countRawMaterialByPlant(String plantCode) {
-		return rawMaterialRepository.countByPlantCode(plantCode);
-	}
+  @Transactional(readOnly = true)
+  public Long countRawMaterialByPlant(String plantCode) {
+    return rawMaterialRepository.countByPlantCode(plantCode);
+  }
 
-	@Transactional(readOnly = true)
-	public boolean isPrefixAlreadyExists(String prefix) {
-		if (rawMaterialRepository.existsByPrefix(prefix)) {
-			return true;
-		}
-		return false;
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getNameByPlantCode(String plantCode, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return rawMaterialRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+  }
 
-	@Transactional(readOnly = true)
-	public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
-		if ((!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-				&& rawMaterialRepository.existsByPrefix(prefix)) {
-			return true;
-		}
-		return false;
-	}
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getName(String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return rawMaterialRepository.findByNameStartsWith(name);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (rawMaterialRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && rawMaterialRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
 }

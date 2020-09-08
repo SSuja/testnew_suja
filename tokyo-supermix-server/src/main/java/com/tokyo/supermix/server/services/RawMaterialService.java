@@ -35,6 +35,11 @@ public interface RawMaterialService {
   public Long countRawMaterials();
 
   public Long countRawMaterialByPlant(String plantCode);
+
+  public List<RawMaterial> getNameByPlantCode(String plantCode, String name);
+
+  public List<RawMaterial> getName(String name);
+
   public boolean isPrefixAlreadyExists(String prefix);
 
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);

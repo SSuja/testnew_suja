@@ -28,8 +28,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
@@ -185,5 +185,18 @@ public class MixDesignController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGNS_BY_PLANT)
+  public ResponseEntity<Object> getCodeSearch(@PathVariable String plantCode,
+      @RequestParam(name = "code") String code) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(mixDesignService.getCode(code), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(mixDesignService.getCodeByPlantCode(plantCode, code), MixDesignResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

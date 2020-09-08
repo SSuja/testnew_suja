@@ -151,4 +151,20 @@ public class MixDesignServiceImpl implements MixDesignService {
   public Long getCountMixDesignByPlantCode(String plantCode) {
     return mixDesignRepository.countByPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getCodeByPlantCode(String plantCode, String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return mixDesignRepository.findByPlantCodeAndCodeStartsWith(plantCode, code);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getCode(String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return mixDesignRepository.findByCodeStartsWith(code);
+  }
 }

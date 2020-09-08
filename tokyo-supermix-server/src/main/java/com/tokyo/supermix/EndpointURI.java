@@ -157,6 +157,8 @@ public final class EndpointURI {
   public static final String RAW_MATERIALS_BY_PLANT = RAW_MATERIAL + PLANT_WISE;
   public static final String RAW_MATERIALS_BY_MATERIAL_SUBCATORY_AND_PLANT = RAW_MATERIAL + SLASH
       + "material-sub-category" + SLASH + "{materialSubCategoryId}" + PLANT_WISE;
+  public static final String GET_RAW_MATERIALS_BY_PLANT =
+      RAW_MATERIAL + PLANT_WISE_SEARCH + SLASH + "name";
   /*
    * EquipmentPlantCalibration apis
    */
@@ -277,6 +279,8 @@ public final class EndpointURI {
       MIX_DESIGN + SLASH + "material-category" + SLASH + "{materialCategoryId}";
   public static final String GET_MIX_DESIGN_BY_RAW_MATERIAL =
       MIX_DESIGN + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String GET_MIX_DESIGNS_BY_PLANT =
+      MIX_DESIGN + PLANT_WISE_SEARCH + SLASH + "code";
 
   /*
    * Test Parameter APIs
