@@ -119,27 +119,31 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode,Pageable pageable) {
+  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode, Pageable pageable) {
     return incomingSampleRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser,Pageable pageable) {
+  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser,
+      Pageable pageable) {
     return incomingSampleRepository.findAllByPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_INCOMING_SAMPLE),pageable);
+            PermissionConstants.VIEW_INCOMING_SAMPLE),
+        pageable);
   }
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
-      String plantCode) {
+      String plantCode, String code) {
     return incomingSampleRepository
-        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId, plantCode);
+        .findByRawMaterialMaterialSubCategoryIdAndPlantCodeAndCodeStartsWith(materialSubCategoryId,
+            plantCode, code);
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
-    return incomingSampleRepository.findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId, String code) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndCodeStartsWith(materialSubCategoryId, code);
   }
 
   @Transactional(readOnly = true)
@@ -149,7 +153,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
 
   @Transactional(readOnly = true)
   public Long getCountIncomingSampleByPlantCode(String plantCode) {
-    return  incomingSampleRepository.countByPlantCode(plantCode);
+    return incomingSampleRepository.countByPlantCode(plantCode);
   }
 
   @Override
@@ -157,7 +161,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     if (code.isEmpty()) {
       return null;
     }
-    return incomingSampleRepository.findByPlantCodeAndCodeStartsWith(plantCode,code);
+    return incomingSampleRepository.findByPlantCodeAndCodeStartsWith(plantCode, code);
   }
 
 

@@ -35,10 +35,10 @@ public interface IncomingSampleService {
 
   // public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
 
-  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
-      String plantCode);
+  // public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+  // String plantCode);
 
-  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
+  // public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
 
   public List<IncomingSample> getAllIncomingSamplesByCurrentUser(
       @CurrentUser UserPrincipal currentUser, Pageable pageable);
@@ -52,4 +52,9 @@ public interface IncomingSampleService {
   public List<IncomingSample> getIncomingSampleCodeByPlantCode(String plantCode, String code);
 
   public List<IncomingSample> getIncomingSampleCode(String code);
+
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId, String code);
+
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+      String plantCode, String code);
 }

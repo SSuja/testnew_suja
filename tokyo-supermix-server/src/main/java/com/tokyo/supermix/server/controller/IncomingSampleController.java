@@ -196,17 +196,18 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
-      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode) {
+      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode,
+      @RequestParam(name = "code") String code) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
       if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
         return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId),
+            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId, code),
                 IncomingSampleResponseDto.class),
             RestApiResponseStatus.OK), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
             mapper.map(incomingSampleService.getByMaterialSubCategoryPlantWise(
-                materialSubCategoryId, plantCode), IncomingSampleResponseDto.class),
+                materialSubCategoryId, plantCode, code), IncomingSampleResponseDto.class),
             RestApiResponseStatus.OK), HttpStatus.OK);
       }
     }
