@@ -26,4 +26,5 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
   Page<RawMaterial> findAll(Pageable pageable);
 
   Long countByPlantCode(String plantCode);
+  boolean existsByPrefix(String prefix);
 }
