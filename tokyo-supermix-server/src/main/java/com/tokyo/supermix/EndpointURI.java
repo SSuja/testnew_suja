@@ -65,6 +65,8 @@ public final class EndpointURI {
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
   public static final String EMPLOYEE_WITH_TOKEN =
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
+  public static final String GET_EMPLOYEES_BY_PLANT =
+      EMPLOYEES + SLASH + PLANT_WISE_SEARCH + SLASH + "firstName";
   /*
    * Material Category APIs
    */
@@ -344,7 +346,7 @@ public final class EndpointURI {
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}" + SLASH + "test"
           + SLASH + "{testConfigId}" + PLANT_WISE;
   public static final String MATERIAL_TEST_BY_PLANT_CODE =
-      MATERIAL_TEST + SLASH + "incoming-sample" +PLANT_WISE;
+      MATERIAL_TEST + SLASH + "incoming-sample" + PLANT_WISE;
   public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH;
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";

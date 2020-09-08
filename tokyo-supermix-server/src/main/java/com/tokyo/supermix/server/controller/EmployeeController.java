@@ -143,8 +143,9 @@ public class EmployeeController {
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(employeeService.getCountEmployee());
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EMPLOYEES, mapper
-          .map(employeeService.getAllEmployeesByPlant(currentUser,pageable), EmployeeResponseDto.class),
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getAllEmployeesByPlant(currentUser, pageable),
+              EmployeeResponseDto.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
@@ -214,5 +215,19 @@ public class EmployeeController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
+  public ResponseEntity<Object> getFirstNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "firstName") String firstName) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+          mapper.map(employeeService.getFirstName(firstName), EmployeeResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMPLOYEES,
+        mapper.map(employeeService.getFirstNameByPlantCode(plantCode, firstName),
+            EmployeeResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
