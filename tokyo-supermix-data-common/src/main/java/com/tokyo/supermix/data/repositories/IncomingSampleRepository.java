@@ -64,4 +64,8 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   Page<IncomingSample> findAll(Pageable pageable);
 
   Long countByPlantCode(String plantCode);
+
+  List<IncomingSample> findByPlantCodeAndCodeStartsWith(String plantCode, String code);
+
+  List<IncomingSample> findByCodeStartsWith(String code);
 }

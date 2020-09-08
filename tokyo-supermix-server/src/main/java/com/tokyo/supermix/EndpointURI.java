@@ -53,6 +53,8 @@ public final class EndpointURI {
   public static final String GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}" + SLASH + "supplier-category" + SLASH
           + "{supplierCategoryId}";
+  public static final String GET_SUPPLIER_BY_PLANT_CODE =
+      SUPPLIERS + PLANT_WISE_SEARCH + SLASH + "supplierName";
 
   /*
    * Employee apis
@@ -251,6 +253,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_PLANT = INCOMING_SAMPLE + PLANT_WISE;
   public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
+  public static final String GET_INCOMING_SAMPLE_BY_PLANT_CODE =
+      INCOMING_SAMPLES + PLANT_WISE_SEARCH + SLASH + "incoming-sample";
   /*
    * Mix design apis
    * 
