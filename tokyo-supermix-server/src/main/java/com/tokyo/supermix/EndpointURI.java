@@ -402,6 +402,9 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
   public static final String GET_FINISH_PRODUCT_BY_MATERIAL_CATEGORY =
       FINISH_PRODUCT_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+  public static final String RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT =
+      FINISH_PRODUCT_SAMPLE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}"
+          + PLANT_WISE;
 
   /*
    * finish product sample issue apis

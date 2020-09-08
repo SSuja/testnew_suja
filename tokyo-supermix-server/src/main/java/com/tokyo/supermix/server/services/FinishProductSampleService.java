@@ -48,4 +48,9 @@ public interface FinishProductSampleService {
   public Long getCountFinishProductSample();
 
   public Long getCountFinishProductSampleByPlantCode(String plantCode);
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId);
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(Long subCategoryId,
+      String plantCode);
 }
