@@ -300,7 +300,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE = BASE_API_PATH + "process-sample";
   public static final String PROCESS_SAMPLES = BASE_API_PATH + "process-samples";
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
-  public static final String PROCESS_SAMPLE_SEARCH = PROCESS_SAMPLE + SEARCH;
+  public static final String PROCESS_SAMPLE_SEARCH =
+      PROCESS_SAMPLE + SEARCH + SLASH + "{plantCode}";
   public static final String PROCESS_SAMPLES_BY_PLANT_CODE =
       PROCESS_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PROCESS_SAMPLE_BY_PLANT = PROCESS_SAMPLE + PLANT_WISE;

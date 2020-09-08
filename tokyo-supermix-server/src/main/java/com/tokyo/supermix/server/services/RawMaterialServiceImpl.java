@@ -113,7 +113,6 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
       String materialSubCategoryName, String plantName, String plantCode, Pageable pageable,
       Pagination pagination) {
-
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.name.startsWithIgnoreCase(name));
     }
