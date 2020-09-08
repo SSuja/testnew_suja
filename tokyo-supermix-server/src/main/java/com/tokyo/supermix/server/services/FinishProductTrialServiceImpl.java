@@ -348,9 +348,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureMaterialSubCategoryIdAndStatus(
             mixDesign.getCode(), mixDesign.getRawMaterial().getMaterialSubCategory().getId(),
             Status.PASS);
-    System.out
-        .println("vrjvnetjinbvtinebvtn" + finishTest.size() + "hyyugtyvt" + configureList.size());
-
     if (finishproductTest.getTestConfigure().isCoreTest()) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
         if ((finishTest.size() >= configureList.size())) {
