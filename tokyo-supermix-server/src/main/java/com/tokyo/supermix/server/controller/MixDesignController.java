@@ -199,4 +199,13 @@ public class MixDesignController {
         .map(mixDesignService.getCodeByPlantCode(plantCode, code), MixDesignResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS)
+  public ResponseEntity<Object> getCodeWithMaterialIdSearch(@PathVariable Long rawMaterialId,
+      @PathVariable Status status, @RequestParam(name = "code") String code) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(mixDesignService.getCodeAndRawMaterialId(rawMaterialId, status, code),
+            MixDesignResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 }
