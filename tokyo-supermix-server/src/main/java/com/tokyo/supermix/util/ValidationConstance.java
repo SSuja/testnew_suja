@@ -26,5 +26,10 @@ public class ValidationConstance {
   public static final String UNIT_EXIST = "Unit already exist";
   public static final String UNIT_NOT_EXIST = "Unit not exists";
 
+  /*
+   * Prefix
+   */
+  public static final String PREFIX = "prefix already exist";
+
   private ValidationConstance() {}
 }

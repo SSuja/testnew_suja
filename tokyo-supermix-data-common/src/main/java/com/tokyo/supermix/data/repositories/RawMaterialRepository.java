@@ -19,4 +19,6 @@ public interface RawMaterialRepository
 
   List<RawMaterial> findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(Long materialSubCategoryId,
       String plantCode);
+
+  boolean existsByPrefix(String prefix);
 }

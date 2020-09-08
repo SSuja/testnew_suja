@@ -88,4 +88,21 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     return rawMaterialRepository
         .findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(materialSubCategoryId, plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (rawMaterialRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && rawMaterialRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
 }
