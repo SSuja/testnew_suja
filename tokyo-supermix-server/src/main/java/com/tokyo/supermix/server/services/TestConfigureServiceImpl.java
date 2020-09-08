@@ -258,4 +258,21 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     }
     return testConfigureResDto;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (testConfigureRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getTestConfigureById(id).getPrefix().equalsIgnoreCase(prefix))
+        && testConfigureRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
 }

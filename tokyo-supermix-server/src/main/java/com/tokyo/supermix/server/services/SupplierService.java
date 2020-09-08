@@ -51,4 +51,8 @@ public interface SupplierService {
   public Long getCountSupplier();
 
   public Long getCountSupplierByPlantCode(String plantCode);
+
+  public List<Supplier> getSupplierNameByPlantCode(String plantCode, String name);
+
+  public List<Supplier> getSupplierName(String name);
 }

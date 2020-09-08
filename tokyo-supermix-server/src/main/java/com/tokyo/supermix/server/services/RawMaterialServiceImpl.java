@@ -115,4 +115,21 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     }
     return rawMaterialRepository.findByNameStartsWith(name);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (rawMaterialRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && rawMaterialRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
 }

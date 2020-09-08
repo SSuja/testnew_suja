@@ -16,4 +16,8 @@ public interface PourRepository extends JpaRepository<Pour, Long>, QuerydslPredi
   Long countByProjectPlantCode(String plantCode);
 
   List<Pour> findAllByProjectPlantCode(String plantCode, Pageable pageable);
+
+  List<Pour> findByProjectPlantCodeAndNameStartsWith(String plantCode, String name);
+
+  List<Pour> findByNameStartsWith(String name);
 }

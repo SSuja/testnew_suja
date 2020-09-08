@@ -47,4 +47,8 @@ public interface TestConfigureService {
 
   public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId);
 
+  public boolean isPrefixAlreadyExists(String prefix);
+
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
+
 }

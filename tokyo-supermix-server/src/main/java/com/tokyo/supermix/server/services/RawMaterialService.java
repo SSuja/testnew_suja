@@ -39,4 +39,8 @@ public interface RawMaterialService {
   public List<RawMaterial> getNameByPlantCode(String plantCode, String name);
 
   public List<RawMaterial> getName(String name);
+
+  public boolean isPrefixAlreadyExists(String prefix);
+
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 }

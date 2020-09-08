@@ -89,4 +89,22 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExists(String prefix) {
+    if (materialSubCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+    if ((!getMaterialSubCategoryById(id).getPrefix().equalsIgnoreCase(prefix))
+        && materialSubCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
 }
