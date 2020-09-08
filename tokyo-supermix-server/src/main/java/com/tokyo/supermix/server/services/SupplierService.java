@@ -32,8 +32,8 @@ public interface SupplierService {
   public List<Supplier> findBySupplierCategoryIdAndPlantCode(Long suppilerCategoryId,
       String plantCode);
 
-  public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
-      String email,String plantName, BooleanBuilder booleanBuilder);
+//  public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
+//      String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable);
 
   // public List<Supplier> getSupplierByPlantCode(String plantCode);
 
@@ -55,4 +55,7 @@ public interface SupplierService {
   public List<Supplier> getSupplierNameByPlantCode(String plantCode, String name);
 
   public List<Supplier> getSupplierName(String name);
+  
+  public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
+      String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable,String plantCode);
 }

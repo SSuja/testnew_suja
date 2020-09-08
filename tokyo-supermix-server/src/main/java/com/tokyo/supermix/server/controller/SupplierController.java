@@ -249,19 +249,33 @@ public class SupplierController {
   }
 
   @GetMapping(value = EndpointURI.SUPPLIER_SEARCH)
-  public ResponseEntity<Object> getSupplierSearch(@RequestParam(name = "name") String name,
+  public ResponseEntity<Object> getSupplierSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name,
       @RequestParam(name = "address", required = false) String address,
       @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
       @RequestParam(name = "email", required = false) String email,
-      @RequestParam(name = "plantName", required = false) String plantName) {
-    Pagination pagination = new Pagination(0, 0, 0, 0l);
-    BooleanBuilder booleanBuilder = new BooleanBuilder();
-    pagination.setTotalRecords(300l);
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination= new Pagination(0, 0, 0, 0l); 
+    BooleanBuilder booleanBuilder = new BooleanBuilder(); 
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+    pagination.setTotalRecords(supplierService.getCountSupplier());
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.SUPPLIER,
             mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
-                booleanBuilder), SupplierResponseDto.class),
+                booleanBuilder,pageable,plantCode), SupplierResponseDto.class),
             RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
+    }
+    pagination.setTotalRecords(supplierService.getCountSupplierByPlantCode(plantCode));
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.SUPPLIER,
+              mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
+                  booleanBuilder,pageable,plantCode), SupplierResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          null, HttpStatus.OK); 
+    
   }
 }

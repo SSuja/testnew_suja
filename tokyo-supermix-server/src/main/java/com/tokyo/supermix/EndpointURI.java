@@ -46,7 +46,7 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       BASE_API_PATH + "supplier-category" + SLASH + "{suppilerCategoryId}" + SLASH + "plant" + SLASH
           + "{plantCode}";
-  public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH;
+  public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH +SLASH + "{plantCode}";
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String SUPPLIER_BY_PLANT = SUPPLIER + PLANT_WISE;

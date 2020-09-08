@@ -156,10 +156,10 @@ public class SupplierServiceImpl implements SupplierService {
     }
     return supplierRepository.findByNameStartsWith(name);
   }
-
+  
   @Transactional(readOnly = true)
   public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
-      String email, String plantName, BooleanBuilder booleanBuilder) {
+      String email, String plantName, BooleanBuilder booleanBuilder, Pageable pageable,String plantCode) {
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QSupplier.supplier.name.contains(name));
     }
@@ -172,7 +172,10 @@ public class SupplierServiceImpl implements SupplierService {
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QSupplier.supplier.plant.name.contains(plantName));
     }
-    return (List<Supplier>) supplierRepository.findAll(booleanBuilder);
+    if(!plantCode.equals("ADMIN")) {
+    booleanBuilder.and(QSupplier.supplier.plant.code.contains(plantCode));
+    }
+    return  supplierRepository.findAll(booleanBuilder, pageable).toList();
 
   }
 
