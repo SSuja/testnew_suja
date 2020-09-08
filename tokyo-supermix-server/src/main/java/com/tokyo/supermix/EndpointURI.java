@@ -147,7 +147,7 @@ public final class EndpointURI {
   public static final String RAW_MATERIALS = BASE_API_PATH + "raw-materials";
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
-  public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH;
+  public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH + SLASH + "{plantCode}";
   public static final String ACTIVE_RAW_MATERIALS =
       BASE_API_PATH + "active" + SLASH + "raw-materials";
   public static final String GET_BY_MATERIAL_SUB_CATEGORY =
@@ -234,7 +234,7 @@ public final class EndpointURI {
       PROJECTS + SLASH + "customer" + SLASH + "{customerId}";
 
   public static final String GET_PROJECTS_BY_CUSTOMER_PLANT_WISE =
-      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;  
+      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;
   public static final String GET_PROJECT_BY_NAME =
       PROJECTS + PLANT_WISE_SEARCH + SLASH + "projectName";
   /*

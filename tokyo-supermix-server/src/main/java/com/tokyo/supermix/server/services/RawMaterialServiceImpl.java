@@ -9,10 +9,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
+import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.util.Constants;
+import java.util.Collection;
 
 @Service
 public class RawMaterialServiceImpl implements RawMaterialService {
@@ -20,6 +27,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public void saveRawMaterial(RawMaterial rawMaterial) {
@@ -99,4 +108,31 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   public Long countRawMaterialByPlant(String plantCode) {
     return rawMaterialRepository.countByPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
+      String materialSubCategoryName, String plantName, String plantCode, Pageable pageable,
+      Pagination pagination) {
+
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.name.startsWithIgnoreCase(name));
+    }
+    if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name
+          .startsWithIgnoreCase(materialSubCategoryName));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.startsWithIgnoreCase(plantName));
+    }
+
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(rawMaterialRepository.findAll(booleanBuilder, pageable).toList(),
+        RawMaterialResponseDto.class);
+  }
 }
+
