@@ -217,7 +217,7 @@ public class EmployeeController {
         HttpStatus.OK);
   }
 
-  @GetMapping(value = EndpointURI.GET_CUSTOMERS_BY_PLANT_CODE)
+  @GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT)
   public ResponseEntity<Object> getFirstNameSearch(@PathVariable String plantCode,
       @RequestParam(name = "firstName") String firstName) {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
