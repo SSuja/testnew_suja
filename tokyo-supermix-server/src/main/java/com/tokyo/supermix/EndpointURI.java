@@ -82,7 +82,7 @@ public final class EndpointURI {
   public static final String POUR = BASE_API_PATH + "pour";
   public static final String POURS = BASE_API_PATH + "pours";
   public static final String POUR_BY_ID = POUR + ID;
-  public static final String POUR_SEARCH = POUR + SEARCH;
+  public static final String POUR_SEARCH = POUR + SEARCH + SLASH + "{plantCode}";
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String POUR_BY_PLANT = POUR + PLANT_WISE;
