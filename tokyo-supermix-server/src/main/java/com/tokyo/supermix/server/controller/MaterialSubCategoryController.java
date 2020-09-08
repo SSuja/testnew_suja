@@ -29,6 +29,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @RestController
@@ -91,6 +92,11 @@ public class MaterialSubCategoryController {
               validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
           HttpStatus.BAD_REQUEST);
     }
+    if (materialSubCategoryService
+        .isPrefixAlreadyExists(materialSubCategoryRequestDto.getPrefix())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+          validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     materialSubCategoryService.saveMaterialSubCategory(
         mapper.map(materialSubCategoryRequestDto, MaterialSubCategory.class));
     return new ResponseEntity<>(
@@ -110,6 +116,11 @@ public class MaterialSubCategoryController {
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_NAME,
                 validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
             HttpStatus.BAD_REQUEST);
+      }
+      if (materialSubCategoryService.isPrefixAlreadyExistsUpdate(
+          materialSubCategoryRequestDto.getId(), materialSubCategoryRequestDto.getPrefix())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       materialSubCategoryService.saveMaterialSubCategory(
           mapper.map(materialSubCategoryRequestDto, MaterialSubCategory.class));

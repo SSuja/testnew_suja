@@ -30,4 +30,8 @@ public interface RawMaterialService {
 
   public List<RawMaterial> getRawMaterialsByMaterialSubCategoryAndPlantCode(
       Long materialSubCategoryId, String plantCode);
+
+  public boolean isPrefixAlreadyExists(String prefix);
+
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 }
