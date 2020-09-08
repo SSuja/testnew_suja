@@ -99,4 +99,20 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   public Long countRawMaterialByPlant(String plantCode) {
     return rawMaterialRepository.countByPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getNameByPlantCode(String plantCode, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return rawMaterialRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getName(String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return rawMaterialRepository.findByNameStartsWith(name);
+  }
 }

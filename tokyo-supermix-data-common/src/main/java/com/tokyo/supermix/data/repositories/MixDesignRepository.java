@@ -36,4 +36,8 @@ public interface MixDesignRepository extends JpaRepository<MixDesign, String>,
   Page<MixDesign> findAllByPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
+
+  List<MixDesign> findByPlantCodeAndCodeStartsWith(String plantCode, String code);
+
+  List<MixDesign> findByCodeStartsWith(String code);
 }
