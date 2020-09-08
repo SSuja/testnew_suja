@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
@@ -31,11 +30,15 @@ public interface ProjectService {
 
   public List<Project> getAllProjectsByCustomerAndPlant(Long customerId, String plantCode);
 
-  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId,String plantCode);
+  public boolean isNameAndCustomerIdAndProjectExist(String name, Long customerId, String plantCode);
 
   public Long getCountProject();
 
   public Long getCountProjectByPlantCode(String plantCode);
 
   public List<Project> getProjectByPlantCode(String plantCode, Pageable pageable);
+
+  public List<Project> getProjectNameByPlantCode(String plantCode, String name);
+
+  public List<Project> getProjectName(String name);
 }

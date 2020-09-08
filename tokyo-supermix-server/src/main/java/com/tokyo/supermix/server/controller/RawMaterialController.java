@@ -27,14 +27,15 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.RawMaterialService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -60,6 +61,10 @@ public class RawMaterialController {
       logger.debug("Material already exists: createMaterial(), materialName: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
           validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    if (rawMaterialService.isPrefixAlreadyExists(rawMaterialRequestDto.getPrefix())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+          validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     return new ResponseEntity<>(
@@ -101,6 +106,11 @@ public class RawMaterialController {
           rawMaterialRequestDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
             validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      if (rawMaterialService.isPrefixAlreadyExistsUpdate(rawMaterialRequestDto.getId(),
+          rawMaterialRequestDto.getPrefix())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
       return new ResponseEntity<>(
@@ -207,5 +217,19 @@ public class RawMaterialController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+
+  @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_PLANT)
+  public ResponseEntity<Object> getNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(rawMaterialService.getName(name), RawMaterialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(rawMaterialService.getNameByPlantCode(plantCode, name), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

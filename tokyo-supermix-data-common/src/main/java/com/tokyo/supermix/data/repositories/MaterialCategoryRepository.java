@@ -17,4 +17,6 @@ public interface MaterialCategoryRepository extends JpaRepository<MaterialCatego
   boolean existsByMainType(MainType mainType);
 
   boolean existsByNameAndMainType(String name, MainType mainType);
+
+  boolean existsByPrefix(String prefix);
 }

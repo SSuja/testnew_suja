@@ -152,4 +152,20 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     return  incomingSampleRepository.countByPlantCode(plantCode);
   }
 
+  @Override
+  public List<IncomingSample> getIncomingSampleCodeByPlantCode(String plantCode, String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return incomingSampleRepository.findByPlantCodeAndCodeStartsWith(plantCode,code);
+  }
+
+
+  @Override
+  public List<IncomingSample> getIncomingSampleCode(String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return incomingSampleRepository.findByCodeStartsWith(code);
+  }
 }

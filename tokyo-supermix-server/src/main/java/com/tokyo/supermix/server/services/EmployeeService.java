@@ -38,4 +38,8 @@ public interface EmployeeService {
   public Long getCountEmployeeByPlantCode(String plantCode);
 
   public List<Employee> getEmployeeByPlantCode(String plantCode, Pageable pageable);
+
+  public List<Employee> getFirstNameByPlantCode(String plantCode, String firstName);
+
+  public List<Employee> getFirstName(String firstName);
 }

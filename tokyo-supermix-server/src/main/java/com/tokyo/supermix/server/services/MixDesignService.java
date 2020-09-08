@@ -27,7 +27,7 @@ public interface MixDesignService {
 
   public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser);
 
-   public List<MixDesign> getAllMixDesignByDecending();
+  public List<MixDesign> getAllMixDesignByDecending();
 
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode);
 
@@ -44,4 +44,10 @@ public interface MixDesignService {
   public Long getCountMixDesign();
 
   public Long getCountMixDesignByPlantCode(String plantCode);
+
+  public List<MixDesign> getCodeByPlantCode(String plantCode, String code);
+
+  public List<MixDesign> getCode(String code);
+
+  public List<MixDesign> getCodeAndRawMaterialId(Long rawMaterialId, Status status, String code);
 }

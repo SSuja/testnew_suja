@@ -31,6 +31,7 @@ import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @RestController
@@ -57,6 +58,10 @@ public class TestConfigureController {
         testConfigureRequestDto.getRawMaterialId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    if (testConfigureService.isPrefixAlreadyExists(testConfigureRequestDto.getPrefix())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+          validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
         testConfigureService.saveTestConfigure(testConfigureRequestDto), RestApiResponseStatus.OK),
@@ -99,6 +104,11 @@ public class TestConfigureController {
               new ValidationFailureResponse(Constants.TEST_CONFIGURE,
                   validationFailureStatusCodes.getTestConfigureAlreadyExist()),
               HttpStatus.BAD_REQUEST);
+        }
+        if (testConfigureService.isPrefixAlreadyExistsUpdate(testConfigureRequestDto.getId(),
+            testConfigureRequestDto.getPrefix())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
         }
         testConfigureService
             .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));

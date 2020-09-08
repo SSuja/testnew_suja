@@ -147,4 +147,20 @@ public class SupplierServiceImpl implements SupplierService {
   public Long getCountSupplierByPlantCode(String plantCode) {
     return supplierRepository.countByPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<Supplier> getSupplierNameByPlantCode(String plantCode, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return supplierRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Supplier> getSupplierName(String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return supplierRepository.findByNameStartsWith(name);
+  }
 }

@@ -408,7 +408,7 @@ public class ValidationFailureStatusCodes {
     this.employeeFirstNameIsEmpty = employeeFirstNameIsEmpty;
   }
 
-  
+
   public String getEmployeeIsEnableIsTrue() {
     return employeeIsEnableIsTrue;
   }
@@ -493,6 +493,16 @@ public class ValidationFailureStatusCodes {
   private String materialSubCategoryNameIsNull;
   @Value("${materialSubCategoryRequestDto.name.empty}")
   private String materialSubCategoryNameIsEmpty;
+  @Value("${validation.prefix.alreadyExist}")
+  private String prefixAlreadyExist;
+
+  public String getPrefixAlreadyExist() {
+    return prefixAlreadyExist;
+  }
+
+  public void setPrefixAlreadyExist(String prefixAlreadyExist) {
+    this.prefixAlreadyExist = prefixAlreadyExist;
+  }
 
   public String getCustomerAlreadyExist() {
     return customerAlreadyExist;
