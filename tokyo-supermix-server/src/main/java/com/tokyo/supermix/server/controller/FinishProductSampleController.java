@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
@@ -30,8 +28,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
@@ -227,5 +225,28 @@ public class FinishProductSampleController {
               validationFailureStatusCodes.getFinishProductSampleNotExist()),
           HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT)
+  public ResponseEntity<Object> getFinishProductSamplesBySubCategoryAndCurrentUserPermission(
+      @CurrentUser UserPrincipal currentUser, @PathVariable Long materialSubCategoryId,
+      @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleService.getFinishProductSamplesBySubCategoryId(
+              materialSubCategoryId), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK), null, HttpStatus.OK);
+    } else {
+      if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+          PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+            mapper
+                .map(finishProductSampleService.getFinishProductSamplesBySubCategoryIdAndPlantCode(
+                    materialSubCategoryId, plantCode), FinishProductSampleResponseDto.class),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

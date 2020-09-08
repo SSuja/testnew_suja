@@ -168,4 +168,18 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   public Long getCountFinishProductSampleByPlantCode(String plantCode) {
     return finishProductSampleRepository.countByMixDesignPlantCode(plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
+      Long subCategoryId, String plantCode) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(subCategoryId,
+            plantCode);
+  }
 }

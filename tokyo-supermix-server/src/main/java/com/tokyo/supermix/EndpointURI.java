@@ -68,6 +68,8 @@ public final class EndpointURI {
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
   public static final String EMPLOYEE_WITH_TOKEN =
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
+  public static final String GET_EMPLOYEES_BY_PLANT =
+      EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
   /*
    * Material Category APIs
    */
@@ -234,7 +236,7 @@ public final class EndpointURI {
       PROJECTS + SLASH + "customer" + SLASH + "{customerId}";
 
   public static final String GET_PROJECTS_BY_CUSTOMER_PLANT_WISE =
-      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;  
+      PROJECTS + SLASH + "customer" + SLASH + "{customerId}" + PLANT_WISE;
   public static final String GET_PROJECT_BY_NAME =
       PROJECTS + PLANT_WISE_SEARCH + SLASH + "projectName";
   /*
@@ -405,6 +407,9 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "status" + SLASH + "{status}";
   public static final String GET_FINISH_PRODUCT_BY_MATERIAL_CATEGORY =
       FINISH_PRODUCT_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+  public static final String RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT =
+      FINISH_PRODUCT_SAMPLE + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}"
+          + PLANT_WISE;
 
   /*
    * finish product sample issue apis

@@ -30,7 +30,6 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Autowired
   private EmailNotification emailNotification;
 
-
   @Autowired
   private ConfirmationTokenRepository confirmationTokenRepository;
 
@@ -144,5 +143,21 @@ public class EmployeeServiceImpl implements EmployeeService {
   @Transactional(readOnly = true)
   public List<Employee> getEmployeeByPlantCode(String plantCode) {
     return employeeRepository.findByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Employee> getFirstNameByPlantCode(String plantCode, String firstName) {
+    if (firstName.isEmpty()) {
+      return null;
+    }
+    return employeeRepository.findByPlantCodeAndFirstNameStartsWith(plantCode, firstName);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Employee> getFirstName(String firstName) {
+    if (firstName.isEmpty()) {
+      return null;
+    }
+    return employeeRepository.findByFirstNameStartsWith(firstName);
   }
 }

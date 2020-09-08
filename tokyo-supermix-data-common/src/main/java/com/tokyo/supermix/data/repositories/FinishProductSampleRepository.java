@@ -41,5 +41,8 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryId(
       Long materialSubCategoryId);
 
+  List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(
+      Long materialSubCategoryId, String plantCode);
+
   Long countByMixDesignPlantCode(String plantCode);
 }
