@@ -42,6 +42,8 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
 
   List<FinishProductTest> findByTestConfigureMaterialSubCategoryId(Long materialSubCategoryId);
 
-  List<FinishProductTest> findByTestConfigureMaterialSubCategoryIdAndStatus(
-      Long materialSubCategoryId, Status status);
+  List<FinishProductTest> findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureMaterialSubCategoryIdAndStatus(
+      String mixDesignCode, Long materialSubCategoryId, Status status);
+
+
 }
