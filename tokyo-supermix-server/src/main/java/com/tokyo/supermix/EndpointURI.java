@@ -168,7 +168,7 @@ public final class EndpointURI {
       BASE_API_PATH + "plant-equipment-calibrations";
   public static final String EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
   public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
-      EQUIPMENT_PLANT_CALIBRATION + SEARCH;
+      EQUIPMENT_PLANT_CALIBRATION + SEARCH+ SLASH + "{plantCode}";
   public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
       EQUIPMENT_PLANT_CALIBRATIONS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT =

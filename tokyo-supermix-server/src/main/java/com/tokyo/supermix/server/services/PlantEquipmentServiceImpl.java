@@ -52,7 +52,7 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   }
 
   @Transactional(readOnly = true)
-  public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName, String modelName,String plantName,
+  public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName, String modelName,String plantName,String equipmentName,
       BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode) {
     
     if (serialNo != null && !serialNo.isEmpty()) {
@@ -63,12 +63,15 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
       booleanBuilder.and(QPlantEquipment.plantEquipment.brandName.startsWithIgnoreCase(brandName));
     }
 
-    if (serialNo != null && !modelName.isEmpty()) {
+    if (modelName != null && !modelName.isEmpty()) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.modelName.startsWithIgnoreCase(modelName));
     }
 
-    if (serialNo != null && !serialNo.isEmpty()) {
+    if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if (equipmentName != null && !equipmentName.isEmpty()) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.equipment.name.startsWithIgnoreCase(equipmentName));
     }
     if(!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
@@ -98,13 +101,14 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentIdAndPlantCode(
       Long equipmentId, String plantCode) {
-  
-    return plantEquipmentRepository.findByCalibrationExistsTrueAndEquipmentIdAndPlantCode(equipmentId, plantCode);
+
+    return plantEquipmentRepository
+        .findByCalibrationExistsTrueAndEquipmentIdAndPlantCode(equipmentId, plantCode);
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipment(Pageable pageable) {
-    
+
     return plantEquipmentRepository.findAll(pageable).toList();
   }
 
@@ -115,13 +119,13 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipment() {
-    
+
     return plantEquipmentRepository.count();
   }
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipmentByPlantCode(String plantCode) {
-    
+
     return plantEquipmentRepository.countByPlantCode(plantCode);
   }
 }

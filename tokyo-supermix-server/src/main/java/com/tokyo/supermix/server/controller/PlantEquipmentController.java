@@ -145,7 +145,8 @@ public class PlantEquipmentController {
       @RequestParam(name = "brandName", required = false) String brandName,
       @RequestParam(name = "modelName", required = false) String modelName,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "equipmentName", required = false) String equipmentName)      {
+      @RequestParam(name = "equipmentName", required = false) String equipmentName
+      )      {
 
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination= new Pagination(0, 0, 0, 0l); 
@@ -153,9 +154,9 @@ public class PlantEquipmentController {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
       pagination.setTotalRecords(plantCode.equalsIgnoreCase(Constants.ADMIN) ?
           plantEquipmentService.getCountPlantEquipment() : plantEquipmentService.getCountPlantEquipmentByPlantCode(plantCode));   
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
         mapper.map(
-            plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName, plantName, booleanBuilder, page, size, pageable, plantCode),
+            plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName, plantName, equipmentName,booleanBuilder, page, size, pageable, plantCode),
             PlantEquipmentResponseDto.class),
         RestApiResponseStatus.OK,
         pagination),HttpStatus.OK);

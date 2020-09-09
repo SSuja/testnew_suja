@@ -19,7 +19,7 @@ public interface PlantEquipmentService {
   public PlantEquipment getPlantEquipmentBySerialNo(String serialNo);
 
   public List<PlantEquipment> searchPlantEquipment(
-      String serialNo, String brandName, String modelName,String plantName,
+      String serialNo, String brandName, String modelName,String plantName,String equipmentName,
       BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode);
 
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode);
