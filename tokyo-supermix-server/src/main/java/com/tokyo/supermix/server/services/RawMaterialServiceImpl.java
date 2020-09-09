@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 
@@ -40,8 +41,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public List<RawMaterial> getAllRawMaterials(Pageable pageable) {
-    return rawMaterialRepository.findAll(pageable).toList();
+  public List<RawMaterial> getAllRawMaterials() {
+    return rawMaterialRepository.findAll();
   }
 
   @Transactional(readOnly = true)
@@ -113,9 +114,6 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (name.isEmpty()) {
       return null;
     }
-
-
-    // this is not good way
     return rawMaterialRepository.findByNameStartsWith(name);
   }
 
@@ -134,5 +132,16 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getRawMaterialsByMainType(MainType mainType) {
+    return rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryMainType(mainType);
+
+  }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getAllRawMaterialsPage(Pageable pageable) {
+    return rawMaterialRepository.findAll(pageable).toList();
   }
 }

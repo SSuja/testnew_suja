@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.MainType;
 
 public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
     QuerydslPredicateExecutor<RawMaterial>, PagingAndSortingRepository<RawMaterial, Long> {
@@ -32,4 +33,9 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
   List<RawMaterial> findByNameStartsWith(String name);
 
   boolean existsByPrefix(String prefix);
+//  RawMaterial.java
+//  MaterialSubCategory.java
+//  MaterialCategory.java
+
+  List<RawMaterial> findByMaterialSubCategoryMaterialCategoryMainType(MainType mainType);
 }
