@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services.auth;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import org.passay.CharacterRule;
 import org.passay.EnglishCharacterData;
@@ -12,11 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.auth.QUser;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.auth.UserRole;
@@ -29,9 +32,11 @@ import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRoleRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.EmployeeService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -61,7 +66,7 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private EmailNotification emailNotification;
   @Autowired
-  private  EmployeeService employeeService;
+  private EmployeeService employeeService;
 
 
   @Transactional
@@ -147,13 +152,14 @@ public class UserServiceImpl implements UserService {
       UserResponseDto userResponseDto = new UserResponseDto();
       userResponseDto.setId(user.getId());
       userResponseDto.setUserName(user.getUserName());
-     userResponseDto.setEmployee(mapper.map(employeeService.getEmployeeById(user.getEmployee().getId()),EmployeeResponseDto.class));
+      userResponseDto.setEmployee(mapper.map(
+          employeeService.getEmployeeById(user.getEmployee().getId()), EmployeeResponseDto.class));
       userResponseDto.setUserType(user.getUserType().name());
       userResponseDto.setCreatedAt(user.getCreatedAt().toString());
       userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
-      userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());   
-      userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());   
-      UserResponseDtoList.add(userResponseDto );
+      userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());
+      userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());
+      UserResponseDtoList.add(userResponseDto);
     }
     return UserResponseDtoList;
 
@@ -267,24 +273,53 @@ public class UserServiceImpl implements UserService {
     return userResponseDtoList;
   }
 
-  private void userListGetterSetter(List<User> userList,  ArrayList<UserResponseDto> userResponseDtoList) {
-  for (User user : userList) {
-  UserResponseDto userResponseDto = new UserResponseDto();
-  userResponseDto.setId(user.getId());
-  userResponseDto.setUserName(user.getUserName());
- userResponseDto.setEmployee(mapper.map(employeeService.getEmployeeById(user.getEmployee().getId()),EmployeeResponseDto.class));
-  userResponseDto.setUserType(user.getUserType().name());
-  userResponseDto.setCreatedAt(user.getCreatedAt().toString());
-  userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
-  userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());   
-  userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());   
-  userResponseDtoList.add(userResponseDto );
-}
-    
+  private void userListGetterSetter(List<User> userList,
+      ArrayList<UserResponseDto> userResponseDtoList) {
+    for (User user : userList) {
+      UserResponseDto userResponseDto = new UserResponseDto();
+      userResponseDto.setId(user.getId());
+      userResponseDto.setUserName(user.getUserName());
+      userResponseDto.setEmployee(mapper.map(
+          employeeService.getEmployeeById(user.getEmployee().getId()), EmployeeResponseDto.class));
+      userResponseDto.setUserType(user.getUserType().name());
+      userResponseDto.setCreatedAt(user.getCreatedAt().toString());
+      userResponseDto.setUpdatedAt(user.getUpdatedAt().toString());
+      userResponseDto.setRoles(getUserDetailById(user.getId()).getRoles());
+      userResponseDto.setPlantRoles(getUserDetailById(user.getId()).getPlantRoles());
+      userResponseDtoList.add(userResponseDto);
+    }
+
   }
 
   @Transactional(readOnly = true)
   public Long getCountUserByPlantCode(String plantCode) {
     return userRepository.countByEmployeePlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<UserResponseDto> searchUserByPlantCode(String userName, String firstName,
+      String plantName, String designationName, BooleanBuilder booleanBuilder, String plantCode,
+      Pageable pageable, Pagination pagination) {
+    if (userName != null && !userName.isEmpty()) {
+      booleanBuilder.and(QUser.user.userName.startsWithIgnoreCase(userName));
+    }
+    if (firstName != null && !firstName.isEmpty()) {
+      booleanBuilder.and(QUser.user.employee.firstName.startsWithIgnoreCase(firstName));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QUser.user.employee.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if (designationName != null && !designationName.isEmpty()) {
+      booleanBuilder
+          .and(QUser.user.employee.designation.name.startsWithIgnoreCase(designationName));
+    }
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QUser.user.employee.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<User>) userRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(userRepository.findAll(booleanBuilder, pageable).toList(),
+        UserResponseDto.class);
   }
 }

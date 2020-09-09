@@ -151,7 +151,7 @@ public class CustomerController {
   }
 
   @GetMapping(value = EndpointURI.CUSTOMER_SEARCH)
-  public ResponseEntity<Object> searchMaterialTest(@PathVariable String plantCode,
+  public ResponseEntity<Object> searchCustomer(@PathVariable String plantCode,
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "email", required = false) String email,
       @RequestParam(name = "plantName", required = false) String plantName,
