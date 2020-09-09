@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PourDtoRequest;
 import com.tokyo.supermix.data.dto.PourDtoResponse;
@@ -27,8 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
@@ -115,15 +114,6 @@ public class PourController {
         validationFailureStatusCodes.getPourNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.POUR_SEARCH)
-  public ResponseEntity<Object> getPourSearch(
-      @QuerydslPredicate(root = Pour.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
-        pourService.searchPour(predicate, page, size), RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.GET_POURS_BY_PLANT_CODE)
   public ResponseEntity<Object> getPourByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
@@ -173,5 +163,19 @@ public class PourController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
         mapper.map(pourService.getPourNameByPlantCode(plantCode, name), PourDtoResponse.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.POUR_SEARCH)
+  public ResponseEntity<Object> getPourSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "projectName", required = false) String projectName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.POUR,
+        pourService.searchPour(booleanBuilder, name, projectName, plantCode, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

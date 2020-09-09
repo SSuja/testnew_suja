@@ -61,4 +61,8 @@ public interface IncomingSampleService {
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
       BooleanBuilder booleanBuilder, Pageable pageable, String plantCode);
+
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
+
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId, String plantCode);
 }

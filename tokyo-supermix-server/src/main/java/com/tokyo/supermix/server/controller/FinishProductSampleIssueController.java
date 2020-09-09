@@ -1,12 +1,10 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,8 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
@@ -29,8 +26,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
@@ -124,15 +121,6 @@ public class FinishProductSampleIssueController {
         HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH)
-  public ResponseEntity<Object> getFinishProductSampleIssueBySearch(
-      @QuerydslPredicate(root = FinishProductSampleIssue.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-        finishProductSampleIssueService.searchFinishProductSampleIssue(predicate, size, page),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT_CODE)
   public ResponseEntity<Object> getFinishProductSampleIssueByPlantCode(
       @PathVariable String plantCode, @RequestParam(name = "page") int page,
@@ -183,5 +171,27 @@ public class FinishProductSampleIssueController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH)
+  public ResponseEntity<Object> getFinishProductSampleIssueSearch(@PathVariable String plantCode,
+      @RequestParam(name = "workOrderNumber", required = false) String workOrderNumber,
+      @RequestParam(name = "materialName", required = false) String materialName,
+      @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
+      @RequestParam(name = "pourName", required = false) String pourName,
+      @RequestParam(name = "projectName", required = false) String projectName,
+      @RequestParam(name = "customerName", required = false) String customerName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
+            finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
+                workOrderNumber, materialName, mixDesignCode, pourName, projectName, customerName,
+                plantCode, pageable, pagination),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
   }
 }

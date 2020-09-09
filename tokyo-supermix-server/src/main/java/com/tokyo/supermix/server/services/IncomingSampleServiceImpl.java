@@ -159,7 +159,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     return incomingSampleRepository.countByPlantCode(plantCode);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleCodeByPlantCode(String plantCode, String code) {
     if (code.isEmpty()) {
       return null;
@@ -168,7 +168,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
 
-  @Override
+  @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleCode(String code) {
     if (code.isEmpty()) {
       return null;
@@ -176,7 +176,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     return incomingSampleRepository.findByCodeStartsWith(code);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
       BooleanBuilder booleanBuilder, Pageable pageable, String plantCode) {
@@ -204,5 +204,19 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
     return incomingSampleRepository.findAll(booleanBuilder, pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+      String plantCode) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId,
+            plantCode);
   }
 }

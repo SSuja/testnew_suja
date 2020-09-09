@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.ProcessSampleResponseDto;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.ProcessSample;
+import com.tokyo.supermix.data.entities.QProcessSample;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.ProcessSampleRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -33,6 +40,8 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   private EmailNotification emailNotification;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<ProcessSample> getAllProcessSamples() {
@@ -130,5 +139,30 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   @Transactional(readOnly = true)
   public Long getCountProcessSampleByPlantCode(String plantCode) {
     return processSampleRepository.countByIncomingSamplePlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<ProcessSampleResponseDto> searchProcessSample(BooleanBuilder booleanBuilder,
+      String incomingSampleCode, String rawMaterialName, String plantCode, Pageable pageable,
+      Pagination pagination) {
+
+    if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
+      booleanBuilder.and(QProcessSample.processSample.incomingSample.code
+          .startsWithIgnoreCase(incomingSampleCode));
+    }
+    if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
+      booleanBuilder
+          .and(QProcessSample.processSample.rawMaterial.name.startsWithIgnoreCase(rawMaterialName));
+    }
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(
+          QProcessSample.processSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<ProcessSample>) processSampleRepository.findAll(booleanBuilder)).stream()
+            .count());
+    return mapper.map(processSampleRepository.findAll(booleanBuilder, pageable).toList(),
+        ProcessSampleResponseDto.class);
   }
 }

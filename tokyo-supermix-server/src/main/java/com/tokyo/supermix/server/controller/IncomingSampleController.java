@@ -186,7 +186,7 @@ public class IncomingSampleController {
   // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   // }
 
-  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
+  @GetMapping(value = EndpointURI.GET_INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
       @PathVariable Long materialSubCategoryId, @PathVariable String plantCode,
       @RequestParam(name = "code") String code) {
@@ -246,5 +246,24 @@ public class IncomingSampleController {
             RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
 
+  }
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
+  public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
+      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode) {
+    if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId),
+                IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+            mapper.map(incomingSampleService.getByMaterialSubCategoryPlantWise(
+                materialSubCategoryId, plantCode), IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
+        validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

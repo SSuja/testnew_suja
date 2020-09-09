@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,15 +12,21 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.entities.QFinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -32,6 +39,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   private EmailNotification emailNotification;
   @Autowired
   private MixDesignRepository mixDesignRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public boolean isFinishProductCodeExist(String code) {
@@ -170,6 +179,39 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
+  public List<FinishProductSampleResponseDto> searchFinishProductSample(
+      BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
+      String mixDesignCode, String plantName, String plantCode, Pageable pageable,
+      Pagination pagination) {
+
+    if (finishProductCode != null && !finishProductCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
+          .startsWithIgnoreCase(finishProductCode));
+    }
+    if (equipmentName != null && !equipmentName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.equipment.name
+          .startsWithIgnoreCase(equipmentName));
+    }
+    if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.code
+          .startsWithIgnoreCase(mixDesignCode));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.name
+          .startsWithIgnoreCase(plantName));
+    }
+
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
+          .startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
+            .stream().count());
+    return mapper.map(finishProductSampleRepository.findAll(booleanBuilder, pageable).toList(),
+        FinishProductSampleResponseDto.class);
+      }
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId) {
     return finishProductSampleRepository
         .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId);

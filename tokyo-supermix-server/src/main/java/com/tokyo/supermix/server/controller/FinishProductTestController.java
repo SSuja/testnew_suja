@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductTestRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductTestResponseDto;
@@ -193,5 +193,25 @@ public class FinishProductTestController {
         finishProductTestService.getFinishProductTestByFinishProductSample(finishProductSampleCode),
         RestApiResponseStatus.OK), HttpStatus.OK);
 
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_SEARCH)
+  public ResponseEntity<Object> getFinishProductTest(@PathVariable String plantCode,
+      @RequestParam(name = "specimenCode", required = false) String specimenCode,
+      @RequestParam(name = "finishProductSampleCode",
+          required = false) String finishProductSampleCode,
+      @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
+      @RequestParam(name = "testName", required = false) String testName,
+      @RequestParam(name = "materialName", required = false) String materialName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+        finishProductTestService.searchFinishProductTest(booleanBuilder, specimenCode,
+            finishProductSampleCode, mixDesignCode, testName, materialName, plantCode, pageable,
+            pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }
