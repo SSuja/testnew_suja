@@ -123,6 +123,9 @@ public class SupplierServiceImpl implements SupplierService {
   @Transactional(readOnly = true)
   public List<Supplier> getByPlantCodeAndSupplierCategoryId(String plantCode,
       Long supplierCategoryId, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
     return supplierRepository.findByPlantCodeAndSupplierCategoriesIdAndNameStartsWith(plantCode,
         supplierCategoryId, name);
   }
