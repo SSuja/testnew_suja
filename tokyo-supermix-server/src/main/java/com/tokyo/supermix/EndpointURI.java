@@ -46,7 +46,7 @@ public final class EndpointURI {
   public static final String GET_SUPPLIER_BY_SUPPLIER_CATEGORY_ID =
       BASE_API_PATH + "supplier-category" + SLASH + "{suppilerCategoryId}" + SLASH + "plant" + SLASH
           + "{plantCode}";
-  public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH +SLASH + "{plantCode}";
+  public static final String SUPPLIER_SEARCH = SUPPLIER + SEARCH + SLASH + "{plantCode}";
   public static final String GET_SUPPLIERS_BY_PLANT_CODE =
       SUPPLIERS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String SUPPLIER_BY_PLANT = SUPPLIER + PLANT_WISE;
@@ -62,7 +62,7 @@ public final class EndpointURI {
   public static final String EMPLOYEE = BASE_API_PATH + "employee";
   public static final String EMPLOYEE_BY_ID = EMPLOYEE + ID;
   public static final String EMPLOYEES = BASE_API_PATH + "employees";
-  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH;
+  public static final String SEARCH_EMPLOYEE = EMPLOYEE + SEARCH + SLASH + "{plantCode}";
   public static final String GET_EMPLOYEES_BY_PLANT_CODE =
       EMPLOYEES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EMPLOYEE_BY_PLANT = EMPLOYEE + PLANT_WISE;
@@ -84,7 +84,7 @@ public final class EndpointURI {
   public static final String POUR = BASE_API_PATH + "pour";
   public static final String POURS = BASE_API_PATH + "pours";
   public static final String POUR_BY_ID = POUR + ID;
-  public static final String POUR_SEARCH = POUR + SEARCH;
+  public static final String POUR_SEARCH = POURS + PLANT_WISE_SEARCH + SLASH + "pourName";
   public static final String GET_POURS_BY_PLANT_CODE =
       POURS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String POUR_BY_PLANT = POUR + PLANT_WISE;
@@ -170,7 +170,7 @@ public final class EndpointURI {
       BASE_API_PATH + "plant-equipment-calibrations";
   public static final String EQUIPMENT_PLANT_CALIBRATION_BY_ID = EQUIPMENT_PLANT_CALIBRATION + ID;
   public static final String EQUIPMENT_PLANT_CALIBRATION_SEARCH =
-      EQUIPMENT_PLANT_CALIBRATION + SEARCH+ SLASH + "{plantCode}";
+      EQUIPMENT_PLANT_CALIBRATION + SEARCH + SLASH + "{plantCode}";
   public static final String GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE =
       EQUIPMENT_PLANT_CALIBRATIONS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT =
@@ -182,7 +182,8 @@ public final class EndpointURI {
   public static final String PLANT_EQUIPMENT = BASE_API_PATH + "plantequipment";
   public static final String PLANT_EQUIPMENTS = BASE_API_PATH + "plantequipments";
   public static final String PLANTEQUIPMENT_BY_SERIALNO = PLANT_EQUIPMENT + SERIALNO;
-  public static final String PLANTEQUIPMENT_SEARCH = PLANT_EQUIPMENT + SEARCH+ SLASH + "{plantCode}";
+  public static final String PLANTEQUIPMENT_SEARCH =
+      PLANT_EQUIPMENT + SEARCH + SLASH + "{plantCode}";
   public static final String GET_PLANTEQUIPMENTS_BY_PLANT_CODE =
       PLANT_EQUIPMENTS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PLANT_EQUIPMENTS_BY_PLANT = PLANT_EQUIPMENT + PLANT_WISE;
@@ -192,7 +193,7 @@ public final class EndpointURI {
   public static final String CUSTOMER = BASE_API_PATH + "customer";
   public static final String CUSTOMERS = BASE_API_PATH + "customers";
   public static final String CUSTOMER_BY_ID = CUSTOMER + ID;
-  public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH;
+  public static final String CUSTOMER_SEARCH = CUSTOMER + SEARCH + SLASH + "{plantCode}";
   public static final String GET_CUSTOMERS_BY_PLANT_CODE =
       CUSTOMERS + PLANT_WISE_SEARCH + SLASH + "customerName";
   public static final String GET_TEST_DETAILS_BY_CONFIGURE_ID =
@@ -231,7 +232,7 @@ public final class EndpointURI {
   public static final String PROJECT = BASE_API_PATH + "project";
   public static final String PROJECT_BY_ID = PROJECT + CODE;
   public static final String PROJECTS = BASE_API_PATH + "projects";
-  public static final String SEARCH_PROJECT = PROJECT + SEARCH;
+  public static final String SEARCH_PROJECT = PROJECT + SEARCH + SLASH + "{plantCode}";
   public static final String GET_PROJECTS_BY_PLANT_CODE =
       PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PROJECT_BY_PLANT = PROJECT + PLANT_WISE;
@@ -253,7 +254,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
   public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
       INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
-  public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH+ SLASH + "{plantCode}";
+  public static final String INCOMING_SAMPLE_SEARCH =
+      INCOMING_SAMPLE + SEARCH + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}" + SLASH
           + "plant" + SLASH + "{plantCode}";
@@ -363,7 +365,7 @@ public final class EndpointURI {
           + SLASH + "{testConfigId}" + PLANT_WISE;
   public static final String MATERIAL_TEST_BY_PLANT_CODE =
       MATERIAL_TEST + SLASH + "incoming-sample" + PLANT_WISE;
-  public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH+ SLASH + "{plantCode}";
+  public static final String SEARCH_MATERIAL_TEST = MATERIAL_TEST + SEARCH + SLASH + "{plantCode}";
   public static final String GET_MATERIAL_TEST_BY_PLANT =
       MATERIAL_TEST + SLASH + "plant" + SLASH + "{plantCode}";
 
