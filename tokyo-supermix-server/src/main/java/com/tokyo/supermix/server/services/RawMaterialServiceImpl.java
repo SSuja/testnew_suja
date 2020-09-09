@@ -97,7 +97,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public Long countRawMaterialByPlant(String plantCode) {
-    return rawMaterialRepository.countByPlantCode(plantCode);
+    return rawMaterialRepository.countByPlantCodeOrPlantNull(plantCode);
   }
 
   @Transactional(readOnly = true)
@@ -105,7 +105,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (name.isEmpty()) {
       return null;
     }
-    return rawMaterialRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+    return rawMaterialRepository.findByPlantCodeOrPlantNullAndNameStartsWith(plantCode, name);
   }
 
   @Transactional(readOnly = true)
@@ -113,6 +113,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (name.isEmpty()) {
       return null;
     }
+
+
+    // this is not good way
     return rawMaterialRepository.findByNameStartsWith(name);
   }
 
