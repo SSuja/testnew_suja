@@ -418,7 +418,7 @@ public final class EndpointURI {
       BASE_API_PATH + "finish-product-sample-issues";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + CODE;
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH =
-      FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH;
+      FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT_CODE =
       FINISH_PRODUCT_SAMPLE_ISSUES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT =
