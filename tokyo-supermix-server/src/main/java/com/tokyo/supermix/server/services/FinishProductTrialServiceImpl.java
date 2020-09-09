@@ -210,7 +210,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   @Transactional
-  public void saveAverageCalculationFinishProductTrials(List<FinishProductTrial> finishProductTrialList) {
+  public void saveAverageCalculationFinishProductTrials(
+      List<FinishProductTrial> finishProductTrialList) {
     finishProductTrialRepository.saveAll(finishProductTrialList);
   }
 
@@ -343,20 +344,22 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     List<TestConfigure> configureList =
         testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(
             mixDesign.getRawMaterial().getMaterialSubCategory().getId());
-    List<FinishProductTest> finishTest =
-        finishProductTestRepository.findByTestConfigureMaterialSubCategoryIdAndStatus(
-            mixDesign.getRawMaterial().getMaterialSubCategory().getId(), Status.PASS);
-    if ((finishTest.size() == configureList.size() || (finishTest.size() > configureList.size()))) {
-      finishProductSample.setStatus(finishproductTest.getStatus());
-      finishProductSampleRepository.save(finishProductSample);
-      mixDesign.setStatus(finishproductTest.getStatus());
-      mixDesignRepository.save(mixDesign);
-    } else {
-      finishProductSample.setStatus(Status.PROCESS);
-      finishProductSampleRepository.save(finishProductSample);
-    }
+    List<FinishProductTest> finishTest = finishProductTestRepository
+        .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureMaterialSubCategoryIdAndStatus(
+            mixDesign.getCode(), mixDesign.getRawMaterial().getMaterialSubCategory().getId(),
+            Status.PASS);
     if (finishproductTest.getTestConfigure().isCoreTest()) {
-      if (finishproductTest.getStatus().equals(Status.FAIL)) {
+      if (finishproductTest.getStatus().equals(Status.PASS)) {
+        if ((finishTest.size() >= configureList.size())) {
+          finishProductSample.setStatus(finishproductTest.getStatus());
+          finishProductSampleRepository.save(finishProductSample);
+          mixDesign.setStatus(finishproductTest.getStatus());
+          mixDesignRepository.save(mixDesign);
+        } else {
+          finishProductSample.setStatus(Status.PROCESS);
+          finishProductSampleRepository.save(finishProductSample);
+        }
+      } else {
         finishProductSample.setStatus(finishproductTest.getStatus());
         finishProductSampleRepository.save(finishProductSample);
         mixDesign.setStatus(finishproductTest.getStatus());
