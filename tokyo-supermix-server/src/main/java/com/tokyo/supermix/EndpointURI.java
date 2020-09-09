@@ -399,7 +399,8 @@ public final class EndpointURI {
       FINISH_PRODUCT_SAMPLE + SLASH + "mix-design-code" + SLASH + "{mixDesignCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_CONCRETE_MIXER_ID =
       FINISH_PRODUCT_SAMPLE + SLASH + "concrete-mixer-id" + SLASH + "{concreteMixerId}";
-  public static final String FINISH_PRODUCT_SAMPLE_SEARCH = FINISH_PRODUCT_SAMPLE + SEARCH;
+  public static final String FINISH_PRODUCT_SAMPLE_SEARCH =
+      FINISH_PRODUCT_SAMPLE + SEARCH + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLES_BY_PLANT_CODE =
       FINISH_PRODUCT_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_BY_STATUS =

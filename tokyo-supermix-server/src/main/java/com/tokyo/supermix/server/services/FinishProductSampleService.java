@@ -4,9 +4,12 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductSampleService {
@@ -48,4 +51,9 @@ public interface FinishProductSampleService {
   public Long getCountFinishProductSample();
 
   public Long getCountFinishProductSampleByPlantCode(String plantCode);
+
+  public List<FinishProductSampleResponseDto> searchFinishProductSample(
+      BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
+      String mixDesignCode, String plantName, String plantCode, Pageable pageable,
+      Pagination pagination);
 }
