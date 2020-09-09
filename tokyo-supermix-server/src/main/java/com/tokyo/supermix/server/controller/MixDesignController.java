@@ -192,5 +192,26 @@ public class MixDesignController {
                 plantName, plantCode, pageable, pagination),
             RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
+      }
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGNS_BY_PLANT)
+  public ResponseEntity<Object> getCodeSearch(@PathVariable String plantCode,
+      @RequestParam(name = "code") String code) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(mixDesignService.getCode(code), MixDesignResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(mixDesignService.getCodeByPlantCode(plantCode, code), MixDesignResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS)
+  public ResponseEntity<Object> getCodeWithMaterialIdSearch(@PathVariable Long rawMaterialId,
+      @PathVariable Status status, @RequestParam(name = "code") String code) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(mixDesignService.getCodeAndRawMaterialId(rawMaterialId, status, code),
+            MixDesignResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

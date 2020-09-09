@@ -185,5 +185,28 @@ public class MixDesignServiceImpl implements MixDesignService {
         ((Collection<MixDesign>) mixDesignRepository.findAll(booleanBuilder)).stream().count());
     return mapper.map(mixDesignRepository.findAll(booleanBuilder, pageable).toList(),
         MixDesignResponseDto.class);
+      }
+  public List<MixDesign> getCodeByPlantCode(String plantCode, String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return mixDesignRepository.findByPlantCodeAndCodeStartsWith(plantCode, code);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getCode(String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return mixDesignRepository.findByCodeStartsWith(code);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesign> getCodeAndRawMaterialId(Long rawMaterialId, Status status, String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
+    return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeStartsWith(rawMaterialId, status,
+        code);
   }
 }

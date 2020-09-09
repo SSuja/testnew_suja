@@ -18,6 +18,7 @@ import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -88,28 +89,6 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
-		return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
-	}
-
-	@Transactional(readOnly = true)
-	public List<RawMaterial> getRawMaterialsByMaterialSubCategoryAndPlantCode(Long materialSubCategoryId,
-			String plantCode) {
-		return rawMaterialRepository.findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(materialSubCategoryId,
-				plantCode);
-	}
-
-	@Transactional(readOnly = true)
-	public Long countRawMaterials() {
-		return rawMaterialRepository.count();
-	}
-
-	@Transactional(readOnly = true)
-	public Long countRawMaterialByPlant(String plantCode) {
-		return rawMaterialRepository.countByPlantCode(plantCode);
-	}
-
-	@Transactional(readOnly = true)
 	public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
 			String materialSubCategoryName, String plantName, String plantCode, Pageable pageable,
 			Pagination pagination) {
@@ -132,5 +111,76 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 				((Collection<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder)).stream().count());
 		return mapper.map(rawMaterialRepository.findAll(booleanBuilder, pageable).toList(),
 				RawMaterialResponseDto.class);
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
+		return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getRawMaterialsByMaterialSubCategoryAndPlantCode(Long materialSubCategoryId,
+			String plantCode) {
+		return rawMaterialRepository.findByMaterialSubCategoryIdAndPlantCodeOrPlantNull(materialSubCategoryId,
+				plantCode);
+	}
+
+	@Transactional(readOnly = true)
+	public Long countRawMaterials() {
+		return rawMaterialRepository.count();
+	}
+
+	@Transactional(readOnly = true)
+	public Long countRawMaterialByPlant(String plantCode) {
+		return rawMaterialRepository.countByPlantCodeOrPlantNull(plantCode);
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getNameByPlantCode(String plantCode, String name) {
+		if (name.isEmpty()) {
+			return null;
+		}
+		return rawMaterialRepository.findByPlantCodeOrPlantNullAndNameStartsWith(plantCode, name);
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getName(String name) {
+		if (name.isEmpty()) {
+			return null;
+		}
+		return rawMaterialRepository.findByNameStartsWith(name);
+	}
+
+	@Transactional(readOnly = true)
+	public boolean isPrefixAlreadyExists(String prefix) {
+		if (rawMaterialRepository.existsByPrefix(prefix)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Transactional(readOnly = true)
+	public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
+		if ((!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+				&& rawMaterialRepository.existsByPrefix(prefix)) {
+			return true;
+		}
+		return false;
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getRawMaterialsByMainType(MainType mainType) {
+		return rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryMainType(mainType);
+
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getAllRawMaterialsPage(Pageable pageable) {
+		return rawMaterialRepository.findAll(pageable).toList();
+	}
+
+	@Transactional(readOnly = true)
+	public List<RawMaterial> getAllRawMaterials() {
+		return rawMaterialRepository.findAll();
 	}
 }

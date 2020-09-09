@@ -56,4 +56,8 @@ public interface FinishProductSampleService {
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, Pageable pageable,
       Pagination pagination);
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId);
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(Long subCategoryId,
+      String plantCode);
 }

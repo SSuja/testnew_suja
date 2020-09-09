@@ -51,15 +51,15 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(
       Long materialSubCategoryId, Date sqlDate, String plantCode);
 
-  List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+  // List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
 
-  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
-      Long materialSubCategoryId, String plantCode);
+  // List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
+  // Long materialSubCategoryId, String plantCode);
 
   List<IncomingSample> findAllByPlantCodeInOrderByUpdatedAtDesc(
       List<String> permissionPlantCodeByCurrentUser, Pageable pageable);
 
-  List<IncomingSample> findByPlantCodeOrderByUpdatedAtDesc(String plantCode,Pageable pageable);
+  List<IncomingSample> findByPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
 
   Page<IncomingSample> findAll(Pageable pageable);
 
@@ -68,4 +68,15 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findByPlantCodeAndCodeStartsWith(String plantCode, String code);
 
   List<IncomingSample> findByCodeStartsWith(String code);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndCodeStartsWith(
+      Long materialSubCategoryId, String code);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCodeAndCodeStartsWith(
+      Long materialSubCategoryId, String plantCode, String code);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
+      Long materialSubCategoryId, String plantCode);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
 }

@@ -1,24 +1,24 @@
 package com.tokyo.supermix.server.services;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.entities.QIncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -112,34 +112,41 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     return incomingSampleRepository.existsByStatus(status);
   }
 
-  @Transactional(readOnly = true)
-  public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size) {
-    return incomingSampleRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
-  }
+  // @Transactional(readOnly = true)
+  // public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size) {
+  // return incomingSampleRepository.findAll(predicate,
+  // PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+  // }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode,Pageable pageable) {
+  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode, Pageable pageable) {
     return incomingSampleRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser,Pageable pageable) {
+  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(UserPrincipal currentUser,
+      Pageable pageable) {
     return incomingSampleRepository.findAllByPlantCodeInOrderByUpdatedAtDesc(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_INCOMING_SAMPLE),pageable);
+            PermissionConstants.VIEW_INCOMING_SAMPLE),
+        pageable);
   }
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
-      String plantCode) {
+      String plantCode, String code) {
+    if (code.isEmpty()) {
+      return null;
+    }
     return incomingSampleRepository
-        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId, plantCode);
+        .findByRawMaterialMaterialSubCategoryIdAndPlantCodeAndCodeStartsWith(materialSubCategoryId,
+            plantCode, code);
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
-    return incomingSampleRepository.findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId, String code) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndCodeStartsWith(materialSubCategoryId, code);
   }
 
   @Transactional(readOnly = true)
@@ -149,23 +156,67 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
 
   @Transactional(readOnly = true)
   public Long getCountIncomingSampleByPlantCode(String plantCode) {
-    return  incomingSampleRepository.countByPlantCode(plantCode);
+    return incomingSampleRepository.countByPlantCode(plantCode);
   }
 
-  @Override
+  @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleCodeByPlantCode(String plantCode, String code) {
     if (code.isEmpty()) {
       return null;
     }
-    return incomingSampleRepository.findByPlantCodeAndCodeStartsWith(plantCode,code);
+    return incomingSampleRepository.findByPlantCodeAndCodeStartsWith(plantCode, code);
   }
 
 
-  @Override
+  @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleCode(String code) {
     if (code.isEmpty()) {
       return null;
     }
     return incomingSampleRepository.findByCodeStartsWith(code);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
+      String status, String rawMaterialName, String plantName, String supplierName,
+      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode) {
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QIncomingSample.incomingSample.code.startsWithIgnoreCase(code));
+    }
+    if (vehicleNo != null && !vehicleNo.isEmpty()) {
+      booleanBuilder.and(QIncomingSample.incomingSample.vehicleNo.startsWithIgnoreCase(vehicleNo));
+    }
+    if (date != null) {
+      booleanBuilder.and(QIncomingSample.incomingSample.date.eq(date));
+    }
+    if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
+      booleanBuilder.and(
+          QIncomingSample.incomingSample.rawMaterial.name.startsWithIgnoreCase(rawMaterialName));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QIncomingSample.incomingSample.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if (supplierName != null && !supplierName.isEmpty()) {
+      booleanBuilder
+          .and(QIncomingSample.incomingSample.supplier.name.startsWithIgnoreCase(supplierName));
+    }
+    if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    return incomingSampleRepository.findAll(booleanBuilder, pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+      String plantCode) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId,
+            plantCode);
   }
 }

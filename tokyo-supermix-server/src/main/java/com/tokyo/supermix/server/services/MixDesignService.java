@@ -51,4 +51,9 @@ public interface MixDesignService {
   public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
       String materialName, String subCategoryName, String plantName, String plantCode,
       Pageable pageable, Pagination pagination);
+  public List<MixDesign> getCodeByPlantCode(String plantCode, String code);
+
+  public List<MixDesign> getCode(String code);
+
+  public List<MixDesign> getCodeAndRawMaterialId(Long rawMaterialId, Status status, String code);
 }

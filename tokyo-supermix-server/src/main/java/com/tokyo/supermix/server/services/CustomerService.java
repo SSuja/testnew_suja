@@ -2,11 +2,11 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.CustomerResponseDto;
 import com.tokyo.supermix.data.entities.Customer;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface CustomerService {
@@ -34,8 +34,6 @@ public interface CustomerService {
 
   public boolean isNameExist(String name);
 
-  public Page<Customer> searchCustomer(Predicate predicate, int page, int size);
-
   public List<CustomerResponseDto> getAllCustomer(Pageable pageable);
 
   public List<CustomerResponseDto> getCustomerByPlantCode(String plantCode, Pageable pageable);
@@ -47,4 +45,8 @@ public interface CustomerService {
   public List<Customer> getCustomerNameByPlantCode(String plantCode, String name);
 
   public List<Customer> getCustomerName(String name);
+
+  public List<CustomerResponseDto> searchCustomerByPlantCode(String name, String email,
+      String phoneNumber, String address, BooleanBuilder booleanBuilder, String plantCode,
+      Pageable pageable, Pagination pagination);
 }

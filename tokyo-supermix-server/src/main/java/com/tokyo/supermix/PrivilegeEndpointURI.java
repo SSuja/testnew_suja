@@ -42,6 +42,7 @@ public final class PrivilegeEndpointURI {
   public static final String USER_BY_PLANT = USER + PLANT_WISE;
   public static final String USER_BY_PLANT_BY_USERTYPE = USER + "/plant"+SLASH+"{userType}";
   public static final String USER_BY_USERTYPE = USER +SLASH+"user-type"+SLASH+"{userType}";
+  public static final String USER_SEARCH = USER + SEARCH+ SLASH + "{plantCode}";
   /*
    * User Role
    */

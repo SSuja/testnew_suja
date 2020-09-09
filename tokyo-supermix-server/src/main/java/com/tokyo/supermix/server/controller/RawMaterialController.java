@@ -21,6 +21,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -34,6 +35,7 @@ import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.RawMaterialService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -60,6 +62,10 @@ public class RawMaterialController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
           validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
+    if (rawMaterialService.isPrefixAlreadyExists(rawMaterialRequestDto.getPrefix())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+          validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
     rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_RAW_MATERIAL_SUCCESS),
@@ -67,17 +73,10 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
-  public ResponseEntity<Object> getAllRawMaterials(@RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    int totalpage = 0;
-    Pagination pagination = new Pagination(page, size, totalpage, 0l);
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
-            mapper.map(rawMaterialService.getAllRawMaterials(pageable),
-                RawMaterialResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        HttpStatus.OK);
+  public ResponseEntity<Object> getAllRawMaterials() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIAL_BY_ID)
@@ -100,6 +99,11 @@ public class RawMaterialController {
           rawMaterialRequestDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
             validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      if (rawMaterialService.isPrefixAlreadyExistsUpdate(rawMaterialRequestDto.getId(),
+          rawMaterialRequestDto.getPrefix())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
       rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
       return new ResponseEntity<>(
@@ -154,7 +158,7 @@ public class RawMaterialController {
       pagination.setTotalRecords(rawMaterialService.countRawMaterials());
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
-              mapper.map(rawMaterialService.getAllRawMaterials(pageable),
+              mapper.map(rawMaterialService.getAllRawMaterialsPage(pageable),
                   RawMaterialResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);
@@ -216,5 +220,25 @@ public class RawMaterialController {
                 plantName, plantCode, pageable, pagination),
             RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
+      }
+
+  @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_PLANT)
+  public ResponseEntity<Object> getNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+          mapper.map(rawMaterialService.getName(name), RawMaterialResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(rawMaterialService.getNameByPlantCode(plantCode, name), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_MAIN_TYPE)
+  public ResponseEntity<Object> getRawMaterialsByMainType(@PathVariable MainType mainType) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(rawMaterialService.getRawMaterialsByMainType(mainType), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

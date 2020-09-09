@@ -8,7 +8,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.EnrollWriter;
 import com.tokyo.supermix.config.export.SupplierFillManager;
@@ -180,15 +179,6 @@ public class SupplierController {
     }
   }
 
-  @GetMapping(value = EndpointURI.SUPPLIER_SEARCH)
-  public ResponseEntity<Object> getSupplierSearch(
-      @QuerydslPredicate(root = Supplier.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.SUPPLIER,
-            supplierService.searchSupplier(predicate, page, size), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
 
   // @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE)
   // public ResponseEntity<Object> getSupplierByPlantCode(@PathVariable String plantCode) {
@@ -203,12 +193,13 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY)
   public ResponseEntity<Object> getSupplierByPlantCodeAndSupplierCategoryId(
-      @PathVariable String plantCode, @PathVariable Long supplierCategoryId) {
+      @PathVariable String plantCode, @PathVariable Long supplierCategoryId,
+      @RequestParam(name = "name") String name) {
     if (supplierService.isPlantCodeAndSupplierCategoryIdExist(plantCode, supplierCategoryId)) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.SUPPLIER,
               mapper.map(supplierService.getByPlantCodeAndSupplierCategoryId(plantCode,
-                  supplierCategoryId), SupplierResponseDto.class),
+                  supplierCategoryId, name), SupplierResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
@@ -256,5 +247,26 @@ public class SupplierController {
         mapper.map(supplierService.getSupplierNameByPlantCode(plantCode, name),
             SupplierResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SUPPLIER_SEARCH)
+  public ResponseEntity<Object> getSupplierSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name,
+      @RequestParam(name = "address", required = false) String address,
+      @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
+      @RequestParam(name = "email", required = false) String email,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    pagination.setTotalRecords(
+        plantCode.equalsIgnoreCase(Constants.ADMIN) ? supplierService.getCountSupplier()
+            : supplierService.getCountSupplierByPlantCode(plantCode));
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
+        mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
+            booleanBuilder, pageable, plantCode), SupplierResponseDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+
   }
 }

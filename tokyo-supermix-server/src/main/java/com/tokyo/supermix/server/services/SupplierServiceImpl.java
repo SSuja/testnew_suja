@@ -3,14 +3,12 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.entities.QSupplier;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
@@ -18,6 +16,7 @@ import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -110,11 +109,6 @@ public class SupplierServiceImpl implements SupplierService {
     return supplierRepository.findBySupplierCategoriesIdAndPlantCode(suppilerCategoryId, plantCode);
   }
 
-  @Transactional(readOnly = true)
-  public Page<Supplier> searchSupplier(Predicate predicate, int page, int size) {
-    return supplierRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
 
   @Transactional(readOnly = true)
   public List<Supplier> getSupplierByPlantCode(String plantCode, Pageable pageable) {
@@ -128,8 +122,12 @@ public class SupplierServiceImpl implements SupplierService {
 
   @Transactional(readOnly = true)
   public List<Supplier> getByPlantCodeAndSupplierCategoryId(String plantCode,
-      Long supplierCategoryId) {
-    return supplierRepository.findByPlantCodeAndSupplierCategoriesId(plantCode, supplierCategoryId);
+      Long supplierCategoryId, String name) {
+    if (name.isEmpty()) {
+      return null;
+    }
+    return supplierRepository.findByPlantCodeAndSupplierCategoriesIdAndNameStartsWith(plantCode,
+        supplierCategoryId, name);
   }
 
   @Transactional(readOnly = true)
@@ -163,4 +161,28 @@ public class SupplierServiceImpl implements SupplierService {
     }
     return supplierRepository.findByNameStartsWith(name);
   }
+
+  @Transactional(readOnly = true)
+  public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
+      String email, String plantName, BooleanBuilder booleanBuilder, Pageable pageable,
+      String plantCode) {
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.name.startsWithIgnoreCase(name));
+    }
+    if (address != null && !address.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.address.startsWithIgnoreCase(address));
+    }
+    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.phoneNumber.startsWithIgnoreCase(phoneNumber));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      booleanBuilder.and(QSupplier.supplier.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    return supplierRepository.findAll(booleanBuilder, pageable).toList();
+
+  }
+
 }

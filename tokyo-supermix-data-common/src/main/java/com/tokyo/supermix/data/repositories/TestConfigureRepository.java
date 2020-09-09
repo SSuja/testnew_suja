@@ -25,10 +25,12 @@ public interface TestConfigureRepository
       MainType testType);
 
   TestConfigure findByMaterialCategoryName(String materialCategoryName);
-  
+
   List<TestConfigure> findByRawMaterialIdAndCoreTestTrue(Long rawMaterialId);
- 
+
   boolean existsByRawMaterialId(Long rawMaterialId);
-  
+
   List<TestConfigure> findByMaterialCategoryId(Long materialCategoryId);
+
+  boolean existsByPrefix(String prefix);
 }
