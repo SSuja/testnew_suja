@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.MainType;
 
 public interface RawMaterialService {
   public void saveRawMaterial(RawMaterial rawMaterial);
@@ -13,7 +14,7 @@ public interface RawMaterialService {
 
   public boolean isRawMaterialExist(Long id);
 
-  public List<RawMaterial> getAllRawMaterials(Pageable pageable);
+  public List<RawMaterial> getAllRawMaterials();
 
   public RawMaterial getRawMaterialById(Long id);
 
@@ -43,4 +44,8 @@ public interface RawMaterialService {
   public boolean isPrefixAlreadyExists(String prefix);
 
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
+
+  public List<RawMaterial> getRawMaterialsByMainType(MainType mainType);
+
+  public List<RawMaterial> getAllRawMaterialsPage(Pageable pageable);
 }
