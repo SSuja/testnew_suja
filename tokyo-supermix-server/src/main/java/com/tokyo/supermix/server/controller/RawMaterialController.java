@@ -22,6 +22,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -73,17 +74,10 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
-  public ResponseEntity<Object> getAllRawMaterials(@RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    int totalpage = 0;
-    Pagination pagination = new Pagination(page, size, totalpage, 0l);
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
-            mapper.map(rawMaterialService.getAllRawMaterials(pageable),
-                RawMaterialResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        HttpStatus.OK);
+  public ResponseEntity<Object> getAllRawMaterials() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIAL_BY_ID)
@@ -175,7 +169,7 @@ public class RawMaterialController {
       pagination.setTotalRecords(rawMaterialService.countRawMaterials());
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
-              mapper.map(rawMaterialService.getAllRawMaterials(pageable),
+              mapper.map(rawMaterialService.getAllRawMaterialsPage(pageable),
                   RawMaterialResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);
@@ -230,6 +224,13 @@ public class RawMaterialController {
     }
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
         .map(rawMaterialService.getNameByPlantCode(plantCode, name), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_MAIN_TYPE)
+  public ResponseEntity<Object> getRawMaterialsByMainType(@PathVariable MainType mainType) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(rawMaterialService.getRawMaterialsByMainType(mainType), RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

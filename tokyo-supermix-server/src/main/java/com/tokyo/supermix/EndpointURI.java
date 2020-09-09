@@ -159,6 +159,8 @@ public final class EndpointURI {
       + "material-sub-category" + SLASH + "{materialSubCategoryId}" + PLANT_WISE;
   public static final String GET_RAW_MATERIALS_BY_PLANT =
       RAW_MATERIAL + PLANT_WISE_SEARCH + SLASH + "name";
+  public static final String GET_RAW_MATERIALS_BY_MAIN_TYPE =
+      RAW_MATERIAL + SLASH + "main-type" + SLASH + "{mainType}";
   /*
    * EquipmentPlantCalibration apis
    */
