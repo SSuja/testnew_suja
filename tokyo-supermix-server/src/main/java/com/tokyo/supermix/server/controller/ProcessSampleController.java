@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.ProcessSampleRequestDto;
 import com.tokyo.supermix.data.dto.ProcessSampleResponseDto;
@@ -140,15 +139,6 @@ public class ProcessSampleController {
         validationFailureStatusCodes.getProcessSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_SEARCH)
-  public ResponseEntity<Object> getProcessSampleSearch(
-      @QuerydslPredicate(root = ProcessSample.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PROCESS_SAMPLES,
-        processSampleService.searchProcessSample(predicate, page, size), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.PROCESS_SAMPLES_BY_PLANT_CODE)
   public ResponseEntity<Object> getProcessSampleByPlantCode(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
@@ -160,5 +150,20 @@ public class ProcessSampleController {
     logger.debug("No ProcessSample record exist for given plantCode");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_SEARCH)
+  public ResponseEntity<Object> getProcessSampleSearch(@PathVariable String plantCode,
+      @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
+      @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PROCESS_SAMPLES,
+        processSampleService.searchProcessSample(booleanBuilder, incomingSampleCode,
+            rawMaterialName, plantCode, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

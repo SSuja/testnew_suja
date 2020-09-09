@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,11 +9,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.PourDtoResponse;
 import com.tokyo.supermix.data.entities.Pour;
+import com.tokyo.supermix.data.entities.QPour;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PourRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -22,6 +28,8 @@ public class PourServiceImpl implements PourService {
   private PourRepository pourRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional()
   public Pour savePour(Pour pour) {
@@ -109,4 +117,25 @@ public class PourServiceImpl implements PourService {
     }
     return pourRepository.findByNameStartsWith(name);
   }
+
+  @Transactional(readOnly = true)
+  public List<PourDtoResponse> searchPour(BooleanBuilder booleanBuilder, String name,
+      String projectName, String plantCode, Pageable pageable, Pagination pagination) {
+
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QPour.pour.name.startsWithIgnoreCase(name));
+    }
+    if (projectName != null && !projectName.isEmpty()) {
+      booleanBuilder.and(QPour.pour.project.name.startsWithIgnoreCase(projectName));
+    }
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QPour.pour.project.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<Pour>) pourRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(pourRepository.findAll(booleanBuilder, pageable).toList(),
+        PourDtoResponse.class);
+  }
 }
+
