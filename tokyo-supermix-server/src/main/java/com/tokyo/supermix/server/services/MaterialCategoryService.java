@@ -26,4 +26,8 @@ public interface MaterialCategoryService {
   public boolean isMainTypeExist(MainType mainType);
 
   public boolean isExistByNameAndMainType(String name, MainType mainType);
+
+  public boolean isPrefixAlreadyExists(String prefix);
+
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 }

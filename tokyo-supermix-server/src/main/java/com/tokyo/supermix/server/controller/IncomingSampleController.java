@@ -1,11 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
+import java.sql.Date;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
 import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
@@ -173,14 +173,6 @@ public class IncomingSampleController {
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
-  public ResponseEntity<Object> getIncomingSampleSearch(
-      @QuerydslPredicate(root = IncomingSample.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-        incomingSampleService.searchIncomingSample(predicate, page, size),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
-  }
 
   // @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
   // public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
@@ -196,21 +188,63 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
-      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode) {
+      @PathVariable Long materialSubCategoryId, @PathVariable String plantCode,
+      @RequestParam(name = "code") String code) {
     if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
       if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
         return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId),
+            mapper.map(incomingSampleService.getByMaterialSubCategory(materialSubCategoryId, code),
                 IncomingSampleResponseDto.class),
             RestApiResponseStatus.OK), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
             mapper.map(incomingSampleService.getByMaterialSubCategoryPlantWise(
-                materialSubCategoryId, plantCode), IncomingSampleResponseDto.class),
+                materialSubCategoryId, plantCode, code), IncomingSampleResponseDto.class),
             RestApiResponseStatus.OK), HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.GET_INCOMING_SAMPLE_BY_PLANT_CODE)
+  public ResponseEntity<Object> getCustomerNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "code") String code) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES, mapper
+          .map(incomingSampleService.getIncomingSampleCode(code), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+        mapper.map(incomingSampleService.getIncomingSampleCodeByPlantCode(plantCode, code),
+            IncomingSampleResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
+  public ResponseEntity<Object> getIncomingSampleSearch(@PathVariable String plantCode,
+      @RequestParam(name = "code") String code,
+      @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
+      @RequestParam(name = "date", required = false) Date date,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "supplierName", required = false) String supplierName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    pagination.setTotalRecords(
+        plantCode.equalsIgnoreCase(Constants.ADMIN) ? incomingSampleService.getCountIncomingSample()
+            : incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
+            mapper.map(
+                incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
+                    rawMaterialName, plantName, supplierName, booleanBuilder, pageable, plantCode),
+                IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
+
   }
 }

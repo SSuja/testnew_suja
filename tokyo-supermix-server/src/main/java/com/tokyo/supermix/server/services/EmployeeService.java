@@ -42,7 +42,11 @@ public interface EmployeeService {
 
   public List<Employee> getEmployeeByPlantCode(String plantCode, Pageable pageable);
 
-  public List<EmployeeResponseDto> searchEmployee(BooleanBuilder booleanBuilder, String firstName, String email, String lastName, String address,
-      String phoneNumber, String plantName, String designationName, String plantCode,
-      Pageable pageable, Pagination pagination);
+  public List<EmployeeResponseDto> searchEmployee(BooleanBuilder booleanBuilder, String firstName,
+      String email, String lastName, String address, String phoneNumber, String plantName,
+      String designationName, String plantCode, Pageable pageable, Pagination pagination);
+
+  public List<Employee> getFirstNameByPlantCode(String plantCode, String firstName);
+
+  public List<Employee> getFirstName(String firstName);
 }

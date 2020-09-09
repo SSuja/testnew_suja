@@ -184,6 +184,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
     pagination.setTotalRecords(
         ((Collection<Employee>) employeeRepository.findAll(booleanBuilder)).stream().count());
-    return mapper.map(employeeRepository.findAll(booleanBuilder, pageable).toList(), EmployeeResponseDto.class);
+    return mapper.map(employeeRepository.findAll(booleanBuilder, pageable).toList(),
+        EmployeeResponseDto.class);
+
+  }
+
+  @Transactional(readOnly = true)
+  public List<Employee> getFirstNameByPlantCode(String plantCode, String firstName) {
+    if (firstName.isEmpty()) {
+      return null;
+    }
+    return employeeRepository.findByPlantCodeAndFirstNameStartsWith(plantCode, firstName);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Employee> getFirstName(String firstName) {
+    if (firstName.isEmpty()) {
+      return null;
+    }
+    return employeeRepository.findByFirstNameStartsWith(firstName);
   }
 }

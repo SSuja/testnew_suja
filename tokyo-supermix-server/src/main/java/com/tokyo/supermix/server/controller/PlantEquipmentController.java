@@ -8,7 +8,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.EnrollWriter;
 import com.tokyo.supermix.config.export.PlantEquipmentFillManager;
@@ -30,6 +29,7 @@ import com.tokyo.supermix.data.dto.PlantEquipmentRequestDto;
 import com.tokyo.supermix.data.dto.PlantEquipmentResponseDto;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -59,6 +59,8 @@ public class PlantEquipmentController {
   private PlantEquipmentService plantEquipmentService;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private  PlantRepository plantRepository;
   @Autowired
   private FileStorageService fileStorageService;
   @Autowired
@@ -136,12 +138,31 @@ public class PlantEquipmentController {
   }
 
   @GetMapping(value = EndpointURI.PLANTEQUIPMENT_SEARCH)
-  public ResponseEntity<Object> getPlantEquipmentSearch(
-      @QuerydslPredicate(root = PlantEquipment.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-        plantEquipmentService.searchPlantEquipment(predicate, page, size),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getPlantEquipmentSearch(@PathVariable String plantCode,
+      @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "serialNo", required = false) String serialNo,
+      @RequestParam(name = "brandName", required = false) String brandName,
+      @RequestParam(name = "modelName", required = false) String modelName,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "equipmentName", required = false) String equipmentName
+      )      {
+
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination= new Pagination(0, 0, 0, 0l); 
+    BooleanBuilder booleanBuilder = new BooleanBuilder(); 
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
+      pagination.setTotalRecords(plantCode.equalsIgnoreCase(Constants.ADMIN) ?
+          plantEquipmentService.getCountPlantEquipment() : plantEquipmentService.getCountPlantEquipmentByPlantCode(plantCode));   
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
+        mapper.map(
+            plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName, plantName, equipmentName,booleanBuilder, page, size, pageable, plantCode),
+            PlantEquipmentResponseDto.class),
+        RestApiResponseStatus.OK,
+        pagination),HttpStatus.OK);
+  }
+  return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+      validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.GET_PLANTEQUIPMENTS_BY_PLANT_CODE)

@@ -8,7 +8,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.EnrollWriter;
 import com.tokyo.supermix.config.export.SupplierFillManager;
@@ -34,12 +33,11 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FileStorageService;
-import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.SupplierCategoryService;
 import com.tokyo.supermix.server.services.SupplierService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -60,8 +58,6 @@ public class SupplierController {
   @Autowired
   private Mapper mapper;
   @Autowired
-  private PlantService plantService;
-  @Autowired
   private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
@@ -76,23 +72,26 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.SUPPLIER_BY_PLANT)
   public ResponseEntity<Object> getSuppliersByPlant(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode,@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(supplierService.getCountSupplier());
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
-          mapper.map(supplierService.getSuppliersByPlant(currentUser,pageable), SupplierResponseDto.class),
-          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
+          mapper.map(supplierService.getSuppliersByPlant(currentUser, pageable),
+              SupplierResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER)
         .contains(plantCode)) {
       pagination.setTotalRecords(supplierService.getCountSupplierByPlantCode(plantCode));
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
-          mapper.map(supplierService.getSupplierByPlantCode(plantCode,pageable), SupplierResponseDto.class),
-          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
+          mapper.map(supplierService.getSupplierByPlantCode(plantCode, pageable),
+              SupplierResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -180,35 +179,27 @@ public class SupplierController {
     }
   }
 
-  @GetMapping(value = EndpointURI.SUPPLIER_SEARCH)
-  public ResponseEntity<Object> getSupplierSearch(
-      @QuerydslPredicate(root = Supplier.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.SUPPLIER,
-            supplierService.searchSupplier(predicate, page, size), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
 
-//  @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE)
-//  public ResponseEntity<Object> getSupplierByPlantCode(@PathVariable String plantCode) {
-//    if (plantService.isPlantExist(plantCode)) {
-//      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
-//          mapper.map(supplierService.getSupplierByPlantCode(plantCode), SupplierResponseDto.class),
-//          RestApiResponseStatus.OK), HttpStatus.OK);
-//    }
-//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-//        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-//  }
+  // @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE)
+  // public ResponseEntity<Object> getSupplierByPlantCode(@PathVariable String plantCode) {
+  // if (plantService.isPlantExist(plantCode)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+  // mapper.map(supplierService.getSupplierByPlantCode(plantCode), SupplierResponseDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  // }
 
   @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY)
   public ResponseEntity<Object> getSupplierByPlantCodeAndSupplierCategoryId(
-      @PathVariable String plantCode, @PathVariable Long supplierCategoryId) {
+      @PathVariable String plantCode, @PathVariable Long supplierCategoryId,
+      @RequestParam(name = "name") String name) {
     if (supplierService.isPlantCodeAndSupplierCategoryIdExist(plantCode, supplierCategoryId)) {
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.SUPPLIER,
               mapper.map(supplierService.getByPlantCodeAndSupplierCategoryId(plantCode,
-                  supplierCategoryId), SupplierResponseDto.class),
+                  supplierCategoryId, name), SupplierResponseDto.class),
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
@@ -242,5 +233,40 @@ public class SupplierController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_SUPPLIER_BY_PLANT_CODE)
+  public ResponseEntity<Object> getCustomerNameSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+          mapper.map(supplierService.getSupplierName(name), SupplierResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
+        mapper.map(supplierService.getSupplierNameByPlantCode(plantCode, name),
+            SupplierResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SUPPLIER_SEARCH)
+  public ResponseEntity<Object> getSupplierSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name") String name,
+      @RequestParam(name = "address", required = false) String address,
+      @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
+      @RequestParam(name = "email", required = false) String email,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    pagination.setTotalRecords(
+        plantCode.equalsIgnoreCase(Constants.ADMIN) ? supplierService.getCountSupplier()
+            : supplierService.getCountSupplierByPlantCode(plantCode));
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
+        mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
+            booleanBuilder, pageable, plantCode), SupplierResponseDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+
   }
 }

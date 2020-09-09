@@ -5,10 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -131,20 +128,25 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
-      Double average, String testName, Double averageMin, Double averageMax,
-      BooleanBuilder booleanBuilder, int page, int size) {
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String status, String supplierName,
+      String testName,BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode) {
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.code.eq(incomingSampleCode));
+      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
     }
     if (status != null) {
-      booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
+      booleanBuilder.and(QMaterialTest.materialTest.status.stringValue().startsWithIgnoreCase(status));
     }
     if (testName != null && !testName.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.eq(testName));
+      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.startsWithIgnoreCase(testName));
     }
-    return materialTestRepository.findAll(booleanBuilder,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+    if (supplierName != null && !supplierName.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.supplier.name.startsWithIgnoreCase(supplierName));
+    }
+  
+    if(!plantCode.equals("ADMIN")) {
+      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.plant.code.contains(plantCode));
+      }
+    return materialTestRepository.findAll(booleanBuilder, pageable).toList();
   }
 
   @Transactional(readOnly = true)

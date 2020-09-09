@@ -33,4 +33,8 @@ public interface MaterialSubCategoryService {
       int page);
 
   public boolean isMaterialCategoryExist(String name, Long materialCategoryId);
+
+  public boolean isPrefixAlreadyExists(String prefix);
+
+  public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 }
