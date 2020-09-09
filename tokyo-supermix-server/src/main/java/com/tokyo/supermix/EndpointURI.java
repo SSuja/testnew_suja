@@ -253,7 +253,7 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLE_BY_CODE = INCOMING_SAMPLE + CODE;
   public static final String INCOMING_SAMPLE_BY_CODE_AND_STATUS =
       INCOMING_SAMPLE_BY_CODE + "/test-status" + "/{status}";
-  public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH;
+  public static final String INCOMING_SAMPLE_SEARCH = INCOMING_SAMPLE + SEARCH+ SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}" + SLASH
           + "plant" + SLASH + "{plantCode}";

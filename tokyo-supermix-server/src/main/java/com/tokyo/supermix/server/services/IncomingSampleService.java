@@ -1,9 +1,9 @@
 package com.tokyo.supermix.server.services;
 
+import java.sql.Date;
 import java.util.List;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.security.CurrentUser;
@@ -31,7 +31,7 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> getIncomingSampleByStatus(Status status);
 
-  public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
+  // public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
 
   // public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
 
@@ -57,4 +57,8 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
       String plantCode, String code);
+
+  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
+      String status, String rawMaterialName, String plantName, String supplierName,
+      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode);
 }
