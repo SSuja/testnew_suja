@@ -4,15 +4,14 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
+import com.tokyo.supermix.data.entities.QPlantEquipment;
+import com.tokyo.supermix.data.entities.QPlantEquipmentCalibration;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -66,10 +65,43 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
   }
 
   @Transactional(readOnly = true)
-  public Page<PlantEquipmentCalibration> searchPlantEquipmentCalibration(Predicate predicate,
-      int page, int size) {
-    return plantEquipmentCalibrationRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+  public List<PlantEquipmentCalibration> searchPlantEquipmentCalibration(String serialNo,
+      String equipmentName, Date calibratedDate, Date dueDate, String calibrationType,
+      String supplierName, String accuracy, String employeeName, BooleanBuilder booleanBuilder,
+      int page, int size, Pageable pageable, String plantCode) {
+    if (serialNo != null && !serialNo.isEmpty()) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
+    }
+
+    if (equipmentName != null && !equipmentName.isEmpty()) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.equipment.name.startsWithIgnoreCase(equipmentName));
+    }
+
+    if (calibratedDate != null ) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibratedDate.eq(calibratedDate));
+    }
+
+    if (dueDate != null ) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.dueDate.eq(dueDate));
+    }
+    if (calibrationType != null && !calibrationType.isEmpty()) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibrationType.stringValue().startsWithIgnoreCase(calibrationType));
+    }
+    if (supplierName != null && !supplierName.isEmpty()) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.supplier.name.startsWithIgnoreCase(supplierName));
+    }
+    if (accuracy != null && !accuracy.isEmpty()) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.startsWithIgnoreCase(accuracy));
+    }
+    if (employeeName != null && !employeeName.isEmpty()) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.employee.firstName.startsWithIgnoreCase(employeeName));
+    }
+
+    if(!plantCode.equals("ADMIN")) {
+      booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
+      }
+    return plantEquipmentCalibrationRepository.findAll(booleanBuilder, pageable).toList();
+   
   }
 
   @Transactional(readOnly = true)
