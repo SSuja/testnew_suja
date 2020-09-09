@@ -265,7 +265,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN = BASE_API_PATH + "mix-design";
   public static final String MIX_DESIGNS = BASE_API_PATH + "mix-designs";
   public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
-  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
+  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH + SLASH + "{plantCode}";
   public static final String GET_MIX_DESIGN_BY_PLANT =
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String MIX_DESIGN_BY_PLANT = MIX_DESIGN + PLANT_WISE;

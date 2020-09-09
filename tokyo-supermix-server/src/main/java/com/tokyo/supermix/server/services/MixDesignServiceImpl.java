@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +12,20 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.entities.QMixDesign;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -31,6 +38,8 @@ public class MixDesignServiceImpl implements MixDesignService {
   private EmailNotification emailNotification;
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<MixDesign> getAllMixDesigns() {
@@ -150,5 +159,31 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional(readOnly = true)
   public Long getCountMixDesignByPlantCode(String plantCode) {
     return mixDesignRepository.countByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
+      String materialName, String subCategoryName, String plantName, String plantCode,
+      Pageable pageable, Pagination pagination) {
+
+    if (materialName != null && !materialName.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.startsWithIgnoreCase(materialName));
+    }
+    if (subCategoryName != null && !subCategoryName.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.materialSubCategory.name
+          .startsWithIgnoreCase(subCategoryName));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.plant.name.startsWithIgnoreCase(plantName));
+    }
+
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QMixDesign.mixDesign.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<MixDesign>) mixDesignRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(mixDesignRepository.findAll(booleanBuilder, pageable).toList(),
+        MixDesignResponseDto.class);
   }
 }

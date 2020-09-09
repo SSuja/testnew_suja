@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MixDesignRequestDto;
@@ -109,16 +110,6 @@ public class MixDesignController {
         validationFailureStatusCodes.getMixDesignAlreadyExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.MIX_DESIGN_SEARCH)
-  public ResponseEntity<Object> getMixDesignSearch(
-      @QuerydslPredicate(root = MixDesign.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.MIX_DESIGNS,
-            mixDesignService.searchMixDesign(predicate, size, page), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.GET_MIX_DESIGN_BY_PLANT)
   public ResponseEntity<Object> getMixDesignByPlant(@PathVariable String plantCode) {
     if (plantService.isPlantExist(plantCode)) {
@@ -185,5 +176,23 @@ public class MixDesignController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping(value = EndpointURI.MIX_DESIGN_SEARCH)
+  public ResponseEntity<Object> getMixDesign(@PathVariable String plantCode,
+      @RequestParam(name = "materialName", required = false) String materialName,
+      @RequestParam(name = "subCategoryName", required = false) String subCategoryName,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.MIX_DESIGN,
+            mixDesignService.searchMixDesign(booleanBuilder, materialName, subCategoryName,
+                plantName, plantCode, pageable, pagination),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
   }
 }
