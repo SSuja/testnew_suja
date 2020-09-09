@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
       customerResponseDto.setName(customer.getName());
       customerResponseDto.setPhoneNumber(customer.getPhoneNumber());
       customerResponseDto.setEmail(customer.getEmail());
-      customerResponseDto.setPlants(getAllPlant(customer.getId()));
+      customerResponseDto.setPlant(getAllPlant(customer.getId()));
       customerResponseDtoList.add(customerResponseDto);
     }
     return customerResponseDtoList;
@@ -89,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
     customerResponseDto.setName(customer.getName());
     customerResponseDto.setPhoneNumber(customer.getPhoneNumber());
     customerResponseDto.setEmail(customer.getEmail());
-    customerResponseDto.setPlants(getAllPlant(customer.getId()));
+    customerResponseDto.setPlant(getAllPlant(customer.getId()));
     return customerResponseDto;
   }
 
@@ -136,7 +136,7 @@ public class CustomerServiceImpl implements CustomerService {
       customerResponseDto.setName(customer.getName());
       customerResponseDto.setPhoneNumber(customer.getPhoneNumber());
       customerResponseDto.setEmail(customer.getEmail());
-      customerResponseDto.setPlants(getAllPlant(customer.getId()));
+      customerResponseDto.setPlant(getAllPlant(customer.getId()));
       customerResponseDtoList.add(customerResponseDto);
     }
     return customerResponseDtoList;
@@ -155,7 +155,7 @@ public class CustomerServiceImpl implements CustomerService {
       customerResponseDto.setName(customer.getName());
       customerResponseDto.setPhoneNumber(customer.getPhoneNumber());
       customerResponseDto.setEmail(customer.getEmail());
-      customerResponseDto.setPlants(getAllPlant(customer.getId()));
+      customerResponseDto.setPlant(getAllPlant(customer.getId()));
       customerResponseDtoList.add(customerResponseDto);
     }
     return customerResponseDtoList;
@@ -215,20 +215,20 @@ public class CustomerServiceImpl implements CustomerService {
       String plantCode, Pageable pageable, Pagination pagination) {
     Plant plant = new Plant();
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.name.contains(name));
+      booleanBuilder.and(QCustomer.customer.name.startsWithIgnoreCase(name));
     }
     if (email != null && !email.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.email.contains(email));
+      booleanBuilder.and(QCustomer.customer.email.startsWithIgnoreCase(email));
     }
     if (plantName != null && !plantName.isEmpty()) {
       plant.setName(plantName);
       booleanBuilder.and(QCustomer.customer.plant.contains(plant));
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.phoneNumber.contains(phoneNumber));
+      booleanBuilder.and(QCustomer.customer.phoneNumber.startsWithIgnoreCase(phoneNumber));
     }
     if (address != null && !address.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.address.contains(address));
+      booleanBuilder.and(QCustomer.customer.address.startsWithIgnoreCase(address));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
@@ -240,6 +240,6 @@ public class CustomerServiceImpl implements CustomerService {
         .filter(customers -> customerList.add(customers)).collect(Collectors.toList());
     pagination.setTotalRecords(
         ((Collection<Customer>) customerRepository.findAll(booleanBuilder)).stream().count());
-    return mapper.map(customerList, CustomerResponseDto.class);
+    return mapper.map(customerList, CustomerResponseDto.class);    
   }
 }

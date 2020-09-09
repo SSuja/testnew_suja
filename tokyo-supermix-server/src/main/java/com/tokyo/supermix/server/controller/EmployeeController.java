@@ -176,7 +176,7 @@ public class EmployeeController {
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.EMPLOYEES,
             employeeService.searchEmployee(booleanBuilder, firstName, email, lastName, address, phoneNumber, plantName, designationName , plantCode, pageable, pagination), RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
+         HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT_CODE)
