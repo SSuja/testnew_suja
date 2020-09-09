@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+import com.tokyo.supermix.data.entities.QFinishProductSampleIssue;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -32,6 +39,8 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   private EmailNotification emailNotification;
   @Autowired
   private MixDesignRepository mixDesignRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
@@ -120,5 +129,50 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   @Transactional(readOnly = true)
   public Long countFinishProductSampleIssueByPlant(String plantCode) {
     return finishProductSampleIssueRepository.countByMixDesignPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSampleIssueResponseDto> searchFinishProductSampleIssue(
+      BooleanBuilder booleanBuilder, String workOrderNumber, String materialName,
+      String mixDesignCode, String pourName, String projectName, String customerName,
+      String plantCode, Pageable pageable, Pagination pagination) {
+
+    if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
+      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.workOrderNumber
+          .startsWithIgnoreCase(workOrderNumber));
+    }
+    if (materialName != null && !materialName.isEmpty()) {
+      booleanBuilder
+          .and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.rawMaterial.name
+              .startsWithIgnoreCase(materialName));
+    }
+    if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.code
+          .startsWithIgnoreCase(mixDesignCode));
+    }
+
+    if (pourName != null && !pourName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.pour.name
+          .startsWithIgnoreCase(pourName));
+    }
+    if (projectName != null && !projectName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.project.name
+          .startsWithIgnoreCase(projectName));
+    }
+    if (customerName != null && !customerName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.project.customer.name
+          .startsWithIgnoreCase(customerName));
+    }
+
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.plant.code
+          .startsWithIgnoreCase(plantCode));
+    }
+    pagination
+        .setTotalRecords(((Collection<FinishProductSampleIssue>) finishProductSampleIssueRepository
+            .findAll(booleanBuilder)).stream().count());
+    return mapper.map(finishProductSampleIssueRepository.findAll(booleanBuilder, pageable).toList(),
+        FinishProductSampleIssueResponseDto.class);
   }
 }

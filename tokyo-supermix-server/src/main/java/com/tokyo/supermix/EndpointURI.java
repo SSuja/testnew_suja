@@ -265,7 +265,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN = BASE_API_PATH + "mix-design";
   public static final String MIX_DESIGNS = BASE_API_PATH + "mix-designs";
   public static final String MIX_DESIGN_BY_CODE = MIX_DESIGN + CODE;
-  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH;
+  public static final String MIX_DESIGN_SEARCH = MIX_DESIGN + SEARCH + SLASH + "{plantCode}";
   public static final String GET_MIX_DESIGN_BY_PLANT =
       MIX_DESIGN + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String MIX_DESIGN_BY_PLANT = MIX_DESIGN + PLANT_WISE;
@@ -418,7 +418,7 @@ public final class EndpointURI {
       BASE_API_PATH + "finish-product-sample-issues";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_BY_ID = FINISH_PRODUCT_SAMPLE_ISSUE + CODE;
   public static final String FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH =
-      FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH;
+      FINISH_PRODUCT_SAMPLE_ISSUE + SEARCH + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT_CODE =
       FINISH_PRODUCT_SAMPLE_ISSUES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String FINISH_PRODUCT_SAMPLE_ISSUES_BY_PLANT =
@@ -593,6 +593,8 @@ public final class EndpointURI {
   public static final String FINISH_PRODUCT_TEST_COMMENT = FINISH_PRODUCT_TEST + SLASH + "comment";
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE =
       FINISH_PRODUCT_TEST + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}";
+  public static final String FINISH_PRODUCT_TEST_SEARCH =
+      FINISH_PRODUCT_TEST + SEARCH + SLASH + "{plantCode}";
 
   /*
    * Employee apis

@@ -3,9 +3,12 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MixDesignService {
@@ -27,7 +30,7 @@ public interface MixDesignService {
 
   public List<MixDesign> getAllMixDesignByPlant(UserPrincipal currentUser);
 
-   public List<MixDesign> getAllMixDesignByDecending();
+  public List<MixDesign> getAllMixDesignByDecending();
 
   public List<MixDesign> getAllPlantCodeOrderByUpdatedAtDesc(String plantCode);
 
@@ -44,4 +47,8 @@ public interface MixDesignService {
   public Long getCountMixDesign();
 
   public Long getCountMixDesignByPlantCode(String plantCode);
+
+  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
+      String materialName, String subCategoryName, String plantName, String plantCode,
+      Pageable pageable, Pagination pagination);
 }
