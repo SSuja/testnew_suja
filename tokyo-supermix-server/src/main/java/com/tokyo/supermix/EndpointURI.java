@@ -222,7 +222,7 @@ public final class EndpointURI {
   public static final String PROJECT = BASE_API_PATH + "project";
   public static final String PROJECT_BY_ID = PROJECT + CODE;
   public static final String PROJECTS = BASE_API_PATH + "projects";
-  public static final String SEARCH_PROJECT = PROJECT + SEARCH;
+  public static final String SEARCH_PROJECT = PROJECT + SEARCH + SLASH + "{plantCode}";
   public static final String GET_PROJECTS_BY_PLANT_CODE =
       PROJECTS + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PROJECT_BY_PLANT = PROJECT + PLANT_WISE;
