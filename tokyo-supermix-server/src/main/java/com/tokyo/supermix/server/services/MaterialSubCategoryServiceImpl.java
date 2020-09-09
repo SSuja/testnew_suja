@@ -84,7 +84,8 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 
   @Transactional(readOnly = true)
   public boolean isMaterialCategoryExist(String name, Long materialCategoryId) {
-    if (materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name, materialCategoryId)) {
+    if (!(materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name,
+        materialCategoryId))) {
       return true;
     }
     return false;
