@@ -211,18 +211,14 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional(readOnly = true)
   public List<CustomerResponseDto> searchCustomerByPlantCode(String name, String email,
-      String plantName, String phoneNumber, String address, BooleanBuilder booleanBuilder,
-      String plantCode, Pageable pageable, Pagination pagination) {
-    Plant plant = new Plant();
+      String phoneNumber, String address, BooleanBuilder booleanBuilder, String plantCode,
+      Pageable pageable, Pagination pagination) {
+
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.name.startsWithIgnoreCase(name));
     }
     if (email != null && !email.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.email.startsWithIgnoreCase(email));
-    }
-    if (plantName != null && !plantName.isEmpty()) {
-      plant.setName(plantName);
-      booleanBuilder.and(QCustomer.customer.plant.contains(plant));
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.phoneNumber.startsWithIgnoreCase(phoneNumber));
@@ -232,6 +228,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      Plant plant = new Plant();
       plant.setCode(plantCode);
       booleanBuilder.and(QCustomer.customer.plant.contains(plant));
     }
@@ -240,6 +237,6 @@ public class CustomerServiceImpl implements CustomerService {
         .filter(customers -> customerList.add(customers)).collect(Collectors.toList());
     pagination.setTotalRecords(
         ((Collection<Customer>) customerRepository.findAll(booleanBuilder)).stream().count());
-    return mapper.map(customerList, CustomerResponseDto.class);    
+    return mapper.map(customerList, CustomerResponseDto.class);
   }
 }

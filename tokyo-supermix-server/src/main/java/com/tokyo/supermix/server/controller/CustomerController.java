@@ -154,7 +154,6 @@ public class CustomerController {
   public ResponseEntity<Object> searchCustomer(@PathVariable String plantCode,
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "email", required = false) String email,
-      @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "address", required = false) String address,
       @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
@@ -163,7 +162,7 @@ public class CustomerController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.CUSTOMERS,
-        customerService.searchCustomerByPlantCode(name, email, plantName, address, phoneNumber,
+        customerService.searchCustomerByPlantCode(name, email, address, phoneNumber,
             booleanBuilder, plantCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
