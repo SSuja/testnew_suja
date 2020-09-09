@@ -194,7 +194,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
     if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.code
-          .eq(mixDesignCode));
+          .startsWithIgnoreCase(mixDesignCode));
     }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.name
