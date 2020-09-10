@@ -169,7 +169,7 @@ public class ProjectController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.PROJECTS,
-            projectService.searchProject(booleanBuilder, code, plantName, name, customerName, contactPerson, startDate , plantCode, pageable, pagination), RestApiResponseStatus.OK ,pagination),
+            projectService.searchProject(booleanBuilder, code, plantName, name, customerName, contactPerson, startDate , plantCode, pageable, pagination, contactNumber), RestApiResponseStatus.OK ,pagination),
          HttpStatus.OK);
   }
 

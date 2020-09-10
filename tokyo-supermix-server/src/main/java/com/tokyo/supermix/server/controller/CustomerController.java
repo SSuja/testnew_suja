@@ -162,7 +162,7 @@ public class CustomerController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.CUSTOMERS,
-        customerService.searchCustomerByPlantCode(name, email, address, phoneNumber,
+        customerService.searchCustomerByPlantCode(name, email, phoneNumber, address, 
             booleanBuilder, plantCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }

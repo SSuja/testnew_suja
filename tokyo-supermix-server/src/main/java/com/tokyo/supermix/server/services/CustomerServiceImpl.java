@@ -213,18 +213,17 @@ public class CustomerServiceImpl implements CustomerService {
   public List<CustomerResponseDto> searchCustomerByPlantCode(String name, String email,
       String phoneNumber, String address, BooleanBuilder booleanBuilder, String plantCode,
       Pageable pageable, Pagination pagination) {
-
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.name.startsWithIgnoreCase(name));
     }
     if (email != null && !email.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.email.startsWithIgnoreCase(email));
     }
-    if (phoneNumber != null && !phoneNumber.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.phoneNumber.startsWithIgnoreCase(phoneNumber));
-    }
     if (address != null && !address.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.address.startsWithIgnoreCase(address));
+    }
+    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+      booleanBuilder.and(QCustomer.customer.phoneNumber.startsWith(phoneNumber));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {

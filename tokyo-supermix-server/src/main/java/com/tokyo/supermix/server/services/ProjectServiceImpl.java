@@ -162,7 +162,7 @@ public class ProjectServiceImpl implements ProjectService {
   @Transactional(readOnly = true)
   public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code,
       String plantName, String name, String customerName, String contactPerson, Date startDate,
-      String plantCode, Pageable pageable, Pagination pagination) {
+      String plantCode, Pageable pageable, Pagination pagination, String contactNumber) {
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(QProject.project.code.startsWithIgnoreCase(code));
     }
@@ -180,6 +180,9 @@ public class ProjectServiceImpl implements ProjectService {
     }
     if (startDate != null) {
       booleanBuilder.and(QProject.project.startDate.eq(startDate));
+    }
+    if (contactNumber != null && !contactNumber.isEmpty()) {
+      booleanBuilder.and(QProject.project.contactNumber.startsWithIgnoreCase(contactNumber));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
