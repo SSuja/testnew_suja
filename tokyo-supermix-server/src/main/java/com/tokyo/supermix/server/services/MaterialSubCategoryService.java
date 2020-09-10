@@ -37,4 +37,6 @@ public interface MaterialSubCategoryService {
   public boolean isPrefixAlreadyExists(String prefix);
 
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
+
+  public boolean isMaterialCategoryExistUpdate(Long id, String name, Long materialCategoryId);
 }

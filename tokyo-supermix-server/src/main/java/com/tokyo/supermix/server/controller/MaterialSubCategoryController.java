@@ -85,8 +85,8 @@ public class MaterialSubCategoryController {
   @PostMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> createMaterialSubCategory(
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
-    if (materialSubCategoryService
-        .isMaterialSubCategoryNameExist(materialSubCategoryRequestDto.getName())) {
+    if (materialSubCategoryService.isMaterialCategoryExist(materialSubCategoryRequestDto.getName(),
+        materialSubCategoryRequestDto.getMaterialCategoryId())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_NAME,
               validationFailureStatusCodes.getMaterialSubCategoryAlreadyExist()),
@@ -109,8 +109,8 @@ public class MaterialSubCategoryController {
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
     if (materialSubCategoryService
         .isMaterialSubCategoryExist(materialSubCategoryRequestDto.getId())) {
-      if (materialSubCategoryService.isMaterialCategoryExist(
-          materialSubCategoryRequestDto.getName(),
+      if (materialSubCategoryService.isMaterialCategoryExistUpdate(
+          materialSubCategoryRequestDto.getId(), materialSubCategoryRequestDto.getName(),
           materialSubCategoryRequestDto.getMaterialCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_NAME,
