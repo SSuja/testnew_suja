@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.QPlantEquipment;
 import com.tokyo.supermix.data.entities.QPlantEquipmentCalibration;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -66,9 +67,9 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> searchPlantEquipmentCalibration(String serialNo,
-      String equipmentName, Date calibratedDate, Date dueDate, String calibrationType,
+      String equipmentName, String calibratedDate, String dueDate, String calibrationType,
       String supplierName, String accuracy, String employeeName, BooleanBuilder booleanBuilder,
-      int page, int size, Pageable pageable, String plantCode) {
+      int page, int size, Pageable pageable, String plantCode,Pagination pagination) {
     if (serialNo != null && !serialNo.isEmpty()) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
     }
@@ -78,11 +79,11 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
     }
 
     if (calibratedDate != null ) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibratedDate.eq(calibratedDate));
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibratedDate.stringValue().startsWith(calibratedDate));
     }
 
     if (dueDate != null ) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.dueDate.eq(dueDate));
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.dueDate.stringValue().startsWith(dueDate));
     }
     if (calibrationType != null && !calibrationType.isEmpty()) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibrationType.stringValue().startsWithIgnoreCase(calibrationType));
@@ -100,6 +101,8 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
     if(!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
       }
+    pagination.setTotalRecords(
+        (long) ((List<PlantEquipmentCalibration>) plantEquipmentCalibrationRepository.findAll(booleanBuilder)).size());
     return plantEquipmentCalibrationRepository.findAll(booleanBuilder, pageable).toList();
    
   }

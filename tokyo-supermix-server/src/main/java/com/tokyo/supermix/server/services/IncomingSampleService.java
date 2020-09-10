@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -60,9 +61,10 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode);
+      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination);
 
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
 
-  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId, String plantCode);
+  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
+      String plantCode);
 }
