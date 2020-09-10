@@ -59,5 +59,6 @@ public interface SupplierService {
 
   public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
       String email, String plantName, String createdAt, String updatedAt,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination);
+      String supplierCategoryName, BooleanBuilder booleanBuilder, Pageable pageable,
+      String plantCode, Pagination pagination);
 }
