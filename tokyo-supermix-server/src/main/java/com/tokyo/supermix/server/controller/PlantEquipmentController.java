@@ -60,7 +60,7 @@ public class PlantEquipmentController {
   @Autowired
   private PlantService plantService;
   @Autowired
-  private  PlantRepository plantRepository;
+  private PlantRepository plantRepository;
   @Autowired
   private FileStorageService fileStorageService;
   @Autowired
@@ -139,30 +139,28 @@ public class PlantEquipmentController {
 
   @GetMapping(value = EndpointURI.PLANTEQUIPMENT_SEARCH)
   public ResponseEntity<Object> getPlantEquipmentSearch(@PathVariable String plantCode,
-      @RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
       @RequestParam(name = "serialNo", required = false) String serialNo,
       @RequestParam(name = "brandName", required = false) String brandName,
       @RequestParam(name = "modelName", required = false) String modelName,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "equipmentName", required = false) String equipmentName
-      )      {
+      @RequestParam(name = "equipmentName", required = false) String equipmentName) {
 
     Pageable pageable = PageRequest.of(page, size);
-    Pagination pagination= new Pagination(0, 0, 0, 0l); 
-    BooleanBuilder booleanBuilder = new BooleanBuilder(); 
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      pagination.setTotalRecords(plantCode.equalsIgnoreCase(Constants.ADMIN) ?
-          plantEquipmentService.getCountPlantEquipment() : plantEquipmentService.getCountPlantEquipmentByPlantCode(plantCode));   
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
-        mapper.map(
-            plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName, plantName, equipmentName,booleanBuilder, page, size, pageable, plantCode),
-            PlantEquipmentResponseDto.class),
-        RestApiResponseStatus.OK,
-        pagination),HttpStatus.OK);
-  }
-  return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
-      validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
+              mapper.map(
+                  plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName,
+                      plantName, equipmentName, booleanBuilder, page, size, pageable, plantCode, pagination),
+                  PlantEquipmentResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.GET_PLANTEQUIPMENTS_BY_PLANT_CODE)
@@ -177,26 +175,27 @@ public class PlantEquipmentController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-//  @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
-//  public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal currentUser,
-//      @PathVariable String plantCode) {
-//    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-//      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-//          mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser),
-//              PlantEquipmentResponseDto.class),
-//          RestApiResponseStatus.OK), null, HttpStatus.OK);
-//    }
-//    if (currentUserPermissionPlantService
-//        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
-//        .contains(plantCode)) {
-//      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-//          mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode),
-//              PlantEquipmentResponseDto.class),
-//          RestApiResponseStatus.OK), null, HttpStatus.OK);
-//    }
-//    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-//        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-//  }
+  // @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
+  // public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal
+  // currentUser,
+  // @PathVariable String plantCode) {
+  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
+  // mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser),
+  // PlantEquipmentResponseDto.class),
+  // RestApiResponseStatus.OK), null, HttpStatus.OK);
+  // }
+  // if (currentUserPermissionPlantService
+  // .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
+  // .contains(plantCode)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
+  // mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode),
+  // PlantEquipmentResponseDto.class),
+  // RestApiResponseStatus.OK), null, HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  // }
 
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID)
   public ResponseEntity<Object> getAllPlantEquipmentsByCalibrationTrueAndEquipment(
@@ -254,28 +253,34 @@ public class PlantEquipmentController {
         new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
         HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
   public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal currentUser,
-      @PathVariable String plantCode,  @RequestParam(name = "page") int page, @RequestParam(name = "size") int size){
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      pagination.setTotalRecords(plantEquipmentService.getCountPlantEquipment());     
-      return new  ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENTS,
-          mapper.map(plantEquipmentService.getAllPlantEquipment(pageable),
-              PlantEquipmentResponseDto.class),
-          RestApiResponseStatus.OK,pagination), null, HttpStatus.OK);
+      pagination.setTotalRecords(plantEquipmentService.getCountPlantEquipment());
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENTS,
+              mapper.map(plantEquipmentService.getAllPlantEquipment(pageable),
+                  PlantEquipmentResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          null, HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
         .contains(plantCode)) {
-      pagination.setTotalRecords(plantEquipmentService.getCountPlantEquipmentByPlantCode(plantCode));  
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENTS,
-          mapper.map(plantEquipmentService. getPlantEquipmentByPlantCode(plantCode, pageable),
-              PlantEquipmentResponseDto.class),
-          RestApiResponseStatus.OK,pagination), null, HttpStatus.OK);
+      pagination
+          .setTotalRecords(plantEquipmentService.getCountPlantEquipmentByPlantCode(plantCode));
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENTS,
+              mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode, pageable),
+                  PlantEquipmentResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          null, HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);

@@ -158,8 +158,8 @@ public class PlantEquipmentCalibrationController {
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
       @RequestParam(name = "serialNo", required = false) String serialNo,
       @RequestParam(name = "equipmentName", required = false) String equipmentName,
-      @RequestParam(name = "calibratedDate", required = false) Date calibratedDate,
-      @RequestParam(name = "dueDate", required = false) Date dueDate,
+      @RequestParam(name = "calibratedDate", required = false) String calibratedDate,
+      @RequestParam(name = "dueDate", required = false) String dueDate,
       @RequestParam(name = "calibrationType", required = false) String calibrationType,
       @RequestParam(name = "supplierName", required = false) String supplierName,
       @RequestParam(name = "accuracy", required = false) String accuracy,
@@ -168,17 +168,14 @@ public class PlantEquipmentCalibrationController {
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      pagination.setTotalRecords(plantCode.equalsIgnoreCase(Constants.ADMIN)
-          ? plantEquipmentCalibrationService.getCountPlantEquipmentCalibration()
-          : plantEquipmentCalibrationService
-              .getCountPlantEquipmentCalibrationByPlantCode(plantCode));
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
-          mapper.map(
-              plantEquipmentCalibrationService.searchPlantEquipmentCalibration(serialNo,
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
+              mapper.map(plantEquipmentCalibrationService.searchPlantEquipmentCalibration(serialNo,
                   equipmentName, calibratedDate, dueDate, calibrationType, supplierName, accuracy,
-                  employeeName, booleanBuilder, page, size, pageable, plantCode),
-              PlantEquipmentCalibrationResponseDto.class),
-          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+                  employeeName, booleanBuilder, page, size, pageable, plantCode, pagination),
+                  PlantEquipmentCalibrationResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
