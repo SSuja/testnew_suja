@@ -251,19 +251,25 @@ public class SupplierController {
 
   @GetMapping(value = EndpointURI.SUPPLIER_SEARCH)
   public ResponseEntity<Object> getSupplierSearch(@PathVariable String plantCode,
-      @RequestParam(name = "name") String name,
+      @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "address", required = false) String address,
       @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
       @RequestParam(name = "email", required = false) String email,
       @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "createdAt", required = false) String createdAt,
+      @RequestParam(name = "updatedAt", required = false) String updatedAt,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
-        mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
-            booleanBuilder, pageable, plantCode, pagination), SupplierResponseDto.class),
-        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.SUPPLIER,
+            mapper.map(
+                supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
+                    createdAt, updatedAt, booleanBuilder, pageable, plantCode, pagination),
+                SupplierResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
 
   }
 }
