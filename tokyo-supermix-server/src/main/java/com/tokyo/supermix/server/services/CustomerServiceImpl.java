@@ -212,7 +212,7 @@ public class CustomerServiceImpl implements CustomerService {
   @Transactional(readOnly = true)
   public List<CustomerResponseDto> searchCustomerByPlantCode(String name, String email,
       String phoneNumber, String address, BooleanBuilder booleanBuilder, String plantCode,
-      Pageable pageable, Pagination pagination) {
+      Pageable pageable, Pagination pagination, String plantName) {
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.name.startsWithIgnoreCase(name));
     }
@@ -224,6 +224,9 @@ public class CustomerServiceImpl implements CustomerService {
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
       booleanBuilder.and(QCustomer.customer.phoneNumber.startsWith(phoneNumber));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QCustomer.customer.plant.any().name.startsWith(plantName));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {

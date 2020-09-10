@@ -156,14 +156,15 @@ public class CustomerController {
       @RequestParam(name = "email", required = false) String email,
       @RequestParam(name = "address", required = false) String address,
       @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
+      @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.CUSTOMERS,
-        customerService.searchCustomerByPlantCode(name, email, phoneNumber, address, 
-            booleanBuilder, plantCode, pageable, pagination),
+        customerService.searchCustomerByPlantCode(name, email, phoneNumber, address, booleanBuilder,
+            plantCode, pageable, pagination, plantName),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 
