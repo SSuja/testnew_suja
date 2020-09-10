@@ -230,7 +230,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public Long getSubCategoryCountFinishProductSample(Long materialSubCategoryId) {
     return finishProductSampleRepository
-        .MixDesignRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+        .countByMixDesignRawMaterialMaterialSubCategoryId(materialSubCategoryId);
   }
 
   @Transactional(readOnly = true)
@@ -239,5 +239,30 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     return finishProductSampleRepository
         .countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryId(plantCode,
             materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCategoryCountFinishProductSample(Long materialCategoryId) {
+    return finishProductSampleRepository
+        .countByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId,
+      Pageable pageable) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountCategoryFinishProductSampleByPlantCode(String plantCode,
+      Long materialCategoryId) {
+    return finishProductSampleRepository.countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(plantCode, materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByCategoryIdAndPlantCode(
+      Long materialCategoryId, String plantCode, Pageable pageable) {
+    return finishProductSampleRepository.findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryIdAndMixDesignPlantCode(materialCategoryId, plantCode, pageable);
   }
 }

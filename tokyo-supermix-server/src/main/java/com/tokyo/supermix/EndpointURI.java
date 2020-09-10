@@ -390,6 +390,8 @@ public final class EndpointURI {
 			+ "material-category" + SLASH + "{materialCategoryId}";
 	public static final String RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT = FINISH_PRODUCT_SAMPLE
 			+ SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}" + PLANT_WISE;
+	public static final String RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_CATORY_AND_PLANT = FINISH_PRODUCT_SAMPLE
+        + SLASH + "material-category" + SLASH + "{materialCategoryId}" + PLANT_WISE;
 
 	/*
 	 * finish product sample issue apis

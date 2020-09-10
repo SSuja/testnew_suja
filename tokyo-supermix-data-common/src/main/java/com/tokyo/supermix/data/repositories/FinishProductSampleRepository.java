@@ -12,42 +12,51 @@ import com.tokyo.supermix.data.enums.Status;
 
 @Repository
 public interface FinishProductSampleRepository extends JpaRepository<FinishProductSample, String>,
-    QuerydslPredicateExecutor<FinishProductSample>,
-    PagingAndSortingRepository<FinishProductSample, String> {
-  boolean existsByFinishProductCode(String code);
+		QuerydslPredicateExecutor<FinishProductSample>, PagingAndSortingRepository<FinishProductSample, String> {
+	boolean existsByFinishProductCode(String code);
 
-  boolean existsByMixDesignCode(String code);
+	boolean existsByMixDesignCode(String code);
 
-  List<FinishProductSample> findByMixDesignCode(String mixDesignCode);
+	List<FinishProductSample> findByMixDesignCode(String mixDesignCode);
 
-  boolean existsByEquipmentId(Long id);
+	boolean existsByEquipmentId(Long id);
 
-  List<FinishProductSample> findByEquipmentId(Long id);
+	List<FinishProductSample> findByEquipmentId(Long id);
 
-  Page<FinishProductSample> findByMixDesignPlantCodeOrderByUpdatedAtDesc(String plantCode,
-      Pageable pageable);
+	Page<FinishProductSample> findByMixDesignPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
 
-  List<FinishProductSample> findByStatus(Status status);
+	List<FinishProductSample> findByStatus(Status status);
 
-  boolean existsByStatus(Status status);
+	boolean existsByStatus(Status status);
 
-  Page<FinishProductSample> findByMixDesignPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes,
-      Pageable pageable);
+	Page<FinishProductSample> findByMixDesignPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes,
+			Pageable pageable);
 
-  List<FinishProductSample> findByCodeContaining(String code);
+	List<FinishProductSample> findByCodeContaining(String code);
 
-  List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
+	List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
 
-  List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryId(
-      Long materialSubCategoryId, Pageable pageable);
+	List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryId(Long materialSubCategoryId,
+			Pageable pageable);
 
-  List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(
-      Long materialSubCategoryId, String plantCode, Pageable pageable);
+	List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(
+			Long materialSubCategoryId, String plantCode, Pageable pageable);
 
-  Long countByMixDesignPlantCode(String plantCode);
+	Long countByMixDesignPlantCode(String plantCode);
 
 	Long countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryId(String plantCode,
-		Long materialSubCategoryId);
+			Long materialSubCategoryId);
 
-	Long MixDesignRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+	Long countByMixDesignRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+
+	Long countByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(Long materialCategoryId);
+
+	List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(Long materialCategoryId,
+			Pageable pageable);
+
+	Long countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(String plantCode,
+			Long materialCategoryId);
+
+	List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryIdAndMixDesignPlantCode(
+			Long materialCategoryId, String plantCode, Pageable pageable);
 }
