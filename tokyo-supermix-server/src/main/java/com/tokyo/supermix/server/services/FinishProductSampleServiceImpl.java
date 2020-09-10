@@ -226,4 +226,18 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
         .findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(subCategoryId,
             plantCode, pageable);
   }
+
+  @Transactional(readOnly = true)
+  public Long getSubCategoryCountFinishProductSample(Long materialSubCategoryId) {
+    return finishProductSampleRepository
+        .MixDesignRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountSubCategoryFinishProductSampleByPlantCode(String plantCode,
+      Long materialSubCategoryId) {
+    return finishProductSampleRepository
+        .countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryId(plantCode,
+            materialSubCategoryId);
+  }
 }
