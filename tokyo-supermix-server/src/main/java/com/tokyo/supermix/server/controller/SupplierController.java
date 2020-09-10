@@ -258,18 +258,17 @@ public class SupplierController {
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "createdAt", required = false) String createdAt,
       @RequestParam(name = "updatedAt", required = false) String updatedAt,
+      @RequestParam(name = "supplierCategoryName", required = false) String supplierCategoryName,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.SUPPLIER,
-            mapper.map(
-                supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
-                    createdAt, updatedAt, booleanBuilder, pageable, plantCode, pagination),
-                SupplierResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
+        mapper.map(
+            supplierService.searchSupplier(name, address, phoneNumber, email, plantName, createdAt,
+                updatedAt, supplierCategoryName, booleanBuilder, pageable, plantCode, pagination),
+            SupplierResponseDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
   }
 }
