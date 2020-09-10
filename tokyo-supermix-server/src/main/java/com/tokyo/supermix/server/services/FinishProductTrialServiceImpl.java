@@ -333,8 +333,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       });
     }
   }
-
-  /************ countsPASS ***/
   private int getCountKeyTestPassFinishProductTestsByMaterialSubCategory(String mixDesignCode,
       Long materialSubCategoryId, Status status) {
     return finishProductTestRepository
@@ -360,8 +358,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   }
 
-  /*************************************/
-  /******* KeyTestCount **********/
   private int getCountkeyTestConfigByMaterialSubCategory(Long materialSubCategoryId) {
     return testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(materialSubCategoryId)
         .size();
@@ -376,7 +372,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return testConfigureRepository.findByRawMaterialIdAndCoreTestTrue(rawMaterialId).size();
   }
 
-  /************************************/
   private void checkStatusAndSaveStatus(String finishProductTestCode) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
@@ -390,7 +385,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     mixDesignRepository.save(mixDesign);
   }
 
-  /******************************/
   private void checkPassCountAndTestConfigKeyTestCountByMaterialSubCategory(
       String finishProductTestCode) {
     FinishProductTest finishproductTest =
@@ -446,7 +440,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
   }
 
-  /***************************************************************** finalUpdate ****/
   public void updateFinishProductSampleAndMixDesignStatus(String finishProductTestCode) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
