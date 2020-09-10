@@ -312,4 +312,38 @@ public class FinishProductSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+  
+  @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_RAW_MATERIAL_AND_PLANT)
+  public ResponseEntity<Object> getFinishProductSamplesByRawMaterialAndCurrentUserPermission(
+      @CurrentUser UserPrincipal currentUser, @PathVariable Long rawMaterialId,
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      pagination.setTotalRecords(
+          finishProductSampleService.getRawMaterialCountFinishProductSample(rawMaterialId));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleService.getFinishProductSamplesByRawMaterialId(
+              rawMaterialId, pageable), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+    } else {
+      if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+          PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
+        pagination.setTotalRecords(finishProductSampleService
+            .getCountRawMaterialFinishProductSampleByPlantCode(plantCode, rawMaterialId));
+        return new ResponseEntity<>(
+            new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+                mapper.map(
+                    finishProductSampleService.getFinishProductSamplesByRawMaterialIdAndPlantCode(
+                        rawMaterialId, plantCode, pageable),
+                    FinishProductSampleResponseDto.class),
+                RestApiResponseStatus.OK, pagination),
+            HttpStatus.OK);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
 }
