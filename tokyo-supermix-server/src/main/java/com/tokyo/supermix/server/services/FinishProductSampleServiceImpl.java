@@ -211,17 +211,19 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             .stream().count());
     return mapper.map(finishProductSampleRepository.findAll(booleanBuilder, pageable).toList(),
         FinishProductSampleResponseDto.class);
-      }
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId) {
+  }
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId,
+      Pageable pageable) {
     return finishProductSampleRepository
-        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId);
+        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId, pageable);
   }
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
-      Long subCategoryId, String plantCode) {
+      Long subCategoryId, String plantCode, Pageable pageable) {
     return finishProductSampleRepository
         .findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(subCategoryId,
-            plantCode);
+            plantCode, pageable);
   }
 }

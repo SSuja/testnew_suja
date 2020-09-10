@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
@@ -243,24 +242,35 @@ public class FinishProductSampleController {
             equipmentName, mixDesignCode, plantName, plantCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
-      }
+  }
+
   @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT)
   public ResponseEntity<Object> getFinishProductSamplesBySubCategoryAndCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable Long materialSubCategoryId,
-      @PathVariable String plantCode) {
+      @PathVariable String plantCode, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+      pagination.setTotalRecords(finishProductSampleService.getCountFinishProductSample());
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
           mapper.map(finishProductSampleService.getFinishProductSamplesBySubCategoryId(
-              materialSubCategoryId), FinishProductSampleResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
+              materialSubCategoryId, pageable), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     } else {
       if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
           PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
-        return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-            mapper
-                .map(finishProductSampleService.getFinishProductSamplesBySubCategoryIdAndPlantCode(
-                    materialSubCategoryId, plantCode), FinishProductSampleResponseDto.class),
-            RestApiResponseStatus.OK), null, HttpStatus.OK);
+        pagination.setTotalRecords(
+            finishProductSampleService.getCountFinishProductSampleByPlantCode(plantCode));
+        return new ResponseEntity<>(
+            new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+                mapper.map(
+                    finishProductSampleService.getFinishProductSamplesBySubCategoryIdAndPlantCode(
+                        materialSubCategoryId, plantCode, pageable),
+                    FinishProductSampleResponseDto.class),
+                RestApiResponseStatus.OK, pagination),
+            HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
