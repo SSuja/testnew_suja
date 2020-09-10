@@ -226,7 +226,7 @@ public class CustomerServiceImpl implements CustomerService {
       booleanBuilder.and(QCustomer.customer.phoneNumber.startsWith(phoneNumber));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.plant.any().name.startsWith(plantName));
+      booleanBuilder.and(QCustomer.customer.plant.any().name.startsWithIgnoreCase(plantName));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
