@@ -334,42 +334,146 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
   }
 
-  public void updateFinishProductSampleAndMixDesignStatus(String finishProductTestCode) {
+  /************ countsPASS ***/
+  private int getCountKeyTestPassFinishProductTestsByMaterialSubCategory(String mixDesignCode,
+      Long materialSubCategoryId, Status status) {
+    return finishProductTestRepository
+        .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureMaterialSubCategoryIdAndStatus(
+            mixDesignCode, materialSubCategoryId, status)
+        .size();
+  }
+
+  private int getCountKeyTestPassFinishProductTestsByMaterialCategory(String mixDesignCode,
+      Long materialCategoryId, Status status) {
+    return finishProductTestRepository
+        .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureMaterialCategoryIdAndStatus(
+            mixDesignCode, materialCategoryId, status)
+        .size();
+  }
+
+  private int getCountKeyTestPassFinishProductTestsByRawMaterial(String mixDesignCode,
+      Long rawMaterialId, Status status) {
+    return finishProductTestRepository
+        .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureRawMaterialIdAndStatus(
+            mixDesignCode, rawMaterialId, status)
+        .size();
+
+  }
+
+  /*************************************/
+  /******* KeyTestCount **********/
+  private int getCountkeyTestConfigByMaterialSubCategory(Long materialSubCategoryId) {
+    return testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(materialSubCategoryId)
+        .size();
+  }
+
+  private int getCountKeyTestConfigByMaterialCategory(Long materialCategoryId) {
+    return testConfigureRepository.findByMaterialCategoryIdAndCoreTestTrue(materialCategoryId)
+        .size();
+  }
+
+  private int getCountKeyTestConfigByRawMaterial(Long rawMaterialId) {
+    return testConfigureRepository.findByRawMaterialIdAndCoreTestTrue(rawMaterialId).size();
+  }
+
+  /************************************/
+  private void checkStatusAndSaveStatus(String finishProductTestCode) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     FinishProductSample finishProductSample = finishProductSampleRepository
         .findById(finishproductTest.getFinishProductSample().getCode()).get();
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
-    List<TestConfigure> configureList =
-        testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(
-            mixDesign.getRawMaterial().getMaterialSubCategory().getId());
-    List<FinishProductTest> finishTest = finishProductTestRepository
-        .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureMaterialSubCategoryIdAndStatus(
-            mixDesign.getCode(), mixDesign.getRawMaterial().getMaterialSubCategory().getId(),
-            Status.PASS);
-    if (finishproductTest.getTestConfigure().isCoreTest()) {
+    finishProductSample.setStatus(finishproductTest.getStatus());
+    finishProductSampleRepository.save(finishProductSample);
+    mixDesign.setStatus(finishproductTest.getStatus());
+    mixDesignRepository.save(mixDesign);
+  }
+
+  /******************************/
+  private void checkPassCountAndTestConfigKeyTestCountByMaterialSubCategory(
+      String finishProductTestCode) {
+    FinishProductTest finishproductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishproductTest.getFinishProductSample().getCode()).get();
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+    if (getCountKeyTestPassFinishProductTestsByMaterialSubCategory(mixDesign.getCode(),
+        mixDesign.getRawMaterial().getMaterialSubCategory().getId(),
+        Status.PASS) >= getCountkeyTestConfigByMaterialSubCategory(
+            mixDesign.getRawMaterial().getMaterialSubCategory().getId())) {
+      checkStatusAndSaveStatus(finishProductTestCode);
+    } else {
+      finishProductSample.setStatus(Status.PROCESS);
+      finishProductSampleRepository.save(finishProductSample);
+    }
+  }
+
+  private void checkPassCountAndTestConfigKeyTestCountByMaterialCategory(
+      String finishProductTestCode) {
+    FinishProductTest finishproductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishproductTest.getFinishProductSample().getCode()).get();
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+    if (getCountKeyTestPassFinishProductTestsByMaterialCategory(mixDesign.getCode(),
+        mixDesign.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getId(),
+        Status.PASS) >= getCountKeyTestConfigByMaterialCategory(
+            mixDesign.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getId())) {
+      checkStatusAndSaveStatus(finishProductTestCode);
+    } else {
+      finishProductSample.setStatus(Status.PROCESS);
+      finishProductSampleRepository.save(finishProductSample);
+    }
+  }
+
+  private void checkPassCountAndTestConfigKeyTestCountByRawMaterial(String finishProductTestCode) {
+    FinishProductTest finishproductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishproductTest.getFinishProductSample().getCode()).get();
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+    if (getCountKeyTestPassFinishProductTestsByRawMaterial(mixDesign.getCode(),
+        mixDesign.getRawMaterial().getId(),
+        Status.PASS) >= getCountKeyTestConfigByRawMaterial(mixDesign.getRawMaterial().getId())) {
+      checkStatusAndSaveStatus(finishProductTestCode);
+    } else {
+      finishProductSample.setStatus(Status.PROCESS);
+      finishProductSampleRepository.save(finishProductSample);
+    }
+  }
+
+  /***************************************************************** finalUpdate ****/
+  public void updateFinishProductSampleAndMixDesignStatus(String finishProductTestCode) {
+    FinishProductTest finishproductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findById(finishproductTest.getFinishProductSample().getCode()).get();
+    TestConfigure testConfigure =
+        testConfigureRepository.findById(finishproductTest.getTestConfigure().getId()).get();
+    if (testConfigure.isCoreTest()) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
-        if ((finishTest.size() >= configureList.size())) {
-          finishProductSample.setStatus(finishproductTest.getStatus());
-          finishProductSampleRepository.save(finishProductSample);
-          mixDesign.setStatus(finishproductTest.getStatus());
-          mixDesignRepository.save(mixDesign);
-        } else {
-          finishProductSample.setStatus(Status.PROCESS);
-          finishProductSampleRepository.save(finishProductSample);
+        if ((testConfigure.getRawMaterial() == null)) {
+          checkPassCountAndTestConfigKeyTestCountByMaterialSubCategory(finishProductTestCode);
+        }
+        if (testConfigure.getMaterialSubCategory() == null) {
+          checkPassCountAndTestConfigKeyTestCountByMaterialCategory(finishProductTestCode);
+        }
+        if (testConfigure.getRawMaterial() != null) {
+          checkPassCountAndTestConfigKeyTestCountByRawMaterial(finishProductTestCode);
         }
       } else {
-        finishProductSample.setStatus(finishproductTest.getStatus());
-        finishProductSampleRepository.save(finishProductSample);
-        mixDesign.setStatus(finishproductTest.getStatus());
-        mixDesignRepository.save(mixDesign);
+        checkStatusAndSaveStatus(finishProductTestCode);
       }
     } else {
       finishProductSample.setStatus(Status.PROCESS);
       finishProductSampleRepository.save(finishProductSample);
     }
   }
+
 
   public boolean getEquationCheck(String finishProductTestCode) {
     if (testParameterService
