@@ -66,7 +66,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     List<Integer> list = new ArrayList<Integer>();
     incomingSampleList.forEach(obj -> {
       String code = obj.getCode();
-      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
     });
     return Collections.max(list);
   }
