@@ -48,5 +48,5 @@ public interface CustomerService {
 
   public List<CustomerResponseDto> searchCustomerByPlantCode(String name, String email,
       String phoneNumber, String address, BooleanBuilder booleanBuilder, String plantCode,
-      Pageable pageable, Pagination pagination);
+      Pageable pageable, Pagination pagination, String plantName);
 }
