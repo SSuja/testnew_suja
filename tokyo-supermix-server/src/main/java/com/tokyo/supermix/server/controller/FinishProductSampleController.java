@@ -253,7 +253,7 @@ public class FinishProductSampleController {
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      pagination.setTotalRecords(finishProductSampleService.getCountFinishProductSample());
+      pagination.setTotalRecords(finishProductSampleService.getSubCategoryCountFinishProductSample(materialSubCategoryId));
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
           mapper.map(finishProductSampleService.getFinishProductSamplesBySubCategoryId(
               materialSubCategoryId, pageable), FinishProductSampleResponseDto.class),
@@ -262,7 +262,7 @@ public class FinishProductSampleController {
       if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
           PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
         pagination.setTotalRecords(
-            finishProductSampleService.getCountFinishProductSampleByPlantCode(plantCode));
+            finishProductSampleService.getCountSubCategoryFinishProductSampleByPlantCode(plantCode, materialSubCategoryId));
         return new ResponseEntity<>(
             new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
                 mapper.map(
