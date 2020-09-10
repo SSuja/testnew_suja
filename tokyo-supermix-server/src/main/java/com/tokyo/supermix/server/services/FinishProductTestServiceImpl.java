@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.data.entities.QFinishProductTest;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -29,6 +35,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -192,5 +200,44 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   @Transactional(readOnly = true)
   public Long getCountFinishProductTestByPlant(String plantCode) {
     return finishProductTestRepository.countByFinishProductSampleMixDesignPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTestDto> searchFinishProductTest(BooleanBuilder booleanBuilder,
+      String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
+      String materialName, String plantCode, Pageable pageable, Pagination pagination) {
+
+    if (specimenCode != null && !specimenCode.isEmpty()) {
+      booleanBuilder.and(
+          QFinishProductTest.finishProductTest.specimenCode.startsWithIgnoreCase(specimenCode));
+    }
+    if (finishProductSampleCode != null && !finishProductSampleCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.finishProductSample.finishProductCode
+          .startsWithIgnoreCase(finishProductSampleCode));
+    }
+    if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.code
+          .startsWithIgnoreCase(mixDesignCode));
+    }
+    if (testName != null && !testName.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.test.name
+          .startsWithIgnoreCase(testName));
+    }
+    if (materialName != null && !materialName.isEmpty()) {
+      booleanBuilder
+          .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
+              .startsWithIgnoreCase(materialName));
+    }
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder
+          .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.plant.code
+              .startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<FinishProductTest>) finishProductTestRepository.findAll(booleanBuilder))
+            .stream().count());
+    return mapper.map(finishProductTestRepository.findAll(booleanBuilder, pageable).toList(),
+        FinishProductTestDto.class);
   }
 }

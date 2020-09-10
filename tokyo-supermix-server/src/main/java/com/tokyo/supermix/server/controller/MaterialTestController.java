@@ -150,21 +150,28 @@ public class MaterialTestController {
   }
 
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_TEST)
-  public ResponseEntity<Object> searchMaterialTest(@RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size,
+  public ResponseEntity<Object> searchMaterialTest(@PathVariable String plantCode,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
       @RequestParam(name = "testName", required = false) String testName,
-      @RequestParam(name = "status", required = false) Status status,
-      @RequestParam(name = "averageMax", required = false) Double averageMax,
-      @RequestParam(name = "averageMin", required = false) Double averageMin,
-      @RequestParam(name = "average", required = false) Double average) {
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "supplierName", required = false) String supplierName) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.MATERIAL_TESTS,
-            materialTestService.searchMaterialTest(incomingSampleCode, status, average, testName,
-                averageMin, averageMax, booleanBuilder, page, size),
-            RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(
+                  materialTestService.searchMaterialTest(incomingSampleCode, status, supplierName,
+                      testName, booleanBuilder, page, size, pageable, plantCode,pagination),
+                  MaterialTestResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_BY_PLANT)
@@ -276,51 +283,51 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
-//  @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
-//  public ResponseEntity<Object> getMaterialTestByPlantCode(
-//          @PathVariable String plantCode) {
-//        if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-//        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-//            mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
-//            RestApiResponseStatus.OK), HttpStatus.OK);
-//      }
-//      if (plantRepository.existsByCode(plantCode)) {
-//        return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-//            mapper.map(
-//                materialTestService.getMaterialTestByPlant(plantCode),
-//                MaterialTestResponseDto.class),
-//            RestApiResponseStatus.OK), HttpStatus.OK);
-//      }
-//      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
-//          validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-//      
-      @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
-      public ResponseEntity<Object> getMaterialTestByPlantCode(
-              @PathVariable String plantCode,
+
+  // @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
+  // public ResponseEntity<Object> getMaterialTestByPlantCode(
+  // @PathVariable String plantCode) {
+  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+  // mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // }
+  // if (plantRepository.existsByCode(plantCode)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+  // mapper.map(
+  // materialTestService.getMaterialTestByPlant(plantCode),
+  // MaterialTestResponseDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  //
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
+  public ResponseEntity<Object> getMaterialTestByPlantCode(@PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        int totalpage = 0;
-        Pagination pagination = new Pagination(page, size, totalpage, 0l);
-            if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-              pagination.setTotalRecords(materialTestService.getCountMaterialTest());
-            return new ResponseEntity<>(new  PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-                mapper.map(materialTestService.getAllMaterialTests(pageable), MaterialTestResponseDto.class),
-                RestApiResponseStatus.OK,pagination), HttpStatus.OK);
-          }
-          if (plantRepository.existsByCode(plantCode)) {
-            return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-                mapper.map(
-                    materialTestService.getMaterialTestByPlant(plantCode, pageable),
-                    MaterialTestResponseDto.class),
-                RestApiResponseStatus.OK,
-                pagination),HttpStatus.OK);
-          }
-          return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
-              validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-           
-      }
-    
-    
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      pagination.setTotalRecords(materialTestService.getCountMaterialTest());
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(materialTestService.getAllMaterialTests(pageable),
+                  MaterialTestResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
+    }
+    if (plantRepository.existsByCode(plantCode)) {
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(materialTestService.getMaterialTestByPlant(plantCode, pageable),
+                  MaterialTestResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+
   }
 
+}

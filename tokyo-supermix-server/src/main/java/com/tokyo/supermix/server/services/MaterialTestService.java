@@ -1,12 +1,11 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
-import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MaterialTestService {
@@ -34,9 +33,8 @@ public interface MaterialTestService {
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
-  public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
-      Double average, String testName, Double averageMin, Double averageMax,
-      BooleanBuilder booleanBuilder, int page, int size);
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String status, String supplierName,
+     String testName,BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode, Pagination pagination);
 
  List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 

@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +13,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.ProjectResponseDto;
 import com.tokyo.supermix.data.entities.Project;
+import com.tokyo.supermix.data.entities.QProject;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ProjectRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
@@ -27,6 +35,8 @@ public class ProjectServiceImpl implements ProjectService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<Project> getAllProjectsByPlant(UserPrincipal currentUser, Pageable pageable) {
@@ -147,5 +157,40 @@ public class ProjectServiceImpl implements ProjectService {
       return null;
     }
     return projectRepository.findByNameStartsWith(name);
+  }
+
+  @Transactional(readOnly = true)
+  public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code,
+      String plantName, String name, String customerName, String contactPerson, Date startDate,
+      String plantCode, Pageable pageable, Pagination pagination, String contactNumber) {
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QProject.project.code.startsWithIgnoreCase(code));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QProject.project.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QProject.project.name.startsWithIgnoreCase(name));
+    }
+    if (customerName != null && !customerName.isEmpty()) {
+      booleanBuilder.and(QProject.project.customer.name.startsWithIgnoreCase(customerName));
+    }
+    if (contactPerson != null && !contactPerson.isEmpty()) {
+      booleanBuilder.and(QProject.project.contactPerson.startsWithIgnoreCase(contactPerson));
+    }
+    if (startDate != null) {
+      booleanBuilder.and(QProject.project.startDate.eq(startDate));
+    }
+    if (contactNumber != null && !contactNumber.isEmpty()) {
+      booleanBuilder.and(QProject.project.contactNumber.startsWithIgnoreCase(contactNumber));
+    }
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QProject.project.plant.code.startsWithIgnoreCase(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<Project>) projectRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(projectRepository.findAll(booleanBuilder, pageable).toList(),
+        ProjectResponseDto.class);
   }
 }

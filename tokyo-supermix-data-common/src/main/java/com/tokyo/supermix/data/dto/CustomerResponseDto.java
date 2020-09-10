@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
-import com.tokyo.supermix.data.entities.Plant;
 
 public class CustomerResponseDto {
   private Long id;
@@ -9,7 +8,7 @@ public class CustomerResponseDto {
   private String phoneNumber;
   private String address;
   private String email;
-  private List<PlantDto> plants;
+  private List<PlantDto> plant;
   private String createdAt;
   private String updatedAt;
   public Long getId() {
@@ -42,11 +41,12 @@ public class CustomerResponseDto {
   public void setEmail(String email) {
     this.email = email;
   }
-  public List<PlantDto> getPlants() {
-    return plants;
+ 
+  public List<PlantDto> getPlant() {
+    return plant;
   }
-  public void setPlants(List<PlantDto> plants) {
-    this.plants = plants;
+  public void setPlant(List<PlantDto> plant) {
+    this.plant = plant;
   }
   public String getCreatedAt() {
     return createdAt;

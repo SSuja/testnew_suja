@@ -5,10 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +22,7 @@ import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -131,20 +129,32 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public Page<MaterialTest> searchMaterialTest(String incomingSampleCode, Status status,
-      Double average, String testName, Double averageMin, Double averageMax,
-      BooleanBuilder booleanBuilder, int page, int size) {
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String status,
+      String supplierName, String testName, BooleanBuilder booleanBuilder, int page, int size,
+      Pageable pageable, String plantCode, Pagination pagination) {
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.code.eq(incomingSampleCode));
+      booleanBuilder.and(
+          QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
     }
     if (status != null) {
-      booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
+      booleanBuilder
+          .and(QMaterialTest.materialTest.status.stringValue().startsWithIgnoreCase(status));
     }
     if (testName != null && !testName.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.eq(testName));
+      booleanBuilder
+          .and(QMaterialTest.materialTest.testConfigure.test.name.startsWithIgnoreCase(testName));
     }
-    return materialTestRepository.findAll(booleanBuilder,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
+    if (supplierName != null && !supplierName.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.supplier.name
+          .startsWithIgnoreCase(supplierName));
+    }
+
+    if (!plantCode.equals("ADMIN")) {
+      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.plant.code.contains(plantCode));
+    }
+    pagination.setTotalRecords(
+        (long) ((List<MaterialTest>) materialTestRepository.findAll(booleanBuilder)).size());
+    return materialTestRepository.findAll(booleanBuilder, pageable).toList();
   }
 
   @Transactional(readOnly = true)
@@ -270,20 +280,20 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public List<MaterialTest> getMaterialTestByPlant(String plantCode) {
-   
+
     return materialTestRepository.findByIncomingSamplePlantCode(plantCode);
   }
 
   @Transactional(readOnly = true)
   public List<MaterialTest> getAllMaterialTests(Pageable pageable) {
-    
-     return materialTestRepository.findAll(pageable).toList();
+
+    return materialTestRepository.findAll(pageable).toList();
   }
 
   @Transactional(readOnly = true)
   public List<MaterialTest> getMaterialTestByPlant(String plantCode, Pageable pageable) {
-  
-    return materialTestRepository.findAllByIncomingSamplePlantCode(plantCode,pageable);
+
+    return materialTestRepository.findAllByIncomingSamplePlantCode(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
@@ -294,7 +304,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public Long getCountMaterialTestByPlantCode(String plantCode) {
-  
+
     return materialTestRepository.countByIncomingSamplePlantCode(plantCode);
   }
 }

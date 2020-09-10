@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,13 +17,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationRequestDto;
 import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationResponseDto;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.enums.CalibrationType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -52,6 +52,8 @@ public class PlantEquipmentCalibrationController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private PlantService plantService;
+  @Autowired
+  private PlantRepository plantRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(PlantEquipmentCalibrationController.class);
@@ -152,12 +154,31 @@ public class PlantEquipmentCalibrationController {
   }
 
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_SEARCH)
-  public ResponseEntity<Object> getPlantEquipmentCalibrationSearch(
-      @QuerydslPredicate(root = PlantEquipmentCalibration.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-        plantEquipmentCalibrationService.searchPlantEquipmentCalibration(predicate, page, size),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  public ResponseEntity<Object> getPlantEquipmentCalibrationSearch(@PathVariable String plantCode,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
+      @RequestParam(name = "serialNo", required = false) String serialNo,
+      @RequestParam(name = "equipmentName", required = false) String equipmentName,
+      @RequestParam(name = "calibratedDate", required = false) String calibratedDate,
+      @RequestParam(name = "dueDate", required = false) String dueDate,
+      @RequestParam(name = "calibrationType", required = false) String calibrationType,
+      @RequestParam(name = "supplierName", required = false) String supplierName,
+      @RequestParam(name = "accuracy", required = false) String accuracy,
+      @RequestParam(name = "employeeName", required = false) String employeeName) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
+              mapper.map(plantEquipmentCalibrationService.searchPlantEquipmentCalibration(serialNo,
+                  equipmentName, calibratedDate, dueDate, calibrationType, supplierName, accuracy,
+                  employeeName, booleanBuilder, page, size, pageable, plantCode, pagination),
+                  PlantEquipmentCalibrationResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
+        validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.GET_EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT_CODE)
