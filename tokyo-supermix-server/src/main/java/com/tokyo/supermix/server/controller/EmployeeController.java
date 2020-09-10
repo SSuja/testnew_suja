@@ -9,7 +9,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.EmployeeFillManager;
 import com.tokyo.supermix.config.export.EmployeeLayouter;
@@ -162,13 +161,23 @@ public class EmployeeController {
   }
 
   @GetMapping(value = EndpointURI.SEARCH_EMPLOYEE)
-  public ResponseEntity<Object> getEmployeeSearch(
-      @QuerydslPredicate(root = Employee.class) Predicate predicate,
+  public ResponseEntity<Object> getEmployeeSearch(@PathVariable String plantCode,
+      @RequestParam(name = "firstName", required = false) String firstName,
+      @RequestParam(name = "email", required = false) String email,
+      @RequestParam(name = "lastName", required = false) String lastName,
+      @RequestParam(name = "address", required = false) String address,
+      @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "designationName", required = false) String designationName,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
-        new ContentResponse<>(Constants.EMPLOYEES,
-            employeeService.searchEmployee(predicate, size, page), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+        new PaginatedContentResponse<>(Constants.EMPLOYEES,
+            employeeService.searchEmployee(booleanBuilder, firstName, email, lastName, address, phoneNumber, plantName, designationName , plantCode, pageable, pagination), RestApiResponseStatus.OK, pagination),
+         HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT_CODE)

@@ -2,11 +2,13 @@ package com.tokyo.supermix.server.services.auth;
 
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.dto.auth.UserResponseDto;
 import com.tokyo.supermix.data.dto.auth.UserRoleDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.UserType;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface UserService {
@@ -51,4 +53,8 @@ public interface UserService {
   public Long getCountUser();
 
   public Long getCountUserByPlantCode(String plantCode);
+
+ public  List<UserResponseDto> searchUserByPlantCode(String userName, String firstName, String plantName,
+      String designationName, BooleanBuilder booleanBuilder, String plantCode, Pageable pageable,
+      Pagination pagination);
 }

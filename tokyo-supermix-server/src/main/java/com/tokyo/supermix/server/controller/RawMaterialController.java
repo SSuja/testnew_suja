@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,11 +16,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -73,17 +73,10 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.RAW_MATERIALS)
-  public ResponseEntity<Object> getAllRawMaterials(@RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    int totalpage = 0;
-    Pagination pagination = new Pagination(page, size, totalpage, 0l);
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
-            mapper.map(rawMaterialService.getAllRawMaterials(pageable),
-                RawMaterialResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        HttpStatus.OK);
+  public ResponseEntity<Object> getAllRawMaterials() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(rawMaterialService.getAllRawMaterials(), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIAL_BY_ID)
@@ -135,16 +128,6 @@ public class RawMaterialController {
         validationFailureStatusCodes.getRawMaterialNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.SEARCH_RAW_MATERIAL)
-  public ResponseEntity<Object> getRawMaterialSearch(
-      @QuerydslPredicate(root = RawMaterial.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(
-        new ContentResponse<>(Constants.RAW_MATERIAL,
-            rawMaterialService.searchRawMaterial(predicate, page, size), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.ACTIVE_RAW_MATERIALS)
   public ResponseEntity<Object> getAllActiveRawMaterials() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
@@ -175,7 +158,7 @@ public class RawMaterialController {
       pagination.setTotalRecords(rawMaterialService.countRawMaterials());
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
-              mapper.map(rawMaterialService.getAllRawMaterials(pageable),
+              mapper.map(rawMaterialService.getAllRawMaterialsPage(pageable),
                   RawMaterialResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);
@@ -219,6 +202,25 @@ public class RawMaterialController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  @GetMapping(value = EndpointURI.SEARCH_RAW_MATERIAL)
+  public ResponseEntity<Object> getRawMaterialSearch(@PathVariable String plantCode,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "materialSubCategoryName",
+          required = false) String materialSubCategoryName,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "designationName", required = false) String designationName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
+            rawMaterialService.searchRawMaterial(booleanBuilder, name, materialSubCategoryName,
+                plantName, plantCode, pageable, pagination),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
+      }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_PLANT)
   public ResponseEntity<Object> getNameSearch(@PathVariable String plantCode,
@@ -230,6 +232,13 @@ public class RawMaterialController {
     }
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
         .map(rawMaterialService.getNameByPlantCode(plantCode, name), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_MAIN_TYPE)
+  public ResponseEntity<Object> getRawMaterialsByMainType(@PathVariable MainType mainType) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
+        .map(rawMaterialService.getRawMaterialsByMainType(mainType), RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

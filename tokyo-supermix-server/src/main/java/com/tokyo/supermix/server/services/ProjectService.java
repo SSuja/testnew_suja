@@ -1,10 +1,14 @@
 package com.tokyo.supermix.server.services;
 
+import java.sql.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.ProjectResponseDto;
 import com.tokyo.supermix.data.entities.Project;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface ProjectService {
@@ -41,4 +45,8 @@ public interface ProjectService {
   public List<Project> getProjectNameByPlantCode(String plantCode, String name);
 
   public List<Project> getProjectName(String name);
+
+  public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code, String plantName,
+      String name, String customerName, String contactPerson, Date startDate, String plantCode,
+      Pageable pageable, Pagination pagination, String contactNumber);
 }

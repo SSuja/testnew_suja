@@ -4,12 +4,14 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface FinishProductTestRepository extends JpaRepository<FinishProductTest, String>,
-    PagingAndSortingRepository<FinishProductTest, String> {
+    PagingAndSortingRepository<FinishProductTest, String>,
+    QuerydslPredicateExecutor<FinishProductTest> {
 
   List<FinishProductTest> findByTestConfigureId(Long testConfigureId);
 

@@ -260,12 +260,9 @@ public class SupplierController {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    pagination.setTotalRecords(
-        plantCode.equalsIgnoreCase(Constants.ADMIN) ? supplierService.getCountSupplier()
-            : supplierService.getCountSupplierByPlantCode(plantCode));
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.SUPPLIER,
         mapper.map(supplierService.searchSupplier(name, address, phoneNumber, email, plantName,
-            booleanBuilder, pageable, plantCode), SupplierResponseDto.class),
+            booleanBuilder, pageable, plantCode, pagination), SupplierResponseDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
   }

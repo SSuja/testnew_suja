@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface SupplierService {
@@ -57,5 +58,5 @@ public interface SupplierService {
   public List<Supplier> getSupplierName(String name);
   
   public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
-      String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable,String plantCode);
+      String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable,String plantCode,Pagination pagination);
 }

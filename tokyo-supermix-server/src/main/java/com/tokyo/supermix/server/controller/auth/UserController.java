@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.auth.GenerateUserDto;
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
@@ -29,8 +30,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.auth.UserService;
@@ -172,5 +173,22 @@ public class UserController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_USER_SUCCESS),
         HttpStatus.OK);
+  }
+  
+  @GetMapping(value = PrivilegeEndpointURI.USER_SEARCH)
+  public ResponseEntity<Object> searchUser(@PathVariable String plantCode,
+      @RequestParam(name = "userName", required = false) String userName,
+      @RequestParam(name = "firstName", required = false) String firstName,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "designationName", required = false) String designationName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USERS,
+        userService.searchUserByPlantCode(userName, firstName, plantName, designationName,
+            booleanBuilder, plantCode, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }
