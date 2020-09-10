@@ -16,6 +16,7 @@ import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -179,7 +180,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   @Transactional(readOnly = true)
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode) {
+      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination) {
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(QIncomingSample.incomingSample.code.startsWithIgnoreCase(code));
     }
@@ -203,20 +204,20 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
+    pagination.setTotalRecords(
+        (long) ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).size());
     return incomingSampleRepository.findAll(booleanBuilder, pageable).toList();
   }
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId) {
-    return incomingSampleRepository
-        .findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+    return incomingSampleRepository.findByRawMaterialMaterialSubCategoryId(materialSubCategoryId);
   }
 
   @Transactional(readOnly = true)
   public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
       String plantCode) {
     return incomingSampleRepository
-        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId,
-            plantCode);
+        .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId, plantCode);
   }
 }
