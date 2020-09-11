@@ -109,8 +109,8 @@ public class MaterialSubCategoryController {
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
     if (materialSubCategoryService
         .isMaterialSubCategoryExist(materialSubCategoryRequestDto.getId())) {
-      if (materialSubCategoryService.isMaterialCategoryExist(
-          materialSubCategoryRequestDto.getName(),
+      if (materialSubCategoryService.isMaterialCategoryExistUpdate(
+          materialSubCategoryRequestDto.getId(), materialSubCategoryRequestDto.getName(),
           materialSubCategoryRequestDto.getMaterialCategoryId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_NAME,

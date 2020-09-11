@@ -10,8 +10,6 @@ public class SupplierRequestDto {
   @NotEmpty(message = "{supplierRequestDto.name.empty}")
   private String name;
   private String address;
-  @NotNull(message = "{supplierRequestDto.phoneNumber.null}")
-  @NotEmpty(message = "{supplierRequestDto.phoneNumber.empty}")
   private String phoneNumber;
   private String email;
   @NotNull(message = "{supplierRequestDto.plantCode.null}")
