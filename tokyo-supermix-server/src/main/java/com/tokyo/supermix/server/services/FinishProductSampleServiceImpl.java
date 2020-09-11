@@ -211,17 +211,88 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
             .stream().count());
     return mapper.map(finishProductSampleRepository.findAll(booleanBuilder, pageable).toList(),
         FinishProductSampleResponseDto.class);
-      }
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId) {
+  }
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId,
+      Pageable pageable) {
     return finishProductSampleRepository
-        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId);
+        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId, pageable);
   }
 
   @Transactional(readOnly = true)
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
-      Long subCategoryId, String plantCode) {
+      Long subCategoryId, String plantCode, Pageable pageable) {
     return finishProductSampleRepository
         .findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(subCategoryId,
-            plantCode);
+            plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getSubCategoryCountFinishProductSample(Long materialSubCategoryId) {
+    return finishProductSampleRepository
+        .countByMixDesignRawMaterialMaterialSubCategoryId(materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountSubCategoryFinishProductSampleByPlantCode(String plantCode,
+      Long materialSubCategoryId) {
+    return finishProductSampleRepository
+        .countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryId(plantCode,
+            materialSubCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCategoryCountFinishProductSample(Long materialCategoryId) {
+    return finishProductSampleRepository
+        .countByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId,
+      Pageable pageable) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId,
+            pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountCategoryFinishProductSampleByPlantCode(String plantCode,
+      Long materialCategoryId) {
+    return finishProductSampleRepository
+        .countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(
+            plantCode, materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByCategoryIdAndPlantCode(
+      Long materialCategoryId, String plantCode, Pageable pageable) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryIdAndMixDesignPlantCode(
+            materialCategoryId, plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getRawMaterialCountFinishProductSample(Long rawMaterialId) {
+    return finishProductSampleRepository.countByMixDesignRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId,
+      Pageable pageable) {
+    return finishProductSampleRepository.findByMixDesignRawMaterialId(rawMaterialId, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountRawMaterialFinishProductSampleByPlantCode(String plantCode,
+      Long rawMaterialId) {
+    return finishProductSampleRepository
+        .countByMixDesignPlantCodeAndMixDesignRawMaterialId(plantCode, rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(
+      Long rawMaterialId, String plantCode, Pageable pageable) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialIdAndMixDesignPlantCode(rawMaterialId, plantCode, pageable);
   }
 }

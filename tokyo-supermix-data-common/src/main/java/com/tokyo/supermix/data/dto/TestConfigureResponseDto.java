@@ -19,6 +19,7 @@ public class TestConfigureResponseDto {
   private String createdAt;
   private String updatedAt;
   private RawMaterialResponseDto rawMaterial;
+  private MaterialCategoryDto materialCategory;
 
   public String getCreatedAt() {
     return createdAt;
@@ -138,5 +139,13 @@ public class TestConfigureResponseDto {
 
   public void setRawMaterial(RawMaterialResponseDto rawMaterial) {
     this.rawMaterial = rawMaterial;
+  }
+
+  public MaterialCategoryDto getMaterialCategory() {
+    return materialCategory;
+  }
+
+  public void setMaterialCategory(MaterialCategoryDto materialCategory) {
+    this.materialCategory = materialCategory;
   }
 }

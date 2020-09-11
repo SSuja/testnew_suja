@@ -56,8 +56,36 @@ public interface FinishProductSampleService {
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, Pageable pageable,
       Pagination pagination);
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId);
 
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(Long subCategoryId,
-      String plantCode);
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId,
+      Pageable pageable);
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
+      Long subCategoryId, String plantCode, Pageable pageable);
+
+  public Long getSubCategoryCountFinishProductSample(Long materialSubCategoryId);
+
+  public Long getCountSubCategoryFinishProductSampleByPlantCode(String plantCode,
+      Long materialSubCategoryId);
+
+  public Long getCategoryCountFinishProductSample(Long materialCategoryId);
+
+  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId,
+      Pageable pageable);
+
+  public Long getCountCategoryFinishProductSampleByPlantCode(String plantCode,
+      Long materialCategoryId);
+
+  public List<FinishProductSample> getFinishProductSamplesByCategoryIdAndPlantCode(
+      Long materialCategoryId, String plantCode, Pageable pageable);
+
+  public Long getRawMaterialCountFinishProductSample(Long rawMaterialId);
+
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId, Pageable pageable);
+
+  public Long getCountRawMaterialFinishProductSampleByPlantCode(String plantCode,
+      Long rawMaterialId);
+
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(Long rawMaterialId,
+      String plantCode, Pageable pageable);
 }

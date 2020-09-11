@@ -245,10 +245,12 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     TestConfigure testConfigure = testConfigureRepository.getOne(testConfigureId);
     testConfigureResDto.setTestConfigureId(testConfigureId);
     testConfigureResDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
-    testConfigureResDto.setMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId());
-    testConfigureResDto.setMaterialCategoryName(testConfigure.getMaterialCategory().getName());
-    testConfigureResDto
-        .setMaterialSubCategoryName(testConfigure.getMaterialSubCategory().getName());
+    if (testConfigure.getMaterialSubCategory() != null) {
+      testConfigureResDto.setMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId());
+      testConfigureResDto
+      .setMaterialSubCategoryName(testConfigure.getMaterialSubCategory().getName());
+    }
+    testConfigureResDto.setMaterialCategoryName(testConfigure.getMaterialCategory().getName());  
     testConfigureResDto.setTestName(testConfigure.getTest().getName());
     testConfigureResDto.setAcceptedType(testConfigure.getAcceptedType().toString());
     testConfigureResDto.setTestType(testConfigure.getTestType().toString());

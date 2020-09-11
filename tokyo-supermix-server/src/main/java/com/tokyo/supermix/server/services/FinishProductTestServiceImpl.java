@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.FinishProductTestDto;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.QFinishProductTest;
 import com.tokyo.supermix.data.enums.Status;
@@ -155,16 +156,20 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       String finishProductSampleCode) {
     ArrayList<FinishProductTestDto> finishProductTestDtoList =
         new ArrayList<FinishProductTestDto>();
+    FinishProductSample finishProductSample =
+        finishProductSampleRepository.findById(finishProductSampleCode).get();
     testConfigureRepository
-        .findByMaterialCategoryId(
-            finishProductSampleRepository.findById(finishProductSampleCode).get().getMixDesign()
-                .getRawMaterial().getMaterialSubCategory().getMaterialCategory().getId())
-        .forEach(testConfigure -> {
+        .findByMaterialCategoryIdOrMaterialSubCategoryIdOrRawMaterialId(
+            finishProductSample.getMixDesign().getRawMaterial().getMaterialSubCategory()
+                .getMaterialCategory().getId(),
+            finishProductSample.getMixDesign().getRawMaterial().getMaterialSubCategory().getId(),
+            finishProductSample.getMixDesign().getRawMaterial().getId())
+        .forEach(testConfigureMaterial -> {
           FinishProductTestDto finishProductTestDto = new FinishProductTestDto();
-          finishProductTestRepository.findByTestConfigureId(testConfigure.getId())
+          finishProductTestRepository.findByTestConfigureId(testConfigureMaterial.getId())
               .forEach(finishProductTest -> {
                 if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
-                    finishProductSampleCode, testConfigure.getId())) {
+                    finishProductSampleCode, testConfigureMaterial.getId())) {
                   finishProductTestDto.setCreatedDate(finishProductTest.getCreatedAt().toString());
                   finishProductTestDto.setUpdatedDate(finishProductTest.getUpdatedAt().toString());
                   finishProductTestDto
@@ -180,12 +185,12 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
                 }
               });
           if (!(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
-              finishProductSampleCode, testConfigure.getId()))) {
-            finishProductTestDto.setTestConfigId(testConfigure.getId());
+              finishProductSampleCode, testConfigureMaterial.getId()))) {
+            finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
             finishProductTestDto.setStatus(Status.NEW);
-            finishProductTestDto.setTestName(testConfigure.getTest().getName());
+            finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
             finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
-            finishProductTestDto.setMainType(testConfigure.getTestType());
+            finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
           }
           finishProductTestDtoList.add(finishProductTestDto);
         });

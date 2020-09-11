@@ -33,9 +33,6 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
   List<RawMaterial> findByNameStartsWith(String name);
 
   boolean existsByPrefix(String prefix);
-//  RawMaterial.java
-//  MaterialSubCategory.java
-//  MaterialCategory.java
 
   List<RawMaterial> findByMaterialSubCategoryMaterialCategoryMainType(MainType mainType);
 }
