@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.Supplier;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface SupplierService {
@@ -32,15 +33,15 @@ public interface SupplierService {
   public List<Supplier> findBySupplierCategoryIdAndPlantCode(Long suppilerCategoryId,
       String plantCode);
 
-//  public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
-//      String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable);
+  // public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
+  // String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable);
 
   // public List<Supplier> getSupplierByPlantCode(String plantCode);
 
   public List<Supplier> findBySupplierCategoryId(Long suppilerCategoryId);
 
   public List<Supplier> getByPlantCodeAndSupplierCategoryId(String plantCode,
-      Long supplierCategoryId,String name);
+      Long supplierCategoryId, String name);
 
   public boolean isPlantCodeAndSupplierCategoryIdExist(String plantCode, Long supplierCategoryId);
 
@@ -55,7 +56,9 @@ public interface SupplierService {
   public List<Supplier> getSupplierNameByPlantCode(String plantCode, String name);
 
   public List<Supplier> getSupplierName(String name);
-  
+
   public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
-      String email,String plantName, BooleanBuilder booleanBuilder, Pageable pageable,String plantCode);
+      String email, String plantName, String createdAt, String updatedAt,
+      String supplierCategoryName, BooleanBuilder booleanBuilder, Pageable pageable,
+      String plantCode, Pagination pagination);
 }

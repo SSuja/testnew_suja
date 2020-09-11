@@ -84,7 +84,7 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
 
   @Transactional(readOnly = true)
   public boolean isMaterialCategoryExist(String name, Long materialCategoryId) {
-    if (!(materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name,
+    if ((materialSubCategoryRepository.existsByNameAndMaterialCategoryId(name,
         materialCategoryId))) {
       return true;
     }
@@ -108,4 +108,12 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
     return false;
   }
 
+  @Transactional(readOnly = true)
+  public boolean isMaterialCategoryExistUpdate(Long id, String name, Long materialCategoryId) {
+    if (!(materialSubCategoryRepository.existsByIdAndNameAndMaterialCategoryId(id, name,
+        materialCategoryId))) {
+      return true;
+    }
+    return false;
+  }
 }

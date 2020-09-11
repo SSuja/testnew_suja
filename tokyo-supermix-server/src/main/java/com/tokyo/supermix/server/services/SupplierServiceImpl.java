@@ -14,6 +14,7 @@ import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -164,8 +165,9 @@ public class SupplierServiceImpl implements SupplierService {
 
   @Transactional(readOnly = true)
   public List<Supplier> searchSupplier(String name, String address, String phoneNumber,
-      String email, String plantName, BooleanBuilder booleanBuilder, Pageable pageable,
-      String plantCode) {
+      String email, String plantName, String createdAt, String updatedAt,
+      String supplierCategoryName, BooleanBuilder booleanBuilder, Pageable pageable,
+      String plantCode, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QSupplier.supplier.name.startsWithIgnoreCase(name));
     }
@@ -175,12 +177,29 @@ public class SupplierServiceImpl implements SupplierService {
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
       booleanBuilder.and(QSupplier.supplier.phoneNumber.startsWithIgnoreCase(phoneNumber));
     }
+    if (email != null && !email.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.email.startsWithIgnoreCase(email));
+    }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QSupplier.supplier.plant.name.startsWithIgnoreCase(plantName));
+    }
+    if (createdAt != null && !createdAt.isEmpty()) {
+      booleanBuilder
+          .and(QSupplier.supplier.createdAt.stringValue().startsWithIgnoreCase(createdAt));
+    }
+    if (updatedAt != null && !updatedAt.isEmpty()) {
+      booleanBuilder
+          .and(QSupplier.supplier.updatedAt.stringValue().startsWithIgnoreCase(updatedAt));
+    }
+    if (supplierCategoryName != null && !supplierCategoryName.isEmpty()) {
+      booleanBuilder.and(QSupplier.supplier.supplierCategories.any().category
+          .startsWithIgnoreCase(supplierCategoryName));
     }
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       booleanBuilder.and(QSupplier.supplier.plant.code.startsWithIgnoreCase(plantCode));
     }
+    pagination.setTotalRecords(
+        (long) ((List<Supplier>) supplierRepository.findAll(booleanBuilder)).size());
     return supplierRepository.findAll(booleanBuilder, pageable).toList();
 
   }

@@ -48,5 +48,5 @@ public interface ProjectService {
 
   public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code, String plantName,
       String name, String customerName, String contactPerson, Date startDate, String plantCode,
-      Pageable pageable, Pagination pagination);
+      Pageable pageable, Pagination pagination, String contactNumber);
 }

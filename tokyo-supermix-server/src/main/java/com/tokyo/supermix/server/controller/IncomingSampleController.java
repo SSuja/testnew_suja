@@ -234,19 +234,14 @@ public class IncomingSampleController {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    pagination.setTotalRecords(
-        plantCode.equalsIgnoreCase(Constants.ADMIN) ? incomingSampleService.getCountIncomingSample()
-            : incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
-            mapper.map(
-                incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
-                    rawMaterialName, plantName, supplierName, booleanBuilder, pageable, plantCode),
-                IncomingSampleResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
+        mapper.map(incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
+            rawMaterialName, plantName, supplierName, booleanBuilder, pageable, plantCode,
+            pagination), IncomingSampleResponseDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
   }
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(
       @PathVariable Long materialSubCategoryId, @PathVariable String plantCode) {

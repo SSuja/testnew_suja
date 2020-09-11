@@ -186,7 +186,7 @@ public class UserController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.CUSTOMERS,
+    return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USERS,
         userService.searchUserByPlantCode(userName, firstName, plantName, designationName,
             booleanBuilder, plantCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);

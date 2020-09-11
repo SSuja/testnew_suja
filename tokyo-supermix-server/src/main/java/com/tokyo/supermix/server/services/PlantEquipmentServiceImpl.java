@@ -11,6 +11,7 @@ import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.data.entities.QPlantEquipment;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -53,7 +54,7 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName, String modelName,String plantName,String equipmentName,
-      BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode) {
+      BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode, Pagination pagination) {
     
     if (serialNo != null && !serialNo.isEmpty()) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
@@ -76,6 +77,8 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
     if(!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
       }
+    pagination.setTotalRecords(
+        (long) ((List<PlantEquipment>) plantEquipmentRepository.findAll(booleanBuilder)).size());
     return plantEquipmentRepository.findAll(booleanBuilder, pageable).toList();
    
   }
