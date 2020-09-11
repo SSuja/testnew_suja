@@ -109,6 +109,11 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteFinishProductSample(String code) {
+    FinishProductSample finishProductSample = finishProductSampleRepository.findById(code).get();
+    MixDesign mixDesign =
+        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
+    mixDesign.setCheckDepend(false);
+    mixDesignRepository.save(mixDesign);
     finishProductSampleRepository.deleteById(code);
   }
 
