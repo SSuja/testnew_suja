@@ -37,4 +37,7 @@ public interface TestConfigureRepository
   List<TestConfigure> findByMaterialCategoryIdAndCoreTestTrue(Long materialCategoryId);
 
   List<TestConfigure> findByRawMaterialId(Long rawNaterialId);
+
+  List<TestConfigure> findByMaterialCategoryIdOrMaterialSubCategoryIdOrRawMaterialId(
+      Long materialCategoryId, Long materialSubCategoryId, Long rawMaterialId);
 }
