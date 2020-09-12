@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -161,7 +160,7 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Transactional(readOnly = true)
   public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code,
-      String plantName, String name, String customerName, String contactPerson, Date startDate,
+      String plantName, String name, String customerName, String contactPerson, String startDate,
       String plantCode, Pageable pageable, Pagination pagination, String contactNumber) {
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(QProject.project.code.startsWithIgnoreCase(code));
@@ -179,7 +178,7 @@ public class ProjectServiceImpl implements ProjectService {
       booleanBuilder.and(QProject.project.contactPerson.startsWithIgnoreCase(contactPerson));
     }
     if (startDate != null) {
-      booleanBuilder.and(QProject.project.startDate.eq(startDate));
+      booleanBuilder.and(QProject.project.startDate.stringValue().startsWithIgnoreCase(startDate));
     }
     if (contactNumber != null && !contactNumber.isEmpty()) {
       booleanBuilder.and(QProject.project.contactNumber.startsWithIgnoreCase(contactNumber));

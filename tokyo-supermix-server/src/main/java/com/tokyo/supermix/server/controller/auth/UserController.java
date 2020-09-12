@@ -181,13 +181,14 @@ public class UserController {
       @RequestParam(name = "firstName", required = false) String firstName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "designationName", required = false) String designationName,
+      @RequestParam(name = "phoneNumber", required = false) String phoneNumber,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USERS,
-        userService.searchUserByPlantCode(userName, firstName, plantName, designationName,
+        userService.searchUserByPlantCode(userName, firstName, plantName, designationName,phoneNumber,
             booleanBuilder, plantCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }

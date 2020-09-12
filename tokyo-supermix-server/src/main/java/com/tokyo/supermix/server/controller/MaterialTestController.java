@@ -153,6 +153,8 @@ public class MaterialTestController {
   public ResponseEntity<Object> searchMaterialTest(@PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
+      @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "specimenCode", required = false) String specimenCode,
       @RequestParam(name = "testName", required = false) String testName,
       @RequestParam(name = "status", required = false) String status,
       @RequestParam(name = "supplierName", required = false) String supplierName) {
@@ -163,7 +165,7 @@ public class MaterialTestController {
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
               mapper.map(
-                  materialTestService.searchMaterialTest(incomingSampleCode, status, supplierName,
+                  materialTestService.searchMaterialTest(incomingSampleCode,date,specimenCode, status, supplierName,
                       testName, booleanBuilder, page, size, pageable, plantCode,pagination),
                   MaterialTestResponseDto.class),
               RestApiResponseStatus.OK, pagination),

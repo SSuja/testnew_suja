@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.sql.Date;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -161,7 +160,7 @@ public class ProjectController {
       @RequestParam(name = "customerName", required = false) String customerName,
       @RequestParam(name = "contactPerson", required = false) String contactPerson,
       @RequestParam(name = "contactNumber", required = false) String contactNumber,
-      @RequestParam(name = "startDate", required = false) Date startDate,
+      @RequestParam(name = "startDate", required = false) String startDate,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;

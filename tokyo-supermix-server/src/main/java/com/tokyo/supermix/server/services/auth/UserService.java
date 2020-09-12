@@ -55,6 +55,6 @@ public interface UserService {
   public Long getCountUserByPlantCode(String plantCode);
 
  public  List<UserResponseDto> searchUserByPlantCode(String userName, String firstName, String plantName,
-      String designationName, BooleanBuilder booleanBuilder, String plantCode, Pageable pageable,
+      String designationName, String phoneNumber, BooleanBuilder booleanBuilder, String plantCode, Pageable pageable,
       Pagination pagination);
 }

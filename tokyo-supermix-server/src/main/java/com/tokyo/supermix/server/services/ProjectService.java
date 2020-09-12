@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.sql.Date;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +46,6 @@ public interface ProjectService {
   public List<Project> getProjectName(String name);
 
   public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code, String plantName,
-      String name, String customerName, String contactPerson, Date startDate, String plantCode,
+      String name, String customerName, String contactPerson, String startDate, String plantCode,
       Pageable pageable, Pagination pagination, String contactNumber);
 }
