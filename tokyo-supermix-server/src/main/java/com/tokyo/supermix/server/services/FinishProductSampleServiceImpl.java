@@ -186,8 +186,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, Pageable pageable,
-      Pagination pagination) {
+      String mixDesignCode, String plantName, String plantCode, String status, String date,
+      Pageable pageable, Pagination pagination) {
 
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
@@ -210,6 +210,14 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
           .startsWithIgnoreCase(plantCode));
+    }
+    if (status != null && !status.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.status.stringValue()
+          .startsWithIgnoreCase(status));
+    }
+    if (date != null && !date.isEmpty()) {
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.date.stringValue().startsWithIgnoreCase(date));
     }
     pagination.setTotalRecords(
         ((Collection<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))

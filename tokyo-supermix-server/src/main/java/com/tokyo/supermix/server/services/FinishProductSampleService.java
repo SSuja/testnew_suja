@@ -54,8 +54,8 @@ public interface FinishProductSampleService {
 
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, Pageable pageable,
-      Pagination pagination);
+      String mixDesignCode, String plantName, String plantCode, String status, String date,
+      Pageable pageable, Pagination pagination);
 
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId,
       Pageable pageable);
@@ -81,11 +81,12 @@ public interface FinishProductSampleService {
 
   public Long getRawMaterialCountFinishProductSample(Long rawMaterialId);
 
-  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId, Pageable pageable);
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId,
+      Pageable pageable);
 
   public Long getCountRawMaterialFinishProductSampleByPlantCode(String plantCode,
       Long rawMaterialId);
 
-  public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(Long rawMaterialId,
-      String plantCode, Pageable pageable);
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(
+      Long rawMaterialId, String plantCode, Pageable pageable);
 }

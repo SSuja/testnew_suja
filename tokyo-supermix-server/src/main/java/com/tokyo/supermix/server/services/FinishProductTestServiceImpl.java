@@ -140,7 +140,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
 
   @Transactional
   public void updateFinishProductTestComment(FinishProductTest finishProductTest) {
-    
+
     finishProductTest.setSpecimenCode(
         finishProductTestRepository.findById(finishProductTest.getCode()).get().getSpecimenCode());
     finishProductTestRepository.save(finishProductTest);
@@ -210,7 +210,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   @Transactional(readOnly = true)
   public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
-      String materialName, String plantCode, Pageable pageable, Pagination pagination) {
+      String materialName, String plantCode, String status, String date, Pageable pageable,
+      Pagination pagination) {
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(
           QFinishProductTest.finishProductTest.specimenCode.startsWithIgnoreCase(specimenCode));
@@ -228,8 +229,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
           .startsWithIgnoreCase(testName));
     }
     if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
+      booleanBuilder
+          .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
               .startsWithIgnoreCase(materialName));
     }
     if (plantCode != null && !plantCode.isEmpty()
@@ -237,6 +238,14 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.plant.code
               .startsWithIgnoreCase(plantCode));
+    }
+    if (status != null && !status.isEmpty()) {
+      booleanBuilder.and(
+          QFinishProductTest.finishProductTest.status.stringValue().startsWithIgnoreCase(status));
+    }
+    if (date != null && !date.isEmpty()) {
+      booleanBuilder
+          .and(QFinishProductTest.finishProductTest.date.stringValue().startsWithIgnoreCase(date));
     }
     pagination.setTotalRecords(
         ((Collection<FinishProductTest>) finishProductTestRepository.findAll(booleanBuilder))

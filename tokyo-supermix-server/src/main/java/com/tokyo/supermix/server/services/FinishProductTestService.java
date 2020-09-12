@@ -48,5 +48,6 @@ public interface FinishProductTestService {
 
   public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
-      String materialName, String plantCode, Pageable pageable, Pagination pagination);
+      String materialName, String status, String date, String plantCode, Pageable pageable,
+      Pagination pagination);
 }
