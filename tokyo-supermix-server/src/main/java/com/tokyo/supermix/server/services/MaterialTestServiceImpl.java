@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -129,22 +130,23 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String date, String specimenCode,String status,
-      String supplierName, String testName, BooleanBuilder booleanBuilder, int page, int size,
-      Pageable pageable, String plantCode, Pagination pagination) {
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String date,
+      String specimenCode, String status, String supplierName, String testName,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
+      Pagination pagination) {
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
       booleanBuilder.and(
           QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
     }
-    if (date != null) {
+    if (date != null && date.isEmpty()) {
       booleanBuilder
           .and(QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
     }
-    if (specimenCode != null) {
+    if (specimenCode != null && specimenCode.isEmpty()) {
       booleanBuilder
           .and(QMaterialTest.materialTest.specimenCode.startsWithIgnoreCase(specimenCode));
     }
-    if (status != null) {
+    if (status != null && status.isEmpty()) {
       booleanBuilder
           .and(QMaterialTest.materialTest.status.stringValue().startsWithIgnoreCase(status));
     }
@@ -160,8 +162,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QMaterialTest.materialTest.incomingSample.plant.code.contains(plantCode));
     }
-    pagination.setTotalRecords(
-        (long) ((List<MaterialTest>) materialTestRepository.findAll(booleanBuilder)).size());
+    pagination
+        .setTotalRecords(((Collection<MaterialTest>) materialTestRepository.findAll(booleanBuilder))
+            .stream().count());
     return materialTestRepository.findAll(booleanBuilder, pageable).toList();
   }
 
