@@ -164,7 +164,7 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional(readOnly = true)
   public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
       String materialName, String subCategoryName, String plantName, String plantCode,
-      Pageable pageable, Pagination pagination) {
+      String status, String date, Pageable pageable, Pagination pagination) {
 
     if (materialName != null && !materialName.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.startsWithIgnoreCase(materialName));
@@ -181,11 +181,18 @@ public class MixDesignServiceImpl implements MixDesignService {
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
       booleanBuilder.and(QMixDesign.mixDesign.plant.code.startsWithIgnoreCase(plantCode));
     }
+    if (status != null && !status.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.status.stringValue().startsWithIgnoreCase(status));
+    }
+    if (date != null && !date.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.date.stringValue().startsWithIgnoreCase(date));
+    }
     pagination.setTotalRecords(
         ((Collection<MixDesign>) mixDesignRepository.findAll(booleanBuilder)).stream().count());
     return mapper.map(mixDesignRepository.findAll(booleanBuilder, pageable).toList(),
         MixDesignResponseDto.class);
-      }
+  }
+
   public List<MixDesign> getCodeByPlantCode(String plantCode, String code) {
     if (code.isEmpty()) {
       return null;

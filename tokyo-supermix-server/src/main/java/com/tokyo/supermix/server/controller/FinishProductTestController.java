@@ -203,6 +203,8 @@ public class FinishProductTestController {
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
       @RequestParam(name = "testName", required = false) String testName,
       @RequestParam(name = "materialName", required = false) String materialName,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -210,8 +212,8 @@ public class FinishProductTestController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_TEST,
         mapper.map(finishProductTestService.searchFinishProductTest(booleanBuilder, specimenCode,
-            finishProductSampleCode, mixDesignCode, testName, materialName, plantCode, pageable,
-            pagination), FinishProductTestResponseDto.class),
+            finishProductSampleCode, mixDesignCode, testName, materialName, plantCode, status, date,
+            pageable, pagination), FinishProductTestResponseDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

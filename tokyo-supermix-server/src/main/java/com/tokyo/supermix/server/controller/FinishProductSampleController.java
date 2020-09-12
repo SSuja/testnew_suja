@@ -232,6 +232,8 @@ public class FinishProductSampleController {
       @RequestParam(name = "equipmentName", required = false) String equipmentName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -239,7 +241,7 @@ public class FinishProductSampleController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
         finishProductSampleService.searchFinishProductSample(booleanBuilder, finishProductCode,
-            equipmentName, mixDesignCode, plantName, plantCode, pageable, pagination),
+            equipmentName, mixDesignCode, plantName, plantCode, status, date, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
   }
@@ -312,7 +314,7 @@ public class FinishProductSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_RAW_MATERIAL_AND_PLANT)
   public ResponseEntity<Object> getFinishProductSamplesByRawMaterialAndCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable Long rawMaterialId,
@@ -333,14 +335,11 @@ public class FinishProductSampleController {
           PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
         pagination.setTotalRecords(finishProductSampleService
             .getCountRawMaterialFinishProductSampleByPlantCode(plantCode, rawMaterialId));
-        return new ResponseEntity<>(
-            new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-                mapper.map(
-                    finishProductSampleService.getFinishProductSamplesByRawMaterialIdAndPlantCode(
-                        rawMaterialId, plantCode, pageable),
-                    FinishProductSampleResponseDto.class),
-                RestApiResponseStatus.OK, pagination),
-            HttpStatus.OK);
+        return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+            mapper
+                .map(finishProductSampleService.getFinishProductSamplesByRawMaterialIdAndPlantCode(
+                    rawMaterialId, plantCode, pageable), FinishProductSampleResponseDto.class),
+            RestApiResponseStatus.OK, pagination), HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,

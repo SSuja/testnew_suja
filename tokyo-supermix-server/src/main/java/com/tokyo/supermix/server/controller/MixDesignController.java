@@ -181,18 +181,19 @@ public class MixDesignController {
       @RequestParam(name = "materialName", required = false) String materialName,
       @RequestParam(name = "subCategoryName", required = false) String subCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.MIX_DESIGN,
-            mixDesignService.searchMixDesign(booleanBuilder, materialName, subCategoryName,
-                plantName, plantCode, pageable, pagination),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
-      }
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MIX_DESIGN,
+        mixDesignService.searchMixDesign(booleanBuilder, materialName, subCategoryName, plantName,
+            plantCode, status, date, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+  }
+
   @GetMapping(value = EndpointURI.GET_MIX_DESIGNS_BY_PLANT)
   public ResponseEntity<Object> getCodeSearch(@PathVariable String plantCode,
       @RequestParam(name = "code") String code) {
