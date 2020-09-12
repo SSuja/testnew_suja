@@ -22,7 +22,7 @@ public interface PlantEquipmentCalibrationService {
 
   public List<PlantEquipmentCalibration> searchPlantEquipmentCalibration(String serialNo,
       String equipmentName, String calibratedDate, String dueDate, String calibrationType,
-      String supplierName, String accuracy, String employeeName, BooleanBuilder booleanBuilder,
+      String supplierName, String accuracy, String status, String employeeName, BooleanBuilder booleanBuilder,
       int page, int size, Pageable pageable, String plantCode, Pagination pagination);
 
 

@@ -33,7 +33,7 @@ public interface MaterialTestService {
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
-  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String status, String supplierName,
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode,String date, String specimenCode, String status, String supplierName,
      String testName,BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode, Pagination pagination);
 
  List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
