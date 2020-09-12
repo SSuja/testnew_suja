@@ -138,15 +138,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       booleanBuilder.and(
           QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
     }
-    if (date != null && date.isEmpty()) {
+    if (date != null && !date.isEmpty()) {
       booleanBuilder
           .and(QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
     }
-    if (specimenCode != null && specimenCode.isEmpty()) {
+    if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder
           .and(QMaterialTest.materialTest.specimenCode.startsWithIgnoreCase(specimenCode));
     }
-    if (status != null && status.isEmpty()) {
+    if (status != null && !status.isEmpty()) {
       booleanBuilder
           .and(QMaterialTest.materialTest.status.stringValue().startsWithIgnoreCase(status));
     }
