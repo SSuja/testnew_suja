@@ -46,7 +46,7 @@ public interface FinishProductTestService {
 
   public Long getCountFinishProductTestByPlant(String plantCode);
 
-  public List<FinishProductTestDto> searchFinishProductTest(BooleanBuilder booleanBuilder,
+  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
       String materialName, String plantCode, Pageable pageable, Pagination pagination);
 }

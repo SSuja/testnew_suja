@@ -9,6 +9,15 @@ public class FinishProductTestTrialDto {
   private InputMethod testParameterInputMethods;
   private TestParameterType testParameterType;
   private Long finishProductTestNoOfTrial;
+  private String testParameterParameterName;
+
+  public String getTestParameterParameterName() {
+    return testParameterParameterName;
+  }
+
+  public void setTestParameterParameterName(String testParameterParameterName) {
+    this.testParameterParameterName = testParameterParameterName;
+  }
 
   public Long getTrialNo() {
     return trialNo;

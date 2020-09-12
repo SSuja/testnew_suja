@@ -208,10 +208,10 @@ public class FinishProductTestController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-        finishProductTestService.searchFinishProductTest(booleanBuilder, specimenCode,
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_TEST,
+        mapper.map(finishProductTestService.searchFinishProductTest(booleanBuilder, specimenCode,
             finishProductSampleCode, mixDesignCode, testName, materialName, plantCode, pageable,
-            pagination),
+            pagination), FinishProductTestResponseDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }
