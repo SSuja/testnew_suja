@@ -68,7 +68,7 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> searchPlantEquipmentCalibration(String serialNo,
       String equipmentName, String calibratedDate, String dueDate, String calibrationType,
-      String supplierName, String accuracy, String employeeName, BooleanBuilder booleanBuilder,
+      String supplierName, String accuracy,String status, String employeeName, BooleanBuilder booleanBuilder,
       int page, int size, Pageable pageable, String plantCode,Pagination pagination) {
     if (serialNo != null && !serialNo.isEmpty()) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
@@ -93,6 +93,9 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
     }
     if (accuracy != null && !accuracy.isEmpty()) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.startsWithIgnoreCase(accuracy));
+    }
+    if (status != null ) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.status.stringValue().startsWithIgnoreCase(status));
     }
     if (employeeName != null && !employeeName.isEmpty()) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.employee.firstName.startsWithIgnoreCase(employeeName));

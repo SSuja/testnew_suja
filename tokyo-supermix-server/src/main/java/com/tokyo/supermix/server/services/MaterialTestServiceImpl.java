@@ -129,12 +129,20 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String status,
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String date, String specimenCode,String status,
       String supplierName, String testName, BooleanBuilder booleanBuilder, int page, int size,
       Pageable pageable, String plantCode, Pagination pagination) {
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
       booleanBuilder.and(
           QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
+    }
+    if (date != null) {
+      booleanBuilder
+          .and(QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
+    }
+    if (specimenCode != null) {
+      booleanBuilder
+          .and(QMaterialTest.materialTest.specimenCode.startsWithIgnoreCase(specimenCode));
     }
     if (status != null) {
       booleanBuilder

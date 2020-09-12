@@ -163,6 +163,7 @@ public class PlantEquipmentCalibrationController {
       @RequestParam(name = "calibrationType", required = false) String calibrationType,
       @RequestParam(name = "supplierName", required = false) String supplierName,
       @RequestParam(name = "accuracy", required = false) String accuracy,
+      @RequestParam(name = "status", required = false) String status,
       @RequestParam(name = "employeeName", required = false) String employeeName) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
@@ -172,7 +173,7 @@ public class PlantEquipmentCalibrationController {
           new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
               mapper.map(plantEquipmentCalibrationService.searchPlantEquipmentCalibration(serialNo,
                   equipmentName, calibratedDate, dueDate, calibrationType, supplierName, accuracy,
-                  employeeName, booleanBuilder, page, size, pageable, plantCode, pagination),
+                  status,employeeName, booleanBuilder, page, size, pageable, plantCode, pagination),
                   PlantEquipmentCalibrationResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);
