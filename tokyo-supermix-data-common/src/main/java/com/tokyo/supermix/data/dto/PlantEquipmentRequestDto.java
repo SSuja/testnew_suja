@@ -1,4 +1,5 @@
 package com.tokyo.supermix.data.dto;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -6,8 +7,6 @@ public class PlantEquipmentRequestDto {
   @NotNull(message = "{plantEquipmentDto.serialNo.null}")
   @NotEmpty(message = "{plantequipmentDto.serialNo.empty}")
   private String serialNo;
-  @NotNull(message = "{plantEquipmentDto.brandName.null}")
-  @NotEmpty(message = "{plantEquipmentDto.brandName.empty}")
   private String brandName;
   private String modelName;
   private String description;
