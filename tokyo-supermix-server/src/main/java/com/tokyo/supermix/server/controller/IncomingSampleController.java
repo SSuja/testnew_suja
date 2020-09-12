@@ -223,7 +223,7 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
   public ResponseEntity<Object> getIncomingSampleSearch(@PathVariable String plantCode,
-      @RequestParam(name = "code",required = false) String code,
+      @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
       @RequestParam(name = "date", required = false) Date date,
       @RequestParam(name = "status", required = false) String status,

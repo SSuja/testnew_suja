@@ -201,6 +201,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       booleanBuilder
           .and(QIncomingSample.incomingSample.supplier.name.startsWithIgnoreCase(supplierName));
     }
+    if (status != null ) {
+        booleanBuilder.and(QIncomingSample.incomingSample.status.stringValue().startsWith(status));
+      }
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
