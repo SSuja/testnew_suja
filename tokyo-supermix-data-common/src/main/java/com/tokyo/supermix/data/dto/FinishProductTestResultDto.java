@@ -20,6 +20,15 @@ public class FinishProductTestResultDto {
   private Date finishProductTestDate;
   private AcceptedType finishProductTestTestConfigureTestAcceptedType;
   private Long finishProductTestFinishProductSampleMixDesignRawMaterialId;
+  private String finishProductTestCode;
+
+  public String getFinishProductTestCode() {
+    return finishProductTestCode;
+  }
+
+  public void setFinishProductTestCode(String finishProductTestCode) {
+    this.finishProductTestCode = finishProductTestCode;
+  }
 
   public double getResult() {
     return result;

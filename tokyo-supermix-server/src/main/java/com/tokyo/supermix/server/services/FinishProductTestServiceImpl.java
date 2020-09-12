@@ -15,7 +15,6 @@ import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.QFinishProductTest;
 import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -36,8 +35,6 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
-  @Autowired
-  private Mapper mapper;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -143,6 +140,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
 
   @Transactional
   public void updateFinishProductTestComment(FinishProductTest finishProductTest) {
+    
+    finishProductTest.setSpecimenCode(
+        finishProductTestRepository.findById(finishProductTest.getCode()).get().getSpecimenCode());
     finishProductTestRepository.save(finishProductTest);
   }
 
@@ -208,10 +208,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTestDto> searchFinishProductTest(BooleanBuilder booleanBuilder,
+  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
       String materialName, String plantCode, Pageable pageable, Pagination pagination) {
-
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(
           QFinishProductTest.finishProductTest.specimenCode.startsWithIgnoreCase(specimenCode));
@@ -229,8 +228,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
           .startsWithIgnoreCase(testName));
     }
     if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder
-          .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
+      booleanBuilder.and(
+          QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
               .startsWithIgnoreCase(materialName));
     }
     if (plantCode != null && !plantCode.isEmpty()
@@ -242,7 +241,6 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     pagination.setTotalRecords(
         ((Collection<FinishProductTest>) finishProductTestRepository.findAll(booleanBuilder))
             .stream().count());
-    return mapper.map(finishProductTestRepository.findAll(booleanBuilder, pageable).toList(),
-        FinishProductTestDto.class);
+    return finishProductTestRepository.findAll(booleanBuilder, pageable).toList();
   }
 }
