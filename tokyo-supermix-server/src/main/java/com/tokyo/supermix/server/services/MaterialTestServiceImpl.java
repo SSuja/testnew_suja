@@ -264,6 +264,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional
   public void updateMaterialTestComment(MaterialTest materialTest) {
+    materialTest.setSpecimenCode(
+        materialTestRepository.findById(materialTest.getCode()).get().getSpecimenCode());
     materialTestRepository.save(materialTest);
   }
 
