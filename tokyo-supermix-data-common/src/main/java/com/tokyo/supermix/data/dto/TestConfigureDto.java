@@ -15,7 +15,7 @@ public class TestConfigureDto {
   private AcceptedType acceptedType;
   private String prefix;
   private List<AcceptedValuesDto> acceptedValue;
-  private List<MaterialAcceptedValueDto> materialAcceptedValue;
+  private List<AccepetedValueDto> materialAcceptedValue;
   private List<TestParametersDto> testparameters;
   private MaterialSubCategoryResponseDto materialSubCategory;
   private RawMaterialResponseDto rawMaterial;
@@ -94,11 +94,13 @@ public class TestConfigureDto {
     this.acceptedValue = acceptedValue;
   }
 
-  public List<MaterialAcceptedValueDto> getMaterialAcceptedValue() {
+
+
+  public List<AccepetedValueDto> getMaterialAcceptedValue() {
     return materialAcceptedValue;
   }
 
-  public void setMaterialAcceptedValue(List<MaterialAcceptedValueDto> materialAcceptedValue) {
+  public void setMaterialAcceptedValue(List<AccepetedValueDto> materialAcceptedValue) {
     this.materialAcceptedValue = materialAcceptedValue;
   }
 
