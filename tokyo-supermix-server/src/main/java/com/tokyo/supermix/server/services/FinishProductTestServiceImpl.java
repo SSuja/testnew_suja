@@ -210,8 +210,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   @Transactional(readOnly = true)
   public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
-      String materialName, String plantCode, String status, String date, Pageable pageable,
-      Pagination pagination) {
+      String materialName, String plantName, String plantCode, String status, String date,
+      Pageable pageable, Pagination pagination) {
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(
           QFinishProductTest.finishProductTest.specimenCode.startsWithIgnoreCase(specimenCode));
@@ -232,6 +232,11 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
               .startsWithIgnoreCase(materialName));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder
+          .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.plant.name
+              .startsWithIgnoreCase(plantName));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
