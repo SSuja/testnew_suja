@@ -27,6 +27,7 @@ public class RawMaterial extends DateAudit implements Serializable {
   private String description;
   private String prefix;
   private boolean active;
+  private boolean accepetedValueAdded;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = true)
   private Plant plant;
@@ -97,5 +98,13 @@ public class RawMaterial extends DateAudit implements Serializable {
 
   public void setActive(boolean active) {
     this.active = active;
+  }
+
+  public boolean isAccepetedValueAdded() {
+    return accepetedValueAdded;
+  }
+
+  public void setAccepetedValueAdded(boolean accepetedValueAdded) {
+    this.accepetedValueAdded = accepetedValueAdded;
   }
 }
