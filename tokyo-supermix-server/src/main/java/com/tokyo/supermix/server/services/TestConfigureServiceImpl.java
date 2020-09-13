@@ -169,6 +169,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
           materialAcceptedValueDto
               .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
           materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
+          materialAcceptedValueDto.setConditionRange(materialAcceptedValue.getConditionRange());
           if (materialAcceptedValue.getTestParameter() != null) {
             materialAcceptedValueDto
                 .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
@@ -248,9 +249,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testConfigure.getMaterialSubCategory() != null) {
       testConfigureResDto.setMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId());
       testConfigureResDto
-      .setMaterialSubCategoryName(testConfigure.getMaterialSubCategory().getName());
+          .setMaterialSubCategoryName(testConfigure.getMaterialSubCategory().getName());
     }
-    testConfigureResDto.setMaterialCategoryName(testConfigure.getMaterialCategory().getName());  
+    testConfigureResDto.setMaterialCategoryName(testConfigure.getMaterialCategory().getName());
     testConfigureResDto.setTestName(testConfigure.getTest().getName());
     testConfigureResDto.setAcceptedType(testConfigure.getAcceptedType().toString());
     testConfigureResDto.setTestType(testConfigure.getTestType().toString());
