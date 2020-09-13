@@ -2,18 +2,15 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
-import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 
 @Service
 public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueService {
@@ -22,17 +19,10 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private TestConfigureService testConfigureService;
-  @Autowired
-  private RawMaterialRepository rawMaterialRepository;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
       List<MaterialAcceptedValue> materialAcceptedValue) {
-    materialAcceptedValue.forEach(matacc -> {
-      RawMaterial rawMaterial = rawMaterialRepository.findById(matacc.getId()).get();
-      rawMaterial.setAccepetedValueAdded(true);
-      rawMaterialRepository.save(rawMaterial);
-    });
     return materialAcceptedValueRepository.saveAll(materialAcceptedValue);
   }
 
@@ -58,11 +48,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
 
   @Transactional
   public void deleteMaterialAcceptedValue(Long id) {
-    RawMaterial rawMaterial = rawMaterialRepository
-        .findById(materialAcceptedValueRepository.findById(id).get().getRawMaterial().getId())
-        .get();
-    rawMaterial.setAccepetedValueAdded(false);
-    rawMaterialRepository.save(rawMaterial);
     materialAcceptedValueRepository.deleteById(id);
   }
 
