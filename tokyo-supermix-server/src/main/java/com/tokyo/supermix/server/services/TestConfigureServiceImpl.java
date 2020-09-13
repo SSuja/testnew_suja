@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValuesDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParametersDto;
-import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -155,25 +155,22 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     return testConfigureDto;
   }
 
-  public List<MaterialAcceptedValueDto> getMaterialAcceptedValue(Long testConfigId) {
-    ArrayList<MaterialAcceptedValueDto> materialAcceptedValueDtoList =
-        new ArrayList<MaterialAcceptedValueDto>();
+  public List<AccepetedValueDto> getMaterialAcceptedValue(Long testConfigId) {
+    ArrayList<AccepetedValueDto> materialAcceptedValueDtoList =
+        new ArrayList<AccepetedValueDto>();
     materialAcceptedValueRepository.findByTestConfigureId(testConfigId)
         .forEach(materialAcceptedValue -> {
-          MaterialAcceptedValueDto materialAcceptedValueDto = new MaterialAcceptedValueDto();
+        AccepetedValueDto materialAcceptedValueDto = new AccepetedValueDto();
           materialAcceptedValueDto
               .setMaterialName(materialAcceptedValue.getRawMaterial().getName());
+          materialAcceptedValueDto.setConditionRange(materialAcceptedValue.getConditionRange().toString());
           materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
           materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
           materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
-          materialAcceptedValueDto
-              .setTestName(materialAcceptedValue.getTestConfigure().getTest().getName());
           materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
-          materialAcceptedValueDto.setConditionRange(materialAcceptedValue.getConditionRange());
           if (materialAcceptedValue.getTestParameter() != null) {
-            materialAcceptedValueDto
-                .setParameter(materialAcceptedValue.getTestParameter().getParameter().getName());
-            materialAcceptedValueDto.setName(materialAcceptedValue.getTestParameter().getName());
+            materialAcceptedValueDto.setParameterName(materialAcceptedValue.getTestParameter().getParameter().getName());
+            materialAcceptedValueDto.setTestParameterName(materialAcceptedValue.getTestParameter().getName());
           }
           materialAcceptedValueDtoList.add(materialAcceptedValueDto);
 
