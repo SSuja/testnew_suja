@@ -51,9 +51,7 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
   public boolean isUpdatedMaterialSubCategoryNameExist(Long id, String name,
       Long materialCategoryId) {
     if ((!getMaterialSubCategoryById(id).getName().equalsIgnoreCase(name))
-        && (!getMaterialSubCategoryById(id).getMaterialCategory().getId()
-            .equals(materialCategoryId))
-        && (isMaterialCategoryExist(name, materialCategoryId))) {
+        && (isMaterialSubCategoryNameExist(name))) {
       return true;
     }
     return false;
@@ -112,8 +110,8 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
   public boolean isMaterialCategoryExistUpdate(Long id, String name, Long materialCategoryId) {
     if (!(materialSubCategoryRepository.existsByIdAndNameAndMaterialCategoryId(id, name,
         materialCategoryId))) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 }

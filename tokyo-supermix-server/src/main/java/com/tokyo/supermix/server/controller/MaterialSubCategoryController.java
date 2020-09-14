@@ -109,7 +109,7 @@ public class MaterialSubCategoryController {
       @Valid @RequestBody MaterialSubCategoryRequestDto materialSubCategoryRequestDto) {
     if (materialSubCategoryService
         .isMaterialSubCategoryExist(materialSubCategoryRequestDto.getId())) {
-      if (materialSubCategoryService.isMaterialCategoryExistUpdate(
+      if (materialSubCategoryService.isUpdatedMaterialSubCategoryNameExist(
           materialSubCategoryRequestDto.getId(), materialSubCategoryRequestDto.getName(),
           materialSubCategoryRequestDto.getMaterialCategoryId())) {
         return new ResponseEntity<>(
