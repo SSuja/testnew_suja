@@ -40,6 +40,4 @@ public interface PlantEquipmentService {
   public Long getCountPlantEquipment();
 
   public Long getCountPlantEquipmentByPlantCode(String plantCode);
-
-  public boolean isDuplicateExist(String serialNo, String plantCode);
 }

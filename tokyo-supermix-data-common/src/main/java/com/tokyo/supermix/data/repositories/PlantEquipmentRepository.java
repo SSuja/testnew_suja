@@ -29,6 +29,4 @@ public interface PlantEquipmentRepository extends JpaRepository<PlantEquipment, 
   List<PlantEquipment> findAllByPlantCode(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
-
-  boolean existsByserialNoAndPlantCode(String serialNo, String plantCode);
 }

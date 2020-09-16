@@ -132,9 +132,4 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   public Long getCountPlantEquipmentByPlantCode(String plantCode) {
     return plantEquipmentRepository.countByPlantCode(plantCode);
   }
-
-  @Transactional(readOnly = true)
-  public boolean isDuplicateExist(String serialNo, String plantCode) {
-    return plantEquipmentRepository.existsByserialNoAndPlantCode(serialNo, plantCode);
-  }
 }
