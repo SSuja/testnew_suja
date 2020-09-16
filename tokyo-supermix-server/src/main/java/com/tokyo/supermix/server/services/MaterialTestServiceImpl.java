@@ -49,8 +49,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String prefix =
           testConfigureRepository.getOne(materialTest.getTestConfigure().getId()).getPrefix();
       List<MaterialTest> materialTestList = materialTestRepository.findByCodeContaining(prefix);
-      materialTest.setCode(materialTestList.size() == 0 ? prefix + String.format("%04d", 1)
-          : prefix + String.format("%04d", maxNumberFromCode(materialTestList) + 1));
+      materialTest.setCode(materialTestList.size() == 0 ? prefix +"-"+ String.format("%04d", 1)
+          : prefix +"-"+ String.format("%04d", maxNumberFromCode(materialTestList) + 1));
     }
     materialTest.setStatus(Status.PROCESS);
     String codePrefix = materialTest.getIncomingSample().getCode();
@@ -72,7 +72,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private Integer maxNumberFromCode(List<MaterialTest> materialTestList) {
     List<Integer> list = new ArrayList<Integer>();
     materialTestList.forEach(obj -> {
-      list.add(getNumberFromCode(obj.getCode()));
+    	String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
     });
     return Collections.max(list);
   }
