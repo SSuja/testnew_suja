@@ -147,19 +147,29 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         testConfigureRepository.findById(finishproductTest.getTestConfigure().getId()).get();
     List<TestParameter> testParameterList =
         testParameterRepository.findByTestConfigureId(testConfigure.getId());
-
     for (TestParameter testParameter : testParameterList) {
       if (testParameterService.checkEqutaionExistsForTest(
           testParameter.getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
         if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
             && testParameter.getType().equals(TestParameterType.RESULT))) {
-          FinishProductParameterResult finishProductParameterResult =
-              new FinishProductParameterResult();
-          finishProductParameterResult.setFinishProductTest(finishproductTest);
-          finishProductParameterResult.setTestParameter(testParameter);
-          finishProductParameterResult.setResult(
-              roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
-          finishProductParameterResultRepository.save(finishProductParameterResult);
+          if (finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
+              testParameter.getId(), finishProductTestCode) != null) {
+            FinishProductParameterResult finishProductAlready =
+                finishProductParameterResultRepository
+                    .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                        finishProductTestCode);
+            finishProductAlready.setResult(
+                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+            finishProductParameterResultRepository.save(finishProductAlready);
+          } else {
+            FinishProductParameterResult finishProductParameterResult =
+                new FinishProductParameterResult();
+            finishProductParameterResult.setFinishProductTest(finishproductTest);
+            finishProductParameterResult.setTestParameter(testParameter);
+            finishProductParameterResult.setResult(
+                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+            finishProductParameterResultRepository.save(finishProductParameterResult);
+          }
         }
       }
       if (testParameterService.checkEqutaionExistsForTest(
@@ -168,13 +178,24 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             && testParameter.getType().equals(TestParameterType.INPUT))
             || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
                 && testParameter.getType().equals(TestParameterType.RESULT))) {
-          FinishProductParameterResult finishProductParameterResult =
-              new FinishProductParameterResult();
-          finishProductParameterResult.setFinishProductTest(finishproductTest);
-          finishProductParameterResult.setTestParameter(testParameter);
-          finishProductParameterResult.setResult(
-              roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
-          finishProductParameterResultRepository.save(finishProductParameterResult);
+          if (finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
+              testParameter.getId(), finishProductTestCode) != null) {
+            FinishProductParameterResult finishProductAlready =
+                finishProductParameterResultRepository
+                    .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                        finishProductTestCode);
+            finishProductAlready.setResult(
+                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+            finishProductParameterResultRepository.save(finishProductAlready);
+          } else {
+            FinishProductParameterResult finishProductParameterResult =
+                new FinishProductParameterResult();
+            finishProductParameterResult.setFinishProductTest(finishproductTest);
+            finishProductParameterResult.setTestParameter(testParameter);
+            finishProductParameterResult.setResult(
+                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+            finishProductParameterResultRepository.save(finishProductParameterResult);
+          }
         }
       }
     }
