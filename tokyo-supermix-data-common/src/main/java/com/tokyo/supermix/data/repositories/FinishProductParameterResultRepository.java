@@ -9,8 +9,12 @@ public interface FinishProductParameterResultRepository
   List<FinishProductParameterResult> findByTestParameterIdAndFinishProductTestCodeOrderByUpdatedAtDesc(
       Long testParameterId, String finishProductTestCode);
 
-  List<FinishProductParameterResult> findByFinishProductTestCodeOrderByUpdatedAtDesc(String finishProductTestCode);
+  List<FinishProductParameterResult> findByFinishProductTestCodeOrderByUpdatedAtDesc(
+      String finishProductTestCode);
 
   List<FinishProductParameterResult> findByFinishProductTestFinishProductSampleCode(
       String finishProductSampleCode);
+
+  FinishProductParameterResult findByTestParameterIdAndFinishProductTestCode(Long testParameterId,
+      String finishProductTestCode);
 }
