@@ -260,10 +260,12 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return testEquation;
   }
 
-  public String getParameterEquationFormula(Long testParameterId) {
+  public String getParameterEquationFormula(Long testParameterId, Long configId) {
     String parameterEquation = " ";
-    if (parameterEquationRepository.findByTestParameterId(testParameterId) != null) {
-      parameterEquation = parameterEquationRepository.findByTestParameterId(testParameterId)
+    if (parameterEquationRepository
+        .findByTestParameterIdAndTestParameterTestConfigureId(testParameterId, configId) != null) {
+      parameterEquation = parameterEquationRepository
+          .findByTestParameterIdAndTestParameterTestConfigureId(testParameterId, configId)
           .getEquation().getFormula();
     }
     return parameterEquation;
@@ -330,7 +332,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       }
     }
     try {
-      finishProductResult = (double) engine.eval(getParameterEquationFormula(testParameterId));
+      finishProductResult =
+          (double) engine.eval(getParameterEquationFormula(testParameterId, testConfigId));
     } catch (ScriptException e) {
       e.printStackTrace();
     }
