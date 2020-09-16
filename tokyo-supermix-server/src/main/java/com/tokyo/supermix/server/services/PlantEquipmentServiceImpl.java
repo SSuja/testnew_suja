@@ -53,9 +53,10 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
   }
 
   @Transactional(readOnly = true)
-  public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName, String modelName,String plantName,String equipmentName,
-      BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode, Pagination pagination) {
-    
+  public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName,
+      String modelName, String plantName, String equipmentName, BooleanBuilder booleanBuilder,
+      int page, int size, Pageable pageable, String plantCode, Pagination pagination) {
+
     if (serialNo != null && !serialNo.isEmpty()) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
     }
@@ -72,15 +73,16 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.name.startsWithIgnoreCase(plantName));
     }
     if (equipmentName != null && !equipmentName.isEmpty()) {
-      booleanBuilder.and(QPlantEquipment.plantEquipment.equipment.name.startsWithIgnoreCase(equipmentName));
+      booleanBuilder
+          .and(QPlantEquipment.plantEquipment.equipment.name.startsWithIgnoreCase(equipmentName));
     }
-    if(!plantCode.equals("ADMIN")) {
+    if (!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
-      }
+    }
     pagination.setTotalRecords(
         (long) ((List<PlantEquipment>) plantEquipmentRepository.findAll(booleanBuilder)).size());
     return plantEquipmentRepository.findAll(booleanBuilder, pageable).toList();
-   
+
   }
 
   @Transactional(readOnly = true)
@@ -128,7 +130,11 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipmentByPlantCode(String plantCode) {
-
     return plantEquipmentRepository.countByPlantCode(plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isDuplicateExist(String serialNo, String plantCode) {
+    return plantEquipmentRepository.existsByserialNoAndPlantCode(serialNo, plantCode);
   }
 }

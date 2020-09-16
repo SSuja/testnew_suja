@@ -19,9 +19,9 @@ public interface PlantEquipmentService {
 
   public PlantEquipment getPlantEquipmentBySerialNo(String serialNo);
 
-  public List<PlantEquipment> searchPlantEquipment(
-      String serialNo, String brandName, String modelName,String plantName,String equipmentName,
-      BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode, Pagination pagination);
+  public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName,
+      String modelName, String plantName, String equipmentName, BooleanBuilder booleanBuilder,
+      int page, int size, Pageable pageable, String plantCode, Pagination pagination);
 
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode);
 
@@ -32,7 +32,7 @@ public interface PlantEquipmentService {
 
   public List<PlantEquipment> getAllPlantEquipmentsByCalibrationExistTrueAndEquipmentIdAndPlantCode(
       Long equipmentId, String code);
-  
+
   public List<PlantEquipment> getAllPlantEquipment(Pageable pageable);
 
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode, Pageable pageable);
@@ -40,4 +40,6 @@ public interface PlantEquipmentService {
   public Long getCountPlantEquipment();
 
   public Long getCountPlantEquipmentByPlantCode(String plantCode);
+
+  public boolean isDuplicateExist(String serialNo, String plantCode);
 }
