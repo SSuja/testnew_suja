@@ -17,4 +17,8 @@ public interface FinishProductParameterResultRepository
 
   FinishProductParameterResult findByTestParameterIdAndFinishProductTestCode(Long testParameterId,
       String finishProductTestCode);
+
+  List<FinishProductParameterResult> findByFinishProductTestCode(String finishProductTestCode);
+
+  boolean existsByFinishProductTestCode(String finishProductTestCode);
 }
