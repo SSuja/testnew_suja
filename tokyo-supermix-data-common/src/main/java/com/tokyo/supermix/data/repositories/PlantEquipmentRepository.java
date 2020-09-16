@@ -8,8 +8,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 
-public interface PlantEquipmentRepository
-    extends JpaRepository<PlantEquipment, String>, QuerydslPredicateExecutor<PlantEquipment>,PagingAndSortingRepository<PlantEquipment, String> {
+public interface PlantEquipmentRepository extends JpaRepository<PlantEquipment, String>,
+    QuerydslPredicateExecutor<PlantEquipment>, PagingAndSortingRepository<PlantEquipment, String> {
 
   boolean existsByserialNo(String serialNo);
 
@@ -23,10 +23,12 @@ public interface PlantEquipmentRepository
 
   List<PlantEquipment> findByCalibrationExistsTrueAndEquipmentIdAndPlantCode(Long equipmentId,
       String plantCode);
-  
+
   Page<PlantEquipment> findAll(Pageable pageable);
 
   List<PlantEquipment> findAllByPlantCode(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
+
+  boolean existsByserialNoAndPlantCode(String serialNo, String plantCode);
 }

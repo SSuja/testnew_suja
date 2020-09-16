@@ -71,7 +71,8 @@ public class PlantEquipmentController {
   @PostMapping(value = EndpointURI.PLANT_EQUIPMENT)
   public ResponseEntity<Object> createEquipmentPlant(
       @Valid @RequestBody PlantEquipmentRequestDto plantequipmentRequestDto) {
-    if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {
+    if (plantEquipmentService.isDuplicateExist(plantequipmentRequestDto.getSerialNo(),
+        plantequipmentRequestDto.getPlantCode())) {
       logger.debug("PlantEquipment SerailNumber already exists: ");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.PLANTEQUIPMENT_SERIALNO,
@@ -125,7 +126,8 @@ public class PlantEquipmentController {
   @PutMapping(value = EndpointURI.PLANT_EQUIPMENT)
   public ResponseEntity<Object> updatePlantEquipment(
       @Valid @RequestBody PlantEquipmentRequestDto plantequipmentRequestDto) {
-    if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {
+    if (plantEquipmentService.isDuplicateExist(plantequipmentRequestDto.getSerialNo(),
+        plantequipmentRequestDto.getPlantCode())) {
       plantEquipmentService
           .savePlantEquipment(mapper.map(plantequipmentRequestDto, PlantEquipment.class));
       return new ResponseEntity<>(
@@ -134,7 +136,6 @@ public class PlantEquipmentController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTEQUIPMENT_SERIALNO,
         validationFailureStatusCodes.getPlantEquipmentNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   @GetMapping(value = EndpointURI.PLANTEQUIPMENT_SEARCH)
@@ -151,12 +152,10 @@ public class PlantEquipmentController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
       return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
-              mapper.map(
-                  plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName,
-                      plantName, equipmentName, booleanBuilder, page, size, pageable, plantCode, pagination),
-                  PlantEquipmentResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
+          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT, mapper.map(
+              plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName, plantName,
+                  equipmentName, booleanBuilder, page, size, pageable, plantCode, pagination),
+              PlantEquipmentResponseDto.class), RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
