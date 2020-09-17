@@ -437,14 +437,22 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
       materialAcceptedValueRepository.findByTestConfigureId(testConfigureId)
           .forEach(materialAcceptedValue -> {
+            List<FinishProductParameterResult> finishProductResultList =
+                finishProductParameterResultRepository
+                    .findByFinishProductTestCode(finishProductTestCode);
             if ((materialAcceptedValue.isFinalResult())
                 && (materialAcceptedValue.getRawMaterial().getId() == finishProductTest
                     .getFinishProductSample().getMixDesign().getRawMaterial().getId())) {
-              checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
-                  materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
-                  materialAcceptedValue.getConditionRange(), averageValue(finishProductTestCode,
-                      materialAcceptedValue.getTestParameter().getId()),
-                  finishProductTestCode);
+              finishProductResultList.forEach(result -> {
+                if ((materialAcceptedValue.getRawMaterial().getId() == result.getFinishProductTest()
+                    .getFinishProductSample().getMixDesign().getRawMaterial().getId())
+                    && (materialAcceptedValue.getTestParameter().getId() == result
+                        .getTestParameter().getId()))
+                  checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
+                      materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+                      materialAcceptedValue.getConditionRange(), result.getResult(),
+                      finishProductTestCode);
+              });
             }
           });
     } else {
