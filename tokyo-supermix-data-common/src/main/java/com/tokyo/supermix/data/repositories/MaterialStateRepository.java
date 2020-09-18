@@ -5,4 +5,6 @@ import com.tokyo.supermix.data.entities.MaterialState;
 
 public interface MaterialStateRepository extends JpaRepository<MaterialState, Long> {
   boolean existsByMaterialState(String materialState);
+
+  public MaterialState findByMaterialState(String materialState);
 }

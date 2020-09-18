@@ -23,6 +23,8 @@ import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.Equipment;
+import com.tokyo.supermix.data.entities.MaterialState;
+import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.entities.Plant;
@@ -37,6 +39,8 @@ import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
+import com.tokyo.supermix.data.repositories.MaterialStateRepository;
+import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
@@ -77,6 +81,12 @@ public class FileStorageServiceImpl implements FileStorageService {
   private EquipmentRepository equipmentRepository;
   @Autowired
   private EmployeeService employeeService;
+  @Autowired
+  private MaterialStateRepository materialStateRepository;
+  @Autowired
+  private MaterialSubCategoryRepository materialSubCategoryRepository;
+  @Autowired
+  private RawMaterialService rawMaterialService;
   @Autowired
   private FileStorageProperties fileStorageProperties;
 
@@ -353,5 +363,44 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @Transactional
+  public void importRawMaterial(MultipartFile file,HttpServletRequest request) {
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
+    String csvFilename = path + file.getOriginalFilename();
+    // Read the csv file
+    CSVReader csvReader = null;
+    try {
+      csvReader = new CSVReader(new FileReader(csvFilename));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    String[] row = null;
+    try {
+      row = csvReader.readNext();
+      row = csvReader.readNext();
+      // Import the data to DB
+      while ((row = csvReader.readNext()) != null) {
+        if (rawMaterialRepository.findByName(row[0]) == null) {
+          RawMaterial rawMaterial = new RawMaterial();
+          rawMaterial.setName(row[0]);
+          rawMaterial.setPrefix(row[1]);
+          MaterialState materialState = materialStateRepository.findByMaterialState(row[2]);
+          rawMaterial.setMaterialState(materialState);
+          MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findByName(row[3]);
+          rawMaterial.setMaterialSubCategory(materialSubCategory);
+          Plant plant = plantRepository.findByName(row[4]);
+          rawMaterial.setPlant(plant);
+          rawMaterial.setDescription(row[5]);
+          rawMaterial.setActive(Boolean.TRUE);
+          rawMaterialService.saveRawMaterial(rawMaterial);
+        }
+      }
+      csvReader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    
   }
 }
