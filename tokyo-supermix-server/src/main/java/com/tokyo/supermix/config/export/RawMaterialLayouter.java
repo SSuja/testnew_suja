@@ -46,7 +46,7 @@ public class RawMaterialLayouter {
     HSSFRow rowTitle = worksheet.createRow((short) startRowIndex);
     rowTitle.setHeight((short) 500);
     HSSFCell cellTitle = rowTitle.createCell(startColIndex);
-    cellTitle.setCellValue("Raw Material Details");
+    cellTitle.setCellValue("Material Details");
     cellTitle.setCellStyle(cellStyleTitle);
     // Create merged region for the report title
     worksheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
