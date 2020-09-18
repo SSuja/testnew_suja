@@ -17,4 +17,6 @@ public interface FileStorageService {
   public void importProject(MultipartFile file);
 
   public void importPlantEquipment(MultipartFile file);
+
+  public void importRawMaterial(MultipartFile file,HttpServletRequest request);
 }
