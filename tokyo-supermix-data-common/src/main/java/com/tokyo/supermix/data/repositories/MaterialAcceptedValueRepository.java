@@ -34,4 +34,8 @@ public interface MaterialAcceptedValueRepository
 
   public boolean existsByTestConfigureId(Long testConfigureId);
 
+  MaterialAcceptedValue findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
+      Long testConfigureId, Long testParameterId, Long rawMaterialId);
+
+  Long countByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
 }
