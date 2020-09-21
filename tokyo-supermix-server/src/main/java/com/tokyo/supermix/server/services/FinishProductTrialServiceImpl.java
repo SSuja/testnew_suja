@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -331,37 +332,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
           .getEquation().getFormula();
     }
     return parameterEquation;
-
-  }
-
-  public void checkFinishproductAcceptedValue(Double minValue, Double maxValue, Double value,
-      Condition condition, Double gradeRatio, String finishProductTestCode) {
-    if (condition == Condition.BETWEEN) {
-      if (minValue <= gradeRatio && maxValue >= gradeRatio) {
-        updateStatus(finishProductTestCode, Status.PASS);
-      } else {
-        updateStatus(finishProductTestCode, Status.FAIL);
-      }
-    } else if (condition == Condition.EQUAL) {
-      if (value == gradeRatio) {
-        updateStatus(finishProductTestCode, Status.PASS);
-      } else {
-        updateStatus(finishProductTestCode, Status.FAIL);
-      }
-    } else if (condition == Condition.GREATER_THAN) {
-      if (value <= gradeRatio) {
-        updateStatus(finishProductTestCode, Status.PASS);
-      } else {
-        updateStatus(finishProductTestCode, Status.FAIL);
-      }
-
-    } else if (condition == Condition.LESS_THAN) {
-      if (value >= gradeRatio) {
-        updateStatus(finishProductTestCode, Status.PASS);
-      } else {
-        updateStatus(finishProductTestCode, Status.FAIL);
-      }
-    }
   }
 
   public void updateStatus(String finishProductTestCode, Status status) {
@@ -431,46 +401,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return roundDoubleValue(finishProductResult);
   }
 
-  public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
-    FinishProductTest finishProductTest =
-        finishProductTestRepository.findById(finishProductTestCode).get();
-    if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
-      materialAcceptedValueRepository.findByTestConfigureId(testConfigureId)
-          .forEach(materialAcceptedValue -> {
-            List<FinishProductParameterResult> finishProductResultList =
-                finishProductParameterResultRepository
-                    .findByFinishProductTestCode(finishProductTestCode);
-            if ((materialAcceptedValue.isFinalResult())
-                && (materialAcceptedValue.getRawMaterial().getId() == finishProductTest
-                    .getFinishProductSample().getMixDesign().getRawMaterial().getId())) {
-              finishProductResultList.forEach(result -> {
-                if ((materialAcceptedValue.getRawMaterial().getId() == result.getFinishProductTest()
-                    .getFinishProductSample().getMixDesign().getRawMaterial().getId())
-                    && (materialAcceptedValue.getTestParameter().getId() == result
-                        .getTestParameter().getId()))
-                  checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
-                      materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
-                      materialAcceptedValue.getConditionRange(), result.getResult(),
-                      finishProductTestCode);
-              });
-            }
-          });
-    } else {
-      List<FinishProductParameterResult> finishProductResultList =
-          finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
-      acceptedValueRepository.findByTestConfigureId(testConfigureId).forEach(acceptedValue -> {
-        if (acceptedValue.isFinalResult()) {
-          finishProductResultList.forEach(finish -> {
-            if (finish.getTestParameter().getId() == acceptedValue.getTestParameter().getId()) {
-              checkFinishproductAcceptedValue(acceptedValue.getMinValue(),
-                  acceptedValue.getMaxValue(), acceptedValue.getValue(),
-                  acceptedValue.getConditionRange(), finish.getResult(), finishProductTestCode);
-            }
-          });
-        }
-      });
-    }
-  }
+
 
   private int getCountKeyTestPassFinishProductTestsByMaterialSubCategory(String mixDesignCode,
       Long materialSubCategoryId, Status status) {
@@ -623,5 +554,83 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       return true;
     }
     return false;
+  }
+
+
+
+  private Status checkFinishproductAcceptedValue(Double minValue, Double maxValue, Double value,
+      Condition condition, Double average, String materialTestCode) {
+    switch (condition) {
+      case BETWEEN:
+        return (minValue <= average && maxValue >= average) ? Status.PASS : Status.FAIL;
+      case EQUAL:
+        return value.equals(average) ? Status.PASS : Status.FAIL;
+      case GREATER_THAN:
+        return value <= average ? Status.PASS : Status.FAIL;
+      case LESS_THAN:
+        return value >= average ? Status.PASS : Status.FAIL;
+      default:
+        return Status.FAIL;
+    }
+  }
+
+  public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    ArrayList<Status> statusList = new ArrayList<Status>();
+    if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
+      materialAcceptedValueRepository.findByTestConfigureId(testConfigureId)
+          .forEach(materialAcceptedValue -> {
+            List<FinishProductParameterResult> finishProductResultList =
+                finishProductParameterResultRepository
+                    .findByFinishProductTestCode(finishProductTestCode);
+            if ((materialAcceptedValue.isFinalResult())) {
+              finishProductResultList.forEach(result -> {
+                if ((materialAcceptedValue.getRawMaterial().getId() == result.getFinishProductTest()
+                    .getFinishProductSample().getMixDesign().getRawMaterial().getId())
+                    && (materialAcceptedValue.getTestParameter().getId() == result
+                        .getTestParameter().getId())) {
+                  statusList.add(checkFinishproductAcceptedValue(
+                      materialAcceptedValue.getMinValue(), materialAcceptedValue.getMaxValue(),
+                      materialAcceptedValue.getValue(), materialAcceptedValue.getConditionRange(),
+                      result.getResult(), finishProductTestCode));
+                }
+              });
+            }
+          });
+    } else {
+      List<FinishProductParameterResult> finishProductResultList =
+          finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
+      acceptedValueRepository.findByTestConfigureId(testConfigureId).forEach(acceptedValue -> {
+        if (acceptedValue.isFinalResult()) {
+          finishProductResultList.forEach(finish -> {
+            if (finish.getTestParameter().getId() == acceptedValue.getTestParameter().getId()) {
+              statusList.add(checkFinishproductAcceptedValue(acceptedValue.getMinValue(),
+                  acceptedValue.getMaxValue(), acceptedValue.getValue(),
+                  acceptedValue.getConditionRange(), finish.getResult(), finishProductTestCode));
+            }
+          });
+        }
+      });
+    }
+    Long passCount = (long) statusList.stream().filter(sta -> (sta.equals(Status.PASS)))
+        .collect(Collectors.toList()).size();
+    if (passCount == conutrRelavantFinalResult(testConfigureId,
+        finishProductTest.getTestConfigure().getAcceptedType())) {
+      updateStatus(finishProductTestCode, Status.PASS);
+    } else {
+      updateStatus(finishProductTestCode, Status.FAIL);
+    }
+  }
+
+  private Long conutrRelavantFinalResult(Long testConfigId, AcceptedType acceptedType) {
+    Long count = (long) 0;
+    if (acceptedType.equals(AcceptedType.MATERIAL)) {
+      count =
+          materialAcceptedValueRepository.countByTestConfigureIdAndFinalResultTrue(testConfigId);
+    } else {
+      count = acceptedValueRepository.countByTestConfigureIdAndFinalResultTrue(testConfigId);
+    }
+    return count;
   }
 }
