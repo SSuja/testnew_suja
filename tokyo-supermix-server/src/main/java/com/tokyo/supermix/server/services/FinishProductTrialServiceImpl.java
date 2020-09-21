@@ -616,18 +616,20 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     Long passCount = (long) statusList.stream().filter(sta -> (sta.equals(Status.PASS)))
         .collect(Collectors.toList()).size();
     if (passCount == conutrRelavantFinalResult(testConfigureId,
-        finishProductTest.getTestConfigure().getAcceptedType())) {
+        finishProductTest.getTestConfigure().getAcceptedType(),
+        finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId())) {
       updateStatus(finishProductTestCode, Status.PASS);
     } else {
       updateStatus(finishProductTestCode, Status.FAIL);
     }
   }
 
-  private Long conutrRelavantFinalResult(Long testConfigId, AcceptedType acceptedType) {
+  private Long conutrRelavantFinalResult(Long testConfigId, AcceptedType acceptedType,
+      Long rawMaterialId) {
     Long count = (long) 0;
     if (acceptedType.equals(AcceptedType.MATERIAL)) {
-      count =
-          materialAcceptedValueRepository.countByTestConfigureIdAndFinalResultTrue(testConfigId);
+      count = materialAcceptedValueRepository
+          .countByTestConfigureIdAndAndRawMaterialIdAndFinalResultTrue(testConfigId, rawMaterialId);
     } else {
       count = acceptedValueRepository.countByTestConfigureIdAndFinalResultTrue(testConfigId);
     }

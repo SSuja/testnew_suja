@@ -37,5 +37,6 @@ public interface MaterialAcceptedValueRepository
   MaterialAcceptedValue findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
       Long testConfigureId, Long testParameterId, Long rawMaterialId);
 
-  Long countByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
+  Long countByTestConfigureIdAndAndRawMaterialIdAndFinalResultTrue(Long testConfigureId,
+      Long rawMaterialId);
 }
