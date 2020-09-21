@@ -21,7 +21,8 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long>,
 
   List<Supplier> findBySupplierCategoriesId(Long suppilerCategoryId);
 
-//  List<Supplier> findByPlantCodeAndSupplierCategoriesId(String plantCode, Long supplierCategoryId);
+  // List<Supplier> findByPlantCodeAndSupplierCategoriesId(String plantCode, Long
+  // supplierCategoryId);
 
   boolean existsByPlantCodeAndSupplierCategoriesId(String plantCode, Long supplierCategoryId);
 
@@ -33,9 +34,10 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long>,
 
   Long countByPlantCode(String plantCode);
 
-  List<Supplier> findByPlantCodeAndNameStartsWith(String plantCode, String supplierName);
-    
-  List<Supplier> findByNameStartsWith(String supplierName);
-  
-  List<Supplier> findByPlantCodeAndSupplierCategoriesIdAndNameStartsWith(String plantCode, Long supplierCategoryId,String supplierName);
+  List<Supplier> findByPlantCodeAndSupplierCategoriesIdAndNameContaining(String plantCode,
+      Long supplierCategoryId, String supplierName);
+
+  List<Supplier> findByNameContaining(String name);
+
+  List<Supplier> findByPlantCodeAndNameContaining(String plantCode, String name);
 }

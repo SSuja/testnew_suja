@@ -26,4 +26,6 @@ public interface AcceptedValueRepository
       Long testParameterId);
 
   AcceptedValue findByTestParameterIdAndTestConfigureId(Long testParameterId, Long testConfigureId);
+
+  Long countByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
 }

@@ -763,6 +763,7 @@ public class TestReportServiceImpl implements TestReportService {
 
   public List<SieveResultAndParameter> getParaAndResult(String level, Long testConfigId,
       String materialTestCode) {
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     ArrayList<SieveResultAndParameter> sieveResultAndParameterList =
         new ArrayList<SieveResultAndParameter>();
     List<ParameterResult> parameterResultList = parameterResultRepository
@@ -775,23 +776,46 @@ public class TestReportServiceImpl implements TestReportService {
         sieveResultAndParameter.setParameter(parts[0].toString());
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
         sieveResultAndParameterList.add(sieveResultAndParameter);
-        AcceptedValue acceptedValue = acceptedValueRepository
-            .findByTestParameterIdAndTestConfigureId(parameterResult.getTestParameter().getId(),
-                parameterResult.getTestParameter().getTestConfigure().getId());
-        if (acceptedValue != null)
-          if (acceptedValue.isFinalResult()) {
-            SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
-            String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
-            sieveResultAndParameterAcc
-                .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
-            if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
-              sieveResultAndParameterAcc.setVale(acceptedValue.getMaxValue().toString() + " - "
-                  + acceptedValue.getMinValue().toString());
-            } else {
-              sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
+        if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
+          AcceptedValue acceptedValue = acceptedValueRepository
+              .findByTestParameterIdAndTestConfigureId(parameterResult.getTestParameter().getId(),
+                  parameterResult.getTestParameter().getTestConfigure().getId());
+          if (acceptedValue != null)
+            if (acceptedValue.isFinalResult()) {
+              SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
+              String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
+              sieveResultAndParameterAcc
+                  .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
+              if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+                sieveResultAndParameterAcc.setVale(acceptedValue.getMaxValue().toString() + " - "
+                    + acceptedValue.getMinValue().toString());
+              } else {
+                sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
+              }
+              sieveResultAndParameterList.add(sieveResultAndParameterAcc);
             }
-            sieveResultAndParameterList.add(sieveResultAndParameterAcc);
+        } else {
+          MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
+              .findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
+                  parameterResult.getTestParameter().getTestConfigure().getId(),
+                  parameterResult.getTestParameter().getId(),
+                  materialTest.getIncomingSample().getRawMaterial().getId());
+          if (materialAcceptedValue != null) {
+            if (materialAcceptedValue.isFinalResult()) {
+              SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
+              String[] parts1 = materialAcceptedValue.getTestParameter().getName().split("_");
+              sieveResultAndParameterAcc
+                  .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
+              if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+                sieveResultAndParameterAcc.setVale(materialAcceptedValue.getMaxValue().toString()
+                    + " - " + materialAcceptedValue.getMinValue().toString());
+              } else {
+                sieveResultAndParameterAcc.setVale(materialAcceptedValue.getValue().toString());
+              }
+              sieveResultAndParameterList.add(sieveResultAndParameterAcc);
+            }
           }
+        }
       } else {
         SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
         if (parameterResult.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)

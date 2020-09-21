@@ -11,6 +11,7 @@ public class FinishProductTestRequestDto {
   private Long noOfTrial;
   private Date date;
   private String specimenCode;
+  private String comments;
 
   public String getCode() {
     return code;
@@ -66,5 +67,13 @@ public class FinishProductTestRequestDto {
 
   public void setSpecimenCode(String specimenCode) {
     this.specimenCode = specimenCode;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
   }
 }
