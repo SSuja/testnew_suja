@@ -30,7 +30,7 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
 
   List<RawMaterial> findByPlantCodeOrPlantNullAndNameStartsWith(String plantCode, String name);
 
-  List<RawMaterial> findByNameStartsWith(String name);
+  List<RawMaterial> findByNameContainsIgnoreCase(String name);
 
   boolean existsByPrefix(String prefix);
 

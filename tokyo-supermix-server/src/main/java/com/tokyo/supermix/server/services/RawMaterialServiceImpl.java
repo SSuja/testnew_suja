@@ -92,22 +92,24 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
-      String materialSubCategoryName, String plantName, String plantCode, Pageable pageable,
-      Pagination pagination) {
+      String materialSubCategoryName, String plantName, String prefix, String plantCode,
+      Pageable pageable, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QRawMaterial.rawMaterial.name.containsIgnoreCase(name));
     }
     if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name
-          .startsWithIgnoreCase(materialSubCategoryName));
+          .containsIgnoreCase(materialSubCategoryName));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.containsIgnoreCase(plantName));
     }
-
+    if (prefix != null && !prefix.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.prefix.containsIgnoreCase(prefix));
+    }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.orAllOf(QRawMaterial.rawMaterial.plant.code.startsWithIgnoreCase(plantCode),
+      booleanBuilder.orAllOf(QRawMaterial.rawMaterial.plant.code.containsIgnoreCase(plantCode),
           QRawMaterial.rawMaterial.plant.isNull());
     }
     pagination.setTotalRecords(
@@ -151,7 +153,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (name.isEmpty()) {
       return null;
     }
-    return rawMaterialRepository.findByNameStartsWith(name);
+    return rawMaterialRepository.findByNameContainsIgnoreCase(name);
   }
 
   @Transactional(readOnly = true)

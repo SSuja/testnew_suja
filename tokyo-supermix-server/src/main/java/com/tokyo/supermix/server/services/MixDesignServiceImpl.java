@@ -205,7 +205,7 @@ public class MixDesignServiceImpl implements MixDesignService {
     if (code.isEmpty()) {
       return null;
     }
-    return mixDesignRepository.findByCodeStartsWith(code);
+    return mixDesignRepository.findByCodeContainsIgnoreCase(code);
   }
 
   @Transactional(readOnly = true)
@@ -213,7 +213,7 @@ public class MixDesignServiceImpl implements MixDesignService {
     if (code.isEmpty()) {
       return null;
     }
-    return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeStartsWith(rawMaterialId, status,
-        code);
+    return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeContainsIgnoreCase(rawMaterialId,
+        status, code);
   }
 }
