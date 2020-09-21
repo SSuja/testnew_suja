@@ -16,4 +16,6 @@ public class FileStorageConstants {
   public static final String MIX_DESIGN_WORK_SHEET = "MixDesign";;
   public static final String PLANT_EQUIPMENT_FILE_NAME = "PlantEquipment.csv";
   public static final String PLANT_EQUIPMENT_WORK_SHEET = "MixDesign";
+  public static final String RAW_MATERIAL_WORK_SHEET = "Material";
+  public static final String RAW_MATERIAL_FILE_NAME = "Material.csv";
 }

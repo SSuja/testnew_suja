@@ -188,4 +188,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   public List<RawMaterial> getAllRawMaterials() {
     return rawMaterialRepository.findAll();
   }
+
+  @Transactional(readOnly = true)
+  public boolean isPrefixAndMaterialSubCategoryExists(String prefix, Long materialSubCategoryId,String plantCode) {
+    return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndPlantCode(prefix,
+        materialSubCategoryId, plantCode);
+  }
 }

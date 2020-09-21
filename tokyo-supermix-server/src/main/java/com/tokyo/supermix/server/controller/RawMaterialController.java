@@ -1,7 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +20,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.config.export.EnrollWriter;
+import com.tokyo.supermix.config.export.RawMaterialFillManager;
+import com.tokyo.supermix.config.export.RawMaterialLayouter;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
+import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -31,10 +40,12 @@ import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.FileStorageService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.RawMaterialService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.FileStorageConstants;
 import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
@@ -49,6 +60,8 @@ public class RawMaterialController {
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
+  private FileStorageService fileStorageService;
+  @Autowired
   private Mapper mapper;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
@@ -57,14 +70,24 @@ public class RawMaterialController {
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
   public ResponseEntity<Object> createRawMaterial(
       @Valid @RequestBody RawMaterialRequestDto rawMaterialRequestDto) {
+    MaterialSubCategory materialSubCategory = materialSubCategoryService
+        .getMaterialSubCategoryById(rawMaterialRequestDto.getMaterialSubCategoryId());
     if (rawMaterialService.isRawMaterialNameExist(rawMaterialRequestDto.getName())) {
       logger.debug("Material already exists: createMaterial(), materialName: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
           validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    if (rawMaterialService.isPrefixAlreadyExists(rawMaterialRequestDto.getPrefix())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
-          validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+    if (materialSubCategory.getMaterialCategory().getMainType().equals(MainType.RAW_MATERIAL)) {
+      if (rawMaterialService.isPrefixAlreadyExists(rawMaterialRequestDto.getPrefix())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+    } else {
+      if (rawMaterialService.isPrefixAndMaterialSubCategoryExists(rawMaterialRequestDto.getPrefix(),
+          rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getPlantCode())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
     }
     rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     return new ResponseEntity<>(
@@ -239,5 +262,34 @@ public class RawMaterialController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL, mapper
         .map(rawMaterialService.getRawMaterialsByMainType(mainType), RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.EXPORT_RAW_MATERIAL)
+  public ResponseEntity<Object> exportRawMaterial(HttpServletResponse response)
+      throws ClassNotFoundException {
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.RAW_MATERIAL_WORK_SHEET);
+    int startRowIndex = 0;
+    int startColIndex = 0;
+    RawMaterialLayouter.buildReport(worksheet, startRowIndex, startColIndex);
+    RawMaterialFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+        rawMaterialService.getAllActiveRawMaterials());
+    String fileName = FileStorageConstants.RAW_MATERIAL_FILE_NAME;
+    response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+    response.setContentType("application/vnd.ms-excel");
+    EnrollWriter.write(response, worksheet);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        HttpStatus.OK);
+  }
+
+  @PostMapping(value = EndpointURI.IMPORT_RAW_MATERIAL)
+  public ResponseEntity<Object> uploadRawMaterial(@RequestParam("file") MultipartFile file,
+      HttpServletRequest request) {
+    fileStorageService.uploadCsv(file);
+    fileStorageService.importRawMaterial(file, request);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
+        HttpStatus.OK);
   }
 }

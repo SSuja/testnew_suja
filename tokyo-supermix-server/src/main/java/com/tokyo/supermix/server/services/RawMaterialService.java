@@ -54,4 +54,6 @@ public interface RawMaterialService {
   public List<RawMaterial> getRawMaterialsByMainType(MainType mainType);
 
   public List<RawMaterial> getAllRawMaterialsPage(Pageable pageable);
+
+  public boolean isPrefixAndMaterialSubCategoryExists(String prefix, Long materialSubCategoryId,String plantCode);
 }

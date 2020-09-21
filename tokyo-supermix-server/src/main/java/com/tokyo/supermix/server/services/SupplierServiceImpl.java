@@ -127,7 +127,7 @@ public class SupplierServiceImpl implements SupplierService {
     if (name.isEmpty()) {
       return null;
     }
-    return supplierRepository.findByPlantCodeAndSupplierCategoriesIdAndNameStartsWith(plantCode,
+    return supplierRepository.findByPlantCodeAndSupplierCategoriesIdAndNameContaining(plantCode,
         supplierCategoryId, name);
   }
 
@@ -152,7 +152,7 @@ public class SupplierServiceImpl implements SupplierService {
     if (name.isEmpty()) {
       return null;
     }
-    return supplierRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+    return supplierRepository.findByPlantCodeAndNameContaining(plantCode, name);
   }
 
   @Transactional(readOnly = true)
@@ -160,7 +160,7 @@ public class SupplierServiceImpl implements SupplierService {
     if (name.isEmpty()) {
       return null;
     }
-    return supplierRepository.findByNameStartsWith(name);
+    return supplierRepository.findByNameContaining(name);
   }
 
   @Transactional(readOnly = true)
@@ -169,34 +169,34 @@ public class SupplierServiceImpl implements SupplierService {
       String supplierCategoryName, BooleanBuilder booleanBuilder, Pageable pageable,
       String plantCode, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QSupplier.supplier.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QSupplier.supplier.name.contains(name));
     }
     if (address != null && !address.isEmpty()) {
-      booleanBuilder.and(QSupplier.supplier.address.startsWithIgnoreCase(address));
+      booleanBuilder.and(QSupplier.supplier.address.contains(address));
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
-      booleanBuilder.and(QSupplier.supplier.phoneNumber.startsWithIgnoreCase(phoneNumber));
+      booleanBuilder.and(QSupplier.supplier.phoneNumber.contains(phoneNumber));
     }
     if (email != null && !email.isEmpty()) {
-      booleanBuilder.and(QSupplier.supplier.email.startsWithIgnoreCase(email));
+      booleanBuilder.and(QSupplier.supplier.email.contains(email));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QSupplier.supplier.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QSupplier.supplier.plant.name.contains(plantName));
     }
     if (createdAt != null && !createdAt.isEmpty()) {
       booleanBuilder
-          .and(QSupplier.supplier.createdAt.stringValue().startsWithIgnoreCase(createdAt));
+          .and(QSupplier.supplier.createdAt.stringValue().contains(createdAt));
     }
     if (updatedAt != null && !updatedAt.isEmpty()) {
       booleanBuilder
-          .and(QSupplier.supplier.updatedAt.stringValue().startsWithIgnoreCase(updatedAt));
+          .and(QSupplier.supplier.updatedAt.stringValue().contains(updatedAt));
     }
     if (supplierCategoryName != null && !supplierCategoryName.isEmpty()) {
       booleanBuilder.and(QSupplier.supplier.supplierCategories.any().category
-          .startsWithIgnoreCase(supplierCategoryName));
+          .contains(supplierCategoryName));
     }
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      booleanBuilder.and(QSupplier.supplier.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QSupplier.supplier.plant.code.contains(plantCode));
     }
     pagination.setTotalRecords(
         (long) ((List<Supplier>) supplierRepository.findAll(booleanBuilder)).size());

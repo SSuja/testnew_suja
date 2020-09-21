@@ -35,4 +35,6 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
   boolean existsByPrefix(String prefix);
 
   List<RawMaterial> findByMaterialSubCategoryMaterialCategoryMainType(MainType mainType);
+
+  boolean existsByPrefixAndMaterialSubCategoryIdAndPlantCode(String prefix, Long materialSubCategoryId,String plantCode);
 }

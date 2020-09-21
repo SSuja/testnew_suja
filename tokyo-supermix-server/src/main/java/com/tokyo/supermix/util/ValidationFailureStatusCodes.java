@@ -170,6 +170,9 @@ public class ValidationFailureStatusCodes {
   @Value("${supplierRequestDto.email.alreadyExist}")
   private String emailAlreadyExists;
 
+  @Value("${supplierRequestDto.phoneNumber.alreadyExist}")
+  private String phoneNumberAlreadyExists;
+
   public String getEmailAlreadyExists() {
     return emailAlreadyExists;
   }
@@ -184,6 +187,14 @@ public class ValidationFailureStatusCodes {
 
   public String getSupplierAlreadyExist() {
     return supplierAlreadyExist;
+  }
+
+  public String getPhoneNumberAlreadyExists() {
+    return phoneNumberAlreadyExists;
+  }
+
+  public void setPhoneNumberAlreadyExists(String phoneNumberAlreadyExists) {
+    this.phoneNumberAlreadyExists = phoneNumberAlreadyExists;
   }
 
   @Value("${supplierRequestDto.email.empty}")

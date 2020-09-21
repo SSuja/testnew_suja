@@ -99,9 +99,19 @@ public class SupplierController {
 
   @PostMapping(value = EndpointURI.SUPPLIER)
   public ResponseEntity<Object> createSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
-    if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
-          validationFailureStatusCodes.getEmailAlreadyExists()), HttpStatus.BAD_REQUEST);
+    if (!supplierDto.getPhoneNumber().isEmpty()) {
+      if (supplierService.isPhoneNumberExist(supplierDto.getPhoneNumber())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.PHONE_NUMBER,
+                validationFailureStatusCodes.getPhoneNumberAlreadyExists()),
+            HttpStatus.BAD_REQUEST);
+      }
+    }
+    if (!supplierDto.getEmail().isEmpty()) {
+      if (supplierService.isEmailExist(supplierDto.getEmail())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+            validationFailureStatusCodes.getEmailAlreadyExists()), HttpStatus.BAD_REQUEST);
+      }
     }
     supplierService.createSupplier(mapper.map(supplierDto, Supplier.class),
         supplierDto.getSuppilerCategoryIds());
@@ -113,14 +123,20 @@ public class SupplierController {
   @PutMapping(value = EndpointURI.SUPPLIER)
   public ResponseEntity<Object> updateSupplier(@Valid @RequestBody SupplierRequestDto supplierDto) {
     if (supplierService.isSupplierExist(supplierDto.getId())) {
-      if (supplierService.isUpdatedEmailExist(supplierDto.getId(), supplierDto.getEmail())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-            validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
+      if (!supplierDto.getEmail().isEmpty()) {
+        if (supplierService.isUpdatedEmailExist(supplierDto.getId(), supplierDto.getEmail())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+              validationFailureStatusCodes.getEmailAlreadyExists()), HttpStatus.BAD_REQUEST);
+        }
       }
-      if (supplierService.isUpdatedPhoneNumberExist(supplierDto.getId(),
-          supplierDto.getPhoneNumber())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PHONE_NUMBER,
-            validationFailureStatusCodes.getSupplierAlreadyExist()), HttpStatus.BAD_REQUEST);
+      if (!supplierDto.getPhoneNumber().isEmpty()) {
+        if (supplierService.isUpdatedPhoneNumberExist(supplierDto.getId(),
+            supplierDto.getPhoneNumber())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.PHONE_NUMBER,
+                  validationFailureStatusCodes.getPhoneNumberAlreadyExists()),
+              HttpStatus.BAD_REQUEST);
+        }
       }
       supplierService.updateSupplier(mapper.map(supplierDto, Supplier.class),
           supplierDto.getSuppilerCategoryIds());

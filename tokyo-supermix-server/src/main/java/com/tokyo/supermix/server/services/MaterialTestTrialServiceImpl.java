@@ -76,7 +76,7 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     List<Integer> list = new ArrayList<Integer>();
     materialTestTrialList.forEach(obj -> {
       String code = obj.getCode();
-      list.add(getNumberFromCode(code.substring(code.indexOf("-"))));
+      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
     });
     return Collections.max(list);
   }

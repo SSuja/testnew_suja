@@ -198,7 +198,7 @@ public class CustomerServiceImpl implements CustomerService {
     if (name.isEmpty()) {
       return null;
     }
-    return customerRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+    return customerRepository.findByPlantCodeAndNameContaining(plantCode, name);
   }
 
   @Transactional(readOnly = true)
@@ -206,7 +206,7 @@ public class CustomerServiceImpl implements CustomerService {
     if (name.isEmpty()) {
       return null;
     }
-    return customerRepository.findByNameStartsWith(name);
+    return customerRepository.findByNameContaining(name);
   }
 
   @Transactional(readOnly = true)
@@ -214,19 +214,19 @@ public class CustomerServiceImpl implements CustomerService {
       String phoneNumber, String address, BooleanBuilder booleanBuilder, String plantCode,
       Pageable pageable, Pagination pagination, String plantName) {
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QCustomer.customer.name.contains(name));
     }
     if (email != null && !email.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.email.startsWithIgnoreCase(email));
+      booleanBuilder.and(QCustomer.customer.email.contains(email));
     }
     if (address != null && !address.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.address.startsWithIgnoreCase(address));
+      booleanBuilder.and(QCustomer.customer.address.contains(address));
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.phoneNumber.startsWith(phoneNumber));
+      booleanBuilder.and(QCustomer.customer.phoneNumber.contains(phoneNumber));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QCustomer.customer.plant.any().name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QCustomer.customer.plant.any().name.contains(plantName));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
