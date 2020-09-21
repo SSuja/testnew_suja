@@ -10,6 +10,7 @@ public class FinishProductTestTrialDto {
   private TestParameterType testParameterType;
   private Long finishProductTestNoOfTrial;
   private String testParameterParameterName;
+  private String testParameterAbbreviation;
 
   public String getTestParameterParameterName() {
     return testParameterParameterName;
@@ -57,5 +58,13 @@ public class FinishProductTestTrialDto {
 
   public void setFinishProductTestNoOfTrial(Long finishProductTestNoOfTrial) {
     this.finishProductTestNoOfTrial = finishProductTestNoOfTrial;
+  }
+
+  public String getTestParameterAbbreviation() {
+    return testParameterAbbreviation;
+  }
+
+  public void setTestParameterAbbreviation(String testParameterAbbreviation) {
+    this.testParameterAbbreviation = testParameterAbbreviation;
   }
 }
