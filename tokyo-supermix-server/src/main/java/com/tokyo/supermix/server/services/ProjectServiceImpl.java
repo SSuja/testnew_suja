@@ -147,7 +147,7 @@ public class ProjectServiceImpl implements ProjectService {
     if (name.isEmpty()) {
       return null;
     }
-    return projectRepository.findByPlantCodeAndNameStartsWith(plantCode, name);
+    return projectRepository.findByPlantCodeAndNameContaining(plantCode, name);
   }
 
   @Transactional(readOnly = true)
@@ -155,7 +155,7 @@ public class ProjectServiceImpl implements ProjectService {
     if (name.isEmpty()) {
       return null;
     }
-    return projectRepository.findByNameStartsWith(name);
+    return projectRepository.findByNameContaining(name);
   }
 
   @Transactional(readOnly = true)
@@ -163,29 +163,29 @@ public class ProjectServiceImpl implements ProjectService {
       String plantName, String name, String customerName, String contactPerson, String startDate,
       String plantCode, Pageable pageable, Pagination pagination, String contactNumber) {
     if (code != null && !code.isEmpty()) {
-      booleanBuilder.and(QProject.project.code.startsWithIgnoreCase(code));
+      booleanBuilder.and(QProject.project.code.contains(code));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QProject.project.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QProject.project.plant.name.contains(plantName));
     }
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QProject.project.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QProject.project.name.contains(name));
     }
     if (customerName != null && !customerName.isEmpty()) {
-      booleanBuilder.and(QProject.project.customer.name.startsWithIgnoreCase(customerName));
+      booleanBuilder.and(QProject.project.customer.name.contains(customerName));
     }
     if (contactPerson != null && !contactPerson.isEmpty()) {
-      booleanBuilder.and(QProject.project.contactPerson.startsWithIgnoreCase(contactPerson));
+      booleanBuilder.and(QProject.project.contactPerson.contains(contactPerson));
     }
     if (startDate != null) {
-      booleanBuilder.and(QProject.project.startDate.stringValue().startsWithIgnoreCase(startDate));
+      booleanBuilder.and(QProject.project.startDate.stringValue().contains(startDate));
     }
     if (contactNumber != null && !contactNumber.isEmpty()) {
-      booleanBuilder.and(QProject.project.contactNumber.startsWithIgnoreCase(contactNumber));
+      booleanBuilder.and(QProject.project.contactNumber.contains(contactNumber));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QProject.project.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QProject.project.plant.code.contains(plantCode));
     }
     pagination.setTotalRecords(
         ((Collection<Project>) projectRepository.findAll(booleanBuilder)).stream().count());

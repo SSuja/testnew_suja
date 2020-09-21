@@ -26,7 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>,
 
   Long countByPlantCode(String plantCode);
 
-  List<Customer> findByPlantCodeAndNameStartsWith(String plantCode, String customerName);
+  List<Customer> findByNameContaining(String customerName);
 
-  List<Customer> findByNameStartsWith(String customerName);
+  List<Customer> findByPlantCodeAndNameContaining(String plantCode, String customerName);
 }
