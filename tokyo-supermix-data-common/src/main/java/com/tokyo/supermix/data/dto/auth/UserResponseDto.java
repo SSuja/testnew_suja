@@ -14,6 +14,8 @@ public class UserResponseDto {
   private String updatedAt;
   private List<RoleDto> roles;
   private List<PlantRoleDto> plantRoles;
+  private String designationName;
+
   public Long getId() {
     return id;
   }
@@ -76,5 +78,13 @@ public class UserResponseDto {
 
   public void setPlantRoles(List<PlantRoleDto> plantRoles) {
     this.plantRoles = plantRoles;
+  }
+
+  public String getDesignationName() {
+    return designationName;
+  }
+
+  public void setDesignationName(String designationName) {
+    this.designationName = designationName;
   }
 }
