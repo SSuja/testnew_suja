@@ -298,8 +298,8 @@ public class UserServiceImpl implements UserService {
 
   @Transactional(readOnly = true)
   public List<UserResponseDto> searchUserByPlantCode(String userName, String firstName,
-      String plantName, String designationName,String phoneNumber, BooleanBuilder booleanBuilder, String plantCode,
-      Pageable pageable, Pagination pagination) {
+      String plantName, String designationName, String phoneNumber, BooleanBuilder booleanBuilder,
+      String plantCode, Pageable pageable, Pagination pagination) {
     if (userName != null && !userName.isEmpty()) {
       booleanBuilder.and(QUser.user.userName.startsWithIgnoreCase(userName));
     }
@@ -313,9 +313,8 @@ public class UserServiceImpl implements UserService {
       booleanBuilder
           .and(QUser.user.employee.designation.name.startsWithIgnoreCase(designationName));
     }
-    if (designationName != null && !designationName.isEmpty()) {
-      booleanBuilder
-          .and(QUser.user.employee.phoneNumber.startsWithIgnoreCase(designationName));
+    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+      booleanBuilder.and(QUser.user.employee.phoneNumber.startsWithIgnoreCase(phoneNumber));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
