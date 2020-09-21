@@ -30,7 +30,7 @@ public interface ProjectRepository
 
   List<Project> findAllByPlantCode(String plantCode, Pageable pageable);
 
-  List<Project> findByPlantCodeAndNameStartsWith(String plantCode, String name);
+  List<Project> findByNameContaining(String name);
 
-  List<Project> findByNameStartsWith(String name);
+  List<Project> findByPlantCodeAndNameContaining(String plantCode, String name);
 }
