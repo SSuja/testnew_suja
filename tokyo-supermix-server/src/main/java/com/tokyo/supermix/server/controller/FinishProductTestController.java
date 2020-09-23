@@ -63,14 +63,14 @@ public class FinishProductTestController {
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TEST)
   public ResponseEntity<Object> saveFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
-    if (finishProductTestService.isDuplicateEntry(
-        finishProductTestRequestDto.getFinishProductSampleCode(),
-        finishProductTestRequestDto.getTestConfigureId())) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
-              validationFailureStatusCodes.getFinishProductTestAlreadyExists()),
-          HttpStatus.BAD_REQUEST);
-    }
+//    if (finishProductTestService.isDuplicateEntry(
+//        finishProductTestRequestDto.getFinishProductSampleCode(),
+//        finishProductTestRequestDto.getTestConfigureId())) {
+//      return new ResponseEntity<>(
+//          new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+//              validationFailureStatusCodes.getFinishProductTestAlreadyExists()),
+//          HttpStatus.BAD_REQUEST);
+//    }
     return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
         finishProductTestService.createFinishProductTest(
             mapper.map(finishProductTestRequestDto, FinishProductTest.class)),
