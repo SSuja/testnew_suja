@@ -195,6 +195,20 @@ public class TestReportServiceImpl implements TestReportService {
         materialResult.setTestParameterName(
             results.getTestEquation().getTestParameter().getParameter().getName());
         materialResult.setAverage(results.getResult());
+        if ((results.getMaterialTest().getTestConfigure().getAcceptedType()
+            .equals(AcceptedType.MATERIAL))) {
+          if (results.getMaterialTest().getTestConfigure().getRawMaterial() != null) {
+            materialResult.setAcceptanceCriterias(
+                getMaterialAcceptedValueDtoforAdmixture(results.getMaterialTest().getTestConfigure().getId(),
+                    results.getTestEquation().getTestParameter().getId()));
+          } else {
+            materialResult.setAcceptanceCriterias(getMaterialValueIsNull(
+                results.getMaterialTest().getTestConfigure().getId(), materialTestCode));
+          }
+        } else {
+          materialResult.setAcceptanceCriterias(
+              getAcceptedCriteriaDetails(results.getMaterialTest().getTestConfigure().getId()));
+        }
         materialResults.add(materialResult);
       } else {
         materialResult
@@ -280,6 +294,30 @@ public class TestReportServiceImpl implements TestReportService {
     List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
     List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
         .findByTestConfigureIdAndTestConfigureRawMaterialId(testConfigureId, rawMaterialId);
+    materialAcceptedValues.forEach(materialAccepted -> {
+      if (materialAccepted.isFinalResult()) {
+        AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
+        if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+          acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
+          acceptedValueDto.setMinValue(materialAccepted.getMinValue());
+        } else if (materialAccepted.getConditionRange() == Condition.EQUAL
+            || materialAccepted.getConditionRange() == Condition.GREATER_THAN
+            || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+          acceptedValueDto.setValue(materialAccepted.getValue());
+        }
+        acceptedValueDtoList.add(acceptedValueDto);
+      }
+    });
+    return acceptedValueDtoList;
+  }
+  
+  private List<AcceptedValueDto> getMaterialAcceptedValueDtoforAdmixture(Long testConfigureId,
+      Long testParameterId) {
+    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
+    List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
+        .findByTestConfigureIdAndTestParameterId(testConfigureId, testParameterId);
     materialAcceptedValues.forEach(materialAccepted -> {
       if (materialAccepted.isFinalResult()) {
         AcceptedValueDto acceptedValueDto = new AcceptedValueDto();

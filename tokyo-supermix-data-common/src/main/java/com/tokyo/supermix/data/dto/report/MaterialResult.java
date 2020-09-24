@@ -1,9 +1,12 @@
 package com.tokyo.supermix.data.dto.report;
 
+import java.util.List;
+
 public class MaterialResult {
   private String testParameterName;
   private String testName;
   private Double average;
+  private List<AcceptedValueDto> acceptanceCriterias;
 
   public String getTestParameterName() {
     return testParameterName;
@@ -27,5 +30,13 @@ public class MaterialResult {
 
   public void setTestName(String testName) {
     this.testName = testName;
+  }
+
+  public List<AcceptedValueDto> getAcceptanceCriterias() {
+    return acceptanceCriterias;
+  }
+
+  public void setAcceptanceCriterias(List<AcceptedValueDto> acceptanceCriterias) {
+    this.acceptanceCriterias = acceptanceCriterias;
   }
 }
