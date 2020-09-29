@@ -103,7 +103,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   private Double roundDoubleValue(Double value) {
-    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT);
+    DecimalFormat decimalFormat = new DecimalFormat(Constants.DECIMAL_FORMAT_FINISH);
     return Double.valueOf(decimalFormat.format(value));
   }
 
@@ -358,7 +358,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
             && testParameter.getType().equals(TestParameterType.INPUT))
             || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                && testParameter.getType().equals(TestParameterType.RESULT))) {
+                && testParameter.getType().equals(TestParameterType.RESULT))
+            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                && testParameter.getType().equals(TestParameterType.CONFIG))) {
           engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
         }
       }
@@ -387,7 +389,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
                 && testParameter.getType().equals(TestParameterType.RESULT))
             || testParameter.getInputMethods().equals(InputMethod.CALCULATION)
-                && testParameter.getType().equals(TestParameterType.INPUT)) {
+                && testParameter.getType().equals(TestParameterType.INPUT)
+            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                && testParameter.getType().equals(TestParameterType.CONFIG))) {
           engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
         }
       }

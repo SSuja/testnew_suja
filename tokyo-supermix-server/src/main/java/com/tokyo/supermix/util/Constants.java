@@ -388,6 +388,8 @@ public class Constants {
    */
   public static final String TWO_DECIMAL_FORMAT = "#.##";
   public static final String DECIMAL_FORMAT = "#.##";
+  public static final String DECIMAL_FORMAT_FINISH = "#.#####";
+  
   public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";
   public static final String SIEVE_TEST_TRIAL_ID = "id";
   public static final String ADD_SIEVE_TEST_TRIAL_SUCCEESS = "Sieve Test Trial Added Successfully";
