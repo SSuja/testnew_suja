@@ -197,9 +197,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       if (testParameterService.checkEqutaionExistsForTest(
           testParameter.getTestConfigure().getId()) == Constants.CHECK_EQUATION_FALSE) {
         if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameter.getType().equals(TestParameterType.INPUT))
-            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                && testParameter.getType().equals(TestParameterType.RESULT))) {
+            && testParameter.getType().equals(TestParameterType.RESULT))) {
           if (finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
               testParameter.getId(), finishProductTestCode) != null) {
             FinishProductParameterResult finishProductAlready =
@@ -266,10 +264,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
           .findByFinishProductTestCodeAndTestParameterIdOrderByUpdatedAtDesc(finishProductTestCode,
               testParameterId)) {
         if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.INPUT))
-            || (finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-                && finishProductTrial.getTestParameter().getType()
-                    .equals(TestParameterType.RESULT))) {
+            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
           trialValue.add(finishProductTrial.getValue());
         }
       }
