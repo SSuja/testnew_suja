@@ -136,11 +136,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSampleByEquipmentId(Long id) {
-    return finishProductSampleRepository.findByEquipmentId(id);
-  }
-
-  @Transactional(readOnly = true)
   public Page<FinishProductSample> searchFinishProductSample(Predicate predicate, int page,
       int size) {
     return finishProductSampleRepository.findAll(predicate,
@@ -194,7 +189,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
           .startsWithIgnoreCase(finishProductCode));
     }
     if (equipmentName != null && !equipmentName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.equipment.name
+      booleanBuilder.and(QFinishProductSample.finishProductSample.plantEquipment.serialNo
           .startsWithIgnoreCase(equipmentName));
     }
     if (mixDesignCode != null && !mixDesignCode.isEmpty()) {

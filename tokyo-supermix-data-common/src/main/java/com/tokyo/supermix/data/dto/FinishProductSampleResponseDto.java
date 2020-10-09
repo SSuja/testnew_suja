@@ -6,12 +6,16 @@ import com.tokyo.supermix.data.enums.Status;
 public class FinishProductSampleResponseDto {
   private String code;
   private String finishProductCode;
-  private EquipmentDto equipment;
+  private PlantEquipmentResponseDto plantEquipment;
   private MixDesignResponseDto mixDesign;
   private Status status;
   private Date date;
   private String createdAt;
   private String updatedAt;
+  private String truckNo;
+  private ProjectResponseDto project;
+  private PourDtoResponse pour;
+  private String workOrderNumber;
 
   public String getCode() {
     return code;
@@ -29,12 +33,12 @@ public class FinishProductSampleResponseDto {
     this.finishProductCode = finishProductCode;
   }
 
-  public EquipmentDto getEquipment() {
-    return equipment;
+  public PlantEquipmentResponseDto getPlantEquipment() {
+    return plantEquipment;
   }
 
-  public void setEquipment(EquipmentDto equipment) {
-    this.equipment = equipment;
+  public void setPlantEquipment(PlantEquipmentResponseDto plantEquipment) {
+    this.plantEquipment = plantEquipment;
   }
 
   public MixDesignResponseDto getMixDesign() {
@@ -75,5 +79,37 @@ public class FinishProductSampleResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public String getTruckNo() {
+    return truckNo;
+  }
+
+  public void setTruckNo(String truckNo) {
+    this.truckNo = truckNo;
+  }
+
+  public ProjectResponseDto getProject() {
+    return project;
+  }
+
+  public void setProject(ProjectResponseDto project) {
+    this.project = project;
+  }
+
+  public PourDtoResponse getPour() {
+    return pour;
+  }
+
+  public void setPour(PourDtoResponse pour) {
+    this.pour = pour;
+  }
+
+  public String getWorkOrderNumber() {
+    return workOrderNumber;
+  }
+
+  public void setWorkOrderNumber(String workOrderNumber) {
+    this.workOrderNumber = workOrderNumber;
   }
 }
