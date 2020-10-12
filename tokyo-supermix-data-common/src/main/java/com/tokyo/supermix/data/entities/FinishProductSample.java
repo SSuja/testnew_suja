@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
@@ -19,12 +20,20 @@ public class FinishProductSample extends DateAudit implements Serializable {
   private String finishProductCode;
   private Date date;
   @ManyToOne
-  @JoinColumn(name = "equipmentId", nullable = false)
-  private Equipment equipment;
+  @JoinColumn(name = "plantEquipmentSerialNo", nullable = false)
+  private PlantEquipment plantEquipment;
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
   private Status status;
+  private String truckNo;
+  @ManyToOne
+  @JoinColumn(name = "projectCode", nullable = true)
+  private Project project;
+  @OneToOne
+  @JoinColumn(name = "pourId", nullable = true)
+  private Pour pour;
+  private String workOrderNumber;
 
   public String getCode() {
     return code;
@@ -50,12 +59,12 @@ public class FinishProductSample extends DateAudit implements Serializable {
     this.date = date;
   }
 
-  public Equipment getEquipment() {
-    return equipment;
+  public PlantEquipment getPlantEquipment() {
+    return plantEquipment;
   }
 
-  public void setEquipment(Equipment equipment) {
-    this.equipment = equipment;
+  public void setPlantEquipment(PlantEquipment plantEquipment) {
+    this.plantEquipment = plantEquipment;
   }
 
   public MixDesign getMixDesign() {
@@ -72,6 +81,38 @@ public class FinishProductSample extends DateAudit implements Serializable {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public String getTruckNo() {
+    return truckNo;
+  }
+
+  public void setTruckNo(String truckNo) {
+    this.truckNo = truckNo;
+  }
+
+  public Project getProject() {
+    return project;
+  }
+
+  public void setProject(Project project) {
+    this.project = project;
+  }
+
+  public Pour getPour() {
+    return pour;
+  }
+
+  public void setPour(Pour pour) {
+    this.pour = pour;
+  }
+
+  public String getWorkOrderNumber() {
+    return workOrderNumber;
+  }
+
+  public void setWorkOrderNumber(String workOrderNumber) {
+    this.workOrderNumber = workOrderNumber;
   }
 
   public static long getSerialversionuid() {

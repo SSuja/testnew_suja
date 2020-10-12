@@ -34,8 +34,6 @@ public interface FinishProductSampleService {
 
   public List<FinishProductSample> getFinishProductSampleByMixDesignCode(String code);
 
-  public List<FinishProductSample> getFinishProductSampleByEquipmentId(Long id);
-
   public Page<FinishProductSample> searchFinishProductSample(Predicate predicate, int page,
       int size);
 

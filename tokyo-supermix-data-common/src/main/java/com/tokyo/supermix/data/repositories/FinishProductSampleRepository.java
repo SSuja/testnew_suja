@@ -19,10 +19,6 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
 	List<FinishProductSample> findByMixDesignCode(String mixDesignCode);
 
-	boolean existsByEquipmentId(Long id);
-
-	List<FinishProductSample> findByEquipmentId(Long id);
-
 	Page<FinishProductSample> findByMixDesignPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
 
 	List<FinishProductSample> findByStatus(Status status);
