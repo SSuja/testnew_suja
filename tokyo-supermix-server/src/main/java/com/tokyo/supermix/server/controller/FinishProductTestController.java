@@ -63,14 +63,14 @@ public class FinishProductTestController {
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TEST)
   public ResponseEntity<Object> saveFinishProductSampleTest(
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
-//    if (finishProductTestService.isDuplicateEntry(
-//        finishProductTestRequestDto.getFinishProductSampleCode(),
-//        finishProductTestRequestDto.getTestConfigureId())) {
-//      return new ResponseEntity<>(
-//          new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
-//              validationFailureStatusCodes.getFinishProductTestAlreadyExists()),
-//          HttpStatus.BAD_REQUEST);
-//    }
+    // if (finishProductTestService.isDuplicateEntry(
+    // finishProductTestRequestDto.getFinishProductSampleCode(),
+    // finishProductTestRequestDto.getTestConfigureId())) {
+    // return new ResponseEntity<>(
+    // new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+    // validationFailureStatusCodes.getFinishProductTestAlreadyExists()),
+    // HttpStatus.BAD_REQUEST);
+    // }
     return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
         finishProductTestService.createFinishProductTest(
             mapper.map(finishProductTestRequestDto, FinishProductTest.class)),
@@ -220,5 +220,14 @@ public class FinishProductTestController {
                 FinishProductTestResponseDto.class),
             RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_CODE)
+  public ResponseEntity<Object> getFinishproductTestsByFinishProductSampleCode(
+      @PathVariable String finishProductSampleCode) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
+        mapper.map(finishProductTestService.getFinishProductTestsByFinishProductSampleCode(
+            finishProductSampleCode), FinishProductTestResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }

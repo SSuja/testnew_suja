@@ -617,6 +617,8 @@ public final class EndpointURI {
       FINISH_PRODUCT_TEST + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}";
   public static final String FINISH_PRODUCT_TEST_SEARCH =
       FINISH_PRODUCT_TEST + SEARCH + SLASH + "{plantCode}";
+  public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_CODE =
+      FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}";
 
   /*
    * Employee apis

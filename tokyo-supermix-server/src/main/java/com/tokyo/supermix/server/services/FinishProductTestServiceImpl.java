@@ -330,4 +330,12 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
             .stream().count());
     return finishProductTestRepository.findAll(booleanBuilder, pageable).toList();
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductTest> getFinishProductTestsByFinishProductSampleCode(
+      String finishProductSampleCode) {
+    return finishProductTestRepository.findByFinishProductSampleCode(finishProductSampleCode);
+  }
+
+
 }

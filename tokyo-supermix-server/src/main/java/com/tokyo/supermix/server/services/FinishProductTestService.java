@@ -50,4 +50,7 @@ public interface FinishProductTestService {
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
       String materialName, String status, String date, String plantName, String plantCode,
       Pageable pageable, Pagination pagination);
+
+  public List<FinishProductTest> getFinishProductTestsByFinishProductSampleCode(
+      String finishProductSampleCode);
 }
