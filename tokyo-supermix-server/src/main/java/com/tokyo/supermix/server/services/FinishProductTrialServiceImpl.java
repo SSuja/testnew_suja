@@ -111,7 +111,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   public List<FinishProductTrial> getFinishProductTrialsByFinishProductTestCode(
       String finishProductTestCode) {
     return finishProductTrialRepository
-        .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductTestCode);
+        .findByFinishProductTestCodeOrderByCreatedAtDesc(finishProductTestCode);
   }
 
   @Transactional(readOnly = true)
