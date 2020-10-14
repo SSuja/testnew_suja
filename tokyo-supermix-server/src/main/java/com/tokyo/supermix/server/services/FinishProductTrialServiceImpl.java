@@ -228,7 +228,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     Long noOfTrial = finishProductTest.getNoOfTrial();
     List<Double> trialValue = new ArrayList<Double>();
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
-        .findByFinishProductTestCodeAndTestParameterIdOrderByUpdatedAtDesc(finishProductTestCode,
+        .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
             testParameterId)) {
       if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
           && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
@@ -250,7 +250,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (testParameterService.checkEqutaionExistsForTest(
         finishProductTest.getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
       for (FinishProductTrial finishProductTrial : finishProductTrialRepository
-          .findByFinishProductTestCodeAndTestParameterIdOrderByUpdatedAtDesc(finishProductTestCode,
+          .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
               testParameterId)) {
         if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
             && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
@@ -261,7 +261,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (testParameterService.checkEqutaionExistsForTest(
         finishProductTest.getTestConfigure().getId()) == Constants.CHECK_EQUATION_FALSE) {
       for (FinishProductTrial finishProductTrial : finishProductTrialRepository
-          .findByFinishProductTestCodeAndTestParameterIdOrderByUpdatedAtDesc(finishProductTestCode,
+          .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
               testParameterId)) {
         if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
             && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
@@ -285,7 +285,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public void saveAverageCalculationResult(String finishProductCode) {
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
-        .findByFinishProductTestCodeOrderByUpdatedAtDesc(finishProductCode)) {
+        .findByFinishProductTestCodeOrderByCreatedAtDesc(finishProductCode)) {
       if (finishProductTrial.getTestParameter() != null) {
         TestParameter testParameter =
             testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
