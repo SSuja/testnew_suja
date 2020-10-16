@@ -13,10 +13,13 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.QFinishProductTest;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -35,6 +38,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
+  @Autowired
+  private MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public String createFinishProductTest(FinishProductTest finishProductTest) {
@@ -151,6 +156,10 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
     return finishProductTestRepository.existsByFinishProductSampleMixDesignPlantCode(plantCode);
   }
 
+  private List<MaterialAcceptedValue> getRawMaterialAcceptedValues(Long testConfigId) {
+    return materialAcceptedValueRepository.findByTestConfigureId(testConfigId);
+  }
+
   @Transactional(readOnly = true)
   public List<FinishProductTestDto> getFinishProductTestByFinishProductSample(
       String finishProductSampleCode) {
@@ -170,104 +179,266 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
               .forEach(finishProductTest -> {
                 if (finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
                     finishProductSampleCode, testConfigureMaterial.getId())) {
-                  if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
-                    if (finishProductTest.getTestConfigure().getRawMaterial()
-                        .getId() == finishProductTest.getFinishProductSample().getMixDesign()
-                            .getRawMaterial().getId()) {
-                      finishProductTestDto
-                          .setCreatedDate(finishProductTest.getCreatedAt().toString());
-                      finishProductTestDto
-                          .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
-                      finishProductTestDto
-                          .setTestConfigId(finishProductTest.getTestConfigure().getId());
-                      finishProductTestDto.setFinishproductTestCode(finishProductTest.getCode());
-                      finishProductTestDto.setStatus(finishProductTest.getStatus());
-                      finishProductTestDto
-                          .setTestName(finishProductTest.getTestConfigure().getTest().getName());
-                      finishProductTestDto.setFinishProductSampleCode(
-                          finishProductTest.getFinishProductSample().getCode());
-                      finishProductTestDto
-                          .setMainType(finishProductTest.getTestConfigure().getTestType());
-                    }
-                  } else if (finishProductTest.getTestConfigure()
-                      .getMaterialSubCategory() == null) {
-                    if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
-                        .getMaterialSubCategory().getMaterialCategory().getId() == finishProductTest
-                            .getTestConfigure().getMaterialCategory().getId()) {
-                      finishProductTestDto
-                          .setCreatedDate(finishProductTest.getCreatedAt().toString());
-                      finishProductTestDto
-                          .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
-                      finishProductTestDto
-                          .setTestConfigId(finishProductTest.getTestConfigure().getId());
-                      finishProductTestDto.setFinishproductTestCode(finishProductTest.getCode());
-                      finishProductTestDto.setStatus(finishProductTest.getStatus());
-                      finishProductTestDto
-                          .setTestName(finishProductTest.getTestConfigure().getTest().getName());
-                      finishProductTestDto.setFinishProductSampleCode(
-                          finishProductTest.getFinishProductSample().getCode());
-                      finishProductTestDto
-                          .setMainType(finishProductTest.getTestConfigure().getTestType());
-                    }
-                  } else {
-                    if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
-                        .getMaterialSubCategory().getId() == finishProductTest.getTestConfigure()
-                            .getMaterialSubCategory().getId()) {
-                      finishProductTestDto
-                          .setCreatedDate(finishProductTest.getCreatedAt().toString());
-                      finishProductTestDto
-                          .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
-                      finishProductTestDto
-                          .setTestConfigId(finishProductTest.getTestConfigure().getId());
-                      finishProductTestDto.setFinishproductTestCode(finishProductTest.getCode());
-                      finishProductTestDto.setStatus(finishProductTest.getStatus());
-                      finishProductTestDto
-                          .setTestName(finishProductTest.getTestConfigure().getTest().getName());
-                      finishProductTestDto.setFinishProductSampleCode(
-                          finishProductTest.getFinishProductSample().getCode());
-                      finishProductTestDto
-                          .setMainType(finishProductTest.getTestConfigure().getTestType());
+                  if (finishProductTest.getTestConfigure().getAcceptedType() != null) {
+                    if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
+                      if (finishProductTest.getTestConfigure().getRawMaterial()
+                          .getId() == finishProductTest.getFinishProductSample().getMixDesign()
+                              .getRawMaterial().getId()) {
+                        if (finishProductTest.getTestConfigure().getAcceptedType()
+                            .equals(AcceptedType.TEST)) {
+                          finishProductTestDto
+                              .setCreatedDate(finishProductTest.getCreatedAt().toString());
+                          finishProductTestDto
+                              .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                          finishProductTestDto
+                              .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                          finishProductTestDto
+                              .setFinishproductTestCode(finishProductTest.getCode());
+                          finishProductTestDto.setStatus(finishProductTest.getStatus());
+                          finishProductTestDto.setTestName(
+                              finishProductTest.getTestConfigure().getTest().getName());
+                          finishProductTestDto.setFinishProductSampleCode(
+                              finishProductTest.getFinishProductSample().getCode());
+                          finishProductTestDto
+                              .setMainType(finishProductTest.getTestConfigure().getTestType());
+                          finishProductTestDto.setRawMaterialId(
+                              finishProductSample.getMixDesign().getRawMaterial().getId());
+                        }
+                        if (finishProductTest.getTestConfigure().getAcceptedType()
+                            .equals(AcceptedType.MATERIAL)) {
+                          for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                              finishProductTest.getTestConfigure().getId())) {
+                            if (materialAcceptedValue.getRawMaterial()
+                                .getId() == finishProductSample.getMixDesign().getRawMaterial()
+                                    .getId()) {
+                              finishProductTestDto
+                                  .setCreatedDate(finishProductTest.getCreatedAt().toString());
+                              finishProductTestDto
+                                  .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                              finishProductTestDto
+                                  .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                              finishProductTestDto
+                                  .setFinishproductTestCode(finishProductTest.getCode());
+                              finishProductTestDto.setStatus(finishProductTest.getStatus());
+                              finishProductTestDto.setTestName(
+                                  finishProductTest.getTestConfigure().getTest().getName());
+                              finishProductTestDto.setFinishProductSampleCode(
+                                  finishProductTest.getFinishProductSample().getCode());
+                              finishProductTestDto
+                                  .setMainType(finishProductTest.getTestConfigure().getTestType());
+                              finishProductTestDto.setRawMaterialId(
+                                  finishProductSample.getMixDesign().getRawMaterial().getId());
+                            }
+                          }
+
+                        }
+                      }
+                    } else if (finishProductTest.getTestConfigure()
+                        .getMaterialSubCategory() == null) {
+                      if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
+                          .getMaterialSubCategory().getMaterialCategory()
+                          .getId() == finishProductTest.getTestConfigure().getMaterialCategory()
+                              .getId()) {
+                        if (finishProductTest.getTestConfigure().getAcceptedType()
+                            .equals(AcceptedType.TEST)) {
+                          finishProductTestDto
+                              .setCreatedDate(finishProductTest.getCreatedAt().toString());
+                          finishProductTestDto
+                              .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                          finishProductTestDto
+                              .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                          finishProductTestDto
+                              .setFinishproductTestCode(finishProductTest.getCode());
+                          finishProductTestDto.setStatus(finishProductTest.getStatus());
+                          finishProductTestDto.setTestName(
+                              finishProductTest.getTestConfigure().getTest().getName());
+                          finishProductTestDto.setFinishProductSampleCode(
+                              finishProductTest.getFinishProductSample().getCode());
+                          finishProductTestDto
+                              .setMainType(finishProductTest.getTestConfigure().getTestType());
+                          finishProductTestDto.setRawMaterialId(
+                              finishProductSample.getMixDesign().getRawMaterial().getId());
+                        }
+                        if (finishProductTest.getTestConfigure().getAcceptedType()
+                            .equals(AcceptedType.MATERIAL)) {
+                          for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                              finishProductTest.getTestConfigure().getId())) {
+                            if (materialAcceptedValue.getRawMaterial()
+                                .getId() == finishProductSample.getMixDesign().getRawMaterial()
+                                    .getId()) {
+                              finishProductTestDto
+                                  .setCreatedDate(finishProductTest.getCreatedAt().toString());
+                              finishProductTestDto
+                                  .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                              finishProductTestDto
+                                  .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                              finishProductTestDto
+                                  .setFinishproductTestCode(finishProductTest.getCode());
+                              finishProductTestDto.setStatus(finishProductTest.getStatus());
+                              finishProductTestDto.setTestName(
+                                  finishProductTest.getTestConfigure().getTest().getName());
+                              finishProductTestDto.setFinishProductSampleCode(
+                                  finishProductTest.getFinishProductSample().getCode());
+                              finishProductTestDto
+                                  .setMainType(finishProductTest.getTestConfigure().getTestType());
+                              finishProductTestDto.setRawMaterialId(
+                                  finishProductSample.getMixDesign().getRawMaterial().getId());
+                            }
+                          }
+
+                        }
+                      }
+                    } else {
+                      if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
+                          .getMaterialSubCategory().getId() == finishProductTest.getTestConfigure()
+                              .getMaterialSubCategory().getId()) {
+                        if (finishProductTest.getTestConfigure().getAcceptedType()
+                            .equals(AcceptedType.TEST)) {
+                          finishProductTestDto
+                              .setCreatedDate(finishProductTest.getCreatedAt().toString());
+                          finishProductTestDto
+                              .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                          finishProductTestDto
+                              .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                          finishProductTestDto
+                              .setFinishproductTestCode(finishProductTest.getCode());
+                          finishProductTestDto.setStatus(finishProductTest.getStatus());
+                          finishProductTestDto.setTestName(
+                              finishProductTest.getTestConfigure().getTest().getName());
+                          finishProductTestDto.setFinishProductSampleCode(
+                              finishProductTest.getFinishProductSample().getCode());
+                          finishProductTestDto
+                              .setMainType(finishProductTest.getTestConfigure().getTestType());
+                          finishProductTestDto.setRawMaterialId(
+                              finishProductSample.getMixDesign().getRawMaterial().getId());
+                        }
+                        if (finishProductTest.getTestConfigure().getAcceptedType()
+                            .equals(AcceptedType.MATERIAL)) {
+                          for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                              finishProductTest.getTestConfigure().getId())) {
+                            if (materialAcceptedValue.getRawMaterial()
+                                .getId() == finishProductSample.getMixDesign().getRawMaterial()
+                                    .getId()) {
+                              finishProductTestDto
+                                  .setCreatedDate(finishProductTest.getCreatedAt().toString());
+                              finishProductTestDto
+                                  .setUpdatedDate(finishProductTest.getUpdatedAt().toString());
+                              finishProductTestDto
+                                  .setTestConfigId(finishProductTest.getTestConfigure().getId());
+                              finishProductTestDto
+                                  .setFinishproductTestCode(finishProductTest.getCode());
+                              finishProductTestDto.setStatus(finishProductTest.getStatus());
+                              finishProductTestDto.setTestName(
+                                  finishProductTest.getTestConfigure().getTest().getName());
+                              finishProductTestDto.setFinishProductSampleCode(
+                                  finishProductTest.getFinishProductSample().getCode());
+                              finishProductTestDto
+                                  .setMainType(finishProductTest.getTestConfigure().getTestType());
+                              finishProductTestDto.setRawMaterialId(
+                                  finishProductSample.getMixDesign().getRawMaterial().getId());
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
               });
           if (!(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
               finishProductSampleCode, testConfigureMaterial.getId()))) {
-            if (testConfigureMaterial != null)
+            if (testConfigureMaterial != null && testConfigureMaterial.getAcceptedType() != null)
               if (testConfigureMaterial.getRawMaterial() != null) {
                 if (finishProductSample.getMixDesign().getRawMaterial()
                     .getId() == testConfigureMaterial.getRawMaterial().getId()) {
-                  finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
-                  finishProductTestDto.setStatus(Status.NEW);
-                  finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
-                  finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
-                  finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.TEST)) {
+                    finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
+                    finishProductTestDto.setStatus(Status.NEW);
+                    finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                    finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+                    finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                    finishProductTestDto.setRawMaterialId(
+                        finishProductSample.getMixDesign().getRawMaterial().getId());
+                  }
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+                    for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                        testConfigureMaterial.getId())) {
+                      if (materialAcceptedValue.getRawMaterial().getId() == finishProductSample
+                          .getMixDesign().getRawMaterial().getId()) {
+                        finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
+                        finishProductTestDto.setStatus(Status.NEW);
+                        finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                        finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+                        finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                        finishProductTestDto.setRawMaterialId(
+                            finishProductSample.getMixDesign().getRawMaterial().getId());
+                      }
+                    }
+                  }
                 }
               } else if (testConfigureMaterial.getMaterialSubCategory() == null) {
                 if (finishProductSample.getMixDesign().getRawMaterial().getMaterialSubCategory()
                     .getMaterialCategory()
                     .getId() == testConfigureMaterial.getMaterialCategory().getId()) {
-                  finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
-                  finishProductTestDto.setStatus(Status.NEW);
-                  finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
-                  finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
-                  finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.TEST)) {
+                    finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
+                    finishProductTestDto.setStatus(Status.NEW);
+                    finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                    finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+                    finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                    finishProductTestDto.setRawMaterialId(
+                        finishProductSample.getMixDesign().getRawMaterial().getId());
+                  }
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+                    for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                        testConfigureMaterial.getId())) {
+                      if (materialAcceptedValue.getRawMaterial().getId() == finishProductSample
+                          .getMixDesign().getRawMaterial().getId()) {
+                        finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
+                        finishProductTestDto.setStatus(Status.NEW);
+                        finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                        finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+                        finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                        finishProductTestDto.setRawMaterialId(
+                            finishProductSample.getMixDesign().getRawMaterial().getId());
+                      }
+                    }
+                  }
                 }
               } else if (testConfigureMaterial.getMaterialSubCategory() != null
                   && testConfigureMaterial.getRawMaterial() == null) {
                 if (finishProductSample.getMixDesign().getRawMaterial().getMaterialSubCategory()
                     .getId() == testConfigureMaterial.getMaterialSubCategory().getId()) {
-                  finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
-                  finishProductTestDto.setStatus(Status.NEW);
-                  finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
-                  finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
-                  finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.TEST)) {
+                    finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
+                    finishProductTestDto.setStatus(Status.NEW);
+                    finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                    finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+                    finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                    finishProductTestDto.setRawMaterialId(
+                        finishProductSample.getMixDesign().getRawMaterial().getId());
+                  }
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+                    for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                        testConfigureMaterial.getId())) {
+                      if (materialAcceptedValue.getRawMaterial().getId() == finishProductSample
+                          .getMixDesign().getRawMaterial().getId()) {
+                        finishProductTestDto.setTestConfigId(testConfigureMaterial.getId());
+                        finishProductTestDto.setStatus(Status.NEW);
+                        finishProductTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                        finishProductTestDto.setFinishProductSampleCode(finishProductSampleCode);
+                        finishProductTestDto.setMainType(testConfigureMaterial.getTestType());
+                        finishProductTestDto.setRawMaterialId(
+                            finishProductSample.getMixDesign().getRawMaterial().getId());
+                      }
+                    }
+                  }
                 }
               }
           }
           finishProductTestDtoList.add(finishProductTestDto);
         });
     return finishProductTestDtoList;
+
   }
 
   @Transactional(readOnly = true)

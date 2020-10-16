@@ -404,10 +404,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   private int getCountKeyTestPassFinishProductTestsByMaterialSubCategory(String mixDesignCode,
       String finishProductSampleCode, Status status) {
-    return finishProductTestRepository
+    ArrayList<Long> testConfigIds = new ArrayList<Long>();
+    List<FinishProductTest> finishProductTestList = finishProductTestRepository
         .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndFinishProductSampleCodeAndStatus(
-            mixDesignCode, finishProductSampleCode, status)
-        .size();
+            mixDesignCode, finishProductSampleCode, status);
+    for (FinishProductTest finishProductTest : finishProductTestList) {
+      testConfigIds.add(finishProductTest.getTestConfigure().getId());
+    }
+    return testConfigIds.stream().distinct().collect(Collectors.toList()).size();
   }
 
   private int getCountkeyTestConfigByMaterialSubCategory(Long materialSubCategoryId) {
