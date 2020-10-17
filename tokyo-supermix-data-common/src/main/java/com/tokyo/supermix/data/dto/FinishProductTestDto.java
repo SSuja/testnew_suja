@@ -13,6 +13,7 @@ public class FinishProductTestDto {
   private String finishProductSampleCode;
   private MainType mainType;
   private Long rawMaterialId;
+  private String specimenCode;
 
   public Status getStatus() {
     return status;
@@ -84,5 +85,13 @@ public class FinishProductTestDto {
 
   public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
+  }
+
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
+
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
   }
 }
