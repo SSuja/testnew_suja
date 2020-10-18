@@ -55,11 +55,12 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
             .setCode(prefix + String.format("%04d", maxNumberFromCode(finishProductTestList) + 1));
       }
     }
-    String specimenCode =
-        finishProductTest.getFinishProductSample().getCode() + "-SP-"
-            + String.format("%02d", finishProductTestRepository
-                .findByFinishProductSampleCode(finishProductTest.getFinishProductSample().getCode())
-                .size() + 1);
+    String specimenCode = finishProductTest.getFinishProductSample().getCode() + "-SP-"
+        + String.format("%02d",
+            finishProductTestRepository.findByFinishProductSampleCodeAndTestConfigureId(
+                finishProductTest.getFinishProductSample().getCode(),
+                finishProductTest.getTestConfigure().getId()).size() + 1);
+
     finishProductTest.setSpecimenCode(specimenCode);
     finishProductTestRepository.save(finishProductTest);
     return finishProductTest.getCode();
