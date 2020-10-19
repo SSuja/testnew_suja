@@ -45,7 +45,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   public String createFinishProductTest(FinishProductTest finishProductTest) {
     if (finishProductTest.getCode() == null) {
       String prefix =
-          testConfigureRepository.getOne(finishProductTest.getTestConfigure().getId()).getPrefix();
+          testConfigureRepository.getOne(finishProductTest.getTestConfigure().getId()).getPrefix()+"-";
       List<FinishProductTest> finishProductTestList =
           finishProductTestRepository.findByCodeContaining(prefix);
       if (finishProductTestList.size() == 0) {
@@ -74,7 +74,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   private Integer maxNumberFromCode(List<FinishProductTest> finishProductTestList) {
     List<Integer> list = new ArrayList<Integer>();
     finishProductTestList.forEach(obj -> {
-      list.add(getNumberFromCode(obj.getCode()));
+      list.add(getNumberFromCode(obj.getCode().substring(obj.getCode().lastIndexOf("-"))));
     });
     return Collections.max(list);
   }
