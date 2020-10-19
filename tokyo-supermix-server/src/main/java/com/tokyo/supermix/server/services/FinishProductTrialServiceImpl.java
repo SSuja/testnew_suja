@@ -469,23 +469,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   public void updateFinishProductSampleAndMixDesignStatus(String finishProductTestCode) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
-    FinishProductSample finishProductSample = finishProductSampleRepository
-        .findById(finishproductTest.getFinishProductSample().getCode()).get();
     TestConfigure testConfigure =
         testConfigureRepository.findById(finishproductTest.getTestConfigure().getId()).get();
-    MixDesign mixDesign =
-        mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     if (testConfigure.isCoreTest()) {
       if (finishproductTest.getStatus().equals(Status.PASS)) {
         checkPassCountAndTestConfigKeyTestCount(finishProductTestCode);
       } else {
         checkStatusAndSaveStatus(finishProductTestCode);
       }
-    } else {
-      finishProductSample.setStatus(Status.PROCESS);
-      finishProductSampleRepository.save(finishProductSample);
-      mixDesign.setStatus(Status.NEW);
-      mixDesignRepository.save(mixDesign);
     }
   }
 
