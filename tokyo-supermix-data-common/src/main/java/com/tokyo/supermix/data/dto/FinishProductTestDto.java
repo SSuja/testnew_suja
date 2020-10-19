@@ -12,22 +12,8 @@ public class FinishProductTestDto {
   private String testName;
   private String finishProductSampleCode;
   private MainType mainType;
-
-  public String getFinishProductSampleCode() {
-    return finishProductSampleCode;
-  }
-
-  public void setFinishProductSampleCode(String finishProductSampleCode) {
-    this.finishProductSampleCode = finishProductSampleCode;
-  }
-
-  public MainType getMainType() {
-    return mainType;
-  }
-
-  public void setMainType(MainType mainType) {
-    this.mainType = mainType;
-  }
+  private Long rawMaterialId;
+  private String specimenCode;
 
   public Status getStatus() {
     return status;
@@ -75,5 +61,37 @@ public class FinishProductTestDto {
 
   public void setTestName(String testName) {
     this.testName = testName;
+  }
+
+  public String getFinishProductSampleCode() {
+    return finishProductSampleCode;
+  }
+
+  public void setFinishProductSampleCode(String finishProductSampleCode) {
+    this.finishProductSampleCode = finishProductSampleCode;
+  }
+
+  public MainType getMainType() {
+    return mainType;
+  }
+
+  public void setMainType(MainType mainType) {
+    this.mainType = mainType;
+  }
+
+  public Long getRawMaterialId() {
+    return rawMaterialId;
+  }
+
+  public void setRawMaterialId(Long rawMaterialId) {
+    this.rawMaterialId = rawMaterialId;
+  }
+
+  public String getSpecimenCode() {
+    return specimenCode;
+  }
+
+  public void setSpecimenCode(String specimenCode) {
+    this.specimenCode = specimenCode;
   }
 }

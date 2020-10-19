@@ -54,7 +54,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     if (finishProductSample.getCode() == null) {
       String rawMaterialName = mixDesignRepository
           .getOne(finishProductSample.getMixDesign().getCode()).getRawMaterial().getName();
-      String codePrefix = rawMaterialName + "-PP-";
+      String codePrefix = " ";
+      if (finishProductSample.getWorkOrderNumber() == null) {
+        codePrefix = rawMaterialName + "-PP-";
+      } else {
+        codePrefix = rawMaterialName + "-PO-";
+      }
       mixDesign.setCheckDepend(true);
       List<FinishProductSample> finishProductSampleList =
           finishProductSampleRepository.findByCodeContaining(codePrefix);
