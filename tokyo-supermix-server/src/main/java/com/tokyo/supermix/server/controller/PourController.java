@@ -160,7 +160,7 @@ public class PourController {
           mapper.map(pourService.getPourName(name), PourDtoResponse.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANT,
+    return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
         mapper.map(pourService.getPourNameByPlantCode(plantCode, name), PourDtoResponse.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
