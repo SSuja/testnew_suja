@@ -452,7 +452,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     if (getCountKeyTestPassFinishProductTestsByMaterialSubCategory(mixDesign.getCode(),
         finishProductSample.getCode(),
-        Status.PASS) >= (getCountkeyTestConfigByMaterialSubCategory(
+        Status.PASS) == (getCountkeyTestConfigByMaterialSubCategory(
             mixDesign.getRawMaterial().getMaterialSubCategory().getId())
             + getCountKeyTestConfigByMaterialCategory(
                 mixDesign.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getId())
