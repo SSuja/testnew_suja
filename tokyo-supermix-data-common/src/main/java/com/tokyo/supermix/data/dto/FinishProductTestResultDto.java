@@ -23,6 +23,7 @@ public class FinishProductTestResultDto {
   private String finishProductTestCode;
   private String finishProductTestFinishProductSampleMixDesignRawMaterialName;
   private String testParameterAbbreviation;
+  private String finishProductTestFinishProductSampleFinishProductCode;
 
   public String getTestParameterAbbreviation() {
     return testParameterAbbreviation;
@@ -158,5 +159,15 @@ public class FinishProductTestResultDto {
       String finishProductTestFinishProductSampleMixDesignRawMaterialName) {
     this.finishProductTestFinishProductSampleMixDesignRawMaterialName =
         finishProductTestFinishProductSampleMixDesignRawMaterialName;
+  }
+
+  public String getFinishProductTestFinishProductSampleFinishProductCode() {
+    return finishProductTestFinishProductSampleFinishProductCode;
+  }
+
+  public void setFinishProductTestFinishProductSampleFinishProductCode(
+      String finishProductTestFinishProductSampleFinishProductCode) {
+    this.finishProductTestFinishProductSampleFinishProductCode =
+        finishProductTestFinishProductSampleFinishProductCode;
   }
 }
