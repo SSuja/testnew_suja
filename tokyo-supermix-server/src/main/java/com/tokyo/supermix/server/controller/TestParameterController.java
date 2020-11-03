@@ -61,15 +61,15 @@ public class TestParameterController {
                 validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
           }
         }
-        if (testParameterService.isDuplicateTestParameterEntryExist(
-            testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getAbbreviation(),
-            testParameterRequestDto.getParameterId())) {
-          logger.debug("");
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.TEST_PARAMETER,
-                  validationFailureStatusCodes.getTestParameterAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
+//        if (testParameterService.isDuplicateTestParameterEntryExist(
+//            testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getAbbreviation(),
+//            testParameterRequestDto.getParameterId())) {
+//          logger.debug("");
+//          return new ResponseEntity<>(
+//              new ValidationFailureResponse(Constants.TEST_PARAMETER,
+//                  validationFailureStatusCodes.getTestParameterAlreadyExist()),
+//              HttpStatus.BAD_REQUEST);
+//        }
       }
       testParameterService
           .saveTestParameterAll(mapper.map(testParameterRequestDtoList, TestParameter.class));
