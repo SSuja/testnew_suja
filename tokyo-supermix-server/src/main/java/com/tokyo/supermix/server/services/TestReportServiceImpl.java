@@ -787,8 +787,8 @@ public class TestReportServiceImpl implements TestReportService {
               sieveResultAndParameterAcc
                   .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
               if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
-                sieveResultAndParameterAcc.setVale(acceptedValue.getMaxValue().toString() + " - "
-                    + acceptedValue.getMinValue().toString());
+                sieveResultAndParameterAcc.setVale(acceptedValue.getMinValue().toString() + " - "
+                    + acceptedValue.getMaxValue().toString());
               } else {
                 sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
               }
@@ -807,8 +807,8 @@ public class TestReportServiceImpl implements TestReportService {
               sieveResultAndParameterAcc
                   .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
               if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
-                sieveResultAndParameterAcc.setVale(materialAcceptedValue.getMaxValue().toString()
-                    + " - " + materialAcceptedValue.getMinValue().toString());
+                sieveResultAndParameterAcc.setVale(materialAcceptedValue.getMinValue().toString()
+                    + " - " + materialAcceptedValue.getMaxValue().toString());
               } else {
                 sieveResultAndParameterAcc.setVale(materialAcceptedValue.getValue().toString());
               }
