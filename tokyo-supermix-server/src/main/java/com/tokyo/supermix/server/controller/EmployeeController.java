@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.controller;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -20,8 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,26 +74,15 @@ public class EmployeeController {
   private static final Logger logger = Logger.getLogger(EmployeeController.class);
 
   // Add Employee
-  @RequestMapping(value = EndpointURI.EMPLOYEE, method = RequestMethod.POST,
-      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-  public ResponseEntity<Object> createEmployee(
-      @RequestParam(value = "employee", required = true) String employeeDtoJson,
-      @RequestParam(value = "image", required = true) MultipartFile file,
-      HttpServletRequest request) throws IOException {
-    EmployeeRequestDto employeeRequestDto =
-        objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
-    employeeService.checkValidate(employeeRequestDto);
-    if (employeeService.isEmailExist(employeeRequestDto.getEmail())) {
+  @PostMapping(value = EndpointURI.EMPLOYEE)
+  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
+    if (employeeService.isEmailExist(employeeDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    try {
-      employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
-    } catch (TokyoSupermixFileStorageException e) {
-      e.printStackTrace();
-    }
-    employeeService.createEmployee(mapper.map(employeeRequestDto, Employee.class), request);
+    employeeService.createEmployee(mapper.map(employeeDto, Employee.class), request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -127,6 +116,26 @@ public class EmployeeController {
 
   // Update Employee
   @PutMapping(value = EndpointURI.EMPLOYEE)
+  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
+    if (employeeService.isEmployeeExist(employeeDto.getId())) {
+      if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
+          employeeDto.getEmail())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+            validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      employeeService.updateEmployee(mapper.map(employeeDto, Employee.class), request);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+        validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+
+  // Update user's employee details
+  @PutMapping(value = EndpointURI.EMPLOYEE_USER)
   public ResponseEntity<Object> updateEmployee(
       @RequestParam(value = "employee", required = true) String employeeDtoJson,
       @RequestParam(value = "image", required = true) MultipartFile file,
