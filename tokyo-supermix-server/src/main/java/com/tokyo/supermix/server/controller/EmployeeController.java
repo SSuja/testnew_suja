@@ -1,15 +1,18 @@
 package com.tokyo.supermix.server.controller;
 
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.EmployeeFillManager;
@@ -31,6 +36,8 @@ import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileNotFoundException;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileStorageException;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
@@ -62,18 +69,31 @@ public class EmployeeController {
   private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  ObjectMapper objectMapper;
   private static final Logger logger = Logger.getLogger(EmployeeController.class);
 
   // Add Employee
-  @PostMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
-      HttpServletRequest request) {
-    if (employeeService.isEmailExist(employeeDto.getEmail())) {
+  @RequestMapping(value = EndpointURI.EMPLOYEE, method = RequestMethod.POST,
+      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  public ResponseEntity<Object> createEmployee(
+      @RequestParam(value = "employee", required = true) String employeeDtoJson,
+      @RequestParam(value = "image", required = true) MultipartFile file,
+      HttpServletRequest request) throws IOException {
+    EmployeeRequestDto employeeRequestDto =
+        objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
+    employeeService.checkValidate(employeeRequestDto);
+    if (employeeService.isEmailExist(employeeRequestDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    employeeService.createEmployee(mapper.map(employeeDto, Employee.class), request);
+    try {
+      employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+    } catch (TokyoSupermixFileStorageException e) {
+      e.printStackTrace();
+    }
+    employeeService.createEmployee(mapper.map(employeeRequestDto, Employee.class), request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -107,15 +127,24 @@ public class EmployeeController {
 
   // Update Employee
   @PutMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
-      HttpServletRequest request) {
-    if (employeeService.isEmployeeExist(employeeDto.getId())) {
-      if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
-          employeeDto.getEmail())) {
+  public ResponseEntity<Object> updateEmployee(
+      @RequestParam(value = "employee", required = true) String employeeDtoJson,
+      @RequestParam(value = "image", required = true) MultipartFile file,
+      HttpServletRequest request) throws IOException {
+    EmployeeRequestDto employeeRequestDto =
+        objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
+    if (employeeService.isEmployeeExist(employeeRequestDto.getId())) {
+      if (employeeService.isUpdatedEmployeeEmailExist(employeeRequestDto.getId(),
+          employeeRequestDto.getEmail())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      employeeService.updateEmployee(mapper.map(employeeDto, Employee.class), request);
+      try {
+        employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+      } catch (TokyoSupermixFileStorageException e) {
+        e.printStackTrace();
+      }
+      employeeService.updateEmployee(mapper.map(employeeRequestDto, Employee.class), request);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
           HttpStatus.OK);
@@ -174,10 +203,10 @@ public class EmployeeController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.EMPLOYEES,
-            employeeService.searchEmployee(booleanBuilder, firstName, email, lastName, address, phoneNumber, plantName, designationName , plantCode, pageable, pagination), RestApiResponseStatus.OK, pagination),
-         HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EMPLOYEES,
+        employeeService.searchEmployee(booleanBuilder, firstName, email, lastName, address,
+            phoneNumber, plantName, designationName, plantCode, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_EMPLOYEES_BY_PLANT_CODE)
@@ -238,5 +267,24 @@ public class EmployeeController {
         mapper.map(employeeService.getFirstNameByPlantCode(plantCode, firstName),
             EmployeeResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.GET_EMPLOYEE_IMAGE)
+  public ResponseEntity<Object> downloadFile(@PathVariable String fileName,
+      HttpServletRequest request) throws TokyoSupermixFileNotFoundException {
+    Resource resource = fileStorageService.loadFileAsResource(fileName);
+    String contentType = null;
+    try {
+      contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    }
+    if (contentType == null) {
+      contentType = "application/octet-stream";
+    }
+    return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
+        .header(HttpHeaders.CONTENT_DISPOSITION,
+            String.format("attachment; filename=\"%s\"", resource.getFilename()))
+        .body(resource);
   }
 }
