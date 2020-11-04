@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.Collection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,8 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.EmployeeRequestDto;
 import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.entities.ConfirmationToken;
 import com.tokyo.supermix.data.entities.Employee;
@@ -29,6 +32,7 @@ import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
+@Validated
 public class EmployeeServiceImpl implements EmployeeService {
   @Autowired
   private EmployeeRepository employeeRepository;
@@ -203,5 +207,10 @@ public class EmployeeServiceImpl implements EmployeeService {
       return null;
     }
     return employeeRepository.findByFirstNameStartsWith(firstName);
+  }
+
+  @Override
+  public void checkValidate(@Valid EmployeeRequestDto employeeRequestDto) {
+
   }
 }
