@@ -70,6 +70,9 @@ public final class EndpointURI {
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
   public static final String GET_EMPLOYEES_BY_PLANT =
       EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
+  public static final String GET_EMPLOYEE_IMAGE =
+      "/downloadFile/{fileName:.+}";
+  public static final String EMPLOYEE_USER = BASE_API_PATH + "employee-user";
   /*
    * Material Category APIs
    */
