@@ -588,6 +588,14 @@ public class Constants {
       "Finish Product Accepted Value Added Successfully";
   public static final String UPDATE_FINISH_PRODUCT_ACCEPTED_VALUE_SUCCESS =
       "Finish Product Accepted Value Updated Successfully";
+  
+  public static final String MAC_ADDRESS = "Mac address";
+  public static final String ADD_MAC_ADDRESS_SUCCESS = "Mac address Added Successfully";
+  public static final String MAC_ADDRESS_DELETED = "Mac address Successfully Deleted";
+  public static final String MAC_ADDRESS_UPDATED_SUCCESS = "Mac address Updated Successfully";
+  
+  
+  
 
   /*
    * Encapsulate constructor to restrict modification from outside

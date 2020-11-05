@@ -728,6 +728,10 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "download";
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
-
+  
+  public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";  
+  public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
+  public static final String MAC_ADDRESS_BY_ID = MAC_ADDRESS + ID;
+ 
   private EndpointURI() {}
 }
