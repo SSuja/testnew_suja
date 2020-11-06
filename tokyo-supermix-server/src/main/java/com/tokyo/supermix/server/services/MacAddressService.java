@@ -1,9 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
-
-
 import com.tokyo.supermix.data.entities.MacAddress;
 
 public interface MacAddressService {
