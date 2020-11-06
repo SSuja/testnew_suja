@@ -1723,47 +1723,47 @@ public class ValidationFailureStatusCodes {
   }
   
 //macAddress
- @Value("${validation.MacAddress.notExists}") 
+ @Value("${validation.macAddress.notExists}") 
  private String macAddressNotExist;
 
- @Value("${validation.MacAddress.alreadyExist}")
+ @Value("${validation.macAddress.alreadyExist}")
  private String macAddressAlreadyExist;
 
- @Value("${macAddressDto.MacAddress.null}")
+ @Value("${macAddressDto.macAddress.null}")
  private String macAddressIsNull;
 
- @Value("${macAddressDto.MacAddress.empty}")
+ @Value("${macAddressDto.macAddress.empty}")
  private String macAddressIsEmpty;
 
 public String getMacAddressNotExist() {
-	return macAddressNotExist;
+  return macAddressNotExist;
 }
 
 public void setMacAddressNotExist(String macAddressNotExist) {
-	this.macAddressNotExist = macAddressNotExist;
+  this.macAddressNotExist = macAddressNotExist;
 }
 
 public String getMacAddressAlreadyExist() {
-	return macAddressAlreadyExist;
+  return macAddressAlreadyExist;
 }
 
 public void setMacAddressAlreadyExist(String macAddressAlreadyExist) {
-	this.macAddressAlreadyExist = macAddressAlreadyExist;
+  this.macAddressAlreadyExist = macAddressAlreadyExist;
 }
 
 public String getMacAddressIsNull() {
-	return macAddressIsNull;
+  return macAddressIsNull;
 }
 
 public void setMacAddressIsNull(String macAddressIsNull) {
-	this.macAddressIsNull = macAddressIsNull;
+  this.macAddressIsNull = macAddressIsNull;
 }
 
 public String getMacAddressIsEmpty() {
-	return macAddressIsEmpty;
+  return macAddressIsEmpty;
 }
 
 public void setMacAddressIsEmpty(String macAddressIsEmpty) {
-	this.macAddressIsEmpty = macAddressIsEmpty;
-}  
+  this.macAddressIsEmpty = macAddressIsEmpty;
+}
 }
