@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller.auth;
 
 import java.util.UUID;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +28,8 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MacAddressService;
 import com.tokyo.supermix.server.services.auth.AuthService;
 import com.tokyo.supermix.server.services.auth.UserService;
+import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
@@ -47,12 +48,12 @@ public class AuthController {
   private EmailNotification emailNotification;
   @Autowired
   MacAddressService macAddressService;
+  @Autowired
+  ValidationFailureStatusCodes validationFailureStatusCodes;
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNIN)
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto,
-      HttpServletRequest request) {
-    System.out.println(macAddressService.getClientMACAddress(request));
-    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress(request))) {
+  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress())) {
       try {
         String jwt = authService.generateUserToken(loginRequestDto);
         if (jwt != null) {
@@ -73,8 +74,8 @@ public class AuthController {
             privilegeValidationFailureStatusCodes.getCredentials()), HttpStatus.BAD_REQUEST);
       }
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.CREDENCIALS,
-        privilegeValidationFailureStatusCodes.getCredentials()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MAC_ADDRESS,
+        validationFailureStatusCodes.getMacAddressNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNUP)
