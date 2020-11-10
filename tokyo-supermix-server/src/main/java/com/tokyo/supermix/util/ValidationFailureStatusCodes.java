@@ -1721,4 +1721,18 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
+
+  /*
+   * Material Quality Parameter
+   */
+  @Value("${validation.materialQualityParameter.notExists}")
+  private String materialQualityParameterNotExist;
+
+  public String getMaterialQualityParameterNotExist() {
+    return materialQualityParameterNotExist;
+  }
+
+  public void setMaterialQualityParameterNotExist(String materialQualityParameterNotExist) {
+    this.materialQualityParameterNotExist = materialQualityParameterNotExist;
+  }
 }

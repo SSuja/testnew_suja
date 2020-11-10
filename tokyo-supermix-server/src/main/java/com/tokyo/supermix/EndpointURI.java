@@ -729,5 +729,13 @@ public final class EndpointURI {
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
 
+  /** Material Quality Parameter **/
+  public static final String MATERIAL_QUALITY_PARAMETER =
+      BASE_API_PATH + SLASH + "material_quality_parameter";
+  public static final String MATERIAL_QUALITY_PARAMETERS =
+      BASE_API_PATH + SLASH + "material_quality_parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID =
+      BASE_API_PATH + SLASH + "material_quality_parameter" + ID;
+
   private EndpointURI() {}
 }
