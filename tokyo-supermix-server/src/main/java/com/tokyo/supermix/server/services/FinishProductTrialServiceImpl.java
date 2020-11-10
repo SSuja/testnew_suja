@@ -461,8 +461,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     } else {
       finishProductSample.setStatus(Status.PROCESS);
       finishProductSampleRepository.save(finishProductSample);
-      mixDesign.setStatus(Status.NEW);
-      mixDesignRepository.save(mixDesign);
+      if (finishProductSample.getWorkOrderNumber() == null) {
+        mixDesign.setStatus(Status.NEW);
+        mixDesignRepository.save(mixDesign);
+      }
     }
   }
 

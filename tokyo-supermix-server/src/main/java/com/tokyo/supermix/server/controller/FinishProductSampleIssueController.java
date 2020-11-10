@@ -20,6 +20,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
+import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -151,23 +152,19 @@ public class FinishProductSampleIssueController {
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(finishProductSampleIssueService.countFinishProductSampleIssue());
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-              mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(
-                  currentUser, pageable), FinishProductSampleIssueResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(
+              currentUser, pageable), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
         PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE).contains(plantCode)) {
       pagination.setTotalRecords(
           finishProductSampleIssueService.countFinishProductSampleIssueByPlant(plantCode));
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-              mapper.map(finishProductSampleIssueService.getFinishProductSampleIssueByPlantCode(
-                  plantCode, pageable), FinishProductSampleIssueResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleIssueService.getFinishProductSampleIssueByPlantCode(
+              plantCode, pageable), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
