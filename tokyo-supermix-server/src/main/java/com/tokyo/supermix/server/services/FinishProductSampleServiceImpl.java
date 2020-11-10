@@ -151,7 +151,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode,
       Pageable pageable) {
     return finishProductSampleRepository
-        .findByMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable).toList();
+        .findByWorkOrderNumberNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
+        .toList();
   }
 
   @Transactional(readOnly = true)
@@ -167,20 +168,22 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser,
       Pageable pageable) {
-    return finishProductSampleRepository.findByMixDesignPlantCodeInOrderByUpdatedAtDesc(
-        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
-        pageable).toList();
+    return finishProductSampleRepository
+        .findByWorkOrderNumberNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
+            currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+                PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
+            pageable)
+        .toList();
   }
 
   @Transactional(readOnly = true)
   public Long getCountFinishProductSample() {
-    return finishProductSampleRepository.count();
+    return finishProductSampleRepository.countByWorkOrderNumberNull();
   }
 
   @Transactional(readOnly = true)
   public Long getCountFinishProductSampleByPlantCode(String plantCode) {
-    return finishProductSampleRepository.countByMixDesignPlantCode(plantCode);
+    return finishProductSampleRepository.countByMixDesignPlantCodeAndWorkOrderNumberNull(plantCode);
   }
 
   @Transactional(readOnly = true)

@@ -15,10 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.QFinishProductSampleIssue;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -32,6 +34,8 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   @Autowired
   public FinishProductSampleIssueRepository finishProductSampleIssueRepository;
+  @Autowired
+  public FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
@@ -106,29 +110,33 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSampleIssue> getFinishProductSampleIssueByPlantCode(String plantCode,
+  public List<FinishProductSample> getFinishProductSampleIssueByPlantCode(String plantCode,
       Pageable pageable) {
-    return finishProductSampleIssueRepository.findByMixDesignPlantCode(plantCode, pageable)
+    return finishProductSampleRepository
+        .findByWorkOrderNumberNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
         .toList();
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSampleIssue> getAllFinishProductSampleIssueByPlant(
-      UserPrincipal currentUser, Pageable pageable) {
-    return finishProductSampleIssueRepository.findByProjectPlantCodeIn(
-        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-            PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE),
-        pageable).toList();
+  public List<FinishProductSample> getAllFinishProductSampleIssueByPlant(UserPrincipal currentUser,
+      Pageable pageable) {
+    return finishProductSampleRepository
+        .findByWorkOrderNumberNotNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
+            currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+                PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
+            pageable)
+        .toList();
   }
 
   @Transactional(readOnly = true)
   public Long countFinishProductSampleIssue() {
-    return finishProductSampleIssueRepository.count();
+    return finishProductSampleRepository.countByWorkOrderNumberNotNull();
   }
 
   @Transactional(readOnly = true)
   public Long countFinishProductSampleIssueByPlant(String plantCode) {
-    return finishProductSampleIssueRepository.countByMixDesignPlantCode(plantCode);
+    return finishProductSampleRepository
+        .countByMixDesignPlantCodeAndWorkOrderNumberNotNull(plantCode);
   }
 
   @Transactional(readOnly = true)
