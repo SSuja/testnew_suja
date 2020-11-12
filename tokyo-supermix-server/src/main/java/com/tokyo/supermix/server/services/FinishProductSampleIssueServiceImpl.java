@@ -113,7 +113,7 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public List<FinishProductSample> getFinishProductSampleIssueByPlantCode(String plantCode,
       Pageable pageable) {
     return finishProductSampleRepository
-        .findByWorkOrderNumberNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
+        .findByWorkOrderNumberNotNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
         .toList();
   }
 
