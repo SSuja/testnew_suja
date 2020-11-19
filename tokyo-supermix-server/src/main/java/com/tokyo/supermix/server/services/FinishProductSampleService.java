@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,11 +54,8 @@ public interface FinishProductSampleService {
       String mixDesignCode, String plantName, String plantCode, String status, String date,
       Pageable pageable, Pagination pagination);
 
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId,
-      Pageable pageable);
-
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
-      Long subCategoryId, String plantCode, Pageable pageable);
+      Long subCategoryId, String plantCode);
 
   public Long getSubCategoryCountFinishProductSample(Long materialSubCategoryId);
 
@@ -68,23 +64,23 @@ public interface FinishProductSampleService {
 
   public Long getCategoryCountFinishProductSample(Long materialCategoryId);
 
-  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId,
-      Pageable pageable);
+  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId);
 
   public Long getCountCategoryFinishProductSampleByPlantCode(String plantCode,
       Long materialCategoryId);
 
   public List<FinishProductSample> getFinishProductSamplesByCategoryIdAndPlantCode(
-      Long materialCategoryId, String plantCode, Pageable pageable);
+      Long materialCategoryId, String plantCode);
 
   public Long getRawMaterialCountFinishProductSample(Long rawMaterialId);
 
-  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId,
-      Pageable pageable);
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId);
 
   public Long getCountRawMaterialFinishProductSampleByPlantCode(String plantCode,
       Long rawMaterialId);
 
   public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(
-      Long rawMaterialId, String plantCode, Pageable pageable);
+      Long rawMaterialId, String plantCode);
+
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId);
 }
