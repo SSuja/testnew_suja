@@ -9,6 +9,7 @@ public class RawMaterialResponseDto {
   private String prefix;
   private boolean active;
   private PlantDto plant;
+  private String erpCode;
 
   public Long getId() {
     return id;
@@ -72,5 +73,13 @@ public class RawMaterialResponseDto {
 
   public void setPlant(PlantDto plant) {
     this.plant = plant;
+  }
+
+  public String getErpCode() {
+    return erpCode;
+  }
+
+  public void setErpCode(String erpCode) {
+    this.erpCode = erpCode;
   }
 }
