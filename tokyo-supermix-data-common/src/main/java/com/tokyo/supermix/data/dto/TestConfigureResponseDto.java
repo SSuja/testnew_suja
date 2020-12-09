@@ -20,6 +20,7 @@ public class TestConfigureResponseDto {
   private String updatedAt;
   private RawMaterialResponseDto rawMaterial;
   private MaterialCategoryDto materialCategory;
+  private Long noOfTrial;
 
   public String getCreatedAt() {
     return createdAt;
@@ -147,5 +148,13 @@ public class TestConfigureResponseDto {
 
   public void setMaterialCategory(MaterialCategoryDto materialCategory) {
     this.materialCategory = materialCategory;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
   }
 }

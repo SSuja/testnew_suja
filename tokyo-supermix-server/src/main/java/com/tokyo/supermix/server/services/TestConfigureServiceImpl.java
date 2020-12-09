@@ -152,25 +152,28 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testParameterRepository.findByTestConfigureId(testConfigId) != null) {
       testConfigureDto.setTestparameters(getTestParametersByTestConfigId(testConfigId));
     }
+    testConfigureDto.setNoOfTrial(testConfigure.getNoOfTrial());
     return testConfigureDto;
   }
 
   public List<AccepetedValueDto> getMaterialAcceptedValue(Long testConfigId) {
-    ArrayList<AccepetedValueDto> materialAcceptedValueDtoList =
-        new ArrayList<AccepetedValueDto>();
+    ArrayList<AccepetedValueDto> materialAcceptedValueDtoList = new ArrayList<AccepetedValueDto>();
     materialAcceptedValueRepository.findByTestConfigureId(testConfigId)
         .forEach(materialAcceptedValue -> {
-        AccepetedValueDto materialAcceptedValueDto = new AccepetedValueDto();
+          AccepetedValueDto materialAcceptedValueDto = new AccepetedValueDto();
           materialAcceptedValueDto
               .setMaterialName(materialAcceptedValue.getRawMaterial().getName());
-          materialAcceptedValueDto.setConditionRange(materialAcceptedValue.getConditionRange().toString());
+          materialAcceptedValueDto
+              .setConditionRange(materialAcceptedValue.getConditionRange().toString());
           materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
           materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
           materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
           materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
           if (materialAcceptedValue.getTestParameter() != null) {
-            materialAcceptedValueDto.setParameterName(materialAcceptedValue.getTestParameter().getParameter().getName());
-            materialAcceptedValueDto.setTestParameterName(materialAcceptedValue.getTestParameter().getName());
+            materialAcceptedValueDto.setParameterName(
+                materialAcceptedValue.getTestParameter().getParameter().getName());
+            materialAcceptedValueDto
+                .setTestParameterName(materialAcceptedValue.getTestParameter().getName());
           }
           materialAcceptedValueDtoList.add(materialAcceptedValueDto);
 

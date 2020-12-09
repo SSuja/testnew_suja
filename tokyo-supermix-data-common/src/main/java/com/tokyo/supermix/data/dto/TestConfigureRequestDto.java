@@ -27,6 +27,7 @@ public class TestConfigureRequestDto {
   private ReportFormat reportFormat;
   private AcceptedType acceptedType;
   private boolean name;
+  private Long noOfTrial;
 
   public boolean isName() {
     return name;
@@ -147,4 +148,13 @@ public class TestConfigureRequestDto {
   public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
   }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
+  }
+
 }

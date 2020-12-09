@@ -46,16 +46,8 @@ public class TestConfigure extends DateAudit implements Serializable {
   private RawMaterial rawMaterial;
   @Enumerated(EnumType.ORDINAL)
   private AcceptedType acceptedType;
-
+  private Long noOfTrial;
   private boolean name;
-
-  public boolean isName() {
-    return name;
-  }
-
-  public void setName(boolean name) {
-    this.name = name;
-  }
 
   public Long getId() {
     return id;
@@ -65,36 +57,12 @@ public class TestConfigure extends DateAudit implements Serializable {
     this.id = id;
   }
 
-  public MaterialCategory getMaterialCategory() {
-    return materialCategory;
-  }
-
-  public void setMaterialCategory(MaterialCategory materialCategory) {
-    this.materialCategory = materialCategory;
-  }
-
-  public MaterialSubCategory getMaterialSubCategory() {
-    return materialSubCategory;
-  }
-
-  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
-  }
-
   public boolean isCoreTest() {
     return coreTest;
   }
 
   public void setCoreTest(boolean coreTest) {
     this.coreTest = coreTest;
-  }
-
-  public Test getTest() {
-    return test;
-  }
-
-  public void setTest(Test test) {
-    this.test = test;
   }
 
   public String getDescription() {
@@ -121,10 +89,6 @@ public class TestConfigure extends DateAudit implements Serializable {
     this.prefix = prefix;
   }
 
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
   public MainType getTestType() {
     return testType;
   }
@@ -141,12 +105,28 @@ public class TestConfigure extends DateAudit implements Serializable {
     this.reportFormat = reportFormat;
   }
 
-  public AcceptedType getAcceptedType() {
-    return acceptedType;
+  public Test getTest() {
+    return test;
   }
 
-  public void setAcceptedType(AcceptedType acceptedType) {
-    this.acceptedType = acceptedType;
+  public void setTest(Test test) {
+    this.test = test;
+  }
+
+  public MaterialCategory getMaterialCategory() {
+    return materialCategory;
+  }
+
+  public void setMaterialCategory(MaterialCategory materialCategory) {
+    this.materialCategory = materialCategory;
+  }
+
+  public MaterialSubCategory getMaterialSubCategory() {
+    return materialSubCategory;
+  }
+
+  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+    this.materialSubCategory = materialSubCategory;
   }
 
   public RawMaterial getRawMaterial() {
@@ -155,5 +135,33 @@ public class TestConfigure extends DateAudit implements Serializable {
 
   public void setRawMaterial(RawMaterial rawMaterial) {
     this.rawMaterial = rawMaterial;
+  }
+
+  public AcceptedType getAcceptedType() {
+    return acceptedType;
+  }
+
+  public void setAcceptedType(AcceptedType acceptedType) {
+    this.acceptedType = acceptedType;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
+  }
+
+  public boolean isName() {
+    return name;
+  }
+
+  public void setName(boolean name) {
+    this.name = name;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }
