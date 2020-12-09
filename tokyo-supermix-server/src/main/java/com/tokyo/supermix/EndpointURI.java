@@ -729,5 +729,9 @@ public final class EndpointURI {
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
 
+  // Mix design ratio configuration
+  public static final String MIX_DESIGN_RATIO_CONFIG = BASE_API_PATH + "mixdesign-ratio";
+  public static final String MIX_DESIGN_RATIO_CONFIGS = BASE_API_PATH + "mixdesign-ratios";
+
   private EndpointURI() {}
 }
