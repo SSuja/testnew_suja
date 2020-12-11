@@ -80,4 +80,10 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   Page<FinishProductSample> findByWorkOrderNumberNotNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
       List<String> plantCodes, Pageable pageable);
+
+  List<FinishProductSample> findByWorkOrderNumberNotNull();
+
+  FinishProductSample findByCode(String code);
+
+  FinishProductSample findByProjectName(String projectName);
 }

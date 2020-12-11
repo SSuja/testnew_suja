@@ -183,4 +183,10 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
     return mapper.map(finishProductSampleIssueRepository.findAll(booleanBuilder, pageable).toList(),
         FinishProductSampleIssueResponseDto.class);
   }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getAllFinishProductSampleIssue() {
+    return finishProductSampleRepository
+        .findByWorkOrderNumberNotNull();
+  }
 }
