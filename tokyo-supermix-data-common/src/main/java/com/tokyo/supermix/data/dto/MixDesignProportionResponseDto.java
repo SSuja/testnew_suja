@@ -2,21 +2,13 @@ package com.tokyo.supermix.data.dto;
 
 public class MixDesignProportionResponseDto {
   private Long id;
-  private Long quantity;
+  private Double quantity;
   private Long unitId;
   private String unit;
   private String mixDesignCode;
   private Long rawMaterialId;
   private String rawMaterialName;
   private String rawMaterialSubCategoryName;
-
-  public String getRawMaterialSubCategoryName() {
-    return rawMaterialSubCategoryName;
-  }
-
-  public void setRawMaterialSubCategoryName(String rawMaterialSubCategoryName) {
-    this.rawMaterialSubCategoryName = rawMaterialSubCategoryName;
-  }
 
   public Long getId() {
     return id;
@@ -26,11 +18,11 @@ public class MixDesignProportionResponseDto {
     this.id = id;
   }
 
-  public Long getQuantity() {
+  public Double getQuantity() {
     return quantity;
   }
 
-  public void setQuantity(Long quantity) {
+  public void setQuantity(Double quantity) {
     this.quantity = quantity;
   }
 
@@ -41,7 +33,6 @@ public class MixDesignProportionResponseDto {
   public void setUnitId(Long unitId) {
     this.unitId = unitId;
   }
-
 
   public String getUnit() {
     return unit;
@@ -75,4 +66,11 @@ public class MixDesignProportionResponseDto {
     this.rawMaterialName = rawMaterialName;
   }
 
+  public String getRawMaterialSubCategoryName() {
+    return rawMaterialSubCategoryName;
+  }
+
+  public void setRawMaterialSubCategoryName(String rawMaterialSubCategoryName) {
+    this.rawMaterialSubCategoryName = rawMaterialSubCategoryName;
+  }
 }

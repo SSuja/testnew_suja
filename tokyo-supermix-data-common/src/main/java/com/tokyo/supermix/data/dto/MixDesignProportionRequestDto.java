@@ -4,11 +4,12 @@ import javax.validation.constraints.NotNull;
 
 public class MixDesignProportionRequestDto {
   private Long id;
-   @NotNull(message = "{mixDesignProportionRequestDto.quantity.null}")
-   private Long quantity;
-   private Long unitId;
-   private String mixDesignCode;
-   private Long rawMaterialId;
+  @NotNull(message = "{mixDesignProportionRequestDto.quantity.null}")
+  private Double quantity;
+  private Long unitId;
+  private String mixDesignCode;
+  private Long rawMaterialId;
+
   public Long getId() {
     return id;
   }
@@ -17,11 +18,11 @@ public class MixDesignProportionRequestDto {
     this.id = id;
   }
 
-  public Long getQuantity() {
+  public Double getQuantity() {
     return quantity;
   }
 
-  public void setQuantity(Long quantity) {
+  public void setQuantity(Double quantity) {
     this.quantity = quantity;
   }
 
@@ -48,5 +49,4 @@ public class MixDesignProportionRequestDto {
   public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
   }
-
 }
