@@ -162,7 +162,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         RawMaterial rawMaterial = rawMaterialRepository.findByName(row[5]);
         mixDesignProportion.setRawMaterial(rawMaterial);
         mixDesignProportion.setMixDesign(mixDesignNew);
-        mixDesignProportion.setQuantity(Long.valueOf(row[6]));
+        mixDesignProportion.setQuantity(Double.valueOf(row[6]));
         Unit unit = unitRepository.findByUnit(row[7]);
         mixDesignProportion.setUnit(unit);
         mixDesignProportions.add(mixDesignProportion);
