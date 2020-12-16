@@ -39,4 +39,6 @@ public interface FinishProductSampleIssueService {
       BooleanBuilder booleanBuilder, String workOrderNumber, String materialName,
       String mixDesignCode, String pourName, String projectName, String customerName,
       String plantCode, Pageable pageable, Pagination pagination);
+  
+  public List<FinishProductSample> getAllFinishProductSampleIssue();
 }
