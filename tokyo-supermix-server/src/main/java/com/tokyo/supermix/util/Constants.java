@@ -595,6 +595,17 @@ public class Constants {
   public static final String MIX_DESIGN_RATIO_CONFIG = "mixDesignRatios";
 
   /*
+   * Constants for SBU validation key & Success messages
+   */
+  public static final String SUB_BUSINESS_UNIT_NAME = "subBusinessUnitName";
+  public static final String SUB_BUSINESS_UNIT = "subBusinessUnit";
+  public static final String SUB_BUSINESS_UNITS = "subBusinessUnits";
+  public static final String ADD_SUB_BUSINESS_UNIT_SUCCESS = "SubBusinessUnit Added Successfully";
+  public static final String SUB_BUSINESS_UNIT_DELETED = "SubBusinessUnit Successfully Deleted";
+  public static final String UPDATE_SUB_BUSINESS_UNIT_SUCCESS =
+      "SubBusinessUnit Updated Successfully";
+
+  /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}

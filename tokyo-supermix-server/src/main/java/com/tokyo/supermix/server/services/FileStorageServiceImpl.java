@@ -366,7 +366,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   }
 
   @Transactional
-  public void importRawMaterial(MultipartFile file,HttpServletRequest request) {
+  public void importRawMaterial(MultipartFile file, HttpServletRequest request) {
     Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
@@ -388,7 +388,8 @@ public class FileStorageServiceImpl implements FileStorageService {
           rawMaterial.setPrefix(row[1]);
           MaterialState materialState = materialStateRepository.findByMaterialState(row[2]);
           rawMaterial.setMaterialState(materialState);
-          MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findByName(row[3]);
+          MaterialSubCategory materialSubCategory =
+              materialSubCategoryRepository.findByName(row[3]);
           rawMaterial.setMaterialSubCategory(materialSubCategory);
           Plant plant = plantRepository.findByName(row[4]);
           rawMaterial.setPlant(plant);
@@ -401,6 +402,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
   }
 }

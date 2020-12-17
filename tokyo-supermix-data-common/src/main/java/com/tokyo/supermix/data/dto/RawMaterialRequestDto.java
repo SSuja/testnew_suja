@@ -17,6 +17,7 @@ public class RawMaterialRequestDto {
   private boolean active;
   private String plantCode;
   private String erpCode;
+  private Long subBusinessUnitId;
 
   public Long getId() {
     return id;
@@ -88,5 +89,13 @@ public class RawMaterialRequestDto {
 
   public void setErpCode(String erpCode) {
     this.erpCode = erpCode;
+  }
+
+  public Long getSubBusinessUnitId() {
+    return subBusinessUnitId;
+  }
+
+  public void setSubBusinessUnitId(Long subBusinessUnitId) {
+    this.subBusinessUnitId = subBusinessUnitId;
   }
 }

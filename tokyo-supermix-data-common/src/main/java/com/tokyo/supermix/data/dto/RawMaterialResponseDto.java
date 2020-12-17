@@ -10,6 +10,8 @@ public class RawMaterialResponseDto {
   private boolean active;
   private PlantDto plant;
   private String erpCode;
+  private Long subBusinessUnitId;
+  private String subBusinessUnitName;
 
   public Long getId() {
     return id;
@@ -81,5 +83,21 @@ public class RawMaterialResponseDto {
 
   public void setErpCode(String erpCode) {
     this.erpCode = erpCode;
+  }
+
+  public Long getSubBusinessUnitId() {
+    return subBusinessUnitId;
+  }
+
+  public void setSubBusinessUnitId(Long subBusinessUnitId) {
+    this.subBusinessUnitId = subBusinessUnitId;
+  }
+
+  public String getSubBusinessUnitName() {
+    return subBusinessUnitName;
+  }
+
+  public void setSubBusinessUnitName(String subBusinessUnitName) {
+    this.subBusinessUnitName = subBusinessUnitName;
   }
 }

@@ -1721,4 +1721,38 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
+
+  // SBU
+  @Value("${validation.subBusinessUnit.notExists}")
+  private String subBusinessUnitNotExist;
+
+  @Value("${validation.subBusinessUnit.alreadyExist}")
+  private String subBusinessUnitAlreadyExist;
+
+  @Value("${subBusinessUnitDto.name.null}")
+  private String subBusinessUnitNameIsNull;
+
+  public String getSubBusinessUnitNotExist() {
+    return subBusinessUnitNotExist;
+  }
+
+  public void setSubBusinessUnitNotExist(String subBusinessUnitNotExist) {
+    this.subBusinessUnitNotExist = subBusinessUnitNotExist;
+  }
+
+  public String getSubBusinessUnitAlreadyExist() {
+    return subBusinessUnitAlreadyExist;
+  }
+
+  public void setSubBusinessUnitAlreadyExist(String subBusinessUnitAlreadyExist) {
+    this.subBusinessUnitAlreadyExist = subBusinessUnitAlreadyExist;
+  }
+
+  public String getSubBusinessUnitNameIsNull() {
+    return subBusinessUnitNameIsNull;
+  }
+
+  public void setSubBusinessUnitNameIsNull(String subBusinessUnitNameIsNull) {
+    this.subBusinessUnitNameIsNull = subBusinessUnitNameIsNull;
+  }
 }
