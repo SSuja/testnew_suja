@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,14 +74,23 @@ public class EmployeeController {
 
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
-      HttpServletRequest request) {
-    if (employeeService.isEmailExist(employeeDto.getEmail())) {
+  public ResponseEntity<Object> createEmployee(
+      @Valid @RequestParam(value = "employee", required = true) String employeeDtoJson,
+      @RequestParam(value = "signature", required = true) MultipartFile signature,
+      HttpServletRequest request) throws IOException, TokyoSupermixFileStorageException {
+    EmployeeRequestDto employeeRequestDto =
+        objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
+    if (!signature.isEmpty()) {
+      employeeRequestDto.setSignature(fileStorageService.storeSignature(signature));
+    } else {
+      employeeRequestDto.setSignature(null);
+    }
+    if (employeeService.isEmailExist(employeeRequestDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    employeeService.createEmployee(mapper.map(employeeDto, Employee.class), request);
+    employeeService.createEmployee(mapper.map(employeeRequestDto, Employee.class), request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -114,44 +122,27 @@ public class EmployeeController {
         validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // Update Employee
-  @PutMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
-      HttpServletRequest request) {
-    if (employeeService.isEmployeeExist(employeeDto.getId())) {
-      if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
-          employeeDto.getEmail())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
-            validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-      employeeService.updateEmployee(mapper.map(employeeDto, Employee.class), request);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
-          HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
-        validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
-  }
-
-
   // Update user's employee details
-  @PutMapping(value = EndpointURI.EMPLOYEE_USER)
+  @PutMapping(value = EndpointURI.EMPLOYEE)
   public ResponseEntity<Object> updateEmployee(
       @RequestParam(value = "employee", required = true) String employeeDtoJson,
       @RequestParam(value = "image", required = true) MultipartFile file,
-      HttpServletRequest request) throws IOException {
+      @RequestParam(value = "signature", required = true) MultipartFile signature,
+      HttpServletRequest request) throws IOException, TokyoSupermixFileStorageException {
     EmployeeRequestDto employeeRequestDto =
         objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
+    if (!file.isEmpty()) {
+      employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+      employeeRequestDto.setSignature(fileStorageService.storeSignature(signature));
+    } else {
+      employeeRequestDto.setProfilePicPath(null);
+      employeeRequestDto.setSignature(null);
+    }
     if (employeeService.isEmployeeExist(employeeRequestDto.getId())) {
       if (employeeService.isUpdatedEmployeeEmailExist(employeeRequestDto.getId(),
           employeeRequestDto.getEmail())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-      try {
-        employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
-      } catch (TokyoSupermixFileStorageException e) {
-        e.printStackTrace();
       }
       employeeService.updateEmployee(mapper.map(employeeRequestDto, Employee.class), request);
       return new ResponseEntity<>(

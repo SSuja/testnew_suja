@@ -21,7 +21,8 @@ public class EmployeeRequestDto {
   private boolean hasUser;
   private boolean isEnabled;
   private String profilePicPath;
-  
+  private String signature;
+
   public Long getId() {
     return id;
   }
@@ -108,5 +109,13 @@ public class EmployeeRequestDto {
 
   public void setProfilePicPath(String profilePicPath) {
     this.profilePicPath = profilePicPath;
+  }
+
+  public String getSignature() {
+    return signature;
+  }
+
+  public void setSignature(String signature) {
+    this.signature = signature;
   }
 }

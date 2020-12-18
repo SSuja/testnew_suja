@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,8 +30,8 @@ public class Employee extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "designationId", nullable = false)
   private Designation designation;
-  @Column(name = "profilePicPath", nullable = true)
   private String profilePicPath;
+  private String signature;
 
   public Long getId() {
     return id;
@@ -126,5 +125,11 @@ public class Employee extends DateAudit implements Serializable {
     this.profilePicPath = profilePicPath;
   }
 
- 
+  public String getSignature() {
+    return signature;
+  }
+
+  public void setSignature(String signature) {
+    this.signature = signature;
+  }
 }

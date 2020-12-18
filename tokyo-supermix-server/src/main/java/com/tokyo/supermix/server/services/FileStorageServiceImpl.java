@@ -478,7 +478,7 @@ public class FileStorageServiceImpl implements FileStorageService {
       e.printStackTrace();
     }
   }
-  
+
   public String storeFile(MultipartFile file)
       throws IOException, TokyoSupermixFileStorageException {
     if (!(file.getOriginalFilename().endsWith(".png")
@@ -525,6 +525,40 @@ public class FileStorageServiceImpl implements FileStorageService {
       }
     } catch (MalformedURLException ex) {
       throw new TokyoSupermixFileNotFoundException("File Not Found" + fileName, ex);
+    }
+  }
+
+  public String storeSignature(MultipartFile file)
+      throws IOException, TokyoSupermixFileStorageException {
+    if (!(file.getOriginalFilename().endsWith(".png")
+        || file.getOriginalFilename().endsWith(".jpeg")
+        || file.getOriginalFilename().endsWith(".jpg")))
+      throw new TokyoSupermixFileStorageException("Only PNG, JPEG and JPG images are allowed");
+    FileOutputStream fout = new FileOutputStream(new File(file.getOriginalFilename()));
+    fout.write(file.getBytes());
+    fout.close();
+    BufferedImage image = ImageIO.read(new File(file.getOriginalFilename()));
+    int height = image.getHeight();
+    int width = image.getWidth();
+    if (width > 500 || height > 300) {
+      throw new TokyoSupermixFileStorageException(
+          "Invalid file dimensions. File dimension should note be more than 500 X 300");
+    }
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    try {
+      if (fileName.contains("..")) {
+        throw new TokyoSupermixFileStorageException(
+            "Filename contains invalid path sequence" + fileName);
+      }
+      String newFileName = System.currentTimeMillis() + "_" + fileName;
+      Path targetLocation = this.fileStorageLocation.resolve(newFileName);
+      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+      String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+          .path("/downloadFile/").path(newFileName).toUriString();
+      return fileDownloadUri;
+    } catch (IOException ex) {
+      throw new TokyoSupermixFileStorageException(
+          String.format("Could not store file %s !! Please try again!", fileName), ex);
     }
   }
 }

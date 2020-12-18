@@ -26,8 +26,11 @@ public interface FileStorageService {
   public void importRawMaterial(MultipartFile file, HttpServletRequest request);
 
   public void importDeliverySample(MultipartFile file);
-  
-  public String storeFile(MultipartFile file)  throws IOException, TokyoSupermixFileStorageException;
-  
+
+  public String storeFile(MultipartFile file) throws IOException, TokyoSupermixFileStorageException;
+
   public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException;
+
+  public String storeSignature(MultipartFile file)
+      throws IOException, TokyoSupermixFileStorageException;
 }
