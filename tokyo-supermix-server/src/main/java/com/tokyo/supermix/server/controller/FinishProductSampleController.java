@@ -250,6 +250,10 @@ public class FinishProductSampleController {
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
       @RequestParam(name = "status", required = false) String status,
       @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
+      @RequestParam(name = "workOrderNumber", required = false) String workOrderNumber,
+      @RequestParam(name = "customer", required = false) String customer,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -257,7 +261,8 @@ public class FinishProductSampleController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
         finishProductSampleService.searchFinishProductSample(booleanBuilder, finishProductCode,
-            equipmentName, mixDesignCode, plantName, plantCode, status, date, pageable, pagination),
+            equipmentName, mixDesignCode, plantName, plantCode, status, date, code, rawMaterialName,
+            workOrderNumber, customer, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
   }

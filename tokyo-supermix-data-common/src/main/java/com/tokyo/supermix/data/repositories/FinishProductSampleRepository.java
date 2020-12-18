@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 

@@ -52,6 +52,7 @@ public interface FinishProductSampleService {
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, String status, String date,
+      String code, String rawMaterialName, String workOrderNumber, String customer,
       Pageable pageable, Pagination pagination);
 
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
