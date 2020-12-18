@@ -70,6 +70,9 @@ public final class EndpointURI {
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
   public static final String GET_EMPLOYEES_BY_PLANT =
       EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
+  public static final String GET_EMPLOYEE_IMAGE =
+      "/downloadFile/{fileName:.+}";
+  public static final String EMPLOYEE_USER = BASE_API_PATH + "employee-user";
   /*
    * Material Category APIs
    */
@@ -733,5 +736,10 @@ public final class EndpointURI {
   public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
 
+  
+  public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";  
+  public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
+  public static final String MAC_ADDRESS_BY_ID = MAC_ADDRESS + ID;
+ 
   private EndpointURI() {}
 }

@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.controller.auth;
 
 import java.util.UUID;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.PrivilegeEndpointURI;
 import com.tokyo.supermix.data.dto.auth.JwtAuthenticationDtoResponse;
 import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
@@ -28,8 +25,11 @@ import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.MacAddressService;
 import com.tokyo.supermix.server.services.auth.AuthService;
 import com.tokyo.supermix.server.services.auth.UserService;
+import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
@@ -46,26 +46,36 @@ public class AuthController {
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  MacAddressService macAddressService;
+  @Autowired
+  ValidationFailureStatusCodes validationFailureStatusCodes;
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNIN)
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
-    try {
-      String jwt = authService.generateUserToken(loginRequestDto);
-      if (jwt != null) {
-        return ResponseEntity.ok(new JwtAuthenticationDtoResponse(jwt));
-      } else {
-        return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
-            privilegeValidationFailureStatusCodes.getUserNotActive()), HttpStatus.BAD_REQUEST);
+    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress())) {
+      try {
+        String jwt = authService.generateUserToken(loginRequestDto);
+        if (jwt != null) {
+          return ResponseEntity.ok(new JwtAuthenticationDtoResponse(jwt));
+        } else {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(PrivilegeConstants.USER,
+                  privilegeValidationFailureStatusCodes.getUserNotActive()),
+              HttpStatus.BAD_REQUEST);
+        }
+      } catch (UsernameNotFoundException ex) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(PrivilegeConstants.EMAIL_OR_USERNAME,
+                privilegeValidationFailureStatusCodes.getEmailOrUserName()),
+            HttpStatus.BAD_REQUEST);
+      } catch (BadCredentialsException ex) {
+        return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.CREDENCIALS,
+            privilegeValidationFailureStatusCodes.getCredentials()), HttpStatus.BAD_REQUEST);
       }
-    } catch (UsernameNotFoundException ex) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(PrivilegeConstants.EMAIL_OR_USERNAME,
-              privilegeValidationFailureStatusCodes.getEmailOrUserName()),
-          HttpStatus.BAD_REQUEST);
-    } catch (BadCredentialsException ex) {
-      return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.CREDENCIALS,
-          privilegeValidationFailureStatusCodes.getCredentials()), HttpStatus.BAD_REQUEST);
     }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MAC_ADDRESS,
+        validationFailureStatusCodes.getMacAddressNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNUP)

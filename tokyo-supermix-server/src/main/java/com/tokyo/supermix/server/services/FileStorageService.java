@@ -1,7 +1,12 @@
 package com.tokyo.supermix.server.services;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileNotFoundException;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileStorageException;
+import org.springframework.core.io.Resource;
 
 public interface FileStorageService {
   public void uploadCsv(MultipartFile file);
@@ -21,4 +26,8 @@ public interface FileStorageService {
   public void importRawMaterial(MultipartFile file, HttpServletRequest request);
 
   public void importDeliverySample(MultipartFile file);
+  
+  public String storeFile(MultipartFile file)  throws IOException, TokyoSupermixFileStorageException;
+  
+  public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException;
 }

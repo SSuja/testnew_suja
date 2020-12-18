@@ -2,10 +2,12 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.EmployeeRequestDto;
 import com.tokyo.supermix.data.dto.EmployeeResponseDto;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -49,4 +51,6 @@ public interface EmployeeService {
   public List<Employee> getFirstNameByPlantCode(String plantCode, String firstName);
 
   public List<Employee> getFirstName(String firstName);
+
+  public void checkValidate(@Valid EmployeeRequestDto employeeRequestDto);
 }

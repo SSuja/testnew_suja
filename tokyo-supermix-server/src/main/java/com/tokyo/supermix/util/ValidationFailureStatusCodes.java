@@ -1721,4 +1721,49 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
+  
+//macAddress
+ @Value("${validation.macAddress.notExists}") 
+ private String macAddressNotExist;
+
+ @Value("${validation.macAddress.alreadyExist}")
+ private String macAddressAlreadyExist;
+
+ @Value("${macAddressDto.macAddress.null}")
+ private String macAddressIsNull;
+
+ @Value("${macAddressDto.macAddress.empty}")
+ private String macAddressIsEmpty;
+
+public String getMacAddressNotExist() {
+  return macAddressNotExist;
+}
+
+public void setMacAddressNotExist(String macAddressNotExist) {
+  this.macAddressNotExist = macAddressNotExist;
+}
+
+public String getMacAddressAlreadyExist() {
+  return macAddressAlreadyExist;
+}
+
+public void setMacAddressAlreadyExist(String macAddressAlreadyExist) {
+  this.macAddressAlreadyExist = macAddressAlreadyExist;
+}
+
+public String getMacAddressIsNull() {
+  return macAddressIsNull;
+}
+
+public void setMacAddressIsNull(String macAddressIsNull) {
+  this.macAddressIsNull = macAddressIsNull;
+}
+
+public String getMacAddressIsEmpty() {
+  return macAddressIsEmpty;
+}
+
+public void setMacAddressIsEmpty(String macAddressIsEmpty) {
+  this.macAddressIsEmpty = macAddressIsEmpty;
+}
 }
