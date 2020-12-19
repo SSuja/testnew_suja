@@ -185,6 +185,7 @@ public class FinishProductSampleIssueController {
       @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
       @RequestParam(name = "workOrderNo", required = false) String workOrderNumber,
       @RequestParam(name = "customer", required = false) String customer,
+      @RequestParam(name = "project", required = false) String project,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -193,8 +194,7 @@ public class FinishProductSampleIssueController {
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
         finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
             finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status, date,
-            code, rawMaterialName, workOrderNumber, customer, pageable, pagination),
+            code, rawMaterialName, workOrderNumber, customer, project, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
-
   }
 }
