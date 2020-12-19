@@ -1755,4 +1755,27 @@ public class ValidationFailureStatusCodes {
   public void setSubBusinessUnitNameIsNull(String subBusinessUnitNameIsNull) {
     this.subBusinessUnitNameIsNull = subBusinessUnitNameIsNull;
   }
+
+  // ratio config
+  @Value("${validation.ratioConfig.notExists}")
+  private String ratioConfigNotExist;
+
+  @Value("${validation.ratioConfig.alreadyExist}")
+  private String ratioConfigAlreadyExist;
+
+  public String getRatioConfigNotExist() {
+    return ratioConfigNotExist;
+  }
+
+  public void setRatioConfigNotExist(String ratioConfigNotExist) {
+    this.ratioConfigNotExist = ratioConfigNotExist;
+  }
+
+  public String getRatioConfigAlreadyExist() {
+    return ratioConfigAlreadyExist;
+  }
+
+  public void setRatioConfigAlreadyExist(String ratioConfigAlreadyExist) {
+    this.ratioConfigAlreadyExist = ratioConfigAlreadyExist;
+  }
 }

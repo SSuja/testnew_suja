@@ -741,6 +741,13 @@ public final class EndpointURI {
   public static final String SUB_BUSINESS_UNIT = BASE_API_PATH + "sub-business-unit";
   public static final String SUB_BUSINESS_UNITS = BASE_API_PATH + "sub-business-units";
   public static final String SUB_BUSINESS_UNIT_BY_ID = SUB_BUSINESS_UNIT + ID;
+  
+  /*
+   * ratioConfig API
+   */
+  public static final String RATIO_CONFIG = BASE_API_PATH + "ratio-config";
+  public static final String RATIO_CONFIGS = BASE_API_PATH + "ratio-configs";
+  public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
 
   private EndpointURI() {}
 }
