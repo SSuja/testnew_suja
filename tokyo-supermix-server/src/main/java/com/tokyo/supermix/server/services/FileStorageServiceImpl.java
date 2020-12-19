@@ -448,11 +448,7 @@ public class FileStorageServiceImpl implements FileStorageService {
           finishProductSample.setStatus(Status.NEW);
           finishProductSampleRepository.save(finishProductSample);
         } else {
-          List<FinishProductSample> listfinishProductSample =
-              finishProductSampleRepository.findByWorkOrderNumberNotNull();
-          for (FinishProductSample finishProductSample : listfinishProductSample) {
-            codeArray.add(finishProductSample.getCode());
-          }
+          codeArray.add(row[0]);
         }
       }
       csvReader.close();
