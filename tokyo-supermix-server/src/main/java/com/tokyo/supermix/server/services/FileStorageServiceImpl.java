@@ -422,6 +422,8 @@ public class FileStorageServiceImpl implements FileStorageService {
       e.printStackTrace();
     }
     String[] row = null;
+    int count = 0;
+
     try {
       row = csvReader.readNext();
       row = csvReader.readNext();
@@ -446,8 +448,11 @@ public class FileStorageServiceImpl implements FileStorageService {
           }
           finishProductSample.setTruckNo(row[7]);
           finishProductSample.setStatus(Status.NEW);
+          count++;
           finishProductSampleRepository.save(finishProductSample);
-        } else {
+        } else {   
+          count++;
+          codeArray.add(0,String.valueOf(count));
           codeArray.add(row[0]);
         }
       }
