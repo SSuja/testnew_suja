@@ -3,7 +3,6 @@ package com.tokyo.supermix.data.dto;
 public class RatioConfigRequestDto {
   private Long id;
   private String name;
-  private String ratio;
 
   public Long getId() {
     return id;
@@ -19,13 +18,5 @@ public class RatioConfigRequestDto {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public String getRatio() {
-    return ratio;
-  }
-
-  public void setRatio(String ratio) {
-    this.ratio = ratio;
   }
 }

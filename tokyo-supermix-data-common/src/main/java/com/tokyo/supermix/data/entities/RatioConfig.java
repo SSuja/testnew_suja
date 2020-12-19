@@ -10,11 +10,11 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "ratio_config")
 public class RatioConfig {
 
+  private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
-  private String ratio;
 
   public Long getId() {
     return id;
@@ -32,11 +32,7 @@ public class RatioConfig {
     this.name = name;
   }
 
-  public String getRatio() {
-    return ratio;
-  }
-
-  public void setRatio(String ratio) {
-    this.ratio = ratio;
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }

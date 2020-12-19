@@ -591,8 +591,11 @@ public class Constants {
   /*
    * Constants for Mix design ratio configuration validation key & Success messages
    */
+  public static final String MIX_DESIGN_RATIO_CONFIG = "mixDesignRatio";
+  public static final String MIX_DESIGN_RATIO_CONFIGS = "mixDesignRatios";
   public static final String ADD_MIX_DESIGN_RATIO_CONFIG = "Mix design Ratio Added Successfully";
-  public static final String MIX_DESIGN_RATIO_CONFIG = "mixDesignRatios";
+  public static final String DELETE_MIX_DESIGN_RATIO_CONFIG =
+      "Mix design Ratio Deleted Successfully";
 
   /*
    * Constants for SBU validation key & Success messages

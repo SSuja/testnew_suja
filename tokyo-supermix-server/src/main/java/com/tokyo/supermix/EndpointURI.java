@@ -732,6 +732,7 @@ public final class EndpointURI {
   // Mix design ratio configuration
   public static final String MIX_DESIGN_RATIO_CONFIG = BASE_API_PATH + "mixdesign-ratio";
   public static final String MIX_DESIGN_RATIO_CONFIGS = BASE_API_PATH + "mixdesign-ratios";
+  public static final String MIX_DESIGN_RATIO_CONFIG_BY_ID = MIX_DESIGN_RATIO_CONFIG + ID;
 
 
   /*

@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(schema = "tokyo-supermix", name = "ratio_config_parameter")
 public class RatioConfigParameter {
+  private static final long serialVersionUID = 1L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -54,5 +56,9 @@ public class RatioConfigParameter {
 
   public void setAbbreviation(String abbreviation) {
     this.abbreviation = abbreviation;
+  }
+
+  public static long getSerialversionuid() {
+    return serialVersionUID;
   }
 }

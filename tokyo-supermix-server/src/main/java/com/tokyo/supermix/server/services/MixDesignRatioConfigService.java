@@ -8,4 +8,10 @@ public interface MixDesignRatioConfigService {
   public void saveMixDesignRatioConfig(MixDesignRatioConfig mixDesignRatioConfig);
 
   public List<MixDesignRatioConfig> getAllMixDesignRatioConfigs();
+  
+  public boolean isMixDesignRatioConfigExist(Long id);
+
+  public MixDesignRatioConfig getMixDesignRatioConfigById(Long id);
+
+  public void deleteMixDesignRatioConfig(Long id);
 }
