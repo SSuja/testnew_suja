@@ -450,8 +450,7 @@ public class FileStorageServiceImpl implements FileStorageService {
           finishProductSample.setStatus(Status.NEW);
           count++;
           finishProductSampleRepository.save(finishProductSample);
-        } else {   
-          count++;
+        } else { 
           codeArray.add(0,String.valueOf(count));
           codeArray.add(row[0]);
         }
