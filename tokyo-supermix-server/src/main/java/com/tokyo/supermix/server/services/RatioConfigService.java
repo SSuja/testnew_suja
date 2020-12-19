@@ -12,4 +12,10 @@ public interface RatioConfigService {
   public boolean isRatioConfigExist(Long id);
 
   public RatioConfig getRatioConfigById(Long id);
+
+  public void deleteRatioConfig(Long id);
+
+  public boolean isRatioConfigExist(String name);
+
+  public boolean isUpdatedRatioConfigNameExist(Long id, String name);
 }

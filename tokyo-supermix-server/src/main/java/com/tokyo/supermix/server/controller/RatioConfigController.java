@@ -1,17 +1,25 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.data.dto.RatioConfigRequestDto;
 import com.tokyo.supermix.data.dto.RatioConfigResponseDto;
+import com.tokyo.supermix.data.entities.RatioConfig;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
+import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.RatioConfigService;
@@ -33,7 +41,7 @@ public class RatioConfigController {
 
   private static final Logger logger = Logger.getLogger(RatioConfigController.class);
 
-  // get all Ratio Configs
+  // get all Ratio Configuration
   @GetMapping(value = EndpointURI.RATIO_CONFIGS)
   public ResponseEntity<Object> getAllRatioConfigs() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIGS,
@@ -41,9 +49,9 @@ public class RatioConfigController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
-  // get RatioConfigService by id
+  // get RatioConfig by id
   @GetMapping(value = EndpointURI.RATIO_CONFIG_BY_ID)
-  public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
+  public ResponseEntity<Object> getRatioConfigById(@PathVariable Long id) {
     if (ratioConfigService.isRatioConfigExist(id)) {
       logger.debug("Get Designation by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG,
@@ -51,6 +59,55 @@ public class RatioConfigController {
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
     logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
+        validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  // delete api for RatioConfig
+  @DeleteMapping(value = EndpointURI.RATIO_CONFIG_BY_ID)
+  public ResponseEntity<Object> deleteRatioConfig(@PathVariable Long id) {
+    if (ratioConfigService.isRatioConfigExist(id)) {
+      ratioConfigService.deleteRatioConfig(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_DELETED),
+          HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
+        validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
+
+  }
+
+  // post API for RatioConfig
+  @PostMapping(value = EndpointURI.RATIO_CONFIG)
+  public ResponseEntity<Object> createRatioConfig(
+      @Valid @RequestBody RatioConfigRequestDto ratioConfigRequestDto) {
+    if (ratioConfigService.isRatioConfigExist(ratioConfigRequestDto.getName())) {
+      logger.debug("Name already exists");
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
+          validationFailureStatusCodes.getRatioConfigAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    ratioConfigService.saveRatioConfig(mapper.map(ratioConfigRequestDto, RatioConfig.class));
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_RATIO_CONFIG_SUCCESS),
+        HttpStatus.OK);
+  }
+
+  // update API for RatioConfig
+  @PutMapping(value = EndpointURI.RATIO_CONFIG)
+  public ResponseEntity<Object> updateDesignation(
+      @Valid @RequestBody RatioConfigRequestDto ratioConfigRequestDto) {
+    if (ratioConfigService.isRatioConfigExist(ratioConfigRequestDto.getId())) {
+      if (ratioConfigService.isUpdatedRatioConfigNameExist(ratioConfigRequestDto.getId(),
+          ratioConfigRequestDto.getName())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
+            validationFailureStatusCodes.getRatioConfigAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      ratioConfigService.saveRatioConfig(mapper.map(ratioConfigRequestDto, RatioConfig.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_RATIO_CONFIG_SUCCESS),
+          HttpStatus.OK);
+    }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
         validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
   }
