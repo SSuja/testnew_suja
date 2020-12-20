@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
@@ -364,13 +365,8 @@ public class FinishProductSampleController {
   }
 
   @PostMapping(value = EndpointURI.IMPORT_FINISHED_PRODUCT_DELIVERY)
-  public ResponseEntity<Object> uploadFinishProductDelivery(
-      @RequestParam("file") MultipartFile file) {
+  public ArrayList<String> uploadFinishProductDelivery(@RequestParam("file") MultipartFile file) {
     fileStorageService.uploadCsv(file);
-    fileStorageService.importDeliverySample(file);
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.UPLOAD_SUCCESS),
-        HttpStatus.OK);
+    return fileStorageService.importDeliverySample(file);
   }
-
 }

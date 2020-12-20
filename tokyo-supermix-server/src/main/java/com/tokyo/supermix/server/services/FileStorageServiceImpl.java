@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -225,7 +227,6 @@ public class FileStorageServiceImpl implements FileStorageService {
       e.printStackTrace();
     }
 
-
     String[] row = null;
     try {
       row = csvReader.readNext();
@@ -406,13 +407,13 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
-
   }
 
   @Transactional
-  public void importDeliverySample(MultipartFile file) {
+  public ArrayList<String> importDeliverySample(MultipartFile file) {
     Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
+    ArrayList<String> codeArray = new ArrayList<String>();
     // Read the csv file
     CSVReader csvReader = null;
     try {
@@ -421,6 +422,8 @@ public class FileStorageServiceImpl implements FileStorageService {
       e.printStackTrace();
     }
     String[] row = null;
+    int count = 0;
+
     try {
       row = csvReader.readNext();
       row = csvReader.readNext();
@@ -445,12 +448,17 @@ public class FileStorageServiceImpl implements FileStorageService {
           }
           finishProductSample.setTruckNo(row[7]);
           finishProductSample.setStatus(Status.NEW);
+          count++;
           finishProductSampleRepository.save(finishProductSample);
+        } else { 
+          codeArray.add(0,String.valueOf(count));
+          codeArray.add(row[0]);
         }
       }
       csvReader.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
+    return (ArrayList<String>) codeArray.stream().distinct().collect(Collectors.toList());
   }
 }

@@ -196,7 +196,7 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public List<FinishProductSampleResponseDto> searchFinishProductSampleIssue(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, String status, String date,
-      String code, String rawMaterialName, String workOrderNumber, String customer,
+      String code, String rawMaterialName, String workOrderNumber, String customer, String project,
       Pageable pageable, Pagination pagination) {
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
@@ -243,6 +243,10 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
     if (customer != null && !customer.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
           .stringValue().stringValue().startsWithIgnoreCase(customer));
+    }
+    if (project != null && !project.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.project.name.stringValue()
+          .stringValue().startsWithIgnoreCase(project));
     }
     pagination.setTotalRecords(finishProductSampleRepository.countByWorkOrderNumberNotNull());
     return mapper.map(

@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
@@ -39,8 +38,8 @@ public interface FinishProductSampleIssueService {
   public List<FinishProductSampleResponseDto> searchFinishProductSampleIssue(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, String status, String date,
-      String code, String rawMaterialName, String workOrderNumber, String customer,
+      String code, String rawMaterialName, String workOrderNumber, String customer, String project,
       Pageable pageable, Pagination pagination);
-  
+
   public List<FinishProductSample> getAllFinishProductSampleIssue();
 }

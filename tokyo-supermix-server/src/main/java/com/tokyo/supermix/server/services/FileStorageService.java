@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,5 +22,5 @@ public interface FileStorageService {
 
   public void importRawMaterial(MultipartFile file, HttpServletRequest request);
 
-  public void importDeliverySample(MultipartFile file);
+  public ArrayList<String> importDeliverySample(MultipartFile file);
 }
