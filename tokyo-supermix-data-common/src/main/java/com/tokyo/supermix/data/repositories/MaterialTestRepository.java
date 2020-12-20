@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.repositories;
 
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +12,8 @@ import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 
-public interface MaterialTestRepository
-    extends JpaRepository<MaterialTest, String>, QuerydslPredicateExecutor<MaterialTest>, PagingAndSortingRepository<MaterialTest, String> {
+public interface MaterialTestRepository extends JpaRepository<MaterialTest, String>,
+    QuerydslPredicateExecutor<MaterialTest>, PagingAndSortingRepository<MaterialTest, String> {
 
   boolean existsByCode(String code);
 
@@ -70,10 +71,13 @@ public interface MaterialTestRepository
 
   List<MaterialTest> findByTestConfigureIdAndIncomingSampleRawMaterialId(Long testConfigureId,
       Long rawMaterialId);
-  
+
   List<MaterialTest> findAllByIncomingSamplePlantCode(String plantCode, Pageable pageable);
-  
+
   Page<MaterialTest> findAll(Pageable pageable);
 
   Long countByIncomingSamplePlantCode(String plantCode);
+
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCodeOrderByUpdatedAtDesc(
+      String incomingSampleCode, Long testConfigId, String plantCode);
 }

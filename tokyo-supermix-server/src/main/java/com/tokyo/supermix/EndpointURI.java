@@ -728,6 +728,18 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "download";
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
+  
+  /*
+   * CoreTestConfigure
+   */
+  public static final String CORE_TEST_CONFIGURE = BASE_API_PATH + "core-test-configure";
+  public static final String CORE_TEST_CONFIGURES = BASE_API_PATH + "core-test-configures";
+  public static final String CORE_TEST_CONFIGURE_BY_RAWMATERIAL_ID = CORE_TEST_CONFIGURE +SLASH+"raw-material"+SLASH+"{rawMaterialId}";
+  public static final String CORE_TEST_CONFIGURE_BY_TEST_CONFIGURE_ID = CORE_TEST_CONFIGURE+SLASH+"test-configure"+SLASH+"{testConfigureId}";
+  public static final String LIST_CORE_TEST_CONFIGURE_BY_TEST_CONFIGURE_ID = CORE_TEST_CONFIGURE+SLASH+"test-configure-list"+SLASH+"{testConfigureId}";
+
+//  public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
+//      EMAIL_POINT + SLASH + "admin-status" + SLASH + "{status}";
 
   private EndpointURI() {}
 }

@@ -38,6 +38,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EmailPointsService emailPointsService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private CoreTestConfigureService coreTestConfigureService;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -50,8 +52,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
             testConfigureRequestDto.getMaterialCategoryId()) == null) {
       emailPointsService.createEmailPoints(testConfigureRequestDto);
     }
-    return testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
+    Long id = testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
         .getId();
+    coreTestConfigureService.createCoreTestConfigure(id);
+    return id;
   }
 
   @Transactional(readOnly = true)
@@ -156,21 +160,23 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   public List<AccepetedValueDto> getMaterialAcceptedValue(Long testConfigId) {
-    ArrayList<AccepetedValueDto> materialAcceptedValueDtoList =
-        new ArrayList<AccepetedValueDto>();
+    ArrayList<AccepetedValueDto> materialAcceptedValueDtoList = new ArrayList<AccepetedValueDto>();
     materialAcceptedValueRepository.findByTestConfigureId(testConfigId)
         .forEach(materialAcceptedValue -> {
-        AccepetedValueDto materialAcceptedValueDto = new AccepetedValueDto();
+          AccepetedValueDto materialAcceptedValueDto = new AccepetedValueDto();
           materialAcceptedValueDto
               .setMaterialName(materialAcceptedValue.getRawMaterial().getName());
-          materialAcceptedValueDto.setConditionRange(materialAcceptedValue.getConditionRange().toString());
+          materialAcceptedValueDto
+              .setConditionRange(materialAcceptedValue.getConditionRange().toString());
           materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
           materialAcceptedValueDto.setMinValue(materialAcceptedValue.getMinValue());
           materialAcceptedValueDto.setValue(materialAcceptedValue.getValue());
           materialAcceptedValueDto.setFinalResult(materialAcceptedValue.isFinalResult());
           if (materialAcceptedValue.getTestParameter() != null) {
-            materialAcceptedValueDto.setParameterName(materialAcceptedValue.getTestParameter().getParameter().getName());
-            materialAcceptedValueDto.setTestParameterName(materialAcceptedValue.getTestParameter().getName());
+            materialAcceptedValueDto.setParameterName(
+                materialAcceptedValue.getTestParameter().getParameter().getName());
+            materialAcceptedValueDto
+                .setTestParameterName(materialAcceptedValue.getTestParameter().getName());
           }
           materialAcceptedValueDtoList.add(materialAcceptedValueDto);
 
