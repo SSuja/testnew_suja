@@ -732,6 +732,10 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
   public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
+  
+  
+  public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
+      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
 
   private EndpointURI() {}
 }
