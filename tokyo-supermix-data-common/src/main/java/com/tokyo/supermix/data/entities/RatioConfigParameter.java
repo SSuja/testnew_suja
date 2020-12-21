@@ -25,6 +25,10 @@ public class RatioConfigParameter {
   private RawMaterial rawMaterial;
   @Size(max = 2)
   private String abbreviation;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = false)
+  private Unit unit;
+  private Double value;
 
   public Long getId() {
     return id;
@@ -60,5 +64,21 @@ public class RatioConfigParameter {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public Unit getUnit() {
+    return unit;
+  }
+
+  public void setUnit(Unit unit) {
+    this.unit = unit;
+  }
+
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
   }
 }

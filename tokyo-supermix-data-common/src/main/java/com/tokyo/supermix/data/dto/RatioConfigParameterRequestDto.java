@@ -6,6 +6,8 @@ public class RatioConfigParameterRequestDto {
   private Long ratioConfigId;
   private Long rawMaterialId;
   private String abbreviation;
+  private Long unitId;
+  private Double value;
 
   public Long getId() {
     return id;
@@ -37,5 +39,21 @@ public class RatioConfigParameterRequestDto {
 
   public void setAbbreviation(String abbreviation) {
     this.abbreviation = abbreviation;
+  }
+
+  public Long getUnitId() {
+    return unitId;
+  }
+
+  public void setUnitId(Long unitId) {
+    this.unitId = unitId;
+  }
+
+  public Double getValue() {
+    return value;
+  }
+
+  public void setValue(Double value) {
+    this.value = value;
   }
 }

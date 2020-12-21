@@ -15,6 +15,7 @@ public class RatioConfig {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String name;
+  private String description;
 
   public Long getId() {
     return id;
@@ -34,5 +35,13 @@ public class RatioConfig {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 }
