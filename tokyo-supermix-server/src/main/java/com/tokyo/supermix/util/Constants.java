@@ -607,7 +607,7 @@ public class Constants {
   public static final String SUB_BUSINESS_UNIT_DELETED = "SubBusinessUnit Successfully Deleted";
   public static final String UPDATE_SUB_BUSINESS_UNIT_SUCCESS =
       "SubBusinessUnit Updated Successfully";
-  
+
   /*
    * Constants for ratio config validation key & Success messages
    */
@@ -617,6 +617,19 @@ public class Constants {
   public static final String RATIO_CONFIG_DELETED = "Ratio Config Successfully Deleted";
   public static final String ADD_RATIO_CONFIG_SUCCESS = "Ratio Config Added Successfully";
   public static final String UPDATE_RATIO_CONFIG_SUCCESS = "Ratio Config Updated Successfully";
+
+  /*
+   * Constants for ratio config parameter validation key & Success messages
+   */
+  public static final String RATIO_CONFIG_PARAMETER_ID = "ratioConfigParameterId";
+  public static final String RATIO_CONFIG_PARAMETERS = "ratioConfigParameters";
+  public static final String RATIO_CONFIG_PARAMETER = "ratioConfigParameter";
+  public static final String RATIO_CONFIG_PARAMETER_DELETED =
+      "Ratio Config Parameter Successfully Deleted";
+  public static final String ADD_RATIO_CONFIG_PARAMETER_SUCCESS =
+      "Ratio Config Parameter Added Successfully";
+  public static final String UPDATE_RATIO_CONFIG_PARAMETER_SUCCESS =
+      "Ratio Config Parameter Updated Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside

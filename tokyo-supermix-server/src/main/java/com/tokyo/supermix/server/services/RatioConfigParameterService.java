@@ -11,4 +11,7 @@ public interface RatioConfigParameterService {
 
   public boolean isRatioConfigParameterExist(Long id);
 
+  public boolean isRatioConfigParameterExistByRatioConfig(Long ratioConfigId);
+
+  public List<RatioConfigParameter> getAllRatioParametersByRatioConfig(Long ratioConfigId);
 }

@@ -734,20 +734,28 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_RATIO_CONFIGS = BASE_API_PATH + "mixdesign-ratios";
   public static final String MIX_DESIGN_RATIO_CONFIG_BY_ID = MIX_DESIGN_RATIO_CONFIG + ID;
 
-
   /*
    * SBU API
    */
   public static final String SUB_BUSINESS_UNIT = BASE_API_PATH + "sub-business-unit";
   public static final String SUB_BUSINESS_UNITS = BASE_API_PATH + "sub-business-units";
   public static final String SUB_BUSINESS_UNIT_BY_ID = SUB_BUSINESS_UNIT + ID;
-  
+
   /*
    * ratioConfig API
    */
   public static final String RATIO_CONFIG = BASE_API_PATH + "ratio-config";
   public static final String RATIO_CONFIGS = BASE_API_PATH + "ratio-configs";
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
+
+  /*
+   * ratioConfigParameter API
+   */
+  public static final String RATIO_CONFIG_PARAMETER = BASE_API_PATH + "ratio-config-parameter";
+  public static final String RATIO_CONFIG_PARAMETERS = BASE_API_PATH + "ratio-config-parameters";
+  public static final String RATIO_CONFIG_PARAMETER_BY_ID = RATIO_CONFIG_PARAMETER + ID;
+  public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIG =
+      RATIO_CONFIG_PARAMETER + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
 
   private EndpointURI() {}
 }
