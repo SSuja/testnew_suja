@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.RatioConfigParameter;
 import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
@@ -36,5 +37,15 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
   @Transactional(readOnly = true)
   public boolean isRatioConfigParameterExistByRatioConfig(Long ratioConfigId) {
     return ratioConfigParameterRepository.existsByRatioConfigId(ratioConfigId);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteRatioConfigParameter(Long id) {
+    ratioConfigParameterRepository.deleteById(id);
+  }
+
+  @Transactional
+  public void UpdateRatioConfigParameters(RatioConfigParameter ratioConfigParameter) {
+    ratioConfigParameterRepository.save(ratioConfigParameter);
   }
 }

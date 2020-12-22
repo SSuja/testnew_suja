@@ -7,6 +7,8 @@ public interface RatioConfigParameterService {
 
   public void saveRatioConfigParameters(List<RatioConfigParameter> ratioConfigParameter);
 
+  public void UpdateRatioConfigParameters(RatioConfigParameter ratioConfigParameter);
+
   public List<RatioConfigParameter> getAllRatioConfigParameters();
 
   public boolean isRatioConfigParameterExist(Long id);
@@ -14,4 +16,6 @@ public interface RatioConfigParameterService {
   public boolean isRatioConfigParameterExistByRatioConfig(Long ratioConfigId);
 
   public List<RatioConfigParameter> getAllRatioParametersByRatioConfig(Long ratioConfigId);
+
+  public void deleteRatioConfigParameter(Long id);
 }

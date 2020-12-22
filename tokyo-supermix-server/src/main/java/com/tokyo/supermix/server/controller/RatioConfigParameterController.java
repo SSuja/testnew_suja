@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
@@ -76,6 +78,33 @@ public class RatioConfigParameterController {
           mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.ADD_RATIO_CONFIG_PARAMETER_SUCCESS), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+        validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @DeleteMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER_BY_ID)
+  public ResponseEntity<Object> deleteRatioConfigParameter(@PathVariable Long id) {
+    if (ratioConfigParameterService.isRatioConfigParameterExist(id)) {
+      ratioConfigParameterService.deleteRatioConfigParameter(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_PARAMETER_DELETED),
+          HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+        validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @PutMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER)
+  public ResponseEntity<Object> updateRatioConfigParameter(
+      @Valid @RequestBody RatioConfigParameterRequestDto ratioConfigParameterRequestDto) {
+    if (ratioConfigParameterService
+        .isRatioConfigParameterExist(ratioConfigParameterRequestDto.getId())) {
+      ratioConfigParameterService.UpdateRatioConfigParameters(
+          mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.UPDATE_RATIO_CONFIG_PARAMETER_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
         validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
