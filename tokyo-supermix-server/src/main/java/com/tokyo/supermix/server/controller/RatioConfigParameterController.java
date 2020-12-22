@@ -55,7 +55,7 @@ public class RatioConfigParameterController {
   public ResponseEntity<Object> getRatioConfigParameterByRatioConfig(
       @PathVariable Long ratioConfigId) {
     if (ratioConfigParameterService.isRatioConfigParameterExistByRatioConfig(ratioConfigId)) {
-      logger.debug("Get Designation by id ");
+      logger.debug("Get Parameter by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG_PARAMETER,
           mapper.map(ratioConfigParameterService.getAllRatioParametersByRatioConfig(ratioConfigId),
               RatioConfigParameterResponseDto.class),

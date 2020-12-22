@@ -6,7 +6,7 @@ import com.tokyo.supermix.data.entities.RatioConfigParameter;
 
 public interface RatioConfigParameterRepository extends JpaRepository<RatioConfigParameter, Long> {
 
-  List<RatioConfigParameter> findByRatioConfig(Long ratioConfigId);
+  List<RatioConfigParameter> findByRatioConfigId(Long ratioConfigId);
 
-  boolean existsByRatioConfig(Long ratioConfigId);
+  boolean existsByRatioConfigId(Long ratioConfigId);
 }

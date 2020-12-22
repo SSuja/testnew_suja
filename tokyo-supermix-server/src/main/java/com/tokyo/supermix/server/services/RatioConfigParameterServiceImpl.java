@@ -30,11 +30,11 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
 
   @Transactional(readOnly = true)
   public List<RatioConfigParameter> getAllRatioParametersByRatioConfig(Long ratioConfigId) {
-    return ratioConfigParameterRepository.findByRatioConfig(ratioConfigId);
+    return ratioConfigParameterRepository.findByRatioConfigId(ratioConfigId);
   }
 
   @Transactional(readOnly = true)
   public boolean isRatioConfigParameterExistByRatioConfig(Long ratioConfigId) {
-    return false;
+    return ratioConfigParameterRepository.existsByRatioConfigId(ratioConfigId);
   }
 }
