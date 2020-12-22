@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
-import org.apache.lucene.search.Collector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.RatioConfigParameterRequestDto;
 import com.tokyo.supermix.data.dto.RatioConfigParameterResponseDto;
-import com.tokyo.supermix.data.dto.RatioConfigRequestDto;
-import com.tokyo.supermix.data.dto.RatioConfigResponseDto;
-import com.tokyo.supermix.data.entities.RatioConfig;
 import com.tokyo.supermix.data.entities.RatioConfigParameter;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -28,7 +23,6 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.RatioConfigParameterService;
-import com.tokyo.supermix.server.services.RatioConfigService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -62,7 +56,7 @@ public class RatioConfigParameterController {
       @PathVariable Long ratioConfigId) {
     if (ratioConfigParameterService.isRatioConfigParameterExistByRatioConfig(ratioConfigId)) {
       logger.debug("Get Designation by id ");
-      return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG_PARAMETER,
           mapper.map(ratioConfigParameterService.getAllRatioParametersByRatioConfig(ratioConfigId),
               RatioConfigParameterResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
