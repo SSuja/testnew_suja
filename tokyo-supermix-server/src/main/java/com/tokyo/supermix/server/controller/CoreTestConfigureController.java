@@ -29,9 +29,6 @@ public class CoreTestConfigureController {
   @Autowired
   private CoreTestConfigureService coreTestConfigureService;
 
-//  @Autowired
-//  private CoreTestConfigureRepository coreTestConfigureRepository;
-
   @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(MaterialAcceptedValueController.class);
@@ -82,13 +79,6 @@ public class CoreTestConfigureController {
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.ADD_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
   }
-    // }
-    // logger.debug("Invalid id");
-    // return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
-    // validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
-//  }
-
-
 
   @PutMapping(value = EndpointURI.CORE_TEST_CONFIGURE)
   public ResponseEntity<Object> updateAcceptedValue(
@@ -109,39 +99,14 @@ public class CoreTestConfigureController {
         coreTestConfigureService.getAllCoreTestConfigureByTestConfigureId(testConfigureId),
             RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  
+  @GetMapping(value =EndpointURI.LIST_ALL_CORE_TEST_CONFIGURE_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getCoreTestConfigureListByTestId(
+      @PathVariable Long testId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CORE_TEST_CONFIGURES,
+        coreTestConfigureService.getAllCoreTestConfigureByTestId(testId),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 
 }
 
-//@GetMapping(value = EndpointURI.CORE_TEST_CONFIGURE_BY_RAWMATERIAL_ID)
-//public ResponseEntity<Object> getCoreTestConfigureByMaterialSubCategoryAndTestType(
-//  @PathVariable Long rawMaterialId) {
-//// if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
-//return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY, mapper.map(
-//    // coreTestConfigureRepository.findByrawMaterialId(rawMaterialId)
-//    coreTestConfigureRepository.findByrawMaterialIdAndCoreTestTrue(rawMaterialId),
-//    CoreTestConfigureDto.class), RestApiResponseStatus.OK), HttpStatus.OK);
-//}
-// logger.debug("No Test Configure record exist for given Material Sub Category");
-// return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
-// validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
-// }
-
-// @GetMapping(value = "/api/v1/core-test-configure/test-configure/{testConfigureId}")
-// public ResponseEntity<Object> getCoreTestConfigureByTestConfigureId(
-// @PathVariable Long testConfigureId) {
-//// if (materialSubCategoryService.isMaterialSubCategoryExist(materialSubCategoryId)) {
-// return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
-// mapper.map(
-//// coreTestConfigureRepository.findByrawMaterialId(rawMaterialId)
-// coreTestConfigureRepository.findByrawMaterialIdAndCoreTestTrue(rawMaterialId)
-// , CoreTestConfigureDto.class),
-// RestApiResponseStatus.OK), HttpStatus.OK);
-// }
-//@GetMapping(value = "/api/v1/core-test-configure/test-configure/{testConfigureId}")
-//public ResponseEntity<Object> getCoreTestConfigureByTestConfigureId(
-//  @PathVariable Long testConfigureId) {
-//return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
-//    mapper.map(coreTestConfigureService.getCoreTestConfigureByTestConfigureId(testConfigureId),
-//        CoreTestConfigureDto.class),
-//    RestApiResponseStatus.OK), null, HttpStatus.OK);
-//}

@@ -21,4 +21,6 @@ public interface CoreTestConfigureService {
   public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialId(Long rawMaterialId);
   
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestConfigureId(Long testConfigureId);
+  
+  public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestId(Long testId);
 }

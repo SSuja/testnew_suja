@@ -7,11 +7,11 @@ import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.tokyo.supermix.data.dto.CoreTestConfigureMainDto;
 import com.tokyo.supermix.data.dto.CoreTestConfigureMaterialDto;
 import com.tokyo.supermix.data.dto.CoreTestConfigureResponseDto;
 import com.tokyo.supermix.data.dto.CoreTestConfigureSubCatDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
+import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
@@ -30,12 +30,13 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   @Autowired
   private TestConfigureRepository testConfigureRepository;
 
+
   @Transactional
   public List<CoreTestConfigure> saveCoreTestConfigure(List<CoreTestConfigure> CoreTestConfigure) {
     return coreTestConfigureRepository.saveAll(CoreTestConfigure);
   }
-  
-  public List<CoreTestConfigure> getAllCoreTestConfigure(){
+
+  public List<CoreTestConfigure> getAllCoreTestConfigure() {
     return coreTestConfigureRepository.findAll();
   }
 
@@ -96,11 +97,6 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     if (RawMatId == null) {
       System.out.println("rawMatId");
       List<RawMaterial> rawMaterialslist = rawMaterialRepository.findByMaterialSubCategoryId(subId);
-      // MaterialCategory materialCategory
-      // =materialCategoryRepository.findById(testConfigure.getMaterialCategory()).get();
-      // MaterialSubCategory
-      // materialSubCategory=materialSubCategoryRepository.findById(subId).get();
-
 
       rawMaterialslist.forEach(rawMaterial -> {
         CoreTestConfigure coreTestConfigure = new CoreTestConfigure();
@@ -164,106 +160,75 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   @Override
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestConfigureId(
       Long testConfigureId) {
-    CoreTestConfigureResponseDto coreTestConfigureResponseDto=new CoreTestConfigureResponseDto();
+    CoreTestConfigureResponseDto coreTestConfigureResponseDto = new CoreTestConfigureResponseDto();
     coreTestConfigureResponseDto.setTestConfigureId(testConfigureId);
-    
-    List<CoreTestConfigure> coreTestConfigurelist=coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
-    
-    List<CoreTestConfigureMainDto> coreTestConfigureMainDtoList=new ArrayList<>();
-    Set<CoreTestConfigureMainDto> cc=new HashSet<>();
-    for(CoreTestConfigure coreTestConfigure:coreTestConfigurelist) {
-      CoreTestConfigureMainDto configureMainDto =new CoreTestConfigureMainDto();
-      configureMainDto.setMaterialCategoryId(coreTestConfigure.getMaterialCategory().getId());
-//      coreTestConfigureMainDtoList.add(configureMainDto);
-      cc.add(configureMainDto);
+
+    TestConfigure testConfigure = testConfigureRepository.getOne(testConfigureId);
+
+    testConfigure.getMaterialCategory();
+
+    List<CoreTestConfigure> coreTestConfigurelist =
+        coreTestConfigureRepository.findByTestConfigureIdAndMaterialCategoryId(testConfigureId,
+            testConfigure.getMaterialCategory().getId());
+
+    List<CoreTestConfigureSubCatDto> coreTestConfigureSubCatDtoList = new ArrayList<>();
+    Set<MaterialSubCategory> cc = new HashSet<>();
+
+    for (CoreTestConfigure coreTestConfigure : coreTestConfigurelist) {
+      if (coreTestConfigure.isCoreTest()) {
+        coreTestConfigureResponseDto.setCoreTest(true);
+      }
+      cc.add(coreTestConfigure.getMaterialSubCategory());
     }
-    coreTestConfigureMainDtoList.addAll(cc);
-//    (cc.toArray());
-    
-//    List<CoreTestConfigureMainDto> coreTestConfigureMainDtoList=new ArrayList<>();
-     
-//    CoreTestConfigureMainDto configureMainDto =new CoreTestConfigureMainDto();
-//      configureMainDto.setMaterialCategoryId(1l);
-        
-        List<CoreTestConfigureSubCatDto> coreTestConfigureSubCatDtoList=new ArrayList<>();
-        
-         CoreTestConfigureSubCatDto coreTestConfigureSubCatDto=new CoreTestConfigureSubCatDto();
-         coreTestConfigureSubCatDto.setMaterialSubCategoryId(2l);
-         coreTestConfigureSubCatDtoList.add(coreTestConfigureSubCatDto);
-         List<CoreTestConfigureMaterialDto> coreTestConfigureMaterialDtoList=new ArrayList<>();
-         
-         CoreTestConfigureMaterialDto coreTestConfigureMaterialDto=new CoreTestConfigureMaterialDto();
-         
-         coreTestConfigureMaterialDto.setRawMaterialId(3l);
-         coreTestConfigureMaterialDto.setCoreTest(true);
-         
-         coreTestConfigureMaterialDtoList.add(coreTestConfigureMaterialDto);
-         
-         coreTestConfigureSubCatDto.setCoreTestConfigureMaterialDtos(coreTestConfigureMaterialDtoList);
-         
-//      configureMainDto.setMaterialSubCategoryId(coreTestConfigureSubCatDtoList);
-    
-//    coreTestConfigureMainDtoList.add(configureMainDto);
-    
-    coreTestConfigureResponseDto.setCoreTestConfigureMainDto(coreTestConfigureMainDtoList);
-    
+
+    cc.forEach(c -> {
+      c.getName();
+      CoreTestConfigureSubCatDto coreTestConfigureSubCatDto = new CoreTestConfigureSubCatDto();
+      coreTestConfigureSubCatDto.setMaterialSubCategoryId(c.getId());
+      coreTestConfigureSubCatDto.setMaterialSubCategoryName(c.getName());
+      coreTestConfigureSubCatDto.setMaterialCategoryId(c.getMaterialCategory().getId());
+
+      List<CoreTestConfigure> coreTestConfigureSublist = coreTestConfigureRepository
+          .findByTestConfigureIdAndMaterialSubCategoryId(testConfigureId, c.getId());
+      List<CoreTestConfigureMaterialDto> CoreTestConfigureMaterialDtoList = new ArrayList<>();
+      for (CoreTestConfigure coreSub : coreTestConfigureSublist) {
+        CoreTestConfigureMaterialDto coreTestConfigureMaterialDto =
+            new CoreTestConfigureMaterialDto();
+        coreTestConfigureMaterialDto.setRawMaterialId(coreSub.getRawMaterial().getId());
+        coreTestConfigureMaterialDto.setRawMaterialName(coreSub.getRawMaterial().getName());
+        coreTestConfigureMaterialDto.setCoreTestConfigureId(coreSub.getId());
+        coreTestConfigureMaterialDto
+            .setMaterialSubCategoryId(coreSub.getMaterialSubCategory().getId());
+        coreTestConfigureMaterialDto.setCoreTest(coreSub.isCoreTest());
+
+        if (coreSub.isCoreTest()) {
+          coreTestConfigureSubCatDto.setCoretest(true);
+        }
+        CoreTestConfigureMaterialDtoList.add(coreTestConfigureMaterialDto);
+      }
+
+      coreTestConfigureSubCatDto.setCoreTestConfigureMaterialDtos(CoreTestConfigureMaterialDtoList);
+
+      coreTestConfigureSubCatDtoList.add(coreTestConfigureSubCatDto);
+
+    });
+
+
+
+    coreTestConfigureResponseDto.setTestConfigureId(testConfigureId);
+    coreTestConfigureResponseDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
+    coreTestConfigureResponseDto
+        .setMaterialCategoryName(testConfigure.getMaterialCategory().getName());
+    coreTestConfigureResponseDto.setCoreTestConfigureSubCatDto(coreTestConfigureSubCatDtoList);
+
+
+
     return coreTestConfigureResponseDto;
   }
+
+  @Override
+  public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestId(Long testId) {   
+    return getAllCoreTestConfigureByTestConfigureId(testConfigureRepository.findByTestId(testId).getId());
+  }
 }
-// @Override
-// public void createCoreTestConfigure(Long Mainid, Long subId, Long RawMatId) {
-//
-// List<CoreTestConfigure> coreTestConfigurelist=new ArrayList<>();
-// TestConfigure testConfigure=testConfigureRepository.findById(470l).get();
-//
-// if(testConfigure.getRawMaterial() ==null) {
-// System.out.println("rawMatId");
-// List<RawMaterial> rawMaterialslist=rawMaterialRepository.findByMaterialSubCategoryId(subId);
-//// MaterialCategory materialCategory
-// =materialCategoryRepository.findById(testConfigure.getMaterialCategory()).get();
-//// MaterialSubCategory materialSubCategory=materialSubCategoryRepository.findById(subId).get();
-//
-//
-// rawMaterialslist.forEach(rawMaterial -> {
-// CoreTestConfigure coreTestConfigure=new CoreTestConfigure();
-// coreTestConfigure.setMaterialCategory(testConfigure.getMaterialCategory());
-// coreTestConfigure.setMaterialSubCategory(testConfigure.getMaterialSubCategory());
-// coreTestConfigure.setRawMaterial(rawMaterial);
-// coreTestConfigure.setTestConfigure(testConfigure);
-// coreTestConfigure.setCoreTest(true);
-//
-// coreTestConfigurelist.add(coreTestConfigure);
-// });
-// coreTestConfigureRepository.saveAll(coreTestConfigurelist);
-// }
-// else if(testConfigure.getMaterialSubCategory() == null) {
-// System.out.println("subId");
-// List<RawMaterial>
-// rawMaterialslist=rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryId
-// (testConfigure.getMaterialCategory().getId());
-// rawMaterialslist.forEach(rawMaterial -> {
-// CoreTestConfigure coreTestConfigure=new CoreTestConfigure();
-// coreTestConfigure.setMaterialCategory(testConfigure.getMaterialCategory());
-// coreTestConfigure.setMaterialSubCategory(rawMaterial.getMaterialSubCategory());
-// coreTestConfigure.setRawMaterial(rawMaterial);
-// coreTestConfigure.setTestConfigure(testConfigure);
-// coreTestConfigure.setCoreTest(true);
-//
-// coreTestConfigurelist.add(coreTestConfigure);
-// });
-// coreTestConfigureRepository.saveAll(coreTestConfigurelist);
-// }
-// else {
-// CoreTestConfigure coreTestConfigure=new CoreTestConfigure();
-// coreTestConfigure.setMaterialCategory(testConfigure.getMaterialCategory());
-// coreTestConfigure.setMaterialSubCategory(testConfigure.getMaterialSubCategory());
-// coreTestConfigure.setRawMaterial(testConfigure.getRawMaterial());
-// coreTestConfigure.setTestConfigure(testConfigure);
-// coreTestConfigure.setCoreTest(true);
-//
-// coreTestConfigurelist.add(coreTestConfigure);
-//
-// coreTestConfigureRepository.save(coreTestConfigure);
-// }
-// }
-// }
+

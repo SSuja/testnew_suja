@@ -40,4 +40,6 @@ public interface TestConfigureRepository
 
   List<TestConfigure> findByMaterialCategoryIdOrMaterialSubCategoryIdOrRawMaterialId(
       Long materialCategoryId, Long materialSubCategoryId, Long rawMaterialId);
+
+  TestConfigure findByTestId(Long TestId);
 }

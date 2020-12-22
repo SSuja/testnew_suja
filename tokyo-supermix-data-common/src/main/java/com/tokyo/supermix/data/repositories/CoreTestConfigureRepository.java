@@ -15,4 +15,10 @@ public interface CoreTestConfigureRepository extends JpaRepository<CoreTestConfi
 
   boolean existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(Long testConfigureId,
       Long rawMaterialId);
+
+  List<CoreTestConfigure> findByTestConfigureIdAndMaterialCategoryId(Long testConfigureId,
+      Long materialCategoryId);
+
+  List<CoreTestConfigure> findByTestConfigureIdAndMaterialSubCategoryId(Long testConfigureId,
+      Long materialSubCategoryId);
 }
