@@ -13,9 +13,11 @@ public interface RatioConfigEquationService {
 
   public RatioConfigEquation getRatioConfigEquationById(Long id);
 
+  public boolean isRatioExists(String ratio);
+
   public boolean isRatioConfigEquationExistsById(Long id);
 
-  public boolean isRatioConfigEquationExistsByRatioConfigId(Long id, Long ratioConfigId);
+  public boolean isRatioConfigEquationExistsByRatioConfigId(Long ratioConfigId);
 
   public void deleteRatioConfigEquation(Long id);
 }

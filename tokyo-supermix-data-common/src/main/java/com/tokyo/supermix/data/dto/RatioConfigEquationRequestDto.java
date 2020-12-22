@@ -1,8 +1,13 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class RatioConfigEquationRequestDto {
 
   private Long id;
+  @NotNull(message = "{ratioConfigDto.ratio.null}")
+  @NotEmpty(message = "{ratioConfigDto.ratio.empty}")
   private String ratio;
   private Long ratioConfigId;
 

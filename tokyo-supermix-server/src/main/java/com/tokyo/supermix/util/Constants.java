@@ -632,6 +632,19 @@ public class Constants {
       "Ratio Config Parameter Updated Successfully";
 
   /*
+   * Constants for ratio config equation validation key & Success messages
+   */
+  public static final String RATIO_CONFIG_EQUATION_ID = "ratioConfigEquationId";
+  public static final String RATIO_CONFIG_EQUATIONS = "ratioConfigEquations";
+  public static final String RATIO_CONFIG_EQUATION = "ratioConfigEquation";
+  public static final String RATIO_CONFIG_EQUATION_DELETED =
+      "Ratio Config Equation Successfully Deleted";
+  public static final String ADD_RATIO_CONFIG__EQUATION_SUCCESS =
+      "Ratio Config Equation Added Successfully";
+  public static final String UPDATE_RATIO_CONFIG__EQUATION_SUCCESS =
+      "Ratio Config Updated Successfully";
+
+  /*
    * Encapsulate constructor to restrict modification from outside
    */
   private Constants() {}

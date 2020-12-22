@@ -26,7 +26,7 @@ public class RatioConfigEquationServiceImpl implements RatioConfigEquationServic
 
   @Transactional(readOnly = true)
   public List<RatioConfigEquation> getAllRatioConfigEquationsByRatioConfig(Long ratioConfigId) {
-    return ratioConfigEquationRepository.findByRatioConfig(ratioConfigId);
+    return ratioConfigEquationRepository.findByRatioConfigId(ratioConfigId);
   }
 
   @Transactional(readOnly = true)
@@ -40,12 +40,17 @@ public class RatioConfigEquationServiceImpl implements RatioConfigEquationServic
   }
 
   @Transactional(readOnly = true)
-  public boolean isRatioConfigEquationExistsByRatioConfigId(Long id, Long ratioConfigId) {
+  public boolean isRatioConfigEquationExistsByRatioConfigId(Long ratioConfigId) {
     return ratioConfigEquationRepository.existsByRatioConfigId(ratioConfigId);
   }
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteRatioConfigEquation(Long id) {
     ratioConfigEquationRepository.deleteById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRatioExists(String ratio) {
+    return ratioConfigEquationRepository.existsByRatio(ratio);
   }
 }

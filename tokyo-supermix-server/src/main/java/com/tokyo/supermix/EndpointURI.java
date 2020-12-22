@@ -757,5 +757,14 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIG =
       RATIO_CONFIG_PARAMETER + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
 
+  /*
+   * ratioConfig equation API
+   */
+  public static final String RATIO_CONFIG_EQUATION = BASE_API_PATH + "ratio-config-equation";
+  public static final String RATIO_CONFIG_EQUATIONS = BASE_API_PATH + "ratio-config-equations";
+  public static final String RATIO_CONFIG_EQUATION_BY_ID = RATIO_CONFIG_EQUATION + ID;
+  public static final String RATIO_CONFIG_EQUATION_BY_RATIO_CONFIG =
+      RATIO_CONFIG_EQUATION + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
+
   private EndpointURI() {}
 }

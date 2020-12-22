@@ -6,7 +6,9 @@ import com.tokyo.supermix.data.entities.RatioConfigEquation;
 
 public interface RatioConfigEquationRepository extends JpaRepository<RatioConfigEquation, Long> {
 
-  List<RatioConfigEquation> findByRatioConfig(Long ratioConfigId);
+  boolean existsByRatio(String ratio);
+
+  List<RatioConfigEquation> findByRatioConfigId(Long ratioConfigId);
 
   boolean existsByRatioConfigId(Long ratioConfigId);
 }

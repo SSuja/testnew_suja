@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tokyo.supermix.data.entities.RatioConfig;
 
 public interface RatioConfigRepository extends JpaRepository<RatioConfig, Long> {
-  
-  boolean existsByName(String name);
 
+  boolean existsByName(String name);
 }

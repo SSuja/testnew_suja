@@ -1778,4 +1778,50 @@ public class ValidationFailureStatusCodes {
   public void setRatioConfigAlreadyExist(String ratioConfigAlreadyExist) {
     this.ratioConfigAlreadyExist = ratioConfigAlreadyExist;
   }
+
+  // ratio config parameter
+  @Value("${validation.ratioConfigParameter.notExists}")
+  private String ratioConfigParameterNotExist;
+
+  @Value("${validation.ratioConfigParameter.alreadyExist}")
+  private String ratioConfigParameterAlreadyExist;
+
+  // ratio config equation
+  @Value("${validation.ratioConfigEquation.notExists}")
+  private String ratioConfigEquationNotExist;
+
+  @Value("${validation.ratioConfigEquation.alreadyExist}")
+  private String ratioConfigEquationAlreadyExist;
+
+  public String getRatioConfigParameterNotExist() {
+    return ratioConfigParameterNotExist;
+  }
+
+  public void setRatioConfigParameterNotExist(String ratioConfigParameterNotExist) {
+    this.ratioConfigParameterNotExist = ratioConfigParameterNotExist;
+  }
+
+  public String getRatioConfigParameterAlreadyExist() {
+    return ratioConfigParameterAlreadyExist;
+  }
+
+  public void setRatioConfigParameterAlreadyExist(String ratioConfigParameterAlreadyExist) {
+    this.ratioConfigParameterAlreadyExist = ratioConfigParameterAlreadyExist;
+  }
+
+  public String getRatioConfigEquationNotExist() {
+    return ratioConfigEquationNotExist;
+  }
+
+  public void setRatioConfigEquationNotExist(String ratioConfigEquationNotExist) {
+    this.ratioConfigEquationNotExist = ratioConfigEquationNotExist;
+  }
+
+  public String getRatioConfigEquationAlreadyExist() {
+    return ratioConfigEquationAlreadyExist;
+  }
+
+  public void setRatioConfigEquationAlreadyExist(String ratioConfigEquationAlreadyExist) {
+    this.ratioConfigEquationAlreadyExist = ratioConfigEquationAlreadyExist;
+  }
 }
