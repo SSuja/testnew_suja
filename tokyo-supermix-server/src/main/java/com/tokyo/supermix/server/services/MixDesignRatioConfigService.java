@@ -5,10 +5,10 @@ import com.tokyo.supermix.data.entities.MixDesignRatioConfig;
 
 public interface MixDesignRatioConfigService {
 
-  public void saveMixDesignRatioConfig(MixDesignRatioConfig mixDesignRatioConfig);
+  public void saveMixDesignRatioConfig(List<MixDesignRatioConfig> mixDesignRatioConfigList);
 
   public List<MixDesignRatioConfig> getAllMixDesignRatioConfigs();
-  
+
   public boolean isMixDesignRatioConfigExist(Long id);
 
   public MixDesignRatioConfig getMixDesignRatioConfigById(Long id);
