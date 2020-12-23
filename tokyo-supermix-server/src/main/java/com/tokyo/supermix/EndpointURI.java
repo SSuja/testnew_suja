@@ -270,6 +270,8 @@ public final class EndpointURI {
   public static final String GET_INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}" + SLASH
           + "plant" + SLASH + "{plantCode}" + SLASH + "incoming-sample";
+  public static final String INCOMING_SAMPLES_BY_SUPPLIER_ID =
+      INCOMING_SAMPLES + SLASH + "supplier" + SLASH + "{supplierId}";
   /*
    * Mix design apis
    * 
