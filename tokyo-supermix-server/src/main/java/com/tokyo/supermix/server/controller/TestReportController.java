@@ -22,6 +22,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.FinishProductTestService;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialTestService;
+import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.TestReportService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -43,6 +44,8 @@ public class TestReportController {
   private Mapper mapper;
   @Autowired
   PlantRepository plantRepository;
+  @Autowired
+  private PlantService plantService;
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
   public ResponseEntity<Object> getMaterialTestReportDetails(@PathVariable String materialTestCode,
@@ -202,5 +205,27 @@ public class TestReportController {
         new ContentResponse<>(Constants.SIEVE_TEST,
             testReportService.getTrialResultGraph(materialTestCode), RestApiResponseStatus.OK),
         HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.STRENGTH_BY_FINISH_PRODUCT_TEST_CODE)
+  public ResponseEntity<Object> getStrengthReport(@PathVariable String finishProductTestCode,
+      @PathVariable String plantCode) {
+    if (finishProductTestService.isFinishProductTestExists(finishProductTestCode)) {
+      if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.STRENGTH,
+            testReportService.getStrengthReport(finishProductTestCode), RestApiResponseStatus.OK),
+            HttpStatus.OK);
+      } else {
+        if (plantService.isPlantExist(plantCode)) {
+          return new ResponseEntity<>(new ContentResponse<>(Constants.STRENGTH,
+              testReportService.getStrengthReportByPlantWise(finishProductTestCode, plantCode),
+              RestApiResponseStatus.OK), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+            validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+      }
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TEST,
+        validationFailureStatusCodes.getFinishProductTestNotExit()), HttpStatus.BAD_REQUEST);
   }
 }

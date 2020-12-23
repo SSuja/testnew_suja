@@ -31,8 +31,7 @@ public class Constants {
       "Notification : About Finish Product Sample Creation ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
       "Notification : About Finish Product Sample Issue Creation ";
-  public static final String SUBJECT_PLANT_EQUIPMENT =
-      "Notification : About Plant Equipment";
+  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
@@ -389,7 +388,7 @@ public class Constants {
   public static final String TWO_DECIMAL_FORMAT = "#.##";
   public static final String DECIMAL_FORMAT = "#.##";
   public static final String DECIMAL_FORMAT_FINISH = "#.#####";
-  
+
   public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";
   public static final String SIEVE_TEST_TRIAL_ID = "id";
   public static final String ADD_SIEVE_TEST_TRIAL_SUCCEESS = "Sieve Test Trial Added Successfully";
@@ -588,14 +587,15 @@ public class Constants {
       "Finish Product Accepted Value Added Successfully";
   public static final String UPDATE_FINISH_PRODUCT_ACCEPTED_VALUE_SUCCESS =
       "Finish Product Accepted Value Updated Successfully";
-  
+
   public static final String MAC_ADDRESS = "Mac address";
   public static final String ADD_MAC_ADDRESS_SUCCESS = "Mac address Added Successfully";
   public static final String MAC_ADDRESS_DELETED = "Mac address Successfully Deleted";
   public static final String MAC_ADDRESS_UPDATED_SUCCESS = "Mac address Updated Successfully";
-  
-  
-  
+
+  public static final String STRENGTH = "strength";
+
+
 
   /*
    * Encapsulate constructor to restrict modification from outside
