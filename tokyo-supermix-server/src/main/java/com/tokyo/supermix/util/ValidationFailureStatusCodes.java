@@ -1824,4 +1824,16 @@ public class ValidationFailureStatusCodes {
   public void setRatioConfigEquationAlreadyExist(String ratioConfigEquationAlreadyExist) {
     this.ratioConfigEquationAlreadyExist = ratioConfigEquationAlreadyExist;
   }
+
+  // ratio config parameter
+  @Value("${validation.mixDesignRatioConfig.notExists}")
+  private String mixDesignRatioConfigNotExist;
+
+  public String getMixDesignRatioConfigNotExist() {
+    return mixDesignRatioConfigNotExist;
+  }
+
+  public void setMixDesignRatioConfigNotExist(String mixDesignRatioConfigNotExist) {
+    this.mixDesignRatioConfigNotExist = mixDesignRatioConfigNotExist;
+  }
 }
