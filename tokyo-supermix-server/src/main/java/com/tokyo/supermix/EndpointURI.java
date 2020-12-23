@@ -733,6 +733,8 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_RATIO_CONFIG = BASE_API_PATH + "mixdesign-ratio";
   public static final String MIX_DESIGN_RATIO_CONFIGS = BASE_API_PATH + "mixdesign-ratios";
   public static final String MIX_DESIGN_RATIO_CONFIG_BY_ID = MIX_DESIGN_RATIO_CONFIG + ID;
+  public static final String MIX_DESIGN_RATIO_CONFIG_MIXDESIGN_CODE =
+      MIX_DESIGN_RATIO_CONFIG + SLASH + "mix-design" + SLASH + "{mixDesignCode}";
 
   /*
    * SBU API

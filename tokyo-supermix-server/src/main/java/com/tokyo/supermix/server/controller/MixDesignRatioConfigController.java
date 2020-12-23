@@ -37,9 +37,10 @@ public class MixDesignRatioConfigController {
 
   @PostMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG)
   public ResponseEntity<Object> createMixDesignRatioConfig(
-      @Valid @RequestBody List<MixDesignRatioConfigRequestDto> mixDesignRatioConfigDtoList) {
-    mixDesignRatioConfigService.saveMixDesignRatioConfig(
-        mapper.map(mixDesignRatioConfigDtoList, MixDesignRatioConfig.class));
+      @Valid @RequestBody List<MixDesignRatioConfigRequestDto> MixDesignRatioConfigDto) {
+    mixDesignRatioConfigService
+        .saveMixDesignRatioConfig(mapper.map(MixDesignRatioConfigDto, MixDesignRatioConfig.class));
+
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_RATIO_CONFIG),
         HttpStatus.OK);
@@ -55,29 +56,48 @@ public class MixDesignRatioConfigController {
         null, HttpStatus.OK);
   }
 
-  // @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_BY_ID)
-  // public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
-  // if (designationService.isDesignationExist(id)) {
-  // logger.debug("Get Designation by id ");
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_RATIO_CONFIG,
-  // mapper.map(designationService.getDesignationById(id), DesignationDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // logger.debug("Invalid Id");
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
-  // validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
-  // }
+  @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_BY_ID)
+  public ResponseEntity<Object> getMixDesignRatiosById(@PathVariable Long id) {
+    if (mixDesignRatioConfigService.isMixDesignRatioConfigExist(id)) {
+      logger.debug("Get Designation by id ");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_RATIO_CONFIG,
+          mapper.map(mixDesignRatioConfigService.getMixDesignRatioConfigById(id),
+              MixDesignRatioConfigResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
+            validationFailureStatusCodes.getMixDesignRatioConfigNotExist()),
+        HttpStatus.BAD_REQUEST);
+  }
 
-  // @DeleteMapping(value = EndpointURI.DESIGNATION_BY_ID)
-  // public ResponseEntity<Object> deleteDesignation(@PathVariable Long id) {
-  // if (designationService.isDesignationExist(id)) {
-  // designationService.deleteDesignation(id);
-  // return new ResponseEntity<>(
-  // new BasicResponse<>(RestApiResponseStatus.OK, Constants.DESIGNATION_DELETED),
-  // HttpStatus.OK);
-  // }
-  // logger.debug("Invalid Id");
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
-  // validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
-  // }
+  @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_MIXDESIGN_CODE)
+  public ResponseEntity<Object> getratiosByMixDesignCode(@PathVariable String mixDesignCode) {
+    if (mixDesignRatioConfigService.isExistByMixDesignCode(mixDesignCode)) {
+      logger.debug("Get Designation by id ");
+      return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_RATIO_CONFIG,
+          mapper.map(mixDesignRatioConfigService.getAllRatiosByMixDesignCode(mixDesignCode),
+              MixDesignRatioConfigResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
+        validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @DeleteMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_BY_ID)
+  public ResponseEntity<Object> deleteMixDesignRatio(@PathVariable Long id) {
+    if (mixDesignRatioConfigService.isMixDesignRatioConfigExist(id)) {
+      mixDesignRatioConfigService.deleteMixDesignRatioConfig(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_MIX_DESIGN_RATIO_CONFIG),
+          HttpStatus.OK);
+    }
+    logger.debug("Invalid Id");
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
+            validationFailureStatusCodes.getMixDesignRatioConfigNotExist()),
+        HttpStatus.BAD_REQUEST);
+  }
 }

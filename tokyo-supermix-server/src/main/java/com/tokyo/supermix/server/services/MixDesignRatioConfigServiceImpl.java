@@ -37,8 +37,8 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
   private RatioConfigEquationRepository ratioConfigEquationRepository;
 
   @Transactional
-  public void saveMixDesignRatioConfig(List<MixDesignRatioConfig> mixDesignRatioConfigList) {
-    mixDesignRatioConfigRepository.saveAll(mixDesignRatioConfigList);
+  public void saveMixDesignRatioConfig(List<MixDesignRatioConfig> mixDesignRatioConfig) {
+    mixDesignRatioConfigRepository.saveAll(mixDesignRatioConfig);
   }
 
   @Transactional(readOnly = true)
@@ -108,5 +108,13 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
       e.printStackTrace();
     }
     return roundDoubleValue(finishProductResult);
+  @Transactional(readOnly = true)
+  public List<MixDesignRatioConfig> getAllRatiosByMixDesignCode(String mixDesignCode) {
+    return mixDesignRatioConfigRepository.findByMixDesignCode(mixDesignCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistByMixDesignCode(String mixDesignCode) {
+    return mixDesignRatioConfigRepository.existsByMixDesigncode(mixDesignCode);
   }
 }
