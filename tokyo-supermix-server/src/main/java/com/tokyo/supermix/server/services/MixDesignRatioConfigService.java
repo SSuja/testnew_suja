@@ -18,4 +18,6 @@ public interface MixDesignRatioConfigService {
   public void deleteMixDesignRatioConfig(Long id);
 
   public boolean isExistByMixDesignCode(String mixDesignCode);
+
+  public void saveRatioResult(String mixDesignCode, Long ratioConfigId);
 }

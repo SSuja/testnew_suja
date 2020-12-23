@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.script.ScriptEngine;
@@ -11,13 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.entities.MixDesignRatioConfig;
 import com.tokyo.supermix.data.entities.RatioConfigParameter;
-import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.InputMethod;
-import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRatioConfigRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigEquationRepository;
@@ -61,11 +56,14 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
     mixDesignRatioConfigRepository.deleteById(id);
   }
 
+  @Transactional
   public void saveRatioResult(String mixDesignCode, Long ratioConfigId) {
-
+    MixDesignRatioConfig mixDesignRatioConfig = mixDesignRatioConfigRepository
+        .findByMixDesignCodeAndRatioConfigId(mixDesignCode, ratioConfigId);
+    mixDesignRatioConfig.setValue(getFinishProductResultParameter(mixDesignCode, ratioConfigId));
+    mixDesignRatioConfigRepository.save(mixDesignRatioConfig);
   }
 
-  // @Transactional
   private HashMap<String, Double> getFinishProductTestResult(String mixDesignCode,
       Long ratioConfigId) {
     HashMap<String, Double> list = new HashMap<String, Double>();
@@ -108,6 +106,8 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
       e.printStackTrace();
     }
     return roundDoubleValue(finishProductResult);
+  }
+
   @Transactional(readOnly = true)
   public List<MixDesignRatioConfig> getAllRatiosByMixDesignCode(String mixDesignCode) {
     return mixDesignRatioConfigRepository.findByMixDesignCode(mixDesignCode);
@@ -115,6 +115,6 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
 
   @Transactional(readOnly = true)
   public boolean isExistByMixDesignCode(String mixDesignCode) {
-    return mixDesignRatioConfigRepository.existsByMixDesigncode(mixDesignCode);
+    return mixDesignRatioConfigRepository.existsByMixDesignCode(mixDesignCode);
   }
 }
