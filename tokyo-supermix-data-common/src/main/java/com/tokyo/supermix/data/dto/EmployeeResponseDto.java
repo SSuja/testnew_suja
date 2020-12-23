@@ -16,7 +16,6 @@ public class EmployeeResponseDto {
   private String updatedAt;
   private boolean isEnabled;
   private String profilePicPath;
-  private String signature;
 
   public boolean isEnabled() {
     return isEnabled;
@@ -136,13 +135,5 @@ public class EmployeeResponseDto {
 
   public void setProfilePicPath(String profilePicPath) {
     this.profilePicPath = profilePicPath;
-  }
-
-  public String getSignature() {
-    return signature;
-  }
-
-  public void setSignature(String signature) {
-    this.signature = signature;
   }
 }

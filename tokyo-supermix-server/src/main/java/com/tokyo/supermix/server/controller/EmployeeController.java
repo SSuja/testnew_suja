@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,16 +76,7 @@ public class EmployeeController {
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
   public ResponseEntity<Object> createEmployee(
-      @Valid @RequestParam(value = "employee", required = true) String employeeDtoJson,
-      @RequestParam(value = "signature", required = true) MultipartFile signature,
-      HttpServletRequest request) throws IOException, TokyoSupermixFileStorageException {
-    EmployeeRequestDto employeeRequestDto =
-        objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
-    if (!signature.isEmpty()) {
-      employeeRequestDto.setSignature(fileStorageService.storeSignature(signature));
-    } else {
-      employeeRequestDto.setSignature(null);
-    }
+      @Valid @RequestBody EmployeeRequestDto employeeRequestDto, HttpServletRequest request) {
     if (employeeService.isEmailExist(employeeRequestDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
@@ -127,16 +119,13 @@ public class EmployeeController {
   public ResponseEntity<Object> updateEmployee(
       @RequestParam(value = "employee", required = true) String employeeDtoJson,
       @RequestParam(value = "image", required = true) MultipartFile file,
-      @RequestParam(value = "signature", required = true) MultipartFile signature,
       HttpServletRequest request) throws IOException, TokyoSupermixFileStorageException {
     EmployeeRequestDto employeeRequestDto =
         objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
     if (!file.isEmpty()) {
       employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
-      employeeRequestDto.setSignature(fileStorageService.storeSignature(signature));
     } else {
       employeeRequestDto.setProfilePicPath(null);
-      employeeRequestDto.setSignature(null);
     }
     if (employeeService.isEmployeeExist(employeeRequestDto.getId())) {
       if (employeeService.isUpdatedEmployeeEmailExist(employeeRequestDto.getId(),
