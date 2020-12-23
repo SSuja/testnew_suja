@@ -112,4 +112,11 @@ public class RatioConfigController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
         validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.RATIO_CONFIG_DETAILS_CONFIG_ID)
+  public ResponseEntity<Object> getAllRatioConfigDetails(@PathVariable Long ratioConfigId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIGS,
+        ratioConfigService.getMixDesignTestConfigDetails(ratioConfigId), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 }

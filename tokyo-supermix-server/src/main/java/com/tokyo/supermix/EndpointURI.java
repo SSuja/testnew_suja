@@ -747,6 +747,8 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG = BASE_API_PATH + "ratio-config";
   public static final String RATIO_CONFIGS = BASE_API_PATH + "ratio-configs";
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
+  public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
+      RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
 
   /*
    * ratioConfigParameter API
