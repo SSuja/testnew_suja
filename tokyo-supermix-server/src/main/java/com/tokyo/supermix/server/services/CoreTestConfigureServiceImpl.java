@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 import com.tokyo.supermix.data.dto.CoreTestConfigureMaterialDto;
 import com.tokyo.supermix.data.dto.CoreTestConfigureResponseDto;
 import com.tokyo.supermix.data.dto.CoreTestConfigureSubCatDto;
+import com.tokyo.supermix.data.dto.TestOriginDto;
+import com.tokyo.supermix.data.dto.TestOriginRequestDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.Origin;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 
@@ -29,6 +33,10 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  
+  @Autowired
+  private MaterialSubCategoryRepository materialSubCategoryRepository;
+  
 
 
   @Transactional
@@ -229,6 +237,117 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   @Override
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestId(Long testId) {   
     return getAllCoreTestConfigureByTestConfigureId(testConfigureRepository.findByTestId(testId).getId());
+  }
+
+  @Override
+  public List<TestOriginDto> getAllCoreTestConfigureByMainCategoryId(Long mainCategoryId) {
+      List<TestOriginDto> testOriginDtoList=new ArrayList<>();  
+        //testconfigureBymatrialCatId
+        List<TestConfigure> testConfigureList=testConfigureRepository.
+            findByMaterialCategoryIdAndMaterialSubCategoryNull(mainCategoryId);
+        
+        for(TestConfigure testConfigure:testConfigureList) {
+          TestOriginDto testOriginDto=new TestOriginDto();
+          testOriginDto.setTestConfigureId(testConfigure.getId());
+        testOriginDto.setCoreTest(coreTestConfigureRepository.
+            existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrue(testConfigure.getId(), mainCategoryId));
+        testOriginDto.setTestOrigin(Origin.OWN);
+        testOriginDto.setTestId(testConfigure.getTest().getId());
+        testOriginDto.setTestName(testConfigure.getTest().getName());
+        testOriginDtoList.add(testOriginDto);
+        }
+    return testOriginDtoList;
+  }
+
+  @Override
+  public List<TestOriginDto> getAllCoreTestConfigureByMaterialSubCategoryId(
+      Long materialSubCategoryId) {
+    MaterialSubCategory materialSubCategory=materialSubCategoryRepository.getOne(materialSubCategoryId);
+    List<TestOriginDto> testOriginDtoList=getAllCoreTestConfigureByMainCategoryId
+        (materialSubCategory.getMaterialCategory().getId());
+    testOriginDtoList.forEach(testOrigin ->{
+      testOrigin.setTestOrigin(Origin.MAIN);
+      testOrigin.setCoreTest(coreTestConfigureRepository.
+        existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrue(testOrigin.getTestConfigureId(), materialSubCategoryId));
+    });
+    List<TestConfigure> testConfigureList=testConfigureRepository.
+        findByMaterialSubCategoryIdAndRawMaterialNull(materialSubCategoryId);
+       
+    
+    for(TestConfigure testConfigure:testConfigureList) {
+      TestOriginDto testOriginDto=new TestOriginDto();
+      testOriginDto.setTestConfigureId(testConfigure.getId());
+    testOriginDto.setCoreTest(coreTestConfigureRepository.
+        existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrue(testConfigure.getId(), materialSubCategoryId));
+    testOriginDto.setTestOrigin(Origin.OWN);
+    testOriginDto.setTestId(testConfigure.getTest().getId());
+    testOriginDto.setTestName(testConfigure.getTest().getName());
+    testOriginDtoList.add(testOriginDto);
+    }
+    
+    
+    return testOriginDtoList;
+  }
+
+  @Override
+  public List<TestOriginDto> getAllCoreTestConfigureByRawMaterialId(Long rawMaterialId) {
+    
+    RawMaterial rawMaterial=rawMaterialRepository.getOne(rawMaterialId);
+    
+    List<TestOriginDto> testOriginDtoList=getAllCoreTestConfigureByMaterialSubCategoryId(rawMaterial.getMaterialSubCategory().getId());
+    testOriginDtoList.forEach(testOrigin ->{
+      if(testOrigin.getTestOrigin().equals(Origin.OWN)) {
+        testOrigin.setTestOrigin(Origin.SUB);
+      }
+      testOrigin.setCoreTest(coreTestConfigureRepository.
+          existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(testOrigin.getTestConfigureId(), rawMaterialId));
+    });
+    
+    List<TestConfigure> testConfigureList=testConfigureRepository.
+        findByRawMaterialId(rawMaterial.getId());
+    for(TestConfigure testConfigure:testConfigureList) {
+      TestOriginDto testOriginDto=new TestOriginDto();
+      testOriginDto.setTestConfigureId(testConfigure.getId());
+    testOriginDto.setCoreTest(coreTestConfigureRepository.
+        existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(testConfigure.getId(), rawMaterial.getId()));
+    testOriginDto.setTestOrigin(Origin.OWN);
+    testOriginDto.setTestId(testConfigure.getTest().getId());
+    testOriginDto.setTestName(testConfigure.getTest().getName());
+    testOriginDtoList.add(testOriginDto);
+    }
+    
+    return testOriginDtoList;
+  }
+  
+  public void testOriginChangeStatus(List<TestOriginRequestDto> testOriginRequestDtolist) {
+    
+    
+    for(TestOriginRequestDto testOriginRequestDto:testOriginRequestDtolist) {
+      
+      if(testOriginRequestDto.getMaterialCategoryId()!=null) {
+        coreTestConfigureRepository.findByTestConfigureIdAndMaterialCategoryId(testOriginRequestDto.getTestConfigureId(),
+            testOriginRequestDto.getMaterialCategoryId()).stream().forEach(coreTest->{
+              coreTest.setCoreTest(testOriginRequestDto.isCoreTest());
+              coreTestConfigureRepository.save(coreTest);
+            }); 
+      } 
+      if(testOriginRequestDto.getMaterialSubCategoryId()!=null) {
+       
+        coreTestConfigureRepository.findByTestConfigureIdAndMaterialSubCategoryId(testOriginRequestDto.getTestConfigureId(),
+            testOriginRequestDto.getMaterialSubCategoryId()).stream().forEach(coreTest->{
+              coreTest.setCoreTest(testOriginRequestDto.isCoreTest());
+              coreTestConfigureRepository.save(coreTest);
+      });
+    }
+      if(testOriginRequestDto.getRawMaterialId()!=null) {
+        
+        coreTestConfigureRepository.findByTestConfigureIdAndRawMaterialId(testOriginRequestDto.getTestConfigureId(),
+            testOriginRequestDto.getRawMaterialId()).stream().forEach(coreTest->{
+              coreTest.setCoreTest(testOriginRequestDto.isCoreTest());
+              coreTestConfigureRepository.save(coreTest);
+      });
+    }
+    }
   }
 }
 

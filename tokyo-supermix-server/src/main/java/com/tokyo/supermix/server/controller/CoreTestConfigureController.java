@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
 import com.tokyo.supermix.data.dto.CoreTestConfigureDto;
+import com.tokyo.supermix.data.dto.TestOriginRequestDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
@@ -25,6 +27,7 @@ import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.util.Constants;
 
 @RestController
+@CrossOrigin
 public class CoreTestConfigureController {
   @Autowired
   private CoreTestConfigureService coreTestConfigureService;
@@ -107,6 +110,41 @@ public class CoreTestConfigureController {
         coreTestConfigureService.getAllCoreTestConfigureByTestId(testId),
             RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
+  
+  @GetMapping(value =EndpointURI.CORE_TEST_CONFIGURE_BY_MATERIAL_CATEGORY_ID)
+  public ResponseEntity<Object> getCoreTestConfigureListByMainCatId(
+      @PathVariable Long mainCategoryId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CORE_TEST_CONFIGURES,
+        coreTestConfigureService.getAllCoreTestConfigureByMainCategoryId(mainCategoryId),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @GetMapping(value =EndpointURI.CORE_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY_ID)
+  public ResponseEntity<Object> getCoreTestConfigureListByMaterialSubCategoryId(
+      @PathVariable Long materialSubCategoryId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CORE_TEST_CONFIGURES,
+        coreTestConfigureService.getAllCoreTestConfigureByMaterialSubCategoryId(materialSubCategoryId),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @GetMapping(value =EndpointURI.CORE_TEST_CONFIGURE_BY_RAW_MATERIAL_ID)
+  public ResponseEntity<Object> getCoreTestConfigureListByRawMaterialId(
+      @PathVariable Long rawMaterialId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.CORE_TEST_CONFIGURES,
+        coreTestConfigureService.getAllCoreTestConfigureByRawMaterialId(rawMaterialId),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+  
+  @PutMapping(value =EndpointURI.CORE_TEST_CONFIGURE_TEST_ORIGIN)
+  public ResponseEntity<Object> updateCoreTestOrigin(
+      @Valid @RequestBody List<TestOriginRequestDto> testOriginRequestDtolist) {
 
+    coreTestConfigureService
+        .testOriginChangeStatus(testOriginRequestDtolist);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.CORE_TEST_CONFIGURE),
+        HttpStatus.OK);
+  }
+  
 }
 

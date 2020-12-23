@@ -2,6 +2,8 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.CoreTestConfigureResponseDto;
+import com.tokyo.supermix.data.dto.TestOriginDto;
+import com.tokyo.supermix.data.dto.TestOriginRequestDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
 
 public interface CoreTestConfigureService {
@@ -23,4 +25,12 @@ public interface CoreTestConfigureService {
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestConfigureId(Long testConfigureId);
   
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestId(Long testId);
+
+  public List<TestOriginDto> getAllCoreTestConfigureByMainCategoryId(Long mainCategoryId);
+
+  public List<TestOriginDto> getAllCoreTestConfigureByMaterialSubCategoryId(Long materialSubCategoryId);
+
+  public List<TestOriginDto> getAllCoreTestConfigureByRawMaterialId(Long rawMaterialId);
+  
+  public void testOriginChangeStatus(List<TestOriginRequestDto> testOriginRequestDtolist);
 }

@@ -1,9 +1,7 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
 
 public interface CoreTestConfigureRepository extends JpaRepository<CoreTestConfigure, Long> {
@@ -21,4 +19,13 @@ public interface CoreTestConfigureRepository extends JpaRepository<CoreTestConfi
 
   List<CoreTestConfigure> findByTestConfigureIdAndMaterialSubCategoryId(Long testConfigureId,
       Long materialSubCategoryId);
+
+  boolean existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrue(Long testConfigureId,
+      Long mainCategoryId);
+
+  boolean existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrue(Long testConfigureId,
+      Long materialSubCategoryId);
+
+  List<CoreTestConfigure> findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
+      Long rawMaterialId);
 }
