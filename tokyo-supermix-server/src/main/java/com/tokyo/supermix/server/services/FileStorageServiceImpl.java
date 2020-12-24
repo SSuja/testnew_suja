@@ -1,24 +1,32 @@
 package com.tokyo.supermix.server.services;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.opencsv.CSVReader;
 import com.tokyo.supermix.config.FileStorageProperties;
 import com.tokyo.supermix.data.entities.Customer;
@@ -54,6 +62,8 @@ import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.UnitRepository;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileNotFoundException;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileStorageException;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
@@ -94,7 +104,23 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Autowired
   private FileStorageProperties fileStorageProperties;
   @Autowired
+  private final Path fileStorageLocation;
+  @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
+
+
+  
+  public FileStorageServiceImpl(FileStorageProperties fileStorageProperties)
+      throws TokyoSupermixFileStorageException {
+    this.fileStorageLocation =
+        Paths.get(fileStorageProperties.getUploadDir1()).toAbsolutePath().normalize();
+    try {
+      Files.createDirectories(this.fileStorageLocation);
+    } catch (Exception ex) {
+      throw new TokyoSupermixFileStorageException(
+          "Could not create the directory where the uploaded files will be stored", ex);
+    }
+  }  
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
@@ -407,6 +433,59 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+
+  }
+
+  @Transactional
+  public String storeFile(MultipartFile file)
+      throws IOException, TokyoSupermixFileStorageException {
+    if (!(file.getOriginalFilename().endsWith(".png")
+        || file.getOriginalFilename().endsWith(".jpeg")
+        || file.getOriginalFilename().endsWith(".jpg")))
+      throw new TokyoSupermixFileStorageException("Only PNG, JPEG and JPG images are allowed");
+    FileOutputStream fout = new FileOutputStream(new File(file.getOriginalFilename()));
+    fout.write(file.getBytes());
+    fout.close();
+    BufferedImage image = ImageIO.read(new File(file.getOriginalFilename()));
+    int height = image.getHeight();
+    int width = image.getWidth();
+    if (width > 500 || height > 600) {
+      throw new TokyoSupermixFileStorageException(
+          "Invalid file dimensions. File dimension should note be more than 500 X 600");
+    }
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    try {
+      if (fileName.contains("..")) {
+        throw new TokyoSupermixFileStorageException(
+            "Filename contains invalid path sequence" + fileName);
+      }
+      String newFileName = System.currentTimeMillis() + "_" + fileName;
+      Path targetLocation = this.fileStorageLocation.resolve(newFileName);
+      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+      String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+          .path("/downloadFile/").path(newFileName).toUriString();
+      return fileDownloadUri;
+    } catch (IOException ex) {
+      throw new TokyoSupermixFileStorageException(
+          String.format("Could not store file %s !! Please try again!", fileName), ex);
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException {
+    try {
+      Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+      Resource resource = new UrlResource(filePath.toUri());
+      if (resource.exists()) {
+        return resource;
+      } else {
+        throw new TokyoSupermixFileNotFoundException("File Not Found" + fileName);
+      }
+    } catch (MalformedURLException ex) {
+      throw new TokyoSupermixFileNotFoundException("File Not Found" + fileName, ex);
+    }
+
   }
 
   @Transactional
