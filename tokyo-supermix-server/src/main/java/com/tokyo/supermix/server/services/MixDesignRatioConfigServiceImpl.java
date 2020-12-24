@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -80,6 +81,7 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
         }
       }
     }
+    System.out.println("raguxvuvx" + list);
     return list;
   }
 

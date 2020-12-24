@@ -42,12 +42,10 @@ public class MixDesignProportionController {
   @PostMapping(value = EndpointURI.MIX_DESIGN_PROPORTION)
   public ResponseEntity<Object> saveMixDesignProportion(
       @Valid @RequestBody List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList) {
-    mixDesignProportionRequestDtoList.forEach(
-        mixDesignProportionRequestDtoObj -> mixDesignProportionService.saveMixDesignProportion(
-            mapper.map(mixDesignProportionRequestDtoObj, MixDesignProportion.class)));
-    return new ResponseEntity<Object>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_PROPORTION_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION,
+        mixDesignProportionService.saveMixDesignProportion(
+            mapper.map(mixDesignProportionRequestDtoList, MixDesignProportion.class)),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.MIX_DESIGN_PROPORTIONS)
@@ -94,7 +92,7 @@ public class MixDesignProportionController {
       @Valid @RequestBody MixDesignProportionRequestDto mixDesignProportionRequestDto) {
     if (mixDesignProportionService
         .isMixDesignProportionExist(mixDesignProportionRequestDto.getId())) {
-      mixDesignProportionService.saveMixDesignProportion(
+      mixDesignProportionService.updateMixDesignProportion(
           mapper.map(mixDesignProportionRequestDto, MixDesignProportion.class));
       return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MIX_DESIGN_PROPORTION_SUCCESS), HttpStatus.OK);
