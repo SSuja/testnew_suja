@@ -53,4 +53,9 @@ public class RatioConfigEquationServiceImpl implements RatioConfigEquationServic
   public boolean isRatioExists(String ratio) {
     return ratioConfigEquationRepository.existsByRatio(ratio);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isRatioExistsByRatioConfig(Long ratioConfigId, String ratio) {
+    return ratioConfigEquationRepository.existsByRatioConfigIdAndRatio(ratioConfigId, ratio);
+  }
 }

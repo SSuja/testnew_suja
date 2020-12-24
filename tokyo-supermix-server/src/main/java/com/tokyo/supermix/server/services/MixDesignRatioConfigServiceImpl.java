@@ -3,7 +3,6 @@ package com.tokyo.supermix.server.services;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -65,7 +64,7 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
     mixDesignRatioConfigRepository.save(mixDesignRatioConfig);
   }
 
-  private HashMap<String, Double> getFinishProductTestResult(String mixDesignCode,
+  private HashMap<String, Double> getMixDesignRatioResult(String mixDesignCode,
       Long ratioConfigId) {
     HashMap<String, Double> list = new HashMap<String, Double>();
     for (RatioConfigParameter ratioConfigParameter : ratioConfigParameterRepository
@@ -81,7 +80,6 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
         }
       }
     }
-    System.out.println("raguxvuvx" + list);
     return list;
   }
 
@@ -98,16 +96,16 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
   public double getFinishProductResultParameter(String mixDesignCode, Long ratioConfigId) {
     ScriptEngineManager engineManager = new ScriptEngineManager();
     ScriptEngine engine = engineManager.getEngineByName("JavaScript");
-    double finishProductResult = 0.0;
-    for (String i : getFinishProductTestResult(mixDesignCode, ratioConfigId).keySet()) {
-      engine.put(i, getFinishProductTestResult(mixDesignCode, ratioConfigId).get(i));
+    double mixDesignRatioValue = 0.0;
+    for (String i : getMixDesignRatioResult(mixDesignCode, ratioConfigId).keySet()) {
+      engine.put(i, getMixDesignRatioResult(mixDesignCode, ratioConfigId).get(i));
     }
     try {
-      finishProductResult = (double) engine.eval(getFormula(ratioConfigId));
+      mixDesignRatioValue = (double) engine.eval(getFormula(ratioConfigId));
     } catch (ScriptException e) {
       e.printStackTrace();
     }
-    return roundDoubleValue(finishProductResult);
+    return roundDoubleValue(mixDesignRatioValue);
   }
 
   @Transactional(readOnly = true)

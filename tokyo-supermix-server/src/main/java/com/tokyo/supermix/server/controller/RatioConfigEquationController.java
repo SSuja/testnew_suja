@@ -81,11 +81,19 @@ public class RatioConfigEquationController {
         validationFailureStatusCodes.getRatioConfigEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // post API for RatioConfig
+  // post API for RatioConfig Equation
   @PostMapping(value = EndpointURI.RATIO_CONFIG_EQUATION)
   public ResponseEntity<Object> createRatioConfigEquation(
       @Valid @RequestBody RatioConfigEquationRequestDto ratioConfigEquationRequestDto) {
-    if (ratioConfigEquationService.isRatioExists(ratioConfigEquationRequestDto.getRatio())) {
+    if (ratioConfigEquationService.isRatioExistsByRatioConfig(
+        ratioConfigEquationRequestDto.getRatioConfigId(),
+        ratioConfigEquationRequestDto.getRatio())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_EQUATION,
+          validationFailureStatusCodes.getRatioConfigAlreadyExist()), HttpStatus.BAD_REQUEST);
+    }
+    if (!ratioConfigEquationService
+        .getAllRatioConfigEquationsByRatioConfig(ratioConfigEquationRequestDto.getRatioConfigId())
+        .isEmpty()) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_EQUATION,
           validationFailureStatusCodes.getRatioConfigAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
