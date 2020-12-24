@@ -30,6 +30,10 @@ public class RawMaterial extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = true)
   private Plant plant;
+  private String erpCode;
+  @ManyToOne
+  @JoinColumn(name = "subBusinessUnitId", nullable = true)
+  private SubBusinessUnit subBusinessUnit;
 
   public Plant getPlant() {
     return plant;
@@ -97,5 +101,21 @@ public class RawMaterial extends DateAudit implements Serializable {
 
   public void setActive(boolean active) {
     this.active = active;
+  }
+
+  public String getErpCode() {
+    return erpCode;
+  }
+
+  public void setErpCode(String erpCode) {
+    this.erpCode = erpCode;
+  }
+
+  public SubBusinessUnit getSubBusinessUnit() {
+    return subBusinessUnit;
+  }
+
+  public void setSubBusinessUnit(SubBusinessUnit subBusinessUnit) {
+    this.subBusinessUnit = subBusinessUnit;
   }
 }

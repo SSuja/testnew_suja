@@ -57,34 +57,35 @@ public class PlantController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-  plantService.savePlant(mapper.map(plantDto, Plant.class));
-        return new ResponseEntity<>(
+    plantService.savePlant(mapper.map(plantDto, Plant.class));
+    return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_PLANT_SUCCESS), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.PLANTS)
-  public ResponseEntity<Object> getAllPlants(@CurrentUser UserPrincipal currentUser){
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
-          mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
-    }
+  public ResponseEntity<Object> getAllPlants(@CurrentUser UserPrincipal currentUser) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
+        mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 
   // get plant by id
   @GetMapping(value = EndpointURI.PLANT_BY_CODE)
-  public ResponseEntity<Object> getPlantByCode(@PathVariable String code,@CurrentUser UserPrincipal currentUser) {
+  public ResponseEntity<Object> getPlantByCode(@PathVariable String code,
+      @CurrentUser UserPrincipal currentUser) {
     if (code.equalsIgnoreCase(Constants.ADMIN)) {
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
           mapper.map(plantService.getAllPlants(currentUser), PlantDto.class),
           RestApiResponseStatus.OK), null, HttpStatus.OK);
     }
     if (plantService.isPlantExist(code)) {
-    if (currentUserPermissionPlantService
-        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT)
-        .contains(code)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
-          mapper.map(plantService.getPlantByCode(code), PlantDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
-    }
+      if (currentUserPermissionPlantService
+          .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT)
+          .contains(code)) {
+        return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
+            mapper.map(plantService.getPlantByCode(code), PlantDto.class),
+            RestApiResponseStatus.OK), null, HttpStatus.OK);
+      }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);

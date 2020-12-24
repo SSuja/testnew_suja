@@ -25,7 +25,6 @@ import com.tokyo.supermix.server.services.UnitService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 public class UnitController {

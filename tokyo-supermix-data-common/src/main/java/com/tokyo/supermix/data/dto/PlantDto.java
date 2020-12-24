@@ -13,6 +13,8 @@ public class PlantDto {
   private String phoneNumber;
   private String description;
   private String faxNumber;
+  private Long subBusinessUnitId;
+  private String subBusinessUnitName;
 
   public String getCode() {
     return code;
@@ -62,4 +64,19 @@ public class PlantDto {
     this.faxNumber = faxNumber;
   }
 
+  public Long getSubBusinessUnitId() {
+    return subBusinessUnitId;
+  }
+
+  public void setSubBusinessUnitId(Long subBusinessUnitId) {
+    this.subBusinessUnitId = subBusinessUnitId;
+  }
+
+  public String getSubBusinessUnitName() {
+    return subBusinessUnitName;
+  }
+
+  public void setSubBusinessUnitName(String subBusinessUnitName) {
+    this.subBusinessUnitName = subBusinessUnitName;
+  }
 }
