@@ -752,6 +752,13 @@ public final class EndpointURI {
   
   public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
+  
+  /*
+   * Unit apis
+   */
+  public static final String TABLE_FORMAT = BASE_API_PATH + "table-format";
+  public static final String TABLE_FORMATS = BASE_API_PATH + "table-formats";
+  public static final String TABLE_FORMAT_BY_ID = TABLE_FORMAT + ID;
 
   private EndpointURI() {}
 }

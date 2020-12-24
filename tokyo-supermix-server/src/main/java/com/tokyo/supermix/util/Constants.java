@@ -31,8 +31,7 @@ public class Constants {
       "Notification : About Finish Product Sample Creation ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
       "Notification : About Finish Product Sample Issue Creation ";
-  public static final String SUBJECT_PLANT_EQUIPMENT =
-      "Notification : About Plant Equipment";
+  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
@@ -389,7 +388,7 @@ public class Constants {
   public static final String TWO_DECIMAL_FORMAT = "#.##";
   public static final String DECIMAL_FORMAT = "#.#####";
   public static final String DECIMAL_FORMAT_FINISH = "#.#####";
-  
+
   public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";
   public static final String SIEVE_TEST_TRIAL_ID = "id";
   public static final String ADD_SIEVE_TEST_TRIAL_SUCCEESS = "Sieve Test Trial Added Successfully";
@@ -595,12 +594,24 @@ public class Constants {
   public static final String CORE_TEST_CONFIGURES = "coreTestConfigures";
   public static final String ADD_CORE_TEST_CONFIGURE_SUCCESS =
       "coreTestConfigure Added Successfully";
-//  public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
-//  public static final String ACCEPTED_VALUE_TEST_CONFIGURE_ID = "acceptedValueTestConfigureId";
-//  public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";
-//  public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
-//  public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated Successfully";
-//  public static final String ACCEPTED_VALUE_ALREADY_DEPENDED = "Accepted Value is Already Depended";
+  // public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
+  // public static final String ACCEPTED_VALUE_TEST_CONFIGURE_ID = "acceptedValueTestConfigureId";
+  // public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";
+  // public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
+  // public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated
+  // Successfully";
+  // public static final String ACCEPTED_VALUE_ALREADY_DEPENDED = "Accepted Value is Already
+  // Depended";
+
+  /*
+   * Constants for Unit validation key & Success messages
+   */
+  public static final String TABLE_FORMAT = "tableFormat";
+  public static final String TABLE_FORMATS = "tableFormats";
+  public static final String ADD_TABLE_FORMAT_SUCCESS = "tableFormat Added Successfully";
+  public static final String TABLE_FORMAT_DELETED = "table format Successfully Deleted";
+  public static final String TABLE_FORMAT_UPDATED_SUCCESS = "table format Updated Successfully";
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */
