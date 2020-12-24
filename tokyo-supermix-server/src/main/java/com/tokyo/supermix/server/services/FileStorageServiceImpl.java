@@ -102,10 +102,9 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Autowired
   private RawMaterialService rawMaterialService;
   @Autowired
-  private FileStorageProperties fileStorageProperties;  
+  private FileStorageProperties fileStorageProperties;
   @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
-  
   private final Path fileStorageLocation;
 
   @Autowired
@@ -119,7 +118,8 @@ public class FileStorageServiceImpl implements FileStorageService {
       throw new TokyoSupermixFileStorageException(
           "Could not create the directory where the uploaded files will be stored", ex);
     }
-  }  
+  }
+  
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
@@ -433,7 +433,6 @@ public class FileStorageServiceImpl implements FileStorageService {
       e.printStackTrace();
     }
 
-
   }
 
   @Transactional
@@ -484,7 +483,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (MalformedURLException ex) {
       throw new TokyoSupermixFileNotFoundException("File Not Found" + fileName, ex);
     }
-
   }
 
   @Transactional
