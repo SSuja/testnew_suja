@@ -33,4 +33,6 @@ public interface ProjectRepository
   List<Project> findByNameContaining(String name);
 
   List<Project> findByPlantCodeAndNameContaining(String plantCode, String name);
+
+  Project findByName(String name);
 }
