@@ -1721,10 +1721,6 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
-<<<<<<< HEAD
-}
-=======
-
   // SBU
   @Value("${validation.subBusinessUnit.notExists}")
   private String subBusinessUnitNotExist;
@@ -1885,4 +1881,4 @@ public void setMacAddressIsEmpty(String macAddressIsEmpty) {
   this.macAddressIsEmpty = macAddressIsEmpty;
 }
 }
->>>>>>> 72e5734a10b1406ea5c3d2c34c547444f572f9cb
+
