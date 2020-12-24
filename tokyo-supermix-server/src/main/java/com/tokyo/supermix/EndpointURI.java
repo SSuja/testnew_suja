@@ -70,6 +70,9 @@ public final class EndpointURI {
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
   public static final String GET_EMPLOYEES_BY_PLANT =
       EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
+  public static final String GET_EMPLOYEE_IMAGE =
+      "/downloadFile/{fileName:.+}";
+  public static final String EMPLOYEE_USER = BASE_API_PATH + "employee-user";
   /*
    * Material Category APIs
    */
@@ -728,14 +731,17 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "download";
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
+
+  public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";  
+  public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
+  public static final String MAC_ADDRESS_BY_ID = MAC_ADDRESS + ID;
   public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
   public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
-      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
-  
-  
+      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";   
   public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
+
 
   private EndpointURI() {}
 }

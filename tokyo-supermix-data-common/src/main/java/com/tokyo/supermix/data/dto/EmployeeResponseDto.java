@@ -15,6 +15,7 @@ public class EmployeeResponseDto {
   private String createdAt;
   private String updatedAt;
   private boolean isEnabled;
+  private String profilePicPath;
 
   public boolean isEnabled() {
     return isEnabled;
@@ -127,4 +128,13 @@ public class EmployeeResponseDto {
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
   }
+
+  public String getProfilePicPath() {
+    return profilePicPath;
+  }
+
+  public void setProfilePicPath(String profilePicPath) {
+    this.profilePicPath = profilePicPath;
+  }
+
 }
