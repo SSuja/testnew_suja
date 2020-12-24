@@ -138,7 +138,7 @@ public class EmployeeController {
   @PutMapping(value = EndpointURI.EMPLOYEE_USER)
   public ResponseEntity<Object> updateEmployee(
       @RequestParam(value = "employee", required = true) String employeeDtoJson,
-      @RequestParam(value = "image", required = true) MultipartFile file,
+      @RequestParam(value = "image", required = false) MultipartFile file,
       HttpServletRequest request) throws IOException {
     EmployeeRequestDto employeeRequestDto =
         objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
@@ -148,10 +148,12 @@ public class EmployeeController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      try {
-        employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
-      } catch (TokyoSupermixFileStorageException e) {
-        e.printStackTrace();
+      if (file != null) {
+        try {
+          employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+        } catch (TokyoSupermixFileStorageException e) {
+          e.printStackTrace();
+        }
       }
       employeeService.updateEmployee(mapper.map(employeeRequestDto, Employee.class), request);
       return new ResponseEntity<>(
