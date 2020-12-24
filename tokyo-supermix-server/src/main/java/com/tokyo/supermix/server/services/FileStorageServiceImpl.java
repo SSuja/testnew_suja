@@ -105,6 +105,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   private FileStorageProperties fileStorageProperties;
   @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
+
   private final Path fileStorageLocation;
 
   @Autowired
@@ -119,7 +120,6 @@ public class FileStorageServiceImpl implements FileStorageService {
           "Could not create the directory where the uploaded files will be stored", ex);
     }
   }
-  
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
@@ -435,6 +435,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
   }
 
+
   @Transactional
   public String storeFile(MultipartFile file)
       throws IOException, TokyoSupermixFileStorageException {
@@ -526,8 +527,8 @@ public class FileStorageServiceImpl implements FileStorageService {
           finishProductSample.setStatus(Status.NEW);
           count++;
           finishProductSampleRepository.save(finishProductSample);
-        } else { 
-          codeArray.add(0,String.valueOf(count));
+        } else {
+          codeArray.add(0, String.valueOf(count));
           codeArray.add(row[0]);
         }
       }

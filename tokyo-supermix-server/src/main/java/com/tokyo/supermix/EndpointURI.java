@@ -70,8 +70,7 @@ public final class EndpointURI {
       EMPLOYEE + SLASH + "confirmation" + SLASH + "{confirmationToken}";
   public static final String GET_EMPLOYEES_BY_PLANT =
       EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
-  public static final String GET_EMPLOYEE_IMAGE =
-      "/downloadFile/{fileName:.+}";
+  public static final String GET_EMPLOYEE_IMAGE = "/downloadFile/{fileName:.+}";
   public static final String EMPLOYEE_USER = BASE_API_PATH + "employee-user";
   /*
    * Material Category APIs
@@ -272,6 +271,8 @@ public final class EndpointURI {
   public static final String GET_INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY =
       INCOMING_SAMPLES + SLASH + "material-sub-category" + SLASH + "{materialSubCategoryId}" + SLASH
           + "plant" + SLASH + "{plantCode}" + SLASH + "incoming-sample";
+  public static final String INCOMING_SAMPLES_BY_SUPPLIER_ID =
+      INCOMING_SAMPLES + SLASH + "supplier" + SLASH + "{supplierId}";
   /*
    * Mix design apis
    * 
@@ -732,13 +733,17 @@ public final class EndpointURI {
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
 
-  public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";  
+  public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";
   public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
   public static final String MAC_ADDRESS_BY_ID = MAC_ADDRESS + ID;
+
+  public static final String STRENGTH_BY_FINISH_PRODUCT_TEST_CODE = BASE_API_PATH + "strength"
+      + SLASH + "{finishProductTestCode}" + SLASH + "plant" + SLASH + "{plantCode}";
+
   public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
   public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
-      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";   
+      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
   public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
 

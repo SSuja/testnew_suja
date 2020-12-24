@@ -136,5 +136,4 @@ public class EmployeeResponseDto {
   public void setProfilePicPath(String profilePicPath) {
     this.profilePicPath = profilePicPath;
   }
-
 }

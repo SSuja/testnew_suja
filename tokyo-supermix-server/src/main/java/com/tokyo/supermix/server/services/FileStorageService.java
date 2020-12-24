@@ -1,4 +1,5 @@
 package com.tokyo.supermix.server.services;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -22,12 +23,11 @@ public interface FileStorageService {
 
   public void importPlantEquipment(MultipartFile file);
 
-  public void importRawMaterial(MultipartFile file,HttpServletRequest request);
-  
-  public String storeFile(MultipartFile file)  throws IOException, TokyoSupermixFileStorageException;
-  
+  public void importRawMaterial(MultipartFile file, HttpServletRequest request);
+
+  public String storeFile(MultipartFile file) throws IOException, TokyoSupermixFileStorageException;
+
   public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException;
 
   public ArrayList<String> importDeliverySample(MultipartFile file);
-
 }

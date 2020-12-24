@@ -21,7 +21,7 @@ public class EmployeeRequestDto {
   private boolean hasUser;
   private boolean isEnabled;
   private String profilePicPath;
-  
+
   public Long getId() {
     return id;
   }

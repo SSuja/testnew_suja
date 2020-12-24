@@ -201,9 +201,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       booleanBuilder
           .and(QIncomingSample.incomingSample.supplier.name.startsWithIgnoreCase(supplierName));
     }
-    if (status != null ) {
-        booleanBuilder.and(QIncomingSample.incomingSample.status.stringValue().startsWith(status));
-      }
+    if (status != null) {
+      booleanBuilder.and(QIncomingSample.incomingSample.status.stringValue().startsWith(status));
+    }
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
@@ -222,5 +222,10 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       String plantCode) {
     return incomingSampleRepository
         .findByRawMaterialMaterialSubCategoryIdAndPlantCode(materialSubCategoryId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getBySupplierId(Long supplierId) {
+    return incomingSampleRepository.findBySupplierId(supplierId);
   }
 }
