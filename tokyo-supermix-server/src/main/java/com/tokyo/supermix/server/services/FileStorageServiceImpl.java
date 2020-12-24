@@ -102,14 +102,13 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Autowired
   private RawMaterialService rawMaterialService;
   @Autowired
-  private FileStorageProperties fileStorageProperties;
-  @Autowired
-  private final Path fileStorageLocation;
+  private FileStorageProperties fileStorageProperties;  
   @Autowired
   private FinishProductSampleRepository finishProductSampleRepository;
-
-
   
+  private final Path fileStorageLocation;
+
+  @Autowired
   public FileStorageServiceImpl(FileStorageProperties fileStorageProperties)
       throws TokyoSupermixFileStorageException {
     this.fileStorageLocation =
