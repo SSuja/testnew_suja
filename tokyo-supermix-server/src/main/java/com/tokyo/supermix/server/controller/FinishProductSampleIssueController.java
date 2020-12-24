@@ -20,6 +20,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
+import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -31,6 +32,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
+import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -42,6 +44,8 @@ import com.tokyo.supermix.util.privilege.PermissionConstants;
 public class FinishProductSampleIssueController {
   @Autowired
   FinishProductSampleIssueService finishProductSampleIssueService;
+  @Autowired
+  FinishProductSampleService finishProductSampleService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -151,47 +155,46 @@ public class FinishProductSampleIssueController {
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(finishProductSampleIssueService.countFinishProductSampleIssue());
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-              mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(
-                  currentUser, pageable), FinishProductSampleIssueResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleIssueService.getAllFinishProductSampleIssueByPlant(
+              currentUser, pageable), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
         PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE_ISSUE).contains(plantCode)) {
       pagination.setTotalRecords(
           finishProductSampleIssueService.countFinishProductSampleIssueByPlant(plantCode));
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-              mapper.map(finishProductSampleIssueService.getFinishProductSampleIssueByPlantCode(
-                  plantCode, pageable), FinishProductSampleIssueResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(finishProductSampleIssueService.getFinishProductSampleIssueByPlantCode(
+              plantCode, pageable), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH)
-  public ResponseEntity<Object> getFinishProductSampleIssueSearch(@PathVariable String plantCode,
-      @RequestParam(name = "workOrderNumber", required = false) String workOrderNumber,
-      @RequestParam(name = "materialName", required = false) String materialName,
+  public ResponseEntity<Object> getFinishProductSearch(@PathVariable String plantCode,
+      @RequestParam(name = "finishProductCode", required = false) String finishProductCode,
+      @RequestParam(name = "equipmentName", required = false) String equipmentName,
+      @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
-      @RequestParam(name = "pourName", required = false) String pourName,
-      @RequestParam(name = "projectName", required = false) String projectName,
-      @RequestParam(name = "customerName", required = false) String customerName,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
+      @RequestParam(name = "workOrderNo", required = false) String workOrderNumber,
+      @RequestParam(name = "customer", required = false) String customer,
+      @RequestParam(name = "project", required = false) String project,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-            finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
-                workOrderNumber, materialName, mixDesignCode, pourName, projectName, customerName,
-                plantCode, pageable, pagination),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+        finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
+            finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status, date,
+            code, rawMaterialName, workOrderNumber, customer, project, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

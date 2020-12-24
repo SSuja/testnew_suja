@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.FinishProductTestDto;
+import com.tokyo.supermix.data.dto.report.MaterialTestDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -33,10 +35,12 @@ public interface MaterialTestService {
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
-  public List<MaterialTest> searchMaterialTest(String incomingSampleCode,String date, String specimenCode, String status, String supplierName,
-     String testName,BooleanBuilder booleanBuilder, int page, int size,Pageable pageable,String plantCode, Pagination pagination);
+  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String date,
+      String specimenCode, String status, String supplierName, String testName,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
+      Pagination pagination);
 
- List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
+  List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 
   public List<MaterialTest> getMaterialTestByTestConfigureTestType(MainType testType);
 
@@ -54,14 +58,16 @@ public interface MaterialTestService {
 
   public List<MaterialTest> getMaterialTestsByIncomingSampleCodeAndTestConfigIdAndPlantCode(
       String incomingSampleCode, Long testConfigId, String plantCode);
-  
+
   public List<MaterialTest> getMaterialTestByPlant(String plantCode);
-  
+
   public List<MaterialTest> getAllMaterialTests(Pageable pageable);
-  
-  public List<MaterialTest> getMaterialTestByPlant(String plantCode,Pageable pageable);
-  
+
+  public List<MaterialTest> getMaterialTestByPlant(String plantCode, Pageable pageable);
+
   public Long getCountMaterialTest();
 
   public Long getCountMaterialTestByPlantCode(String plantCode);
+
+  public List<MaterialTestDto> getMaterialTestsByIncomingSample(String incomingSampleCode);
 }
