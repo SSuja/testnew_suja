@@ -386,7 +386,7 @@ public class Constants {
    * Constants for Sieve Test Trial validation key & Success messages
    */
   public static final String TWO_DECIMAL_FORMAT = "#.##";
-  public static final String DECIMAL_FORMAT = "#.##";
+  public static final String DECIMAL_FORMAT = "#.#####";
   public static final String DECIMAL_FORMAT_FINISH = "#.#####";
 
   public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";

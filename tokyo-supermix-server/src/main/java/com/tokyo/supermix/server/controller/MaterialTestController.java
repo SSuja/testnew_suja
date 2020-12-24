@@ -162,18 +162,14 @@ public class MaterialTestController {
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-              mapper.map(
-                  materialTestService.searchMaterialTest(incomingSampleCode,date,specimenCode, status, supplierName,
-                      testName, booleanBuilder, page, size, pageable, plantCode,pagination),
-                  MaterialTestResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(materialTestService.searchMaterialTest(incomingSampleCode, date, specimenCode,
+              status, supplierName, testName, booleanBuilder, page, size, pageable, plantCode,
+              pagination), MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_TEST_BY_PLANT)
@@ -330,6 +326,14 @@ public class MaterialTestController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
 
+  }
+
+  @GetMapping(value = EndpointURI.GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE)
+  public ResponseEntity<Object> getMaterialTestsByIncomingSample(
+      @PathVariable String incomingSampleCode) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
+        materialTestService.getMaterialTestsByIncomingSample(incomingSampleCode),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
 }
