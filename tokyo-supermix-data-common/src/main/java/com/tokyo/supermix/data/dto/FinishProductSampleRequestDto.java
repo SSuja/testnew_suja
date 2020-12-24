@@ -7,7 +7,6 @@ import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleRequestDto {
   private String code;
-  @NotNull(message = "{finishProductSampleRequestDto.finishProductCode.null}")
   private String finishProductCode;
   private String plantEquipmentSerialNo;
   @NotNull(message = "{finishProductSampleRequestDto.mixDesignCode.null}")

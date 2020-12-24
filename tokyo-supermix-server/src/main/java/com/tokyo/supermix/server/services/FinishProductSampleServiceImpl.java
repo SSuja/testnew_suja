@@ -71,6 +71,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       }
     }
     finishProductSample.setStatus(Status.NEW);
+    finishProductSample.setFinishProductCode(finishProductSample.getCode());
     FinishProductSample finishProductSampleObj =
         finishProductSampleRepository.save(finishProductSample);
     if (finishProductSampleObj != null) {
