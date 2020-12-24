@@ -731,10 +731,6 @@ public final class EndpointURI {
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "download";
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
-  public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
-      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
-  public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
-      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
 
 
   public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";
