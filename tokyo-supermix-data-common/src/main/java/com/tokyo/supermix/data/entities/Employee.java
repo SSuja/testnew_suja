@@ -30,6 +30,7 @@ public class Employee extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "designationId", nullable = false)
   private Designation designation;
+  private String profilePicPath;
 
   public Long getId() {
     return id;
@@ -113,5 +114,13 @@ public class Employee extends DateAudit implements Serializable {
 
   public void setEnabled(boolean isEnabled) {
     this.isEnabled = isEnabled;
+  }
+
+  public String getProfilePicPath() {
+    return profilePicPath;
+  }
+
+  public void setProfilePicPath(String profilePicPath) {
+    this.profilePicPath = profilePicPath;
   }
 }

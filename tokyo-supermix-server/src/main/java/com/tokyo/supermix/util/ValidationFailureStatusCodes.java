@@ -1721,4 +1721,168 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
+<<<<<<< HEAD
 }
+=======
+
+  // SBU
+  @Value("${validation.subBusinessUnit.notExists}")
+  private String subBusinessUnitNotExist;
+
+  @Value("${validation.subBusinessUnit.alreadyExist}")
+  private String subBusinessUnitAlreadyExist;
+
+  @Value("${subBusinessUnitDto.name.null}")
+  private String subBusinessUnitNameIsNull;
+
+  public String getSubBusinessUnitNotExist() {
+    return subBusinessUnitNotExist;
+  }
+
+  public void setSubBusinessUnitNotExist(String subBusinessUnitNotExist) {
+    this.subBusinessUnitNotExist = subBusinessUnitNotExist;
+  }
+
+  public String getSubBusinessUnitAlreadyExist() {
+    return subBusinessUnitAlreadyExist;
+  }
+
+  public void setSubBusinessUnitAlreadyExist(String subBusinessUnitAlreadyExist) {
+    this.subBusinessUnitAlreadyExist = subBusinessUnitAlreadyExist;
+  }
+
+  public String getSubBusinessUnitNameIsNull() {
+    return subBusinessUnitNameIsNull;
+  }
+
+  public void setSubBusinessUnitNameIsNull(String subBusinessUnitNameIsNull) {
+    this.subBusinessUnitNameIsNull = subBusinessUnitNameIsNull;
+  }
+
+  // ratio config
+  @Value("${validation.ratioConfig.notExists}")
+  private String ratioConfigNotExist;
+
+  @Value("${validation.ratioConfig.alreadyExist}")
+  private String ratioConfigAlreadyExist;
+
+  public String getRatioConfigNotExist() {
+    return ratioConfigNotExist;
+  }
+
+  public void setRatioConfigNotExist(String ratioConfigNotExist) {
+    this.ratioConfigNotExist = ratioConfigNotExist;
+  }
+
+  public String getRatioConfigAlreadyExist() {
+    return ratioConfigAlreadyExist;
+  }
+
+  public void setRatioConfigAlreadyExist(String ratioConfigAlreadyExist) {
+    this.ratioConfigAlreadyExist = ratioConfigAlreadyExist;
+  }
+
+  // ratio config parameter
+  @Value("${validation.ratioConfigParameter.notExists}")
+  private String ratioConfigParameterNotExist;
+
+  @Value("${validation.ratioConfigParameter.alreadyExist}")
+  private String ratioConfigParameterAlreadyExist;
+
+  // ratio config equation
+  @Value("${validation.ratioConfigEquation.notExists}")
+  private String ratioConfigEquationNotExist;
+
+  @Value("${validation.ratioConfigEquation.alreadyExist}")
+  private String ratioConfigEquationAlreadyExist;
+
+  public String getRatioConfigParameterNotExist() {
+    return ratioConfigParameterNotExist;
+  }
+
+  public void setRatioConfigParameterNotExist(String ratioConfigParameterNotExist) {
+    this.ratioConfigParameterNotExist = ratioConfigParameterNotExist;
+  }
+
+  public String getRatioConfigParameterAlreadyExist() {
+    return ratioConfigParameterAlreadyExist;
+  }
+
+  public void setRatioConfigParameterAlreadyExist(String ratioConfigParameterAlreadyExist) {
+    this.ratioConfigParameterAlreadyExist = ratioConfigParameterAlreadyExist;
+  }
+
+  public String getRatioConfigEquationNotExist() {
+    return ratioConfigEquationNotExist;
+  }
+
+  public void setRatioConfigEquationNotExist(String ratioConfigEquationNotExist) {
+    this.ratioConfigEquationNotExist = ratioConfigEquationNotExist;
+  }
+
+  public String getRatioConfigEquationAlreadyExist() {
+    return ratioConfigEquationAlreadyExist;
+  }
+
+  public void setRatioConfigEquationAlreadyExist(String ratioConfigEquationAlreadyExist) {
+    this.ratioConfigEquationAlreadyExist = ratioConfigEquationAlreadyExist;
+  }
+
+  // ratio config parameter
+  @Value("${validation.mixDesignRatioConfig.notExists}")
+  private String mixDesignRatioConfigNotExist;
+
+  public String getMixDesignRatioConfigNotExist() {
+    return mixDesignRatioConfigNotExist;
+  }
+
+  public void setMixDesignRatioConfigNotExist(String mixDesignRatioConfigNotExist) {
+    this.mixDesignRatioConfigNotExist = mixDesignRatioConfigNotExist;
+  }
+  
+//macAddress
+ @Value("${validation.macAddress.notExists}") 
+ private String macAddressNotExist;
+
+ @Value("${validation.macAddress.alreadyExist}")
+ private String macAddressAlreadyExist;
+
+ @Value("${macAddressDto.macAddress.null}")
+ private String macAddressIsNull;
+
+ @Value("${macAddressDto.macAddress.empty}")
+ private String macAddressIsEmpty;
+
+public String getMacAddressNotExist() {
+  return macAddressNotExist;
+}
+
+public void setMacAddressNotExist(String macAddressNotExist) {
+  this.macAddressNotExist = macAddressNotExist;
+}
+
+public String getMacAddressAlreadyExist() {
+  return macAddressAlreadyExist;
+}
+
+public void setMacAddressAlreadyExist(String macAddressAlreadyExist) {
+  this.macAddressAlreadyExist = macAddressAlreadyExist;
+}
+
+public String getMacAddressIsNull() {
+  return macAddressIsNull;
+}
+
+public void setMacAddressIsNull(String macAddressIsNull) {
+  this.macAddressIsNull = macAddressIsNull;
+}
+
+public String getMacAddressIsEmpty() {
+  return macAddressIsEmpty;
+}
+
+public void setMacAddressIsEmpty(String macAddressIsEmpty) {
+  this.macAddressIsEmpty = macAddressIsEmpty;
+}
+}
+>>>>>>> 72e5734a10b1406ea5c3d2c34c547444f572f9cb

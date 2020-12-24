@@ -59,13 +59,14 @@ public class FinishProductSampleController {
   @Autowired
   private FinishProductSampleService finishProductSampleService;
   @Autowired
-  private FinishProductSampleIssueService finishProductSampleIssueService;
-  @Autowired
   private PlantService plantService;
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private FileStorageService fileStorageService;
   @Autowired
-  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  private FinishProductSampleIssueService finishProductSampleIssueService;
+
   private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)

@@ -612,6 +612,71 @@ public class Constants {
   public static final String TABLE_FORMAT_DELETED = "table format Successfully Deleted";
   public static final String TABLE_FORMAT_UPDATED_SUCCESS = "table format Updated Successfully";
 
+  public static final String MAC_ADDRESS = "Mac address";
+  public static final String ADD_MAC_ADDRESS_SUCCESS = "Mac address Added Successfully";
+  public static final String MAC_ADDRESS_DELETED = "Mac address Successfully Deleted";
+  public static final String MAC_ADDRESS_UPDATED_SUCCESS = "Mac address Updated Successfully";
+
+  public static final String STRENGTH = "strength";
+
+
+
+  /*
+   * Constants for Mix design ratio configuration validation key & Success messages
+   */
+  public static final String MIX_DESIGN_RATIO_CONFIG = "mixDesignRatio";
+  public static final String MIX_DESIGN_RATIO_CONFIGS = "mixDesignRatios";
+  public static final String ADD_MIX_DESIGN_RATIO_CONFIG = "Mix design Ratio Added Successfully";
+  public static final String DELETE_MIX_DESIGN_RATIO_CONFIG =
+      "Mix design Ratio Deleted Successfully";
+
+  /*
+   * Constants for SBU validation key & Success messages
+   */
+  public static final String SUB_BUSINESS_UNIT_NAME = "subBusinessUnitName";
+  public static final String SUB_BUSINESS_UNIT = "subBusinessUnit";
+  public static final String SUB_BUSINESS_UNITS = "subBusinessUnits";
+  public static final String ADD_SUB_BUSINESS_UNIT_SUCCESS = "SubBusinessUnit Added Successfully";
+  public static final String SUB_BUSINESS_UNIT_DELETED = "SubBusinessUnit Successfully Deleted";
+  public static final String UPDATE_SUB_BUSINESS_UNIT_SUCCESS =
+      "SubBusinessUnit Updated Successfully";
+
+  /*
+   * Constants for ratio config validation key & Success messages
+   */
+  public static final String RATIO_CONFIG_ID = "ratioConfigId";
+  public static final String RATIO_CONFIGS = "ratioConfigs";
+  public static final String RATIO_CONFIG = "ratioConfig";
+  public static final String RATIO_CONFIG_DELETED = "Ratio Config Successfully Deleted";
+  public static final String ADD_RATIO_CONFIG_SUCCESS = "Ratio Config Added Successfully";
+  public static final String UPDATE_RATIO_CONFIG_SUCCESS = "Ratio Config Updated Successfully";
+
+  /*
+   * Constants for ratio config parameter validation key & Success messages
+   */
+  public static final String RATIO_CONFIG_PARAMETER_ID = "ratioConfigParameterId";
+  public static final String RATIO_CONFIG_PARAMETERS = "ratioConfigParameters";
+  public static final String RATIO_CONFIG_PARAMETER = "ratioConfigParameter";
+  public static final String RATIO_CONFIG_PARAMETER_DELETED =
+      "Ratio Config Parameter Successfully Deleted";
+  public static final String ADD_RATIO_CONFIG_PARAMETER_SUCCESS =
+      "Ratio Config Parameter Added Successfully";
+  public static final String UPDATE_RATIO_CONFIG_PARAMETER_SUCCESS =
+      "Ratio Config Parameter Updated Successfully";
+
+  /*
+   * Constants for ratio config equation validation key & Success messages
+   */
+  public static final String RATIO_CONFIG_EQUATION_ID = "ratioConfigEquationId";
+  public static final String RATIO_CONFIG_EQUATIONS = "ratioConfigEquations";
+  public static final String RATIO_CONFIG_EQUATION = "ratioConfigEquation";
+  public static final String RATIO_CONFIG_EQUATION_DELETED =
+      "Ratio Config Equation Successfully Deleted";
+  public static final String ADD_RATIO_CONFIG__EQUATION_SUCCESS =
+      "Ratio Config Equation Added Successfully";
+  public static final String UPDATE_RATIO_CONFIG__EQUATION_SUCCESS =
+      "Ratio Config Updated Successfully";
+
   /*
    * Encapsulate constructor to restrict modification from outside
    */

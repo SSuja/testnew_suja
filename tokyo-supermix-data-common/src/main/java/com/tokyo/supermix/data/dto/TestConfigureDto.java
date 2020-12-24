@@ -21,6 +21,7 @@ public class TestConfigureDto {
   private RawMaterialResponseDto rawMaterial;
   private List<TestEquationResponseDto> testEquations;
   private List<MaterialAcceptedValueDto> rawMaterialDto;
+  private Long noOfTrial;
 
   public Long getId() {
     return id;
@@ -142,5 +143,13 @@ public class TestConfigureDto {
 
   public void setRawMaterialDto(List<MaterialAcceptedValueDto> rawMaterialDto) {
     this.rawMaterialDto = rawMaterialDto;
+  }
+
+  public Long getNoOfTrial() {
+    return noOfTrial;
+  }
+
+  public void setNoOfTrial(Long noOfTrial) {
+    this.noOfTrial = noOfTrial;
   }
 }

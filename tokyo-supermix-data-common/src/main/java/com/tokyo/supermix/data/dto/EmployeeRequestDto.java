@@ -20,6 +20,7 @@ public class EmployeeRequestDto {
   private Long designationId;
   private boolean hasUser;
   private boolean isEnabled;
+  private String profilePicPath;
 
   public Long getId() {
     return id;
@@ -101,4 +102,11 @@ public class EmployeeRequestDto {
     this.isEnabled = isEnabled;
   }
 
+  public String getProfilePicPath() {
+    return profilePicPath;
+  }
+
+  public void setProfilePicPath(String profilePicPath) {
+    this.profilePicPath = profilePicPath;
+  }
 }

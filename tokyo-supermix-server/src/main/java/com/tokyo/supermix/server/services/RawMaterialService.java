@@ -42,7 +42,8 @@ public interface RawMaterialService {
 
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
       String materialSubCategoryName, String plantName, String prefix, String plantCode,
-      Pageable pageable, Pagination pagination);
+      String erpCode, Pageable pageable, Pagination pagination);
+
   public List<RawMaterial> getNameByPlantCode(String plantCode, String name);
 
   public List<RawMaterial> getName(String name);
@@ -55,5 +56,6 @@ public interface RawMaterialService {
 
   public List<RawMaterial> getAllRawMaterialsPage(Pageable pageable);
 
-  public boolean isPrefixAndMaterialSubCategoryExists(String prefix, Long materialSubCategoryId,String plantCode);
+  public boolean isPrefixAndMaterialSubCategoryExists(String prefix, Long materialSubCategoryId,
+      String plantCode);
 }
