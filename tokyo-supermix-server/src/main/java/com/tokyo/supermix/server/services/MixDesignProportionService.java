@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.entities.MixDesignProportion;
 public interface MixDesignProportionService {
   public List<MixDesignProportion> getAllMixDesignProportions();
 
-  public MixDesignProportion saveMixDesignProportion(MixDesignProportion mixDesignProportion);
+  public String saveMixDesignProportion(List<MixDesignProportion> mixDesignProportion);
 
   public void deleteById(Long id);
 
@@ -22,4 +22,6 @@ public interface MixDesignProportionService {
   public Page<MixDesignProportion> searchMixDesignProportion(String rawMaterialName1,
       String rawMaterialName2, String rawMaterialName3, String rawMaterialName4,
       String rawMaterialName5, int page, int size, String mixDesignCode);
+
+  public void updateMixDesignProportion(MixDesignProportion mixDesignProportion);
 }

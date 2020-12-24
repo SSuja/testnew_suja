@@ -60,7 +60,6 @@ public class DesignationController {
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
         validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   // delete api for designation
@@ -75,7 +74,6 @@ public class DesignationController {
     logger.debug("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
         validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   // post API for designation
@@ -93,7 +91,6 @@ public class DesignationController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_DESIGNATION_SUCCESS),
         HttpStatus.OK);
-
   }
 
   // update API for designations
