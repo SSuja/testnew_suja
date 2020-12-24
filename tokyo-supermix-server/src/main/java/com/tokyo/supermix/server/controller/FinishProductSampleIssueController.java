@@ -32,6 +32,7 @@ import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
+import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
@@ -43,6 +44,8 @@ import com.tokyo.supermix.util.privilege.PermissionConstants;
 public class FinishProductSampleIssueController {
   @Autowired
   FinishProductSampleIssueService finishProductSampleIssueService;
+  @Autowired
+  FinishProductSampleService finishProductSampleService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
@@ -171,24 +174,27 @@ public class FinishProductSampleIssueController {
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_ISSUE_SEARCH)
-  public ResponseEntity<Object> getFinishProductSampleIssueSearch(@PathVariable String plantCode,
-      @RequestParam(name = "workOrderNumber", required = false) String workOrderNumber,
-      @RequestParam(name = "materialName", required = false) String materialName,
+  public ResponseEntity<Object> getFinishProductSearch(@PathVariable String plantCode,
+      @RequestParam(name = "finishProductCode", required = false) String finishProductCode,
+      @RequestParam(name = "equipmentName", required = false) String equipmentName,
+      @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
-      @RequestParam(name = "pourName", required = false) String pourName,
-      @RequestParam(name = "projectName", required = false) String projectName,
-      @RequestParam(name = "customerName", required = false) String customerName,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
+      @RequestParam(name = "workOrderNo", required = false) String workOrderNumber,
+      @RequestParam(name = "customer", required = false) String customer,
+      @RequestParam(name = "project", required = false) String project,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE_ISSUES,
-            finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
-                workOrderNumber, materialName, mixDesignCode, pourName, projectName, customerName,
-                plantCode, pageable, pagination),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+        finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
+            finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status, date,
+            code, rawMaterialName, workOrderNumber, customer, project, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

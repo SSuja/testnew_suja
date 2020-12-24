@@ -123,8 +123,8 @@ public class RawMaterialController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
             validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      if (rawMaterialService.isPrefixAlreadyExistsUpdate(rawMaterialRequestDto.getId(),
-          rawMaterialRequestDto.getPrefix())) {
+      if (rawMaterialService.isPrefixAndMaterialSubCategoryExists(rawMaterialRequestDto.getPrefix(),
+          rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getPlantCode())) {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
@@ -232,7 +232,7 @@ public class RawMaterialController {
           required = false) String materialSubCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "prefix", required = false) String prefix,
-      @RequestParam(name = "designationName", required = false) String designationName,
+      @RequestParam(name = "erpCode", required = false) String erpCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -240,7 +240,7 @@ public class RawMaterialController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
         rawMaterialService.searchRawMaterial(booleanBuilder, name, materialSubCategoryName,
-            plantName, prefix, plantCode, pageable, pagination),
+            plantName, prefix, plantCode, erpCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 

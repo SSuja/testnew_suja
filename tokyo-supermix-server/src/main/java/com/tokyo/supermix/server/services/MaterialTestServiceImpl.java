@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.FinishProductTestDto;
+import com.tokyo.supermix.data.dto.report.MaterialTestDto;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.QMaterialTest;
 import com.tokyo.supermix.data.entities.TestConfigure;
@@ -49,8 +53,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       String prefix =
           testConfigureRepository.getOne(materialTest.getTestConfigure().getId()).getPrefix();
       List<MaterialTest> materialTestList = materialTestRepository.findByCodeContaining(prefix);
-      materialTest.setCode(materialTestList.size() == 0 ? prefix +"-"+ String.format("%04d", 1)
-          : prefix +"-"+ String.format("%04d", maxNumberFromCode(materialTestList) + 1));
+      materialTest.setCode(materialTestList.size() == 0 ? prefix + "-" + String.format("%04d", 1)
+          : prefix + "-" + String.format("%04d", maxNumberFromCode(materialTestList) + 1));
     }
     materialTest.setStatus(Status.PROCESS);
     String codePrefix = materialTest.getIncomingSample().getCode();
@@ -72,7 +76,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private Integer maxNumberFromCode(List<MaterialTest> materialTestList) {
     List<Integer> list = new ArrayList<Integer>();
     materialTestList.forEach(obj -> {
-    	String code = obj.getCode();
+      String code = obj.getCode();
       list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
     });
     return Collections.max(list);
@@ -320,5 +324,227 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public Long getCountMaterialTestByPlantCode(String plantCode) {
 
     return materialTestRepository.countByIncomingSamplePlantCode(plantCode);
+  }
+
+
+  private List<MaterialAcceptedValue> getRawMaterialAcceptedValues(Long testConfigId) {
+    return materialAcceptedValueRepository.findByTestConfigureId(testConfigId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTestDto> getMaterialTestsByIncomingSample(String incomingSampleCode) {
+    ArrayList<MaterialTestDto> materialTestList = new ArrayList<MaterialTestDto>();
+    IncomingSample incomingSample = incomingSampleRepository.findById(incomingSampleCode).get();
+    materialTestRepository.findByIncomingSampleCode(incomingSampleCode).forEach(materialTest -> {
+      MaterialTestDto materialTestDto = new MaterialTestDto();
+      if (materialTest.getTestConfigure().getAcceptedType() != null) {
+        if (materialTest.getTestConfigure().getRawMaterial() != null) {
+          if (materialTest.getTestConfigure().getRawMaterial().getId() == materialTest
+              .getIncomingSample().getRawMaterial().getId()) {
+            if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
+              materialTestDto.setCreatedDate(materialTest.getCreatedAt().toString());
+              materialTestDto.setUpdatedDate(materialTest.getUpdatedAt().toString());
+              materialTestDto.setTestConfigId(materialTest.getTestConfigure().getId());
+              materialTestDto.setMaterialTestCode(materialTest.getCode());
+              materialTestDto.setStatus(materialTest.getStatus());
+              materialTestDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+              materialTestDto.setIncomingSampleCode(incomingSampleCode);
+              materialTestDto.setMainType(materialTest.getTestConfigure().getTestType());
+              materialTestDto
+                  .setRawMaterialId(materialTest.getIncomingSample().getRawMaterial().getId());
+              materialTestDto.setSpecimenCode(materialTest.getSpecimenCode());
+            }
+            if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
+              for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                  materialTest.getTestConfigure().getId())) {
+                if (materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                    .getRawMaterial().getId()) {
+                  materialTestDto.setCreatedDate(materialTest.getCreatedAt().toString());
+                  materialTestDto.setUpdatedDate(materialTest.getUpdatedAt().toString());
+                  materialTestDto.setTestConfigId(materialTest.getTestConfigure().getId());
+                  materialTestDto.setMaterialTestCode(materialTest.getCode());
+                  materialTestDto.setStatus(materialTest.getStatus());
+                  materialTestDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+                  materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                  materialTestDto.setMainType(materialTest.getTestConfigure().getTestType());
+                  materialTestDto
+                      .setRawMaterialId(materialTest.getIncomingSample().getRawMaterial().getId());
+                  materialTestDto.setSpecimenCode(materialTest.getSpecimenCode());
+                }
+              }
+
+            }
+          }
+        } else if (materialTest.getTestConfigure().getMaterialSubCategory() == null) {
+          if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
+              .getMaterialCategory()
+              .getId() == materialTest.getTestConfigure().getMaterialCategory().getId()) {
+            if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
+              materialTestDto.setCreatedDate(materialTest.getCreatedAt().toString());
+              materialTestDto.setUpdatedDate(materialTest.getUpdatedAt().toString());
+              materialTestDto.setTestConfigId(materialTest.getTestConfigure().getId());
+              materialTestDto.setMaterialTestCode(materialTest.getCode());
+              materialTestDto.setStatus(materialTest.getStatus());
+              materialTestDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+              materialTestDto.setIncomingSampleCode(incomingSampleCode);
+              materialTestDto.setMainType(materialTest.getTestConfigure().getTestType());
+              materialTestDto
+                  .setRawMaterialId(materialTest.getIncomingSample().getRawMaterial().getId());
+              materialTestDto.setSpecimenCode(materialTest.getSpecimenCode());
+            }
+            if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
+              for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                  materialTest.getTestConfigure().getId())) {
+                if (materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                    .getRawMaterial().getId()) {
+                  materialTestDto.setCreatedDate(materialTest.getCreatedAt().toString());
+                  materialTestDto.setUpdatedDate(materialTest.getUpdatedAt().toString());
+                  materialTestDto.setTestConfigId(materialTest.getTestConfigure().getId());
+                  materialTestDto.setMaterialTestCode(materialTest.getCode());
+                  materialTestDto.setStatus(materialTest.getStatus());
+                  materialTestDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+                  materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                  materialTestDto.setMainType(materialTest.getTestConfigure().getTestType());
+                  materialTestDto
+                      .setRawMaterialId(materialTest.getIncomingSample().getRawMaterial().getId());
+                  materialTestDto.setSpecimenCode(materialTest.getSpecimenCode());
+                }
+              }
+
+            }
+          }
+        } else {
+          if (materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory()
+              .getId() == materialTest.getTestConfigure().getMaterialSubCategory().getId()) {
+            if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
+              materialTestDto.setCreatedDate(materialTest.getCreatedAt().toString());
+              materialTestDto.setUpdatedDate(materialTest.getUpdatedAt().toString());
+              materialTestDto.setTestConfigId(materialTest.getTestConfigure().getId());
+              materialTestDto.setMaterialTestCode(materialTest.getCode());
+              materialTestDto.setStatus(materialTest.getStatus());
+              materialTestDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+              materialTestDto.setIncomingSampleCode(incomingSampleCode);
+              materialTestDto.setMainType(materialTest.getTestConfigure().getTestType());
+              materialTestDto
+                  .setRawMaterialId(materialTest.getIncomingSample().getRawMaterial().getId());
+              materialTestDto.setSpecimenCode(materialTest.getSpecimenCode());
+            }
+            if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
+              for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                  materialTest.getTestConfigure().getId())) {
+                if (materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                    .getRawMaterial().getId()) {
+                  materialTestDto.setCreatedDate(materialTest.getCreatedAt().toString());
+                  materialTestDto.setUpdatedDate(materialTest.getUpdatedAt().toString());
+                  materialTestDto.setTestConfigId(materialTest.getTestConfigure().getId());
+                  materialTestDto.setMaterialTestCode(materialTest.getCode());
+                  materialTestDto.setStatus(materialTest.getStatus());
+                  materialTestDto.setTestName(materialTest.getTestConfigure().getTest().getName());
+                  materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                  materialTestDto.setMainType(materialTest.getTestConfigure().getTestType());
+                  materialTestDto
+                      .setRawMaterialId(materialTest.getIncomingSample().getRawMaterial().getId());
+                  materialTestDto.setSpecimenCode(materialTest.getSpecimenCode());
+                }
+              }
+            }
+          }
+        }
+      }
+      materialTestList.add(materialTestDto);
+    });
+    testConfigureRepository.findByMaterialCategoryIdOrMaterialSubCategoryIdOrRawMaterialId(
+        incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getId(),
+        incomingSample.getRawMaterial().getMaterialSubCategory().getId(),
+        incomingSample.getRawMaterial().getId()).forEach(testConfigureMaterial -> {
+          if (!materialTestRepository.existsByIncomingSampleCodeAndTestConfigureId(
+              incomingSampleCode, testConfigureMaterial.getId())) {
+            MaterialTestDto materialTestDto = new MaterialTestDto();
+            if (testConfigureMaterial != null && testConfigureMaterial.getAcceptedType() != null)
+              if (testConfigureMaterial.getRawMaterial() != null) {
+                if (incomingSample.getRawMaterial().getId() == testConfigureMaterial
+                    .getRawMaterial().getId()) {
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.TEST)) {
+                    materialTestDto.setTestConfigId(testConfigureMaterial.getId());
+                    materialTestDto.setStatus(Status.NEW);
+                    materialTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                    materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                    materialTestDto.setMainType(testConfigureMaterial.getTestType());
+                    materialTestDto.setRawMaterialId(incomingSample.getRawMaterial().getId());
+                  }
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+                    for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                        testConfigureMaterial.getId())) {
+                      if (materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                          .getRawMaterial().getId()) {
+                        materialTestDto.setTestConfigId(testConfigureMaterial.getId());
+                        materialTestDto.setStatus(Status.NEW);
+                        materialTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                        materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                        materialTestDto.setMainType(testConfigureMaterial.getTestType());
+                        materialTestDto.setRawMaterialId(incomingSample.getRawMaterial().getId());
+                      }
+                    }
+                  }
+                }
+              } else if (testConfigureMaterial.getMaterialSubCategory() == null) {
+                if (incomingSample.getRawMaterial().getMaterialSubCategory().getMaterialCategory()
+                    .getId() == testConfigureMaterial.getMaterialCategory().getId()) {
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.TEST)) {
+                    materialTestDto.setTestConfigId(testConfigureMaterial.getId());
+                    materialTestDto.setStatus(Status.NEW);
+                    materialTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                    materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                    materialTestDto.setMainType(testConfigureMaterial.getTestType());
+                    materialTestDto.setRawMaterialId(incomingSample.getRawMaterial().getId());
+                  }
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+                    for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                        testConfigureMaterial.getId())) {
+                      if (materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                          .getRawMaterial().getId()) {
+                        materialTestDto.setTestConfigId(testConfigureMaterial.getId());
+                        materialTestDto.setStatus(Status.NEW);
+                        materialTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                        materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                        materialTestDto.setMainType(testConfigureMaterial.getTestType());
+                        materialTestDto.setRawMaterialId(incomingSample.getRawMaterial().getId());
+                      }
+                    }
+                  }
+                }
+              } else if (testConfigureMaterial.getMaterialSubCategory() != null
+                  && testConfigureMaterial.getRawMaterial() == null) {
+                if (incomingSample.getRawMaterial().getMaterialSubCategory()
+                    .getId() == testConfigureMaterial.getMaterialSubCategory().getId()) {
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.TEST)) {
+                    materialTestDto.setTestConfigId(testConfigureMaterial.getId());
+                    materialTestDto.setStatus(Status.NEW);
+                    materialTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                    materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                    materialTestDto.setMainType(testConfigureMaterial.getTestType());
+                    materialTestDto.setRawMaterialId(incomingSample.getRawMaterial().getId());
+                  }
+                  if (testConfigureMaterial.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+                    for (MaterialAcceptedValue materialAcceptedValue : getRawMaterialAcceptedValues(
+                        testConfigureMaterial.getId())) {
+                      if (materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                          .getRawMaterial().getId()) {
+                        materialTestDto.setTestConfigId(testConfigureMaterial.getId());
+                        materialTestDto.setStatus(Status.NEW);
+                        materialTestDto.setTestName(testConfigureMaterial.getTest().getName());
+                        materialTestDto.setIncomingSampleCode(incomingSampleCode);
+                        materialTestDto.setMainType(testConfigureMaterial.getTestType());
+                        materialTestDto.setRawMaterialId(incomingSample.getRawMaterial().getId());
+                      }
+                    }
+                  }
+                }
+              }
+            materialTestList.add(materialTestDto);
+          }
+        });
+    return materialTestList;
+
   }
 }

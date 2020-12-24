@@ -8,6 +8,7 @@ import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
+// service
 public interface FinishProductTestService {
 
   public String createFinishProductTest(FinishProductTest finishProductTest);

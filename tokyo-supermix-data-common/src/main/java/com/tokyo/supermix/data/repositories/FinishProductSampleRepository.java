@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 
@@ -29,10 +30,10 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   List<FinishProductSample> findByMixDesignPlantCode(String plantCode);
 
   List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryId(
-      Long materialSubCategoryId, Pageable pageable);
+      Long materialSubCategoryId);
 
   List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(
-      Long materialSubCategoryId, String plantCode, Pageable pageable);
+      Long materialSubCategoryId, String plantCode);
 
   Long countByMixDesignPlantCode(String plantCode);
 
@@ -44,22 +45,22 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   Long countByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(Long materialCategoryId);
 
   List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(
-      Long materialCategoryId, Pageable pageable);
+      Long materialCategoryId);
 
   Long countByMixDesignPlantCodeAndMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(
       String plantCode, Long materialCategoryId);
 
   List<FinishProductSample> findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryIdAndMixDesignPlantCode(
-      Long materialCategoryId, String plantCode, Pageable pageable);
+      Long materialCategoryId, String plantCode);
 
   Long countByMixDesignRawMaterialId(Long rawMaterialId);
 
-  List<FinishProductSample> findByMixDesignRawMaterialId(Long rawMaterialId, Pageable pageable);
+  List<FinishProductSample> findByMixDesignRawMaterialId(Long rawMaterialId);
 
   Long countByMixDesignPlantCodeAndMixDesignRawMaterialId(String plantCode, Long rawMaterialId);
 
   List<FinishProductSample> findByMixDesignRawMaterialIdAndMixDesignPlantCode(Long rawMaterialId,
-      String plantCode, Pageable pageable);
+      String plantCode);
 
   Long countByMixDesignPlantCodeAndWorkOrderNumberNull(String plantCode);
 

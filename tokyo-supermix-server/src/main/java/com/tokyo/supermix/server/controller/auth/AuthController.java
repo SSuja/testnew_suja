@@ -53,7 +53,8 @@ public class AuthController {
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNIN)
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
-    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress())) {
+    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress())
+        || loginRequestDto.getUsernameOrEmail().equalsIgnoreCase(Constants.ADMIN)) {
       try {
         String jwt = authService.generateUserToken(loginRequestDto);
         if (jwt != null) {

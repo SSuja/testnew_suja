@@ -75,14 +75,14 @@ public class EmployeeController {
 
   // Add Employee
   @PostMapping(value = EndpointURI.EMPLOYEE)
-  public ResponseEntity<Object> createEmployee(
-      @Valid @RequestBody EmployeeRequestDto employeeRequestDto, HttpServletRequest request) {
-    if (employeeService.isEmailExist(employeeRequestDto.getEmail())) {
+  public ResponseEntity<Object> createEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
+    if (employeeService.isEmailExist(employeeDto.getEmail())) {
       logger.debug("email is already exists: createEmployee(), isEmailAlreadyExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
           validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    employeeService.createEmployee(mapper.map(employeeRequestDto, Employee.class), request);
+    employeeService.createEmployee(mapper.map(employeeDto, Employee.class), request);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_EMPLOYEE_SUCCESS),
         HttpStatus.OK);
@@ -114,24 +114,46 @@ public class EmployeeController {
         validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // Update user's employee details
+  // Update Employee
   @PutMapping(value = EndpointURI.EMPLOYEE)
+  public ResponseEntity<Object> updateEmployee(@Valid @RequestBody EmployeeRequestDto employeeDto,
+      HttpServletRequest request) {
+    if (employeeService.isEmployeeExist(employeeDto.getId())) {
+      if (employeeService.isUpdatedEmployeeEmailExist(employeeDto.getId(),
+          employeeDto.getEmail())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
+            validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      employeeService.updateEmployee(mapper.map(employeeDto, Employee.class), request);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMPLOYEE_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMPLOYEE_ID,
+        validationFailureStatusCodes.getEmployeeNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+
+  // Update user's employee details
+  @PutMapping(value = EndpointURI.EMPLOYEE_USER)
   public ResponseEntity<Object> updateEmployee(
       @RequestParam(value = "employee", required = true) String employeeDtoJson,
-      @RequestParam(value = "image", required = true) MultipartFile file,
-      HttpServletRequest request) throws IOException, TokyoSupermixFileStorageException {
+      @RequestParam(value = "image", required = false) MultipartFile file,
+      HttpServletRequest request) throws IOException {
     EmployeeRequestDto employeeRequestDto =
         objectMapper.readValue(employeeDtoJson, EmployeeRequestDto.class);
-    if (!file.isEmpty()) {
-      employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
-    } else {
-      employeeRequestDto.setProfilePicPath(null);
-    }
     if (employeeService.isEmployeeExist(employeeRequestDto.getId())) {
       if (employeeService.isUpdatedEmployeeEmailExist(employeeRequestDto.getId(),
           employeeRequestDto.getEmail())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.EMAIL,
             validationFailureStatusCodes.getEmployeeAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      if (file != null) {
+        try {
+          employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+        } catch (TokyoSupermixFileStorageException e) {
+          e.printStackTrace();
+        }
       }
       employeeService.updateEmployee(mapper.map(employeeRequestDto, Employee.class), request);
       return new ResponseEntity<>(

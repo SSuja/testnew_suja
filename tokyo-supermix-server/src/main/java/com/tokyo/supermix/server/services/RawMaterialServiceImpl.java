@@ -93,7 +93,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
       String materialSubCategoryName, String plantName, String prefix, String plantCode,
-      Pageable pageable, Pagination pagination) {
+      String erpCode, Pageable pageable, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.name.containsIgnoreCase(name));
     }
@@ -111,6 +111,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
       booleanBuilder.orAllOf(QRawMaterial.rawMaterial.plant.code.containsIgnoreCase(plantCode),
           QRawMaterial.rawMaterial.plant.isNull());
+    }
+    if (erpCode != null && !erpCode.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.containsIgnoreCase(erpCode));
     }
     pagination.setTotalRecords(
         ((Collection<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder)).stream().count());
@@ -190,7 +193,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isPrefixAndMaterialSubCategoryExists(String prefix, Long materialSubCategoryId,String plantCode) {
+  public boolean isPrefixAndMaterialSubCategoryExists(String prefix, Long materialSubCategoryId,
+      String plantCode) {
     return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndPlantCode(prefix,
         materialSubCategoryId, plantCode);
   }

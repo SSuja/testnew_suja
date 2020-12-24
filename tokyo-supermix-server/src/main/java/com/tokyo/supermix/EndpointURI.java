@@ -71,6 +71,7 @@ public final class EndpointURI {
   public static final String GET_EMPLOYEES_BY_PLANT =
       EMPLOYEES + PLANT_WISE_SEARCH + SLASH + "firstName";
   public static final String GET_EMPLOYEE_IMAGE = "/downloadFile/{fileName:.+}";
+  public static final String EMPLOYEE_USER = BASE_API_PATH + "employee-user";
   /*
    * Material Category APIs
    */
@@ -732,13 +733,60 @@ public final class EndpointURI {
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
 
-
   public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";
   public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
   public static final String MAC_ADDRESS_BY_ID = MAC_ADDRESS + ID;
 
   public static final String STRENGTH_BY_FINISH_PRODUCT_TEST_CODE = BASE_API_PATH + "strength"
       + SLASH + "{finishProductTestCode}" + SLASH + "plant" + SLASH + "{plantCode}";
+
+  public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
+      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
+  public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
+      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
+  public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
+      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
+
+  // Mix design ratio configuration
+  public static final String MIX_DESIGN_RATIO_CONFIG = BASE_API_PATH + "mixdesign-ratio";
+  public static final String MIX_DESIGN_RATIO_CONFIGS = BASE_API_PATH + "mixdesign-ratios";
+  public static final String MIX_DESIGN_RATIO_CONFIG_BY_ID = MIX_DESIGN_RATIO_CONFIG + ID;
+  public static final String MIX_DESIGN_RATIO_CONFIG_MIXDESIGN_CODE =
+      MIX_DESIGN_RATIO_CONFIG + SLASH + "mix-design" + SLASH + "{mixDesignCode}";
+
+  /*
+   * SBU API
+   */
+  public static final String SUB_BUSINESS_UNIT = BASE_API_PATH + "sub-business-unit";
+  public static final String SUB_BUSINESS_UNITS = BASE_API_PATH + "sub-business-units";
+  public static final String SUB_BUSINESS_UNIT_BY_ID = SUB_BUSINESS_UNIT + ID;
+
+  /*
+   * ratioConfig API
+   */
+  public static final String RATIO_CONFIG = BASE_API_PATH + "ratio-config";
+  public static final String RATIO_CONFIGS = BASE_API_PATH + "ratio-configs";
+  public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
+  public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
+      RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
+
+  /*
+   * ratioConfigParameter API
+   */
+  public static final String RATIO_CONFIG_PARAMETER = BASE_API_PATH + "ratio-config-parameter";
+  public static final String RATIO_CONFIG_PARAMETERS = BASE_API_PATH + "ratio-config-parameters";
+  public static final String RATIO_CONFIG_PARAMETER_BY_ID = RATIO_CONFIG_PARAMETER + ID;
+  public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIG =
+      RATIO_CONFIG_PARAMETER + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
+
+  /*
+   * ratioConfig equation API
+   */
+  public static final String RATIO_CONFIG_EQUATION = BASE_API_PATH + "ratio-config-equation";
+  public static final String RATIO_CONFIG_EQUATIONS = BASE_API_PATH + "ratio-config-equations";
+  public static final String RATIO_CONFIG_EQUATION_BY_ID = RATIO_CONFIG_EQUATION + ID;
+  public static final String RATIO_CONFIG_EQUATION_BY_RATIO_CONFIG =
+      RATIO_CONFIG_EQUATION + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
 
   private EndpointURI() {}
 }
