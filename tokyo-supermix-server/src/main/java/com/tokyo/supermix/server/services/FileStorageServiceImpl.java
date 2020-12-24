@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.Equipment;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MaterialState;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.MixDesign;
@@ -39,6 +42,7 @@ import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialStateRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
@@ -89,6 +93,8 @@ public class FileStorageServiceImpl implements FileStorageService {
   private RawMaterialService rawMaterialService;
   @Autowired
   private FileStorageProperties fileStorageProperties;
+  @Autowired
+  private FinishProductSampleRepository finishProductSampleRepository;
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
@@ -158,7 +164,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         RawMaterial rawMaterial = rawMaterialRepository.findByName(row[5]);
         mixDesignProportion.setRawMaterial(rawMaterial);
         mixDesignProportion.setMixDesign(mixDesignNew);
-        mixDesignProportion.setQuantity(Long.valueOf(row[6]));
+        mixDesignProportion.setQuantity(Double.valueOf(row[6]));
         Unit unit = unitRepository.findByUnit(row[7]);
         mixDesignProportion.setUnit(unit);
         mixDesignProportions.add(mixDesignProportion);
@@ -220,7 +226,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-
 
     String[] row = null;
     try {
@@ -366,7 +371,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   }
 
   @Transactional
-  public void importRawMaterial(MultipartFile file,HttpServletRequest request) {
+  public void importRawMaterial(MultipartFile file, HttpServletRequest request) {
     Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
@@ -388,7 +393,8 @@ public class FileStorageServiceImpl implements FileStorageService {
           rawMaterial.setPrefix(row[1]);
           MaterialState materialState = materialStateRepository.findByMaterialState(row[2]);
           rawMaterial.setMaterialState(materialState);
-          MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findByName(row[3]);
+          MaterialSubCategory materialSubCategory =
+              materialSubCategoryRepository.findByName(row[3]);
           rawMaterial.setMaterialSubCategory(materialSubCategory);
           Plant plant = plantRepository.findByName(row[4]);
           rawMaterial.setPlant(plant);
@@ -401,6 +407,58 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+  }
+
+  @Transactional
+  public ArrayList<String> importDeliverySample(MultipartFile file) {
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
+    String csvFilename = path + file.getOriginalFilename();
+    ArrayList<String> codeArray = new ArrayList<String>();
+    // Read the csv file
+    CSVReader csvReader = null;
+    try {
+      csvReader = new CSVReader(new FileReader(csvFilename));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    String[] row = null;
+    int count = 0;
+
+    try {
+      row = csvReader.readNext();
+      row = csvReader.readNext();
+      // Import the data to DB
+      while ((row = csvReader.readNext()) != null) {
+        if (finishProductSampleRepository.findByCode(row[0]) == null) {
+          FinishProductSample finishProductSample = new FinishProductSample();
+          finishProductSample.setCode(row[0]);
+          MixDesign mixDesign = mixDesignRepository.findByCode(row[1]);
+          finishProductSample.setMixDesign(mixDesign);
+          PlantEquipment plantEquipment =
+              plantEquipmentRepository.findPlantEquipmentBySerialNo(row[2]);
+          finishProductSample.setPlantEquipment(plantEquipment);
+          finishProductSample.setDate(Date.valueOf(row[3]));
+          finishProductSample.setFinishProductCode(row[4]);
+          finishProductSample.setWorkOrderNumber(row[5]);
+          if (row[6].isEmpty()) {
+            finishProductSample.setProject(null);
+          } else {
+            Project project = projectRepository.findByName(row[6]);
+            finishProductSample.setProject(project);
+          }
+          finishProductSample.setTruckNo(row[7]);
+          finishProductSample.setStatus(Status.NEW);
+          count++;
+          finishProductSampleRepository.save(finishProductSample);
+        } else { 
+          codeArray.add(0,String.valueOf(count));
+          codeArray.add(row[0]);
+        }
+      }
+      csvReader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return (ArrayList<String>) codeArray.stream().distinct().collect(Collectors.toList());
   }
 }

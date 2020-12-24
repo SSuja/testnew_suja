@@ -80,4 +80,6 @@ public interface MaterialTestRepository extends JpaRepository<MaterialTest, Stri
 
   List<MaterialTest> findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCodeOrderByUpdatedAtDesc(
       String incomingSampleCode, Long testConfigId, String plantCode);
+  boolean existsByIncomingSampleCodeAndTestConfigureId(String incomingSampleCode,
+      Long testConfigId);
 }

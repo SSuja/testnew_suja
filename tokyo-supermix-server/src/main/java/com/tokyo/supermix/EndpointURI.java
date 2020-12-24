@@ -744,6 +744,14 @@ public final class EndpointURI {
   public static final String CORE_TEST_CONFIGURE_TEST_ORIGIN=CORE_TEST_CONFIGURE+SLASH+"test-origin";
 //  public static final String EMAIL_POINTS_BY_ADMIN_STATUS =
 //      EMAIL_POINT + SLASH + "admin-status" + SLASH + "{status}";
+  public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
+      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
+  public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
+      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
+  
+  
+  public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
+      MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
 
   private EndpointURI() {}
 }

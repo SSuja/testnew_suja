@@ -18,7 +18,7 @@ public class MixDesignProportion extends DateAudit implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private Long quantity;
+  private Double quantity;
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
@@ -37,11 +37,11 @@ public class MixDesignProportion extends DateAudit implements Serializable {
     this.id = id;
   }
 
-  public Long getQuantity() {
+  public Double getQuantity() {
     return quantity;
   }
 
-  public void setQuantity(Long quantity) {
+  public void setQuantity(Double quantity) {
     this.quantity = quantity;
   }
 
@@ -72,5 +72,4 @@ public class MixDesignProportion extends DateAudit implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
 }

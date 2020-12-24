@@ -123,8 +123,8 @@ public class RawMaterialController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
             validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      if (rawMaterialService.isPrefixAlreadyExistsUpdate(rawMaterialRequestDto.getId(),
-          rawMaterialRequestDto.getPrefix())) {
+      if (rawMaterialService.isPrefixAndMaterialSubCategoryExists(rawMaterialRequestDto.getPrefix(),
+          rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getPlantCode())) {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
