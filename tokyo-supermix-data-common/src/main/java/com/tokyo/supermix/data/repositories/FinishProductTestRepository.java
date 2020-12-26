@@ -62,7 +62,10 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
 
   List<FinishProductTest> findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndTestConfigureRawMaterialIdAndStatus(
       String mixDesignCode, Long rawMaterialId, Status status);
+
   List<FinishProductTest> findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndFinishProductSampleCodeAndStatus(
       String mixDesignCode, String finishProductSampleCode, Status status);
 
+  List<FinishProductTest> findByFinishProductSampleMixDesignCodeAndFinishProductSampleCodeAndStatus(
+      String mixDesignCode, String finishProductSampleCode, Status status);
 }
