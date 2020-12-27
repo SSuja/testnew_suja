@@ -83,7 +83,7 @@ public class UploadImageController {
   @GetMapping(value = EndpointURI.GET_TEST_IMAGES_BY_MATERIAL_TEST)
   public ResponseEntity<Object> getTestImagesByMaterialTest(@PathVariable String materialTestCode) {
     if (uploadImageService.existsByMaterialTestCode(materialTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.UNIT,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.UPLOAD_IMAGE,
           mapper.map(uploadImageService.getAllImagesByMaterialTest(materialTestCode),
               UploadImageResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -95,7 +95,7 @@ public class UploadImageController {
   @GetMapping(value = EndpointURI.GET_TEST_IMAGES_BY_FINISHPRODUCT_TEST)
   public ResponseEntity<Object> getTestImagesByFPTest(@PathVariable String finishProductTestCode) {
     if (uploadImageService.existsByFinishProductTestCode(finishProductTestCode)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.UNIT,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.UPLOAD_IMAGE,
           mapper.map(uploadImageService.getAllImagesByFinishProductTest(finishProductTestCode),
               UploadImageResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
