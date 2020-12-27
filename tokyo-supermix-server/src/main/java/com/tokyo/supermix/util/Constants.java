@@ -652,9 +652,10 @@ public class Constants {
       "Ratio Config Equation Added Successfully";
   public static final String UPDATE_RATIO_CONFIG__EQUATION_SUCCESS =
       "Ratio Config Updated Successfully";
-  
-  //upload image
+
+  // upload image
   public static final String UPLOAD_IMAGE = "Image Uploaded Successfully";
+  public static final String UPLOAD_IMAGES = "uploadImages";
 
   /*
    * Encapsulate constructor to restrict modification from outside

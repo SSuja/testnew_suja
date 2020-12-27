@@ -790,6 +790,7 @@ public final class EndpointURI {
   
   //upload image
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
+  public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
 
   private EndpointURI() {}
 }
