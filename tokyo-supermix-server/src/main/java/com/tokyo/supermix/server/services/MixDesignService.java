@@ -57,4 +57,6 @@ public interface MixDesignService {
   public List<MixDesign> getCode(String code);
 
   public List<MixDesign> getCodeAndRawMaterialId(Long rawMaterialId, Status status, String code);
+  
+  public void updateMixDesignWithConfirmation(String confirmationToken);
 }

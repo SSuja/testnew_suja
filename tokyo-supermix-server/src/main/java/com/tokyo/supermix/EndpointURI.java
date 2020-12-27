@@ -290,6 +290,7 @@ public final class EndpointURI {
       MIX_DESIGN + PLANT_WISE_SEARCH + SLASH + "code";
   public static final String GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS =
       MIX_DESIGN + "search" + SLASH + "{rawMaterialId}" + SLASH + "{status}" + SLASH + "code";
+  public static final String MIX_DESIGNS_WITH_TOKEN = MIX_DESIGN + SLASH + "confirmation" + SLASH + "{confirmationToken}";
 
   /*
    * Test Parameter APIs
@@ -330,6 +331,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE =
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
+ 
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
   /* Parameter Result */

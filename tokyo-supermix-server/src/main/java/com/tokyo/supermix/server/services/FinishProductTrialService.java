@@ -1,6 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -22,7 +25,7 @@ public interface FinishProductTrialService {
 
   public boolean isFinishProductTestExists(String finishProductTestCode);
 
-  public void saveFinishproductResult(String finishProductTestCode);
+  public void saveFinishproductResult(String finishProductTestCode ,HttpServletRequest request);
 
   public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial);
 
