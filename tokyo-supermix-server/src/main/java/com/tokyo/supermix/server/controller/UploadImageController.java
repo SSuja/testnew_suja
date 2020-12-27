@@ -37,7 +37,7 @@ public class UploadImageController {
   private FileStorageService fileStorageService;
 
   @PostMapping(value = EndpointURI.UPLOAD_IMAGE)
-  public ResponseEntity<Object> updateEmployee(
+  public ResponseEntity<Object> updateImages(
       @Valid @RequestBody UploadImageRequestDto uploadImageRequestDto,
       @RequestParam(value = "image", required = false) MultipartFile file)
       throws TokyoSupermixFileStorageException, IOException {
