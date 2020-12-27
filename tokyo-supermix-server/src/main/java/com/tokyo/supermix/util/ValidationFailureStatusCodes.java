@@ -1836,49 +1836,72 @@ public class ValidationFailureStatusCodes {
   public void setMixDesignRatioConfigNotExist(String mixDesignRatioConfigNotExist) {
     this.mixDesignRatioConfigNotExist = mixDesignRatioConfigNotExist;
   }
-  
-//macAddress
- @Value("${validation.macAddress.notExists}") 
- private String macAddressNotExist;
 
- @Value("${validation.macAddress.alreadyExist}")
- private String macAddressAlreadyExist;
+  // macAddress
+  @Value("${validation.macAddress.notExists}")
+  private String macAddressNotExist;
 
- @Value("${macAddressDto.macAddress.null}")
- private String macAddressIsNull;
+  @Value("${validation.macAddress.alreadyExist}")
+  private String macAddressAlreadyExist;
 
- @Value("${macAddressDto.macAddress.empty}")
- private String macAddressIsEmpty;
+  @Value("${macAddressDto.macAddress.null}")
+  private String macAddressIsNull;
 
-public String getMacAddressNotExist() {
-  return macAddressNotExist;
-}
+  @Value("${macAddressDto.macAddress.empty}")
+  private String macAddressIsEmpty;
 
-public void setMacAddressNotExist(String macAddressNotExist) {
-  this.macAddressNotExist = macAddressNotExist;
-}
+  public String getMacAddressNotExist() {
+    return macAddressNotExist;
+  }
 
-public String getMacAddressAlreadyExist() {
-  return macAddressAlreadyExist;
-}
+  public void setMacAddressNotExist(String macAddressNotExist) {
+    this.macAddressNotExist = macAddressNotExist;
+  }
 
-public void setMacAddressAlreadyExist(String macAddressAlreadyExist) {
-  this.macAddressAlreadyExist = macAddressAlreadyExist;
-}
+  public String getMacAddressAlreadyExist() {
+    return macAddressAlreadyExist;
+  }
 
-public String getMacAddressIsNull() {
-  return macAddressIsNull;
-}
+  public void setMacAddressAlreadyExist(String macAddressAlreadyExist) {
+    this.macAddressAlreadyExist = macAddressAlreadyExist;
+  }
 
-public void setMacAddressIsNull(String macAddressIsNull) {
-  this.macAddressIsNull = macAddressIsNull;
-}
+  public String getMacAddressIsNull() {
+    return macAddressIsNull;
+  }
 
-public String getMacAddressIsEmpty() {
-  return macAddressIsEmpty;
-}
+  public void setMacAddressIsNull(String macAddressIsNull) {
+    this.macAddressIsNull = macAddressIsNull;
+  }
 
-public void setMacAddressIsEmpty(String macAddressIsEmpty) {
-  this.macAddressIsEmpty = macAddressIsEmpty;
-}
+  public String getMacAddressIsEmpty() {
+    return macAddressIsEmpty;
+  }
+
+  public void setMacAddressIsEmpty(String macAddressIsEmpty) {
+    this.macAddressIsEmpty = macAddressIsEmpty;
+  }
+
+  // uploadImages
+  @Value("${validation.testId.null}")
+  private String testIdNull;
+
+  public String getTestIdNull() {
+    return testIdNull;
+  }
+
+  public void setTestIdNull(String testIdNull) {
+    this.testIdNull = testIdNull;
+  }
+
+  @Value("${validation.testId.notExists}")
+  private String testIdNotExists;
+
+  public String getTestIdNotExists() {
+    return testIdNotExists;
+  }
+
+  public void setTestIdNotExists(String testIdNotExists) {
+    this.testIdNotExists = testIdNotExists;
+  }
 }
