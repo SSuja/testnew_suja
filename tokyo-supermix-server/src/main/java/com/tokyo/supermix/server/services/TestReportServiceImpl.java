@@ -1136,6 +1136,7 @@ public class TestReportServiceImpl implements TestReportService {
         .setMixDesignCode(finishProductTest.getFinishProductSample().getMixDesign().getCode());
     strengthDto.setStatus(finishProductTest.getFinishProductSample().getStatus().name());
     strengthDto.setTestName(finishProductTest.getTestConfigure().getTest().getName());
+    strengthDto.setDueDay(finishProductTest.getTestConfigure().getDueDay());
     strengthDto.setPlant(mapper
         .map(finishProductTest.getFinishProductSample().getMixDesign().getPlant(), PlantDto.class));
     strengthDto.setFinishProductResult(getFinishProductResult(finishProductTestCode));
@@ -1216,6 +1217,7 @@ public class TestReportServiceImpl implements TestReportService {
         .setMixDesignCode(finishProductTest.getFinishProductSample().getMixDesign().getCode());
     strengthDto.setStatus(finishProductTest.getFinishProductSample().getStatus().name());
     strengthDto.setTestName(finishProductTest.getTestConfigure().getTest().getName());
+    strengthDto.setDueDay(finishProductTest.getTestConfigure().getDueDay());
     strengthDto.setPlant(mapper
         .map(finishProductTest.getFinishProductSample().getMixDesign().getPlant(), PlantDto.class));
     strengthDto.setFinishProductResult(getFinishProductResult(finishProductTestCode));
