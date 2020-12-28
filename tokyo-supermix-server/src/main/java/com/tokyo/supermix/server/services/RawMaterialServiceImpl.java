@@ -1,8 +1,9 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.MaterialType;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -123,7 +125,21 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
-    return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
+    List<RawMaterial> rawMaterialList = new ArrayList<RawMaterial>();
+    List<RawMaterial> rawMaterialListFinal = new ArrayList<RawMaterial>();
+    for (RawMaterial rawMaterialPlant : rawMaterialRepository
+        .findByPlantCodeOrPlantNull(plantCode, pageable).toList()) {
+      for (RawMaterial rawMaterialS : rawMaterialRepository.findByMaterialType(MaterialType.SBU)) {
+        if (rawMaterialPlant.getPlant().getCode() == rawMaterialS.getPlant().getCode()) {
+          rawMaterialList.add(rawMaterialS);
+        }
+      }
+    }
+
+    rawMaterialListFinal.addAll(rawMaterialRepository.findByMaterialType(MaterialType.COMMON));
+    rawMaterialListFinal.addAll(rawMaterialList);
+    return rawMaterialListFinal.stream().distinct().collect(Collectors.toList());
+
   }
 
   @Transactional(readOnly = true)
