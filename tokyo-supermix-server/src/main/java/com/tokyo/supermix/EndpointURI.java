@@ -787,10 +787,14 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_EQUATION_BY_ID = RATIO_CONFIG_EQUATION + ID;
   public static final String RATIO_CONFIG_EQUATION_BY_RATIO_CONFIG =
       RATIO_CONFIG_EQUATION + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
-  
-  //upload image
+
+  // upload image
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
   public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
+  public static final String GET_TEST_IMAGES_BY_MATERIAL_TEST =
+      UPLOAD_IMAGE + SLASH + "materialTest" + SLASH + "{materialTestCode}";
+  public static final String GET_TEST_IMAGES_BY_FINISHPRODUCT_TEST =
+      UPLOAD_IMAGE + SLASH + "finishProductTest" + SLASH + "{finishProductTestCode}";
 
   private EndpointURI() {}
 }

@@ -21,4 +21,24 @@ public class UploadImageServiceImpl implements UploadImageService {
   public List<UploadImage> getAllImages() {
     return uploadImageRepository.findAll();
   }
+
+  @Transactional(readOnly = true)
+  public List<UploadImage> getAllImagesByMaterialTest(String materialTestCode) {
+    return uploadImageRepository.findByMaterialTestCode(materialTestCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<UploadImage> getAllImagesByFinishProductTest(String finishProductTestCode) {
+    return uploadImageRepository.findByFinishProductTestCode(finishProductTestCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsByMaterialTestCode(String materialTestCode) {
+    return uploadImageRepository.existsByMaterialTestCode(materialTestCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsByFinishProductTestCode(String finishProductTestCode) {
+    return uploadImageRepository.existsByFinishProductTestCode(finishProductTestCode);
+  }
 }
