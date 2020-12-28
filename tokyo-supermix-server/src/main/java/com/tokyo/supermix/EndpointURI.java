@@ -294,6 +294,7 @@ public final class EndpointURI {
       MIX_DESIGN + PLANT_WISE_SEARCH + SLASH + "code";
   public static final String GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS =
       MIX_DESIGN + "search" + SLASH + "{rawMaterialId}" + SLASH + "{status}" + SLASH + "code";
+  public static final String MIX_DESIGNS_WITH_TOKEN = MIX_DESIGN + SLASH + "confirmation" + SLASH + "{confirmationToken}";
 
   /*
    * Test Parameter APIs
@@ -334,6 +335,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE =
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
+ 
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
   /* Parameter Result */
@@ -787,6 +789,14 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_EQUATION_BY_ID = RATIO_CONFIG_EQUATION + ID;
   public static final String RATIO_CONFIG_EQUATION_BY_RATIO_CONFIG =
       RATIO_CONFIG_EQUATION + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
+
+  // upload image
+  public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
+  public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
+  public static final String GET_TEST_IMAGES_BY_MATERIAL_TEST =
+      UPLOAD_IMAGE + SLASH + "materialTest" + SLASH + "{materialTestCode}";
+  public static final String GET_TEST_IMAGES_BY_FINISHPRODUCT_TEST =
+      UPLOAD_IMAGE + SLASH + "finishProductTest" + SLASH + "{finishProductTestCode}";
 
   private EndpointURI() {}
 }
