@@ -15,6 +15,7 @@ public class StrengthDto {
   private String mixDesignCode;
   private String status;
   private String testName;
+  private String dueDay;
   private PlantDto plant;
   private FinishProductResultDto finishProductResult;
   private List<AcceptedValueDto> acceptanceCriterias;
@@ -118,6 +119,14 @@ public class StrengthDto {
 
   public List<AcceptedValueDto> getAcceptanceCriterias() {
     return acceptanceCriterias;
+  }
+
+  public String getDueDay() {
+    return dueDay;
+  }
+
+  public void setDueDay(String dueDay) {
+    this.dueDay = dueDay;
   }
 
   public void setAcceptanceCriterias(List<AcceptedValueDto> acceptanceCriterias) {
