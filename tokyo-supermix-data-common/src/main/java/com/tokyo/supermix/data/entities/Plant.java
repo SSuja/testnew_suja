@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
@@ -25,6 +27,9 @@ public class Plant extends DateAudit implements Serializable {
   Set<PlantRole> plantRole;
   @OneToMany(mappedBy = "plant")
   Set<PlantPermission> plantPermission;
+  @ManyToOne
+  @JoinColumn(name = "subBusinessUnitId", nullable = true)
+  private SubBusinessUnit subBusinessUnit;
 
   public Set<PlantRole> getPlantRole() {
     return plantRole;
@@ -92,5 +97,13 @@ public class Plant extends DateAudit implements Serializable {
 
   public void setPlantPermission(Set<PlantPermission> plantPermission) {
     this.plantPermission = plantPermission;
+  }
+
+  public SubBusinessUnit getSubBusinessUnit() {
+    return subBusinessUnit;
+  }
+
+  public void setSubBusinessUnit(SubBusinessUnit subBusinessUnit) {
+    this.subBusinessUnit = subBusinessUnit;
   }
 }

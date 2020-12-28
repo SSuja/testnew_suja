@@ -1,28 +1,39 @@
 package com.tokyo.supermix.server.services;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.opencsv.CSVReader;
 import com.tokyo.supermix.config.FileStorageProperties;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.Designation;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.Equipment;
+import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MaterialState;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.MixDesign;
@@ -39,6 +50,7 @@ import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
+import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialStateRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
@@ -50,6 +62,8 @@ import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.SupplierCategoryRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.UnitRepository;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileNotFoundException;
+import com.tokyo.supermix.rest.exception.TokyoSupermixFileStorageException;
 
 @Service
 public class FileStorageServiceImpl implements FileStorageService {
@@ -89,6 +103,23 @@ public class FileStorageServiceImpl implements FileStorageService {
   private RawMaterialService rawMaterialService;
   @Autowired
   private FileStorageProperties fileStorageProperties;
+  @Autowired
+  private FinishProductSampleRepository finishProductSampleRepository;
+
+  private final Path fileStorageLocation;
+
+  @Autowired
+  public FileStorageServiceImpl(FileStorageProperties fileStorageProperties)
+      throws TokyoSupermixFileStorageException {
+    this.fileStorageLocation =
+        Paths.get(fileStorageProperties.getUploadDir1()).toAbsolutePath().normalize();
+    try {
+      Files.createDirectories(this.fileStorageLocation);
+    } catch (Exception ex) {
+      throw new TokyoSupermixFileStorageException(
+          "Could not create the directory where the uploaded files will be stored", ex);
+    }
+  }
 
   @Transactional
   public void uploadCsv(MultipartFile file) {
@@ -158,7 +189,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         RawMaterial rawMaterial = rawMaterialRepository.findByName(row[5]);
         mixDesignProportion.setRawMaterial(rawMaterial);
         mixDesignProportion.setMixDesign(mixDesignNew);
-        mixDesignProportion.setQuantity(Long.valueOf(row[6]));
+        mixDesignProportion.setQuantity(Double.valueOf(row[6]));
         Unit unit = unitRepository.findByUnit(row[7]);
         mixDesignProportion.setUnit(unit);
         mixDesignProportions.add(mixDesignProportion);
@@ -220,7 +251,6 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-
 
     String[] row = null;
     try {
@@ -366,7 +396,7 @@ public class FileStorageServiceImpl implements FileStorageService {
   }
 
   @Transactional
-  public void importRawMaterial(MultipartFile file,HttpServletRequest request) {
+  public void importRawMaterial(MultipartFile file, HttpServletRequest request) {
     Path path = Paths.get(fileStorageProperties.getUploadDir());
     String csvFilename = path + file.getOriginalFilename();
     // Read the csv file
@@ -388,7 +418,8 @@ public class FileStorageServiceImpl implements FileStorageService {
           rawMaterial.setPrefix(row[1]);
           MaterialState materialState = materialStateRepository.findByMaterialState(row[2]);
           rawMaterial.setMaterialState(materialState);
-          MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findByName(row[3]);
+          MaterialSubCategory materialSubCategory =
+              materialSubCategoryRepository.findByName(row[3]);
           rawMaterial.setMaterialSubCategory(materialSubCategory);
           Plant plant = plantRepository.findByName(row[4]);
           rawMaterial.setPlant(plant);
@@ -401,6 +432,110 @@ public class FileStorageServiceImpl implements FileStorageService {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
+
+  }
+
+
+  @Transactional
+  public String storeFile(MultipartFile file)
+      throws IOException, TokyoSupermixFileStorageException {
+    if (!(file.getOriginalFilename().endsWith(".png")
+        || file.getOriginalFilename().endsWith(".jpeg")
+        || file.getOriginalFilename().endsWith(".jpg")))
+      throw new TokyoSupermixFileStorageException("Only PNG, JPEG and JPG images are allowed");
+    FileOutputStream fout = new FileOutputStream(new File(file.getOriginalFilename()));
+    fout.write(file.getBytes());
+    fout.close();
+    BufferedImage image = ImageIO.read(new File(file.getOriginalFilename()));
+    int height = image.getHeight();
+    int width = image.getWidth();
+    if (width > 500 || height > 600) {
+      throw new TokyoSupermixFileStorageException(
+          "Invalid file dimensions. File dimension should note be more than 500 X 600");
+    }
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    try {
+      if (fileName.contains("..")) {
+        throw new TokyoSupermixFileStorageException(
+            "Filename contains invalid path sequence" + fileName);
+      }
+      String newFileName = System.currentTimeMillis() + "_" + fileName;
+      Path targetLocation = this.fileStorageLocation.resolve(newFileName);
+      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+      String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+          .path("/downloadFile/").path(newFileName).toUriString();
+      return fileDownloadUri;
+    } catch (IOException ex) {
+      throw new TokyoSupermixFileStorageException(
+          String.format("Could not store file %s !! Please try again!", fileName), ex);
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException {
+    try {
+      Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+      Resource resource = new UrlResource(filePath.toUri());
+      if (resource.exists()) {
+        return resource;
+      } else {
+        throw new TokyoSupermixFileNotFoundException("File Not Found" + fileName);
+      }
+    } catch (MalformedURLException ex) {
+      throw new TokyoSupermixFileNotFoundException("File Not Found" + fileName, ex);
+    }
+  }
+
+  @Transactional
+  public ArrayList<String> importDeliverySample(MultipartFile file) {
+    Path path = Paths.get(fileStorageProperties.getUploadDir());
+    String csvFilename = path + file.getOriginalFilename();
+    ArrayList<String> codeArray = new ArrayList<String>();
+    // Read the csv file
+    CSVReader csvReader = null;
+    try {
+      csvReader = new CSVReader(new FileReader(csvFilename));
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
+    String[] row = null;
+    int count = 0;
+
+    try {
+      row = csvReader.readNext();
+      row = csvReader.readNext();
+      // Import the data to DB
+      while ((row = csvReader.readNext()) != null) {
+        if (finishProductSampleRepository.findByCode(row[0]) == null) {
+          FinishProductSample finishProductSample = new FinishProductSample();
+          finishProductSample.setCode(row[0]);
+          MixDesign mixDesign = mixDesignRepository.findByCode(row[1]);
+          finishProductSample.setMixDesign(mixDesign);
+          PlantEquipment plantEquipment =
+              plantEquipmentRepository.findPlantEquipmentBySerialNo(row[2]);
+          finishProductSample.setPlantEquipment(plantEquipment);
+          finishProductSample.setDate(Date.valueOf(row[3]));
+          finishProductSample.setFinishProductCode(row[4]);
+          finishProductSample.setWorkOrderNumber(row[5]);
+          if (row[6].isEmpty()) {
+            finishProductSample.setProject(null);
+          } else {
+            Project project = projectRepository.findByName(row[6]);
+            finishProductSample.setProject(project);
+          }
+          finishProductSample.setTruckNo(row[7]);
+          finishProductSample.setStatus(Status.NEW);
+          count++;
+          finishProductSampleRepository.save(finishProductSample);
+        } else {
+          codeArray.add(0, String.valueOf(count));
+          codeArray.add(row[0]);
+        }
+      }
+      csvReader.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return (ArrayList<String>) codeArray.stream().distinct().collect(Collectors.toList());
   }
 }

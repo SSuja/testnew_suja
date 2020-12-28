@@ -34,6 +34,7 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.IncomingSampleService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
+import com.tokyo.supermix.server.services.SupplierService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -52,6 +53,8 @@ public class IncomingSampleController {
   private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private SupplierService supplierService;
   private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
@@ -260,5 +263,16 @@ public class IncomingSampleController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_SUPPLIER_ID)
+  public ResponseEntity<Object> getIncomingSampleBySupplierId(@PathVariable Long supplierId) {
+    if (supplierService.isSupplierExist(supplierId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES, mapper
+          .map(incomingSampleService.getBySupplierId(supplierId), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
+        validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
 }

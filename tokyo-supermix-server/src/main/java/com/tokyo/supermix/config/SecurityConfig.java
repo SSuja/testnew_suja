@@ -60,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
         .antMatchers("/api/v1/auth/**").permitAll().antMatchers("/swagger-ui.html").permitAll()
+        .antMatchers("/downloadFile/**").permitAll()
         .antMatchers(HttpMethod.GET,"/api/v1/employee/confirmation/**").permitAll() 
         .antMatchers(HttpMethod.GET,"/api/v1/mix-design/confirmation/**").permitAll() 
         // plant

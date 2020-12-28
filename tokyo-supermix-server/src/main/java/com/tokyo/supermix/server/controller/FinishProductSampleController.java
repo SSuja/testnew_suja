@@ -1,7 +1,11 @@
 package com.tokyo.supermix.server.controller;
 
+import java.util.ArrayList;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +20,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.config.export.EnrollWriter;
+import com.tokyo.supermix.config.export.FinishProductDeliveryLayouter;
+import com.tokyo.supermix.config.export.FinishedProductDeliveryFillManager;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
@@ -31,10 +39,13 @@ import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.FileStorageService;
+import com.tokyo.supermix.server.services.FinishProductSampleIssueService;
 import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.FileStorageConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -51,6 +62,11 @@ public class FinishProductSampleController {
   private PlantService plantService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private FileStorageService fileStorageService;
+  @Autowired
+  private FinishProductSampleIssueService finishProductSampleIssueService;
+
   private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
@@ -183,8 +199,10 @@ public class FinishProductSampleController {
   // @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_SEARCH)
   // public ResponseEntity<Object> getFinishProductSampleSearch(
   // @QuerydslPredicate(root = FinishProductSample.class) Predicate predicate,
-  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size)
+  // {
+  // return new ResponseEntity<>(new
+  // ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
   // finishProductSampleService.searchFinishProductSample(predicate, page, size),
   // RestApiResponseStatus.OK), null, HttpStatus.OK);
   // }
@@ -234,6 +252,10 @@ public class FinishProductSampleController {
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
       @RequestParam(name = "status", required = false) String status,
       @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
+      @RequestParam(name = "workOrderNumber", required = false) String workOrderNumber,
+      @RequestParam(name = "customer", required = false) String customer,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
@@ -241,7 +263,8 @@ public class FinishProductSampleController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
         finishProductSampleService.searchFinishProductSample(booleanBuilder, finishProductCode,
-            equipmentName, mixDesignCode, plantName, plantCode, status, date, pageable, pagination),
+            equipmentName, mixDesignCode, plantName, plantCode, status, date, code, rawMaterialName,
+            workOrderNumber, customer, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
 
   }
@@ -249,65 +272,46 @@ public class FinishProductSampleController {
   @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_SUBCATORY_AND_PLANT)
   public ResponseEntity<Object> getFinishProductSamplesBySubCategoryAndCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable Long materialSubCategoryId,
-      @PathVariable String plantCode, @RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    int totalpage = 0;
-    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+      @PathVariable String plantCode) {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      pagination.setTotalRecords(
-          finishProductSampleService.getSubCategoryCountFinishProductSample(materialSubCategoryId));
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
           mapper.map(finishProductSampleService.getFinishProductSamplesBySubCategoryId(
-              materialSubCategoryId, pageable), FinishProductSampleResponseDto.class),
-          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+              materialSubCategoryId), FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
           PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
-        pagination.setTotalRecords(finishProductSampleService
-            .getCountSubCategoryFinishProductSampleByPlantCode(plantCode, materialSubCategoryId));
-        return new ResponseEntity<>(
-            new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-                mapper.map(
-                    finishProductSampleService.getFinishProductSamplesBySubCategoryIdAndPlantCode(
-                        materialSubCategoryId, plantCode, pageable),
-                    FinishProductSampleResponseDto.class),
-                RestApiResponseStatus.OK, pagination),
-            HttpStatus.OK);
+        return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+            mapper
+                .map(finishProductSampleService.getFinishProductSamplesBySubCategoryIdAndPlantCode(
+                    materialSubCategoryId, plantCode), FinishProductSampleResponseDto.class),
+            RestApiResponseStatus.OK), HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-
   @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_MATERIAL_CATORY_AND_PLANT)
   public ResponseEntity<Object> getFinishProductSamplesByCategoryAndCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable Long materialCategoryId,
-      @PathVariable String plantCode, @RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    int totalpage = 0;
-    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+      @PathVariable String plantCode) {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      pagination.setTotalRecords(
-          finishProductSampleService.getCategoryCountFinishProductSample(materialCategoryId));
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-          mapper.map(finishProductSampleService.getFinishProductSamplesByCategoryId(
-              materialCategoryId, pageable), FinishProductSampleResponseDto.class),
-          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+              mapper.map(finishProductSampleService.getFinishProductSamplesByCategoryId(
+                  materialCategoryId), FinishProductSampleResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
     } else {
       if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
           PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
-        pagination.setTotalRecords(finishProductSampleService
-            .getCountCategoryFinishProductSampleByPlantCode(plantCode, materialCategoryId));
         return new ResponseEntity<>(
-            new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-                mapper.map(
-                    finishProductSampleService.getFinishProductSamplesByCategoryIdAndPlantCode(
-                        materialCategoryId, plantCode, pageable),
+            new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+                mapper.map(finishProductSampleService
+                    .getFinishProductSamplesByCategoryIdAndPlantCode(materialCategoryId, plantCode),
                     FinishProductSampleResponseDto.class),
-                RestApiResponseStatus.OK, pagination),
+                RestApiResponseStatus.OK),
             HttpStatus.OK);
       }
     }
@@ -318,31 +322,52 @@ public class FinishProductSampleController {
   @GetMapping(value = EndpointURI.RAW_FINISH_PRODUCT_SAMPLES_BY_RAW_MATERIAL_AND_PLANT)
   public ResponseEntity<Object> getFinishProductSamplesByRawMaterialAndCurrentUserPermission(
       @CurrentUser UserPrincipal currentUser, @PathVariable Long rawMaterialId,
-      @PathVariable String plantCode, @RequestParam(name = "page") int page,
-      @RequestParam(name = "size") int size) {
-    Pageable pageable = PageRequest.of(page, size);
-    int totalpage = 0;
-    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+      @PathVariable String plantCode) {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      pagination.setTotalRecords(
-          finishProductSampleService.getRawMaterialCountFinishProductSample(rawMaterialId));
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-          mapper.map(finishProductSampleService.getFinishProductSamplesByRawMaterialId(
-              rawMaterialId, pageable), FinishProductSampleResponseDto.class),
-          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+      return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+          mapper.map(
+              finishProductSampleService.getFinishProductSamplesByRawMaterialId(rawMaterialId),
+              FinishProductSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
       if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
           PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE).contains(plantCode)) {
-        pagination.setTotalRecords(finishProductSampleService
-            .getCountRawMaterialFinishProductSampleByPlantCode(plantCode, rawMaterialId));
-        return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-            mapper
-                .map(finishProductSampleService.getFinishProductSamplesByRawMaterialIdAndPlantCode(
-                    rawMaterialId, plantCode, pageable), FinishProductSampleResponseDto.class),
-            RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+        return new ResponseEntity<>(
+            new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+                mapper.map(finishProductSampleService
+                    .getFinishProductSamplesByRawMaterialIdAndPlantCode(rawMaterialId, plantCode),
+                    FinishProductSampleResponseDto.class),
+                RestApiResponseStatus.OK),
+            HttpStatus.OK);
       }
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.EXPORT_FINISHED_PRODUCT_DELIVERY)
+  public ResponseEntity<Object> exportFinishProductDelivery(HttpServletResponse response)
+      throws ClassNotFoundException {
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet worksheet =
+        workbook.createSheet(FileStorageConstants.FINISHED_PRODUCT_DELIVERY_WORK_SHEET);
+    int startRowIndex = 0;
+    int startColIndex = 0;
+    FinishProductDeliveryLayouter.buildReport(worksheet, startRowIndex, startColIndex);
+    FinishedProductDeliveryFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+        finishProductSampleIssueService.getAllFinishProductSampleIssue());
+    String fileName = FileStorageConstants.FINISHED_PRODUCT_DELIVERY_FILE_NAME;
+    response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+    response.setContentType("application/vnd.ms-excel");
+    EnrollWriter.write(response, worksheet);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        HttpStatus.OK);
+  }
+
+  @PostMapping(value = EndpointURI.IMPORT_FINISHED_PRODUCT_DELIVERY)
+  public ArrayList<String> uploadFinishProductDelivery(@RequestParam("file") MultipartFile file) {
+    fileStorageService.uploadCsv(file);
+    return fileStorageService.importDeliverySample(file);
   }
 }

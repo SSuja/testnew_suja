@@ -1,9 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -71,6 +71,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       }
     }
     finishProductSample.setStatus(Status.NEW);
+    finishProductSample.setFinishProductCode(finishProductSample.getCode());
     FinishProductSample finishProductSampleObj =
         finishProductSampleRepository.save(finishProductSample);
     if (finishProductSampleObj != null) {
@@ -190,8 +191,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, String status, String date,
+      String code, String rawMaterialName, String workOrderNumber, String customer,
       Pageable pageable, Pagination pagination) {
-
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
           .startsWithIgnoreCase(finishProductCode));
@@ -222,25 +223,27 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       booleanBuilder.and(
           QFinishProductSample.finishProductSample.date.stringValue().startsWithIgnoreCase(date));
     }
-    pagination.setTotalRecords(
-        ((Collection<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
-            .stream().count());
-    return mapper.map(finishProductSampleRepository.findAll(booleanBuilder, pageable).toList(),
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.code.stringValue().startsWithIgnoreCase(code));
+    }
+    if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
+          .stringValue().startsWithIgnoreCase(rawMaterialName));
+    }
+    if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.stringValue()
+          .stringValue().startsWithIgnoreCase(workOrderNumber));
+    }
+    if (customer != null && !customer.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
+          .stringValue().stringValue().startsWithIgnoreCase(customer));
+    }
+    pagination.setTotalRecords(finishProductSampleRepository.countByWorkOrderNumberNull());
+    return mapper.map(
+        finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+            .filter(sample -> sample.getWorkOrderNumber() == null).collect(Collectors.toList()),
         FinishProductSampleResponseDto.class);
-  }
-
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId,
-      Pageable pageable) {
-    return finishProductSampleRepository
-        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId, pageable);
-  }
-
-  @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
-      Long subCategoryId, String plantCode, Pageable pageable) {
-    return finishProductSampleRepository
-        .findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(subCategoryId,
-            plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
@@ -264,14 +267,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId,
-      Pageable pageable) {
-    return finishProductSampleRepository
-        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId,
-            pageable);
-  }
-
-  @Transactional(readOnly = true)
   public Long getCountCategoryFinishProductSampleByPlantCode(String plantCode,
       Long materialCategoryId) {
     return finishProductSampleRepository
@@ -280,22 +275,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSamplesByCategoryIdAndPlantCode(
-      Long materialCategoryId, String plantCode, Pageable pageable) {
-    return finishProductSampleRepository
-        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryIdAndMixDesignPlantCode(
-            materialCategoryId, plantCode, pageable);
-  }
-
-  @Transactional(readOnly = true)
   public Long getRawMaterialCountFinishProductSample(Long rawMaterialId) {
     return finishProductSampleRepository.countByMixDesignRawMaterialId(rawMaterialId);
-  }
-
-  @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId,
-      Pageable pageable) {
-    return finishProductSampleRepository.findByMixDesignRawMaterialId(rawMaterialId, pageable);
   }
 
   @Transactional(readOnly = true)
@@ -306,9 +287,42 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(
-      Long rawMaterialId, String plantCode, Pageable pageable) {
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId) {
     return finishProductSampleRepository
-        .findByMixDesignRawMaterialIdAndMixDesignPlantCode(rawMaterialId, plantCode, pageable);
+        .findByMixDesignRawMaterialMaterialSubCategoryId(subCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
+      Long subCategoryId, String plantCode) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryIdAndMixDesignPlantCode(subCategoryId,
+            plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByCategoryId(Long materialCategoryId) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByCategoryIdAndPlantCode(
+      Long materialCategoryId, String plantCode) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialMaterialSubCategoryMaterialCategoryIdAndMixDesignPlantCode(
+            materialCategoryId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialId(Long rawMaterialId) {
+    return finishProductSampleRepository.findByMixDesignRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> getFinishProductSamplesByRawMaterialIdAndPlantCode(
+      Long rawMaterialId, String plantCode) {
+    return finishProductSampleRepository
+        .findByMixDesignRawMaterialIdAndMixDesignPlantCode(rawMaterialId, plantCode);
   }
 }

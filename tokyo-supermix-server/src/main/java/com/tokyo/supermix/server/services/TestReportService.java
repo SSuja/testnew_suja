@@ -10,6 +10,7 @@ import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.SeiveTestReportResponseDto;
 import com.tokyo.supermix.data.dto.report.SieveTestTrialDto;
+import com.tokyo.supermix.data.dto.report.StrengthDto;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
 import com.tokyo.supermix.data.enums.ReportFormat;
 
@@ -52,10 +53,14 @@ public interface TestReportService {
   public List<SieveTestTrialDto> getTrialResultGraph(String materialTestCode);
 
   public List<ConcreteStrengthDto> getConcreteStrengths();
-  
+
   public IncomingSampleJasperDeliveryDto getIncomingSampleJasperSummaryReport1(
       String incomingSampleCode);
 
   public IncomingSampleJasperDeliveryDto getIncomingSampleDeliveryReports1(
       String incomingSampleCode, ReportFormat reportFormat);
+
+  public StrengthDto getStrengthReport(String finishProductTestCode);
+
+  public StrengthDto getStrengthReportByPlantWise(String finishProductTestCode, String plantCode);
 }

@@ -25,8 +25,9 @@ public class MixDesignProportionServiceImpl implements MixDesignProportionServic
   }
 
   @Transactional
-  public MixDesignProportion saveMixDesignProportion(MixDesignProportion mixDesignProportion) {
-    return mixDesignProportionRepository.save(mixDesignProportion);
+  public String saveMixDesignProportion(List<MixDesignProportion> mixDesignProportion) {
+    mixDesignProportionRepository.saveAll(mixDesignProportion);
+    return mixDesignProportion.get(0).getMixDesign().getCode();
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -95,5 +96,10 @@ public class MixDesignProportionServiceImpl implements MixDesignProportionServic
     }
     return mixDesignProportionRepository.findAll(booleanBuilder.getValue(),
         PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+  }
+
+  @Transactional
+  public void updateMixDesignProportion(MixDesignProportion mixDesignProportion) {
+    mixDesignProportionRepository.save(mixDesignProportion);
   }
 }

@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +20,7 @@ import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueForSieveTest;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
+import com.tokyo.supermix.data.dto.report.FinishProductResultDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
@@ -27,6 +30,8 @@ import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
 import com.tokyo.supermix.data.dto.report.SeiveTestReportResponseDto;
 import com.tokyo.supermix.data.dto.report.SieveResultAndParameter;
 import com.tokyo.supermix.data.dto.report.SieveTestTrialDto;
+import com.tokyo.supermix.data.dto.report.StrengthDto;
+import com.tokyo.supermix.data.dto.report.StrengthResultDto;
 import com.tokyo.supermix.data.dto.report.SupplierReportDto;
 import com.tokyo.supermix.data.dto.report.TestAndResult;
 import com.tokyo.supermix.data.dto.report.TestReportDetailDto;
@@ -1106,5 +1111,128 @@ public class TestReportServiceImpl implements TestReportService {
       }
     });
     return acceptedValueDtos;
+  }
+
+
+  @Transactional(readOnly = true)
+  public StrengthDto getStrengthReport(String finishProductTestCode) {
+    StrengthDto strengthDto = new StrengthDto();
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findFinishProductTestByCode(finishProductTestCode);
+    strengthDto.setFinishProdutSampleCode(finishProductTest.getFinishProductSample().getCode());
+    strengthDto.setTestDate(finishProductTest.getDate());
+    strengthDto.setUpdatedDate(finishProductTest.getUpdatedAt());
+    if (finishProductTest.getFinishProductSample().getProject() != null) {
+      strengthDto.setProject(finishProductTest.getFinishProductSample().getProject().getCode());
+      strengthDto.setCustomer(
+          finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
+    } else {
+      strengthDto.setProject(null);
+      strengthDto.setCustomer(null);
+    }
+    strengthDto.setRawMaterialName(
+        finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getName());
+    strengthDto
+        .setMixDesignCode(finishProductTest.getFinishProductSample().getMixDesign().getCode());
+    strengthDto.setStatus(finishProductTest.getFinishProductSample().getStatus().name());
+    strengthDto.setTestName(finishProductTest.getTestConfigure().getTest().getName());
+    strengthDto.setPlant(mapper
+        .map(finishProductTest.getFinishProductSample().getMixDesign().getPlant(), PlantDto.class));
+    strengthDto.setFinishProductResult(getFinishProductResult(finishProductTestCode));
+    if ((finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
+      if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
+        strengthDto.setAcceptanceCriterias(getMaterialAcceptedValueDto(
+            finishProductTest.getTestConfigure().getId(),
+            finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId()));
+      } else {
+        strengthDto.setAcceptanceCriterias(getMaterialValueIsNull(
+            finishProductTest.getTestConfigure().getId(), finishProductTestCode));
+      }
+    } else {
+      strengthDto.setAcceptanceCriterias(
+          getAcceptedCriteriaDetails(finishProductTest.getTestConfigure().getId()));
+    }
+    strengthDto.setStrengthResultDtos(
+        getFinishProductsTrailsValuesByFinishProductCode(finishProductTestCode,
+            finishProductTest.getNoOfTrial(), finishProductTest.getTestConfigure().getId()));
+    return strengthDto;
+  }
+
+  private FinishProductResultDto getFinishProductResult(String finishProductTestCode) {
+    FinishProductResultDto finishProductResultDto = new FinishProductResultDto();
+    List<FinishProductParameterResult> finishProductParameterResultList =
+        finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
+    finishProductResultDto.setTestParameterName(
+        finishProductParameterResultList.get(0).getTestParameter().getParameter().getName());
+    finishProductResultDto.setAverage(finishProductParameterResultList.get(0).getResult());
+    return finishProductResultDto;
+  }
+
+  private List<StrengthResultDto> getFinishProductsTrailsValuesByFinishProductCode(
+      String finishProductCode, Long noOftrial, Long testConfigId) {
+    List<TestParameter> testParaList = testParameterRepository.findByTestConfigureId(testConfigId);
+    int n = testParaList.size();
+    List<StrengthResultDto> strengthResultDtoList = new ArrayList<StrengthResultDto>();
+    List<FinishProductTrial> finishProductTrialListAdd = new ArrayList<FinishProductTrial>();
+    List<FinishProductTrial> finishProductTrialList = finishProductTrialRepository
+        .findByFinishProductTestCodeOrderByCreatedAtDesc(finishProductCode);
+    for (int i = (int) (noOftrial * n); i > 0; i--) {
+      finishProductTrialListAdd.addAll(finishProductTrialList.stream()
+          .filter(fini -> fini.getTestParameter().getType().equals(TestParameterType.RESULT))
+          .collect(Collectors.toList()));
+    }
+    Collections.reverse(finishProductTrialListAdd);
+    for (FinishProductTrial finishProductTrial : finishProductTrialListAdd.stream().distinct()
+        .collect(Collectors.toList())) {
+      StrengthResultDto strengthResultDto = new StrengthResultDto();
+      strengthResultDto.setTrailNo(finishProductTrial.getTrialNo());
+      strengthResultDto.setValue(finishProductTrial.getValue());
+      strengthResultDtoList.add(strengthResultDto);
+    }
+    return strengthResultDtoList;
+  }
+
+  @Transactional(readOnly = true)
+  public StrengthDto getStrengthReportByPlantWise(String finishProductTestCode, String plantCode) {
+    StrengthDto strengthDto = new StrengthDto();
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findFinishProductTestByCode(finishProductTestCode);
+    strengthDto.setFinishProdutSampleCode(finishProductTest.getFinishProductSample().getCode());
+    strengthDto.setTestDate(finishProductTest.getDate());
+    strengthDto.setUpdatedDate(finishProductTest.getUpdatedAt());
+    if (finishProductTest.getFinishProductSample().getProject() != null) {
+      strengthDto.setProject(finishProductTest.getFinishProductSample().getProject().getCode());
+      strengthDto.setCustomer(
+          finishProductTest.getFinishProductSample().getProject().getCustomer().getName());
+    } else {
+      strengthDto.setProject(null);
+      strengthDto.setCustomer(null);
+    }
+    strengthDto.setRawMaterialName(
+        finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getName());
+    strengthDto
+        .setMixDesignCode(finishProductTest.getFinishProductSample().getMixDesign().getCode());
+    strengthDto.setStatus(finishProductTest.getFinishProductSample().getStatus().name());
+    strengthDto.setTestName(finishProductTest.getTestConfigure().getTest().getName());
+    strengthDto.setPlant(mapper
+        .map(finishProductTest.getFinishProductSample().getMixDesign().getPlant(), PlantDto.class));
+    strengthDto.setFinishProductResult(getFinishProductResult(finishProductTestCode));
+    if ((finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
+      if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
+        strengthDto.setAcceptanceCriterias(getMaterialAcceptedValueDto(
+            finishProductTest.getTestConfigure().getId(),
+            finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId()));
+      } else {
+        strengthDto.setAcceptanceCriterias(getMaterialValueIsNull(
+            finishProductTest.getTestConfigure().getId(), finishProductTestCode));
+      }
+    } else {
+      strengthDto.setAcceptanceCriterias(
+          getAcceptedCriteriaDetails(finishProductTest.getTestConfigure().getId()));
+    }
+    strengthDto.setStrengthResultDtos(
+        getFinishProductsTrailsValuesByFinishProductCode(finishProductTestCode,
+            finishProductTest.getNoOfTrial(), finishProductTest.getTestConfigure().getId()));
+    return strengthDto;
   }
 }
