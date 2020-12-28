@@ -755,7 +755,7 @@ public final class EndpointURI {
   public static final String CORE_TEST_CONFIGURE_TEST_ORIGIN =
       CORE_TEST_CONFIGURE + SLASH + "test-origin";
   public static final String CORE_TEST_CONFIGURE_SEARCH=CORE_TEST_CONFIGURE + SLASH+"search"+SLASH+"test-configure-Id"+SLASH+"{testConfigureId}";
-
+  public static final String CORE_TEST_CONFIGURE_UPDATE=CORE_TEST_CONFIGURE + SLASH+"update-status";
 
   public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";
   public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";

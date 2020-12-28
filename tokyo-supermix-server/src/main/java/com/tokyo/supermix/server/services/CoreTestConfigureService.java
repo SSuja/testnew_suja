@@ -38,4 +38,6 @@ public interface CoreTestConfigureService {
 
 	public List<CoreTestConfigureDto> searchRawMaterial(BooleanBuilder booleanBuilder, Long testConfigureId,
 			String rawMaterialName, Long materialSubCategoryId);
+	
+	public List<CoreTestConfigure> updateCoreTestConfigure(List<CoreTestConfigure> CoreTestConfigure);
 }

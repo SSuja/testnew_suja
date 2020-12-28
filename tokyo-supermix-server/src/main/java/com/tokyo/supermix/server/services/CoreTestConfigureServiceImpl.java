@@ -370,4 +370,15 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 		coreTestConfigureRepository.findAll(booleanBuilder).forEach(coreTest -> coretestlist.add(coreTest));
 		return mapper.map(coretestlist, CoreTestConfigureDto.class);
 	}
+
+	@Override
+	public List<CoreTestConfigure> updateCoreTestConfigure(List<CoreTestConfigure> CoreTestConfigurelist) {
+		List<CoreTestConfigure> CoreTestConfigurelistnew=new ArrayList<>();
+		for(CoreTestConfigure coreTestConfigure:CoreTestConfigurelist) {
+			CoreTestConfigure coreTestConfigure2=coreTestConfigureRepository.getOne(coreTestConfigure.getId());
+			coreTestConfigure2.setCoreTest(coreTestConfigure.isCoreTest());
+			CoreTestConfigurelistnew.add(coreTestConfigure2);
+		}
+		return coreTestConfigureRepository.saveAll(CoreTestConfigurelistnew);
+	}
 }

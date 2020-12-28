@@ -21,12 +21,15 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.CoreTestConfigureDto;
 import com.tokyo.supermix.data.dto.TestOriginRequestDto;
+import com.tokyo.supermix.data.dto.UnitDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
+import com.tokyo.supermix.data.entities.Unit;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.util.Constants;
@@ -158,5 +161,12 @@ public class CoreTestConfigureController {
 						RestApiResponseStatus.OK, pagination),
 				null, HttpStatus.OK);
 	}
+	@PutMapping(value = EndpointURI.CORE_TEST_CONFIGURE_UPDATE)
+	public ResponseEntity<Object> updateCoreTestConfigure(
+			@Valid @RequestBody List<CoreTestConfigureDto> coreTestConfigureDtoList) {
+		coreTestConfigureService.updateCoreTestConfigure(mapper.map(coreTestConfigureDtoList, CoreTestConfigure.class));
 
+		return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, Constants.CORE_TEST_CONFIGURE),
+				HttpStatus.OK);
+	}
 }
