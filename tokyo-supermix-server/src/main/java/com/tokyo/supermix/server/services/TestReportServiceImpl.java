@@ -1165,6 +1165,8 @@ public class TestReportServiceImpl implements TestReportService {
     finishProductResultDto.setTestParameterName(
         finishProductParameterResultList.get(0).getTestParameter().getParameter().getName());
     finishProductResultDto.setAverage(finishProductParameterResultList.get(0).getResult());
+    finishProductResultDto
+        .setUnit(finishProductParameterResultList.get(0).getTestParameter().getUnit().getUnit());
     return finishProductResultDto;
   }
 
