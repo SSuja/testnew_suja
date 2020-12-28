@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.script.ScriptException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +90,7 @@ public class FinishProductTrialController {
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
   public ResponseEntity<Object> saveFinishProductTrial(
-      @Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList)
+      @Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList, HttpServletRequest request)
       throws ScriptException {
     List<FinishProductTrialRequestDto> li = finishProductTrialRequestDtoList.stream()
         .filter(finish -> (finish.getValue() == null
@@ -121,10 +122,10 @@ public class FinishProductTrialController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE)
   public ResponseEntity<Object> getResultByFinishProductCode(
-      @PathVariable String finishProductCode) {
+      @PathVariable String finishProductCode , HttpServletRequest request) {
     if (finishProductTrialService.isFinishProductTestExists(finishProductCode)) {
       logger.debug("Get Finish Product Trial By Id");
-      finishProductTrialService.saveFinishproductResult(finishProductCode);
+      finishProductTrialService.saveFinishproductResult(finishProductCode, request);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
         validationFailureStatusCodes.getFinishProductTrialNotExit()), HttpStatus.BAD_REQUEST);

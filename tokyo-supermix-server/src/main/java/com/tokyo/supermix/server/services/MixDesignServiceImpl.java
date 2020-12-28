@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,13 +13,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.MixDesignResponseDto;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.entities.MixDesignConfirmationToken;
 import com.tokyo.supermix.data.entities.QMixDesign;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.MixDesignConfirmationTokenRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -38,6 +42,8 @@ public class MixDesignServiceImpl implements MixDesignService {
   private EmailNotification emailNotification;
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  MixDesignConfirmationTokenRepository  mixDesignConfirmationTokenRepository;
   @Autowired
   private Mapper mapper;
 
@@ -59,6 +65,7 @@ public class MixDesignServiceImpl implements MixDesignService {
         mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
       }
     }
+    mixDesign.setApproved(false);
     MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
     if (mixDesignObj != null) {
       emailNotification.sendMixDesignCreationEmail(mixDesignObj);
@@ -215,5 +222,16 @@ public class MixDesignServiceImpl implements MixDesignService {
     }
     return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeContainsIgnoreCase(rawMaterialId,
         status, code);
+  }
+  
+  @Override
+  public void updateMixDesignWithConfirmation(String confirmationToken) {
+	  MixDesignConfirmationToken token =
+    		mixDesignConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
+    if (token != null) {
+      MixDesign  mixDesign = mixDesignRepository.findByCode(token.getMixDesign().getCode());
+      mixDesign.setApproved(true);
+      mixDesignRepository.save(mixDesign);
+    }
   }
 }
