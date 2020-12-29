@@ -17,4 +17,7 @@ public interface PlantRepository
   List<Plant> findByCodeIn(List<String> plantCodes);
 
   Plant findByName(String name);
+
+
+  List<Plant> findBySubBusinessUnitId(Long subUnitId);
 }

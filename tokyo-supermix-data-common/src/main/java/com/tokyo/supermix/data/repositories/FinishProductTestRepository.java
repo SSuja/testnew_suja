@@ -66,4 +66,7 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
 			String mixDesignCode, String finishProductSampleCode, Status status);
 
 	Set<FinishProductTest> findByTestConfigureDueDayNotNull();
+
+	List<FinishProductTest> findByFinishProductSampleMixDesignCodeAndFinishProductSampleCodeAndStatus(
+			String mixDesignCode, String finishProductSampleCode, Status status);
 }
