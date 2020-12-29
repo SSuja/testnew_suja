@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
@@ -23,6 +24,7 @@ import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
+import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -46,6 +48,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private GenerateReportService generateReportService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  private CoreTestConfigureRepository coreTestConfigureRepository;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -189,48 +195,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
   }
 
-  public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
-    IncomingSample incomingSample = materialTestObj.getIncomingSample();
-    Integer count = 0;
-    String bodyMessage = "";
-    Integer failCount = 0;
-    List<TestConfigure> RawtestConfigureList = new ArrayList<>();
-    if (testConfigureRepository.existsByRawMaterialId(incomingSample.getRawMaterial().getId())) {
-      RawtestConfigureList = testConfigureRepository
-          .findByRawMaterialIdAndCoreTestTrue(incomingSample.getRawMaterial().getId());
-    }
-
-    List<TestConfigure> SubtestConfigureList = testConfigureRepository
-        .findByMaterialSubCategoryIdAndCoreTestTrue(
-            incomingSample.getRawMaterial().getMaterialSubCategory().getId())
-        .stream()
-        .filter(testConfigure -> testConfigure.getRawMaterial() == null
-            && getMaterialAcceptedForTest(testConfigure,
-                incomingSample.getRawMaterial().getId()) == true)
-        .collect(Collectors.toList());
-    if (!RawtestConfigureList.isEmpty()) {
-      SubtestConfigureList.addAll(RawtestConfigureList);
-    }
-    List<MaterialTest> materialTestList =
-        materialTestRepository.findByIncomingSampleCode(incomingSample.getCode());
-    for (TestConfigure testConfigure : SubtestConfigureList) {
-      for (MaterialTest materialTest : materialTestList) {
-        if (testConfigure.getTest().getName()
-            .equalsIgnoreCase(materialTest.getTestConfigure().getTest().getName())
-            && materialTest.getTestConfigure().isCoreTest()
-            && materialTest.getStatus().equals(Status.PASS)) {
-          count++;
-        }
-      }
-      if (materialTestRepository.countByIncomingSampleCodeAndStatusAndTestConfigureTestName(
-          incomingSample.getCode(), Status.FAIL, testConfigure.getTest().getName()) >= 2) {
-        failCount++;
-      }
-    }
-    calculateTest(count, failCount, SubtestConfigureList.size(), incomingSample, bodyMessage,
-        materialTestObj);
-  }
-
   private void calculateTest(Integer count, Integer failCount, Integer testSize,
       IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
     updateStatusSample(
@@ -326,6 +290,44 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     return materialTestRepository.countByIncomingSamplePlantCode(plantCode);
   }
 
+  public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
+    IncomingSample incomingSample = materialTestObj.getIncomingSample();
+    if (coreTestConfigureRepository.existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
+        materialTestObj.getTestConfigure().getId(), incomingSample.getRawMaterial().getId())) {
+      List<CoreTestConfigure> coreTestConfigureList =
+          coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
+              incomingSample.getRawMaterial().getId());
+
+      List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
+          .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
+
+      Status status = Status.NEW;
+      for (TestConfigure tc : testConfigureList) {
+        if (!materialTestRepository
+            .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
+                incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
+            .isEmpty()) {
+
+          materialTestRepository
+              .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
+                  incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
+              .get(0).getUpdatedAt();
+          if (materialTestRepository
+              .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCodeOrderByUpdatedAtDesc(
+                  incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
+              .get(0).getStatus().equals(Status.FAIL)) {
+            status = Status.FAIL;
+            break;
+          } else {
+            status = Status.PASS;
+          }
+        } else {
+          status = Status.PROCESS;
+          break;
+        }
+      }
+      updateStatusSample(status, incomingSample, "updateed", materialTestObj);}
+    }
 
   private List<MaterialAcceptedValue> getRawMaterialAcceptedValues(Long testConfigId) {
     return materialAcceptedValueRepository.findByTestConfigureId(testConfigId);

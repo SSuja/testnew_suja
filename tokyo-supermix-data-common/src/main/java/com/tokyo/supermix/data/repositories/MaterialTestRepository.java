@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.repositories;
 
+import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -77,6 +78,8 @@ public interface MaterialTestRepository extends JpaRepository<MaterialTest, Stri
 
   Long countByIncomingSamplePlantCode(String plantCode);
 
+  List<MaterialTest> findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCodeOrderByUpdatedAtDesc(
+      String incomingSampleCode, Long testConfigId, String plantCode);
   boolean existsByIncomingSampleCodeAndTestConfigureId(String incomingSampleCode,
       Long testConfigId);
 }

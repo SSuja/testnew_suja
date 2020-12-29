@@ -51,4 +51,6 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
       Pageable pageable);
 
   Long countByPlantCodeOrPlantNullOrSubBusinessUnitId(String plantCode, Long subId);
+
+  List<RawMaterial> findByMaterialSubCategoryMaterialCategoryId(Long materialCategoryId);
 }

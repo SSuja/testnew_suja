@@ -1721,7 +1721,6 @@ public class ValidationFailureStatusCodes {
   public void setFinishProductAcceptedValueNotExist(String finishProductAcceptedValueNotExist) {
     this.finishProductAcceptedValueNotExist = finishProductAcceptedValueNotExist;
   }
-
   // SBU
   @Value("${validation.subBusinessUnit.notExists}")
   private String subBusinessUnitNotExist;
@@ -1905,3 +1904,4 @@ public class ValidationFailureStatusCodes {
     this.testIdNotExists = testIdNotExists;
   }
 }
+

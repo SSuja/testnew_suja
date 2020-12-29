@@ -45,6 +45,17 @@ public class TestParameter extends DateAudit implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private InputMethod inputMethods;
   private String level;
+  @ManyToOne
+  @JoinColumn(name = "tableFormatId", nullable = true)
+  private TableFormat tableFormat;
+
+  public TableFormat getTableFormat() {
+    return tableFormat;
+  }
+
+  public void setTableFormat(TableFormat tableFormat) {
+    this.tableFormat = tableFormat;
+  }
 
   public Long getId() {
     return id;

@@ -20,6 +20,7 @@ public class TestParameterRequestDto {
   private InputMethod inputMethods;
   private String level;
   private String name;
+  private Long tableFormatId;
 
   public Long getId() {
     return id;
@@ -115,5 +116,13 @@ public class TestParameterRequestDto {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Long getTableFormatId() {
+    return tableFormatId;
+  }
+
+  public void setTableFormatId(Long tableFormatId) {
+    this.tableFormatId = tableFormatId;
   }
 }
