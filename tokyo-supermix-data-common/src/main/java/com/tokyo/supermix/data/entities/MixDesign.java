@@ -18,7 +18,7 @@ public class MixDesign extends DateAudit implements Serializable {
   private String code;
   private Date date;
   private Status status;
-  private boolean isApproved;
+  private boolean approved;
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = false)
   private Plant plant;
@@ -51,6 +51,14 @@ public class MixDesign extends DateAudit implements Serializable {
     this.status = status;
   }
 
+  public boolean isApproved() {
+    return approved;
+  }
+
+  public void setApproved(boolean approved) {
+    this.approved = approved;
+  }
+
   public Plant getPlant() {
     return plant;
   }
@@ -78,12 +86,4 @@ public class MixDesign extends DateAudit implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
-
-public boolean isApproved() {
-	return isApproved;
-}
-
-public void setApproved(boolean isApproved) {
-	this.isApproved = isApproved;
-}
 }
