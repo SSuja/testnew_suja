@@ -148,6 +148,7 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setName(test.getName());
         if(test.getTableFormat().getId()!=null) {
         testParameterResponseDto.setTableFormatId(test.getTableFormat().getId());
+        testParameterResponseDto.setTableFormatName(test.getTableFormat().getTableName());
         }
         testParameterResponseDtoList.add(testParameterResponseDto);
       }

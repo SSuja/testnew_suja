@@ -39,10 +39,14 @@ public class TableFormatController {
   @PostMapping(value = EndpointURI.TABLE_FORMAT)
   public ResponseEntity<Object> createTableFormat(
       @Valid @RequestBody TableFormatDto tableFormatDto) {
-    tableFormatService.saveTableFormat(mapper.map(tableFormatDto, TableFormat.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TABLE_FORMAT_SUCCESS),
-        HttpStatus.OK);
+	  if(!tableFormatService.existsTableFormatName(tableFormatDto.getTableName())) {
+		  tableFormatService.saveTableFormat(mapper.map(tableFormatDto, TableFormat.class));
+		    return new ResponseEntity<>(
+		        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TABLE_FORMAT_SUCCESS),
+		        HttpStatus.OK); 
+	  }
+	  return new ResponseEntity<>(new ValidationFailureResponse(Constants.TABLE_FORMAT,
+	          validationFailureStatusCodes.getTableFormatAlreadyExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.TABLE_FORMATS)
