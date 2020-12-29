@@ -22,6 +22,7 @@ public class MailGroupConstance {
   public static final String CREATE_PLANT_EQUIPMENT_CALIBRATION = "Plant Equipment Calibration Creation";
   public static final String CREATE_PLANT_USER = "Plant User Creation";
   public static final String CREATE_NON_PLANT_USER = "Non Plant User Creation";
+  public static final String MIX_DESIGN_CONFIRMATION ="Mix Design Confirmation";
   
   private MailGroupConstance() {}
 

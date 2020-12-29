@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +18,7 @@ import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.data.entities.MixDesign;
+import com.tokyo.supermix.data.entities.MixDesignConfirmationToken;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
@@ -31,6 +33,7 @@ import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MixDesignConfirmationTokenRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -74,6 +77,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   ParameterEquationRepository parameterEquationRepository;
   @Autowired
   CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  MixDesignConfirmationTokenRepository mixDesignConfirmationTokenRepository;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -145,7 +150,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   @Transactional
-  public void saveFinishproductResult(String finishProductTestCode) {
+  public void saveFinishproductResult(String finishProductTestCode, HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     TestConfigure testConfigure =
@@ -223,7 +228,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         }
       }
     }
-    checkAcceptedValue(testConfigure.getId(), finishProductTestCode);
+    checkAcceptedValue(testConfigure.getId(), finishProductTestCode, request);
   }
 
   public double averageValueForResultObserve(String finishProductTestCode, Long testParameterId) {
@@ -333,7 +338,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return parameterEquation;
   }
 
-  public void updateStatus(String finishProductTestCode, Status status) {
+  public void updateStatus(String finishProductTestCode, Status status,
+      HttpServletRequest request) {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     finishProductTest.setStatus(status);
@@ -341,7 +347,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (finishProductTestObj != null) {
       emailNotification.sendFinishProductTestEmail(finishProductTestObj);
     }
-    updateFinishProductSampleAndMixDesignStatus(finishProductTestCode);
+    updateFinishProductSampleAndMixDesignStatus(finishProductTestCode, request);
   }
 
   public double getFinishProductResultParameter(String finishProductTestCode, Long testConfigId,
@@ -441,7 +447,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return testConfigureRepository.findByRawMaterialIdAndCoreTestTrue(rawMaterialId).size();
   }
 
-  private void checkStatusAndSaveStatus(String finishProductTestCode) {
+  private void checkStatusAndSaveStatus(String finishProductTestCode, HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     FinishProductSample finishProductSample = finishProductSampleRepository
@@ -449,12 +455,21 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     finishProductSample.setStatus(finishproductTest.getStatus());
-    finishProductSampleRepository.save(finishProductSample);
+    FinishProductSample finishProductSampleobj =
+        finishProductSampleRepository.save(finishProductSample);
     mixDesign.setStatus(finishproductTest.getStatus());
-    mixDesignRepository.save(mixDesign);
+    MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
+    MixDesignConfirmationToken mixDesignConfirmationToken =
+        new MixDesignConfirmationToken(mixDesignObj);
+    mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);
+    emailNotification.sendMixdesinApprovelEmail(finishProductSampleobj, mixDesignConfirmationToken,
+        request);
+    if (mixDesignObj.getStatus().equals(Status.PASS)) {
+    }
   }
 
-  private void checkPassCountAndTestConfigKeyTestCount(String finishProductTestCode) {
+  private void checkPassCountAndTestConfigKeyTestCount(String finishProductTestCode,
+      HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     FinishProductSample finishProductSample = finishProductSampleRepository
@@ -464,7 +479,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (getCountKeyTestPassFinishProductTestsByMaterialSubCategory(mixDesign.getCode(),
         finishProductSample.getCode(), Status.PASS) == (coreTestConfigureRepository
             .findByrawMaterialIdAndCoreTestTrue(mixDesign.getRawMaterial().getId()).size())) {
-      checkStatusAndSaveStatus(finishProductTestCode);
+      checkStatusAndSaveStatus(finishProductTestCode, request);
     } else {
       finishProductSample.setStatus(Status.PROCESS);
       finishProductSampleRepository.save(finishProductSample);
@@ -475,13 +490,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
   }
 
-  public void updateFinishProductSampleAndMixDesignStatus(String finishProductTestCode) {
+  public void updateFinishProductSampleAndMixDesignStatus(String finishProductTestCode,
+      HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     if (finishproductTest.getStatus().equals(Status.PASS)) {
-      checkPassCountAndTestConfigKeyTestCount(finishProductTestCode);
+      checkPassCountAndTestConfigKeyTestCount(finishProductTestCode, request);
     } else if (finishproductTest.getStatus().equals(Status.FAIL)) {
-      checkStatusAndSaveStatus(finishProductTestCode);
+      checkStatusAndSaveStatus(finishProductTestCode, request);
     }
   }
 
@@ -510,7 +526,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
   }
 
-  public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode) {
+  public void checkAcceptedValue(Long testConfigureId, String finishProductTestCode,
+      HttpServletRequest request) {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
     ArrayList<Status> statusList = new ArrayList<Status>();
@@ -554,9 +571,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (passCount == conutrRelavantFinalResult(testConfigureId,
         finishProductTest.getTestConfigure().getAcceptedType(),
         finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId())) {
-      updateStatus(finishProductTestCode, Status.PASS);
+      updateStatus(finishProductTestCode, Status.PASS, request);
     } else {
-      updateStatus(finishProductTestCode, Status.FAIL);
+      updateStatus(finishProductTestCode, Status.FAIL, request);
     }
   }
 

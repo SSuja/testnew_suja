@@ -48,6 +48,7 @@ public class TestConfigure extends DateAudit implements Serializable {
   private AcceptedType acceptedType;
   private Long noOfTrial;
   private boolean name;
+  private String dueDay;
 
   public Long getId() {
     return id;
@@ -159,6 +160,14 @@ public class TestConfigure extends DateAudit implements Serializable {
 
   public void setName(boolean name) {
     this.name = name;
+  }
+
+  public String getDueDay() {
+    return dueDay;
+  }
+
+  public void setDueDay(String dueDay) {
+    this.dueDay = dueDay;
   }
 
   public static long getSerialversionuid() {

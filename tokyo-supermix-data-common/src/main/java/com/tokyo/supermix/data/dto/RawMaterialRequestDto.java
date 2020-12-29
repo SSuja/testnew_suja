@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.MaterialType;
 
 public class RawMaterialRequestDto {
   private Long id;
@@ -18,6 +19,7 @@ public class RawMaterialRequestDto {
   private String plantCode;
   private String erpCode;
   private Long subBusinessUnitId;
+  private MaterialType materialType;
 
   public Long getId() {
     return id;
@@ -97,5 +99,13 @@ public class RawMaterialRequestDto {
 
   public void setSubBusinessUnitId(Long subBusinessUnitId) {
     this.subBusinessUnitId = subBusinessUnitId;
+  }
+
+  public MaterialType getMaterialType() {
+    return materialType;
+  }
+
+  public void setMaterialType(MaterialType materialType) {
+    this.materialType = materialType;
   }
 }

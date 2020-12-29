@@ -215,4 +215,10 @@ public class MixDesignController {
             MixDesignResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
+  
+  @GetMapping(value = EndpointURI.MIX_DESIGNS_WITH_TOKEN)
+  public String getMixDesignsBy(@PathVariable String confirmationToken) {
+	  mixDesignService.updateMixDesignWithConfirmation(confirmationToken);
+    return "<div ><div style='display:flex,flexDirection:row'><div><img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/Green_tick.svg' alt='Verified Image Not Found' width='100' height='100'></div><div style='color:darkblue'><h1>This MixDesign Successfully Approved</h1></div></div></div>";
+  }
 }

@@ -15,7 +15,7 @@ public class UploadImage {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  private byte[] testImage;
+  private String testImage;
   private String name;
   @ManyToOne
   @JoinColumn(name = "materialTestCode", nullable = true)
@@ -33,11 +33,11 @@ public class UploadImage {
     this.id = id;
   }
 
-  public byte[] getTestImage() {
+  public String getTestImage() {
     return testImage;
   }
 
-  public void setTestImage(byte[] testImage) {
+  public void setTestImage(String testImage) {
     this.testImage = testImage;
   }
 
