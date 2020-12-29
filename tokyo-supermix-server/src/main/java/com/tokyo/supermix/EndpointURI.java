@@ -735,19 +735,49 @@ public final class EndpointURI {
   public static final String IMPORT_RAW_MATERIAL =
       BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
 
+  /*
+   * CoreTestConfigure
+   */
+  public static final String CORE_TEST_CONFIGURE = BASE_API_PATH + "core-test-configure";
+  public static final String CORE_TEST_CONFIGURES = BASE_API_PATH + "core-test-configures";
+  public static final String CORE_TEST_CONFIGURE_BY_RAWMATERIAL_ID =
+      CORE_TEST_CONFIGURE + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String CORE_TEST_CONFIGURE_BY_TEST_CONFIGURE_ID =
+      CORE_TEST_CONFIGURE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String LIST_CORE_TEST_CONFIGURE_BY_TEST_CONFIGURE_ID =
+      CORE_TEST_CONFIGURE + SLASH + "test-configure-Id" + SLASH + "{testConfigureId}";
+  public static final String LIST_ALL_CORE_TEST_CONFIGURE_BY_TEST_CONFIGURE_ID =
+      CORE_TEST_CONFIGURE + SLASH + "test" + SLASH + "{testId}";
+  public static final String CORE_TEST_CONFIGURE_BY_MATERIAL_CATEGORY_ID =
+      CORE_TEST_CONFIGURE + SLASH + "mainCategory" + SLASH + "{mainCategoryId}";
+  public static final String CORE_TEST_CONFIGURE_BY_MATERIAL_SUB_CATEGORY_ID =
+      CORE_TEST_CONFIGURE + SLASH + "materialSubCategory" + SLASH + "{materialSubCategoryId}";
+  public static final String CORE_TEST_CONFIGURE_BY_RAW_MATERIAL_ID =
+      CORE_TEST_CONFIGURE + SLASH + "rawMaterial" + SLASH + "{rawMaterialId}";
+  public static final String CORE_TEST_CONFIGURE_TEST_ORIGIN =
+      CORE_TEST_CONFIGURE + SLASH + "test-origin";
+  public static final String CORE_TEST_CONFIGURE_SEARCH=CORE_TEST_CONFIGURE + SLASH+"search"+SLASH+"test-configure-Id"+SLASH+"{testConfigureId}";
+  public static final String CORE_TEST_CONFIGURE_UPDATE=CORE_TEST_CONFIGURE + SLASH+"update-status";
+
   public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";
   public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
   public static final String MAC_ADDRESS_BY_ID = MAC_ADDRESS + ID;
 
   public static final String STRENGTH_BY_FINISH_PRODUCT_TEST_CODE = BASE_API_PATH + "strength"
       + SLASH + "{finishProductTestCode}" + SLASH + "plant" + SLASH + "{plantCode}";
-
   public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
   public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
   public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
       MATERIAL_TEST + SLASH + "incoming-sample" + SLASH + "{incomingSampleCode}";
+
+  /*
+   * Unit apis
+   */
+  public static final String TABLE_FORMAT = BASE_API_PATH + "table-format";
+  public static final String TABLE_FORMATS = BASE_API_PATH + "table-formats";
+  public static final String TABLE_FORMAT_BY_ID = TABLE_FORMAT + ID;
 
   // Mix design ratio configuration
   public static final String MIX_DESIGN_RATIO_CONFIG = BASE_API_PATH + "mixdesign-ratio";

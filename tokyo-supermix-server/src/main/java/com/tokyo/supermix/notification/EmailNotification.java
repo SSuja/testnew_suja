@@ -187,7 +187,7 @@ public class EmailNotification {
 	public void sendTestEmail(MaterialTest materialTest) {
 		EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
 				materialTest.getTestConfigure().getMaterialSubCategory().getId(),
-				materialTest.getTestConfigure().getTest().getId(), true);
+				materialTest.getTestConfigure().getTest().getId(), false);
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
 				materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
 		if (emailGroup != null) {

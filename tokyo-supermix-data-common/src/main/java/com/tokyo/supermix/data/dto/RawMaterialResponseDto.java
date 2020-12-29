@@ -1,5 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.MaterialType;
+
 public class RawMaterialResponseDto {
   private Long id;
   private String name;
@@ -12,6 +14,7 @@ public class RawMaterialResponseDto {
   private String erpCode;
   private Long subBusinessUnitId;
   private String subBusinessUnitName;
+  private MaterialType materialType;
 
   public Long getId() {
     return id;
@@ -57,6 +60,8 @@ public class RawMaterialResponseDto {
     return prefix;
   }
 
+
+
   public void setPrefix(String prefix) {
     this.prefix = prefix;
   }
@@ -99,5 +104,13 @@ public class RawMaterialResponseDto {
 
   public void setSubBusinessUnitName(String subBusinessUnitName) {
     this.subBusinessUnitName = subBusinessUnitName;
+  }
+
+  public MaterialType getMaterialType() {
+    return materialType;
+  }
+
+  public void setMaterialType(MaterialType materialType) {
+    this.materialType = materialType;
   }
 }

@@ -587,6 +587,30 @@ public class Constants {
       "Finish Product Accepted Value Added Successfully";
   public static final String UPDATE_FINISH_PRODUCT_ACCEPTED_VALUE_SUCCESS =
       "Finish Product Accepted Value Updated Successfully";
+  /*
+   * Constants for Accepted Value validation key & Success messages
+   */
+  public static final String CORE_TEST_CONFIGURE = "coreTestConfigure";
+  public static final String CORE_TEST_CONFIGURES = "coreTestConfigures";
+  public static final String ADD_CORE_TEST_CONFIGURE_SUCCESS =
+      "coreTestConfigure Added Successfully";
+  // public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
+  // public static final String ACCEPTED_VALUE_TEST_CONFIGURE_ID = "acceptedValueTestConfigureId";
+  // public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";
+  // public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
+  // public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated
+  // Successfully";
+  // public static final String ACCEPTED_VALUE_ALREADY_DEPENDED = "Accepted Value is Already
+  // Depended";
+
+  /*
+   * Constants for Unit validation key & Success messages
+   */
+  public static final String TABLE_FORMAT = "tableFormat";
+  public static final String TABLE_FORMATS = "tableFormats";
+  public static final String ADD_TABLE_FORMAT_SUCCESS = "tableFormat Added Successfully";
+  public static final String TABLE_FORMAT_DELETED = "table format Successfully Deleted";
+  public static final String TABLE_FORMAT_UPDATED_SUCCESS = "table format Updated Successfully";
 
   public static final String MAC_ADDRESS = "Mac address";
   public static final String ADD_MAC_ADDRESS_SUCCESS = "Mac address Added Successfully";

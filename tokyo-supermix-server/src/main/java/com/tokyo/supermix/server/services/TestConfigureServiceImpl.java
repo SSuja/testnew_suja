@@ -39,6 +39,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EmailPointsService emailPointsService;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private CoreTestConfigureService coreTestConfigureService;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -56,8 +58,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   	  emailPointsRequestDto.setSchedule(true);
   	  emailPointsService.createScheduleEmailPoints(testConfigureRequestDto);    	  
     }
-    return testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
+    Long id = testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
         .getId();
+    coreTestConfigureService.createCoreTestConfigure(id);
+    return id;
   }
 
   @Transactional(readOnly = true)

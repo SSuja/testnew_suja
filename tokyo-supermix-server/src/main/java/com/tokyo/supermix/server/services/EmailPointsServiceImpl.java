@@ -118,13 +118,13 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     if (testConfigureRequestDto.getMaterialSubCategoryId() != null) {
       String materialSubCategoryName = materialSubCategoryService
           .getMaterialSubCategoryById(testConfigureRequestDto.getMaterialSubCategoryId()).getName();
-      emailPointsRequestDto.setName(materialSubCategoryName + "_" + testName);
+      emailPointsRequestDto.setName(materialSubCategoryName+ "_"  +"Schedule"+ "_" + testName);
       emailPointsRequestDto
           .setMaterialSubCategoryId(testConfigureRequestDto.getMaterialSubCategoryId());
     } else {
       String materialCategoryName = materialCategoryService
           .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
-      emailPointsRequestDto.setName(materialCategoryName + "_" + testName);
+      emailPointsRequestDto.setName(materialCategoryName +"_"  +"Schedule"+ "_"+ testName);
       emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
     }
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
