@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValuesDto;
+import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
@@ -41,14 +42,19 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
+	  EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
     if (testConfigureRequestDto.getMaterialSubCategoryId() != null && (emailPointsService
         .findByTestIdAndMaterialSubCategoryId(testConfigureRequestDto.getTestId(),
             testConfigureRequestDto.getMaterialSubCategoryId())) == null) {
       emailPointsService.createEmailPoints(testConfigureRequestDto);
-    } else if (testConfigureRequestDto.getMaterialSubCategoryId() == null
+         } else if (testConfigureRequestDto.getMaterialSubCategoryId() == null
         && emailPointsService.findByTestIdAndMaterialCategoryId(testConfigureRequestDto.getTestId(),
             testConfigureRequestDto.getMaterialCategoryId()) == null) {
       emailPointsService.createEmailPoints(testConfigureRequestDto);
+    }
+    if(testConfigureRequestDto.getDueDay()!= null) {
+  	  emailPointsRequestDto.setSchedule(true);
+  	  emailPointsService.createScheduleEmailPoints(testConfigureRequestDto);    	  
     }
     return testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
         .getId();

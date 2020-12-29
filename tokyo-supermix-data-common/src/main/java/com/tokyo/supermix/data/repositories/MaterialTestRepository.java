@@ -1,11 +1,14 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
@@ -79,4 +82,5 @@ public interface MaterialTestRepository extends JpaRepository<MaterialTest, Stri
 
   boolean existsByIncomingSampleCodeAndTestConfigureId(String incomingSampleCode,
       Long testConfigId);
+  Set<MaterialTest> findByTestConfigureDueDayNotNull();
 }

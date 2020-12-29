@@ -30,4 +30,6 @@ public interface EmailPointsService {
   EmailPoints findByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId);
 
   EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
+  
+  public void createScheduleEmailPoints(TestConfigureRequestDto testConfigureRequestDto);
 }

@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
+
 import com.tokyo.supermix.data.dto.report.MaterialAcceptedValueDto;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
@@ -22,6 +23,7 @@ public class TestConfigureDto {
   private List<TestEquationResponseDto> testEquations;
   private List<MaterialAcceptedValueDto> rawMaterialDto;
   private Long noOfTrial;
+	private String dueDay;
 
   public Long getId() {
     return id;
@@ -152,4 +154,14 @@ public class TestConfigureDto {
   public void setNoOfTrial(Long noOfTrial) {
     this.noOfTrial = noOfTrial;
   }
+
+public String getDueDay() {
+	return dueDay;
+}
+
+public void setDueDay(String dueDay) {
+	this.dueDay = dueDay;
+}
+
+
 }
