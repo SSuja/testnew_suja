@@ -35,7 +35,9 @@ public class EmailGroupServiceImpl implements EmailGroupService {
     boolean status = (emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get()
         .getName().equalsIgnoreCase(MailGroupConstance.MIX_DESIGN_EMAIL_GROUP)
         || emailPointsRepository.findById(emailGroupDto.getEmailPointsId()).get().getName()
-            .equalsIgnoreCase(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP)) ? true : false;
+            .equalsIgnoreCase(MailGroupConstance.PLANT_EQUIPMENT_CALIBRATION_GROUP)||
+            (emailPointsRepository.findById(emailGroupDto.getEmailPointsId())).get().isSchedule()==true
+            ) ? true : false;
     emailGroupDto.setSchedule(status);
     emailGroupRepository.save(mapper.map(emailGroupDto, EmailGroup.class));
   }
