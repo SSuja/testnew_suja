@@ -627,12 +627,12 @@ public class EmailNotification {
 		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
 				emailGroup.getName(), finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode());
 		emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-				Constants.SUBJECT_MIX_DESIGN, mailBody);
+				Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER, mailBody);
+		
 	}
 	
 	@Scheduled(cron = "${mail.notificationTime.strengthTestMixDesign}")
 	public void reminderForMaterialTest() {
-//		MaterialTest materialTest
 		final LocalDateTime today = LocalDateTime.now();
 		materialTestRepository.findByTestConfigureDueDayNotNull().forEach(materialTest -> {
 			long noOfDays = ChronoUnit.DAYS.between(
@@ -666,6 +666,6 @@ public class EmailNotification {
 		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
 				emailGroup.getName(), materialTest.getIncomingSample().getPlant().getCode());
 		emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-				Constants.SUBJECT_MIX_DESIGN, mailBody);
+				Constants.SUBJECT_MATERIAL_TEST_REMINDER, mailBody);
 	}
 }
