@@ -26,6 +26,7 @@ public class EmailPoints {
   @JoinColumn(name = "testId", nullable = true)
   private Test test;
   private boolean adminLevelEmailConfiguration;
+  private boolean schedule;
   
   public Long getId() {
     return id;
@@ -69,4 +70,10 @@ public class EmailPoints {
   public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
     this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
   }
+public boolean isSchedule() {
+	return schedule;
+}
+public void setSchedule(boolean schedule) {
+	this.schedule = schedule;
+}
 }

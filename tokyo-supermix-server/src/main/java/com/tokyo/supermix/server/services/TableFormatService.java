@@ -13,4 +13,6 @@ public interface TableFormatService {
   public void deleteTableFormat(Long id);
 
   public TableFormat getTableFormatById(Long id);
+  
+  public boolean existsTableFormatName(String name);
 }

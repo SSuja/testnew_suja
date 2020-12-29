@@ -106,6 +106,29 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     }
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
   }
+  
+  @Transactional
+  public void createScheduleEmailPoints(TestConfigureRequestDto testConfigureRequestDto) {
+    EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
+    String testName = testService.getTestById(testConfigureRequestDto.getTestId()).getName();
+    emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
+    emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
+    emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
+    emailPointsRequestDto.setSchedule(true);
+    if (testConfigureRequestDto.getMaterialSubCategoryId() != null) {
+      String materialSubCategoryName = materialSubCategoryService
+          .getMaterialSubCategoryById(testConfigureRequestDto.getMaterialSubCategoryId()).getName();
+      emailPointsRequestDto.setName(materialSubCategoryName+ "_"  +"Schedule"+ "_" + testName);
+      emailPointsRequestDto
+          .setMaterialSubCategoryId(testConfigureRequestDto.getMaterialSubCategoryId());
+    } else {
+      String materialCategoryName = materialCategoryService
+          .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
+      emailPointsRequestDto.setName(materialCategoryName +"_"  +"Schedule"+ "_"+ testName);
+      emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
+    }
+    emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
+  }
 
   @Transactional(readOnly = true)
   public List<EmailPoints> getAllEmailPointsByAdminStatus(boolean status) {

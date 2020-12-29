@@ -39,6 +39,8 @@ public class Constants {
       "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
   public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER = "Notification : About Finish Product Sample Test Reminder ";
+  public static final String SUBJECT_MATERIAL_TEST_REMINDER = "Notification : About Material Test Reminder ";
 
 
   // for sample counts

@@ -8,6 +8,7 @@ public class EmailPointsRequestDto {
   private Long materialCategoryId;
   private Long testId;
   private boolean adminLevelEmailConfiguration;
+  private boolean schedule;
   
   public Long getId() {
     return id;
@@ -50,5 +51,11 @@ public class EmailPointsRequestDto {
   }
   public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
     this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
-  } 
+  }
+public boolean isSchedule() {
+	return schedule;
+}
+public void setSchedule(boolean schedule) {
+	this.schedule = schedule;
+} 
 }
