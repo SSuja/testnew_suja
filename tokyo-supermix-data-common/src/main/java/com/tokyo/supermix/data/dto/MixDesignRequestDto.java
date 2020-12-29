@@ -12,6 +12,7 @@ public class MixDesignRequestDto {
   private String plantCode;
   private Status status;
   private Long rawMaterialId;
+  private boolean isApproved;
 
   public String getCode() {
     return code;
@@ -52,4 +53,12 @@ public class MixDesignRequestDto {
   public void setRawMaterialId(Long rawMaterialId) {
     this.rawMaterialId = rawMaterialId;
   }
+
+public boolean isApproved() {
+	return isApproved;
+}
+
+public void setApproved(boolean isApproved) {
+	this.isApproved = isApproved;
+}
 }
