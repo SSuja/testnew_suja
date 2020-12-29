@@ -4,17 +4,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
@@ -29,6 +27,7 @@ import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
 import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
@@ -76,6 +75,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   TestParameterService testParameterService;
   @Autowired
   ParameterEquationRepository parameterEquationRepository;
+  @Autowired
+  CoreTestConfigureRepository coreTestConfigureRepository;
   @Autowired
   MixDesignConfirmationTokenRepository mixDesignConfirmationTokenRepository;
 
@@ -421,10 +422,19 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       String finishProductSampleCode, Status status) {
     ArrayList<Long> testConfigIds = new ArrayList<Long>();
     List<FinishProductTest> finishProductTestList = finishProductTestRepository
-        .findByFinishProductSampleMixDesignCodeAndTestConfigureCoreTestTrueAndFinishProductSampleCodeAndStatus(
-            mixDesignCode, finishProductSampleCode, status);
+        .findByFinishProductSampleMixDesignCodeAndFinishProductSampleCodeAndStatus(mixDesignCode,
+            finishProductSampleCode, status);
+    FinishProductSample finishProductSample =
+        finishProductSampleRepository.findByCode(finishProductSampleCode);
     for (FinishProductTest finishProductTest : finishProductTestList) {
-      testConfigIds.add(finishProductTest.getTestConfigure().getId());
+      for (CoreTestConfigure coreTestConfigure : coreTestConfigureRepository
+          .findByrawMaterialIdAndCoreTestTrue(
+              finishProductSample.getMixDesign().getRawMaterial().getId())) {
+        if (finishProductTest.getTestConfigure().getId() == coreTestConfigure.getTestConfigure()
+            .getId())
+          testConfigIds.add(finishProductTest.getTestConfigure().getId());
+      }
+
     }
     return testConfigIds.stream().distinct().collect(Collectors.toList()).size();
   }
@@ -475,18 +485,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     if (getCountKeyTestPassFinishProductTestsByMaterialSubCategory(mixDesign.getCode(),
-        finishProductSample.getCode(),
-        Status.PASS) == (getCountkeyTestConfigByMaterialSubCategory(
-            mixDesign.getRawMaterial().getMaterialSubCategory().getId())
-            + getCountKeyTestConfigByMaterialCategory(
-                mixDesign.getRawMaterial().getMaterialSubCategory().getMaterialCategory().getId())
-            + getCountKeyTestConfigByRawMaterial(mixDesign.getRawMaterial().getId()))) {
+        finishProductSample.getCode(), Status.PASS) == (coreTestConfigureRepository
+            .findByrawMaterialIdAndCoreTestTrue(mixDesign.getRawMaterial().getId()).size())) {
       checkStatusAndSaveStatus(finishProductTestCode, request);
     } else {
       finishProductSample.setStatus(Status.PROCESS);
       finishProductSampleRepository.save(finishProductSample);
       if (finishProductSample.getWorkOrderNumber() == null) {
-        mixDesign.setStatus(Status.NEW);
+        mixDesign.setStatus(Status.PROCESS);
         mixDesignRepository.save(mixDesign);
       }
     }
@@ -496,14 +502,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
-    TestConfigure testConfigure =
-        testConfigureRepository.findById(finishproductTest.getTestConfigure().getId()).get();
-    if (testConfigure.isCoreTest()) {
-      if (finishproductTest.getStatus().equals(Status.PASS)) {
-        checkPassCountAndTestConfigKeyTestCount(finishProductTestCode, request);
-      } else {
-        checkStatusAndSaveStatus(finishProductTestCode, request);
-      }
+    if (finishproductTest.getStatus().equals(Status.PASS)) {
+      checkPassCountAndTestConfigKeyTestCount(finishProductTestCode, request);
+    } else if (finishproductTest.getStatus().equals(Status.FAIL)) {
+      checkStatusAndSaveStatus(finishProductTestCode, request);
     }
   }
 
@@ -536,7 +538,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       HttpServletRequest request) {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
-
     ArrayList<Status> statusList = new ArrayList<Status>();
     if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
       materialAcceptedValueRepository.findByTestConfigureId(testConfigureId)
@@ -595,5 +596,4 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     }
     return count;
   }
-
 }
