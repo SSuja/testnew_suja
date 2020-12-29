@@ -91,6 +91,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrial) {
+    FinishProductTest finishProductTest = finishProductTestRepository
+        .findById(finishProductTrial.get(0).getFinishProductTest().getCode()).get();
+    finishProductTest.setStatus(Status.PROCESS);
+    finishProductTestRepository.save(finishProductTest);
     finishProductTrialRepository.saveAll(finishProductTrial);
   }
 
@@ -288,6 +292,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public void saveAverageCalculationFinishProductTrials(
       List<FinishProductTrial> finishProductTrialList) {
+    FinishProductTest finishProductTest = finishProductTestRepository
+        .findById(finishProductTrialList.get(0).getFinishProductTest().getCode()).get();
+    finishProductTest.setStatus(Status.PROCESS);
+    finishProductTestRepository.save(finishProductTest);
     finishProductTrialRepository.saveAll(finishProductTrialList);
   }
 
