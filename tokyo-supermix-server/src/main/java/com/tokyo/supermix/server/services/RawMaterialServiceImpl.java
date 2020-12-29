@@ -2,7 +2,6 @@ package com.tokyo.supermix.server.services;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,14 +10,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -32,6 +31,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   private EmailNotification emailNotification;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  PlantRepository plantRepository;
 
   @Transactional
   public void saveRawMaterial(RawMaterial rawMaterial) {
@@ -123,7 +124,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
-    return rawMaterialRepository.findByPlantCodeOrPlantNull(plantCode, pageable).toList();
+    return rawMaterialRepository
+        .findByPlantCodeOrPlantNullOrSubBusinessUnitId(plantCode,
+            plantRepository.findById(plantCode).get().getSubBusinessUnit().getId(), pageable)
+        .toList();
   }
 
   @Transactional(readOnly = true)
@@ -198,4 +202,11 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndPlantCode(prefix,
         materialSubCategoryId, plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public Long countRawMaterialByPlantCount(String plantCode) {
+    return rawMaterialRepository.countByPlantCodeOrPlantNullOrSubBusinessUnitId(plantCode,
+        plantRepository.findById(plantCode).get().getSubBusinessUnit().getId());
+  }
+
 }
