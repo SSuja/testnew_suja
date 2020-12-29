@@ -19,8 +19,17 @@ public class TestParameterResponseDto {
   private String level;
   private String name;
   private Long tableFormatId;
+  private String tableFormatName;
 
-  public Long getId() {
+  public String getTableFormatName() {
+	return tableFormatName;
+}
+
+public void setTableFormatName(String tableFormatName) {
+	this.tableFormatName = tableFormatName;
+}
+
+public Long getId() {
     return id;
   }
 
