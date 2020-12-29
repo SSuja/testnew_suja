@@ -189,7 +189,7 @@ public class RawMaterialController {
       if (currentUserPermissionPlantService
           .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_RAW_MATERIAL)
           .contains(plantCode)) {
-        pagination.setTotalRecords(rawMaterialService.countRawMaterialByPlant(plantCode));
+        pagination.setTotalRecords(rawMaterialService.countRawMaterialByPlantCount(plantCode));
         return new ResponseEntity<>(
             new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
                 mapper.map(rawMaterialService.getRawMaterialsByPlantCode(plantCode, pageable),

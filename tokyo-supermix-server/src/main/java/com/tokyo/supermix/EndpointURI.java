@@ -294,7 +294,8 @@ public final class EndpointURI {
       MIX_DESIGN + PLANT_WISE_SEARCH + SLASH + "code";
   public static final String GET_MIX_DESIGNS_BY_RAW_MATERIAL_WITH_STATUS =
       MIX_DESIGN + "search" + SLASH + "{rawMaterialId}" + SLASH + "{status}" + SLASH + "code";
-  public static final String MIX_DESIGNS_WITH_TOKEN = MIX_DESIGN + SLASH + "confirmation" + SLASH + "{confirmationToken}";
+  public static final String MIX_DESIGNS_WITH_TOKEN =
+      MIX_DESIGN + SLASH + "confirmation" + SLASH + "{confirmationToken}";
 
   /*
    * Test Parameter APIs
@@ -335,7 +336,7 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE =
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
- 
+
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
 
   /* Parameter Result */
@@ -435,6 +436,8 @@ public final class EndpointURI {
           + PLANT_WISE;
   public static final String RAW_FINISH_PRODUCT_SAMPLES_BY_RAW_MATERIAL_AND_PLANT =
       FINISH_PRODUCT_SAMPLE + SLASH + "material" + SLASH + "{rawMaterialId}" + PLANT_WISE;
+  public static final String FINISH_PRODUCT_SAMPLE_LIST =
+      BASE_API_PATH + "finish-product-sample-list";
 
   /*
    * finish product sample issue apis
