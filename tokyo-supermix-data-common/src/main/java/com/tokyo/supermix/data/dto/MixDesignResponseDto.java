@@ -15,7 +15,7 @@ public class MixDesignResponseDto {
   private String rawMaterialName;
   private Long rawMaterialId;
   private Long rawMaterialMaterialSubCategoryId;
-  private boolean isApproved;
+  private boolean approved;
 
   public String getCode() {
     return code;
@@ -105,11 +105,11 @@ public class MixDesignResponseDto {
     this.rawMaterialMaterialSubCategoryId = rawMaterialMaterialSubCategoryId;
   }
 
-public boolean isApproved() {
-	return isApproved;
-}
+  public boolean isApproved() {
+    return approved;
+  }
 
-public void setApproved(boolean isApproved) {
-	this.isApproved = isApproved;
-}
+  public void setApproved(boolean approved) {
+    this.approved = approved;
+  }
 }
