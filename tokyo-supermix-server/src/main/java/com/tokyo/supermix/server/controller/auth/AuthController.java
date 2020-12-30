@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.controller.auth;
 
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,8 +54,8 @@ public class AuthController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNIN)
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
-    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress())
+  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto ,HttpServletRequest request) {
+    if (macAddressService.isMacAddressExist(macAddressService.getClientMACAddress(macAddressService.getClientIPAddress(request)))    		
         || loginRequestDto.getUsernameOrEmail().equalsIgnoreCase(Constants.ADMIN)) {
       try {
         String jwt = authService.generateUserToken(loginRequestDto);
