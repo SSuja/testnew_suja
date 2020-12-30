@@ -46,11 +46,13 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
 
   List<RawMaterial> findBySubBusinessUnitId(Long id);
 
-
   Page<RawMaterial> findByPlantCodeOrPlantNullOrSubBusinessUnitId(String plantCode, Long subId,
       Pageable pageable);
 
   Long countByPlantCodeOrPlantNullOrSubBusinessUnitId(String plantCode, Long subId);
 
   List<RawMaterial> findByMaterialSubCategoryMaterialCategoryId(Long materialCategoryId);
+
+  boolean existsByPrefixAndMaterialSubCategoryIdAndPlantCodeAndErpCode(String prefix,
+      Long materialSubCategoryId, String plantCode, String erpCode);
 }

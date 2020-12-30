@@ -209,4 +209,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
         plantRepository.findById(plantCode).get().getSubBusinessUnit().getId());
   }
 
+  @Transactional(readOnly = true)
+  public boolean isPrefixAndMaterialSubCategoryAndErpCodeExists(String prefix,
+      Long materialSubCategoryId, String plantCode, String erpCode) {
+    return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndPlantCodeAndErpCode(
+        prefix, materialSubCategoryId, plantCode, erpCode);
+  }
 }
