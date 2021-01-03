@@ -227,4 +227,13 @@ public class TestConfigureController {
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
         HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.GET_TEST_CONFIGURE_BY_MATERIAL_CATEGORY)
+  public ResponseEntity<Object> getTestConfigureByMaterialCategory(
+      @PathVariable Long materialCategoryId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
+        mapper.map(testConfigureService.findByMaterialCategory(materialCategoryId),
+            TestConfigureResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 }

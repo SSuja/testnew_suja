@@ -228,4 +228,18 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   public List<IncomingSample> getBySupplierId(Long supplierId) {
     return incomingSampleRepository.findBySupplierId(supplierId);
   }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId,
+      String plantCode) {
+    return incomingSampleRepository
+        .findByRawMaterialMaterialSubCategoryMaterialCategoryIdAndPlantCode(materialCategoryId,
+            plantCode);
+  }
 }

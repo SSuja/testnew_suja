@@ -69,4 +69,9 @@ public interface IncomingSampleService {
       String plantCode);
 
   public List<IncomingSample> getBySupplierId(Long supplierId);
+
+  public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId);
+
+  public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId,
+      String plantCode);
 }
