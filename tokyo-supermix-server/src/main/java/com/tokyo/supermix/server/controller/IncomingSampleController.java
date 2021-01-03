@@ -275,4 +275,23 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_CATEGORY)
+  public ResponseEntity<Object> getIncomingSampleMaterialCategory(
+      @PathVariable Long materialCategoryId, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getByMaterialCategoryId(materialCategoryId),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(incomingSampleService.getByMaterialCategoryPlantWise(materialCategoryId,
+                  plantCode), IncomingSampleResponseDto.class),
+              RestApiResponseStatus.OK),
+          HttpStatus.OK);
+    }
+
+  }
 }
