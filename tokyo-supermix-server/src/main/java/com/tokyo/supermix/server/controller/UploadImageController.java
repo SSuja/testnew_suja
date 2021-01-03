@@ -59,7 +59,7 @@ public class UploadImageController {
     List<String> testImage = new ArrayList<>();
     Arrays.asList(file).stream().forEach(files -> {
       try {
-        uploadImageRequestDto.setTestImage(fileStorageService.storeFile(files));
+        uploadImageRequestDto.setTestImage(fileStorageService.uploadFile(files));
       } catch (TokyoSupermixFileStorageException e) {
         e.printStackTrace();
       } catch (IOException e) {

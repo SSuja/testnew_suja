@@ -1,8 +1,13 @@
 package com.tokyo.supermix.data.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class UploadImageRequestDto {
 
   private Long id;
+  @NotNull(message = "{uploadDto.testImage.null}")
+  @NotEmpty(message = "{uploadDto.testImage.empty}")
   private String testImage;
   private String name;
   private String materialTestCode;
