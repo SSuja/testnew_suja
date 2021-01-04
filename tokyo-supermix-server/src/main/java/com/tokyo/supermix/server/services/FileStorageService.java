@@ -27,6 +27,9 @@ public interface FileStorageService {
 
   public String storeFile(MultipartFile file) throws IOException, TokyoSupermixFileStorageException;
 
+  public String uploadFile(MultipartFile file)
+      throws IOException, TokyoSupermixFileStorageException;
+
   public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException;
 
   public ArrayList<String> importDeliverySample(MultipartFile file);

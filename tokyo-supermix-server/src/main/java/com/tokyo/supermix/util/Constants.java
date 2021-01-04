@@ -614,7 +614,7 @@ public class Constants {
   public static final String TABLE_FORMAT_DELETED = "table format Successfully Deleted";
   public static final String TABLE_FORMAT_UPDATED_SUCCESS = "table format Updated Successfully";
 
-  public static final String MAC_ADDRESS = "Mac address";
+  public static final String MAC_ADDRESS = "MacAddress";
   public static final String ADD_MAC_ADDRESS_SUCCESS = "Mac address Added Successfully";
   public static final String MAC_ADDRESS_DELETED = "Mac address Successfully Deleted";
   public static final String MAC_ADDRESS_UPDATED_SUCCESS = "Mac address Updated Successfully";

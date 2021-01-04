@@ -44,19 +44,19 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
-	  EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
+    EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
     if (testConfigureRequestDto.getMaterialSubCategoryId() != null && (emailPointsService
         .findByTestIdAndMaterialSubCategoryId(testConfigureRequestDto.getTestId(),
             testConfigureRequestDto.getMaterialSubCategoryId())) == null) {
       emailPointsService.createEmailPoints(testConfigureRequestDto);
-         } else if (testConfigureRequestDto.getMaterialSubCategoryId() == null
+    } else if (testConfigureRequestDto.getMaterialSubCategoryId() == null
         && emailPointsService.findByTestIdAndMaterialCategoryId(testConfigureRequestDto.getTestId(),
             testConfigureRequestDto.getMaterialCategoryId()) == null) {
       emailPointsService.createEmailPoints(testConfigureRequestDto);
     }
-    if(testConfigureRequestDto.getDueDay()!= null) {
-  	  emailPointsRequestDto.setSchedule(true);
-  	  emailPointsService.createScheduleEmailPoints(testConfigureRequestDto);    	  
+    if (testConfigureRequestDto.getDueDay() != null) {
+      emailPointsRequestDto.setSchedule(true);
+      emailPointsService.createScheduleEmailPoints(testConfigureRequestDto);
     }
     Long id = testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
         .getId();
@@ -287,5 +287,12 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       return true;
     }
     return false;
+  }
+
+  @Transactional(readOnly = true)
+  public List<TestConfigure> findByMaterialCategory(Long materialCategoryId) {
+    return testConfigureRepository
+        .findByMaterialCategoryIdAndMaterialSubCategoryNull(materialCategoryId);
+
   }
 }

@@ -51,4 +51,5 @@ public interface TestConfigureService {
 
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 
+  public List<TestConfigure> findByMaterialCategory(Long materialCategoryId);
 }

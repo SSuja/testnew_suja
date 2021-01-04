@@ -56,10 +56,14 @@ public class UploadImageController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.UPLOAD_IMAGE,
           validationFailureStatusCodes.getTestIdNull()), HttpStatus.BAD_REQUEST);
     }
+    if (Arrays.asList(file).isEmpty()) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.UPLOAD_IMAGE,
+          validationFailureStatusCodes.getFileNull()), HttpStatus.BAD_REQUEST);
+    }
     List<String> testImage = new ArrayList<>();
     Arrays.asList(file).stream().forEach(files -> {
       try {
-        uploadImageRequestDto.setTestImage(fileStorageService.storeFile(files));
+        uploadImageRequestDto.setTestImage(fileStorageService.uploadFile(files));
       } catch (TokyoSupermixFileStorageException e) {
         e.printStackTrace();
       } catch (IOException e) {
