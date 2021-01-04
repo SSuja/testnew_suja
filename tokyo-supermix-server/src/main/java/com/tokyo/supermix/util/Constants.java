@@ -216,6 +216,7 @@ public class Constants {
    * Constants for Raw Material validation key & Success messages
    */
   public static final String RAW_MATERIAL_NAME = "name";
+  public static final String PREFIX = "prefix";
   public static final String RAW_MATERIAL = "rawMaterial";
   public static final String RAW_MATERIAL_ID = "id";
   public static final String ADD_RAW_MATERIAL_SUCCESS = "Raw Material Added Successfully";
