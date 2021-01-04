@@ -7,8 +7,8 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.entities.RawMaterial;
 
-public interface CoreTestConfigureRepository extends JpaRepository<CoreTestConfigure, Long> ,
-QuerydslPredicateExecutor<CoreTestConfigure>{
+public interface CoreTestConfigureRepository
+    extends JpaRepository<CoreTestConfigure, Long>, QuerydslPredicateExecutor<CoreTestConfigure> {
   List<CoreTestConfigure> findByrawMaterialId(Long rawMaterialId);
 
   List<CoreTestConfigure> findByrawMaterialIdAndCoreTestTrue(Long rawMaterialId);
@@ -32,4 +32,6 @@ QuerydslPredicateExecutor<CoreTestConfigure>{
 
   List<CoreTestConfigure> findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
       Long rawMaterialId);
+
+  List<CoreTestConfigure> findByrawMaterialIdAndApplicableTestTrue(Long rawMaterialId);
 }

@@ -40,4 +40,6 @@ public interface CoreTestConfigureService {
 			String rawMaterialName, Long materialSubCategoryId);
 	
 	public List<CoreTestConfigure> updateCoreTestConfigure(List<CoreTestConfigure> CoreTestConfigure);
+	
+	public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndApplicableTest(Long rawMaterialId);
 }
