@@ -6,8 +6,6 @@ import javax.validation.constraints.NotNull;
 public class UploadImageRequestDto {
 
   private Long id;
-  @NotNull(message = "{uploadDto.testImage.null}")
-  @NotEmpty(message = "{uploadDto.testImage.empty}")
   private String testImage;
   private String name;
   private String materialTestCode;
