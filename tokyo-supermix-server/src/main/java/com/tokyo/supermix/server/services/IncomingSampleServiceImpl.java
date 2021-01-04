@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -210,8 +211,10 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
     pagination.setTotalRecords(
-        (long) ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).size());
-    return incomingSampleRepository.findAll(booleanBuilder, pageable).toList();
+        incomingSampleRepository.countByRawMaterialSampleType(rawMaterialSampleType));
+    return incomingSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        .filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)

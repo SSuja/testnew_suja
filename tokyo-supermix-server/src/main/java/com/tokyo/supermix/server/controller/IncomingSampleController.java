@@ -259,7 +259,31 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
   public ResponseEntity<Object> getIncomingSampleSearch(@PathVariable String plantCode,
-      @PathVariable RawMaterialSampleType rawMaterialSampleType,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
+      @RequestParam(name = "date", required = false) Date date,
+      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "supplierName", required = false) String supplierName,
+    
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
+            mapper.map(
+                incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
+                    rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
+                    RawMaterialSampleType.INCOMING_SAMPLE, plantCode, pagination),
+                IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.PROCESS_SAMPLE_SEARCH_TYPE)
+  public ResponseEntity<Object> getProcessSampleSearch(@PathVariable String plantCode,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
       @RequestParam(name = "date", required = false) Date date,
@@ -271,11 +295,15 @@ public class IncomingSampleController {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
-        mapper.map(incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
-            rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
-            rawMaterialSampleType, plantCode, pagination), IncomingSampleResponseDto.class),
-        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
+            mapper.map(
+                incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
+                    rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
+                    RawMaterialSampleType.PROCESS_SAMPLE, plantCode, pagination),
+                IncomingSampleResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)

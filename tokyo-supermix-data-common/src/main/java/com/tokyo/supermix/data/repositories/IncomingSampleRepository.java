@@ -101,4 +101,7 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
 
   Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
       String plantCode);
+
+
+
 }
