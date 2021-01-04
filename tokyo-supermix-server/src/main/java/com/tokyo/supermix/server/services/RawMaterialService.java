@@ -60,4 +60,7 @@ public interface RawMaterialService {
       String plantCode);
 
   public Long countRawMaterialByPlantCount(String plantCode);
+
+  public boolean isPrefixAndMaterialSubCategoryAndErpCodeExists(String prefix,
+      Long materialSubCategoryId, String plantCode, String erpCode);
 }
