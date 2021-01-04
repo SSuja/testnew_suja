@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleRequestDto {
@@ -13,6 +14,7 @@ public class IncomingSampleRequestDto {
   @NotEmpty(message = "{incomingSampleRequestDto.plantCode.empty}")
   private String plantCode;
   private Long supplierId;
+  private RawMaterialSampleType rawMaterialSampleType;
 
   public String getCode() {
     return code;
@@ -60,5 +62,13 @@ public class IncomingSampleRequestDto {
 
   public void setSupplierId(Long supplierId) {
     this.supplierId = supplierId;
+  }
+
+  public RawMaterialSampleType getRawMaterialSampleType() {
+    return rawMaterialSampleType;
+  }
+
+  public void setRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType) {
+    this.rawMaterialSampleType = rawMaterialSampleType;
   }
 }
