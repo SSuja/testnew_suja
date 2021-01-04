@@ -1,8 +1,5 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class UploadImageRequestDto {
 
   private Long id;

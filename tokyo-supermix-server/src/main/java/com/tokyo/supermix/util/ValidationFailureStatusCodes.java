@@ -1924,16 +1924,4 @@ public class ValidationFailureStatusCodes {
   public void setTableFormatAlreadyExist(String tableFormatAlreadyExist) {
     this.tableFormatAlreadyExist = tableFormatAlreadyExist;
   }
-
-  // sample type
-  @Value("${validation.rawMaterialSampleType.notExists}")
-  private String rawMaterialSampleTypeNotExists;
-
-  public String getRawMaterialSampleTypeNotExists() {
-    return rawMaterialSampleTypeNotExists;
-  }
-
-  public void setRawMaterialSampleTypeNotExists(String rawMaterialSampleTypeNotExists) {
-    this.rawMaterialSampleTypeNotExists = rawMaterialSampleTypeNotExists;
-  }
 }
