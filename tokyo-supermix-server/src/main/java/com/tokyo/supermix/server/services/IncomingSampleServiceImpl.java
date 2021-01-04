@@ -181,7 +181,8 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   @Transactional(readOnly = true)
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination) {
+      BooleanBuilder booleanBuilder, Pageable pageable, RawMaterialSampleType rawMaterialSampleType,
+      String plantCode, Pagination pagination) {
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(QIncomingSample.incomingSample.code.startsWithIgnoreCase(code));
     }

@@ -62,7 +62,8 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination);
+      BooleanBuilder booleanBuilder, Pageable pageable, RawMaterialSampleType rawMaterialSampleType,
+      String plantCode, Pagination pagination);
 
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
 
@@ -71,7 +72,7 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> getBySupplierId(Long supplierId);
 
-  // new repo
+  // new service
 
   boolean isSampleExistsByRawMaterialSample(RawMaterialSampleType rawMaterialSampleType);
 

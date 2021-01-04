@@ -130,7 +130,6 @@ public class IncomingSampleController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE)
   public ResponseEntity<Object> getIncomingSampleByCode(@PathVariable String code) {
     if (incomingSampleService.isIncomingSampleExist(code)) {
@@ -274,10 +273,9 @@ public class IncomingSampleController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
         mapper.map(incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
-            rawMaterialName, plantName, supplierName, booleanBuilder, pageable, plantCode,
-            pagination), IncomingSampleResponseDto.class),
+            rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
+            rawMaterialSampleType, plantCode, pagination), IncomingSampleResponseDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
-
   }
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
@@ -330,19 +328,4 @@ public class IncomingSampleController {
             validationFailureStatusCodes.getRawMaterialSampleTypeNotExists()),
         HttpStatus.BAD_REQUEST);
   }
-
-  // @GetMapping(value = EndpointURI.GET_ALL_SAMPLES_BY_TYPE)
-  // public ResponseEntity<Object> getAllSamplesByRawMaterialSample(
-  // @PathVariable RawMaterialSampleType rawMaterialSampleType) {
-  // if (incomingSampleService.isSampleExistsByRawMaterialSample(rawMaterialSampleType)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(incomingSampleService.findAllByRawMaterialSampleType(rawMaterialSampleType),
-  // IncomingSampleResponseDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(
-  // new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
-  // validationFailureStatusCodes.getRawMaterialSampleTypeNotExists()),
-  // HttpStatus.BAD_REQUEST);
-  // }
 }
