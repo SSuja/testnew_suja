@@ -73,13 +73,6 @@ public class CoreTestConfigureController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
-  @GetMapping(value = "/api/v1/core-test-configure-test")
-  public ResponseEntity<Object> getTest() {
-    coreTestConfigureService.createCoreTestConfigure(1l);
-    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-        Constants.ADD_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
-  }
-
   @PutMapping(value = EndpointURI.CORE_TEST_CONFIGURE)
   public ResponseEntity<Object> updateAcceptedValue(
       @Valid @RequestBody List<CoreTestConfigureDto> coreTestConfigureDtoList) {
