@@ -89,12 +89,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   private Integer maxNumberFromCode(List<FinishProductSample> finishProductSampleList) {
-    List<Integer> list = new ArrayList<Integer>();
-    finishProductSampleList.forEach(obj -> {
-      String code = obj.getCode();
-      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
-    });
-    return Collections.max(list);
+	  List<Integer> list = new ArrayList<Integer>();
+	  finishProductSampleList.forEach(obj -> {
+	      String code = obj.getCode();
+	      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
+	    });
+	    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)
