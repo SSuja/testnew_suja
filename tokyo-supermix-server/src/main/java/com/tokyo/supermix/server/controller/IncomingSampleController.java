@@ -266,7 +266,7 @@ public class IncomingSampleController {
       @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "supplierName", required = false) String supplierName,
-    
+
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
@@ -355,6 +355,8 @@ public class IncomingSampleController {
         new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
             validationFailureStatusCodes.getRawMaterialSampleTypeNotExists()),
         HttpStatus.BAD_REQUEST);
+  }
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_MATERIAL_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialCategory(
       @PathVariable Long materialCategoryId, @PathVariable String plantCode) {
