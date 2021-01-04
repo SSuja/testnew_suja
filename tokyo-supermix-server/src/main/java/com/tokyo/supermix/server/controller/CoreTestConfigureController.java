@@ -81,7 +81,7 @@ public class CoreTestConfigureController {
         .saveCoreTestConfigure(mapper.map(coreTestConfigureDtoList, CoreTestConfigure.class));
 
     return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.CORE_TEST_CONFIGURE),
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_CORE_TEST_CONFIGURE_SUCCESS),
         HttpStatus.OK);
   }
 
