@@ -22,6 +22,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.IncomingSampleRequestDto;
 import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -64,38 +65,71 @@ public class IncomingSampleController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
+  // @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
+  // public ResponseEntity<Object> getIncomingSamplesByUserPermission(
+  // @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
+  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+  // Pageable pageable = PageRequest.of(page, size);
+  // int totalpage = 0;
+  // Pagination pagination = new Pagination(page, size, totalpage, 0l);
+  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+  // pagination.setTotalRecords(incomingSampleService.getCountIncomingSample());
+  // return new ResponseEntity<>(
+  // new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+  // mapper.map(
+  // incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser, pageable),
+  // IncomingSampleResponseDto.class),
+  // RestApiResponseStatus.OK, pagination),
+  // HttpStatus.OK);
+  // }
+  // if (currentUserPermissionPlantService
+  // .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
+  // .contains(plantCode)) {
+  // pagination
+  // .setTotalRecords(incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
+  // return new ResponseEntity<>(
+  // new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+  // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode, pageable),
+  // IncomingSampleResponseDto.class),
+  // RestApiResponseStatus.OK, pagination),
+  // HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
+  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
+  // }
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getIncomingSamplesByUserPermission(
-      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
+      @CurrentUser UserPrincipal currentUser,
+      @PathVariable RawMaterialSampleType rawMaterialSampleType, @PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      pagination.setTotalRecords(incomingSampleService.getCountIncomingSample());
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-              mapper.map(
-                  incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser, pageable),
-                  IncomingSampleResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      pagination.setTotalRecords(
+          incomingSampleService.countAllSampleByRawMaterialSampleType(rawMaterialSampleType));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService
+              .findAllByPlantCodeAndRawMaterialSampleTypeInOrderByUpdatedAtDesc(currentUser,
+                  rawMaterialSampleType, pageable),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
         .contains(plantCode)) {
-      pagination
-          .setTotalRecords(incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-              mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode, pageable),
-                  IncomingSampleResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      pagination.setTotalRecords(incomingSampleService
+          .countByRawMaterialSampleTypeAndPlantCode(rawMaterialSampleType, plantCode));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.findByRawMaterialSampleTypeAndPlantCode(
+              rawMaterialSampleType, plantCode, pageable), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
+
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_CODE)
   public ResponseEntity<Object> getIncomingSampleByCode(@PathVariable String code) {
@@ -226,6 +260,7 @@ public class IncomingSampleController {
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
   public ResponseEntity<Object> getIncomingSampleSearch(@PathVariable String plantCode,
+      @PathVariable RawMaterialSampleType rawMaterialSampleType,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
       @RequestParam(name = "date", required = false) Date date,
@@ -275,4 +310,39 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.GET_SAMPLES_BY_TYPE)
+  public ResponseEntity<Object> getSamplesByRawMaterialSample(
+      @PathVariable RawMaterialSampleType rawMaterialSampleType,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    if (incomingSampleService.isSampleExistsByRawMaterialSample(rawMaterialSampleType)) {
+      pagination.setTotalRecords(
+          incomingSampleService.countAllSampleByRawMaterialSampleType(rawMaterialSampleType));
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+          incomingSampleService.findByRawMaterialSampleType(rawMaterialSampleType, pageable),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
+            validationFailureStatusCodes.getRawMaterialSampleTypeNotExists()),
+        HttpStatus.BAD_REQUEST);
+  }
+
+  // @GetMapping(value = EndpointURI.GET_ALL_SAMPLES_BY_TYPE)
+  // public ResponseEntity<Object> getAllSamplesByRawMaterialSample(
+  // @PathVariable RawMaterialSampleType rawMaterialSampleType) {
+  // if (incomingSampleService.isSampleExistsByRawMaterialSample(rawMaterialSampleType)) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+  // mapper.map(incomingSampleService.findAllByRawMaterialSampleType(rawMaterialSampleType),
+  // IncomingSampleResponseDto.class),
+  // RestApiResponseStatus.OK), HttpStatus.OK);
+  // }
+  // return new ResponseEntity<>(
+  // new ValidationFailureResponse(Constants.INCOMING_SAMPLE,
+  // validationFailureStatusCodes.getRawMaterialSampleTypeNotExists()),
+  // HttpStatus.BAD_REQUEST);
+  // }
 }

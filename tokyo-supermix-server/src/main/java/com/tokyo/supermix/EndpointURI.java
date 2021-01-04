@@ -263,7 +263,9 @@ public final class EndpointURI {
           + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
-  public static final String INCOMING_SAMPLE_BY_PLANT = INCOMING_SAMPLE + PLANT_WISE;
+  // public static final String INCOMING_SAMPLE_BY_PLANT = INCOMING_SAMPLE + PLANT_WISE;
+  public static final String INCOMING_SAMPLE_BY_PLANT =
+      INCOMING_SAMPLE + SLASH + "sample-type" + SLASH + "{rawMaterialSampleType}" + PLANT_WISE;
   public static final String INCOMING_SAMPLES_BY_PLANT_CODE =
       INCOMING_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String GET_INCOMING_SAMPLE_BY_PLANT_CODE =
@@ -759,8 +761,10 @@ public final class EndpointURI {
       CORE_TEST_CONFIGURE + SLASH + "rawMaterial" + SLASH + "{rawMaterialId}";
   public static final String CORE_TEST_CONFIGURE_TEST_ORIGIN =
       CORE_TEST_CONFIGURE + SLASH + "test-origin";
-  public static final String CORE_TEST_CONFIGURE_SEARCH=CORE_TEST_CONFIGURE + SLASH+"search"+SLASH+"test-configure-Id"+SLASH+"{testConfigureId}";
-  public static final String CORE_TEST_CONFIGURE_UPDATE=CORE_TEST_CONFIGURE + SLASH+"update-status";
+  public static final String CORE_TEST_CONFIGURE_SEARCH = CORE_TEST_CONFIGURE + SLASH + "search"
+      + SLASH + "test-configure-Id" + SLASH + "{testConfigureId}";
+  public static final String CORE_TEST_CONFIGURE_UPDATE =
+      CORE_TEST_CONFIGURE + SLASH + "update-status";
 
   public static final String MAC_ADDRESS = BASE_API_PATH + "mac-address";
   public static final String MAC_ADDRESSES = BASE_API_PATH + "mac-addresses";
@@ -830,6 +834,14 @@ public final class EndpointURI {
       UPLOAD_IMAGE + SLASH + "materialTest" + SLASH + "{materialTestCode}";
   public static final String GET_TEST_IMAGES_BY_FINISHPRODUCT_TEST =
       UPLOAD_IMAGE + SLASH + "finishProductTest" + SLASH + "{finishProductTestCode}";
+
+  // samples by type
+
+  public static final String RAW_MATERIAL_SAMPLE = BASE_API_PATH + "raw-material-sample";
+  public static final String GET_SAMPLES_BY_TYPE =
+      RAW_MATERIAL_SAMPLE + "/sample-type" + "/{rawMaterialSampleType}";
+  public static final String GET_ALL_SAMPLES_BY_TYPE =
+      RAW_MATERIAL_SAMPLE + "/all-samples" + "/{rawMaterialSampleType}";
 
   private EndpointURI() {}
 }
