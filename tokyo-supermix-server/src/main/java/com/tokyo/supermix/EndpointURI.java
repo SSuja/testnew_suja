@@ -138,6 +138,8 @@ public final class EndpointURI {
           + "{materialSubCategoryId}";
   public static final String UPDATE_ACCEPTED_TYPE_TEST_CONFIGURE = TEST_CONFIGURE + SLASH
       + "{testConfigureId}" + SLASH + "accepted-type" + SLASH + "{acceptedType}";
+  public static final String GET_TEST_CONFIGURE_BY_MATERIAL_CATEGORY =
+      TEST_CONFIGURE + SLASH + "material-category" + SLASH + "{materialCategoryId}";
   /*
    * Material State
    */
@@ -275,6 +277,9 @@ public final class EndpointURI {
           + "plant" + SLASH + "{plantCode}" + SLASH + "incoming-sample";
   public static final String INCOMING_SAMPLES_BY_SUPPLIER_ID =
       INCOMING_SAMPLES + SLASH + "supplier" + SLASH + "{supplierId}";
+  public static final String INCOMING_SAMPLES_BY_MATERIAL_CATEGORY =
+      INCOMING_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}" + SLASH
+          + "plant" + SLASH + "{plantCode}";
   /*
    * Mix design apis
    * 

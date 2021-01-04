@@ -90,4 +90,8 @@ public interface IncomingSampleService {
   public Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
       String plantCode);
 
+  public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId);
+
+  public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId,
+      String plantCode);
 }

@@ -103,5 +103,9 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
       String plantCode);
 
 
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryMaterialCategoryId(
+      Long materialCategoryId);
 
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryMaterialCategoryIdAndPlantCode(
+      Long materialCategoryId, String plantCode);
 }

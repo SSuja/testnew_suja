@@ -16,6 +16,7 @@ import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.MaterialType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
@@ -209,4 +210,38 @@ public class RawMaterialServiceImpl implements RawMaterialService {
         plantRepository.findById(plantCode).get().getSubBusinessUnit().getId());
   }
 
+  @Transactional(readOnly = true)
+  public boolean isPrefixAndMaterialSubCategoryAndErpCodeExists(String prefix,
+      Long materialSubCategoryId, String plantCode, String erpCode) {
+    return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndPlantCodeAndErpCode(
+        prefix, materialSubCategoryId, plantCode, erpCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialSubCategoryAndRawMaterialNameAndMaterialType(Long materialCategoryId,
+      String name, MaterialType materialType) {
+    return rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndMaterialType(
+        materialCategoryId, name, materialType);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialNameAndPrefixAndMaterialType(String prefix, Long materialCategoryId,
+      MaterialType materialType) {
+    return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialType(prefix,
+        materialCategoryId, materialType);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndSbu(
+      Long materialCategoryId, String name, Long sbuId) {
+    return rawMaterialRepository
+        .existsByMaterialSubCategoryIdAndNameAndSubBusinessUnitId(materialCategoryId, name, sbuId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndSbu(String prefix, Long materialCategoryId,
+      Long sbuId) {
+    return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
+        materialCategoryId, sbuId);
+  }
 }

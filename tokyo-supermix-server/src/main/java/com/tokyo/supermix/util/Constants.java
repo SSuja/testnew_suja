@@ -216,6 +216,7 @@ public class Constants {
    * Constants for Raw Material validation key & Success messages
    */
   public static final String RAW_MATERIAL_NAME = "name";
+  public static final String PREFIX = "prefix";
   public static final String RAW_MATERIAL = "rawMaterial";
   public static final String RAW_MATERIAL_ID = "id";
   public static final String ADD_RAW_MATERIAL_SUCCESS = "Raw Material Added Successfully";
@@ -614,7 +615,7 @@ public class Constants {
   public static final String TABLE_FORMAT_DELETED = "table format Successfully Deleted";
   public static final String TABLE_FORMAT_UPDATED_SUCCESS = "table format Updated Successfully";
 
-  public static final String MAC_ADDRESS = "Mac address";
+  public static final String MAC_ADDRESS = "MacAddress";
   public static final String ADD_MAC_ADDRESS_SUCCESS = "Mac address Added Successfully";
   public static final String MAC_ADDRESS_DELETED = "Mac address Successfully Deleted";
   public static final String MAC_ADDRESS_UPDATED_SUCCESS = "Mac address Updated Successfully";

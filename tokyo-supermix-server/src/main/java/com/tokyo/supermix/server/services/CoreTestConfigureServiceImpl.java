@@ -69,7 +69,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 				coreTestConfigure.setMaterialSubCategory(testConfigure.getMaterialSubCategory());
 				coreTestConfigure.setRawMaterial(rawMaterial);
 				coreTestConfigure.setTestConfigure(testConfigure);
-				coreTestConfigure.setCoreTest(testConfigure.isCoreTest());
+				coreTestConfigure.setCoreTest(false);
 				coreTestConfigure.setApplicableTest(true);
 
 				coreTestConfigurelist.add(coreTestConfigure);
@@ -85,7 +85,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 				coreTestConfigure.setMaterialSubCategory(rawMaterial.getMaterialSubCategory());
 				coreTestConfigure.setRawMaterial(rawMaterial);
 				coreTestConfigure.setTestConfigure(testConfigure);
-				coreTestConfigure.setCoreTest(testConfigure.isCoreTest());
+				coreTestConfigure.setCoreTest(false);
 				coreTestConfigure.setApplicableTest(true);
 
 				coreTestConfigurelist.add(coreTestConfigure);
@@ -97,7 +97,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 			coreTestConfigure.setMaterialSubCategory(testConfigure.getMaterialSubCategory());
 			coreTestConfigure.setRawMaterial(testConfigure.getRawMaterial());
 			coreTestConfigure.setTestConfigure(testConfigure);
-			coreTestConfigure.setCoreTest(testConfigure.isCoreTest());
+			coreTestConfigure.setCoreTest(false);
 			coreTestConfigure.setApplicableTest(true);
 			coreTestConfigureRepository.save(coreTestConfigure);
 		}
@@ -381,4 +381,11 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 		}
 		return coreTestConfigureRepository.saveAll(CoreTestConfigurelistnew);
 	}
+
+  @Override
+  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndApplicableTest(
+      Long rawMaterialId) {
+    
+    return coreTestConfigureRepository.findByrawMaterialIdAndApplicableTestTrue(rawMaterialId);
+  }
 }

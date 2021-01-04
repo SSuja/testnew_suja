@@ -9,6 +9,7 @@ import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.MaterialType;
 
 public interface RawMaterialService {
   public void saveRawMaterial(RawMaterial rawMaterial);
@@ -60,4 +61,19 @@ public interface RawMaterialService {
       String plantCode);
 
   public Long countRawMaterialByPlantCount(String plantCode);
+
+  public boolean isPrefixAndMaterialSubCategoryAndErpCodeExists(String prefix,
+      Long materialSubCategoryId, String plantCode, String erpCode);
+
+  public boolean isMaterialSubCategoryAndRawMaterialNameAndMaterialType(Long materialCategoryId,
+      String name, MaterialType materialType);
+
+  public boolean isRawMaterialNameAndPrefixAndMaterialType(String prefix, Long materialCategoryId,
+      MaterialType materialType);
+
+  public boolean isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndSbu(
+      Long materialCategoryId, String name, Long sbuId);
+
+  public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndSbu(String prefix,
+      Long materialCategoryId, Long sbuId);
 }
