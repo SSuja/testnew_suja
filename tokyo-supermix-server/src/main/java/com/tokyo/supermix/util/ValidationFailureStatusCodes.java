@@ -1903,7 +1903,7 @@ public class ValidationFailureStatusCodes {
     this.testIdNotExists = testIdNotExists;
   }
 
-  @Value("$uploadDto.testImage.null{}")
+  @Value("${uploadDto.testImage.null}")
   private String fileNull;
 
   public String getFileNull() {
@@ -1912,6 +1912,17 @@ public class ValidationFailureStatusCodes {
 
   public void setFileNull(String fileNull) {
     this.fileNull = fileNull;
+  }
+
+  @Value("${uploadDto.testImage.notExists}")
+  private String imageNotExists;
+
+  public String getImageNotExists() {
+    return imageNotExists;
+  }
+
+  public void setImageNotExists(String imageNotExists) {
+    this.imageNotExists = imageNotExists;
   }
 
   @Value("${validation.tableFormat.alreadyExist}")

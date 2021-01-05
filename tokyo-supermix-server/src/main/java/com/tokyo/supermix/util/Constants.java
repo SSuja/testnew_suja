@@ -39,8 +39,10 @@ public class Constants {
       "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
   public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
-  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER = "Notification : About Finish Product Sample Test Reminder ";
-  public static final String SUBJECT_MATERIAL_TEST_REMINDER = "Notification : About Material Test Reminder ";
+  public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER =
+      "Notification : About Finish Product Sample Test Reminder ";
+  public static final String SUBJECT_MATERIAL_TEST_REMINDER =
+      "Notification : About Material Test Reminder ";
 
 
   // for sample counts
@@ -684,6 +686,7 @@ public class Constants {
   public static final String UPLOAD_IMAGE_SUCCESS = "Image Uploaded Successfully";
   public static final String UPLOAD_IMAGES = "uploadImages";
   public static final String UPLOAD_IMAGE = "uploadImage";
+  public static final String DELETE_IMAGE_SUCCESS = "Image Deleted Successfully";
 
   /*
    * Encapsulate constructor to restrict modification from outside
