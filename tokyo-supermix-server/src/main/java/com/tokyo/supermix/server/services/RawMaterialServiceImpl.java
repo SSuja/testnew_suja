@@ -36,11 +36,12 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   PlantRepository plantRepository;
 
   @Transactional
-  public void saveRawMaterial(RawMaterial rawMaterial) {
+  public Long saveRawMaterial(RawMaterial rawMaterial) {
     RawMaterial rawMaterialObj = rawMaterialRepository.save(rawMaterial);
     if (rawMaterialObj != null) {
       emailNotification.sendRawmaterialCreationEmail(rawMaterial);
     }
+    return rawMaterialObj.getId();
   }
 
   @Transactional(readOnly = true)

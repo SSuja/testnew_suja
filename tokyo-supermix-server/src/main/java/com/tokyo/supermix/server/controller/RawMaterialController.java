@@ -40,6 +40,7 @@ import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.FileStorageService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.RawMaterialService;
@@ -65,6 +66,8 @@ public class RawMaterialController {
   private Mapper mapper;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
+  @Autowired
+  private CoreTestConfigureService coreTestConfigureService;
   private static final Logger logger = Logger.getLogger(RawMaterialController.class);
 
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
@@ -98,7 +101,9 @@ public class RawMaterialController {
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     }
-    rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
+    Long rawMaterialId =
+        rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
+    coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialId);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_RAW_MATERIAL_SUCCESS),
         HttpStatus.OK);
