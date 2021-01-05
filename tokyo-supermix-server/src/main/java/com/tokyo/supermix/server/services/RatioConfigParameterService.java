@@ -18,4 +18,6 @@ public interface RatioConfigParameterService {
   public List<RatioConfigParameter> getAllRatioParametersByRatioConfig(Long ratioConfigId);
 
   public void deleteRatioConfigParameter(Long id);
+
+  public List<RatioConfigParameter> getRatioConfigParametersByRatioConfigIds(Long[] ids);
 }

@@ -824,6 +824,8 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_PARAMETER_BY_ID = RATIO_CONFIG_PARAMETER + ID;
   public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIG =
       RATIO_CONFIG_PARAMETER + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
+  public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIGS =
+      RATIO_CONFIG_PARAMETER + SLASH + "ratio-configs" + SLASH + "{ratioConfigIds}";
 
   /*
    * ratioConfig equation API
