@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.UploadImage;
 import com.tokyo.supermix.data.repositories.UploadImageRepository;
@@ -40,5 +41,15 @@ public class UploadImageServiceImpl implements UploadImageService {
   @Transactional(readOnly = true)
   public boolean existsByFinishProductTestCode(String finishProductTestCode) {
     return uploadImageRepository.existsByFinishProductTestCode(finishProductTestCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsById(Long id) {
+    return uploadImageRepository.existsById(id);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteImage(Long id) {
+    uploadImageRepository.deleteById(id);
   }
 }
