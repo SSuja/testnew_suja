@@ -76,4 +76,18 @@ public interface RawMaterialService {
 
   public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndSbu(String prefix,
       Long materialCategoryId, Long sbuId);
+
+  public boolean isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndPlant(
+      Long materialCategoryId, String name, MaterialType materialType, String plantCode);
+
+  public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndPlant(String prefix,
+      Long materialCategoryId, MaterialType materialType, String plantCode);
+
+  public boolean isUpdatedPrefixAndRawMaterial(Long id, Long materialSubCategoryId, String prefix,
+      MaterialType materialType);
+
+  public boolean isUpdatedPlantWise(Long id, Long materialSubCategoryId, String prefix,
+      MaterialType materialType, String plantCode);
+
+  public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId);
 }

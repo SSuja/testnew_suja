@@ -60,11 +60,17 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
       MaterialType materialType);
 
   boolean existsByPrefixAndMaterialSubCategoryIdAndMaterialType(String prefix,
-      Long materialCategoryId, MaterialType materialType);
+      Long materialSubCategoryId, MaterialType materialType);
 
   boolean existsByMaterialSubCategoryIdAndNameAndSubBusinessUnitId(Long materialCategoryId,
       String name, Long sbuId);
 
   boolean existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(String prefix,
       Long materialCategoryId, Long sbuId);
+
+  boolean existsByMaterialSubCategoryIdAndNameAndMaterialTypeAndPlantCode(Long materialCategoryId,
+      String name, MaterialType materialType, String plantCode);
+
+  boolean existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(String prefix,
+      Long materialCategoryId, MaterialType materialType, String plantCode);
 }
