@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.QIncomingSample;
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
@@ -180,7 +182,8 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   @Transactional(readOnly = true)
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination) {
+      BooleanBuilder booleanBuilder, Pageable pageable, RawMaterialSampleType rawMaterialSampleType,
+      String plantCode, Pagination pagination) {
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(QIncomingSample.incomingSample.code.startsWithIgnoreCase(code));
     }
@@ -208,8 +211,10 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
     pagination.setTotalRecords(
-        (long) ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).size());
-    return incomingSampleRepository.findAll(booleanBuilder, pageable).toList();
+        incomingSampleRepository.countByRawMaterialSampleType(rawMaterialSampleType));
+    return incomingSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        .filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
+        .collect(Collectors.toList());
   }
 
   @Transactional(readOnly = true)
@@ -230,6 +235,49 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
+  public boolean isSampleExistsByRawMaterialSample(RawMaterialSampleType rawMaterialSampleType) {
+    return incomingSampleRepository.existsByRawMaterialSampleType(rawMaterialSampleType);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> findByRawMaterialSampleType(
+      RawMaterialSampleType rawMaterialSampleType, Pageable pageable) {
+    return incomingSampleRepository.findAllByRawMaterialSampleType(rawMaterialSampleType, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long countAllSampleByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType) {
+    return incomingSampleRepository.countByRawMaterialSampleType(rawMaterialSampleType);
+  }
+
+  @Override
+  public Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
+      String plantCode) {
+    return incomingSampleRepository.countByRawMaterialSampleTypeAndPlantCode(rawMaterialSampleType,
+        plantCode);
+  }
+
+  @Override
+  public List<IncomingSample> findByRawMaterialSampleTypeAndPlantCode(
+      RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable) {
+    return incomingSampleRepository
+        .findAllByRawMaterialSampleTypeAndPlantCode(rawMaterialSampleType, plantCode, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> findAllByPlantCodeAndRawMaterialSampleTypeInOrderByUpdatedAtDesc(
+      UserPrincipal currentUser, RawMaterialSampleType rawMaterialSampleType, Pageable pageable) {
+    return incomingSampleRepository.findByPlantCodeInAndRawMaterialSampleTypeOrderByUpdatedAtDesc(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_INCOMING_SAMPLE),
+        rawMaterialSampleType, pageable);
+  }
+
+  // @Transactional(readOnly = true)
+  // public List<IncomingSample> findAllByRawMaterialSampleType(
+  // RawMaterialSampleType rawMaterialSampleType) {
+  // return incomingSampleRepository.findAllByRawMaterialSampleType(rawMaterialSampleType);
+  // }
   public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId) {
     return incomingSampleRepository
         .findByRawMaterialMaterialSubCategoryMaterialCategoryId(materialCategoryId);

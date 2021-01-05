@@ -1,76 +1,85 @@
 package com.tokyo.supermix.data.dto;
 
 public class CoreTestConfigureDto {
-	private Long id;
-	private boolean coreTest;
-	private Long materialCategoryId;
-	private Long materialSubCategoryId;
-	private Long rawMaterialId;
-	private Long testConfigureId;
-	private String materialSubCategoryName;
-	private String rawMaterialName;
+  private Long id;
+  private boolean coreTest;
+  private Long materialCategoryId;
+  private Long materialSubCategoryId;
+  private Long rawMaterialId;
+  private Long testConfigureId;
+  private String materialSubCategoryName;
+  private String rawMaterialName;
+  private boolean applicableTest;
 
-	public Long getId() {
-		return id;
-	}
+  public boolean isApplicableTest() {
+    return applicableTest;
+  }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+  public void setApplicableTest(boolean applicableTest) {
+    this.applicableTest = applicableTest;
+  }
 
-	public boolean isCoreTest() {
-		return coreTest;
-	}
+  public Long getId() {
+    return id;
+  }
 
-	public void setCoreTest(boolean coreTest) {
-		this.coreTest = coreTest;
-	}
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-	public Long getMaterialCategoryId() {
-		return materialCategoryId;
-	}
+  public boolean isCoreTest() {
+    return coreTest;
+  }
 
-	public void setMaterialCategoryId(Long materialCategoryId) {
-		this.materialCategoryId = materialCategoryId;
-	}
+  public void setCoreTest(boolean coreTest) {
+    this.coreTest = coreTest;
+  }
 
-	public Long getMaterialSubCategoryId() {
-		return materialSubCategoryId;
-	}
+  public Long getMaterialCategoryId() {
+    return materialCategoryId;
+  }
 
-	public void setMaterialSubCategoryId(Long materialSubCategoryId) {
-		this.materialSubCategoryId = materialSubCategoryId;
-	}
+  public void setMaterialCategoryId(Long materialCategoryId) {
+    this.materialCategoryId = materialCategoryId;
+  }
 
-	public Long getRawMaterialId() {
-		return rawMaterialId;
-	}
+  public Long getMaterialSubCategoryId() {
+    return materialSubCategoryId;
+  }
 
-	public void setRawMaterialId(Long rawMaterialId) {
-		this.rawMaterialId = rawMaterialId;
-	}
+  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
+    this.materialSubCategoryId = materialSubCategoryId;
+  }
 
-	public Long getTestConfigureId() {
-		return testConfigureId;
-	}
+  public Long getRawMaterialId() {
+    return rawMaterialId;
+  }
 
-	public void setTestConfigureId(Long testConfigureId) {
-		this.testConfigureId = testConfigureId;
-	}
+  public void setRawMaterialId(Long rawMaterialId) {
+    this.rawMaterialId = rawMaterialId;
+  }
 
-	public String getMaterialSubCategoryName() {
-		return materialSubCategoryName;
-	}
+  public Long getTestConfigureId() {
+    return testConfigureId;
+  }
 
-	public void setMaterialSubCategoryName(String materialSubCategoryName) {
-		this.materialSubCategoryName = materialSubCategoryName;
-	}
+  public void setTestConfigureId(Long testConfigureId) {
+    this.testConfigureId = testConfigureId;
+  }
 
-	public String getRawMaterialName() {
-		return rawMaterialName;
-	}
+  public String getMaterialSubCategoryName() {
+    return materialSubCategoryName;
+  }
 
-	public void setRawMaterialName(String rawMaterialName) {
-		this.rawMaterialName = rawMaterialName;
-	}
+  public void setMaterialSubCategoryName(String materialSubCategoryName) {
+    this.materialSubCategoryName = materialSubCategoryName;
+  }
+
+  public String getRawMaterialName() {
+    return rawMaterialName;
+  }
+
+  public void setRawMaterialName(String rawMaterialName) {
+    this.rawMaterialName = rawMaterialName;
+  }
 }

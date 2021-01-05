@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.CurrentUser;
@@ -61,7 +62,8 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
       String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination);
+      BooleanBuilder booleanBuilder, Pageable pageable, RawMaterialSampleType rawMaterialSampleType,
+      String plantCode, Pagination pagination);
 
   public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
 
@@ -69,6 +71,24 @@ public interface IncomingSampleService {
       String plantCode);
 
   public List<IncomingSample> getBySupplierId(Long supplierId);
+
+  // new service
+
+  boolean isSampleExistsByRawMaterialSample(RawMaterialSampleType rawMaterialSampleType);
+
+  public List<IncomingSample> findByRawMaterialSampleType(
+      RawMaterialSampleType rawMaterialSampleType, Pageable pageable);
+
+  public List<IncomingSample> findByRawMaterialSampleTypeAndPlantCode(
+      RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable);
+
+  public List<IncomingSample> findAllByPlantCodeAndRawMaterialSampleTypeInOrderByUpdatedAtDesc(
+      UserPrincipal currentUser, RawMaterialSampleType rawMaterialSampleType, Pageable pageable);
+
+  public Long countAllSampleByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType);
+
+  public Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
+      String plantCode);
 
   public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId);
 
