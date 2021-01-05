@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,5 +107,17 @@ public class UploadImageController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.UPLOAD_IMAGE,
         validationFailureStatusCodes.getTestIdNotExists()), HttpStatus.BAD_REQUEST);
+  }
+
+  @DeleteMapping(value = EndpointURI.IMAGE_BY_ID)
+  public ResponseEntity<Object> deleteImage(@PathVariable Long id) {
+    if (uploadImageService.existsById(id)) {
+      uploadImageService.deleteImage(id);
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_IMAGE_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.UPLOAD_IMAGE,
+        validationFailureStatusCodes.getImageNotExists()), HttpStatus.BAD_REQUEST);
   }
 }

@@ -316,6 +316,7 @@ public class MaterialTestController {
           HttpStatus.OK);
     }
     if (plantRepository.existsByCode(plantCode)) {
+      pagination.setTotalRecords(materialTestService.getCountMaterialTestByPlantCode(plantCode));
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
               mapper.map(materialTestService.getMaterialTestByPlant(plantCode, pageable),

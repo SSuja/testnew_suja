@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
-import com.tokyo.supermix.data.entities.CoreTestConfigure;
-import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
-import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -274,7 +272,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public List<MaterialTest> getMaterialTestByPlant(String plantCode, Pageable pageable) {
-
     return materialTestRepository.findAllByIncomingSamplePlantCode(plantCode, pageable);
   }
 
@@ -326,8 +323,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           break;
         }
       }
-      updateStatusSample(status, incomingSample, "updateed", materialTestObj);}
+      updateStatusSample(status, incomingSample, "updateed", materialTestObj);
     }
+  }
 
   private List<MaterialAcceptedValue> getRawMaterialAcceptedValues(Long testConfigId) {
     return materialAcceptedValueRepository.findByTestConfigureId(testConfigId);

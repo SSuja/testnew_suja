@@ -28,7 +28,6 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
-import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationConstance;
@@ -43,8 +42,6 @@ public class TestConfigureController {
   private MaterialSubCategoryService materialSubCategoryService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-  @Autowired
-  private MaterialTestService materialTestService;
   @Autowired
   private Mapper mapper;
 
@@ -91,31 +88,24 @@ public class TestConfigureController {
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
-      if (materialTestService
-          .isMaterialTestByTestConfigureExists(testConfigureRequestDto.getId())) {
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.TEST_CONFIGURE_ALREADY_DEPENDED), HttpStatus.OK);
-      } else {
-        if (testConfigureService.isUpdatedMaterialSubCategoryAndTest(
-            testConfigureRequestDto.getId(), testConfigureRequestDto.getTestId(),
-            testConfigureRequestDto.getMaterialSubCategoryId(),
-            testConfigureRequestDto.getRawMaterialId())) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.TEST_CONFIGURE,
-                  validationFailureStatusCodes.getTestConfigureAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
-        if (testConfigureService.isPrefixAlreadyExistsUpdate(testConfigureRequestDto.getId(),
-            testConfigureRequestDto.getPrefix())) {
-          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
-              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
-        }
-        testConfigureService
-            .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
+      if (testConfigureService.isUpdatedMaterialSubCategoryAndTest(testConfigureRequestDto.getId(),
+          testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId(),
+          testConfigureRequestDto.getRawMaterialId())) {
         return new ResponseEntity<>(
-            new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
-            HttpStatus.OK);
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
       }
+      if (testConfigureService.isPrefixAlreadyExistsUpdate(testConfigureRequestDto.getId(),
+          testConfigureRequestDto.getPrefix())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      testConfigureService
+          .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
+          HttpStatus.OK);
     }
     logger.debug("No Test Configure record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
