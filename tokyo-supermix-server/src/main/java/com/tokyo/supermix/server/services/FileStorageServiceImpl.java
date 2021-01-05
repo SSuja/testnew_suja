@@ -471,6 +471,34 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
   }
 
+  @Transactional
+  public String uploadFile(MultipartFile file)
+      throws IOException, TokyoSupermixFileStorageException {
+    if (!(file.getOriginalFilename().endsWith(".png")
+        || file.getOriginalFilename().endsWith(".jpeg")
+        || file.getOriginalFilename().endsWith(".jpg")))
+      throw new TokyoSupermixFileStorageException("Only PNG, JPEG and JPG images are allowed");
+    FileOutputStream fout = new FileOutputStream(new File(file.getOriginalFilename()));
+    fout.write(file.getBytes());
+    fout.close();
+    String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    try {
+      if (fileName.contains("..")) {
+        throw new TokyoSupermixFileStorageException(
+            "Filename contains invalid path sequence" + fileName);
+      }
+      String newFileName = System.currentTimeMillis() + "_" + fileName;
+      Path targetLocation = this.fileStorageLocation.resolve(newFileName);
+      Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+      String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+          .path("/downloadFile/").path(newFileName).toUriString();
+      return fileDownloadUri;
+    } catch (IOException ex) {
+      throw new TokyoSupermixFileStorageException(
+          String.format("Could not store file %s !! Please try again!", fileName), ex);
+    }
+  }
+
   @Transactional(readOnly = true)
   public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException {
     try {

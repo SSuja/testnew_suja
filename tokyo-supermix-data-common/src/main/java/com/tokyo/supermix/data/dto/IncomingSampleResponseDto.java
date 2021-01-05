@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class IncomingSampleResponseDto {
@@ -11,6 +12,7 @@ public class IncomingSampleResponseDto {
   private RawMaterialResponseDto rawMaterial;
   private PlantDto plant;
   private SupplierResponseDto supplier;
+  private RawMaterialSampleType rawMaterialSampleType;
 
   public String getCode() {
     return code;
@@ -74,5 +76,13 @@ public class IncomingSampleResponseDto {
 
   public void setSupplier(SupplierResponseDto supplier) {
     this.supplier = supplier;
+  }
+
+  public RawMaterialSampleType getRawMaterialSampleType() {
+    return rawMaterialSampleType;
+  }
+
+  public void setRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType) {
+    this.rawMaterialSampleType = rawMaterialSampleType;
   }
 }

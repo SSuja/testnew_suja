@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 public interface IncomingSampleRepository extends JpaRepository<IncomingSample, String>,
@@ -81,4 +82,30 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
 
   List<IncomingSample> findBySupplierId(Long supplierId);
+
+  boolean existsByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType);
+
+  // new repo
+
+  List<IncomingSample> findAllByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType,
+      Pageable pageable);
+
+  List<IncomingSample> findAllByRawMaterialSampleTypeAndPlantCode(
+      RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable);
+
+  List<IncomingSample> findByPlantCodeInAndRawMaterialSampleTypeOrderByUpdatedAtDesc(
+      List<String> permissionPlantCodeByCurrentUser, RawMaterialSampleType rawMaterialSampleType,
+      Pageable pageable);
+
+  Long countByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType);
+
+  Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
+      String plantCode);
+
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryMaterialCategoryId(
+      Long materialCategoryId);
+
+  List<IncomingSample> findByRawMaterialMaterialSubCategoryMaterialCategoryIdAndPlantCode(
+      Long materialCategoryId, String plantCode);
 }

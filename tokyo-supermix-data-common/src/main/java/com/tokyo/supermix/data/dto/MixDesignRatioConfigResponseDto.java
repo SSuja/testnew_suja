@@ -6,6 +6,7 @@ public class MixDesignRatioConfigResponseDto {
   private String mixDesignCode;
   private Long ratioConfigId;
   private Double value;
+  private String ratioConfigName;
 
   public Long getId() {
     return id;
@@ -37,5 +38,13 @@ public class MixDesignRatioConfigResponseDto {
 
   public void setValue(Double value) {
     this.value = value;
+  }
+
+  public String getRatioConfigName() {
+    return ratioConfigName;
+  }
+
+  public void setRatioConfigName(String ratioConfigName) {
+    this.ratioConfigName = ratioConfigName;
   }
 }
