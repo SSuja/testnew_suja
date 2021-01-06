@@ -467,14 +467,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSampleRepository.save(finishProductSample);
     mixDesign.setStatus(finishproductTest.getStatus());
     MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
-    MixDesignConfirmationToken mixDesignConfirmationToken =
-        new MixDesignConfirmationToken(mixDesignObj);
-    mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);
+           if (mixDesignObj.getStatus().equals(Status.PASS)) {
+        	 MixDesignConfirmationToken mixDesignConfirmationToken =
+        		        new MixDesignConfirmationToken(mixDesignObj);
+        	mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);
     emailNotification.sendMixdesinApprovelEmail(finishProductSampleobj, mixDesignConfirmationToken,
-        request);
-    if (mixDesignObj.getStatus().equals(Status.PASS)) {
-    }
-  }
+        request);}
+     }
 
   private void checkPassCountAndTestConfigKeyTestCount(String finishProductTestCode,
       HttpServletRequest request) {
