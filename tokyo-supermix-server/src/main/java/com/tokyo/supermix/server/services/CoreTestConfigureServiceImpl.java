@@ -101,7 +101,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     }
   }
 
-  @Override
+  @Transactional
   public void createCoreTestConfigureInTestConfig(Long Mainid, Long subId, Long RawMatId,
       Long testId) {
 
@@ -109,7 +109,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     TestConfigure testConfigure = testConfigureRepository.findById(470l).get();
 
     if (RawMatId == null) {
-      System.out.println("rawMatId");
+
       List<RawMaterial> rawMaterialslist = rawMaterialRepository.findByMaterialSubCategoryId(subId);
 
       rawMaterialslist.forEach(rawMaterial -> {
@@ -125,7 +125,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       });
       coreTestConfigureRepository.saveAll(coreTestConfigurelist);
     } else if (testConfigure.getMaterialSubCategory() == null) {
-      System.out.println("subId");
+
       List<RawMaterial> rawMaterialslist = rawMaterialRepository
           .findByMaterialSubCategoryMaterialCategoryId(testConfigure.getMaterialCategory().getId());
       rawMaterialslist.forEach(rawMaterial -> {
@@ -171,7 +171,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return coreTestConfigureRepository.findByrawMaterialIdAndCoreTestTrue(rawMaterialId);
   }
 
-  @Override
+  @Transactional
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestConfigureId(
       Long testConfigureId) {
     CoreTestConfigureResponseDto coreTestConfigureResponseDto = new CoreTestConfigureResponseDto();
@@ -236,13 +236,13 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return coreTestConfigureResponseDto;
   }
 
-  @Override
+  @Transactional
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestId(Long testId) {
     return getAllCoreTestConfigureByTestConfigureId(
         testConfigureRepository.findByTestId(testId).getId());
   }
 
-  @Override
+  @Transactional
   public List<TestOriginDto> getAllCoreTestConfigureByMainCategoryId(Long mainCategoryId) {
     List<TestOriginDto> testOriginDtoList = new ArrayList<>();
     // testconfigureBymatrialCatId
@@ -263,7 +263,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return testOriginDtoList;
   }
 
-  @Override
+  @Transactional
   public List<TestOriginDto> getAllCoreTestConfigureByMaterialSubCategoryId(
       Long materialSubCategoryId) {
     MaterialSubCategory materialSubCategory =
@@ -294,7 +294,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return testOriginDtoList;
   }
 
-  @Override
+  @Transactional
   public List<TestOriginDto> getAllCoreTestConfigureByRawMaterialId(Long rawMaterialId) {
 
     RawMaterial rawMaterial = rawMaterialRepository.getOne(rawMaterialId);
@@ -327,6 +327,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return testOriginDtoList;
   }
 
+  @Transactional
   public void testOriginChangeStatus(List<TestOriginRequestDto> testOriginRequestDtolist) {
 
     for (TestOriginRequestDto testOriginRequestDto : testOriginRequestDtolist) {
@@ -362,6 +363,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     }
   }
 
+  @Transactional
   public List<CoreTestConfigureDto> searchRawMaterial(BooleanBuilder booleanBuilder,
       Long testConfigureId, String rawMaterialName, Long materialSubCategoryId) {
     List<CoreTestConfigure> coretestlist = new ArrayList<>();
@@ -381,7 +383,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return mapper.map(coretestlist, CoreTestConfigureDto.class);
   }
 
-  @Override
+  @Transactional
   public List<CoreTestConfigure> updateCoreTestConfigure(
       List<CoreTestConfigure> CoreTestConfigurelist) {
     List<CoreTestConfigure> CoreTestConfigurelistnew = new ArrayList<>();
@@ -394,14 +396,14 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     return coreTestConfigureRepository.saveAll(CoreTestConfigurelistnew);
   }
 
-  @Override
+  @Transactional
   public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndApplicableTest(
       Long rawMaterialId) {
 
     return coreTestConfigureRepository.findByrawMaterialIdAndApplicableTestTrue(rawMaterialId);
   }
 
-  @Override
+  @Transactional
   public void updateCoreTestByNewRawMaterial(Long rawMaterialId) {
     RawMaterial rawMaterial = rawMaterialRepository.findById(rawMaterialId).get();
 
