@@ -349,8 +349,10 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_PROPORTION_BY_ID = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_BY_MIX_DESIGN_CODE =
       MIX_DESIGN_PROPORTION + "/mix-design" + "/{mixDesignCode}";
-
+  public static final String MIX_DESIGN_PROPORTION_BY_ID_AND_DELETE = MIX_DESIGN_PROPORTION + ID;
   public static final String MIX_DESIGN_PROPORTION_SEARCH = MIX_DESIGN_PROPORTION + SEARCH;
+  public static final String MIX_DESIGN_PROPORTION_BY_ID_DELETE =
+      MIX_DESIGN_PROPORTION + ID + SLASH + "delete" + SLASH + "{mixDesignCode}";
 
   /* Parameter Result */
   public static final String PARAMETER_RESULT = BASE_API_PATH + "parameter-result";
@@ -803,6 +805,8 @@ public final class EndpointURI {
   public static final String MIX_DESIGN_RATIO_CONFIG_BY_ID = MIX_DESIGN_RATIO_CONFIG + ID;
   public static final String MIX_DESIGN_RATIO_CONFIG_MIXDESIGN_CODE =
       MIX_DESIGN_RATIO_CONFIG + SLASH + "mix-design" + SLASH + "{mixDesignCode}";
+  public static final String MIX_DESIGN_RATIO_CONFIG_UPDATE =
+      MIX_DESIGN_RATIO_CONFIG + SLASH + "update" + SLASH + "{mixDesignCode}";
 
   /*
    * SBU API
