@@ -9,4 +9,6 @@ public interface RatioConfigParameterRepository extends JpaRepository<RatioConfi
   List<RatioConfigParameter> findByRatioConfigId(Long ratioConfigId);
 
   boolean existsByRatioConfigId(Long ratioConfigId);
+
+  List<RatioConfigParameter> findByRatioConfigIdIn(Long[] ids);
 }

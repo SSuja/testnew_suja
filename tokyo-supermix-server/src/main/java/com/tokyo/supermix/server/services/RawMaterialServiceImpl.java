@@ -240,9 +240,62 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndSbu(String prefix, Long materialCategoryId,
-      Long sbuId) {
+  public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndSbu(String prefix,
+      Long materialCategoryId, Long sbuId) {
     return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
         materialCategoryId, sbuId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndPlant(
+      Long materialCategoryId, String name, MaterialType materialType, String plantCode) {
+    return rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndMaterialTypeAndPlantCode(
+        materialCategoryId, name, materialType, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndPlant(String prefix,
+      Long materialCategoryId, MaterialType materialType, String plantCode) {
+    return rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(
+        prefix, materialCategoryId, materialType, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedPrefixAndRawMaterial(Long id, Long materialSubCategoryId, String prefix,
+      MaterialType materialType) {
+    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (!getRawMaterialById(id).getMaterialType().equals(materialType))
+        && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialType(prefix,
+            materialSubCategoryId, materialType)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedPlantWise(Long id, Long materialSubCategoryId, String prefix,
+      MaterialType materialType, String plantCode) {
+    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (!getRawMaterialById(id).getMaterialType().equals(materialType))
+        && (!getRawMaterialById(id).getPlant().getCode().equals(plantCode))
+        && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(
+            prefix, materialSubCategoryId, materialType, plantCode)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId) {
+    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
+        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (!getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId))
+        && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
+            materialCategoryId, sbuId)) {
+      return true;
+    }
+    return false;
   }
 }

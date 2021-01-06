@@ -73,8 +73,7 @@ public class RawMaterialController {
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
   public ResponseEntity<Object> createRawMaterial(
       @Valid @RequestBody RawMaterialRequestDto rawMaterialRequestDto) {
-    if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.COMMON)
-        || (rawMaterialRequestDto.getMaterialType().equals(MaterialType.PLANT))) {
+    if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.COMMON)) {
       if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialType(
           rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
           rawMaterialRequestDto.getMaterialType())) {
@@ -84,6 +83,19 @@ public class RawMaterialController {
       if (rawMaterialService.isRawMaterialNameAndPrefixAndMaterialType(
           rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialSubCategoryId(),
           rawMaterialRequestDto.getMaterialType())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PREFIX,
+            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+    } else if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.PLANT)) {
+      if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndPlant(
+          rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
+          rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+            validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      if (rawMaterialService.isRawMaterialNameAndPrefixAndMaterialTypeAndPlant(
+          rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+          rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
@@ -132,16 +144,27 @@ public class RawMaterialController {
   public ResponseEntity<Object> updateRawMaterial(
       @Valid @RequestBody RawMaterialRequestDto rawMaterialRequestDto) {
     if (rawMaterialService.isRawMaterialExist(rawMaterialRequestDto.getId())) {
-      if (rawMaterialService.isUpdatedNameExist(rawMaterialRequestDto.getId(),
-          rawMaterialRequestDto.getName())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
-            validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
-      }
-      if (rawMaterialService.isPrefixAndMaterialSubCategoryAndErpCodeExists(
-          rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialSubCategoryId(),
-          rawMaterialRequestDto.getPlantCode(), rawMaterialRequestDto.getErpCode())) {
-        return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
-            validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.COMMON)) {
+        if (rawMaterialService.isUpdatedPrefixAndRawMaterial(rawMaterialRequestDto.getId(),
+            rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getPrefix(),
+            rawMaterialRequestDto.getMaterialType())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
+      } else if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.PLANT)) {
+        if (rawMaterialService.isUpdatedPlantWise(rawMaterialRequestDto.getId(),
+            rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getPrefix(),
+            rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        if (rawMaterialService.isUpdatedSBU(rawMaterialRequestDto.getId(),
+            rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getPrefix(),
+            rawMaterialRequestDto.getSubBusinessUnitId())) {
+          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+        }
       }
       rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
       return new ResponseEntity<>(

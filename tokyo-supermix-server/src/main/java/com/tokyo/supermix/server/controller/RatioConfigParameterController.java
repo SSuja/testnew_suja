@@ -109,4 +109,15 @@ public class RatioConfigParameterController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
         validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIGS)
+  public ResponseEntity<Object> getRatioConfigParameterByRatioConfigIds(
+      @PathVariable Long[] ratioConfigIds) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.RATIO_CONFIG_PARAMETER,
+            mapper.map(ratioConfigParameterService.getRatioConfigParametersByRatioConfigIds(
+                ratioConfigIds), RatioConfigParameterResponseDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
 }

@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.hibernate.type.TrueFalseType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -47,5 +48,10 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
   @Transactional
   public void UpdateRatioConfigParameters(RatioConfigParameter ratioConfigParameter) {
     ratioConfigParameterRepository.save(ratioConfigParameter);
+  }
+
+  @Transactional(readOnly = true)
+  public List<RatioConfigParameter> getRatioConfigParametersByRatioConfigIds(Long[] ids) {
+    return ratioConfigParameterRepository.findByRatioConfigIdIn(ids);
   }
 }
