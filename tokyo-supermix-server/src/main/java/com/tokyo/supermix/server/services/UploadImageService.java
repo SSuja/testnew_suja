@@ -16,4 +16,8 @@ public interface UploadImageService {
 
   public boolean existsByFinishProductTestCode(String finishProductTestCode);
 
+  public boolean existsById(Long id);
+
+  public void deleteImage(Long id);
+
 }

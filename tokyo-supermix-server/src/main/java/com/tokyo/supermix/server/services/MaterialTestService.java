@@ -3,7 +3,6 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
-import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;

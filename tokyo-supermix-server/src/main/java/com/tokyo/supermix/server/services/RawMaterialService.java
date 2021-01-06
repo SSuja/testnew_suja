@@ -12,7 +12,7 @@ import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.MaterialType;
 
 public interface RawMaterialService {
-  public void saveRawMaterial(RawMaterial rawMaterial);
+  public Long saveRawMaterial(RawMaterial rawMaterial);
 
   public boolean isRawMaterialNameExist(String name);
 

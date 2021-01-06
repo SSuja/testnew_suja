@@ -280,6 +280,10 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLES_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}" + SLASH
           + "plant" + SLASH + "{plantCode}";
+  public static final String INCOMING_SAMPLES_BY_RAW_MATERIAL_ID =
+      INCOMING_SAMPLES + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String INCOMING_SAMPLES_BY_SAMPLE_TYPE = INCOMING_SAMPLES + SLASH + "plant"
+      + SLASH + "{plantCode}" + SLASH + "sample-type" + SLASH + "{rawMaterialSampleType}";
   /*
    * Mix design apis
    * 
@@ -330,8 +334,8 @@ public final class EndpointURI {
   public static final String PROCESS_SAMPLE_BY_CODE = PROCESS_SAMPLE + CODE;
   public static final String PROCESS_SAMPLE_SEARCH =
       PROCESS_SAMPLE + SEARCH + SLASH + "{plantCode}";
-  public static final String PROCESS_SAMPLE_SEARCH_TYPE=
-      PROCESS_SAMPLES+ SEARCH + SLASH + "{plantCode}";
+  public static final String PROCESS_SAMPLE_SEARCH_TYPE =
+      PROCESS_SAMPLES + SEARCH + SLASH + "{plantCode}";
   public static final String PROCESS_SAMPLES_BY_PLANT_CODE =
       PROCESS_SAMPLES + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String PROCESS_SAMPLE_BY_PLANT = PROCESS_SAMPLE + PLANT_WISE;
@@ -824,6 +828,8 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_PARAMETER_BY_ID = RATIO_CONFIG_PARAMETER + ID;
   public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIG =
       RATIO_CONFIG_PARAMETER + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
+  public static final String RATIO_CONFIG_PARAMETER_BY_RATIO_CONFIGS =
+      RATIO_CONFIG_PARAMETER + SLASH + "ratio-configs" + SLASH + "{ratioConfigIds}";
 
   /*
    * ratioConfig equation API
@@ -841,6 +847,7 @@ public final class EndpointURI {
       UPLOAD_IMAGE + SLASH + "materialTest" + SLASH + "{materialTestCode}";
   public static final String GET_TEST_IMAGES_BY_FINISHPRODUCT_TEST =
       UPLOAD_IMAGE + SLASH + "finishProductTest" + SLASH + "{finishProductTestCode}";
+  public static final String IMAGE_BY_ID = UPLOAD_IMAGE + ID;
 
   // samples by type
 
