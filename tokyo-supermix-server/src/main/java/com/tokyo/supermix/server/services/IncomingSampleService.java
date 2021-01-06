@@ -74,4 +74,8 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId,
       String plantCode);
+
+  public List<IncomingSample> getByRawMaterialId(Long rawMaterialId);
+
+  public boolean isRawMaterialExist(Long rawMaterialId);
 }

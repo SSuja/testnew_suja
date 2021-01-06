@@ -242,4 +242,14 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
         .findByRawMaterialMaterialSubCategoryMaterialCategoryIdAndPlantCode(materialCategoryId,
             plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> getByRawMaterialId(Long rawMaterialId) {
+    return incomingSampleRepository.findByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialExist(Long rawMaterialId) {
+    return incomingSampleRepository.existsByRawMaterialId(rawMaterialId);
+  }
 }
