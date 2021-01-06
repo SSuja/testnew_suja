@@ -280,6 +280,8 @@ public final class EndpointURI {
   public static final String INCOMING_SAMPLES_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLES + SLASH + "material-category" + SLASH + "{materialCategoryId}" + SLASH
           + "plant" + SLASH + "{plantCode}";
+  public static final String INCOMING_SAMPLES_BY_RAW_MATERIAL_ID =
+      INCOMING_SAMPLES + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
   public static final String INCOMING_SAMPLES_BY_SAMPLE_TYPE = INCOMING_SAMPLES + SLASH + "plant"
       + SLASH + "{plantCode}" + SLASH + "sample-type" + SLASH + "{rawMaterialSampleType}";
   /*

@@ -292,6 +292,16 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
+  public List<IncomingSample> getByRawMaterialId(Long rawMaterialId) {
+    return incomingSampleRepository.findByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialExist(Long rawMaterialId) {
+    return incomingSampleRepository.existsByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
   public List<IncomingSample> getInComingSampleBySampleType(
       RawMaterialSampleType rawMaterialSampleType) {
     return incomingSampleRepository.findByRawMaterialSampleType(rawMaterialSampleType);

@@ -375,6 +375,18 @@ public class IncomingSampleController {
     }
   }
 
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_RAW_MATERIAL_ID)
+  public ResponseEntity<Object> getIncomingSampleByRawMaterialId(@PathVariable Long rawMaterialId) {
+    if (incomingSampleService.isRawMaterialExist(rawMaterialId)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getByRawMaterialId(rawMaterialId),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL,
+        validationFailureStatusCodes.getRawMaterialNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_SAMPLE_TYPE)
   public ResponseEntity<Object> getIncomingSamplesBySampleType(
       @PathVariable RawMaterialSampleType rawMaterialSampleType, @PathVariable String plantCode) {
