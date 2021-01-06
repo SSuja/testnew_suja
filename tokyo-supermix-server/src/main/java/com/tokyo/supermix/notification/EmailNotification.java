@@ -12,15 +12,18 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
+import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.ConfirmationToken;
 import com.tokyo.supermix.data.entities.Customer;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
 import com.tokyo.supermix.data.entities.Employee;
+import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.IncomingSample;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MixDesign;
@@ -35,16 +38,21 @@ import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.enums.AcceptedType;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.UserType;
+import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 import com.tokyo.supermix.data.repositories.EmployeeRepository;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
+import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
@@ -114,6 +122,12 @@ public class EmailNotification {
 	private FinishProductTestRepository finishProductTestRepository;
 	@Autowired
 	private MaterialTestRepository materialTestRepository;
+	@Autowired
+	private FinishProductParameterResultRepository finishProductParameterResultRepository;
+	@Autowired
+	private AcceptedValueRepository acceptedValueRepository;
+	@Autowired
+	private MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
 	@Scheduled(cron = "${mail.notificationTime.plantEquipment}")
 	public void alertForEquipmentCalibration() {
@@ -236,7 +250,7 @@ public class EmailNotification {
 		}
 	}
 
-	@Async()
+	@Async
 	public void sendMixdesinApprovelEmail(FinishProductSample finishProductSample,
 			MixDesignConfirmationToken mixDesignConfirmationToken, HttpServletRequest request) {
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
@@ -245,17 +259,64 @@ public class EmailNotification {
 			if (emailGroup.isStatus()) {
 				List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
 						emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
+				String result = " ";
+				String acceptedValue = " ";
 				String testMailBody = " ";
 				for (FinishProductTest finishProductTest : finishProductTestRepository
 						.findByFinishProductSampleCode(finishProductSample.getCode())) {
-					testMailBody = testMailBody + "<li> <b>" + finishProductTest.getTestConfigure().getTest().getName()
-							+ finishProductTest.getStatus() + "</b></li></ul>";
-				}
-				String mailBody = "<ul><li>Mix Design code<b>" + finishProductSample.getCode()
-						+ "</b></li><li> Created Date <b>" + finishProductSample.getDate() + "</li><li> Status <b>"
-						+ finishProductSample.getStatus() + "</b></li></ul>"
-//						+ "<li> Test Name    Status    Result    Accepted value <b></b></li>" + "To approve the test "
-						+ testMailBody + "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
+					for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
+							.findByFinishProductTestCode(finishProductTest.getCode())) {
+						result = result + "<li> Result: <b>"
+								+ finishProductParameterResult.getTestParameter().getParameter().getName() + "- "
+								+ finishProductParameterResult.getResult() + "</b></li>";
+						if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
+							AcceptedValue value = acceptedValueRepository.findByTestParameterIdAndTestConfigureId(
+									finishProductParameterResult.getTestParameter().getId(),
+									finishProductTest.getTestConfigure().getId());
+							if (value.getConditionRange() == Condition.BETWEEN) {
+								acceptedValue = acceptedValue + "maxValue - " + value.getMaxValue().toString()
+										+ "minValue - " + value.getMaxValue().toString();
+							} else if (value.getConditionRange() == Condition.EQUAL) {
+								acceptedValue = acceptedValue + "Equal to - " + value.getValue().toString();
+
+							} else if (value.getConditionRange() == Condition.GREATER_THAN) {
+								acceptedValue = acceptedValue + "Greater than - " + value.getValue().toString();
+
+							} else if (value.getConditionRange() == Condition.LESS_THAN) {
+								acceptedValue = acceptedValue + "Less than - " + value.getValue().toString();
+							}
+						} else {
+							MaterialAcceptedValue materialValue = materialAcceptedValueRepository
+									.findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
+											finishProductTest.getTestConfigure().getId(),
+											finishProductParameterResult.getTestParameter().getId(),
+											finishProductParameterResult.getFinishProductTest().getFinishProductSample()
+													.getMixDesign().getRawMaterial().getId());
+							if (materialValue.getConditionRange() == Condition.BETWEEN) {
+								acceptedValue = acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
+										+ " - minValue - " + materialValue.getMinValue().toString();
+							} else if (materialValue.getConditionRange() == Condition.EQUAL) {
+								acceptedValue = acceptedValue + "Equal to - " + materialValue.getValue().toString();
+							} else if (materialValue.getConditionRange() == Condition.GREATER_THAN) {
+								acceptedValue = acceptedValue + " Greater than - : "
+										+ materialValue.getValue().toString();
+							} else if (materialValue.getConditionRange() == Condition.LESS_THAN) {
+								acceptedValue = acceptedValue + "Less than - " + materialValue.getValue().toString();
+							}
+						};
+					}
+					testMailBody = testMailBody + "</br><li> Test: <b>"
+							+ finishProductTest.getTestConfigure().getTest().getName() + "</b></li>" + result
+							+ "<li> Acceptance Range:<b>" + acceptedValue + "</b></li>" + "<li>Status:<b>"
+							+ finishProductTest.getStatus() + "</b></li>" + "<li>Tested Date:<b>"
+							+ finishProductTest.getDate() + "</b></li></n>";
+				};
+				String mailBody = "<ul><li>Finish Product: <b>" + finishProductSample.getFinishProductCode()
+						+ "</b></li>" + "<li> Mix Design Code: <b>" + finishProductSample.getMixDesign().getCode()
+						+ "</b></li>" + "<li> Plant-Lab-Trial Sample: <b>" + finishProductSample.getCode() + "</b></li>"
+						+ "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt() + "</b></li></br>"
+						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>"
+						+ "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
 						+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
 						+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
 						+ "#008CBA" + "}}>Approve</button>" + "</a>";
