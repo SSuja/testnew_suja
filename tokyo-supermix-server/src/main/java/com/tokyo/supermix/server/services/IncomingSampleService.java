@@ -94,4 +94,10 @@ public interface IncomingSampleService {
 
   public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId,
       String plantCode);
+
+  public List<IncomingSample> getInComingSampleBySampleType(
+      RawMaterialSampleType rawMaterialSampleType);
+
+  public List<IncomingSample> getInComingSampleBySampleTypeAndPlant(
+      RawMaterialSampleType rawMaterialSampleType, String plantCode);
 }

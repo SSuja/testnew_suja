@@ -373,6 +373,21 @@ public class IncomingSampleController {
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
+  }
 
+  @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_SAMPLE_TYPE)
+  public ResponseEntity<Object> getIncomingSamplesBySampleType(
+      @PathVariable RawMaterialSampleType rawMaterialSampleType, @PathVariable String plantCode) {
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getInComingSampleBySampleType(rawMaterialSampleType),
+              IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(incomingSampleService.getInComingSampleBySampleTypeAndPlant(
+              rawMaterialSampleType, plantCode), IncomingSampleResponseDto.class),
+          RestApiResponseStatus.OK), HttpStatus.OK);
+    }
   }
 }
