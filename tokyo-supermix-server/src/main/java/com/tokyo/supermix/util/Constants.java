@@ -312,6 +312,8 @@ public class Constants {
       "Mix Design Proportion Successfully Deleted";
   public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
       "Mix Design Proportion Updated Successfully";
+  public static final String MIX_DESIGN_PROPORTION_DELETED_BAD =
+      "Can't Delete depend on ratio";
   /*
    * Constants for Admixture Accepted Value validation key & Success messages
    */

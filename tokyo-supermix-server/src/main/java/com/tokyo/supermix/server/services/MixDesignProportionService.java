@@ -24,4 +24,6 @@ public interface MixDesignProportionService {
       String rawMaterialName5, int page, int size, String mixDesignCode);
 
   public void updateMixDesignProportion(MixDesignProportion mixDesignProportion);
+
+  public boolean deleteProportionCheck(Long id, String mixDesignCode);
 }
