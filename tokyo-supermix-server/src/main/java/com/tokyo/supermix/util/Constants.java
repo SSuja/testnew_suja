@@ -312,6 +312,8 @@ public class Constants {
       "Mix Design Proportion Successfully Deleted";
   public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
       "Mix Design Proportion Updated Successfully";
+  public static final String MIX_DESIGN_PROPORTION_DELETED_BAD =
+      "Can't Delete depend on ratio";
   /*
    * Constants for Admixture Accepted Value validation key & Success messages
    */
@@ -598,7 +600,7 @@ public class Constants {
   public static final String CORE_TEST_CONFIGURE = "coreTestConfigure";
   public static final String CORE_TEST_CONFIGURES = "coreTestConfigures";
   public static final String ADD_CORE_TEST_CONFIGURE_SUCCESS =
-      "coreTestConfigure Added Successfully";
+      "Core Test Configuration Added Successfully";
   // public static final String ACCEPTED_VALUE_ID = "acceptedValueId";
   // public static final String ACCEPTED_VALUE_TEST_CONFIGURE_ID = "acceptedValueTestConfigureId";
   // public static final String ACCEPTED_VALUE_DELETED = "Accepted Value Successfully Deleted";

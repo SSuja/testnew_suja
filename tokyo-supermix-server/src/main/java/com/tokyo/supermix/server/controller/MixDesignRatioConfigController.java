@@ -52,6 +52,16 @@ public class MixDesignRatioConfigController {
         HttpStatus.OK);
   }
 
+  @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_UPDATE)
+  public ResponseEntity<Object> UpDate(@PathVariable String mixDesignCode) {
+    mixDesignRatioConfigService.updateRatioResult(mixDesignCode);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MIX_DESIGN_RATIO_CONFIG),
+        HttpStatus.OK);
+  }
+
+
+
   @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIGS)
   public ResponseEntity<Object> getAllMixDesignRatios() {
     return new ResponseEntity<>(

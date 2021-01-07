@@ -93,7 +93,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     List<Integer> list = new ArrayList<Integer>();
     finishProductSampleList.forEach(obj -> {
       String code = obj.getCode();
-      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
     });
     return Collections.max(list);
   }
