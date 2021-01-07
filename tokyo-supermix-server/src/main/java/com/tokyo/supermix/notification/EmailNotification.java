@@ -311,12 +311,14 @@ public class EmailNotification {
 							+ finishProductTest.getStatus() + "</b></li>" + "<li>Tested Date:<b>"
 							+ finishProductTest.getDate() + "</b></li></n>";
 				};
-				String mailBody = "<ul><li>Finish Product: <b>" + finishProductSample.getFinishProductCode()
+				String message = "<ul><li>Finish Product: <b>" + finishProductSample.getFinishProductCode()
 						+ "</b></li>" + "<li> Mix Design Code: <b>" + finishProductSample.getMixDesign().getCode()
 						+ "</b></li>" + "<li> Plant-Lab-Trial Sample: <b>" + finishProductSample.getCode() + "</b></li>"
 						+ "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt() + "</b></li></br>"
-						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>"
-						+ "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
+						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>";
+						
+						String mailBody = message +	
+						"<a href=http://" + request.getServerName() + ":" + request.getServerPort()
 						+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
 						+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
 						+ "#008CBA" + "}}>Approve</button>" + "</a>";
@@ -325,8 +327,7 @@ public class EmailNotification {
 			}
 		}
 	}
-
-	@Async
+//	@Async
 	public void sendSupplierEmail(Supplier supplier) {
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(supplier.getPlant().getCode(),
 				MailGroupConstance.CREATE_SUPPLIER);
