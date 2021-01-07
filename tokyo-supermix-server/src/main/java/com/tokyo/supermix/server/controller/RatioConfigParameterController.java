@@ -114,6 +114,10 @@ public class RatioConfigParameterController {
   @DeleteMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER_BY_ID)
   public ResponseEntity<Object> deleteRatioConfigParameter(@PathVariable Long id) {
     if (ratioConfigParameterService.isRatioConfigParameterExist(id)) {
+      if (ratioConfigParameterService.deleteCheck(id)) {
+        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+            Constants.RATIO_CONFIG_PARAMETER_DELETED_FAIL), HttpStatus.OK);
+      }
       ratioConfigParameterService.deleteRatioConfigParameter(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_PARAMETER_DELETED),

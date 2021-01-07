@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.RatioConfigParameterRequestDto;
+import com.tokyo.supermix.data.entities.RatioConfigEquation;
 import com.tokyo.supermix.data.entities.RatioConfigParameter;
+import com.tokyo.supermix.data.repositories.RatioConfigEquationRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
 
 @Service
@@ -16,6 +18,8 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
 
   @Autowired
   private RatioConfigParameterRepository ratioConfigParameterRepository;
+  @Autowired
+  private RatioConfigEquationRepository ratioConfigEquationRepository;
 
   @Transactional
   public void saveRatioConfigParameters(List<RatioConfigParameter> ratioConfigParameter) {
@@ -107,4 +111,14 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     return false;
   }
 
+  public boolean deleteCheck(Long ratioParameter) {
+    RatioConfigParameter ratioConfigParameter =
+        ratioConfigParameterRepository.findById(ratioParameter).get();
+    RatioConfigEquation ratioConfigEquation = ratioConfigEquationRepository
+        .findByRatioConfigId(ratioConfigParameter.getRatioConfig().getId()).get(0);
+    if (ratioConfigEquation.getRatio().contains(ratioConfigParameter.getAbbreviation())) {
+      return true;
+    }
+    return false;
+  }
 }
