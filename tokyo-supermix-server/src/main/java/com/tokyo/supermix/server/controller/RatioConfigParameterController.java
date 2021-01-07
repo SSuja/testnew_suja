@@ -88,6 +88,7 @@ public class RatioConfigParameterController {
                 validationFailureStatusCodes.getAbbreviationAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
+
       if (ratioConfigParameterService.checkAleadyRawmaterial(ratioConfigParameterRequestDto)) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
@@ -128,6 +129,15 @@ public class RatioConfigParameterController {
       @Valid @RequestBody RatioConfigParameterRequestDto ratioConfigParameterRequestDto) {
     if (ratioConfigParameterService
         .isRatioConfigParameterExist(ratioConfigParameterRequestDto.getId())) {
+      if (ratioConfigParameterService.checkValidationForRawMaterialAndAbbre(
+          ratioConfigParameterRequestDto.getId(), ratioConfigParameterRequestDto.getRatioConfigId(),
+          ratioConfigParameterRequestDto.getRawMaterialId(),
+          ratioConfigParameterRequestDto.getAbbreviation())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       ratioConfigParameterService.UpdateRatioConfigParameters(
           mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
