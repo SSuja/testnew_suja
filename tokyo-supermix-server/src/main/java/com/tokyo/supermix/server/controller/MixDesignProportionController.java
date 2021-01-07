@@ -58,9 +58,14 @@ public class MixDesignProportionController {
         null, HttpStatus.OK);
   }
 
-  @DeleteMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_ID)
-  public ResponseEntity<Object> deleteMixDesignProportion(@PathVariable Long id) {
+  @DeleteMapping(value = EndpointURI.MIX_DESIGN_PROPORTION_BY_ID_DELETE)
+  public ResponseEntity<Object> deleteMixDesignProportion(@PathVariable Long id,
+      @PathVariable String mixDesignCode) {
     if (mixDesignProportionService.isMixDesignProportionExist(id)) {
+      if (mixDesignProportionService.deleteProportionCheck(id, mixDesignCode)) {
+        return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
+            Constants.MIX_DESIGN_PROPORTION_DELETED_BAD), HttpStatus.OK);
+      }
       mixDesignProportionService.deleteById(id);
       return new ResponseEntity<Object>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MIX_DESIGN_PROPORTION_DELETED),

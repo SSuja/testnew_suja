@@ -10,14 +10,23 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
+import com.tokyo.supermix.data.entities.MixDesignRatioConfig;
 import com.tokyo.supermix.data.entities.QMixDesignProportion;
+import com.tokyo.supermix.data.entities.RatioConfigParameter;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRatioConfigRepository;
+import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
 
 @Service
 public class MixDesignProportionServiceImpl implements MixDesignProportionService {
 
   @Autowired
   public MixDesignProportionRepository mixDesignProportionRepository;
+  @Autowired
+  public MixDesignRatioConfigRepository mixDesignRatioConfigRepository;
+  @Autowired
+  public RatioConfigParameterRepository ratioConfigParameterRepository;
+
 
   @Transactional(readOnly = true)
   public List<MixDesignProportion> getAllMixDesignProportions() {
@@ -101,5 +110,21 @@ public class MixDesignProportionServiceImpl implements MixDesignProportionServic
   @Transactional
   public void updateMixDesignProportion(MixDesignProportion mixDesignProportion) {
     mixDesignProportionRepository.save(mixDesignProportion);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean deleteProportionCheck(Long id, String mixDesignCode) {
+    boolean deleteCheck = false;
+    for (MixDesignRatioConfig mixDesignRatioConfig : mixDesignRatioConfigRepository
+        .findByMixDesignCode(mixDesignCode)) {
+      for (RatioConfigParameter ratioConfigParameter : ratioConfigParameterRepository
+          .findByRatioConfigId(mixDesignRatioConfig.getRatioConfig().getId())) {
+        if (ratioConfigParameter.getRawMaterial().getId() == mixDesignProportionRepository
+            .findById(id).get().getRawMaterial().getId()) {
+          return deleteCheck = true;
+        }
+      }
+    }
+    return deleteCheck;
   }
 }

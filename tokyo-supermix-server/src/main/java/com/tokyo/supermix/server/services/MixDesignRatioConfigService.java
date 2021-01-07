@@ -20,4 +20,6 @@ public interface MixDesignRatioConfigService {
   public boolean isExistByMixDesignCode(String mixDesignCode);
 
   public void saveRatioResult(String mixDesignCode, Long ratioConfigId);
+
+  public void updateRatioResult(String mixDesignCode);
 }

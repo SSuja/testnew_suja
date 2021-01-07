@@ -17,6 +17,7 @@ import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRatioConfigRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigEquationRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
+import com.tokyo.supermix.data.repositories.RatioConfigRepository;
 import com.tokyo.supermix.util.Constants;
 
 @Service
@@ -30,6 +31,8 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
   private MixDesignProportionRepository mixDesignProportionRepository;
   @Autowired
   private RatioConfigEquationRepository ratioConfigEquationRepository;
+  @Autowired
+  private RatioConfigRepository ratioConfigRepository;
 
   @Transactional
   public void saveMixDesignRatioConfig(List<MixDesignRatioConfig> mixDesignRatioConfig) {
@@ -62,6 +65,19 @@ public class MixDesignRatioConfigServiceImpl implements MixDesignRatioConfigServ
         .findByMixDesignCodeAndRatioConfigId(mixDesignCode, ratioConfigId);
     mixDesignRatioConfig.setValue(getFinishProductResultParameter(mixDesignCode, ratioConfigId));
     mixDesignRatioConfigRepository.save(mixDesignRatioConfig);
+  }
+
+  @Transactional
+  public void updateRatioResult(String mixDesignCode) {
+    List<MixDesignRatioConfig> mixDesignRatioConfigList =
+        mixDesignRatioConfigRepository.findByMixDesignCode(mixDesignCode);
+    for (MixDesignRatioConfig mixDesignRatioConfig : mixDesignRatioConfigList) {
+      mixDesignRatioConfig.setRatioConfig(
+          ratioConfigRepository.findById(mixDesignRatioConfig.getRatioConfig().getId()).get());
+      mixDesignRatioConfig.setValue(getFinishProductResultParameter(mixDesignCode,
+          mixDesignRatioConfig.getRatioConfig().getId()));
+      mixDesignRatioConfigRepository.save(mixDesignRatioConfig);
+    }
   }
 
   private HashMap<String, Double> getMixDesignRatioResult(String mixDesignCode,
