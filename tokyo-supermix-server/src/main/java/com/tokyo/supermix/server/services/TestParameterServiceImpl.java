@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.ParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
 import com.tokyo.supermix.data.dto.TestParameterEquationDto;
+import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.dto.report.Level;
 import com.tokyo.supermix.data.entities.ParameterEquation;
@@ -146,9 +148,9 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setValue(test.getValue());
         testParameterResponseDto.setAcceptedCriteria(test.isAcceptedCriteria());
         testParameterResponseDto.setName(test.getName());
-        if(test.getTableFormat()!=null) {
-        testParameterResponseDto.setTableFormatId(test.getTableFormat().getId());
-        testParameterResponseDto.setTableFormatName(test.getTableFormat().getTableName());
+        if (test.getTableFormat() != null) {
+          testParameterResponseDto.setTableFormatId(test.getTableFormat().getId());
+          testParameterResponseDto.setTableFormatName(test.getTableFormat().getTableName());
         }
         testParameterResponseDtoList.add(testParameterResponseDto);
       }
@@ -234,8 +236,11 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public boolean isTestConfigureAndAbbreviationExist(Long testConfigureId, String abbreviation) {
-    return testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
-        abbreviation);
+    if (testParameterRepository.existsByTestConfigureIdAndAbbreviation(testConfigureId,
+        abbreviation)) {
+      return true;
+    }
+    return false;
   }
 
   public boolean isUpdatedParameterExists(Long id, Long testConfigureId, Long parameterId) {
@@ -249,5 +254,18 @@ public class TestParameterServiceImpl implements TestParameterService {
   @Transactional
   public void saveTestParameter(TestParameter testParameter) {
     testParameterRepository.save(testParameter);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean checkAbbreviation(List<TestParameterRequestDto> testParameterRequestDtos) {
+    ArrayList<String> testParameterList = new ArrayList<String>();
+    for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtos) {
+      testParameterList.add(testParameterRequestDto.getAbbreviation());
+    }
+    if (testParameterList.size() != testParameterList.stream().distinct()
+        .collect(Collectors.toList()).size()) {
+      return true;
+    }
+    return false;
   }
 }

@@ -74,6 +74,34 @@ public class RatioConfigParameterController {
     if (ratioConfigParameterRequestDto.stream()
         .filter(para -> para.getAbbreviation() == null && para.getUnitId() == null)
         .collect(Collectors.toList()).isEmpty()) {
+      // if (ratioConfigParameterService.checkAleadyExistValidation(ratioConfigParameterRequestDto))
+      // {
+      // return new ResponseEntity<>(
+      // new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+      // validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+      // HttpStatus.BAD_REQUEST);
+      // }
+      if (ratioConfigParameterService
+          .checkAleadyExistValidationAgain(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+
+      if (ratioConfigParameterService.checkAleadyRawmaterial(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (ratioConfigParameterService.checkAleadyExistValidation(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+
       ratioConfigParameterService.saveRatioConfigParameters(
           mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
@@ -86,6 +114,10 @@ public class RatioConfigParameterController {
   @DeleteMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER_BY_ID)
   public ResponseEntity<Object> deleteRatioConfigParameter(@PathVariable Long id) {
     if (ratioConfigParameterService.isRatioConfigParameterExist(id)) {
+      if (ratioConfigParameterService.deleteCheck(id)) {
+        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+            Constants.RATIO_CONFIG_PARAMETER_DELETED_FAIL), HttpStatus.OK);
+      }
       ratioConfigParameterService.deleteRatioConfigParameter(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_PARAMETER_DELETED),
@@ -101,6 +133,15 @@ public class RatioConfigParameterController {
       @Valid @RequestBody RatioConfigParameterRequestDto ratioConfigParameterRequestDto) {
     if (ratioConfigParameterService
         .isRatioConfigParameterExist(ratioConfigParameterRequestDto.getId())) {
+      if (ratioConfigParameterService.checkValidationForRawMaterialAndAbbre(
+          ratioConfigParameterRequestDto.getId(), ratioConfigParameterRequestDto.getRatioConfigId(),
+          ratioConfigParameterRequestDto.getRawMaterialId(),
+          ratioConfigParameterRequestDto.getAbbreviation())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       ratioConfigParameterService.UpdateRatioConfigParameters(
           mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

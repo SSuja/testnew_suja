@@ -313,7 +313,7 @@ public class Constants {
   public static final String UPDATE_MIX_DESIGN_PROPORTION_SUCCESS =
       "Mix Design Proportion Updated Successfully";
   public static final String MIX_DESIGN_PROPORTION_DELETED_BAD =
-      "Can't Delete depend on ratio";
+      "This Material is already used to create Ratio";
   /*
    * Constants for Admixture Accepted Value validation key & Success messages
    */
@@ -670,6 +670,8 @@ public class Constants {
       "Ratio Config Parameter Added Successfully";
   public static final String UPDATE_RATIO_CONFIG_PARAMETER_SUCCESS =
       "Ratio Config Parameter Updated Successfully";
+  public static final String RATIO_CONFIG_PARAMETER_DELETED_FAIL=
+      "This Material is already used to create Ratio";
 
   /*
    * Constants for ratio config equation validation key & Success messages
