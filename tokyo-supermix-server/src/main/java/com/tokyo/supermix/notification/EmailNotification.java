@@ -262,6 +262,10 @@ public class EmailNotification {
 				String result = " ";
 				String acceptedValue = " ";
 				String testMailBody = " ";
+				String body = "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
+				+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
+				+ "#008CBA" + "}}>Approve</button>" + "</a>";
 				for (FinishProductTest finishProductTest : finishProductTestRepository
 						.findByFinishProductSampleCode(finishProductSample.getCode())) {
 					for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
@@ -317,11 +321,7 @@ public class EmailNotification {
 						+ "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt() + "</b></li></br>"
 						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>";
 						
-						String mailBody = message +	
-						"<a href=http://" + request.getServerName() + ":" + request.getServerPort()
-						+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
-						+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
-						+ "#008CBA" + "}}>Approve</button>" + "</a>";
+						String mailBody = message +	body;
 				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
 						Constants.SUBJECT_CONCRETE_TEST, mailBody);
 			}
