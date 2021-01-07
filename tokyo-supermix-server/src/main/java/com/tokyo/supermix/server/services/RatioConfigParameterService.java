@@ -30,4 +30,8 @@ public interface RatioConfigParameterService {
 
   public boolean checkAleadyRawmaterial(
       List<RatioConfigParameterRequestDto> ratioConfigParameterList);
+
+
+  public boolean checkValidationForRawMaterialAndAbbre(Long id, Long ratioConfigId,
+      Long rawMaterialId, String abbre);
 }

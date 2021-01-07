@@ -76,10 +76,7 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     for (RatioConfigParameterRequestDto ratioConfigParameterRequestDto : ratioConfigParameterList) {
       if (ratioConfigParameterRepository.existsByRatioConfigIdAndAbbreviation(
           ratioConfigParameterRequestDto.getRatioConfigId(),
-          ratioConfigParameterRequestDto.getAbbreviation())
-          || ratioConfigParameterRepository.existsByRatioConfigIdAndRawMaterialId(
-              ratioConfigParameterRequestDto.getRatioConfigId(),
-              ratioConfigParameterRequestDto.getRawMaterialId())) {
+          ratioConfigParameterRequestDto.getAbbreviation())) {
         return true;
       }
     }
@@ -98,4 +95,16 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public boolean checkValidationForRawMaterialAndAbbre(Long id, Long ratioConfigId,
+      Long rawMaterialId, String abbre) {
+    if ((!ratioConfigParameterRepository.findById(id).get().getAbbreviation().equals(abbre))
+        && (ratioConfigParameterRepository.existsByRatioConfigIdAndAbbreviation(ratioConfigId,
+            abbre))) {
+      return true;
+    }
+    return false;
+  }
+
 }

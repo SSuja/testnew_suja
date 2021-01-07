@@ -15,4 +15,7 @@ public interface RatioConfigParameterRepository extends JpaRepository<RatioConfi
   boolean existsByRatioConfigIdAndAbbreviation(Long ratioConfigId, String abbreviation);
 
   boolean existsByRatioConfigIdAndRawMaterialId(Long ratioConfigId, Long rawMaterialId);
+
+  boolean existsByRatioConfigIdAndRawMaterialIdAndAbbreviation(Long ratioConfigId,
+      Long rawMaterialId, String abbreviation);
 }
