@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.TestParameterEquationDto;
+import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.entities.TestParameter;
 
 public interface TestParameterService {
@@ -50,4 +51,6 @@ public interface TestParameterService {
   public boolean isTestConfigureAndAbbreviationExist(Long testConfigureId, String abbreviation);
 
   public boolean isUpdatedParameterExists(Long id, Long testConfigureId, Long parameterId);
+
+  public boolean checkAbbreviation(List<TestParameterRequestDto> testParameterRequestDtos);
 }
