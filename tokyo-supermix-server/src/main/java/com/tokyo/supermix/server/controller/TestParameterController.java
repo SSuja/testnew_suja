@@ -53,6 +53,12 @@ public class TestParameterController {
             || (testPara.getType() == null) || (testPara.getUnitId() == null))
         .collect(Collectors.toList());
     if (listTestParameter.isEmpty()) {
+      if (testParameterService.checkAbbreviation(testParameterRequestDtoList)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.ABBREVIATION,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtoList) {
         if ((testParameterRequestDto.getParameterId() != null)
             && (testParameterRequestDto.getQualityParameterId() == null)) {
@@ -60,6 +66,14 @@ public class TestParameterController {
             return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
                 validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
           }
+        }
+        if (testParameterService.isTestConfigureAndAbbreviationExist(
+            testParameterRequestDto.getTestConfigureId(),
+            testParameterRequestDto.getAbbreviation())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.ABBREVIATION,
+                  validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+              HttpStatus.BAD_REQUEST);
         }
         if (testParameterService.isDuplicateTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getAbbreviation(),
