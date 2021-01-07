@@ -34,4 +34,6 @@ public interface RatioConfigParameterService {
 
   public boolean checkValidationForRawMaterialAndAbbre(Long id, Long ratioConfigId,
       Long rawMaterialId, String abbre);
+
+  public boolean deleteCheck(Long ratioParameter);
 }
