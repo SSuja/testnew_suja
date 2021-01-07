@@ -18,7 +18,7 @@ public class StrengthDto {
   private String dueDay;
   private PlantDto plant;
   private FinishProductResultDto finishProductResult;
-  private List<AcceptedValueDto> acceptanceCriterias;
+  private List<AcceptedValueDtoForStrength> acceptanceCriterias;
   private List<StrengthResultDto> strengthResultDtos;
 
   public String getFinishProdutSampleCode() {
@@ -117,7 +117,7 @@ public class StrengthDto {
     this.strengthResultDtos = strengthResultDtos;
   }
 
-  public List<AcceptedValueDto> getAcceptanceCriterias() {
+  public List<AcceptedValueDtoForStrength> getAcceptanceCriterias() {
     return acceptanceCriterias;
   }
 
@@ -129,7 +129,7 @@ public class StrengthDto {
     this.dueDay = dueDay;
   }
 
-  public void setAcceptanceCriterias(List<AcceptedValueDto> acceptanceCriterias) {
+  public void setAcceptanceCriterias(List<AcceptedValueDtoForStrength> acceptanceCriterias) {
     this.acceptanceCriterias = acceptanceCriterias;
   }
 }
