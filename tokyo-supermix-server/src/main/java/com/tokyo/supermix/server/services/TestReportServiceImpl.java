@@ -18,6 +18,7 @@ import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
+import com.tokyo.supermix.data.dto.report.AcceptedValueDtoForStrength;
 import com.tokyo.supermix.data.dto.report.AcceptedValueForSieveTest;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
 import com.tokyo.supermix.data.dto.report.FinishProductResultDto;
@@ -1142,7 +1143,7 @@ public class TestReportServiceImpl implements TestReportService {
     strengthDto.setFinishProductResult(getFinishProductResult(finishProductTestCode));
     if ((finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
       if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
-        strengthDto.setAcceptanceCriterias(getMaterialAcceptedValueDto(
+        strengthDto.setAcceptanceCriterias(getMaterialAcceptedValueDtoForStrength(
             finishProductTest.getTestConfigure().getId(),
             finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId()));
       } else {
@@ -1151,7 +1152,7 @@ public class TestReportServiceImpl implements TestReportService {
       }
     } else {
       strengthDto.setAcceptanceCriterias(
-          getAcceptedCriteriaDetails(finishProductTest.getTestConfigure().getId()));
+          getAcceptedCriteriaDetailsForStrength(finishProductTest.getTestConfigure().getId()));
     }
     strengthDto.setStrengthResultDtos(
         getFinishProductsTrailsValuesByFinishProductCode(finishProductTestCode,
@@ -1223,7 +1224,7 @@ public class TestReportServiceImpl implements TestReportService {
     strengthDto.setFinishProductResult(getFinishProductResult(finishProductTestCode));
     if ((finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))) {
       if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
-        strengthDto.setAcceptanceCriterias(getMaterialAcceptedValueDto(
+        strengthDto.setAcceptanceCriterias(getMaterialAcceptedValueDtoForStrength(
             finishProductTest.getTestConfigure().getId(),
             finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId()));
       } else {
@@ -1232,7 +1233,7 @@ public class TestReportServiceImpl implements TestReportService {
       }
     } else {
       strengthDto.setAcceptanceCriterias(
-          getAcceptedCriteriaDetails(finishProductTest.getTestConfigure().getId()));
+          getAcceptedCriteriaDetailsForStrength(finishProductTest.getTestConfigure().getId()));
     }
     strengthDto.setStrengthResultDtos(
         getFinishProductsTrailsValuesByFinishProductCode(finishProductTestCode,
@@ -1240,9 +1241,10 @@ public class TestReportServiceImpl implements TestReportService {
     return strengthDto;
   }
 
-  private List<AcceptedValueDto> getFinishProductMaterialValueIsNull(Long testConfigureId,
-      String finishProductCode) {
-    List<AcceptedValueDto> acceptedValueDtoList = new ArrayList<AcceptedValueDto>();
+  private List<AcceptedValueDtoForStrength> getFinishProductMaterialValueIsNull(
+      Long testConfigureId, String finishProductCode) {
+    List<AcceptedValueDtoForStrength> acceptedValueDtoList =
+        new ArrayList<AcceptedValueDtoForStrength>();
     List<MaterialAcceptedValue> materialAcceptedValues =
         materialAcceptedValueRepository.findByTestConfigureId(testConfigureId);
     FinishProductTest finishProductTest = finishProductTestRepository.findByCode(finishProductCode);
@@ -1250,21 +1252,69 @@ public class TestReportServiceImpl implements TestReportService {
       if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
           .getId() == materialAccepted.getRawMaterial().getId()) {
         if (materialAccepted.isFinalResult()) {
-          AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
+          AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
-            acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
+            acceptedValueDto.setValue(materialAccepted.getMinValue().toString() + "-"
+                + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL
               || materialAccepted.getConditionRange() == Condition.GREATER_THAN
               || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getValue());
-            acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
+            acceptedValueDto.setValue(materialAccepted.getValue().toString());
           }
           acceptedValueDtoList.add(acceptedValueDto);
         }
+      }
+    });
+    return acceptedValueDtoList;
+  }
+
+  private List<AcceptedValueDtoForStrength> getMaterialAcceptedValueDtoForStrength(
+      Long testConfigureId, Long rawMaterialId) {
+    List<AcceptedValueDtoForStrength> acceptedValueDtoList =
+        new ArrayList<AcceptedValueDtoForStrength>();
+    List<MaterialAcceptedValue> materialAcceptedValues = materialAcceptedValueRepository
+        .findByTestConfigureIdAndTestConfigureRawMaterialId(testConfigureId, rawMaterialId);
+    materialAcceptedValues.forEach(materialAccepted -> {
+      if (materialAccepted.isFinalResult()) {
+        AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
+        if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+          acceptedValueDto.setValue(materialAccepted.getMinValue().toString() + "-"
+              + materialAccepted.getMaxValue().toString());
+        } else if (materialAccepted.getConditionRange() == Condition.EQUAL
+            || materialAccepted.getConditionRange() == Condition.GREATER_THAN
+            || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+          acceptedValueDto.setValue(materialAccepted.getValue().toString());
+        }
+        acceptedValueDtoList.add(acceptedValueDto);
+      }
+    });
+    return acceptedValueDtoList;
+  }
+
+  private List<AcceptedValueDtoForStrength> getAcceptedCriteriaDetailsForStrength(
+      Long testConfigureId) {
+    List<AcceptedValueDtoForStrength> acceptedValueDtoList =
+        new ArrayList<AcceptedValueDtoForStrength>();
+    List<AcceptedValue> acceptedValueList =
+        acceptedValueRepository.findByTestConfigureId(testConfigureId);
+    acceptedValueList.forEach(values -> {
+      if (values.isFinalResult()) {
+        AcceptedValueDtoForStrength acceptedValueDtos = new AcceptedValueDtoForStrength();
+        if (values.getConditionRange() == Condition.BETWEEN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos
+              .setValue(values.getMinValue().toString() + "-" + values.getMaxValue().toString());
+        } else if (values.getConditionRange() == Condition.EQUAL
+            || values.getConditionRange() == Condition.GREATER_THAN
+            || values.getConditionRange() == Condition.LESS_THAN) {
+          acceptedValueDtos.setValue(values.getValue().toString());
+          acceptedValueDtos.setCondition(values.getConditionRange());
+        }
+        acceptedValueDtoList.add(acceptedValueDtos);
       }
     });
     return acceptedValueDtoList;
