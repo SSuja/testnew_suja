@@ -262,6 +262,10 @@ public class EmailNotification {
 				String result = " ";
 				String acceptedValue = " ";
 				String testMailBody = " ";
+				String body = "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
+				+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
+				+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
+				+ "#008CBA" + "}}>Approve</button>" + "</a>";
 				for (FinishProductTest finishProductTest : finishProductTestRepository
 						.findByFinishProductSampleCode(finishProductSample.getCode())) {
 					for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
@@ -311,22 +315,19 @@ public class EmailNotification {
 							+ finishProductTest.getStatus() + "</b></li>" + "<li>Tested Date:<b>"
 							+ finishProductTest.getDate() + "</b></li></n>";
 				};
-				String mailBody = "<ul><li>Finish Product: <b>" + finishProductSample.getFinishProductCode()
+				String message = "<ul><li>Finish Product: <b>" + finishProductSample.getFinishProductCode()
 						+ "</b></li>" + "<li> Mix Design Code: <b>" + finishProductSample.getMixDesign().getCode()
 						+ "</b></li>" + "<li> Plant-Lab-Trial Sample: <b>" + finishProductSample.getCode() + "</b></li>"
 						+ "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt() + "</b></li></br>"
-						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>"
-						+ "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
-						+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
-						+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
-						+ "#008CBA" + "}}>Approve</button>" + "</a>";
+						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>";
+						
+						String mailBody = message +	body;
 				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
 						Constants.SUBJECT_CONCRETE_TEST, mailBody);
 			}
 		}
 	}
-
-	@Async
+//	@Async
 	public void sendSupplierEmail(Supplier supplier) {
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(supplier.getPlant().getCode(),
 				MailGroupConstance.CREATE_SUPPLIER);
