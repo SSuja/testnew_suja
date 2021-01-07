@@ -74,6 +74,33 @@ public class RatioConfigParameterController {
     if (ratioConfigParameterRequestDto.stream()
         .filter(para -> para.getAbbreviation() == null && para.getUnitId() == null)
         .collect(Collectors.toList()).isEmpty()) {
+      // if (ratioConfigParameterService.checkAleadyExistValidation(ratioConfigParameterRequestDto))
+      // {
+      // return new ResponseEntity<>(
+      // new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+      // validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+      // HttpStatus.BAD_REQUEST);
+      // }
+      if (ratioConfigParameterService
+          .checkAleadyExistValidationAgain(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (ratioConfigParameterService.checkAleadyRawmaterial(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (ratioConfigParameterService.checkAleadyExistValidation(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+
       ratioConfigParameterService.saveRatioConfigParameters(
           mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
