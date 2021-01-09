@@ -41,7 +41,6 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       String subCatPrefix = rawMaterialRepository.getOne(incomingSample.getRawMaterial().getId())
           .getMaterialSubCategory().getPrefix();
       String codePrefix = "";
-
       if (incomingSample.getRawMaterialSampleType() == RawMaterialSampleType.INCOMING_SAMPLE) {
         codePrefix = incomingSample.getPlant().getCode() + "-" + subCatPrefix + "-INC-";
       } else {
