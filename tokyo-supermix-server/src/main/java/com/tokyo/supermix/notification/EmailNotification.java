@@ -3,14 +3,12 @@ package com.tokyo.supermix.notification;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.ConfirmationToken;
@@ -128,6 +126,8 @@ public class EmailNotification {
 	private AcceptedValueRepository acceptedValueRepository;
 	@Autowired
 	private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+	
+	HttpSession session;
 
 	@Scheduled(cron = "${mail.notificationTime.plantEquipment}")
 	public void alertForEquipmentCalibration() {
@@ -253,19 +253,25 @@ public class EmailNotification {
 	@Async
 	public void sendMixdesinApprovelEmail(FinishProductSample finishProductSample,
 			MixDesignConfirmationToken mixDesignConfirmationToken, HttpServletRequest request) {
+		if(request!=null) {
+			session = request.getSession();
+	    	session.setAttribute("url", request.getServerName() +":"+ request.getServerPort() + request.getContextPath());
+		}
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
 				finishProductSample.getMixDesign().getPlant().getCode(), MailGroupConstance.MIX_DESIGN_CONFIRMATION);
 		if (emailGroup != null) {
+			String body = "<a href=http://" +session.getAttribute("url")
+			+ "/api/v1/mix-design/confirmation/"
+			+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
+			+ "#008CBA" + "}}>Approve</button>" + "</a>";
 			if (emailGroup.isStatus()) {
 				List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
 						emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 				String result = " ";
 				String acceptedValue = " ";
 				String testMailBody = " ";
-				String body = "<a href=http://" + request.getServerName() + ":" + request.getServerPort()
-				+ request.getContextPath() + "/api/v1/mix-design/confirmation/"
-				+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
-				+ "#008CBA" + "}}>Approve</button>" + "</a>";
+				request.getPathInfo();
+				
 				for (FinishProductTest finishProductTest : finishProductTestRepository
 						.findByFinishProductSampleCode(finishProductSample.getCode())) {
 					for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
@@ -327,7 +333,7 @@ public class EmailNotification {
 			}
 		}
 	}
-//	@Async
+	@Async
 	public void sendSupplierEmail(Supplier supplier) {
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(supplier.getPlant().getCode(),
 				MailGroupConstance.CREATE_SUPPLIER);

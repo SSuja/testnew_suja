@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.sql.Date;
 import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
@@ -13,6 +14,7 @@ public class IncomingSampleResponseDto {
   private PlantDto plant;
   private SupplierResponseDto supplier;
   private RawMaterialSampleType rawMaterialSampleType;
+  private Date date;
 
   public String getCode() {
     return code;
@@ -84,5 +86,13 @@ public class IncomingSampleResponseDto {
 
   public void setRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType) {
     this.rawMaterialSampleType = rawMaterialSampleType;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
   }
 }

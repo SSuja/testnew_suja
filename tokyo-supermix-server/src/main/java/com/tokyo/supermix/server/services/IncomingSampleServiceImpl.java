@@ -40,7 +40,12 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     if (incomingSample.getCode() == null) {
       String subCatPrefix = rawMaterialRepository.getOne(incomingSample.getRawMaterial().getId())
           .getMaterialSubCategory().getPrefix();
-      String codePrefix = incomingSample.getPlant().getCode() + "-" + subCatPrefix + "-INC-";
+      String codePrefix = "";
+      if (incomingSample.getRawMaterialSampleType() == RawMaterialSampleType.INCOMING_SAMPLE) {
+        codePrefix = incomingSample.getPlant().getCode() + "-" + subCatPrefix + "-INC-";
+      } else {
+        codePrefix = incomingSample.getPlant().getCode() + "-" + subCatPrefix + "-PRC-";
+      }
       List<IncomingSample> incomingSampleList =
           incomingSampleRepository.findByCodeContaining(codePrefix);
       if (incomingSampleList.size() == 0) {
