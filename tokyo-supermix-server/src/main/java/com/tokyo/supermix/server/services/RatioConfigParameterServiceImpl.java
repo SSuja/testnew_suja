@@ -114,10 +114,13 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
   public boolean deleteCheck(Long ratioParameter) {
     RatioConfigParameter ratioConfigParameter =
         ratioConfigParameterRepository.findById(ratioParameter).get();
-    RatioConfigEquation ratioConfigEquation = ratioConfigEquationRepository
-        .findByRatioConfigId(ratioConfigParameter.getRatioConfig().getId()).get(0);
-    if (ratioConfigEquation.getRatio().contains(ratioConfigParameter.getAbbreviation())) {
-      return true;
+    List<RatioConfigEquation> ratioConfigEquationList = ratioConfigEquationRepository
+        .findByRatioConfigId(ratioConfigParameter.getRatioConfig().getId());
+    if (!ratioConfigEquationList.isEmpty()) {
+      if (ratioConfigEquationList.get(0).getRatio()
+          .contains(ratioConfigParameter.getAbbreviation())) {
+        return true;
+      }
     }
     return false;
   }
