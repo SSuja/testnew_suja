@@ -15,6 +15,8 @@ public class IncomingSampleRequestDto {
   private String plantCode;
   private Long supplierId;
   private RawMaterialSampleType rawMaterialSampleType;
+  private Long userId;
+  
 
   public String getCode() {
     return code;
@@ -71,4 +73,13 @@ public class IncomingSampleRequestDto {
   public void setRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType) {
     this.rawMaterialSampleType = rawMaterialSampleType;
   }
+
+public Long getUserId() {
+	return userId;
+}
+
+public void setUserId(Long userId) {
+	this.userId = userId;
+}
+  
 }

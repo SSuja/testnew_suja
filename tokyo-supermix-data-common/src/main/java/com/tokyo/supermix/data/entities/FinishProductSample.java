@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.Status;
 
 @Entity
@@ -34,6 +35,9 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @JoinColumn(name = "pourId", nullable = true)
   private Pour pour;
   private String workOrderNumber;
+  @ManyToOne
+	@JoinColumn(name = "userId", nullable = true)
+	private User user;
 
   public String getCode() {
     return code;
@@ -118,4 +122,13 @@ public class FinishProductSample extends DateAudit implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
+public User getUser() {
+	return user;
+}
+
+public void setUser(User user) {
+	this.user = user;
+}
+  
 }

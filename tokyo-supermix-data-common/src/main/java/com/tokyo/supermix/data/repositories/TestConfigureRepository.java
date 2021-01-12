@@ -46,4 +46,5 @@ public interface TestConfigureRepository
   List<TestConfigure> findByMaterialCategoryIdAndMaterialSubCategoryNull(Long materialCategoryId);
 
   List<TestConfigure> findByMaterialSubCategoryIdAndRawMaterialNull(Long materialSubCategoryId);
+  List<TestConfigure>findByDueDayNotNull();
 }

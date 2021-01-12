@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
@@ -35,6 +36,9 @@ public class IncomingSample extends DateAudit implements Serializable {
   private Supplier supplier;
   @Enumerated(EnumType.ORDINAL)
   private RawMaterialSampleType rawMaterialSampleType;
+  @ManyToOne
+	@JoinColumn(name = "userId", nullable = true)
+	private User user;
 
   public String getCode() {
     return code;
@@ -103,4 +107,13 @@ public class IncomingSample extends DateAudit implements Serializable {
   public void setRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType) {
     this.rawMaterialSampleType = rawMaterialSampleType;
   }
+
+public User getUser() {
+	return user;
+}
+
+public void setUser(User user) {
+	this.user = user;
+}
+  
 }
