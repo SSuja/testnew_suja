@@ -49,11 +49,10 @@ public interface FinishProductSampleService {
 
   public Long getCountFinishProductSampleByPlantCode(String plantCode);
 
-  public List<FinishProductSampleResponseDto> searchFinishProductSample(
-      BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, String status, String date,
-      String code, String rawMaterialName, String workOrderNumber, String customer,
-      Pageable pageable, Pagination pagination);
+  public List<FinishProductSample> searchFinishProductSample(BooleanBuilder booleanBuilder,
+      String finishProductCode, String equipmentName, String mixDesignCode, String plantName,
+      String plantCode, Status status, String date, String code, String rawMaterialName,
+      String workOrderNumber, String customer, Pageable pageable, Pagination pagination);
 
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
       Long subCategoryId, String plantCode);

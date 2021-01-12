@@ -28,6 +28,7 @@ import com.tokyo.supermix.config.export.FinishProductDeliveryLayouter;
 import com.tokyo.supermix.config.export.FinishedProductDeliveryFillManager;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
+import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -249,7 +250,7 @@ public class FinishProductSampleController {
       @RequestParam(name = "equipmentName", required = false) String equipmentName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
@@ -259,12 +260,17 @@ public class FinishProductSampleController {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+   
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-        finishProductSampleService.searchFinishProductSample(booleanBuilder, finishProductCode,
-            equipmentName, mixDesignCode, plantName, plantCode, status, date, code, rawMaterialName,
-            workOrderNumber, customer, pageable, pagination),
-        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+            mapper.map(
+                finishProductSampleService.searchFinishProductSample(booleanBuilder,
+                    finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status,
+                    date, code, rawMaterialName, workOrderNumber, customer, pageable, pagination),
+                FinishProductSampleResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
 
   }
 
