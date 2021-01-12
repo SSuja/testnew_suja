@@ -1925,6 +1925,18 @@ public class ValidationFailureStatusCodes {
     this.imageNotExists = imageNotExists;
   }
 
+  @Value("${uploadDto.image.notValidContent}")
+  private String imageNotValidContent;
+
+  public String getImageNotValidContent() {
+    return imageNotValidContent;
+  }
+
+  public void setImageNotValidContent(String imageNotValidContent) {
+    this.imageNotValidContent = imageNotValidContent;
+  }
+
+  // table format
   @Value("${validation.tableFormat.alreadyExist}")
   private String tableFormatAlreadyExist;
 

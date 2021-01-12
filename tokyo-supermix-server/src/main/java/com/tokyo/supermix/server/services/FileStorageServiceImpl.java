@@ -15,9 +15,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import javax.imageio.ImageIO;
 import java.util.stream.Collectors;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -474,10 +475,6 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Transactional
   public String uploadFile(MultipartFile file)
       throws IOException, TokyoSupermixFileStorageException {
-    if (!(file.getOriginalFilename().endsWith(".png")
-        || file.getOriginalFilename().endsWith(".jpeg")
-        || file.getOriginalFilename().endsWith(".jpg")))
-      throw new TokyoSupermixFileStorageException("Only PNG, JPEG and JPG images are allowed");
     FileOutputStream fout = new FileOutputStream(new File(file.getOriginalFilename()));
     fout.write(file.getBytes());
     fout.close();
@@ -497,6 +494,17 @@ public class FileStorageServiceImpl implements FileStorageService {
       throw new TokyoSupermixFileStorageException(
           String.format("Could not store file %s !! Please try again!", fileName), ex);
     }
+  }
+
+  public boolean isValid(MultipartFile[] multipartFile) {
+    for (MultipartFile multipartFile2 : Arrays.asList(multipartFile)) {
+      if (!(multipartFile2.getOriginalFilename().endsWith(".png")
+          || multipartFile2.getOriginalFilename().endsWith(".jpeg")
+          || multipartFile2.getOriginalFilename().endsWith(".jpg"))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Transactional(readOnly = true)

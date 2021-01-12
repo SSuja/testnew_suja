@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
@@ -24,6 +25,7 @@ public class FinishProductTestResultDto {
   private String finishProductTestFinishProductSampleMixDesignRawMaterialName;
   private String testParameterAbbreviation;
   private String finishProductTestFinishProductSampleFinishProductCode;
+  private ReportFormat finishProductTestTestConfigureReportFormat;
 
   public String getTestParameterAbbreviation() {
     return testParameterAbbreviation;
@@ -169,5 +171,14 @@ public class FinishProductTestResultDto {
       String finishProductTestFinishProductSampleFinishProductCode) {
     this.finishProductTestFinishProductSampleFinishProductCode =
         finishProductTestFinishProductSampleFinishProductCode;
+  }
+
+  public ReportFormat getFinishProductTestTestConfigureReportFormat() {
+    return finishProductTestTestConfigureReportFormat;
+  }
+
+  public void setFinishProductTestTestConfigureReportFormat(
+      ReportFormat finishProductTestTestConfigureReportFormat) {
+    this.finishProductTestTestConfigureReportFormat = finishProductTestTestConfigureReportFormat;
   }
 }

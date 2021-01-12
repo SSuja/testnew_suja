@@ -272,8 +272,13 @@ public class TestReportServiceImpl implements TestReportService {
 
   private IncomingSampleReportDto getIncomingSampleDetails(String incomingSampleCode) {
     IncomingSample incomingSample = incomingSampleRepository.findById(incomingSampleCode).get();
-    IncomingSampleReportDto incomingSampleReportDto =
-        mapper.map(incomingSample, IncomingSampleReportDto.class);
+    IncomingSampleReportDto incomingSampleReportDto = new IncomingSampleReportDto();
+    incomingSampleReportDto.setCode(incomingSample.getCode());
+    incomingSampleReportDto.setStatus(incomingSample.getStatus().name());
+    incomingSampleReportDto.setVehicleNo(incomingSample.getVehicleNo());
+    java.sql.Date date = new java.sql.Date(incomingSample.getCreatedAt().getTime());
+    incomingSampleReportDto.setDate(date);
+    incomingSampleReportDto.setRawMaterialName(incomingSample.getRawMaterial().getName());
     incomingSampleReportDto
         .setMaterialSubCategory(incomingSample.getRawMaterial().getMaterialSubCategory().getName());
     incomingSampleReportDto.setMaterialCategory(

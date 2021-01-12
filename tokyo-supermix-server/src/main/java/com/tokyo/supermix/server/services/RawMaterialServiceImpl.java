@@ -154,7 +154,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (name.isEmpty()) {
       return null;
     }
-    return rawMaterialRepository.findByPlantCodeOrPlantNullAndNameStartsWith(plantCode, name);
+    return rawMaterialRepository.findByPlantCodeOrPlantNullOrSubBusinessUnitIdAndNameStartsWith(
+        plantCode, plantRepository.findById(plantCode).get().getSubBusinessUnit().getId(), name);
   }
 
   @Transactional(readOnly = true)
