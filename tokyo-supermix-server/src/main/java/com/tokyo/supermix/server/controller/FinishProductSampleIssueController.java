@@ -22,6 +22,7 @@ import com.tokyo.supermix.data.dto.FinishProductSampleIssueRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleIssueResponseDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -179,7 +180,7 @@ public class FinishProductSampleIssueController {
       @RequestParam(name = "equipmentName", required = false) String equipmentName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
@@ -191,10 +192,14 @@ public class FinishProductSampleIssueController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
-        finishProductSampleIssueService.searchFinishProductSampleIssue(booleanBuilder,
-            finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status, date,
-            code, rawMaterialName, workOrderNumber, customer, project, pageable, pagination),
-        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
+            mapper.map(
+                finishProductSampleService.searchFinishProductSample(booleanBuilder,
+                    finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status,
+                    date, code, rawMaterialName, workOrderNumber, customer, pageable, pagination),
+                FinishProductSampleResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
   }
 }
