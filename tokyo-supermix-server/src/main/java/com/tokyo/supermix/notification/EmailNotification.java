@@ -43,6 +43,7 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -675,10 +676,10 @@ public class EmailNotification {
 
 	}
 
-	@Scheduled(cron = "0 05 01 * * * ")
+	@Scheduled(cron = "0 30 08 * * * ")
 	public void reminderForFinishProductSampleTest() {
 		final LocalDateTime today = LocalDateTime.now();
-		for (TestConfigure testconfigure : testConfigureRepository.findByDueDayNotNull()) {
+		for (TestConfigure testconfigure : testConfigureRepository.findByTestTypeAndDueDayNotNull(MainType.FINISH_PRODUCT)) {
 			List<RawMaterial> rawMaterialList = coreTestConfigureRepository.findBytestConfigureId(testconfigure.getId())
 					.stream().map(coretest -> coretest.getRawMaterial()).collect(Collectors.toList());
 			for (RawMaterial rawMaterial : rawMaterialList) {
@@ -723,10 +724,10 @@ public class EmailNotification {
 
 	}
 
-	@Scheduled(cron = "0 16 04 * * * ")
+	@Scheduled(cron = "0 30 08 * * * ")
 	public void reminderForMaterialTest() {
 		final LocalDateTime today = LocalDateTime.now();
-		for (TestConfigure testconfigure : testConfigureRepository.findByDueDayNotNull()) {
+		for (TestConfigure testconfigure : testConfigureRepository.findByTestTypeAndDueDayNotNull(MainType.RAW_MATERIAL)) {
 			List<RawMaterial> rawMaterialList = coreTestConfigureRepository.findBytestConfigureId(testconfigure.getId())
 					.stream().map(coretest -> coretest.getRawMaterial()).collect(Collectors.toList());
 			for (RawMaterial rawMaterial : rawMaterialList) {
