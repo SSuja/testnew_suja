@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
@@ -84,4 +85,7 @@ public interface FinishProductSampleService {
       Long rawMaterialId, String plantCode);
 
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId);
+
+  public boolean checkAddValidation(
+      List<FinishProductSampleRequestDto> finishProductSampleRequestDtoList);
 }

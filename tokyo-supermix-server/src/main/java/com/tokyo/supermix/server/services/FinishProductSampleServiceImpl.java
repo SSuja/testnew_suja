@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MixDesign;
@@ -325,4 +326,19 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     return finishProductSampleRepository
         .findByMixDesignRawMaterialIdAndMixDesignPlantCode(rawMaterialId, plantCode);
   }
+
+  @Transactional(readOnly = true)
+  public boolean checkAddValidation(
+      List<FinishProductSampleRequestDto> finishProductSampleRequestDtoList) {
+    for (FinishProductSampleRequestDto finishProductSampleRequestDto : finishProductSampleRequestDtoList) {
+      if (finishProductSampleRequestDto.getMixDesignCode() == null
+          || finishProductSampleRequestDto.getWorkOrderNumber() == null
+          || finishProductSampleRequestDto.getMixDesignCode() == null
+          || finishProductSampleRequestDto.getDate() == null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }
