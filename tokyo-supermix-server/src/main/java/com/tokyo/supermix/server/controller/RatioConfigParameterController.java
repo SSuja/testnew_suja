@@ -71,9 +71,7 @@ public class RatioConfigParameterController {
   @PostMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER)
   public ResponseEntity<Object> createRatioConfigParameter(
       @Valid @RequestBody List<RatioConfigParameterRequestDto> ratioConfigParameterRequestDto) {
-    if (ratioConfigParameterRequestDto.stream()
-        .filter(para -> para.getAbbreviation() == null && para.getUnitId() == null)
-        .collect(Collectors.toList()).isEmpty()) {
+    if (!ratioConfigParameterService.addCheckPost(ratioConfigParameterRequestDto)) {
       // if (ratioConfigParameterService.checkAleadyExistValidation(ratioConfigParameterRequestDto))
       // {
       // return new ResponseEntity<>(
@@ -107,8 +105,8 @@ public class RatioConfigParameterController {
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.ADD_RATIO_CONFIG_PARAMETER_SUCCESS), HttpStatus.OK);
     }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
-        validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
+        validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);
   }
 
   @DeleteMapping(value = EndpointURI.RATIO_CONFIG_PARAMETER_BY_ID)

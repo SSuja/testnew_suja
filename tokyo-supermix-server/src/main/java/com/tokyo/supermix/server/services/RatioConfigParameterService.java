@@ -38,4 +38,6 @@ public interface RatioConfigParameterService {
   public boolean deleteCheck(Long ratioParameter);
 
   public boolean editCheck(Long ratioParameter, String abbreViation);
+
+  public boolean addCheckPost(List<RatioConfigParameterRequestDto> ratioConfigParameterRequestDto);
 }
