@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
+import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 
 public interface MaterialAcceptedValueService {
@@ -38,4 +39,5 @@ public interface MaterialAcceptedValueService {
 
   public boolean ExistsTestConfigureId(Long testConfigureId);
 
+  public List<RawMaterial> findRawMaterialByTestConfigureId(Long testConfigureId);
 }

@@ -162,6 +162,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testParameterRepository.findByTestConfigureId(testConfigId) != null) {
       testConfigureDto.setTestparameters(getTestParametersByTestConfigId(testConfigId));
     }
+    testConfigureDto.setDueDay(testConfigure.getDueDay());
     testConfigureDto.setNoOfTrial(testConfigure.getNoOfTrial());
     return testConfigureDto;
   }
