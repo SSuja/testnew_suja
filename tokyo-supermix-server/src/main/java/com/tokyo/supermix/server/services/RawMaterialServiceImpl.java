@@ -127,7 +127,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public List<RawMaterial> getRawMaterialsByPlantCode(String plantCode, Pageable pageable) {
     return rawMaterialRepository
-        .findByPlantCodeOrPlantNullOrSubBusinessUnitId(plantCode,
+        .findByPlantCodeOrMaterialTypeOrSubBusinessUnitId(plantCode, MaterialType.COMMON,
             plantRepository.findById(plantCode).get().getSubBusinessUnit().getId(), pageable)
         .toList();
   }
@@ -154,8 +154,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (name.isEmpty()) {
       return null;
     }
-    return rawMaterialRepository.findByPlantCodeOrPlantNullOrSubBusinessUnitIdAndNameStartsWith(
-        plantCode, plantRepository.findById(plantCode).get().getSubBusinessUnit().getId(), name);
+    return rawMaterialRepository.findByPlantCodeOrMaterialTypeOrSubBusinessUnitIdAndNameStartsWith(
+        plantCode, MaterialType.COMMON,
+        plantRepository.findById(plantCode).get().getSubBusinessUnit().getId(), name);
   }
 
   @Transactional(readOnly = true)
