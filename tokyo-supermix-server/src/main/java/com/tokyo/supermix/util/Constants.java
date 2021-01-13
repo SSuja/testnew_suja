@@ -43,6 +43,8 @@ public class Constants {
       "Notification : About Finish Product Sample Test Reminder ";
   public static final String SUBJECT_MATERIAL_TEST_REMINDER =
       "Notification : About Material Test Reminder ";
+  public static final String SUBJECT_MIX_DESIGN_APPROVEL = "Notification : Confirmation for Mix Design Approval ";
+
 
 
   // for sample counts
