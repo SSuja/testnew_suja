@@ -111,6 +111,20 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     return false;
   }
 
+  @Transactional(readOnly = true)
+  public boolean editCheck(Long ratioParameter, String abbreViation) {
+    RatioConfigParameter ratioConfigParameter =
+        ratioConfigParameterRepository.findById(ratioParameter).get();
+    List<RatioConfigEquation> ratioConfigEquationList = ratioConfigEquationRepository
+        .findByRatioConfigId(ratioConfigParameter.getRatioConfig().getId());
+    if (!ratioConfigEquationList.isEmpty()) {
+      if (ratioConfigEquationList.get(0).getRatio().contains(abbreViation)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   public boolean deleteCheck(Long ratioParameter) {
     RatioConfigParameter ratioConfigParameter =
         ratioConfigParameterRepository.findById(ratioParameter).get();
