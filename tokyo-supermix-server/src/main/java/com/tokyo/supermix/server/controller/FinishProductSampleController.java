@@ -375,6 +375,13 @@ public class FinishProductSampleController {
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_LIST)
   public ResponseEntity<Object> createFinishProductSampleList(
       @Valid @RequestBody List<FinishProductSampleRequestDto> finishProductSampleRequestDtoList) {
+    if (finishProductSampleService.checkAddValidation(finishProductSampleRequestDtoList)
+        || finishProductSampleRequestDtoList.isEmpty()) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLES,
+              validationFailureStatusCodes.getFinishProductSampleNotExist()),
+          HttpStatus.BAD_REQUEST);
+    }
     for (FinishProductSampleRequestDto finishProductSampleRequestDto : finishProductSampleRequestDtoList) {
       finishProductSampleService.saveFinishProductSample(
           mapper.map(finishProductSampleRequestDto, FinishProductSample.class));
