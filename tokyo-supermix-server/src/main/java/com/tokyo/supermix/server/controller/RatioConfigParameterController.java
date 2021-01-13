@@ -133,6 +133,13 @@ public class RatioConfigParameterController {
       @Valid @RequestBody RatioConfigParameterRequestDto ratioConfigParameterRequestDto) {
     if (ratioConfigParameterService
         .isRatioConfigParameterExist(ratioConfigParameterRequestDto.getId())) {
+      if (ratioConfigParameterService.editCheck(ratioConfigParameterRequestDto.getId(),
+          ratioConfigParameterRequestDto.getAbbreviation())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (ratioConfigParameterService.checkValidationForRawMaterialAndAbbre(
           ratioConfigParameterRequestDto.getId(), ratioConfigParameterRequestDto.getRatioConfigId(),
           ratioConfigParameterRequestDto.getRawMaterialId(),
