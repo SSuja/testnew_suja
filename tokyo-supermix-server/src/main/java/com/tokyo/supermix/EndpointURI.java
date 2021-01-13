@@ -509,6 +509,8 @@ public final class EndpointURI {
   public static final String SEARCH_MATERIAL_ACCEPTED_VALUE = MATERIAL_ACCEPTED_VALUE + SEARCH;
   public static final String MATERIAL_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID =
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
+  public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
+      MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
   /*
    * AcceptedValue
    */

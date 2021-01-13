@@ -25,6 +25,8 @@ public interface MaterialTestService {
 
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId);
 
+  public boolean isMaterialTestByTestConfigureAndRawMaterialExists(Long testConfigureId, Long rawMaterialId);
+
   public List<MaterialTest> getMaterialTestByStatus(String status);
 
   public List<MaterialTest> getMaterialTestByTestConfigureIdByPlant(Long testConfigureId,

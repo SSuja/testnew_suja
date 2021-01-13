@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
+import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -23,6 +24,7 @@ import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -50,6 +52,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   private CoreTestConfigureService coreTestConfigureService;
   @Autowired
   private CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  private FinishProductTestRepository finishProductTestRepository;
 
   @Transactional
   public String saveMaterialTest(MaterialTest materialTest) {
@@ -129,8 +133,34 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
-    return materialTestRepository.existsByTestConfigureId(testConfigureId);
+  public boolean isMaterialTestByTestConfigureAndRawMaterialExists(Long testConfigureId,
+      Long rawMaterialId) {
+    boolean check = false;
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    if (testConfigure.getTestType().equals(MainType.RAW_MATERIAL)) {
+      List<MaterialTest> materialTestsList =
+          materialTestRepository.findByTestConfigureId(testConfigureId);
+      if (!materialTestsList.isEmpty()) {
+        for (MaterialTest materialTest : materialTestsList) {
+          if (materialTest.getIncomingSample().getRawMaterial().getId().toString()
+              .equalsIgnoreCase(rawMaterialId.toString())) {
+            return check = true;
+          }
+        }
+      }
+    } else {
+      List<FinishProductTest> finishProductTestList =
+          finishProductTestRepository.findByTestConfigureId(testConfigureId);
+      if (!finishProductTestList.isEmpty()) {
+        for (FinishProductTest finishProductTest : finishProductTestList) {
+          if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId()
+              .toString().equalsIgnoreCase(rawMaterialId.toString())) {
+            return check = true;
+          }
+        }
+      }
+    }
+    return check;
   }
 
   @Transactional(readOnly = true)
@@ -294,17 +324,14 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       List<CoreTestConfigure> coreTestConfigureList =
           coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
               incomingSample.getRawMaterial().getId());
-
       List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
           .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
-
       Status status = Status.NEW;
       for (TestConfigure tc : testConfigureList) {
         if (!materialTestRepository
             .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
                 incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
             .isEmpty()) {
-
           materialTestRepository
               .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
                   incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
@@ -545,6 +572,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           }
         });
     return materialTestList;
+  }
 
+  @Transactional(readOnly = true)
+  public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
+    return materialAcceptedValueRepository.existsByTestConfigureId(testConfigureId);
   }
 }
