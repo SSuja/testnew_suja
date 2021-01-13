@@ -125,6 +125,7 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     return true;
   }
 
+  @Transactional(readOnly = true)
   public boolean deleteCheck(Long ratioParameter) {
     RatioConfigParameter ratioConfigParameter =
         ratioConfigParameterRepository.findById(ratioParameter).get();
@@ -133,6 +134,18 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     if (!ratioConfigEquationList.isEmpty()) {
       if (ratioConfigEquationList.get(0).getRatio()
           .contains(ratioConfigParameter.getAbbreviation())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean addCheckPost(
+      List<RatioConfigParameterRequestDto> ratioConfigParameterRequestDtoList) {
+    for (RatioConfigParameterRequestDto ratioConfigParameterRequestDto : ratioConfigParameterRequestDtoList) {
+      if (ratioConfigParameterRequestDto.getAbbreviation() == null
+          || ratioConfigParameterRequestDto.getUnitId() == null) {
         return true;
       }
     }
