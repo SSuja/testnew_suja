@@ -18,6 +18,7 @@ public class FinishProductSampleRequestDto {
   private String projectCode;
   private Long pourId;
   private String workOrderNumber;
+  private Long userId;
 
   public String getCode() {
     return code;
@@ -98,4 +99,13 @@ public class FinishProductSampleRequestDto {
   public void setWorkOrderNumber(String workOrderNumber) {
     this.workOrderNumber = workOrderNumber;
   }
+
+public Long getUserId() {
+	return userId;
+}
+
+public void setUserId(Long userId) {
+	this.userId = userId;
+}
+  
 }

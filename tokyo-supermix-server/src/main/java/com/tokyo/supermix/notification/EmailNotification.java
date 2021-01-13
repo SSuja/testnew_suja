@@ -60,7 +60,6 @@ import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
-import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
@@ -127,8 +126,6 @@ public class EmailNotification {
 	private PlantRoleRepository plantRoleRepository;
 	@Autowired
 	private FinishProductTestRepository finishProductTestRepository;
-	@Autowired
-	private MaterialTestRepository materialTestRepository;
 	@Autowired
 	private FinishProductParameterResultRepository finishProductParameterResultRepository;
 	@Autowired
@@ -344,7 +341,7 @@ public class EmailNotification {
 
 				String mailBody = message + body;
 				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-						Constants.SUBJECT_CONCRETE_TEST, mailBody);
+						Constants.SUBJECT_MIX_DESIGN_APPROVEL, mailBody);
 			}
 		}
 	}
@@ -676,7 +673,7 @@ public class EmailNotification {
 
 	}
 
-	@Scheduled(cron = "0 30 08 * * * ")
+	@Scheduled(cron = "0 00 08 * * * ")
 	public void reminderForFinishProductSampleTest() {
 		final LocalDateTime today = LocalDateTime.now();
 		for (TestConfigure testconfigure : testConfigureRepository.findByTestTypeAndDueDayNotNull(MainType.FINISH_PRODUCT)) {
@@ -715,7 +712,7 @@ public class EmailNotification {
 				finishProductSample.getMixDesign().getPlant().getCode(), emailPoints.getName());
 
 		String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample "
-				+ " to conduct the Test.";
+				+finishProductSample.getCode()+ " to conduct the Test.";
 		List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
 				emailGroup.getName(), finishProductSample.getMixDesign().getPlant().getCode());
 		reciepientList.add(finishProductSample.getUser().getEmail());
@@ -724,7 +721,7 @@ public class EmailNotification {
 
 	}
 
-	@Scheduled(cron = "0 30 08 * * * ")
+	@Scheduled(cron = "0 05 08 * * * ")
 	public void reminderForMaterialTest() {
 		final LocalDateTime today = LocalDateTime.now();
 		for (TestConfigure testconfigure : testConfigureRepository.findByTestTypeAndDueDayNotNull(MainType.RAW_MATERIAL)) {
@@ -761,7 +758,7 @@ public class EmailNotification {
 		EmailGroup emailGroup = emailGroupRepository
 				.findByPlantCodeAndEmailPointsName(incomingSample.getPlant().getCode(), emailPoints.getName());
 
-		String mailBody = "Today is the " + noOfDays + "th" + " day for the Incoming sample " + " to conduct the Test.";
+		String mailBody = "Today is the " + noOfDays + "th" + " day for the Incoming sample " +incomingSample.getCode()+ " to conduct the Test.";
 		List<String> reciepientList = emailRecipientService
 				.getEmailsByEmailNotificationAndPlantCode(emailGroup.getName(), incomingSample.getPlant().getCode());
 	reciepientList.add(incomingSample.getUser().getEmail());
