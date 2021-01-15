@@ -73,15 +73,16 @@ public class FinishProductSampleController {
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
   public ResponseEntity<Object> createFinishProductSample(
       @Valid @RequestBody FinishProductSampleRequestDto finishProductSampleRequestDto) {
-    if (finishProductSampleService
-        .isFinishProductCodeExist(finishProductSampleRequestDto.getFinishProductCode())) {
-      logger.debug(
-          "finish product sample code is already exists: createFinishProductSample(), isFinishProductCodeExist: {}");
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.FINISH_PRODUCT_CODE,
-              validationFailureStatusCodes.getFinishProductSampleAlreadyExist()),
-          HttpStatus.BAD_REQUEST);
-    }
+    // if (finishProductSampleService
+    // .isFinishProductCodeExist(finishProductSampleRequestDto.getFinishProductCode())) {
+    // logger.debug(
+    // "finish product sample code is already exists: createFinishProductSample(),
+    // isFinishProductCodeExist: {}");
+    // return new ResponseEntity<>(
+    // new ValidationFailureResponse(Constants.FINISH_PRODUCT_CODE,
+    // validationFailureStatusCodes.getFinishProductSampleAlreadyExist()),
+    // HttpStatus.BAD_REQUEST);
+    // }
     finishProductSampleService.saveFinishProductSample(
         mapper.map(finishProductSampleRequestDto, FinishProductSample.class));
     return new ResponseEntity<>(
