@@ -118,11 +118,16 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     List<RatioConfigEquation> ratioConfigEquationList = ratioConfigEquationRepository
         .findByRatioConfigId(ratioConfigParameter.getRatioConfig().getId());
     if (!ratioConfigEquationList.isEmpty()) {
-      if (ratioConfigEquationList.get(0).getRatio().contains(abbreViation)) {
-        return false;
+      if (ratioConfigEquationList.get(0).getRatio()
+          .contains(ratioConfigParameter.getAbbreviation())) {
+        if (ratioConfigEquationList.get(0).getRatio().contains(abbreViation)) {
+          return false;
+        } else {
+          return true;
+        }
       }
     }
-    return true;
+    return false;
   }
 
   @Transactional(readOnly = true)

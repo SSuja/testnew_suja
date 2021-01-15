@@ -119,8 +119,10 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     FinishProductSample finishProductSample = finishProductSampleRepository.findById(code).get();
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
-    mixDesign.setCheckDepend(false);
-    mixDesignRepository.save(mixDesign);
+    if (finishProductSampleRepository.findByMixDesignCode(mixDesign.getCode()).size() == 1) {
+      mixDesign.setCheckDepend(false);
+      mixDesignRepository.save(mixDesign);
+    }
     finishProductSampleRepository.deleteById(code);
   }
 
