@@ -853,8 +853,9 @@ public final class EndpointURI {
       UPLOAD_IMAGE + SLASH + "finishProductTest" + SLASH + "{finishProductTestCode}";
   public static final String IMAGE_BY_ID = UPLOAD_IMAGE + ID;
 
-  // samples by type
-
+  /*
+   * Sample Type API
+   */
   public static final String RAW_MATERIAL_SAMPLE = BASE_API_PATH + "raw-material-sample";
   public static final String GET_SAMPLES_BY_TYPE =
       RAW_MATERIAL_SAMPLE + "/sample-type" + "/{rawMaterialSampleType}";
