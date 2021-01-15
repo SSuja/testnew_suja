@@ -845,7 +845,7 @@ public final class EndpointURI {
       RATIO_CONFIG_EQUATION + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
 
   /*
-   * upload image API
+   * Upload Image API
    */
   
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
