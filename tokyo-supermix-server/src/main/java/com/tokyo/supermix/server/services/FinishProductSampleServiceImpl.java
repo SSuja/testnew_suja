@@ -89,12 +89,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   private Integer maxNumberFromCode(List<FinishProductSample> finishProductSampleList) {
-	  List<Integer> list = new ArrayList<Integer>();
-	  finishProductSampleList.forEach(obj -> {
-	      String code = obj.getCode();
-	      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
-	    });
-	    return Collections.max(list);
+    List<Integer> list = new ArrayList<Integer>();
+    finishProductSampleList.forEach(obj -> {
+      String code = obj.getCode();
+      list.add(getNumberFromCode(code.substring(code.lastIndexOf("-"))));
+    });
+    return Collections.max(list);
   }
 
   @Transactional(readOnly = true)
@@ -189,7 +189,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, String status, String date,
+      String mixDesignCode, String plantName, String plantCode, Status status, String date,
       String code, String rawMaterialName, String workOrderNumber, String customer,
       Pageable pageable, Pagination pagination) {
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
@@ -214,9 +214,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
           .startsWithIgnoreCase(plantCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.status.stringValue()
-          .startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
     }
     if (date != null && !date.isEmpty()) {
       booleanBuilder.and(
@@ -237,10 +236,13 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     if (customer != null && !customer.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
           .stringValue().stringValue().startsWithIgnoreCase(customer));
-    }
-    pagination.setTotalRecords(finishProductSampleRepository.countByWorkOrderNumberNull());
+    } ;
+    pagination.setTotalRecords(
+        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
+            .stream().filter(sample -> sample.getWorkOrderNumber() == null)
+            .collect(Collectors.toList()).size());
     return mapper.map(
-        finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
             .filter(sample -> sample.getWorkOrderNumber() == null).collect(Collectors.toList()),
         FinishProductSampleResponseDto.class);
   }
