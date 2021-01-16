@@ -8,6 +8,7 @@ public class AcceptedValueDto {
   private Double maxValue;
   private Double value;
   private String material;
+  private String parameterName;
 
   public String getMaterial() {
     return material;
@@ -47,5 +48,13 @@ public class AcceptedValueDto {
 
   public void setCondition(Condition condition) {
     this.condition = condition;
+  }
+
+  public String getParameterName() {
+    return parameterName;
+  }
+
+  public void setParameterName(String parameterName) {
+    this.parameterName = parameterName;
   }
 }
