@@ -8,6 +8,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -37,7 +38,7 @@ public interface FinishProductSampleIssueService {
 
   public List<FinishProductSampleResponseDto> searchFinishProductSampleIssue(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, String status, String date,
+      String mixDesignCode, String plantName, String plantCode, Status status, String date,
       String code, String rawMaterialName, String workOrderNumber, String customer, String project,
       Pageable pageable, Pagination pagination);
 
