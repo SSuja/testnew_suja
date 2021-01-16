@@ -439,8 +439,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     finishProductSample.setStatus(finishproductTest.getStatus());
     finishProductSampleRepository.save(finishProductSample);
-    mixDesign.setStatus(finishproductTest.getStatus());
-    mixDesignRepository.save(mixDesign);
+    if (finishProductSample.getWorkOrderNumber() == null) {
+      mixDesign.setStatus(finishproductTest.getStatus());
+      mixDesignRepository.save(mixDesign);
+    }
   }
 
   private void checkPassCountAndTestConfigKeyTestCount(String finishProductTestCode) {
