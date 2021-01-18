@@ -863,5 +863,12 @@ public final class EndpointURI {
   public static final String GET_ALL_SAMPLES_BY_TYPE =
       RAW_MATERIAL_SAMPLE + "/all-samples" + "/{rawMaterialSampleType}";
 
+  /*
+   * Multi Result Formula
+   */
+  public static final String MULTI_RESULT_FORMULA = BASE_API_PATH + "multi-result-formula";
+  public static final String MULTI_RESULT_FORMULA_BY_TEST_CONFIGURE_ID =
+      BASE_API_PATH + "multi-result-formula" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+
   private EndpointURI() {}
 }

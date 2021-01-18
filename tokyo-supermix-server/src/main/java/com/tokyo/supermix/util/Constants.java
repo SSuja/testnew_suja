@@ -43,7 +43,8 @@ public class Constants {
       "Notification : About Finish Product Sample Test Reminder ";
   public static final String SUBJECT_MATERIAL_TEST_REMINDER =
       "Notification : About Material Test Reminder ";
-  public static final String SUBJECT_MIX_DESIGN_APPROVEL = "Notification : Confirmation for Mix Design Approval ";
+  public static final String SUBJECT_MIX_DESIGN_APPROVEL =
+      "Notification : Confirmation for Mix Design Approval ";
 
 
 
@@ -672,7 +673,7 @@ public class Constants {
       "Ratio Config Parameter Added Successfully";
   public static final String UPDATE_RATIO_CONFIG_PARAMETER_SUCCESS =
       "Ratio Config Parameter Updated Successfully";
-  public static final String RATIO_CONFIG_PARAMETER_DELETED_FAIL=
+  public static final String RATIO_CONFIG_PARAMETER_DELETED_FAIL =
       "This Material is already used to create Ratio";
 
   /*
@@ -693,6 +694,11 @@ public class Constants {
   public static final String UPLOAD_IMAGES = "uploadImages";
   public static final String UPLOAD_IMAGE = "uploadImage";
   public static final String DELETE_IMAGE_SUCCESS = "Image Deleted Successfully";
+
+  /*
+   * Multi Result Formula
+   */
+  public static final String MULTI_RESULT_FORMULA = "multiResultFormula";
 
   /*
    * Encapsulate constructor to restrict modification from outside
