@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,7 +16,7 @@ public class MultiResultFormula {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
-  @ManyToOne
+  @OneToOne
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   private String logicalFormula;
