@@ -9,6 +9,7 @@ import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 
 @Service
 public class MultiResultFormulaServiceImpl implements MultiResultFormulaService {
+
   @Autowired
   private MultiResultFormulaRepository multiResultFormulaRepository;
 
@@ -20,5 +21,25 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
   @Transactional(readOnly = true)
   public boolean isExistsTestConfigureId(Long testConfigureId) {
     return multiResultFormulaRepository.existsByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MultiResultFormula> getAllRelevantResultParametersByTestConfig(Long testConfigId) {
+    return null;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMultiResultFormulaExist(Long id) {
+    return multiResultFormulaRepository.existsById(id);
+  }
+
+  @Transactional
+  public void saveMultiResultFormula(MultiResultFormula multiResultFormula) {
+    multiResultFormulaRepository.save(multiResultFormula);
+  }
+
+  @Override
+  public boolean existFormulaByTestconfigure(Long testConfigureId) {
+    return false;
   }
 }
