@@ -7,4 +7,13 @@ public interface MultiResultFormulaService {
   public List<MultiResultFormula> getByTestConfigureId(Long testConfigureId);
 
   public boolean isExistsTestConfigureId(Long testConfigureId);
+
+  public List<MultiResultFormula> getAllRelevantResultParametersByTestConfig(Long testConfigId);
+
+  public boolean isMultiResultFormulaExist(Long id);
+
+  public boolean existFormulaByTestconfigure(Long testConfigureId);
+
+  public void saveMultiResultFormula(MultiResultFormula multiResultFormula);
+
 }
