@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,7 +52,7 @@ public class MultiResultFormulaController {
       @Valid @RequestBody MultiResultFormulaRequestDto multiResultFormulaRequestDto) {
     if (multiResultFormulaService
         .isExistsTestConfigureId(multiResultFormulaRequestDto.getTestConfigureId())) {
-      return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.MULTI_RESULT_FORMULA,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     multiResultFormulaService
@@ -59,5 +60,16 @@ public class MultiResultFormulaController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MULTI_RESULT_FORMULA_SUCCESS),
         HttpStatus.OK);
+  }
+
+  @DeleteMapping(value = EndpointURI.MULTI_RESULT_FORMULA_BY_ID)
+  public ResponseEntity<Object> deleteMultiResultFormula(@PathVariable Long id) {
+    if (multiResultFormulaService.isExistById(id)) {
+      multiResultFormulaService.deleteMultiResultFormula(id);;
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          Constants.DELETE_MULTI_RESULT_FORMULA_SUCCESS), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MULTI_RESULT_FORMULA,
+        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 }

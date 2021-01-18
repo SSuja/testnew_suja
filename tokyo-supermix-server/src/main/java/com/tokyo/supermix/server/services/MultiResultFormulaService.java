@@ -12,4 +12,6 @@ public interface MultiResultFormulaService {
   public boolean isExistById(Long id);
 
   public void saveMultiResultFormula(MultiResultFormula multiResultFormula);
+
+  public void deleteMultiResultFormula(Long id);
 }
