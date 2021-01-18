@@ -1,28 +1,9 @@
 package com.tokyo.supermix.data.dto;
 
 public class MultiResultFormulaParameterDto {
-
-  private Long id;
-  private Long testConfigureId;
   private Long testParameterId;
-  private Long testParameterName;
+  private String testParameterName;
   private String abbreviation;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Long getTestConfigureId() {
-    return testConfigureId;
-  }
-
-  public void setTestConfigureId(Long testConfigureId) {
-    this.testConfigureId = testConfigureId;
-  }
 
   public Long getTestParameterId() {
     return testParameterId;
@@ -32,11 +13,11 @@ public class MultiResultFormulaParameterDto {
     this.testParameterId = testParameterId;
   }
 
-  public Long getTestParameterName() {
+  public String getTestParameterName() {
     return testParameterName;
   }
 
-  public void setTestParameterName(Long testParameterName) {
+  public void setTestParameterName(String testParameterName) {
     this.testParameterName = testParameterName;
   }
 
