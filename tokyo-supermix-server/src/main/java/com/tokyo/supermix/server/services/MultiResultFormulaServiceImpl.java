@@ -24,22 +24,12 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
   }
 
   @Transactional(readOnly = true)
-  public List<MultiResultFormula> getAllRelevantResultParametersByTestConfig(Long testConfigId) {
-    return null;
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isMultiResultFormulaExist(Long id) {
+  public boolean isExistById(Long id) {
     return multiResultFormulaRepository.existsById(id);
   }
 
   @Transactional
   public void saveMultiResultFormula(MultiResultFormula multiResultFormula) {
     multiResultFormulaRepository.save(multiResultFormula);
-  }
-
-  @Override
-  public boolean existFormulaByTestconfigure(Long testConfigureId) {
-    return false;
   }
 }
