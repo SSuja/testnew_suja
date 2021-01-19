@@ -351,8 +351,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           status = Status.PROCESS;
         }
       }
-      if (lis.size() == testConfigureList.size()) {
-        if (lis.stream().allMatch(mat -> mat.getStatus().equals(Status.PASS))) {
+      if (materialTestlist.size() == testConfigureList.size()) {
+        if (materialTestlist.stream().allMatch(mat -> mat.getStatus().equals(Status.PASS))) {
           status = Status.PASS;
         }
       }
