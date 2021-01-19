@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -55,7 +57,10 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
 
   @Transactional
   public void deleteMaterialAcceptedValue(Long id) {
+    MaterialAcceptedValue materialAcceptedValue =
+        materialAcceptedValueRepository.findById(id).get();
     materialAcceptedValueRepository.deleteById(id);
+    upDateTesConfigureType(materialAcceptedValue.getTestConfigure().getId());
   }
 
   @Transactional(readOnly = true)
@@ -172,5 +177,25 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           .add(rawMaterialRepository.findById(testConfigure.getRawMaterial().getId()).get());
     }
     return rawMaterials;
+  }
+
+  @Transactional
+  public void upDateTesConfigureType(Long testConfigureId) {
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    List<MaterialAcceptedValue> materialAcceptedValueList =
+        materialAcceptedValueRepository.findByTestConfigureIdAndFinalResultTrue(testConfigureId);
+    List<Long> orinalIds = new ArrayList<Long>();
+    List<Long> ids = new ArrayList<Long>();
+    for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
+      ids.add(materialAcceptedValue.getTestParameter().getId());
+    }
+    orinalIds.addAll(ids.stream().distinct().collect(Collectors.toList()));
+    if (orinalIds.isEmpty() || orinalIds.size() == 1) {
+      testConfigure.setTestResultType(TestResultType.SINGLE_RESULT);
+      testConfigureRepository.save(testConfigure);
+    } else {
+      testConfigure.setTestResultType(TestResultType.MULTI_RESULT);
+      testConfigureRepository.save(testConfigure);
+    }
   }
 }

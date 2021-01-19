@@ -176,4 +176,12 @@ public class TestConfigure extends DateAudit implements Serializable {
   public static long getSerialversionuid() {
     return serialVersionUID;
   }
+
+  public TestResultType getTestResultType() {
+    return testResultType;
+  }
+
+  public void setTestResultType(TestResultType testResultType) {
+    this.testResultType = testResultType;
+  }
 }
