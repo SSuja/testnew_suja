@@ -12,11 +12,13 @@ import com.tokyo.supermix.data.dto.MultiResultFormulaResponseDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MultiResultFormula;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
@@ -29,6 +31,8 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private TestParameterRepository testParameterRepository;
+  @Autowired
+  private TestConfigureRepository testConfigureRepository;
 
   @Transactional(readOnly = true)
   public MultiResultFormulaResponseDto getByTestConfigureId(Long testConfigureId) {
@@ -56,16 +60,18 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
         new ArrayList<MultiResultFormulaParameterDto>();
     List<AcceptedValue> acceptedValues =
         acceptedValueRepository.findByTestConfigureIdAndFinalResultTrue(testConfigureId);
-    acceptedValues.forEach(parameters -> {
-      MultiResultFormulaParameterDto multiResultFormulaParameterDto =
-          new MultiResultFormulaParameterDto();
-      multiResultFormulaParameterDto.setTestParameterId(parameters.getTestParameter().getId());
-      multiResultFormulaParameterDto
-          .setTestParameterName(parameters.getTestParameter().getParameter().getName());
-      multiResultFormulaParameterDto
-          .setAbbreviation(parameters.getTestParameter().getAbbreviation());
-      multiResultFormulaParameterDtos.add(multiResultFormulaParameterDto);
-    });
+    if (!acceptedValues.isEmpty()) {
+      acceptedValues.forEach(parameters -> {
+        MultiResultFormulaParameterDto multiResultFormulaParameterDto =
+            new MultiResultFormulaParameterDto();
+        multiResultFormulaParameterDto.setTestParameterId(parameters.getTestParameter().getId());
+        multiResultFormulaParameterDto
+            .setTestParameterName(parameters.getTestParameter().getParameter().getName());
+        multiResultFormulaParameterDto
+            .setAbbreviation(parameters.getTestParameter().getAbbreviation());
+        multiResultFormulaParameterDtos.add(multiResultFormulaParameterDto);
+      });
+    }
     return multiResultFormulaParameterDtos;
   }
 
@@ -127,5 +133,20 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteMultiResultFormula(Long id) {
     multiResultFormulaRepository.deleteById(id);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MultiResultFormulaParameterDto> getParametersByTestConfigureId(Long testConfigureId) {
+    List<MultiResultFormulaParameterDto> listMultiResultFormulaParameterDto =
+        new ArrayList<MultiResultFormulaParameterDto>();
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    if (testConfigure.getAcceptedType() == AcceptedType.TEST) {
+      listMultiResultFormulaParameterDto
+          .addAll(getResultFormulaParameterForAcceptedValue(testConfigureId));
+    } else {
+      listMultiResultFormulaParameterDto
+          .addAll(getResultFormulaParameterForMaterialAcceptedValue(testConfigureId));
+    }
+    return listMultiResultFormulaParameterDto;
   }
 }
