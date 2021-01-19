@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MultiResultFormula;
 import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
@@ -31,5 +32,10 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
   @Transactional
   public void saveMultiResultFormula(MultiResultFormula multiResultFormula) {
     multiResultFormulaRepository.save(multiResultFormula);
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteMultiResultFormula(Long id) {
+    multiResultFormulaRepository.deleteById(id);
   }
 }

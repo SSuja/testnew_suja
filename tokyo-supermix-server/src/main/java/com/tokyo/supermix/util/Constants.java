@@ -699,8 +699,11 @@ public class Constants {
    * Multi Result Formula
    */
   public static final String MULTI_RESULT_FORMULA = "multiResultFormula";
-  public static final String ADD_MULTI_RESULT_FORMULA_SUCCESS = "multiResultFormula Added Successfully";
-  
+  public static final String ADD_MULTI_RESULT_FORMULA_SUCCESS =
+      "MultiResultFormula Added Successfully";
+  public static final String DELETE_MULTI_RESULT_FORMULA_SUCCESS =
+      "MultiResultFormula Deleted Successfully";
+
 
   /*
    * Encapsulate constructor to restrict modification from outside
