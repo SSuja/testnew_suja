@@ -28,4 +28,6 @@ public interface AcceptedValueRepository
   AcceptedValue findByTestParameterIdAndTestConfigureId(Long testParameterId, Long testConfigureId);
 
   Long countByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
+
+  List<AcceptedValue> findByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
 }

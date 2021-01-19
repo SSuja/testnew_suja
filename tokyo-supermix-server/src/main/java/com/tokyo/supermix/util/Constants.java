@@ -700,7 +700,9 @@ public class Constants {
    */
   public static final String MULTI_RESULT_FORMULA = "multiResultFormula";
   public static final String ADD_MULTI_RESULT_FORMULA_SUCCESS =
-      "MultiResultFormula Added Successfully";
+      "multiResultFormula Added Successfully";
+  public static final String UPDATE_MULTI_RESULT_FORMULA_SUCCESS =
+      "Multi Result Formula Updated Successfully";
   public static final String DELETE_MULTI_RESULT_FORMULA_SUCCESS =
       "MultiResultFormula Deleted Successfully";
 

@@ -1959,4 +1959,18 @@ public class ValidationFailureStatusCodes {
   public void setRawMaterialSampleTypeNotExists(String rawMaterialSampleTypeNotExists) {
     this.rawMaterialSampleTypeNotExists = rawMaterialSampleTypeNotExists;
   }
+
+  /*
+   * Multi Result Formula
+   */
+  @Value("${validation.multiResultFormula.notExists}")
+  private String multiResultFormulaNotExist;
+
+  public String getMultiResultFormulaNotExist() {
+    return multiResultFormulaNotExist;
+  }
+
+  public void setMultiResultFormulaNotExist(String multiResultFormulaNotExist) {
+    this.multiResultFormulaNotExist = multiResultFormulaNotExist;
+  }
 }
