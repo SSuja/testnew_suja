@@ -327,30 +327,36 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
           .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
       Status status = Status.NEW;
-      for (TestConfigure tc : testConfigureList) {
+      List<MaterialTest> materialTestlist = new ArrayList<>();
+      for (TestConfigure testconfigure : testConfigureList) {
         if (!materialTestRepository
             .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
-                incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
+                incomingSample.getCode(), testconfigure.getId(),
+                incomingSample.getPlant().getCode())
             .isEmpty()) {
-          materialTestRepository
-              .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCode(
-                  incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
-              .get(0).getUpdatedAt();
           if (materialTestRepository
               .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCodeOrderByUpdatedAtDesc(
-                  incomingSample.getCode(), tc.getId(), incomingSample.getPlant().getCode())
+                  incomingSample.getCode(), testconfigure.getId(),
+                  incomingSample.getPlant().getCode())
               .get(0).getStatus().equals(Status.FAIL)) {
             status = Status.FAIL;
             break;
-          } else {
-            status = Status.PASS;
           }
+          materialTestlist.add(materialTestRepository
+              .findByIncomingSampleCodeAndTestConfigureIdAndIncomingSamplePlantCodeOrderByUpdatedAtDesc(
+                  incomingSample.getCode(), testconfigure.getId(),
+                  incomingSample.getPlant().getCode())
+              .get(0));
         } else {
           status = Status.PROCESS;
-          break;
         }
       }
-      updateStatusSample(status, incomingSample, "updateed", materialTestObj);
+      if (lis.size() == testConfigureList.size()) {
+        if (lis.stream().allMatch(mat -> mat.getStatus().equals(Status.PASS))) {
+          status = Status.PASS;
+        }
+      }
+      updateStatusSample(status, incomingSample, "updated", materialTestObj);
     }
   }
 
