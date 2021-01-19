@@ -703,6 +703,8 @@ public class Constants {
       "multiResultFormula Added Successfully";
   public static final String UPDATE_MULTI_RESULT_FORMULA_SUCCESS =
       "Multi Result Formula Updated Successfully";
+  public static final String DELETE_MULTI_RESULT_FORMULA_SUCCESS =
+      "MultiResultFormula Deleted Successfully";
 
 
   /*

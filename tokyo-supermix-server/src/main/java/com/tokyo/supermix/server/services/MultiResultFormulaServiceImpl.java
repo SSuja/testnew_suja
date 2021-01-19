@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MultiResultFormulaParameterDto;
 import com.tokyo.supermix.data.dto.MultiResultFormulaResponseDto;
@@ -121,5 +122,10 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
       return true;
     }
     return false;
+  }
+
+  @Transactional(propagation = Propagation.NEVER)
+  public void deleteMultiResultFormula(Long id) {
+    multiResultFormulaRepository.deleteById(id);
   }
 }

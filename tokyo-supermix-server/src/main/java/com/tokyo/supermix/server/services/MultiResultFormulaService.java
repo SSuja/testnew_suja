@@ -16,4 +16,6 @@ public interface MultiResultFormulaService {
   public MultiResultFormula getById(Long id);
 
   public boolean isUpdatedTestConfigureId(Long id, Long testConfigureId);
+
+  public void deleteMultiResultFormula(Long id);
 }
