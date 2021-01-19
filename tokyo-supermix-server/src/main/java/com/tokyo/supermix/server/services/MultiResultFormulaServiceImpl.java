@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +11,12 @@ import com.tokyo.supermix.data.dto.MultiResultFormulaResponseDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MultiResultFormula;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class MultiResultFormulaServiceImpl implements MultiResultFormulaService {
@@ -23,6 +26,8 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private TestParameterRepository testParameterRepository;
 
   @Transactional(readOnly = true)
   public MultiResultFormulaResponseDto getByTestConfigureId(Long testConfigureId) {
@@ -70,16 +75,23 @@ public class MultiResultFormulaServiceImpl implements MultiResultFormulaService 
         new ArrayList<MultiResultFormulaParameterDto>();
     List<MaterialAcceptedValue> materialAcceptedValues =
         materialAcceptedValueRepository.findByTestConfigureIdAndFinalResultTrue(testConfigureId);
-    materialAcceptedValues.forEach(parameters -> {
-      MultiResultFormulaParameterDto multiResultFormulaParameterDto =
-          new MultiResultFormulaParameterDto();
-      multiResultFormulaParameterDto.setTestParameterId(parameters.getTestParameter().getId());
-      multiResultFormulaParameterDto
-          .setTestParameterName(parameters.getTestParameter().getParameter().getName());
-      multiResultFormulaParameterDto
-          .setAbbreviation(parameters.getTestParameter().getAbbreviation());
-      multiResultFormulaParameterDtos.add(multiResultFormulaParameterDto);
-    });
+    if (!materialAcceptedValues.isEmpty()) {
+      List<Long> ids = new ArrayList<Long>();
+      List<Long> orinalIds = new ArrayList<Long>();
+      for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValues) {
+        ids.add(materialAcceptedValue.getTestParameter().getId());
+      }
+      orinalIds.addAll(ids.stream().distinct().collect(Collectors.toList()));
+      for (int i = 0; i < orinalIds.size(); i++) {
+        MultiResultFormulaParameterDto multiResultFormulaParameterDto =
+            new MultiResultFormulaParameterDto();
+        TestParameter testParameter = testParameterRepository.findById(orinalIds.get(i)).get();
+        multiResultFormulaParameterDto.setTestParameterId(testParameter.getId());
+        multiResultFormulaParameterDto.setTestParameterName(testParameter.getParameter().getName());
+        multiResultFormulaParameterDto.setAbbreviation(testParameter.getAbbreviation());
+        multiResultFormulaParameterDtos.add(multiResultFormulaParameterDto);
+      }
+    }
     return multiResultFormulaParameterDtos;
   }
 
