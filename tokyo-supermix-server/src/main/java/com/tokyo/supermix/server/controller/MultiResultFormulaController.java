@@ -98,13 +98,9 @@ public class MultiResultFormulaController {
 
   @GetMapping(value = EndpointURI.MULTI_RESULT_PARAMETERS_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getParametersByTestConfigureId(@PathVariable Long testConfigureId) {
-    if (multiResultFormulaService.isExistsTestConfigureId(testConfigureId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.MULTI_RESULT_FORMULA,
-          mapper.map(multiResultFormulaService.getParametersByTestConfigureId(testConfigureId),
-              MultiResultFormulaParameterDto.class),
-          RestApiResponseStatus.OK), HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-        validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MULTI_RESULT_FORMULA,
+        mapper.map(multiResultFormulaService.getParametersByTestConfigureId(testConfigureId),
+            MultiResultFormulaParameterDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
