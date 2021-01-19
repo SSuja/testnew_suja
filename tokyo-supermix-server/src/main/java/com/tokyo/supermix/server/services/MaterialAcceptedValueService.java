@@ -40,4 +40,7 @@ public interface MaterialAcceptedValueService {
   public boolean ExistsTestConfigureId(Long testConfigureId);
 
   public List<RawMaterial> findRawMaterialByTestConfigureId(Long testConfigureId);
+
+
+  public void upDateTesConfigureType(Long testConfigureId);
 }

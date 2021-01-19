@@ -41,4 +41,5 @@ public interface AcceptedValueService {
 
   public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId);
 
+  public void upDateTesConfigureType(Long testConfigureId);
 }
