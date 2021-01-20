@@ -68,13 +68,6 @@ public class MultiResultFormulaController {
   public ResponseEntity<Object> updateMultiResultFormula(
       @Valid @RequestBody MultiResultFormulaRequestDto multiResultFormulaRequestDto) {
     if (multiResultFormulaService.isExistById(multiResultFormulaRequestDto.getId())) {
-      if (multiResultFormulaService
-          .isExistsTestConfigureId(multiResultFormulaRequestDto.getTestConfigureId())) {
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
-                validationFailureStatusCodes.getTestConfigureAlreadyExist()),
-            HttpStatus.BAD_REQUEST);
-      }
       multiResultFormulaService.saveMultiResultFormula(
           mapper.map(multiResultFormulaRequestDto, MultiResultFormula.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
