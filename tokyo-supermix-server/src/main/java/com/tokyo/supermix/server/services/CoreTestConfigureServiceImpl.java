@@ -444,4 +444,13 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       });
     }
   }
+
+  @Transactional
+  public void updatetestConfigureByTestConfigureId(Long testConfigureId) {
+    List<CoreTestConfigure> coreTestConfigures =
+        coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
+    coreTestConfigures.forEach(coreTest -> {
+      coreTestConfigureRepository.deleteById(coreTest.getId());
+    });
+  }
 }
