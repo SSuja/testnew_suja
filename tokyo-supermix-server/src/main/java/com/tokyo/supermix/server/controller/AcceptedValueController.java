@@ -62,6 +62,7 @@ public class AcceptedValueController {
     }
     acceptedValueService
         .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));
+    acceptedValueService.upDateTesConfigureType(acceptedValueRequestDto.getTestConfigureId());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_ACCEPTED_VALUE_SUCCESS),
         HttpStatus.OK);
@@ -111,6 +112,7 @@ public class AcceptedValueController {
       } else {
         acceptedValueService
             .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));
+        acceptedValueService.upDateTesConfigureType(acceptedValueRequestDto.getTestConfigureId());
         return new ResponseEntity<>(
             new BasicResponse<>(RestApiResponseStatus.OK, Constants.ACCEPTED_VALUE_UPDATE_SUCCESS),
             HttpStatus.OK);

@@ -16,6 +16,7 @@ import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
+import com.tokyo.supermix.data.enums.TestResultType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "test_configure")
@@ -49,6 +50,8 @@ public class TestConfigure extends DateAudit implements Serializable {
   private Long noOfTrial;
   private boolean name;
   private String dueDay;
+  @Enumerated(EnumType.ORDINAL)
+  private TestResultType testResultType;
 
   public Long getId() {
     return id;
@@ -172,5 +175,13 @@ public class TestConfigure extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public TestResultType getTestResultType() {
+    return testResultType;
+  }
+
+  public void setTestResultType(TestResultType testResultType) {
+    this.testResultType = testResultType;
   }
 }

@@ -68,6 +68,8 @@ public class MaterialAcceptedValueController {
     }
     materialAcceptedValueService.saveAcceptedValue(
         mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
+    materialAcceptedValueService
+        .upDateTesConfigureType(materialAcceptedValueRequestDtoList.get(0).getTestConfigureId());
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.ADD_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
   }
@@ -131,6 +133,8 @@ public class MaterialAcceptedValueController {
       }
       materialAcceptedValueService.updateMaterialAcceptedValue(
           mapper.map(materialAcceptedValueRequestDto, MaterialAcceptedValue.class));
+      materialAcceptedValueService
+          .upDateTesConfigureType(materialAcceptedValueRequestDto.getTestConfigureId());
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_MATERIAL_ACCEPTED_VALUE_SUCCESS), HttpStatus.OK);
     }
