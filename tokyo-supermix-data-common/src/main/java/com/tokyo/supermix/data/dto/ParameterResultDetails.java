@@ -1,5 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
+import java.time.LocalDateTime;
+
 public class ParameterResultDetails {
   private Long testParameterId;
   private String testParameterInputMethod;
@@ -7,6 +9,7 @@ public class ParameterResultDetails {
   private String testParameterName;
   private String TestParameterAbbrebation;
   private Double value;
+  private LocalDateTime dateValue;
 
   public Long getTestParameterId() {
     return testParameterId;
@@ -54,5 +57,13 @@ public class ParameterResultDetails {
 
   public void setValue(Double value) {
     this.value = value;
+  }
+
+  public LocalDateTime getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(LocalDateTime dateValue) {
+    this.dateValue = dateValue;
   }
 }

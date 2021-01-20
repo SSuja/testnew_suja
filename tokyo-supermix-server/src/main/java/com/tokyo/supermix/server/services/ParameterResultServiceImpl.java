@@ -24,6 +24,7 @@ import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.entities.TestEquationParameter;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
@@ -168,6 +169,10 @@ public class ParameterResultServiceImpl implements ParameterResultService {
           .findByCode(materialParameterResultDto.getMaterialTestTrialCode()));
       parameterResult.setTestParameter(
           testParameterRepository.findById(parameterResultDto.getTestParameterId()).get());
+      if(testParameterRepository.getOne(parameterResultDto.getTestParameterId())
+          .getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)){
+        parameterResult.setDateValue(parameterResultDto.getDateValue());
+      }
       parameterResult.setValue(parameterResultDto.getValue());
       parameterResultRepository.save(parameterResult);
     });
@@ -180,10 +185,10 @@ public class ParameterResultServiceImpl implements ParameterResultService {
   }
 
   public void getValueCalculate(String materialTestTrialCode) {
-    MaterialTestTrial materialTestTrial = materialTestTrialRepository.getOne(materialTestTrialCode);
+    MaterialTestTrial materialTestTrial = materialTestTrialRepository.getOne(materialTestTrialCode);  
     List<TestParameter> testparameters = testParameterRepository
         .findByTestConfigureId(materialTestTrial.getMaterialTest().getTestConfigure().getId());
-    List<TestParameter> calculationTestParameterList =
+      List<TestParameter> calculationTestParameterList =
         testParameterRepository.findByTestConfigureIdAndInputMethods(
             materialTestTrial.getMaterialTest().getTestConfigure().getId(),
             InputMethod.CALCULATION);
@@ -319,8 +324,12 @@ public class ParameterResultServiceImpl implements ParameterResultService {
                 parameterResultDto
                     .setTestParameterType(parameterResult.getTestParameter().getType().toString());
                 parameterResultDto.setTestParameterName(
-                    parameterResult.getTestParameter().getParameter().getName());
+                    parameterResult.getTestParameter().getParameter().getName());                   
+                if(parameterResult.getTestParameter().getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)){
+                  parameterResultDto.setValue(parameterResult.getValue());
+                }else {
                 parameterResultDto.setValue(parameterResult.getValue());
+                }
                 parameterResultList.add(parameterResultDto);
               });
           parameterResultViewResponseDto.setParameterResult(parameterResultList);

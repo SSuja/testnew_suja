@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -36,6 +37,7 @@ public class TestParameter extends DateAudit implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private TestParameterType type;
   private Double value;
+  private LocalDateTime dateValue;
   private String name;
   private String groupKey;
   @ManyToOne
@@ -163,5 +165,13 @@ public class TestParameter extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public LocalDateTime getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(LocalDateTime dateValue) {
+    this.dateValue = dateValue;
   }
 }
