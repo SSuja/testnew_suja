@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,15 @@ public class ParameterResult extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "testEquationId", nullable = true)
   private TestEquation testEquation;
+  private LocalDateTime dateValue;
+
+  public LocalDateTime getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(LocalDateTime dateValue) {
+    this.dateValue = dateValue;
+  }
 
   public Long getId() {
     return id;

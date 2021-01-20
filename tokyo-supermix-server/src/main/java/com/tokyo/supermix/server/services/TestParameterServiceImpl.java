@@ -23,6 +23,7 @@ import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -145,7 +146,11 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
         testParameterResponseDto.setInputMethods(test.getInputMethods());
         testParameterResponseDto.setUnit(test.getUnit());
+        if(test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)) {
+          testParameterResponseDto.setDateValue(test.getDateValue());
+        }else {
         testParameterResponseDto.setValue(test.getValue());
+        }
         testParameterResponseDto.setAcceptedCriteria(test.isAcceptedCriteria());
         testParameterResponseDto.setName(test.getName());
         if (test.getTableFormat() != null) {

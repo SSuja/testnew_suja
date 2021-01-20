@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.time.LocalDateTime;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class TestParameterDto {
@@ -9,6 +10,7 @@ public class TestParameterDto {
   private TestParameterType entryLevel;
   private Double value;
   private UnitDto unit;
+  private LocalDateTime dateValue;
 
   public Long getId() {
     return id;
@@ -56,5 +58,13 @@ public class TestParameterDto {
 
   public void setUnit(UnitDto unit) {
     this.unit = unit;
+  }
+
+  public LocalDateTime getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(LocalDateTime dateValue) {
+    this.dateValue = dateValue;
   }
 }
