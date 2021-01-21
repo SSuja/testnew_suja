@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 
 @Entity
@@ -31,7 +32,7 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   @JoinColumn(name = "testEquationId", nullable = true)
   private TestEquation testEquation;
   @ManyToOne
-  @JoinColumn(name = "rawMaterialId", nullable = false)
+  @JoinColumn(name = "rawMaterialId", nullable = true)
   private RawMaterial rawMaterial;
   @Enumerated(EnumType.ORDINAL)
   private Condition conditionRange;
@@ -39,6 +40,11 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   @JoinColumn(name = "testParameterId", nullable = true)
   private TestParameter testParameter;
   private boolean finalResult;
+  @ManyToOne
+  @JoinColumn(name = "subCategoryId", nullable = true)
+  private MaterialSubCategory materialSubCategory;
+  @Enumerated(EnumType.ORDINAL)
+  private CategoryAcceptedType categoryAcceptedType;
 
   public Long getId() {
     return id;
@@ -122,5 +128,21 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public MaterialSubCategory getMaterialSubCategory() {
+    return materialSubCategory;
+  }
+
+  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+    this.materialSubCategory = materialSubCategory;
+  }
+
+  public CategoryAcceptedType getCategoryAcceptedType() {
+    return categoryAcceptedType;
+  }
+
+  public void setCategoryAcceptedType(CategoryAcceptedType categoryAcceptedType) {
+    this.categoryAcceptedType = categoryAcceptedType;
   }
 }
