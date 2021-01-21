@@ -2,24 +2,23 @@ package com.tokyo.supermix.server.services;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.MixDesignConfirmationToken;
 import com.tokyo.supermix.data.entities.TestConfigure;
@@ -29,6 +28,7 @@ import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
+import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
 import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
@@ -38,6 +38,7 @@ import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MixDesignConfirmationTokenRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestEquationRepository;
@@ -82,6 +83,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   CoreTestConfigureRepository coreTestConfigureRepository;
   @Autowired
   MixDesignConfirmationTokenRepository mixDesignConfirmationTokenRepository;
+  @Autowired
+  MultiResultFormulaRepository multiResultFormulaRepository;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -437,25 +440,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             .getId())
           testConfigIds.add(finishProductTest.getTestConfigure().getId());
       }
-
     }
     return testConfigIds.stream().distinct().collect(Collectors.toList()).size();
-  }
-
-  private int getCountkeyTestConfigByMaterialSubCategory(Long materialSubCategoryId) {
-    return testConfigureRepository.findByMaterialSubCategoryIdAndCoreTestTrue(materialSubCategoryId)
-        .stream().filter(listTest -> listTest.getRawMaterial() == null).collect(Collectors.toList())
-        .size();
-  }
-
-  private int getCountKeyTestConfigByMaterialCategory(Long materialCategoryId) {
-    return testConfigureRepository.findByMaterialCategoryIdAndCoreTestTrue(materialCategoryId)
-        .stream().filter(listTest -> listTest.getMaterialSubCategory() == null)
-        .collect(Collectors.toList()).size();
-  }
-
-  private int getCountKeyTestConfigByRawMaterial(Long rawMaterialId) {
-    return testConfigureRepository.findByRawMaterialIdAndCoreTestTrue(rawMaterialId).size();
   }
 
   private void checkStatusAndSaveStatus(String finishProductTestCode, HttpServletRequest request) {
@@ -543,7 +529,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   private Status checkFinishproductAcceptedValue(Double minValue, Double maxValue, Double value,
-      Condition condition, Double average, String materialTestCode) {
+      Condition condition, Double average) {
     switch (condition) {
       case BETWEEN:
         return (minValue <= average && maxValue >= average) ? Status.PASS : Status.FAIL;
@@ -562,27 +548,45 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       HttpServletRequest request) {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
-    ArrayList<Status> statusList = new ArrayList<Status>();
+    HashMap<String, Boolean> status = new HashMap<String, Boolean>();
     if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
-      materialAcceptedValueRepository.findByTestConfigureId(testConfigureId)
-          .forEach(materialAcceptedValue -> {
-            List<FinishProductParameterResult> finishProductResultList =
-                finishProductParameterResultRepository
-                    .findByFinishProductTestCode(finishProductTestCode);
-            if ((materialAcceptedValue.isFinalResult())) {
-              finishProductResultList.forEach(result -> {
-                if ((materialAcceptedValue.getRawMaterial().getId() == result.getFinishProductTest()
-                    .getFinishProductSample().getMixDesign().getRawMaterial().getId())
-                    && (materialAcceptedValue.getTestParameter().getId() == result
-                        .getTestParameter().getId())) {
-                  statusList.add(checkFinishproductAcceptedValue(
-                      materialAcceptedValue.getMinValue(), materialAcceptedValue.getMaxValue(),
-                      materialAcceptedValue.getValue(), materialAcceptedValue.getConditionRange(),
-                      result.getResult(), finishProductTestCode));
-                }
-              });
+      List<FinishProductParameterResult> finishProductResultList =
+          finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
+      finishProductResultList.forEach(result -> {
+        MaterialAcceptedValue materialAcceptedValue =
+            materialAcceptedValueRepository
+                .findByTestConfigureIdAndRawMaterialIdAndTestParameterIdAndFinalResultTrue(
+                    testConfigureId, result.getFinishProductTest().getFinishProductSample()
+                        .getMixDesign().getRawMaterial().getId(),
+                    result.getTestParameter().getId());
+        if (materialAcceptedValue != null) {
+          if (finishProductTest.getTestConfigure().getTestResultType()
+              .equals(TestResultType.SINGLE_RESULT)) {
+            if (checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
+                materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+                materialAcceptedValue.getConditionRange(), result.getResult())
+                    .equals(Status.PASS)) {
+              updateStatus(finishProductTestCode, Status.PASS, request);
+            } else {
+              updateStatus(finishProductTestCode, Status.FAIL, request);
             }
-          });
+          } else {
+            materialAcceptedValueRepository.findByTestConfigureIdAndRawMaterialIdAndFinalResultTrue(
+                testConfigureId,
+                finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId())
+                .forEach(mc -> {
+                  status.put(mc.getTestParameter().getAbbreviation(),
+                      checkFinishproductAcceptedValueBoolean(mc.getMinValue(), mc.getMaxValue(),
+                          mc.getValue(), mc.getConditionRange(), result.getResult()));
+                });
+            if (!getFinalResultStatus(status, testConfigureId)) {
+              updateStatus(finishProductTestCode, Status.FAIL, request);
+            } else {
+              updateStatus(finishProductTestCode, Status.PASS, request);
+            }
+          }
+        }
+      });
     } else {
       List<FinishProductParameterResult> finishProductResultList =
           finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
@@ -590,34 +594,65 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         if (acceptedValue.isFinalResult()) {
           finishProductResultList.forEach(finish -> {
             if (finish.getTestParameter().getId() == acceptedValue.getTestParameter().getId()) {
-              statusList.add(checkFinishproductAcceptedValue(acceptedValue.getMinValue(),
-                  acceptedValue.getMaxValue(), acceptedValue.getValue(),
-                  acceptedValue.getConditionRange(), finish.getResult(), finishProductTestCode));
+              if (finish.getFinishProductTest().getTestConfigure().getTestResultType()
+                  .equals(TestResultType.SINGLE_RESULT)) {
+                if (checkFinishproductAcceptedValue(acceptedValue.getMinValue(),
+                    acceptedValue.getMaxValue(), acceptedValue.getValue(),
+                    acceptedValue.getConditionRange(), finish.getResult()).equals(Status.PASS)) {
+                  updateStatus(finishProductTestCode, Status.PASS, request);
+                } else {
+                  updateStatus(finishProductTestCode, Status.FAIL, request);
+                }
+              } else {
+                status.put(acceptedValue.getTestParameter().getAbbreviation(),
+                    checkFinishproductAcceptedValueBoolean(acceptedValue.getMinValue(),
+                        acceptedValue.getMaxValue(), acceptedValue.getValue(),
+                        acceptedValue.getConditionRange(), finish.getResult()));
+                if (!getFinalResultStatus(status, testConfigureId)) {
+                  updateStatus(finishProductTestCode, Status.FAIL, request);
+                } else {
+                  updateStatus(finishProductTestCode, Status.PASS, request);
+                }
+              }
             }
           });
         }
       });
     }
-    Long passCount = (long) statusList.stream().filter(sta -> (sta.equals(Status.PASS)))
-        .collect(Collectors.toList()).size();
-    if (passCount == conutrRelavantFinalResult(testConfigureId,
-        finishProductTest.getTestConfigure().getAcceptedType(),
-        finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId())) {
-      updateStatus(finishProductTestCode, Status.PASS, request);
-    } else {
-      updateStatus(finishProductTestCode, Status.FAIL, request);
+  }
+
+  private Boolean checkFinishproductAcceptedValueBoolean(Double minValue, Double maxValue,
+      Double value, Condition condition, Double average) {
+    switch (condition) {
+      case BETWEEN:
+        return (minValue <= average && maxValue >= average) ? true : false;
+      case EQUAL:
+        return value.equals(average) ? true : false;
+      case GREATER_THAN:
+        return value <= average ? true : false;
+      case LESS_THAN:
+        return value >= average ? true : false;
+      default:
+        return false;
     }
   }
 
-  private Long conutrRelavantFinalResult(Long testConfigId, AcceptedType acceptedType,
-      Long rawMaterialId) {
-    Long count = (long) 0;
-    if (acceptedType.equals(AcceptedType.MATERIAL)) {
-      count = materialAcceptedValueRepository
-          .countByTestConfigureIdAndAndRawMaterialIdAndFinalResultTrue(testConfigId, rawMaterialId);
-    } else {
-      count = acceptedValueRepository.countByTestConfigureIdAndFinalResultTrue(testConfigId);
+  private String getConditionFormula(Long testConfigureId) {
+    return multiResultFormulaRepository.findByTestConfigureId(testConfigureId).getLogicalFormula();
+  }
+
+  private Boolean getFinalResultStatus(HashMap<String, Boolean> status, Long testConfigId) {
+    ScriptEngineManager engineManager = new ScriptEngineManager();
+    ScriptEngine engine = engineManager.getEngineByName("JavaScript");
+    boolean statusFinal = false;
+    for (String i : status.keySet()) {
+      engine.put(i, status.get(i));
     }
-    return count;
+    try {
+      statusFinal = (Boolean) engine.eval(getConditionFormula(testConfigId));
+    } catch (ScriptException e) {
+      e.printStackTrace();
+    }
+    return statusFinal;
   }
 }
