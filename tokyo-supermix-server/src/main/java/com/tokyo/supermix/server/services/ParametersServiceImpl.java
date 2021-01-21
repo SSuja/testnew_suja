@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Parameter;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.repositories.ParameterRepository;
 
@@ -84,11 +85,18 @@ public class ParametersServiceImpl implements ParameterService {
 
   @Transactional(readOnly = true)
   public Long getCountParameters() {
-      return parameterRepository.count();
+    return parameterRepository.count();
   }
 
   @Transactional(readOnly = true)
   public List<Parameter> getAllParametersByDecending(Pageable pageable) {
-       return parameterRepository.findAllByOrderByIdDesc(pageable);
+    return parameterRepository.findAllByOrderByIdDesc(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistsByParameterNameAndParameterTypeAndParameterDataType(String name,
+      ParameterType parameterType, ParameterDataType parameterDataType) {
+    return parameterRepository.existsByNameAndParameterTypeAndParameterDataType(name, parameterType,
+        parameterDataType);
   }
 }

@@ -45,15 +45,9 @@ public class ParameterController {
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(ParameterController.class);
 
-//  @GetMapping(value = EndpointURI.PARAMETERS)
-//  public ResponseEntity<Object> getAllParameters() {
-//    return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETERS,
-//        mapper.map(parameterService.getAllParametersByDecending(), ParameterDto.class),
-//        RestApiResponseStatus.OK), null, HttpStatus.OK);
-//  }
-
   @GetMapping(value = EndpointURI.PARAMETERS)
-  public ResponseEntity<Object> getAllParameters( @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+  public ResponseEntity<Object> getAllParameters(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
@@ -65,8 +59,9 @@ public class ParameterController {
 
   @PostMapping(value = EndpointURI.PARAMETER)
   public ResponseEntity<Object> createParameter(@Valid @RequestBody ParameterDto parameterDto) {
-    if (parameterService.isParameterNameAndParameterTypeExists(parameterDto.getName(),
-        parameterDto.getParameterType())) {
+    if (parameterService.isExistsByParameterNameAndParameterTypeAndParameterDataType(
+        parameterDto.getName(), parameterDto.getParameterType(),
+        parameterDto.getParameterDataType())) {
       logger.debug("parameter already exists: createparameter(), parameterName: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
           validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
@@ -117,7 +112,6 @@ public class ParameterController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_ID,
         validationFailureStatusCodes.getParameterNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   @GetMapping(value = EndpointURI.PARAMETER_SEARCH)
