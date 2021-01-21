@@ -41,4 +41,11 @@ public interface MaterialAcceptedValueRepository
       Long rawMaterialId);
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
+
+
+  MaterialAcceptedValue findByTestConfigureIdAndRawMaterialIdAndTestParameterIdAndFinalResultTrue(
+      Long testConfigureId, Long rawMaterialId, Long testParameterId);
+
+  List<MaterialAcceptedValue> findByTestConfigureIdAndRawMaterialIdAndFinalResultTrue(
+      Long testConfigureId, Long rawMaterialId);
 }
