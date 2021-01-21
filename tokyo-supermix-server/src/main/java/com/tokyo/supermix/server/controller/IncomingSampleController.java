@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.sql.Date;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -260,9 +259,8 @@ public class IncomingSampleController {
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_SEARCH)
   public ResponseEntity<Object> getIncomingSampleSearch(@PathVariable String plantCode,
       @RequestParam(name = "code", required = false) String code,
-      @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
-      @RequestParam(name = "date", required = false) Date date,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "supplierName", required = false) String supplierName,
@@ -274,7 +272,7 @@ public class IncomingSampleController {
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
             mapper.map(
-                incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
+                incomingSampleService.searchIncomingSample(code, date, status,
                     rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
                     RawMaterialSampleType.INCOMING_SAMPLE, plantCode, pagination),
                 IncomingSampleResponseDto.class),
@@ -285,9 +283,8 @@ public class IncomingSampleController {
   @GetMapping(value = EndpointURI.PROCESS_SAMPLE_SEARCH_TYPE)
   public ResponseEntity<Object> getProcessSampleSearch(@PathVariable String plantCode,
       @RequestParam(name = "code", required = false) String code,
-      @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
-      @RequestParam(name = "date", required = false) Date date,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "supplierName", required = false) String supplierName,
@@ -298,7 +295,7 @@ public class IncomingSampleController {
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
             mapper.map(
-                incomingSampleService.searchIncomingSample(code, vehicleNo, date, status,
+                incomingSampleService.searchIncomingSample(code, date, status,
                     rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
                     RawMaterialSampleType.PROCESS_SAMPLE, plantCode, pagination),
                 IncomingSampleResponseDto.class),
