@@ -1,17 +1,15 @@
 package com.tokyo.supermix.data.dto;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class ParameterResultRequestDto {
   private Long id;
   private MaterialTestTrialRequestDto materialTestTrial;
-  @NotNull(message = "{parameterResultDto.value.null}")
-  @NotEmpty(message = "{parameterResultDto.value.empty}")
   private Double value;
   private Long testParameterId;
   private String materialTestCode;
   private Long testEquationId;
+  private LocalDateTime dateValue;
 
   public Long getId() {
     return id;
@@ -59,5 +57,13 @@ public class ParameterResultRequestDto {
 
   public void setTestEquationId(Long testEquationId) {
     this.testEquationId = testEquationId;
+  }
+
+  public LocalDateTime getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(LocalDateTime dateValue) {
+    this.dateValue = dateValue;
   }
 }
