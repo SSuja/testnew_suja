@@ -2,9 +2,14 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
+import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface MaterialSubCategoryService {
   public List<MaterialSubCategory> getMaterialSubCategories();
@@ -39,4 +44,8 @@ public interface MaterialSubCategoryService {
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 
   public boolean isMaterialCategoryExistUpdate(Long id, String name, Long materialCategoryId);
+
+  public List<MaterialSubCategoryResponseDto> searchByMaterialSubCategory(
+      BooleanBuilder booleanBuilder, String name, String materialCategoryName, String prefix,
+      MainType materialCategoryMainType, Pageable pageable, Pagination pagination);
 }
