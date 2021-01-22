@@ -1,19 +1,19 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.Parameter;
+import com.tokyo.supermix.data.entities.QParameter;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.repositories.ParameterRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class ParametersServiceImpl implements ParameterService {
@@ -58,12 +58,6 @@ public class ParametersServiceImpl implements ParameterService {
   }
 
   @Transactional(readOnly = true)
-  public Page<Parameter> searchParameter(Predicate predicate, int page, int size) {
-    return parameterRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
-
-  @Transactional(readOnly = true)
   public List<Parameter> getParameterByParameterType(ParameterType parameterType) {
     return parameterRepository.findByParameterType(parameterType);
   }
@@ -98,5 +92,24 @@ public class ParametersServiceImpl implements ParameterService {
       ParameterType parameterType, ParameterDataType parameterDataType) {
     return parameterRepository.existsByNameAndParameterTypeAndParameterDataType(name, parameterType,
         parameterDataType);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Parameter> searchParameters(String name, ParameterType parameterType,
+      ParameterDataType parameterDataType, BooleanBuilder booleanBuilder, int page, int size,
+      Pageable pageable, Pagination pagination) {
+
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QParameter.parameter.name.startsWithIgnoreCase(name));
+    }
+    if (parameterType != null) {
+      booleanBuilder.and(QParameter.parameter.parameterType.eq(parameterType));
+    }
+    if (parameterDataType != null) {
+      booleanBuilder.and(QParameter.parameter.parameterDataType.eq(parameterDataType));
+    }
+    pagination.setTotalRecords(
+        ((Collection<Parameter>) parameterRepository.findAll(booleanBuilder)).stream().count());
+    return parameterRepository.findAll(booleanBuilder, pageable).toList();
   }
 }

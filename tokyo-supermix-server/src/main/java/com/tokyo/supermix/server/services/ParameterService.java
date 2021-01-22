@@ -1,12 +1,12 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.ParameterType;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface ParameterService {
   public List<Parameter> getAllParameters();
@@ -23,8 +23,6 @@ public interface ParameterService {
 
   public boolean isUpdatedNameExist(Long id, String name);
 
-  public Page<Parameter> searchParameter(Predicate predicate, int page, int size);
-
   public List<Parameter> getParameterByParameterType(ParameterType parameterType);
 
   public boolean isParameterTypeExists(ParameterType parameterType);
@@ -39,4 +37,8 @@ public interface ParameterService {
   public List<Parameter> getAllParametersByDecending(Pageable pageable);
 
   public Long getCountParameters();
+
+  public List<Parameter> searchParameters(String name, ParameterType parameterType,
+      ParameterDataType parameterDataType, BooleanBuilder booleanBuilder, int page, int size,
+      Pageable pageable, Pagination pagination);
 }
