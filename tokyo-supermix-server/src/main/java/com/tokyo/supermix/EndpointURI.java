@@ -119,6 +119,7 @@ public final class EndpointURI {
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
+  public static final String SEARCH_EQUIPMENT = EQUIPMENT + SEARCH;
   /*
    * Test Configure
    */
@@ -425,6 +426,7 @@ public final class EndpointURI {
   public static final String TEST = BASE_API_PATH + "test";
   public static final String TESTS = BASE_API_PATH + "tests";
   public static final String TEST_BY_ID = TEST + ID;
+  public static final String SEARCH_TEST = TEST + SEARCH;
 
   /*
    * FinishProductSample
