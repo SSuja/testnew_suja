@@ -43,7 +43,7 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
-  MixDesignConfirmationTokenRepository  mixDesignConfirmationTokenRepository;
+  MixDesignConfirmationTokenRepository mixDesignConfirmationTokenRepository;
   @Autowired
   private Mapper mapper;
 
@@ -65,12 +65,12 @@ public class MixDesignServiceImpl implements MixDesignService {
         mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
       }
     }
-    if(mixDesign.isApproved()) {
+    if (mixDesign.isApproved()) {
       mixDesign.setApproved(true);
-    }else {
+    } else {
       mixDesign.setApproved(false);
     }
-    
+
     MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
     if (mixDesignObj != null) {
       emailNotification.sendMixDesignCreationEmail(mixDesignObj);
@@ -174,10 +174,13 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Transactional(readOnly = true)
-  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
+  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
       String materialName, String subCategoryName, String plantName, String plantCode,
       String status, String date, Pageable pageable, Pagination pagination) {
 
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.code.startsWithIgnoreCase(code));
+    }
     if (materialName != null && !materialName.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.startsWithIgnoreCase(materialName));
     }
@@ -228,13 +231,13 @@ public class MixDesignServiceImpl implements MixDesignService {
     return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeContainsIgnoreCase(rawMaterialId,
         status, code);
   }
-  
+
   @Override
   public void updateMixDesignWithConfirmation(String confirmationToken) {
-	  MixDesignConfirmationToken token =
-    		mixDesignConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
+    MixDesignConfirmationToken token =
+        mixDesignConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
     if (token != null) {
-      MixDesign  mixDesign = mixDesignRepository.findByCode(token.getMixDesign().getCode());
+      MixDesign mixDesign = mixDesignRepository.findByCode(token.getMixDesign().getCode());
       mixDesign.setApproved(true);
       mixDesignRepository.save(mixDesign);
     }

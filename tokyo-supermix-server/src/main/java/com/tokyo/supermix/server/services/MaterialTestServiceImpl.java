@@ -169,10 +169,14 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String date,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String date,
       String specimenCode, String status, String supplierName, String testName,
-      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
-      Pagination pagination) {
+      String mainCategoryName, String subCategoryName, BooleanBuilder booleanBuilder, int page,
+      int size, Pageable pageable, String plantCode, Pagination pagination) {
+
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.code.startsWithIgnoreCase(code));
+    }
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
       booleanBuilder.and(
           QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
@@ -196,6 +200,14 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (supplierName != null && !supplierName.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.incomingSample.supplier.name
           .startsWithIgnoreCase(supplierName));
+    }
+    if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.materialCategory.name
+          .startsWithIgnoreCase(mainCategoryName));
+    }
+    if (subCategoryName != null && !subCategoryName.isEmpty()) {
+      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.materialSubCategory.name
+          .startsWithIgnoreCase(subCategoryName));
     }
 
     if (!plantCode.equals("ADMIN")) {
