@@ -24,8 +24,10 @@ import com.tokyo.supermix.data.entities.MixDesignConfirmationToken;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.enums.TestResultType;
@@ -170,70 +172,79 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     for (TestParameter testParameter : testParameterList) {
       if (testParameterService.checkEqutaionExistsForTest(
           testParameter.getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
-        if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameter.getType().equals(TestParameterType.RESULT))) {
-          if (finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
-              testParameter.getId(), finishProductTestCode) != null) {
-            FinishProductParameterResult finishProductAlready =
-                finishProductParameterResultRepository
-                    .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
-                        finishProductTestCode);
-            finishProductAlready.setResult(roundDoubleValue(
-                averageValueForResultObserve(finishProductTestCode, testParameter.getId())));
-            finishProductParameterResultRepository.save(finishProductAlready);
-          } else {
-            FinishProductParameterResult finishProductParameterResult =
-                new FinishProductParameterResult();
-            finishProductParameterResult.setFinishProductTest(finishproductTest);
-            finishProductParameterResult.setTestParameter(testParameter);
-            finishProductParameterResult.setResult(roundDoubleValue(
-                averageValueForResultObserve(finishProductTestCode, testParameter.getId())));
-            finishProductParameterResultRepository.save(finishProductParameterResult);
+        if (testParameter.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
+          if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+              && testParameter.getType().equals(TestParameterType.RESULT))) {
+            if (finishProductParameterResultRepository
+                .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                    finishProductTestCode) != null) {
+              FinishProductParameterResult finishProductAlready =
+                  finishProductParameterResultRepository
+                      .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                          finishProductTestCode);
+              finishProductAlready.setResult(roundDoubleValue(
+                  averageValueForResultObserve(finishProductTestCode, testParameter.getId())));
+              finishProductParameterResultRepository.save(finishProductAlready);
+            } else {
+              FinishProductParameterResult finishProductParameterResult =
+                  new FinishProductParameterResult();
+              finishProductParameterResult.setFinishProductTest(finishproductTest);
+              finishProductParameterResult.setTestParameter(testParameter);
+              finishProductParameterResult.setResult(roundDoubleValue(
+                  averageValueForResultObserve(finishProductTestCode, testParameter.getId())));
+              finishProductParameterResultRepository.save(finishProductParameterResult);
+            }
           }
-        }
-        if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
-            && testParameter.getType().equals(TestParameterType.RESULT))) {
-          if (finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
-              testParameter.getId(), finishProductTestCode) != null) {
-            FinishProductParameterResult finishProductAlready =
-                finishProductParameterResultRepository
-                    .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
-                        finishProductTestCode);
-            finishProductAlready.setResult(
-                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
-            finishProductParameterResultRepository.save(finishProductAlready);
-          } else {
-            FinishProductParameterResult finishProductParameterResult =
-                new FinishProductParameterResult();
-            finishProductParameterResult.setFinishProductTest(finishproductTest);
-            finishProductParameterResult.setTestParameter(testParameter);
-            finishProductParameterResult.setResult(
-                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
-            finishProductParameterResultRepository.save(finishProductParameterResult);
+
+
+          if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+              && testParameter.getType().equals(TestParameterType.RESULT))) {
+            if (finishProductParameterResultRepository
+                .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                    finishProductTestCode) != null) {
+              FinishProductParameterResult finishProductAlready =
+                  finishProductParameterResultRepository
+                      .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                          finishProductTestCode);
+              finishProductAlready.setResult(
+                  roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+              finishProductParameterResultRepository.save(finishProductAlready);
+            } else {
+              FinishProductParameterResult finishProductParameterResult =
+                  new FinishProductParameterResult();
+              finishProductParameterResult.setFinishProductTest(finishproductTest);
+              finishProductParameterResult.setTestParameter(testParameter);
+              finishProductParameterResult.setResult(
+                  roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+              finishProductParameterResultRepository.save(finishProductParameterResult);
+            }
           }
         }
       }
       if (testParameterService.checkEqutaionExistsForTest(
           testParameter.getTestConfigure().getId()) == Constants.CHECK_EQUATION_FALSE) {
-        if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameter.getType().equals(TestParameterType.RESULT))) {
-          if (finishProductParameterResultRepository.findByTestParameterIdAndFinishProductTestCode(
-              testParameter.getId(), finishProductTestCode) != null) {
-            FinishProductParameterResult finishProductAlready =
-                finishProductParameterResultRepository
-                    .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
-                        finishProductTestCode);
-            finishProductAlready.setResult(
-                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
-            finishProductParameterResultRepository.save(finishProductAlready);
-          } else {
-            FinishProductParameterResult finishProductParameterResult =
-                new FinishProductParameterResult();
-            finishProductParameterResult.setFinishProductTest(finishproductTest);
-            finishProductParameterResult.setTestParameter(testParameter);
-            finishProductParameterResult.setResult(
-                roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
-            finishProductParameterResultRepository.save(finishProductParameterResult);
+        if (testParameter.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
+          if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+              && testParameter.getType().equals(TestParameterType.RESULT))) {
+            if (finishProductParameterResultRepository
+                .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                    finishProductTestCode) != null) {
+              FinishProductParameterResult finishProductAlready =
+                  finishProductParameterResultRepository
+                      .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
+                          finishProductTestCode);
+              finishProductAlready.setResult(
+                  roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+              finishProductParameterResultRepository.save(finishProductAlready);
+            } else {
+              FinishProductParameterResult finishProductParameterResult =
+                  new FinishProductParameterResult();
+              finishProductParameterResult.setFinishProductTest(finishproductTest);
+              finishProductParameterResult.setTestParameter(testParameter);
+              finishProductParameterResult.setResult(
+                  roundDoubleValue(averageValue(finishProductTestCode, testParameter.getId())));
+              finishProductParameterResultRepository.save(finishProductParameterResult);
+            }
           }
         }
       }
@@ -249,9 +260,12 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
         .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
             testParameterId)) {
-      if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-          && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
-        trialValue.add(finishProductTrial.getValue());
+      if (finishProductTrial.getTestParameter().getParameter().getParameterDataType()
+          .equals(ParameterDataType.NUMBER)) {
+        if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
+          trialValue.add(finishProductTrial.getValue());
+        }
       }
     }
     double sumOfValue = 0.0;
@@ -271,9 +285,14 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       for (FinishProductTrial finishProductTrial : finishProductTrialRepository
           .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
               testParameterId)) {
-        if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
-            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
-          trialValue.add(finishProductTrial.getValue());
+        if (finishProductTrial.getTestParameter().getParameter().getParameterDataType()
+            .equals(ParameterDataType.NUMBER)) {
+          if ((finishProductTrial.getTestParameter().getInputMethods()
+              .equals(InputMethod.CALCULATION)
+              && finishProductTrial.getTestParameter().getType()
+                  .equals(TestParameterType.RESULT))) {
+            trialValue.add(finishProductTrial.getValue());
+          }
         }
       }
     }
@@ -282,9 +301,13 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       for (FinishProductTrial finishProductTrial : finishProductTrialRepository
           .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
               testParameterId)) {
-        if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
-            && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
-          trialValue.add(finishProductTrial.getValue());
+        if (finishProductTrial.getTestParameter().getParameter().getParameterDataType()
+            .equals(ParameterDataType.NUMBER)) {
+          if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.OBSERVE)
+              && finishProductTrial.getTestParameter().getType()
+                  .equals(TestParameterType.RESULT))) {
+            trialValue.add(finishProductTrial.getValue());
+          }
         }
       }
     }
@@ -312,19 +335,23 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       if (finishProductTrial.getTestParameter() != null) {
         TestParameter testParameter =
             testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
-        if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
-            && testParameter.getType().equals(TestParameterType.INPUT))) {
-          finishProductTrial.setValue(getFinishProductResultParameter(finishProductCode,
-              testParameter.getTestConfigure().getId(), finishProductTrial.getTrialNo(),
-              testParameter.getId()));
-          finishProductTrialRepository.save(finishProductTrial);
-        }
-        if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
-            && testParameter.getType().equals(TestParameterType.RESULT))) {
-          finishProductTrial.setValue(
-              getFinishProductResult(finishProductCode, testParameter.getTestConfigure().getId(),
-                  finishProductTrial.getTrialNo(), testParameter.getId()));
-          finishProductTrialRepository.save(finishProductTrial);
+        if (testParameter.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
+          if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+              && testParameter.getType().equals(TestParameterType.INPUT))) {
+            finishProductTrial.setValue(getFinishProductResultParameter(finishProductCode,
+                testParameter.getTestConfigure().getId(), finishProductTrial.getTrialNo(),
+                testParameter.getId()));
+            finishProductTrialRepository.save(finishProductTrial);
+          }
+          if ((testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+              && testParameter.getType().equals(TestParameterType.RESULT))) {
+            finishProductTrial.setValue(
+                getFinishProductResult(finishProductCode, testParameter.getTestConfigure().getId(),
+                    finishProductTrial.getTrialNo(), testParameter.getId()));
+            finishProductTrialRepository.save(finishProductTrial);
+          }
+        } else {
+
         }
       }
     }
@@ -374,13 +401,15 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       if (finishProductTrial.getTestParameter() != null) {
         TestParameter testParameter =
             testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
-        if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameter.getType().equals(TestParameterType.INPUT))
-            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                && testParameter.getType().equals(TestParameterType.RESULT))
-            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                && testParameter.getType().equals(TestParameterType.CONFIG))) {
-          engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
+        if (testParameter.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
+          if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+              && testParameter.getType().equals(TestParameterType.INPUT))
+              || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                  && testParameter.getType().equals(TestParameterType.RESULT))
+              || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                  && testParameter.getType().equals(TestParameterType.CONFIG))) {
+            engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
+          }
         }
       }
     }
@@ -403,15 +432,17 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       if (finishProductTrial.getTestParameter() != null) {
         TestParameter testParameter =
             testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
-        if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-            && testParameter.getType().equals(TestParameterType.INPUT))
-            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                && testParameter.getType().equals(TestParameterType.RESULT))
-            || testParameter.getInputMethods().equals(InputMethod.CALCULATION)
-                && testParameter.getType().equals(TestParameterType.INPUT)
-            || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                && testParameter.getType().equals(TestParameterType.CONFIG))) {
-          engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
+        if (testParameter.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
+          if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+              && testParameter.getType().equals(TestParameterType.INPUT))
+              || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                  && testParameter.getType().equals(TestParameterType.RESULT))
+              || testParameter.getInputMethods().equals(InputMethod.CALCULATION)
+                  && testParameter.getType().equals(TestParameterType.INPUT)
+              || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                  && testParameter.getType().equals(TestParameterType.CONFIG))) {
+            engine.put(testParameter.getAbbreviation(), finishProductTrial.getValue());
+          }
         }
       }
     }
@@ -559,7 +590,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                     testConfigureId, result.getFinishProductTest().getFinishProductSample()
                         .getMixDesign().getRawMaterial().getId(),
                     result.getTestParameter().getId());
-        if (materialAcceptedValue != null) {
+        if (materialAcceptedValue != null && materialAcceptedValue.getCategoryAcceptedType()
+            .equals(CategoryAcceptedType.MATERIAL)) {
           if (finishProductTest.getTestConfigure().getTestResultType()
               .equals(TestResultType.SINGLE_RESULT)) {
             if (checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
@@ -575,9 +607,11 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                 testConfigureId,
                 finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId())
                 .forEach(mc -> {
-                  status.put(mc.getTestParameter().getAbbreviation(),
-                      checkFinishproductAcceptedValueBoolean(mc.getMinValue(), mc.getMaxValue(),
-                          mc.getValue(), mc.getConditionRange(), result.getResult()));
+                  if (mc.getCategoryAcceptedType().equals(CategoryAcceptedType.MATERIAL)) {
+                    status.put(mc.getTestParameter().getAbbreviation(),
+                        checkFinishproductAcceptedValueBoolean(mc.getMinValue(), mc.getMaxValue(),
+                            mc.getValue(), mc.getConditionRange(), result.getResult()));
+                  }
                 });
             if (!getFinalResultStatus(status, testConfigureId)) {
               updateStatus(finishProductTestCode, Status.FAIL, request);
@@ -587,7 +621,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
           }
         }
       });
-    } else {
+    } else if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
       List<FinishProductParameterResult> finishProductResultList =
           finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
       acceptedValueRepository.findByTestConfigureId(testConfigureId).forEach(acceptedValue -> {
@@ -616,6 +650,49 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
               }
             }
           });
+        }
+      });
+    } else {
+      List<FinishProductParameterResult> finishProductResultList =
+          finishProductParameterResultRepository.findByFinishProductTestCode(finishProductTestCode);
+      finishProductResultList.forEach(result -> {
+        MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
+            .findByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterIdAndFinalResultTrue(
+                testConfigureId,
+                result.getFinishProductTest().getFinishProductSample().getMixDesign()
+                    .getRawMaterial().getMaterialSubCategory().getId(),
+                result.getTestParameter().getId());
+        if (materialAcceptedValue != null && materialAcceptedValue.getCategoryAcceptedType()
+            .equals(CategoryAcceptedType.SUB_CATEGORY)) {
+          if (finishProductTest.getTestConfigure().getTestResultType()
+              .equals(TestResultType.SINGLE_RESULT)) {
+            if (checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
+                materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+                materialAcceptedValue.getConditionRange(), result.getResult())
+                    .equals(Status.PASS)) {
+              updateStatus(finishProductTestCode, Status.PASS, request);
+            } else {
+              updateStatus(finishProductTestCode, Status.FAIL, request);
+            }
+          } else {
+            materialAcceptedValueRepository
+                .findByTestConfigureIdAndMaterialSubCategoryIdAndFinalResultTrue(testConfigureId,
+                    finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
+                        .getMaterialSubCategory().getId())
+                .forEach(msub -> {
+                  if (msub.getCategoryAcceptedType().equals(CategoryAcceptedType.SUB_CATEGORY)) {
+                    status.put(msub.getTestParameter().getAbbreviation(),
+                        checkFinishproductAcceptedValueBoolean(msub.getMinValue(),
+                            msub.getMaxValue(), msub.getValue(), msub.getConditionRange(),
+                            result.getResult()));
+                  }
+                });
+            if (!getFinalResultStatus(status, testConfigureId)) {
+              updateStatus(finishProductTestCode, Status.FAIL, request);
+            } else {
+              updateStatus(finishProductTestCode, Status.PASS, request);
+            }
+          }
         }
       });
     }

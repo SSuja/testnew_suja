@@ -17,7 +17,7 @@ public interface MaterialAcceptedValueRepository
 
   boolean existsByRawMaterialId(Long rawMaterialId);
 
-  MaterialAcceptedValue findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
+  List<MaterialAcceptedValue> findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
       Long rawMaterialId);
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndTestConfigureRawMaterialId(
@@ -48,4 +48,13 @@ public interface MaterialAcceptedValueRepository
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndRawMaterialIdAndFinalResultTrue(
       Long testConfigureId, Long rawMaterialId);
+
+  MaterialAcceptedValue findByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterIdAndFinalResultTrue(
+      Long testConfigureId, Long materialSubCategoryId, Long testParameterId);
+
+  List<MaterialAcceptedValue> findByTestConfigureIdAndMaterialSubCategoryIdAndFinalResultTrue(
+      Long testConfigureId, Long materialSubCategoryId);
+
+  List<MaterialAcceptedValue> findByTestConfigureIdAndMaterialSubCategoryId(Long testConfigureId,
+      Long materialSubCategoryId);
 }
