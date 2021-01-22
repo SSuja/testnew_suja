@@ -2,16 +2,24 @@ package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MaterialTestTrial;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -19,6 +27,7 @@ import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestTrialRepository;
+import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -48,6 +57,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   MaterialTestResultRepository materialTestResultRepository;
   @Autowired
   private EmailNotification emailNotification;
+  @Autowired
+  private MultiResultFormulaRepository multiResultFormulaRepository;
 
   @Transactional
   public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -116,45 +127,65 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     List<MaterialTestResult> materialTestResults =
         materialTestResultRepository.findByMaterialTestCode(materialTestCode);
     MaterialTest materialTest = materialTestRepository.getOne(materialTestCode);
-    int count = 0;
-    int imp = 0;
+    HashMap<String, Boolean> acceptedParameters = new HashMap<>();
+    String singleEquation = null;
     for (MaterialTestResult materialTestResult : materialTestResults) {
       Status status = Status.FAIL;
       Double average = materialTestResult.getResult();
-      if (materialAcceptedValueRepository
-          .findByTestConfigureId(materialTest.getTestConfigure().getId()).size() > 0) {
-        MaterialAcceptedValue materialAcceptedValue = (materialTestResult.getTestEquation() != null)
-            ? materialAcceptedValueRepository
-                .findByTestConfigureIdAndRawMaterialIdAndTestEquationId(
-                    materialTest.getTestConfigure().getId(),
-                    materialTest.getIncomingSample().getRawMaterial().getId(),
-                    materialTestResult.getTestEquation().getId())
-            : materialAcceptedValueRepository.findByTestConfigureIdAndRawMaterialId(
+      if (materialTestResult.getMaterialTest().getTestConfigure().getAcceptedType()
+          .equals(AcceptedType.MATERIAL)) {
+        MaterialAcceptedValue materialAcceptedValue =
+            materialAcceptedValueRepository.findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
                 materialTest.getTestConfigure().getId(),
+                materialTestResult.getTestParameter().getId(),
                 materialTest.getIncomingSample().getRawMaterial().getId());
+
         if (materialAcceptedValue.isFinalResult()) {
-          imp++;
           status = compareAverage(materialAcceptedValue.getMinValue(),
               materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
               materialAcceptedValue.getConditionRange(), average, materialTestCode);
+          Boolean st = (status.equals(Status.PASS)) ? true : false;
+          acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
+          singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+        }
+      } else if (materialTestResult.getMaterialTest().getTestConfigure().getAcceptedType()
+          .equals(AcceptedType.SUB_CATEGORY)) {
+        MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
+            .findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(
+                materialTest.getTestConfigure().getId(),
+                materialTestResult.getTestParameter().getId(),
+                materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory().getId());
+        if (materialAcceptedValue.isFinalResult()) {
+          status = compareAverage(materialAcceptedValue.getMinValue(),
+              materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+              materialAcceptedValue.getConditionRange(), average, materialTestCode);
+          Boolean st = (status.equals(Status.PASS)) ? true : false;
+          acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
+          singleEquation = materialTestResult.getTestParameter().getAbbreviation();
         }
       } else {
-        AcceptedValue acceptedValue = (materialTestResult.getTestEquation() != null)
-            ? acceptedValueRepository.findByTestConfigureIdAndTestEquationId(
-                materialTest.getTestConfigure().getId(),
-                materialTestResult.getTestEquation().getId())
-            : acceptedValueRepository.findByTestConfigureId(materialTest.getTestConfigure().getId())
-                .get(0);
+        AcceptedValue acceptedValue = acceptedValueRepository
+            .findByTestParameterIdAndTestConfigureId(materialTestResult.getTestParameter().getId(),
+                materialTest.getTestConfigure().getId());
         if (acceptedValue.isFinalResult()) {
-          imp++;
           status = compareAverage(acceptedValue.getMinValue(), acceptedValue.getMaxValue(),
               acceptedValue.getValue(), acceptedValue.getConditionRange(), average,
               materialTestCode);
+          Boolean st = (status.equals(Status.PASS)) ? true : false;
+          acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
+          singleEquation = materialTestResult.getTestParameter().getAbbreviation();
         }
       }
-      count = status.equals(Status.PASS) ? count + 1 : count;
     }
-    updateMaterialTestStatus(materialTestCode, (count == imp) ? Status.PASS : Status.FAIL);
+    if (acceptedParameters.size() == 1) {
+      updateMaterialTestStatus(materialTestCode,
+          resultAccepted(acceptedParameters, singleEquation) ? Status.PASS : Status.FAIL);
+    } else {
+      String eqation = multiResultFormulaRepository
+          .findByTestConfigureId(materialTest.getTestConfigure().getId()).getLogicalFormula();
+      updateMaterialTestStatus(materialTestCode,
+          resultAccepted(acceptedParameters, eqation) ? Status.PASS : Status.FAIL);
+    }
   }
 
   private Status compareAverage(Double minValue, Double maxValue, Double value, Condition condition,
@@ -178,8 +209,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     MaterialTest materialTest = materialTestRepository.findByCode(code);
     materialTest.setStatus(status);
     MaterialTest materialTestObj = materialTestRepository.save(materialTest);
-    if(materialTestObj != null) {
-    emailNotification.sendTestEmail(materialTestObj);
+    if (materialTestObj != null) {
+      emailNotification.sendTestEmail(materialTestObj);
     }
     return materialTest;
   }
@@ -194,5 +225,21 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     return materialTestTrialRepository.findByMaterialTestIncomingSamplePlantCodeIn(
         currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
             PermissionConstants.VIEW_MATERIAL_TEST_TRIAL));
+  }
+
+  public boolean resultAccepted(HashMap<String, Boolean> acceptedParameters, String equation) {
+    ScriptEngineManager engineManager = new ScriptEngineManager();
+    ScriptEngine engine = engineManager.getEngineByName("JavaScript");
+
+    boolean result = false;
+    for (String i : acceptedParameters.keySet()) {
+      engine.put(i, acceptedParameters.get(i));
+    }
+    try {
+      result = (boolean) engine.eval(equation);
+    } catch (ScriptException e) {
+      e.printStackTrace();
+    }
+    return result;
   }
 }
