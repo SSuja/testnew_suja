@@ -23,6 +23,7 @@ import com.tokyo.supermix.data.dto.ParameterResultRequestDto;
 import com.tokyo.supermix.data.dto.ParameterResultResponseDto;
 import com.tokyo.supermix.data.entities.ParameterResult;
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterResultRepository;
@@ -68,7 +69,9 @@ public class ParameterResultController {
             && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
                 .getInputMethods().equals(InputMethod.OBSERVE)
             && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
-                .getType().equals(TestParameterType.INPUT)))
+                .getType().equals(TestParameterType.INPUT)
+                &&testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+                .getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)))
         .collect(Collectors.toList());
     if (li.isEmpty()) {
       parameterResultService.saveParameterResults(materialParameterResultDtolist);
