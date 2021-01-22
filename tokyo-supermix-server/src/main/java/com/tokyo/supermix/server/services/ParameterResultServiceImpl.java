@@ -216,7 +216,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
                     parameterResult.getTestParameter().getParameter().getName());
                 if (parameterResult.getTestParameter().getParameter().getParameterDataType()
                     .equals(ParameterDataType.DATETIME)) {
-                  parameterResultDto.setValue(parameterResult.getValue());
+                  parameterResultDto.setDateValue(parameterResult.getDateValue());
                 } else {
                   parameterResultDto.setValue(parameterResult.getValue());
                 }
