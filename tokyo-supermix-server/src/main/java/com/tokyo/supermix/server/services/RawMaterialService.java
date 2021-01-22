@@ -42,8 +42,8 @@ public interface RawMaterialService {
   public Long countRawMaterialByPlant(String plantCode);
 
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
-      String materialSubCategoryName, String plantName, String prefix, String plantCode,
-      String erpCode, Pageable pageable, Pagination pagination);
+      String materialSubCategoryName, String materialCategoryName, String plantName, String prefix,
+      String plantCode, String erpCode, Pageable pageable, Pagination pagination);
 
   public List<RawMaterial> getNameByPlantCode(String plantCode, String name);
 

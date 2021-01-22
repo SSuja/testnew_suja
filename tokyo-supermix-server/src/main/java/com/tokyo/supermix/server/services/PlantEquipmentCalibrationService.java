@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
+import com.tokyo.supermix.data.enums.CalibrationType;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -21,11 +23,10 @@ public interface PlantEquipmentCalibrationService {
   public boolean isPlantEquipmentCalibrationExit(Long id);
 
   public List<PlantEquipmentCalibration> searchPlantEquipmentCalibration(String serialNo,
-      String equipmentName, String calibratedDate, String dueDate, String calibrationType,
-      String supplierName, String accuracy, String status, String employeeName, BooleanBuilder booleanBuilder,
-      int page, int size, Pageable pageable, String plantCode, Pagination pagination);
-
-
+      String equipmentName, String calibratedDate, String dueDate, CalibrationType calibrationType,
+      String supplierName, String accuracy, Status status, String employeeName,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
+      Pagination pagination);
 
   public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationsByPlantCode(String plantCode);
 

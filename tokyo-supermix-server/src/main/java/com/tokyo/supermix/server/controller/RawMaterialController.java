@@ -268,6 +268,7 @@ public class RawMaterialController {
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "materialSubCategoryName",
           required = false) String materialSubCategoryName,
+      @RequestParam(name = "materialCategoryName", required = false) String materialCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "prefix", required = false) String prefix,
       @RequestParam(name = "erpCode", required = false) String erpCode,
@@ -278,7 +279,7 @@ public class RawMaterialController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
         rawMaterialService.searchRawMaterial(booleanBuilder, name, materialSubCategoryName,
-            plantName, prefix, plantCode, erpCode, pageable, pagination),
+            materialCategoryName, plantName, prefix, plantCode, erpCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 

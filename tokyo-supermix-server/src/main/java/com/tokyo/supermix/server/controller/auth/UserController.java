@@ -116,14 +116,14 @@ public class UserController {
       pagination.setTotalRecords(userService.getCountUser());
       return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USER,
           mapper.map(userService.getAllUsersByPagination(pageable), UserResponseDto.class),
-          RestApiResponseStatus.OK,pagination), HttpStatus.OK);
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_USER)
         .contains(plantCode)) {
       pagination.setTotalRecords(userService.getCountUserByPlantCode(plantCode));
       return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USER,
-          mapper.map(userService.getUserByPlantCode(plantCode,pageable), UserResponseDto.class),
+          mapper.map(userService.getUserByPlantCode(plantCode, pageable), UserResponseDto.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
@@ -174,7 +174,7 @@ public class UserController {
         new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_USER_SUCCESS),
         HttpStatus.OK);
   }
-  
+
   @GetMapping(value = PrivilegeEndpointURI.USER_SEARCH)
   public ResponseEntity<Object> searchUser(@PathVariable String plantCode,
       @RequestParam(name = "userName", required = false) String userName,
@@ -188,8 +188,8 @@ public class UserController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.USERS,
-        userService.searchUserByPlantCode(userName, firstName, plantName, designationName,phoneNumber,
-            booleanBuilder, plantCode, pageable, pagination),
+        userService.searchUserByPlantCode(userName, firstName, plantName, designationName,
+            phoneNumber, booleanBuilder, plantCode, pageable, pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

@@ -95,14 +95,18 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
-      String materialSubCategoryName, String plantName, String prefix, String plantCode,
-      String erpCode, Pageable pageable, Pagination pagination) {
+      String materialSubCategoryName, String materialCategoryName, String plantName, String prefix,
+      String plantCode, String erpCode, Pageable pageable, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.name.containsIgnoreCase(name));
     }
     if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name
           .containsIgnoreCase(materialSubCategoryName));
+    }
+    if (materialCategoryName != null && !materialCategoryName.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+          .containsIgnoreCase(materialCategoryName));
     }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.containsIgnoreCase(plantName));
