@@ -9,11 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
+import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 
@@ -28,6 +30,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
+  @Autowired
+  private MaterialSubCategoryRepository materialSubCategoryRepository;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -168,7 +172,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     if (testConfigure.getMaterialSubCategory() == null) {
       rawMaterials.addAll(rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryId(
           testConfigure.getMaterialCategory().getId()));
-
     } else if (testConfigure.getRawMaterial() == null) {
       rawMaterials.addAll(rawMaterialRepository
           .findByMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId()));
@@ -197,5 +200,19 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       testConfigure.setTestResultType(TestResultType.MULTI_RESULT);
       testConfigureRepository.save(testConfigure);
     }
+  }
+
+  @Transactional
+  public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureId(Long testConfigureId) {
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    List<MaterialSubCategory> materialSubCategoryList = new ArrayList<>();
+    if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() != null) {
+      materialSubCategoryList.add(testConfigure.getMaterialSubCategory());
+    }
+    if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() == null) {
+      materialSubCategoryList.addAll(materialSubCategoryRepository
+          .findByMaterialCategory(testConfigure.getMaterialCategory()));
+    }
+    return materialSubCategoryList;
   }
 }

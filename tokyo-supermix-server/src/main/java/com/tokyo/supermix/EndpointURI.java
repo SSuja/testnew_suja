@@ -226,9 +226,9 @@ public final class EndpointURI {
   public static final String PARAMETER = BASE_API_PATH + "parameter";
   public static final String PARAMETERS = BASE_API_PATH + "parameters";
   public static final String PARAMETER_BY_ID = PARAMETER + ID;
-  public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
+  public static final String SEARCH_PARAMETERS = PARAMETER + SEARCH;
 
   /*
    * Project APIs
@@ -511,6 +511,8 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
       MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID =
+	      MATERIAL_ACCEPTED_VALUE +SLASH+"material-sub-categories"+SLASH+"test-configure"+SLASH+"{testConfigureId}";
   /*
    * AcceptedValue
    */
@@ -849,7 +851,7 @@ public final class EndpointURI {
   /*
    * Upload Image API
    */
-  
+
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
   public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
   public static final String GET_TEST_IMAGES_BY_MATERIAL_TEST =

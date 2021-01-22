@@ -57,4 +57,7 @@ public interface MaterialAcceptedValueRepository
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndMaterialSubCategoryId(Long testConfigureId,
       Long materialSubCategoryId);
+  
+  MaterialAcceptedValue findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(
+	      Long testConfigureId, Long testParameterId, Long MaterialSubCategoryId);
 }
