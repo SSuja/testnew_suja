@@ -23,6 +23,7 @@ import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationRequestDto;
 import com.tokyo.supermix.data.dto.PlantEquipmentCalibrationResponseDto;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.enums.CalibrationType;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -160,23 +161,21 @@ public class PlantEquipmentCalibrationController {
       @RequestParam(name = "equipmentName", required = false) String equipmentName,
       @RequestParam(name = "calibratedDate", required = false) String calibratedDate,
       @RequestParam(name = "dueDate", required = false) String dueDate,
-      @RequestParam(name = "calibrationType", required = false) String calibrationType,
+      @RequestParam(name = "calibrationType", required = false) CalibrationType calibrationType,
       @RequestParam(name = "supplierName", required = false) String supplierName,
       @RequestParam(name = "accuracy", required = false) String accuracy,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "employeeName", required = false) String employeeName) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
-              mapper.map(plantEquipmentCalibrationService.searchPlantEquipmentCalibration(serialNo,
-                  equipmentName, calibratedDate, dueDate, calibrationType, supplierName, accuracy,
-                  status,employeeName, booleanBuilder, page, size, pageable, plantCode, pagination),
-                  PlantEquipmentCalibrationResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
+          mapper.map(plantEquipmentCalibrationService.searchPlantEquipmentCalibration(serialNo,
+              equipmentName, calibratedDate, dueDate, calibrationType, supplierName, accuracy,
+              status, employeeName, booleanBuilder, page, size, pageable, plantCode, pagination),
+              PlantEquipmentCalibrationResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);

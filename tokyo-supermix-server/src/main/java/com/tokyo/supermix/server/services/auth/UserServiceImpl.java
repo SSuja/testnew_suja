@@ -301,24 +301,23 @@ public class UserServiceImpl implements UserService {
       String plantName, String designationName, String phoneNumber, BooleanBuilder booleanBuilder,
       String plantCode, Pageable pageable, Pagination pagination) {
     if (userName != null && !userName.isEmpty()) {
-      booleanBuilder.and(QUser.user.userName.startsWithIgnoreCase(userName));
+      booleanBuilder.and(QUser.user.userName.contains(userName));
     }
     if (firstName != null && !firstName.isEmpty()) {
-      booleanBuilder.and(QUser.user.employee.firstName.startsWithIgnoreCase(firstName));
+      booleanBuilder.and(QUser.user.employee.firstName.contains(firstName));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QUser.user.employee.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QUser.user.employee.plant.name.contains(plantName));
     }
     if (designationName != null && !designationName.isEmpty()) {
-      booleanBuilder
-          .and(QUser.user.employee.designation.name.startsWithIgnoreCase(designationName));
+      booleanBuilder.and(QUser.user.employee.designation.name.contains(designationName));
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
-      booleanBuilder.and(QUser.user.employee.phoneNumber.startsWithIgnoreCase(phoneNumber));
+      booleanBuilder.and(QUser.user.employee.phoneNumber.contains(phoneNumber));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QUser.user.employee.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QUser.user.employee.plant.code.contains(plantCode));
     }
     pagination.setTotalRecords(
         ((Collection<User>) userRepository.findAll(booleanBuilder)).stream().count());

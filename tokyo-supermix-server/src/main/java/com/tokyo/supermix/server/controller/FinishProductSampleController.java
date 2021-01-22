@@ -252,7 +252,7 @@ public class FinishProductSampleController {
       @RequestParam(name = "equipmentName", required = false) String equipmentName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "mixDesignCode", required = false) String mixDesignCode,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "rawmaterial", required = false) String rawMaterialName,
