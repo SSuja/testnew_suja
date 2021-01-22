@@ -105,10 +105,6 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name
           .containsIgnoreCase(materialSubCategoryName));
     }
-    if (materialCategoryName != null && !materialCategoryName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
-          .containsIgnoreCase(materialCategoryName));
-    }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.containsIgnoreCase(plantName));
     }
