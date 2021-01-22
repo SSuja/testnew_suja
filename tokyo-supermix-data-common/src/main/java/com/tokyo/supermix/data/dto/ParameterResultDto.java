@@ -4,6 +4,7 @@ public class ParameterResultDto {
   private Long testParameterId;
   private Long testEquationId;
   private Double value;
+  private String dateValue;
 
   public Long getTestParameterId() {
     return testParameterId;
@@ -28,4 +29,12 @@ public class ParameterResultDto {
   public void setValue(Double value) {
     this.value = value;
   }
+
+  public String getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(String dateValue) {
+    this.dateValue = dateValue;
+  }  
 }

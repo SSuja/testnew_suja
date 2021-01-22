@@ -15,7 +15,9 @@ import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 
 @Service
 public class AcceptedValueServiceImpl implements AcceptedValueService {
@@ -24,6 +26,9 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private AcceptedValueRepository acceptedValueRepository;
   @Autowired
   private TestConfigureService testConfigureService;
+  @Autowired
+  private TestConfigureRepository testConfigureRepository;
+
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -47,7 +52,9 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteAcceptedValue(Long id) {
+    AcceptedValue acceptedValue = acceptedValueRepository.findById(id).get();
     acceptedValueRepository.deleteById(id);
+    upDateTesConfigureType(acceptedValue.getTestConfigure().getId());
   }
 
   @Transactional(readOnly = true)
@@ -152,5 +159,19 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   @Transactional(readOnly = true)
   public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId) {
     return acceptedValueRepository.existsByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional
+  public void upDateTesConfigureType(Long testConfigureId) {
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    List<AcceptedValue> acceptedValueList =
+        acceptedValueRepository.findByTestConfigureIdAndFinalResultTrue(testConfigureId);
+    if (acceptedValueList.isEmpty() || acceptedValueList.size() == 1) {
+      testConfigure.setTestResultType(TestResultType.SINGLE_RESULT);
+      testConfigureRepository.save(testConfigure);
+    } else {
+      testConfigure.setTestResultType(TestResultType.MULTI_RESULT);
+      testConfigureRepository.save(testConfigure);
+    }
   }
 }

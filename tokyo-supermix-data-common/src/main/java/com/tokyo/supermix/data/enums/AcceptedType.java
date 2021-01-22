@@ -1,5 +1,5 @@
 package com.tokyo.supermix.data.enums;
 
 public enum AcceptedType {
-  TEST, MATERIAL
+  TEST, MATERIAL, SUB_CATEGORY
 }

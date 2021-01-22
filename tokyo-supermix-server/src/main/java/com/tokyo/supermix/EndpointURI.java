@@ -227,9 +227,9 @@ public final class EndpointURI {
   public static final String PARAMETER = BASE_API_PATH + "parameter";
   public static final String PARAMETERS = BASE_API_PATH + "parameters";
   public static final String PARAMETER_BY_ID = PARAMETER + ID;
-  public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
+  public static final String SEARCH_PARAMETERS = PARAMETER + SEARCH;
 
   /*
    * Project APIs
@@ -847,7 +847,10 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_EQUATION_BY_RATIO_CONFIG =
       RATIO_CONFIG_EQUATION + SLASH + "ratio-config" + SLASH + "{ratioConfigId}";
 
-  // upload image
+  /*
+   * Upload Image API
+   */
+
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
   public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
   public static final String GET_TEST_IMAGES_BY_MATERIAL_TEST =
@@ -856,8 +859,9 @@ public final class EndpointURI {
       UPLOAD_IMAGE + SLASH + "finishProductTest" + SLASH + "{finishProductTestCode}";
   public static final String IMAGE_BY_ID = UPLOAD_IMAGE + ID;
 
-  // samples by type
-
+  /*
+   * Sample Type API
+   */
   public static final String RAW_MATERIAL_SAMPLE = BASE_API_PATH + "raw-material-sample";
   public static final String GET_SAMPLES_BY_TYPE =
       RAW_MATERIAL_SAMPLE + "/sample-type" + "/{rawMaterialSampleType}";

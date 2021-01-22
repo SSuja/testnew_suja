@@ -45,7 +45,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   public String createFinishProductTest(FinishProductTest finishProductTest) {
     if (finishProductTest.getCode() == null) {
       String prefix =
-          testConfigureRepository.getOne(finishProductTest.getTestConfigure().getId()).getPrefix()+"-";
+          testConfigureRepository.getOne(finishProductTest.getTestConfigure().getId()).getPrefix()
+              + "-";
       List<FinishProductTest> finishProductTestList =
           finishProductTestRepository.findByCodeContaining(prefix);
       if (finishProductTestList.size() == 0) {
@@ -442,8 +443,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   @Transactional(readOnly = true)
   public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
-      String materialName, String plantName, String plantCode, String status, String date,
-      Pageable pageable, Pagination pagination) {
+      String materialName, String mainCategoryName, String subCategoryName, String plantName,
+      String plantCode, String status, String date, Pageable pageable, Pagination pagination) {
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(
           QFinishProductTest.finishProductTest.specimenCode.startsWithIgnoreCase(specimenCode));
@@ -464,6 +465,14 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
               .startsWithIgnoreCase(materialName));
+    }
+    if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.materialCategory.name
+          .startsWithIgnoreCase(mainCategoryName));
+    }
+    if (subCategoryName != null && !subCategoryName.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.materialSubCategory.name
+          .startsWithIgnoreCase(subCategoryName));
     }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder
@@ -495,6 +504,4 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       String finishProductSampleCode) {
     return finishProductTestRepository.findByFinishProductSampleCode(finishProductSampleCode);
   }
-
-
 }

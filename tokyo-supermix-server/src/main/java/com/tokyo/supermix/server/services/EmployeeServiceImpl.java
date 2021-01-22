@@ -190,7 +190,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         ((Collection<Employee>) employeeRepository.findAll(booleanBuilder)).stream().count());
     return mapper.map(employeeRepository.findAll(booleanBuilder, pageable).toList(),
         EmployeeResponseDto.class);
-
   }
 
   @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.time.LocalDateTime;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.entities.Unit;
 import com.tokyo.supermix.data.enums.InputMethod;
@@ -20,6 +21,7 @@ public class TestParameterResponseDto {
   private String name;
   private Long tableFormatId;
   private String tableFormatName;
+  private LocalDateTime dateValue;
 
   public String getTableFormatName() {
 	return tableFormatName;
@@ -131,5 +133,13 @@ public Long getId() {
 
   public void setTableFormatId(Long tableFormatId) {
     this.tableFormatId = tableFormatId;
+  }
+
+  public LocalDateTime getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(LocalDateTime dateValue) {
+    this.dateValue = dateValue;
   }
 }

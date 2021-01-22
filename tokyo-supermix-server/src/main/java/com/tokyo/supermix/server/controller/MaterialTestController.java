@@ -152,21 +152,28 @@ public class MaterialTestController {
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_TEST)
   public ResponseEntity<Object> searchMaterialTest(@PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
+      @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "specimenCode", required = false) String specimenCode,
       @RequestParam(name = "testName", required = false) String testName,
       @RequestParam(name = "status", required = false) String status,
-      @RequestParam(name = "supplierName", required = false) String supplierName) {
+      @RequestParam(name = "supplierName", required = false) String supplierName,
+      @RequestParam(name = "materialCategory", required = false) String materialCategory,
+      @RequestParam(name = "subCategoryName", required = false) String subCategoryName) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-          mapper.map(materialTestService.searchMaterialTest(incomingSampleCode, date, specimenCode,
-              status, supplierName, testName, booleanBuilder, page, size, pageable, plantCode,
-              pagination), MaterialTestResponseDto.class),
-          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+              mapper.map(
+                  materialTestService.searchMaterialTest(code, incomingSampleCode, date,
+                      specimenCode, status, supplierName, testName, materialCategory,
+                      subCategoryName, booleanBuilder, page, size, pageable, plantCode, pagination),
+                  MaterialTestResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -282,24 +289,6 @@ public class MaterialTestController {
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
-  // public ResponseEntity<Object> getMaterialTestByPlantCode(
-  // @PathVariable String plantCode) {
-  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(materialTestService.getAllMaterialTests(), MaterialTestResponseDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // if (plantRepository.existsByCode(plantCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(
-  // materialTestService.getMaterialTestByPlant(plantCode),
-  // MaterialTestResponseDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  //
   @GetMapping(value = EndpointURI.MATERIAL_TEST_BY_PLANT_CODE)
   public ResponseEntity<Object> getMaterialTestByPlantCode(@PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
@@ -326,7 +315,6 @@ public class MaterialTestController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-
   }
 
   @GetMapping(value = EndpointURI.GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE)
