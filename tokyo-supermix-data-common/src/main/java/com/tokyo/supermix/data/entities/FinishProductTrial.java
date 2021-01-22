@@ -28,8 +28,7 @@ public class FinishProductTrial extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "testParameterId", nullable = true)
   private TestParameter testParameter;
-
-
+  private String DateValue;
 
   public Long getTrialNo() {
     return trialNo;
@@ -81,5 +80,21 @@ public class FinishProductTrial extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getDateValue() {
+    return DateValue;
+  }
+
+  public void setDateValue(String dateValue) {
+    DateValue = dateValue;
   }
 }

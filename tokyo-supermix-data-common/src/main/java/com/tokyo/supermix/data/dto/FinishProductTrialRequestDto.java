@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
-import com.tokyo.supermix.data.enums.FinishProductState;
 
 public class FinishProductTrialRequestDto {
   private Long id;
@@ -10,6 +9,7 @@ public class FinishProductTrialRequestDto {
   private Double value;
   private String finishProductTestCode;
   private Long testParameterId;
+  private String dateValue;
 
   public Long getId() {
     return id;
@@ -57,5 +57,13 @@ public class FinishProductTrialRequestDto {
 
   public void setTestParameterId(Long testParameterId) {
     this.testParameterId = testParameterId;
+  }
+
+  public String getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(String dateValue) {
+    this.dateValue = dateValue;
   }
 }
