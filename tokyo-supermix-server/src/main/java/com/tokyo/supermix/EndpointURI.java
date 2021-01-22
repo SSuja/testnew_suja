@@ -511,6 +511,8 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
       MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID =
+	      MATERIAL_ACCEPTED_VALUE +SLASH+"material-sub-categories"+SLASH+"test-configure"+SLASH+"{testConfigureId}";
   /*
    * AcceptedValue
    */
