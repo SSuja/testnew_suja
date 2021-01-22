@@ -849,7 +849,7 @@ public final class EndpointURI {
   /*
    * Upload Image API
    */
-  
+
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
   public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
   public static final String GET_TEST_IMAGES_BY_MATERIAL_TEST =

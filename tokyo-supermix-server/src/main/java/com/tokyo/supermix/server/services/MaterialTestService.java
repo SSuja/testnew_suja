@@ -25,7 +25,8 @@ public interface MaterialTestService {
 
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId);
 
-  public boolean isMaterialTestByTestConfigureAndRawMaterialExists(Long testConfigureId, Long rawMaterialId);
+  public boolean isMaterialTestByTestConfigureAndRawMaterialExists(Long testConfigureId,
+      Long rawMaterialId);
 
   public List<MaterialTest> getMaterialTestByStatus(String status);
 
@@ -36,10 +37,10 @@ public interface MaterialTestService {
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
-  public List<MaterialTest> searchMaterialTest(String incomingSampleCode, String date,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String date,
       String specimenCode, String status, String supplierName, String testName,
-      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
-      Pagination pagination);
+      String mainCategoryName, String subCategoryName, BooleanBuilder booleanBuilder, int page,
+      int size, Pageable pageable, String plantCode, Pagination pagination);
 
   List<MaterialTest> getMaterialTestByPlantCode(String plantCode);
 
