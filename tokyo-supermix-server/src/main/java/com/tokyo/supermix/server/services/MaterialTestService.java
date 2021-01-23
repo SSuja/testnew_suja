@@ -6,6 +6,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -38,7 +39,7 @@ public interface MaterialTestService {
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
   public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String date,
-      String specimenCode, String status, String supplierName, String testName,
+      String specimenCode, Status status, String supplierName, String testName,
       String mainCategoryName, String subCategoryName, BooleanBuilder booleanBuilder, int page,
       int size, Pageable pageable, String plantCode, Pagination pagination);
 

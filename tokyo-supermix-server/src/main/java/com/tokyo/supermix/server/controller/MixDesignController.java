@@ -182,7 +182,7 @@ public class MixDesignController {
       @RequestParam(name = "materialName", required = false) String materialName,
       @RequestParam(name = "subCategoryName", required = false) String subCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);

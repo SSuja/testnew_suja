@@ -157,7 +157,7 @@ public class MaterialTestController {
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "specimenCode", required = false) String specimenCode,
       @RequestParam(name = "testName", required = false) String testName,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "supplierName", required = false) String supplierName,
       @RequestParam(name = "materialCategory", required = false) String materialCategory,
       @RequestParam(name = "subCategoryName", required = false) String subCategoryName) {

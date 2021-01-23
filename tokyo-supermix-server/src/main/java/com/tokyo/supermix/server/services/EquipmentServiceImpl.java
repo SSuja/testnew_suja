@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +31,13 @@ public class EquipmentServiceImpl implements EquipmentService {
   }
 
   @Transactional(readOnly = true)
-  public List<Equipment> getAllEquipments(Pageable pageable) {
-    return equipmentRepository.findAll(pageable).toList();
+  public List<Equipment> getAllEquipmentByPageable(Pageable pageable) {
+    return equipmentRepository.findAllByOrderByIdDesc(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<Equipment> getAllEquipments() {
+    return equipmentRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
   }
 
   @Transactional(readOnly = true)
@@ -60,7 +66,7 @@ public class EquipmentServiceImpl implements EquipmentService {
   public List<Equipment> searchEquipment(String name, EquipmentType equipmentType,
       BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QEquipment.equipment.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QEquipment.equipment.name.contains(name));
     }
     if (equipmentType != null) {
       booleanBuilder.and(QEquipment.equipment.equipmentType.eq(equipmentType));

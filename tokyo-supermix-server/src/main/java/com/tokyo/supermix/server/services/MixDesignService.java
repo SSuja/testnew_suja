@@ -50,7 +50,7 @@ public interface MixDesignService {
 
   public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
       String materialName, String subCategoryName, String plantName, String plantCode,
-      String status, String date, Pageable pageable, Pagination pagination);
+      Status status, String date, Pageable pageable, Pagination pagination);
 
   public List<MixDesign> getCodeByPlantCode(String plantCode, String code);
 

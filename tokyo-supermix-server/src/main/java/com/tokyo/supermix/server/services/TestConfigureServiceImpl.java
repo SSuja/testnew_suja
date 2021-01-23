@@ -306,22 +306,21 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       String mainCategoryName, String subCategoryName, String materialName,
       BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination) {
     if (testName != null && !testName.isEmpty()) {
-      booleanBuilder.and(QTestConfigure.testConfigure.test.name.startsWithIgnoreCase(testName));
+      booleanBuilder.and(QTestConfigure.testConfigure.test.name.contains(testName));
     }
     if (mainType != null) {
       booleanBuilder.and(QTestConfigure.testConfigure.testType.eq(mainType));
     }
     if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
-      booleanBuilder.and(QTestConfigure.testConfigure.materialCategory.name
-          .startsWithIgnoreCase(mainCategoryName));
+      booleanBuilder
+          .and(QTestConfigure.testConfigure.materialCategory.name.contains(mainCategoryName));
     }
     if (subCategoryName != null && !subCategoryName.isEmpty()) {
-      booleanBuilder.and(QTestConfigure.testConfigure.materialSubCategory.name
-          .startsWithIgnoreCase(subCategoryName));
+      booleanBuilder
+          .and(QTestConfigure.testConfigure.materialSubCategory.name.contains(subCategoryName));
     }
     if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder
-          .and(QTestConfigure.testConfigure.rawMaterial.name.startsWithIgnoreCase(materialName));
+      booleanBuilder.and(QTestConfigure.testConfigure.rawMaterial.name.contains(materialName));
     }
     pagination.setTotalRecords(
         ((Collection<TestConfigure>) testConfigureRepository.findAll(booleanBuilder)).stream()

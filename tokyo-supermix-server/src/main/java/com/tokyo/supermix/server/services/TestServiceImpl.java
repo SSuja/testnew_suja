@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ public class TestServiceImpl implements TestService {
   }
 
   @Transactional(readOnly = true)
-  public List<Test> getAllTests(Pageable pegeable) {
+  public List<Test> getAllTestByPagination(Pageable pegeable) {
     return testRepository.findAllByOrderByIdDesc(pegeable).toList();
   }
 
@@ -60,7 +61,7 @@ public class TestServiceImpl implements TestService {
   public List<Test> searchTests(String name, BooleanBuilder booleanBuilder, int page, int size,
       Pageable pageable, Pagination pagination) {
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QTest.test.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QTest.test.name.contains(name));
     }
     pagination.setTotalRecords(
         ((Collection<Test>) testRepository.findAll(booleanBuilder)).stream().count());
@@ -70,5 +71,10 @@ public class TestServiceImpl implements TestService {
   @Transactional(readOnly = true)
   public Long countTest() {
     return testRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public List<Test> getAllTests() {
+    return testRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
   }
 }

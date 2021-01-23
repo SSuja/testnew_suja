@@ -176,28 +176,28 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Transactional(readOnly = true)
   public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
       String materialName, String subCategoryName, String plantName, String plantCode,
-      String status, String date, Pageable pageable, Pagination pagination) {
+      Status status, String date, Pageable pageable, Pagination pagination) {
 
     if (code != null && !code.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.code.startsWithIgnoreCase(code));
+      booleanBuilder.and(QMixDesign.mixDesign.code.contains(code));
     }
     if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.startsWithIgnoreCase(materialName));
+      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.contains(materialName));
     }
     if (subCategoryName != null && !subCategoryName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.materialSubCategory.name
-          .startsWithIgnoreCase(subCategoryName));
+      booleanBuilder
+          .and(QMixDesign.mixDesign.rawMaterial.materialSubCategory.name.contains(subCategoryName));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QMixDesign.mixDesign.plant.name.contains(plantName));
     }
 
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QMixDesign.mixDesign.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QMixDesign.mixDesign.plant.code.contains(plantCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.status.stringValue().startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QMixDesign.mixDesign.status.eq(status));
     }
     if (date != null && !date.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.date.stringValue().startsWithIgnoreCase(date));
