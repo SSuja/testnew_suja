@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.Equipment;
 import com.tokyo.supermix.data.entities.QEquipment;
-import com.tokyo.supermix.data.entities.QTest;
-import com.tokyo.supermix.data.entities.Test;
 import com.tokyo.supermix.data.enums.EquipmentType;
 import com.tokyo.supermix.data.repositories.EquipmentRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;

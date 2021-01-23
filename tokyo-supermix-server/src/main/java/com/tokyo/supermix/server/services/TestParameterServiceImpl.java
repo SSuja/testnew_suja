@@ -146,10 +146,10 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
         testParameterResponseDto.setInputMethods(test.getInputMethods());
         testParameterResponseDto.setUnit(test.getUnit());
-        if(test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)) {
+        if (test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)) {
           testParameterResponseDto.setDateValue(test.getDateValue());
-        }else {
-        testParameterResponseDto.setValue(test.getValue());
+        } else {
+          testParameterResponseDto.setValue(test.getValue());
         }
         testParameterResponseDto.setAcceptedCriteria(test.isAcceptedCriteria());
         testParameterResponseDto.setName(test.getName());
