@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestDto;
 import com.tokyo.supermix.data.entities.Test;
@@ -20,6 +24,8 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.TestService;
 import com.tokyo.supermix.util.Constants;
@@ -57,8 +63,21 @@ public class TestController {
   @GetMapping(value = EndpointURI.TESTS)
   public ResponseEntity<Object> getAllTests() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
-        mapper.map(testService.getAllTests(), TestDto.class), RestApiResponseStatus.OK), null,
+        mapper.map(testService.getAllTests(), TestDto.class), RestApiResponseStatus.OK),
         HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.TESTS_PAGINATION)
+  public ResponseEntity<Object> getAllTests(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(testService.countTest());
+
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST,
+        mapper.map(testService.getAllTestByPagination(pageable), TestDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
   // Delete Test API
@@ -105,5 +124,18 @@ public class TestController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
         validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_TEST)
+  public ResponseEntity<Object> searchTests(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "name", required = false) String name) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST,
+        mapper.map(testService.searchTests(name, booleanBuilder, page, size, pageable, pagination),
+            TestDto.class),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

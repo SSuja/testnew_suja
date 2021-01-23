@@ -178,10 +178,11 @@ public class MixDesignController {
 
   @GetMapping(value = EndpointURI.MIX_DESIGN_SEARCH)
   public ResponseEntity<Object> getMixDesign(@PathVariable String plantCode,
+      @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "materialName", required = false) String materialName,
       @RequestParam(name = "subCategoryName", required = false) String subCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
@@ -189,8 +190,8 @@ public class MixDesignController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MIX_DESIGN,
-        mixDesignService.searchMixDesign(booleanBuilder, materialName, subCategoryName, plantName,
-            plantCode, status, date, pageable, pagination),
+        mixDesignService.searchMixDesign(booleanBuilder, code, materialName, subCategoryName,
+            plantName, plantCode, status, date, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
@@ -215,10 +216,10 @@ public class MixDesignController {
             MixDesignResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.MIX_DESIGNS_WITH_TOKEN)
   public String getMixDesignsBy(@PathVariable String confirmationToken) {
-	  mixDesignService.updateMixDesignWithConfirmation(confirmationToken);
+    mixDesignService.updateMixDesignWithConfirmation(confirmationToken);
     return "<div ><div style='display:flex,flexDirection:row'><div><img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/Green_tick.svg' alt='Verified Image Not Found' width='100' height='100'></div><div style='color:darkblue'><h1>This MixDesign Successfully Approved</h1></div></div></div>";
   }
 }

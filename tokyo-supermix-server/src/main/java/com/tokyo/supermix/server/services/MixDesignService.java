@@ -48,15 +48,15 @@ public interface MixDesignService {
 
   public Long getCountMixDesignByPlantCode(String plantCode);
 
-  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
+  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
       String materialName, String subCategoryName, String plantName, String plantCode,
-      String status, String date, Pageable pageable, Pagination pagination);
+      Status status, String date, Pageable pageable, Pagination pagination);
 
   public List<MixDesign> getCodeByPlantCode(String plantCode, String code);
 
   public List<MixDesign> getCode(String code);
 
   public List<MixDesign> getCodeAndRawMaterialId(Long rawMaterialId, Status status, String code);
-  
+
   public void updateMixDesignWithConfirmation(String confirmationToken);
 }

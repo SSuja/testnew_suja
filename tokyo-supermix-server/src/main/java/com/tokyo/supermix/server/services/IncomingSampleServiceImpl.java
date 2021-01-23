@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -185,39 +184,36 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
-      String status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, RawMaterialSampleType rawMaterialSampleType,
-      String plantCode, Pagination pagination) {
+  public List<IncomingSample> searchIncomingSample(String code, String date, Status status,
+      String rawMaterialName, String plantName, String supplierName, BooleanBuilder booleanBuilder,
+      Pageable pageable, RawMaterialSampleType rawMaterialSampleType, String plantCode,
+      Pagination pagination) {
     if (code != null && !code.isEmpty()) {
-      booleanBuilder.and(QIncomingSample.incomingSample.code.startsWithIgnoreCase(code));
-    }
-    if (vehicleNo != null && !vehicleNo.isEmpty()) {
-      booleanBuilder.and(QIncomingSample.incomingSample.vehicleNo.startsWithIgnoreCase(vehicleNo));
+      booleanBuilder.and(QIncomingSample.incomingSample.code.contains(code));
     }
     if (date != null) {
-      booleanBuilder.and(QIncomingSample.incomingSample.date.eq(date));
+      booleanBuilder.and(QIncomingSample.incomingSample.date.stringValue().contains(date));
     }
     if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
-      booleanBuilder.and(
-          QIncomingSample.incomingSample.rawMaterial.name.startsWithIgnoreCase(rawMaterialName));
+      booleanBuilder.and(QIncomingSample.incomingSample.rawMaterial.name.contains(rawMaterialName));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QIncomingSample.incomingSample.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QIncomingSample.incomingSample.plant.name.contains(plantName));
     }
     if (supplierName != null && !supplierName.isEmpty()) {
-      booleanBuilder
-          .and(QIncomingSample.incomingSample.supplier.name.startsWithIgnoreCase(supplierName));
+      booleanBuilder.and(QIncomingSample.incomingSample.supplier.name.contains(supplierName));
     }
     if (status != null) {
-      booleanBuilder.and(QIncomingSample.incomingSample.status.stringValue().startsWith(status));
+      booleanBuilder.and(QIncomingSample.incomingSample.status.eq(status));
     }
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-      booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QIncomingSample.incomingSample.plant.code.contains(plantCode));
     }
     pagination.setTotalRecords(
-        incomingSampleRepository.countByRawMaterialSampleType(rawMaterialSampleType));
-    return incomingSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        (long) ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).stream()
+            .filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
+            .collect(Collectors.toList()).size());
+    return ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).stream()
         .filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
         .collect(Collectors.toList());
   }

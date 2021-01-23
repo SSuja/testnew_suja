@@ -43,7 +43,7 @@ public class MixDesignServiceImpl implements MixDesignService {
   @Autowired
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
-  MixDesignConfirmationTokenRepository  mixDesignConfirmationTokenRepository;
+  MixDesignConfirmationTokenRepository mixDesignConfirmationTokenRepository;
   @Autowired
   private Mapper mapper;
 
@@ -65,12 +65,12 @@ public class MixDesignServiceImpl implements MixDesignService {
         mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
       }
     }
-    if(mixDesign.isApproved()) {
+    if (mixDesign.isApproved()) {
       mixDesign.setApproved(true);
-    }else {
+    } else {
       mixDesign.setApproved(false);
     }
-    
+
     MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
     if (mixDesignObj != null) {
       emailNotification.sendMixDesignCreationEmail(mixDesignObj);
@@ -174,27 +174,30 @@ public class MixDesignServiceImpl implements MixDesignService {
   }
 
   @Transactional(readOnly = true)
-  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder,
+  public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
       String materialName, String subCategoryName, String plantName, String plantCode,
-      String status, String date, Pageable pageable, Pagination pagination) {
+      Status status, String date, Pageable pageable, Pagination pagination) {
 
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.code.contains(code));
+    }
     if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.startsWithIgnoreCase(materialName));
+      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.contains(materialName));
     }
     if (subCategoryName != null && !subCategoryName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.materialSubCategory.name
-          .startsWithIgnoreCase(subCategoryName));
+      booleanBuilder
+          .and(QMixDesign.mixDesign.rawMaterial.materialSubCategory.name.contains(subCategoryName));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QMixDesign.mixDesign.plant.name.contains(plantName));
     }
 
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QMixDesign.mixDesign.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QMixDesign.mixDesign.plant.code.contains(plantCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.status.stringValue().startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QMixDesign.mixDesign.status.eq(status));
     }
     if (date != null && !date.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.date.stringValue().startsWithIgnoreCase(date));
@@ -228,13 +231,13 @@ public class MixDesignServiceImpl implements MixDesignService {
     return mixDesignRepository.findByRawMaterialIdAndStatusAndCodeContainsIgnoreCase(rawMaterialId,
         status, code);
   }
-  
+
   @Override
   public void updateMixDesignWithConfirmation(String confirmationToken) {
-	  MixDesignConfirmationToken token =
-    		mixDesignConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
+    MixDesignConfirmationToken token =
+        mixDesignConfirmationTokenRepository.findByConfirmationToken(confirmationToken);
     if (token != null) {
-      MixDesign  mixDesign = mixDesignRepository.findByCode(token.getMixDesign().getCode());
+      MixDesign mixDesign = mixDesignRepository.findByCode(token.getMixDesign().getCode());
       mixDesign.setApproved(true);
       mixDesignRepository.save(mixDesign);
     }

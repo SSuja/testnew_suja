@@ -162,35 +162,34 @@ public class EmployeeServiceImpl implements EmployeeService {
       String email, String lastName, String address, String phoneNumber, String plantName,
       String designationName, String plantCode, Pageable pageable, Pagination pagination) {
     if (firstName != null && !firstName.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.firstName.startsWithIgnoreCase(firstName));
+      booleanBuilder.and(QEmployee.employee.firstName.contains(firstName));
     }
     if (email != null && !email.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.email.startsWithIgnoreCase(email));
+      booleanBuilder.and(QEmployee.employee.email.contains(email));
     }
     if (lastName != null && !lastName.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.lastName.startsWithIgnoreCase(lastName));
+      booleanBuilder.and(QEmployee.employee.lastName.contains(lastName));
     }
     if (address != null && !address.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.address.startsWithIgnoreCase(address));
+      booleanBuilder.and(QEmployee.employee.address.contains(address));
     }
     if (phoneNumber != null && !phoneNumber.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.phoneNumber.startsWithIgnoreCase(phoneNumber));
+      booleanBuilder.and(QEmployee.employee.phoneNumber.contains(phoneNumber));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.plant.name.startsWithIgnoreCase(plantName));
+      booleanBuilder.and(QEmployee.employee.plant.name.contains(plantName));
     }
     if (designationName != null && !designationName.isEmpty()) {
-      booleanBuilder.and(QEmployee.employee.designation.name.startsWithIgnoreCase(designationName));
+      booleanBuilder.and(QEmployee.employee.designation.name.contains(designationName));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QEmployee.employee.plant.code.startsWithIgnoreCase(plantCode));
+      booleanBuilder.and(QEmployee.employee.plant.code.contains(plantCode));
     }
     pagination.setTotalRecords(
         ((Collection<Employee>) employeeRepository.findAll(booleanBuilder)).stream().count());
     return mapper.map(employeeRepository.findAll(booleanBuilder, pageable).toList(),
         EmployeeResponseDto.class);
-
   }
 
   @Transactional(readOnly = true)

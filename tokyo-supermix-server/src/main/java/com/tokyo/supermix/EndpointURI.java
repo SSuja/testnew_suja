@@ -110,14 +110,17 @@ public final class EndpointURI {
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
       MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
   public static final String MATERIAL_SUB_CATEGORY_SEARCH = MATERIAL_SUB_CATEGORY + SEARCH;
+  public static final String SEARCH_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORIES + SEARCH;
 
   /*
    * Equipment APIs
    */
   public static final String EQUIPMENT = BASE_API_PATH + "equipment";
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
+  public static final String EQUIPMENT_PAGINATION = BASE_API_PATH + "equipments-page";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
+  public static final String SEARCH_EQUIPMENT = EQUIPMENT + SEARCH;
   /*
    * Test Configure
    */
@@ -226,9 +229,9 @@ public final class EndpointURI {
   public static final String PARAMETER = BASE_API_PATH + "parameter";
   public static final String PARAMETERS = BASE_API_PATH + "parameters";
   public static final String PARAMETER_BY_ID = PARAMETER + ID;
-  public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
+  public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
   /*
    * Project APIs
@@ -423,7 +426,9 @@ public final class EndpointURI {
    */
   public static final String TEST = BASE_API_PATH + "test";
   public static final String TESTS = BASE_API_PATH + "tests";
+  public static final String TESTS_PAGINATION = BASE_API_PATH + "tests-page";
   public static final String TEST_BY_ID = TEST + ID;
+  public static final String SEARCH_TEST = TEST + SEARCH;
 
   /*
    * FinishProductSample
@@ -511,6 +516,8 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
       MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID =
+	      MATERIAL_ACCEPTED_VALUE +SLASH+"material-sub-categories"+SLASH+"test-configure"+SLASH+"{testConfigureId}";
   /*
    * AcceptedValue
    */
@@ -849,7 +856,7 @@ public final class EndpointURI {
   /*
    * Upload Image API
    */
-  
+
   public static final String UPLOAD_IMAGE = BASE_API_PATH + "upload-image";
   public static final String UPLOAD_IMAGES = BASE_API_PATH + "upload-images";
   public static final String GET_TEST_IMAGES_BY_MATERIAL_TEST =

@@ -90,10 +90,10 @@ public class FinishProductTrialController {
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL)
   public ResponseEntity<Object> saveFinishProductTrial(
-      @Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList, HttpServletRequest request)
-      throws ScriptException {
+      @Valid @RequestBody List<FinishProductTrialRequestDto> finishProductTrialRequestDtoList,
+      HttpServletRequest request) throws ScriptException {
     List<FinishProductTrialRequestDto> li = finishProductTrialRequestDtoList.stream()
-        .filter(finish -> (finish.getValue() == null
+        .filter(finish -> ((finish.getValue() == null && finish.getDateValue() == null)
             && testParameterService.getTestParameterById(finish.getTestParameterId())
                 .getInputMethods().equals(InputMethod.OBSERVE)
             && (testParameterService.getTestParameterById(finish.getTestParameterId()).getType()
@@ -121,8 +121,8 @@ public class FinishProductTrialController {
   }
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_RESULT_BY_FINISH_PRODUCT_CODE)
-  public ResponseEntity<Object> getResultByFinishProductCode(
-      @PathVariable String finishProductCode , HttpServletRequest request) {
+  public ResponseEntity<Object> getResultByFinishProductCode(@PathVariable String finishProductCode,
+      HttpServletRequest request) {
     if (finishProductTrialService.isFinishProductTestExists(finishProductCode)) {
       logger.debug("Get Finish Product Trial By Id");
       finishProductTrialService.saveFinishproductResult(finishProductCode, request);
