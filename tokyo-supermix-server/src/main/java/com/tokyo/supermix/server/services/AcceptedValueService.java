@@ -8,7 +8,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface AcceptedValueService {
@@ -47,7 +47,7 @@ public interface AcceptedValueService {
 
   public void upDateTesConfigureType(Long testConfigureId);
 
-  public List<AcceptedValue> searchAcceptedValue(String testName, MainType mainType,
-      String mainCategoryName, String subCategoryName, String materialName,
-      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination);
+  public List<AcceptedValue> searchAcceptedValue(Long testConfigId, String testParamName,
+      Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination);
 }

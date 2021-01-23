@@ -1,7 +1,9 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +17,10 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.QAcceptedValue;
+import com.tokyo.supermix.data.entities.Test;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
-import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -32,7 +35,6 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private TestConfigureService testConfigureService;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
-
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -179,11 +181,26 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
     }
   }
 
-  @Override
-  public List<AcceptedValue> searchAcceptedValue(String testName, MainType mainType,
-      String mainCategoryName, String subCategoryName, String materialName,
-      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination) {
-    // TODO Auto-generated method stub
-    return null;
+  @Transactional(readOnly = true)
+  public List<AcceptedValue> searchAcceptedValue(Long testConfigId, String testParamName,
+      Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination) {
+    System.out.println("mmmmmmmmmmmmmmmm" + booleanBuilder + "test" + testConfigId);
+    if (testParamName != null && !testParamName.isEmpty()) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.testParameter.name.contains(testParamName));
+    }
+    if (condition != null) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.conditionRange.eq(condition));
+    }
+    pagination.setTotalRecords(
+        (long) ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).stream()
+            .filter(ac -> ac.getTestConfigure().getId() == testConfigId)
+            .collect(Collectors.toList()).size());
+    return ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).stream()
+        .filter(ac -> ac.getTestConfigure().getId() == testConfigId).collect(Collectors.toList());
+    // pagination.setTotalRecords(
+    // ((Collection<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).stream()
+    // .count());
+    // return acceptedValueRepository.findAll(booleanBuilder, pageable).toList();
   }
 }
