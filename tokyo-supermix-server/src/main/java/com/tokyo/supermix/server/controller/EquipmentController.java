@@ -59,16 +59,16 @@ public class EquipmentController {
   }
 
   // Get All Equipments
-  // @GetMapping(value = EndpointURI.EQUIPMENTS)
-  // public ResponseEntity<Object> getAllEquipments() {
-  // logger.debug("get all equipments");
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENTS,
-  // mapper.map(equipmentService.getAllEquipments(), EquipmentDto.class),
-  // RestApiResponseStatus.OK), null, HttpStatus.OK);
-  // }
+  @GetMapping(value = EndpointURI.EQUIPMENTS)
+  public ResponseEntity<Object> getAllEquipments() {
+    logger.debug("get all equipments");
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENTS,
+        mapper.map(equipmentService.getAllEquipments(), EquipmentDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
 
   // Get all Test API
-  @GetMapping(value = EndpointURI.EQUIPMENTS)
+  @GetMapping(value = EndpointURI.EQUIPMENT_PAGINATION)
   public ResponseEntity<Object> getAllEquipments(@RequestParam(name = "page") int page,
       @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
@@ -76,7 +76,7 @@ public class EquipmentController {
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     pagination.setTotalRecords(equipmentService.countEquipment());
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EQUIPMENTS,
-        mapper.map(equipmentService.getAllEquipments(pageable), EquipmentDto.class),
+        mapper.map(equipmentService.getAllEquipmentByPageable(pageable), EquipmentDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 

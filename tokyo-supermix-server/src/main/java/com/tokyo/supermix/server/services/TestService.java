@@ -14,7 +14,9 @@ public interface TestService {
 
   public boolean isTestExist(String name);
 
-  public List<Test> getAllTests(Pageable pegeable);
+  public List<Test> getAllTests();
+
+  public List<Test> getAllTestByPagination(Pageable pegeable);
 
   public void deleteTest(Long id);
 

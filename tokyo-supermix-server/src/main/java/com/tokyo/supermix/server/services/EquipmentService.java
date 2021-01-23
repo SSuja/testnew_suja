@@ -12,7 +12,9 @@ public interface EquipmentService {
 
   public void saveEquipment(Equipment equipment);
 
-  public List<Equipment> getAllEquipments(Pageable pageable);
+  public List<Equipment> getAllEquipmentByPageable(Pageable pageable);
+
+  public List<Equipment> getAllEquipments();
 
   boolean isEquipmentExist(Long id);
 

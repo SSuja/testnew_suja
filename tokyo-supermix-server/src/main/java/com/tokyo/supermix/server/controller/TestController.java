@@ -61,6 +61,13 @@ public class TestController {
 
   // Get all Test API
   @GetMapping(value = EndpointURI.TESTS)
+  public ResponseEntity<Object> getAllTests() {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST,
+        mapper.map(testService.getAllTests(), TestDto.class), RestApiResponseStatus.OK),
+        HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.TESTS_PAGINATION)
   public ResponseEntity<Object> getAllTests(@RequestParam(name = "page") int page,
       @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
@@ -69,8 +76,8 @@ public class TestController {
     pagination.setTotalRecords(testService.countTest());
 
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST,
-        mapper.map(testService.getAllTests(pageable), TestDto.class), RestApiResponseStatus.OK,
-        pagination), null, HttpStatus.OK);
+        mapper.map(testService.getAllTestByPagination(pageable), TestDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
   // Delete Test API
