@@ -193,58 +193,60 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   @Transactional(readOnly = true)
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, String status, String date,
+      String mixDesignCode, String plantName, String plantCode, Status status, String date,
       String code, String rawMaterialName, String workOrderNumber, String customer,
       Pageable pageable, Pagination pagination) {
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
-          .startsWithIgnoreCase(finishProductCode));
+          .contains(finishProductCode));
     }
     if (equipmentName != null && !equipmentName.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.plantEquipment.serialNo
-          .startsWithIgnoreCase(equipmentName));
+          .contains(equipmentName));
     }
     if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.code
-          .startsWithIgnoreCase(mixDesignCode));
+          .contains(mixDesignCode));
     }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.name
-          .startsWithIgnoreCase(plantName));
+          .contains(plantName));
     }
 
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
-          .startsWithIgnoreCase(plantCode));
+          .contains(plantCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.status.stringValue()
-          .startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
     }
-    if (date != null && !date.isEmpty()) {
+    if (date != null) {
       booleanBuilder.and(
-          QFinishProductSample.finishProductSample.date.stringValue().startsWithIgnoreCase(date));
+          QFinishProductSample.finishProductSample.date.stringValue().contains(date));
     }
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(
-          QFinishProductSample.finishProductSample.code.stringValue().startsWithIgnoreCase(code));
+          QFinishProductSample.finishProductSample.code.stringValue().contains(code));
     }
     if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
-          .stringValue().startsWithIgnoreCase(rawMaterialName));
+          .stringValue().contains(rawMaterialName));
     }
     if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.stringValue()
-          .stringValue().startsWithIgnoreCase(workOrderNumber));
+          .stringValue().contains(workOrderNumber));
     }
     if (customer != null && !customer.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
-          .stringValue().stringValue().startsWithIgnoreCase(customer));
+          .stringValue().stringValue().contains(customer));
     }
-    pagination.setTotalRecords(finishProductSampleRepository.countByWorkOrderNumberNull());
+    pagination.setTotalRecords(
+        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
+            .filter(sample -> sample.getWorkOrderNumber() == null)
+            .collect(Collectors.toList()).size());
     return mapper.map(
-        finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
             .filter(sample -> sample.getWorkOrderNumber() == null).collect(Collectors.toList()),
         FinishProductSampleResponseDto.class);
   }

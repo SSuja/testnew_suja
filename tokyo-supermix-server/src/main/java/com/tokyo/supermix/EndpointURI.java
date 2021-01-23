@@ -110,6 +110,7 @@ public final class EndpointURI {
   public static final String GET_MATERIAL_SUB_CATEGORY_BY_MATERIAL_CATEGORY_NAME =
       MATERIAL_SUB_CATEGORY + "/materialCategoryName" + "/{materialCategoryName}";
   public static final String MATERIAL_SUB_CATEGORY_SEARCH = MATERIAL_SUB_CATEGORY + SEARCH;
+  public static final String SEARCH_MATERIAL_SUB_CATEGORY = MATERIAL_SUB_CATEGORIES + SEARCH;
 
   /*
    * Equipment APIs
@@ -515,6 +516,8 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
       MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID =
+	      MATERIAL_ACCEPTED_VALUE +SLASH+"material-sub-categories"+SLASH+"test-configure"+SLASH+"{testConfigureId}";
   /*
    * AcceptedValue
    */

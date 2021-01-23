@@ -12,6 +12,8 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.entities.QPlantEquipment;
 import com.tokyo.supermix.data.entities.QPlantEquipmentCalibration;
+import com.tokyo.supermix.data.enums.CalibrationType;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -37,12 +39,13 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
         .plusDays(plantEquipmentCalibration.getNoOfDays());
     java.sql.Date dueDate = java.sql.Date.valueOf(localDueDate);
     plantEquipmentCalibration.setDueDate(dueDate);
-    PlantEquipmentCalibration plantEquipmentCalibrationobj =plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+    PlantEquipmentCalibration plantEquipmentCalibrationobj =
+        plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
     if (plantEquipmentCalibrationobj != null) {
       emailNotification.sendcalibrationCreationEmail(plantEquipmentCalibrationobj);
     }
     return plantEquipmentCalibrationobj;
-    
+
   }
 
   @Transactional(readOnly = true)
@@ -67,47 +70,59 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> searchPlantEquipmentCalibration(String serialNo,
-      String equipmentName, String calibratedDate, String dueDate, String calibrationType,
-      String supplierName, String accuracy,String status, String employeeName, BooleanBuilder booleanBuilder,
-      int page, int size, Pageable pageable, String plantCode,Pagination pagination) {
+      String equipmentName, String calibratedDate, String dueDate, CalibrationType calibrationType,
+      String supplierName, String accuracy, Status status, String employeeName,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
+      Pagination pagination) {
     if (serialNo != null && !serialNo.isEmpty()) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.serialNo.startsWithIgnoreCase(serialNo));
+      booleanBuilder
+          .and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.serialNo
+              .contains(serialNo));
     }
 
     if (equipmentName != null && !equipmentName.isEmpty()) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.equipment.name.startsWithIgnoreCase(equipmentName));
+      booleanBuilder
+          .and(QPlantEquipmentCalibration.plantEquipmentCalibration.plantEquipment.equipment.name
+              .contains(equipmentName));
     }
 
-    if (calibratedDate != null ) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibratedDate.stringValue().startsWith(calibratedDate));
+    if (calibratedDate != null) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibratedDate
+          .stringValue().contains(calibratedDate));
     }
 
-    if (dueDate != null ) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.dueDate.stringValue().startsWith(dueDate));
+    if (dueDate != null) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.dueDate.stringValue()
+          .contains(dueDate));
     }
-    if (calibrationType != null && !calibrationType.isEmpty()) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.calibrationType.stringValue().startsWithIgnoreCase(calibrationType));
+    if (calibrationType != null) {
+      booleanBuilder.and(
+          QPlantEquipmentCalibration.plantEquipmentCalibration.calibrationType.eq(calibrationType));
     }
     if (supplierName != null && !supplierName.isEmpty()) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.supplier.name.startsWithIgnoreCase(supplierName));
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.supplier.name
+          .contains(supplierName));
     }
     if (accuracy != null && !accuracy.isEmpty()) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.startsWithIgnoreCase(accuracy));
+      booleanBuilder
+          .and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.contains(accuracy));
     }
-    if (status != null ) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.status.stringValue().startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.status.eq(status));
     }
     if (employeeName != null && !employeeName.isEmpty()) {
-      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.employee.firstName.startsWithIgnoreCase(employeeName));
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.employee.firstName
+          .contains(employeeName));
     }
 
-    if(!plantCode.equals("ADMIN")) {
+    if (!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
-      }
+    }
     pagination.setTotalRecords(
-        (long) ((List<PlantEquipmentCalibration>) plantEquipmentCalibrationRepository.findAll(booleanBuilder)).size());
+        (long) ((List<PlantEquipmentCalibration>) plantEquipmentCalibrationRepository
+            .findAll(booleanBuilder)).size());
     return plantEquipmentCalibrationRepository.findAll(booleanBuilder, pageable).toList();
-   
+
   }
 
   @Transactional(readOnly = true)
@@ -137,26 +152,27 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration(Pageable pageable) {
-  
+
     return plantEquipmentCalibrationRepository.findAll(pageable).toList();
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationByPlantCode(String plantCode,
       Pageable pageable) {
-  
-    return plantEquipmentCalibrationRepository.findAllByPlantEquipmentPlantCode(plantCode, pageable);
+
+    return plantEquipmentCalibrationRepository.findAllByPlantEquipmentPlantCode(plantCode,
+        pageable);
   }
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipmentCalibration() {
-   
+
     return plantEquipmentCalibrationRepository.count();
   }
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipmentCalibrationByPlantCode(String plantCode) {
-  
+
     return plantEquipmentCalibrationRepository.countByPlantEquipmentPlantCode(plantCode);
   }
 }

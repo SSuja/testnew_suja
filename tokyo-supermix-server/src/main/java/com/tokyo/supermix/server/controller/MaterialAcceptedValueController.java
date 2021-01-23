@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialAcceptedValueRequestDto;
 import com.tokyo.supermix.data.dto.MaterialAcceptedValueResponseDto;
+import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -182,5 +183,15 @@ public class MaterialAcceptedValueController {
         mapper.map(materialAcceptedValueService.findRawMaterialByTestConfigureId(testConfigureId),
             RawMaterialResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getMaterialSubCategory(@PathVariable Long testConfigureId) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
+            mapper.map(materialAcceptedValueService.getMaterialSubCategoryByTesConfigureId(
+                testConfigureId), MaterialSubCategoryResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
 }

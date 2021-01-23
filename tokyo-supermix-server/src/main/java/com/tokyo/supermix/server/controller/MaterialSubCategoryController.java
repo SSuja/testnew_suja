@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryRequestDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
+import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.util.Constants;
@@ -176,5 +182,22 @@ public class MaterialSubCategoryController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
         materialSubCategoryService.searchMaterialSubCategory(predicate, size, page),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_MATERIAL_SUB_CATEGORY)
+  public ResponseEntity<Object> getMaterialSubCategorySearch(
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "materialCategoryName", required = false) String materialCategoryName,
+      @RequestParam(name = "prefix", required = false) String prefix,
+      @RequestParam(name = "materialCategoryMainType", required = false) MainType materialCategoryMainType,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+        materialSubCategoryService.searchByMaterialSubCategory(booleanBuilder, name,
+            materialCategoryName, prefix, materialCategoryMainType, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

@@ -66,4 +66,5 @@ public class ParameterResultDetails {
   public void setDateValue(LocalDateTime dateValue) {
     this.dateValue = dateValue;
   }
+
 }
