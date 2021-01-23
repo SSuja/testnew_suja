@@ -230,7 +230,7 @@ public final class EndpointURI {
   public static final String PARAMETER_BY_ID = PARAMETER + ID;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
-  public static final String SEARCH_PARAMETERS = PARAMETER + SEARCH;
+  public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
   /*
    * Project APIs
