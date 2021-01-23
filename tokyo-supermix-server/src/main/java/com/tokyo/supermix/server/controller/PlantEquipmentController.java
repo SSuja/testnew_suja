@@ -172,28 +172,6 @@ public class PlantEquipmentController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
-  // public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal
-  // currentUser,
-  // @PathVariable String plantCode) {
-  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-  // mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser),
-  // PlantEquipmentResponseDto.class),
-  // RestApiResponseStatus.OK), null, HttpStatus.OK);
-  // }
-  // if (currentUserPermissionPlantService
-  // .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
-  // .contains(plantCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-  // mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode),
-  // PlantEquipmentResponseDto.class),
-  // RestApiResponseStatus.OK), null, HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
-
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID)
   public ResponseEntity<Object> getAllPlantEquipmentsByCalibrationTrueAndEquipment(
       @CurrentUser UserPrincipal currentUser, @PathVariable Long equipmentId,
