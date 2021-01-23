@@ -472,6 +472,56 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.EMAIL_NOTIFICATION_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_NOTIFICATION_DAYS)
 
+        // mac address 
+        .antMatchers(HttpMethod.GET, EndpointURI.MAC_ADDRESSES)
+        .hasAuthority(PermissionConstants.GET_MAC_ADDRESS)
+        .antMatchers(HttpMethod.PUT, EndpointURI.MAC_ADDRESS)
+        .hasAuthority(PermissionConstants.EDIT_MAC_ADDRESS)
+        .antMatchers(HttpMethod.POST, EndpointURI.MAC_ADDRESS)
+        .hasAuthority(PermissionConstants.ADD_MAC_ADDRESS)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.MAC_ADDRESS_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_MAC_ADDRESS)
+        
+        // sbu unit 
+        .antMatchers(HttpMethod.GET, EndpointURI.SUB_BUSINESS_UNITS)
+        .hasAuthority(PermissionConstants.GET_NOTIFICATION_DAYS)
+        .antMatchers(HttpMethod.PUT, EndpointURI.SUB_BUSINESS_UNIT)
+        .hasAuthority(PermissionConstants.EDIT_NOTIFICATION_DAYS)
+        .antMatchers(HttpMethod.POST, EndpointURI.SUB_BUSINESS_UNIT)
+        .hasAuthority(PermissionConstants.ADD_NOTIFICATION_DAYS)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.SUB_BUSINESS_UNIT_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_NOTIFICATION_DAYS)
+              
+        // ratio config equations 
+        .antMatchers(HttpMethod.GET, EndpointURI.RATIO_CONFIG_EQUATIONS)
+        .hasAuthority(PermissionConstants.GET_RATIO_EQUATION)
+        .antMatchers(HttpMethod.PUT, EndpointURI.RATIO_CONFIG_EQUATION)
+        .hasAuthority(PermissionConstants.EDIT_RATIO_EQUATION)
+        .antMatchers(HttpMethod.POST, EndpointURI.RATIO_CONFIG_EQUATION)
+        .hasAuthority(PermissionConstants.ADD_RATIO_EQUATION)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.RATIO_CONFIG_EQUATION_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_RATIO_EQUATION)
+        
+        // ratio configs 
+        .antMatchers(HttpMethod.GET, EndpointURI.RATIO_CONFIGS)
+        .hasAuthority(PermissionConstants.GET_RATIO_CONFIG)
+        .antMatchers(HttpMethod.PUT, EndpointURI.RATIO_CONFIG)
+        .hasAuthority(PermissionConstants.EDIT_RATIO_CONFIG)
+        .antMatchers(HttpMethod.POST, EndpointURI.RATIO_CONFIG)
+        .hasAuthority(PermissionConstants.ADD_RATIO_CONFIG)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.RATIO_CONFIG_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_RATIO_CONFIG)
+        
+     // ratio config parameters
+        .antMatchers(HttpMethod.GET, EndpointURI.RATIO_CONFIG_PARAMETERS)
+        .hasAuthority(PermissionConstants.GET_RATIO_PARAMATER)
+        .antMatchers(HttpMethod.PUT, EndpointURI.RATIO_CONFIG_PARAMETER)
+        .hasAuthority(PermissionConstants.EDIT_RATIO_PARAMATER)
+        .antMatchers(HttpMethod.POST, EndpointURI.RATIO_CONFIG_PARAMETER)
+        .hasAuthority(PermissionConstants.ADD_RATIO_PARAMATER)
+        .antMatchers(HttpMethod.DELETE, EndpointURI.RATIO_CONFIG_PARAMETER_BY_ID)
+        .hasAuthority(PermissionConstants.DELETE_RATIO_PARAMATER)
+        
         .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

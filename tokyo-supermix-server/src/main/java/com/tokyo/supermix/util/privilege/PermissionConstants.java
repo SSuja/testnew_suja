@@ -250,6 +250,36 @@ public final class PermissionConstants {
   public static final String EDIT_NOTIFICATION_DAYS = "edit_schedule_configuration";
   public static final String ADD_NOTIFICATION_DAYS = "add_schedule_configuration";
   public static final String DELETE_NOTIFICATION_DAYS = "delete_schedule_configuration";
+  
+  /* mac address */
+  public static final String GET_MAC_ADDRESS = "view_mac_address";
+  public static final String EDIT_MAC_ADDRESS = "edit_mac_address";
+  public static final String ADD_MAC_ADDRESS = "create_mac_address";
+  public static final String DELETE_MAC_ADDRESS = "delete_mac_address";
+  
+  /* sbu unit */
+  public static final String GET_SUB_BUSINESS_UNIT = "view_sub_business_unit";
+  public static final String EDIT_SUB_BUSINESS_UNIT = "edit_sub_business_unit";
+  public static final String ADD_SUB_BUSINESS_UNIT = "create_sub_business_unit";
+  public static final String DELETE_SUB_BUSINESS_UNIT = "delete_sub_business_unit";
+  
+  /* ratio config */
+  public static final String GET_RATIO_CONFIG = "view_ratio_config";
+  public static final String EDIT_RATIO_CONFIG = "edit_ratio_config";
+  public static final String ADD_RATIO_CONFIG = "create_ratio_config";
+  public static final String DELETE_RATIO_CONFIG = "delete_ratio_config";
+  
+  /* ratio paramater */
+  public static final String GET_RATIO_PARAMATER = "view_ratio_paramater";
+  public static final String EDIT_RATIO_PARAMATER = "edit_ratio_paramater";
+  public static final String ADD_RATIO_PARAMATER = "create_ratio_paramater";
+  public static final String DELETE_RATIO_PARAMATER = "delete_ratio_paramater";
+  
+  /* ratio paramater */
+  public static final String GET_RATIO_EQUATION = "view_ratio_equation";
+  public static final String EDIT_RATIO_EQUATION = "edit_ratio_equation";
+  public static final String ADD_RATIO_EQUATION = "create_ratio_equation";
+  public static final String DELETE_RATIO_EQUATION = "delete_ratio_equation";
 
 
 
