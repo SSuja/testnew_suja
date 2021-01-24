@@ -38,9 +38,9 @@ public interface MaterialTestService {
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
-  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String date,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String createdAt,
       String specimenCode, Status status, String supplierName, String testName,
-      String mainCategoryName, String subCategoryName, BooleanBuilder booleanBuilder, int page,
+      String mainCategoryName, String materialSubCategory, BooleanBuilder booleanBuilder, int page,
       int size, Pageable pageable, String plantCode, Pagination pagination);
 
   List<MaterialTest> getMaterialTestByPlantCode(String plantCode);

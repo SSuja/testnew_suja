@@ -169,9 +169,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String date,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String createdAt,
       String specimenCode, Status status, String supplierName, String testName,
-      String mainCategoryName, String subCategoryName, BooleanBuilder booleanBuilder, int page,
+      String mainCategoryName, String materialSubCategory, BooleanBuilder booleanBuilder, int page,
       int size, Pageable pageable, String plantCode, Pagination pagination) {
 
     if (code != null && !code.isEmpty()) {
@@ -181,9 +181,9 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       booleanBuilder
           .and(QMaterialTest.materialTest.incomingSample.code.contains(incomingSampleCode));
     }
-    if (date != null && !date.isEmpty()) {
+    if (createdAt != null && !createdAt.isEmpty()) {
       booleanBuilder
-          .and(QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
+          .and(QMaterialTest.materialTest.createdAt.stringValue().contains(createdAt));
     }
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.specimenCode.contains(specimenCode));
@@ -200,11 +200,11 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     }
     if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.testConfigure.materialCategory.name
-          .startsWithIgnoreCase(mainCategoryName));
+          .contains(mainCategoryName));
     }
-    if (subCategoryName != null && !subCategoryName.isEmpty()) {
+    if (materialSubCategory != null && !materialSubCategory.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.testConfigure.materialSubCategory.name
-          .contains(subCategoryName));
+          .contains(materialSubCategory));
     }
 
     if (!plantCode.equals("ADMIN")) {
@@ -305,7 +305,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public List<MaterialTest> getAllMaterialTests(Pageable pageable) {
-
     return materialTestRepository.findAll(pageable).toList();
   }
 
