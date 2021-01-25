@@ -96,7 +96,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public List<RawMaterialResponseDto> searchRawMaterial(BooleanBuilder booleanBuilder, String name,
       String materialSubCategoryName, String plantName, String prefix, String plantCode,
-      String erpCode, String mainCategoryName, String sbuName, Pageable pageable,
+      String erpCode, String mainCategoryName, String subBusinessUnitName, Pageable pageable,
       Pagination pagination) {
     if (name != null && !name.isEmpty()) {
       booleanBuilder.and(QRawMaterial.rawMaterial.name.containsIgnoreCase(name));
@@ -123,8 +123,8 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
           .containsIgnoreCase(mainCategoryName));
     }
-    if (sbuName != null && !sbuName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.containsIgnoreCase(sbuName));
+    if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.containsIgnoreCase(subBusinessUnitName));
     }
     pagination.setTotalRecords(
         ((Collection<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder)).stream().count());

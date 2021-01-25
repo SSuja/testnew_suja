@@ -1,13 +1,14 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-import org.springframework.data.domain.Page;
-import com.querydsl.core.types.Predicate;
+import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface TestConfigureService {
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto);
@@ -23,8 +24,6 @@ public interface TestConfigureService {
   public void updateCoreTestForTestConfigure(Long id, boolean coreTest);
 
   public List<TestConfigure> findByCoreTest(boolean coreTest);
-
-  public Page<TestConfigure> searchTestConfigure(Predicate predicate, int page, int size);
 
   public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id);
 
@@ -52,4 +51,8 @@ public interface TestConfigureService {
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix);
 
   public List<TestConfigure> findByMaterialCategory(Long materialCategoryId);
+
+  public List<TestConfigure> searchTestConfigure(String testName, MainType mainType,
+      String mainCategoryName, String subCategoryName, String materialName,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination);
 }

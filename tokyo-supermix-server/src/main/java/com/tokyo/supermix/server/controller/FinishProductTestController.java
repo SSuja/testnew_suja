@@ -22,6 +22,7 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.FinishProductTestRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductTestResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductTest;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -197,6 +198,7 @@ public class FinishProductTestController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_SEARCH)
   public ResponseEntity<Object> getFinishProductTest(@PathVariable String plantCode,
+      @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "specimenCode", required = false) String specimenCode,
       @RequestParam(name = "finishProductSampleCode",
           required = false) String finishProductSampleCode,
@@ -206,7 +208,7 @@ public class FinishProductTestController {
       @RequestParam(name = "mainCategoryName", required = false) String mainCategoryName,
       @RequestParam(name = "subCategoryName", required = false) String subCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
@@ -215,9 +217,9 @@ public class FinishProductTestController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_TEST, mapper.map(
-            finishProductTestService.searchFinishProductTest(booleanBuilder, specimenCode,
+            finishProductTestService.searchFinishProductTest(booleanBuilder, code,specimenCode,
                 finishProductSampleCode, mixDesignCode, testName, materialName, mainCategoryName,
-                subCategoryName, plantName, plantCode, status, date, pageable, pagination),
+                subCategoryName, status, date, plantName, plantCode, pageable, pagination),
             FinishProductTestResponseDto.class), RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
   }

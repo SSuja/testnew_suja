@@ -154,13 +154,13 @@ public class MaterialTestController {
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "incomingSampleCode", required = false) String incomingSampleCode,
-      @RequestParam(name = "date", required = false) String date,
+      @RequestParam(name = "createdAt", required = false) String createdAt,
       @RequestParam(name = "specimenCode", required = false) String specimenCode,
       @RequestParam(name = "testName", required = false) String testName,
-      @RequestParam(name = "status", required = false) String status,
+      @RequestParam(name = "status", required = false) Status status,
       @RequestParam(name = "supplierName", required = false) String supplierName,
       @RequestParam(name = "materialCategory", required = false) String materialCategory,
-      @RequestParam(name = "subCategoryName", required = false) String subCategoryName) {
+      @RequestParam(name = "materialSubCategory", required = false) String materialSubCategory) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
@@ -168,9 +168,9 @@ public class MaterialTestController {
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
               mapper.map(
-                  materialTestService.searchMaterialTest(code, incomingSampleCode, date,
+                  materialTestService.searchMaterialTest(code, incomingSampleCode, createdAt,
                       specimenCode, status, supplierName, testName, materialCategory,
-                      subCategoryName, booleanBuilder, page, size, pageable, plantCode, pagination),
+                      materialSubCategory, booleanBuilder, page, size, pageable, plantCode, pagination),
                   MaterialTestResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);

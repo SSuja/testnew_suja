@@ -2,10 +2,15 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface AcceptedValueService {
 
@@ -42,4 +47,8 @@ public interface AcceptedValueService {
   public boolean existsAcceptedValueByTestConfigureId(Long testConfigureId);
 
   public void upDateTesConfigureType(Long testConfigureId);
+
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
+      Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination);
 }

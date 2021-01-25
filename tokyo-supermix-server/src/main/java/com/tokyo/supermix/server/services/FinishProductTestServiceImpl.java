@@ -546,53 +546,54 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
+  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,String code,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
-      String materialName, String mainCategoryName, String subCategoryName, String plantName,
-      String plantCode, String status, String date, Pageable pageable, Pagination pagination) {
+      String materialName, String mainCategoryName, String subCategoryName, Status status,
+      String date, String plantName, String plantCode, Pageable pageable, Pagination pagination) {
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.code.contains(code));
+    }
     if (specimenCode != null && !specimenCode.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductTest.finishProductTest.specimenCode.startsWithIgnoreCase(specimenCode));
+      booleanBuilder.and(QFinishProductTest.finishProductTest.specimenCode.contains(specimenCode));
     }
     if (finishProductSampleCode != null && !finishProductSampleCode.isEmpty()) {
       booleanBuilder.and(QFinishProductTest.finishProductTest.finishProductSample.finishProductCode
-          .startsWithIgnoreCase(finishProductSampleCode));
+          .contains(finishProductSampleCode));
     }
     if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
       booleanBuilder.and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.code
-          .startsWithIgnoreCase(mixDesignCode));
+          .contains(mixDesignCode));
     }
     if (testName != null && !testName.isEmpty()) {
-      booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.test.name
-          .startsWithIgnoreCase(testName));
+      booleanBuilder
+          .and(QFinishProductTest.finishProductTest.testConfigure.test.name.contains(testName));
     }
     if (materialName != null && !materialName.isEmpty()) {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.rawMaterial.name
-              .startsWithIgnoreCase(materialName));
+              .contains(materialName));
     }
     if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
       booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.materialCategory.name
-          .startsWithIgnoreCase(mainCategoryName));
+          .contains(mainCategoryName));
     }
     if (subCategoryName != null && !subCategoryName.isEmpty()) {
       booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.materialSubCategory.name
-          .startsWithIgnoreCase(subCategoryName));
+          .contains(subCategoryName));
     }
     if (plantName != null && !plantName.isEmpty()) {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.plant.name
-              .startsWithIgnoreCase(plantName));
+              .contains(plantName));
     }
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.plant.code
-              .startsWithIgnoreCase(plantCode));
+              .contains(plantCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductTest.finishProductTest.status.stringValue().startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.status.eq(status));
     }
     if (date != null && !date.isEmpty()) {
       booleanBuilder

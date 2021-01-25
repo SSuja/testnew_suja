@@ -28,6 +28,7 @@ import com.tokyo.supermix.config.export.PlantEquipmentLayouter;
 import com.tokyo.supermix.data.dto.PlantEquipmentRequestDto;
 import com.tokyo.supermix.data.dto.PlantEquipmentResponseDto;
 import com.tokyo.supermix.data.entities.PlantEquipment;
+import com.tokyo.supermix.data.enums.EquipmentType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
@@ -143,18 +144,17 @@ public class PlantEquipmentController {
       @RequestParam(name = "brandName", required = false) String brandName,
       @RequestParam(name = "modelName", required = false) String modelName,
       @RequestParam(name = "plantName", required = false) String plantName,
-      @RequestParam(name = "equipmentName", required = false) String equipmentName) {
-
+      @RequestParam(name = "equipmentName", required = false) String equipmentName,
+      @RequestParam(name = "equipmentType", required = false) EquipmentType equipmentType) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT, mapper.map(
-              plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName, plantName,
-                  equipmentName, booleanBuilder, page, size, pageable, plantCode, pagination),
-              PlantEquipmentResponseDto.class), RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANTEQUIPMENT,
+          mapper.map(plantEquipmentService.searchPlantEquipment(serialNo, brandName, modelName,
+              plantName, equipmentName, equipmentType, booleanBuilder, page, size, pageable,
+              plantCode, pagination), PlantEquipmentResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -171,28 +171,6 @@ public class PlantEquipmentController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-  // @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_PLANT)
-  // public ResponseEntity<Object> getAllPlantEquipmentsByplant(@CurrentUser UserPrincipal
-  // currentUser,
-  // @PathVariable String plantCode) {
-  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-  // mapper.map(plantEquipmentService.getAllPlantEquipmentByPlant(currentUser),
-  // PlantEquipmentResponseDto.class),
-  // RestApiResponseStatus.OK), null, HttpStatus.OK);
-  // }
-  // if (currentUserPermissionPlantService
-  // .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PLANT_EQUIPMENT)
-  // .contains(plantCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENTS,
-  // mapper.map(plantEquipmentService.getPlantEquipmentByPlantCode(plantCode),
-  // PlantEquipmentResponseDto.class),
-  // RestApiResponseStatus.OK), null, HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
 
   @GetMapping(value = EndpointURI.PLANT_EQUIPMENTS_BY_CALIBRATION_TRUE_AND_EQUIPMENTID)
   public ResponseEntity<Object> getAllPlantEquipmentsByCalibrationTrueAndEquipment(

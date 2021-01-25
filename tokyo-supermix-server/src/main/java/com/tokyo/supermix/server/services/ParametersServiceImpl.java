@@ -100,7 +100,7 @@ public class ParametersServiceImpl implements ParameterService {
       Pageable pageable, Pagination pagination) {
 
     if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QParameter.parameter.name.startsWithIgnoreCase(name));
+      booleanBuilder.and(QParameter.parameter.name.contains(name));
     }
     if (parameterType != null) {
       booleanBuilder.and(QParameter.parameter.parameterType.eq(parameterType));

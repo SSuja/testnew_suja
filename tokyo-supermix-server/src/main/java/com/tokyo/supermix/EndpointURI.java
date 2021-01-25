@@ -117,8 +117,10 @@ public final class EndpointURI {
    */
   public static final String EQUIPMENT = BASE_API_PATH + "equipment";
   public static final String EQUIPMENTS = BASE_API_PATH + "equipments";
+  public static final String EQUIPMENT_PAGINATION = BASE_API_PATH + "equipments-page";
   public static final String DELETE_EQUIPMENT = EQUIPMENT + ID;
   public static final String GET_EQUIPMENT_BY_ID = EQUIPMENT + ID;
+  public static final String SEARCH_EQUIPMENT = EQUIPMENT + SEARCH;
   /*
    * Test Configure
    */
@@ -229,7 +231,7 @@ public final class EndpointURI {
   public static final String PARAMETER_BY_ID = PARAMETER + ID;
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
-  public static final String SEARCH_PARAMETERS = PARAMETER + SEARCH;
+  public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
 
   /*
    * Project APIs
@@ -424,7 +426,9 @@ public final class EndpointURI {
    */
   public static final String TEST = BASE_API_PATH + "test";
   public static final String TESTS = BASE_API_PATH + "tests";
+  public static final String TESTS_PAGINATION = BASE_API_PATH + "tests-page";
   public static final String TEST_BY_ID = TEST + ID;
+  public static final String SEARCH_TEST = TEST + SEARCH;
 
   /*
    * FinishProductSample
@@ -507,13 +511,14 @@ public final class EndpointURI {
   public static final String MATERIAL_ACCEPTED_VALUE_BY_ID = MATERIAL_ACCEPTED_VALUE + ID;
   public static final String MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       MATERIAL_ACCEPTED_VALUE + "/dto" + "/test-configure" + "/{testConfigureId}";
-  public static final String SEARCH_MATERIAL_ACCEPTED_VALUE = MATERIAL_ACCEPTED_VALUE + SEARCH;
   public static final String MATERIAL_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID =
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
       MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
-  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID =
-	      MATERIAL_ACCEPTED_VALUE +SLASH+"material-sub-categories"+SLASH+"test-configure"+SLASH+"{testConfigureId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID = MATERIAL_ACCEPTED_VALUE
+      + SLASH + "material-sub-categories" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String SEARCH_MATERIAL_ACCEPTED_VALUE =
+      MATERIAL_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigId}" + SEARCH;
   /*
    * AcceptedValue
    */
@@ -522,7 +527,8 @@ public final class EndpointURI {
   public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "dto" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-  public static final String SEARCH_ACCEPTED_VALUE = ACCEPTED_VALUE + SEARCH;
+  public static final String SEARCH_ACCEPTED_VALUE =
+      ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigId}" + SEARCH;
   public static final String GET_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   /*
