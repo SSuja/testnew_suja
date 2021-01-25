@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,14 +14,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.EquipmentDto;
 import com.tokyo.supermix.data.entities.Equipment;
+import com.tokyo.supermix.data.enums.EquipmentType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquipmentService;
 import com.tokyo.supermix.util.Constants;
@@ -58,6 +65,19 @@ public class EquipmentController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENTS,
         mapper.map(equipmentService.getAllEquipments(), EquipmentDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  // Get all Test API
+  @GetMapping(value = EndpointURI.EQUIPMENT_PAGINATION)
+  public ResponseEntity<Object> getAllEquipments(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(equipmentService.countEquipment());
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EQUIPMENTS,
+        mapper.map(equipmentService.getAllEquipmentByPageable(pageable), EquipmentDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
   // Get Equipment By Id
@@ -102,5 +122,19 @@ public class EquipmentController {
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUIPMENMT_ID,
         validationFailureStatusCodes.getEquipmentNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_EQUIPMENT)
+  public ResponseEntity<Object> searchEquipment(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "equipmentType", required = false) EquipmentType equipmentType) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.EQUIPMENTS,
+        mapper.map(equipmentService.searchEquipment(name, equipmentType, booleanBuilder, page, size,
+            pageable, pagination), EquipmentDto.class),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

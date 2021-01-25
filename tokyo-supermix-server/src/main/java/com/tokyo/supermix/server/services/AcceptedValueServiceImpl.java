@@ -5,19 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.QAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class AcceptedValueServiceImpl implements AcceptedValueService {
@@ -28,7 +33,8 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private TestConfigureService testConfigureService;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
-
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -173,5 +179,24 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
       testConfigure.setTestResultType(TestResultType.MULTI_RESULT);
       testConfigureRepository.save(testConfigure);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
+      Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination) {
+    if (testParamName != null && !testParamName.isEmpty()) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.testParameter.name.contains(testParamName));
+    }
+    if (testConfigId != null) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.testConfigure.id.eq(testConfigId));
+    }
+    if (condition != null) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.conditionRange.eq(condition));
+    }
+    pagination.setTotalRecords(
+        (long) ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).size());
+    return mapper.map(acceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
+        AccepetedValueDto.class);
   }
 }

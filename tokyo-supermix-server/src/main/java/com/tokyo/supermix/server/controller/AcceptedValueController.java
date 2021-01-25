@@ -3,7 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,15 +16,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.AcceptedValueRequestDto;
 import com.tokyo.supermix.data.dto.AcceptedValueResponseDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.AcceptedValueService;
 import com.tokyo.supermix.server.services.MaterialTestService;
@@ -136,13 +140,28 @@ public class AcceptedValueController {
     }
   }
 
+  // @GetMapping(value = EndpointURI.SEARCH_ACCEPTED_VALUE)
+  // public ResponseEntity<Object> getAcceptedValueSearch(
+  // @QuerydslPredicate(root = AcceptedValue.class) Predicate predicate,
+  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+  // return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
+  // acceptedValueService.searchAcceptedValue(predicate, size, page), RestApiResponseStatus.OK),
+  // null, HttpStatus.OK);
+  // }
+
   @GetMapping(value = EndpointURI.SEARCH_ACCEPTED_VALUE)
-  public ResponseEntity<Object> getAcceptedValueSearch(
-      @QuerydslPredicate(root = AcceptedValue.class) Predicate predicate,
+  public ResponseEntity<Object> searchAcceptedValues(@PathVariable Long testConfigId,
+      @RequestParam(name = "testParamName", required = false) String testParamName,
+      @RequestParam(name = "condition", required = false) Condition condition,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
-        acceptedValueService.searchAcceptedValue(predicate, size, page), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.ACCEPTED_VALUES,
+        acceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
+            booleanBuilder, totalpage, size, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID)

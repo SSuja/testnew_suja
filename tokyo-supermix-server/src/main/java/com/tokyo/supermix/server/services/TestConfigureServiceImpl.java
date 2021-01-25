@@ -1,14 +1,17 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValuesDto;
@@ -17,6 +20,7 @@ import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParametersDto;
+import com.tokyo.supermix.data.entities.QTestConfigure;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -24,6 +28,7 @@ import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class TestConfigureServiceImpl implements TestConfigureService {
@@ -294,6 +299,32 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public List<TestConfigure> findByMaterialCategory(Long materialCategoryId) {
     return testConfigureRepository
         .findByMaterialCategoryIdAndMaterialSubCategoryNull(materialCategoryId);
+  }
 
+  @Transactional(readOnly = true)
+  public List<TestConfigure> searchTestConfigure(String testName, MainType mainType,
+      String mainCategoryName, String subCategoryName, String materialName,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination) {
+    if (testName != null && !testName.isEmpty()) {
+      booleanBuilder.and(QTestConfigure.testConfigure.test.name.contains(testName));
+    }
+    if (mainType != null) {
+      booleanBuilder.and(QTestConfigure.testConfigure.testType.eq(mainType));
+    }
+    if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+      booleanBuilder
+          .and(QTestConfigure.testConfigure.materialCategory.name.contains(mainCategoryName));
+    }
+    if (subCategoryName != null && !subCategoryName.isEmpty()) {
+      booleanBuilder
+          .and(QTestConfigure.testConfigure.materialSubCategory.name.contains(subCategoryName));
+    }
+    if (materialName != null && !materialName.isEmpty()) {
+      booleanBuilder.and(QTestConfigure.testConfigure.rawMaterial.name.contains(materialName));
+    }
+    pagination.setTotalRecords(
+        ((Collection<TestConfigure>) testConfigureRepository.findAll(booleanBuilder)).stream()
+            .count());
+    return testConfigureRepository.findAll(booleanBuilder, pageable).toList();
   }
 }

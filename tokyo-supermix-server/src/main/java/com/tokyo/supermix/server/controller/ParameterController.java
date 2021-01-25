@@ -127,7 +127,7 @@ public class ParameterController {
         validationFailureStatusCodes.getParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.SEARCH_PARAMETERS)
+  @GetMapping(value = EndpointURI.PARAMETER_SEARCH)
   public ResponseEntity<Object> searchParameters(@RequestParam(name = "page") int page,
       @RequestParam(name = "size") int size,
       @RequestParam(name = "name", required = false) String name,

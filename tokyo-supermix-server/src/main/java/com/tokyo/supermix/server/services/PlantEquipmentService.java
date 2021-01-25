@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.PlantEquipment;
+import com.tokyo.supermix.data.enums.EquipmentType;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -20,8 +21,9 @@ public interface PlantEquipmentService {
   public PlantEquipment getPlantEquipmentBySerialNo(String serialNo);
 
   public List<PlantEquipment> searchPlantEquipment(String serialNo, String brandName,
-      String modelName, String plantName, String equipmentName, BooleanBuilder booleanBuilder,
-      int page, int size, Pageable pageable, String plantCode, Pagination pagination);
+      String modelName, String plantName, String equipmentName, EquipmentType equipmentType,
+      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, String plantCode,
+      Pagination pagination);
 
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode);
 

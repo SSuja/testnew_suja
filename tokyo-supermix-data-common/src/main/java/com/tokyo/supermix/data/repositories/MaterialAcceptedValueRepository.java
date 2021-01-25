@@ -1,14 +1,13 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 
 public interface MaterialAcceptedValueRepository
-    extends JpaRepository<MaterialAcceptedValue, Long> {
+    extends JpaRepository<MaterialAcceptedValue, Long>, QuerydslPredicateExecutor<MaterialAcceptedValue> {
   List<MaterialAcceptedValue> findByTestConfigure(TestConfigure testConfigure);
 
   public boolean existsByTestConfigureIdAndRawMaterialId(Long testConfigureId, Long rawMaterialId);
@@ -17,7 +16,7 @@ public interface MaterialAcceptedValueRepository
 
   boolean existsByRawMaterialId(Long rawMaterialId);
 
-  MaterialAcceptedValue findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
+  List<MaterialAcceptedValue> findByTestConfigureIdAndRawMaterialId(Long testConfigureId,
       Long rawMaterialId);
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndTestConfigureRawMaterialId(
@@ -48,7 +47,16 @@ public interface MaterialAcceptedValueRepository
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndRawMaterialIdAndFinalResultTrue(
       Long testConfigureId, Long rawMaterialId);
-  
+
+  MaterialAcceptedValue findByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterIdAndFinalResultTrue(
+      Long testConfigureId, Long materialSubCategoryId, Long testParameterId);
+
+  List<MaterialAcceptedValue> findByTestConfigureIdAndMaterialSubCategoryIdAndFinalResultTrue(
+      Long testConfigureId, Long materialSubCategoryId);
+
+  List<MaterialAcceptedValue> findByTestConfigureIdAndMaterialSubCategoryId(Long testConfigureId,
+      Long materialSubCategoryId);
+
   MaterialAcceptedValue findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(
-	      Long testConfigureId, Long testParameterId, Long MaterialSubCategoryId);
+      Long testConfigureId, Long testParameterId, Long MaterialSubCategoryId);
 }

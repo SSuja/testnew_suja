@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.QFinishProductSample;
 import com.tokyo.supermix.data.entities.QFinishProductSampleIssue;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
@@ -195,62 +196,64 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
 
   public List<FinishProductSampleResponseDto> searchFinishProductSampleIssue(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, String status, String date,
+      String mixDesignCode, String plantName, String plantCode, Status status, String date,
       String code, String rawMaterialName, String workOrderNumber, String customer, String project,
       Pageable pageable, Pagination pagination) {
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
-          .startsWithIgnoreCase(finishProductCode));
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.finishProductCode.contains(finishProductCode));
     }
     if (equipmentName != null && !equipmentName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.plantEquipment.serialNo
-          .startsWithIgnoreCase(equipmentName));
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.plantEquipment.serialNo.contains(equipmentName));
     }
     if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.code
-          .startsWithIgnoreCase(mixDesignCode));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.mixDesign.code.contains(mixDesignCode));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.name
-          .startsWithIgnoreCase(plantName));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.mixDesign.plant.name.contains(plantName));
     }
 
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
-          .startsWithIgnoreCase(plantCode));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.mixDesign.plant.code.contains(plantCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.status.stringValue()
-          .startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
     }
-    if (date != null && !date.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductSample.finishProductSample.date.stringValue().startsWithIgnoreCase(date));
+    if (date != null) {
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.date.stringValue().contains(date));
     }
     if (code != null && !code.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductSample.finishProductSample.code.stringValue().startsWithIgnoreCase(code));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.code.stringValue().contains(code));
     }
     if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
-          .stringValue().startsWithIgnoreCase(rawMaterialName));
+          .stringValue().contains(rawMaterialName));
     }
     if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.stringValue()
-          .stringValue().startsWithIgnoreCase(workOrderNumber));
+          .stringValue().contains(workOrderNumber));
     }
     if (customer != null && !customer.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
-          .stringValue().stringValue().startsWithIgnoreCase(customer));
+          .stringValue().stringValue().contains(customer));
     }
     if (project != null && !project.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.project.name.stringValue()
-          .stringValue().startsWithIgnoreCase(project));
+          .stringValue().contains(project));
     }
-    pagination.setTotalRecords(finishProductSampleRepository.countByWorkOrderNumberNotNull());
+    pagination.setTotalRecords(
+        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
+            .stream().filter(sample -> sample.getWorkOrderNumber() != null)
+            .collect(Collectors.toList()).size());
     return mapper.map(
-        finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
             .filter(sample -> sample.getWorkOrderNumber() != null).collect(Collectors.toList()),
         FinishProductSampleResponseDto.class);
   }

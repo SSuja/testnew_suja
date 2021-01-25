@@ -3,7 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResponseDto;
@@ -26,6 +27,8 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.TestConfigureService;
@@ -146,15 +149,6 @@ public class TestConfigureController {
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.TEST_CONFIGURE_SEARCH)
-  public ResponseEntity<Object> getTestConfigureSearch(
-      @QuerydslPredicate(root = TestConfigure.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_CONFIGURE,
-        testConfigureService.searchTestConfigure(predicate, page, size), RestApiResponseStatus.OK),
-        null, HttpStatus.OK);
-  }
-
   @GetMapping(value = EndpointURI.GET_TEST_DETAILS_BY_CONFIGURE_ID)
   public ResponseEntity<Object> getTestConfigAllDetailsByTestConfigId(
       @PathVariable Long testConfigId) {
@@ -225,5 +219,24 @@ public class TestConfigureController {
         mapper.map(testConfigureService.findByMaterialCategory(materialCategoryId),
             TestConfigureResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.TEST_CONFIGURE_SEARCH)
+  public ResponseEntity<Object> searchTestConfigure(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "testName", required = false) String testName,
+      @RequestParam(name = "mainType", required = false) MainType mainType,
+      @RequestParam(name = "mainCategoryName", required = false) String mainCategoryName,
+      @RequestParam(name = "subCategoryName", required = false) String subCategoryName,
+      @RequestParam(name = "materialName", required = false) String materialName) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+        mapper.map(
+            testConfigureService.searchTestConfigure(testName, mainType, mainCategoryName,
+                subCategoryName, materialName, booleanBuilder, page, size, pageable, pagination),
+            TestConfigureResponseDto.class),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

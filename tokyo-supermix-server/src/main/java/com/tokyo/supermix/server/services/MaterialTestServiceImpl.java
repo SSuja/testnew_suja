@@ -169,45 +169,42 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String date,
-      String specimenCode, String status, String supplierName, String testName,
-      String mainCategoryName, String subCategoryName, BooleanBuilder booleanBuilder, int page,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String createdAt,
+      String specimenCode, Status status, String supplierName, String testName,
+      String mainCategoryName, String materialSubCategory, BooleanBuilder booleanBuilder, int page,
       int size, Pageable pageable, String plantCode, Pagination pagination) {
 
     if (code != null && !code.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.code.startsWithIgnoreCase(code));
+      booleanBuilder.and(QMaterialTest.materialTest.code.contains(code));
     }
     if (incomingSampleCode != null && !incomingSampleCode.isEmpty()) {
-      booleanBuilder.and(
-          QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
-    }
-    if (date != null && !date.isEmpty()) {
       booleanBuilder
-          .and(QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
+          .and(QMaterialTest.materialTest.incomingSample.code.contains(incomingSampleCode));
+    }
+    if (createdAt != null && !createdAt.isEmpty()) {
+      booleanBuilder
+          .and(QMaterialTest.materialTest.createdAt.stringValue().contains(createdAt));
     }
     if (specimenCode != null && !specimenCode.isEmpty()) {
-      booleanBuilder
-          .and(QMaterialTest.materialTest.specimenCode.startsWithIgnoreCase(specimenCode));
+      booleanBuilder.and(QMaterialTest.materialTest.specimenCode.contains(specimenCode));
     }
-    if (status != null && !status.isEmpty()) {
-      booleanBuilder
-          .and(QMaterialTest.materialTest.status.stringValue().startsWithIgnoreCase(status));
+    if (status != null) {
+      booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
     }
     if (testName != null && !testName.isEmpty()) {
-      booleanBuilder
-          .and(QMaterialTest.materialTest.testConfigure.test.name.startsWithIgnoreCase(testName));
+      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.contains(testName));
     }
     if (supplierName != null && !supplierName.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.incomingSample.supplier.name
-          .startsWithIgnoreCase(supplierName));
+      booleanBuilder
+          .and(QMaterialTest.materialTest.incomingSample.supplier.name.contains(supplierName));
     }
     if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.testConfigure.materialCategory.name
-          .startsWithIgnoreCase(mainCategoryName));
+          .contains(mainCategoryName));
     }
-    if (subCategoryName != null && !subCategoryName.isEmpty()) {
+    if (materialSubCategory != null && !materialSubCategory.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.testConfigure.materialSubCategory.name
-          .startsWithIgnoreCase(subCategoryName));
+          .contains(materialSubCategory));
     }
 
     if (!plantCode.equals("ADMIN")) {
@@ -308,7 +305,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   @Transactional(readOnly = true)
   public List<MaterialTest> getAllMaterialTests(Pageable pageable) {
-
     return materialTestRepository.findAll(pageable).toList();
   }
 
