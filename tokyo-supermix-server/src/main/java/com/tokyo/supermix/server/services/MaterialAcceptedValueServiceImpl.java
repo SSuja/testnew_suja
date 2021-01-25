@@ -18,6 +18,7 @@ import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 
 @Service
 public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueService {
@@ -213,6 +214,50 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       materialSubCategoryList.addAll(materialSubCategoryRepository
           .findByMaterialCategory(testConfigure.getMaterialCategory()));
     }
+    return materialSubCategoryList;
+  }
+
+  @Transactional
+  public List<RawMaterial> getRawMaterialByTesConfigureId(Long testConfigureId) {
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    List<RawMaterial> rawMaterialList = new ArrayList<>();
+    if (testConfigure.getRawMaterial() != null) {
+      rawMaterialList.add(testConfigure.getRawMaterial());
+    }
+    if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() != null) {
+      rawMaterialList.addAll(rawMaterialRepository
+          .findByMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId()));
+    }
+    if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() == null) {
+      rawMaterialList.addAll(rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryId(
+          testConfigure.getMaterialCategory().getId()));
+    }
+    return rawMaterialList;
+  }
+
+  public List<RawMaterial> getRawMaterialByTesConfigureIdAndTestParameterId(Long testConfigureId,
+      Long testParameterId) {
+    List<RawMaterial> rawMaterialList = new ArrayList<>();
+    List<RawMaterial> rawMaterialListTotal = getRawMaterialByTesConfigureId(testConfigureId);
+    rawMaterialList.addAll(rawMaterialListTotal.stream()
+        .filter(rawmaterial -> (materialAcceptedValueRepository
+            .findByTestConfigureIdAndTestParameterIdAndRawMaterialId(testConfigureId,
+                testParameterId, rawmaterial.getId()) == null))
+        .collect(Collectors.toList()));
+    return rawMaterialList;
+  }
+
+  @Transactional
+  public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureIdAndTestParameterId(
+      Long testConfigureId, Long testParameterId) {
+    List<MaterialSubCategory> materialSubCategoryList = new ArrayList<>();
+    List<MaterialSubCategory> materialSubCategoryListTotal =
+        getMaterialSubCategoryByTesConfigureId(testConfigureId);
+    materialSubCategoryList.addAll(materialSubCategoryListTotal.stream()
+        .filter(materialSubCategory -> (materialAcceptedValueRepository
+            .findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(testConfigureId,
+                testParameterId, materialSubCategory.getId()) == null))
+        .collect(Collectors.toList()));
     return materialSubCategoryList;
   }
 }

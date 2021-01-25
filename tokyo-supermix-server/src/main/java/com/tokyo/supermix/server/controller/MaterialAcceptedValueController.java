@@ -194,4 +194,34 @@ public class MaterialAcceptedValueController {
             RestApiResponseStatus.OK),
         null, HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.RAW_MATERIALS_BY_TEST_CONFIGURE_ID)
+  public ResponseEntity<Object> getRawMaterial(@PathVariable Long testConfigureId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(materialAcceptedValueService.getRawMaterialByTesConfigureId(testConfigureId),
+            RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.RAW_MATERIALS_BY_TEST_CONFIGURE_ID_AND_TEST_PARAMETERS)
+  public ResponseEntity<Object> getRawMaterialByTestConfigureIdAndTestParameterId(
+      @PathVariable Long testConfigureId, @PathVariable Long testParameterId) {
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(materialAcceptedValueService.getRawMaterialByTesConfigureIdAndTestParameterId(
+            testConfigureId, testParameterId), RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID_AND_TEST_PARAMETERS)
+  public ResponseEntity<Object> getMaterialSubCategoryByTestConfigureIdAndTestParameterId(
+      @PathVariable Long testConfigureId, @PathVariable Long testParameterId) {
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORIES,
+            mapper.map(materialAcceptedValueService
+                .getMaterialSubCategoryByTesConfigureIdAndTestParameterId(testConfigureId,
+                    testParameterId),
+                RawMaterialResponseDto.class),
+            RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
 }

@@ -511,8 +511,16 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + "/test-configure" + "/{testConfigureId}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_RAW_MATERIAL =
       MATERIAL_ACCEPTED_VALUE + "/test-configure-by-raw-material" + "/{testConfigureId}";
-  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID =
-	      MATERIAL_ACCEPTED_VALUE +SLASH+"material-sub-categories"+SLASH+"test-configure"+SLASH+"{testConfigureId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID = MATERIAL_ACCEPTED_VALUE
+      + SLASH + "material-sub-categories" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String RAW_MATERIALS_BY_TEST_CONFIGURE_ID = MATERIAL_ACCEPTED_VALUE + SLASH
+      + "raw-materials" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
+  public static final String RAW_MATERIALS_BY_TEST_CONFIGURE_ID_AND_TEST_PARAMETERS =
+      MATERIAL_ACCEPTED_VALUE + SLASH + "raw-materials" + SLASH + "test-configure" + SLASH
+          + "{testConfigureId}" + SLASH + "test-parameter" + SLASH + "{testParameterId}";
+  public static final String MATERIAL_SUB_CATEGORIES_BY_TEST_CONFIGURE_ID_AND_TEST_PARAMETERS =
+      MATERIAL_ACCEPTED_VALUE + SLASH + "material-sub-categories" + SLASH + "test-configure" + SLASH
+          + "{testConfigureId}" + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   /*
    * AcceptedValue
    */
