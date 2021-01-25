@@ -25,6 +25,7 @@ import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.MixDesignConfirmationToken;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.TestEquationParameter;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
@@ -46,6 +47,7 @@ import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestEquationParameterRepository;
 import com.tokyo.supermix.data.repositories.TestEquationRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -90,6 +92,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   MixDesignConfirmationTokenRepository mixDesignConfirmationTokenRepository;
   @Autowired
   MultiResultFormulaRepository multiResultFormulaRepository;
+  @Autowired
+  TestEquationParameterRepository testEquationParameterRepository;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -805,29 +809,38 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   public double getDateTimeResults(String finishProductTestCode, Long testConfigId, Long trialNo,
       Long testParameterId) {
+    List<TestEquationParameter> testEquationParameterEle =
+        testEquationParameterRepository.findByTestParameterId(testParameterId);
+
     double finishProductResult = 0.0;
     List<LocalDateTime> dateResultlist = new ArrayList<>();
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
         .findByFinishProductTestCodeAndTrialNoOrderByCreatedAtDesc(finishProductTestCode,
             trialNo)) {
-      if (finishProductTrial.getTestParameter() != null) {
-        TestParameter testParameter =
-            testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
-        if (testParameter.getParameter().getParameterDataType()
-            .equals(ParameterDataType.DATETIME)) {
-          if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-              && testParameter.getType().equals(TestParameterType.INPUT))
-              || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                  && testParameter.getType().equals(TestParameterType.RESULT))
-              || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
-                  && testParameter.getType().equals(TestParameterType.CONFIG))) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime dateTime =
-                LocalDateTime.parse(finishProductTrial.getDateValue(), formatter);
-            dateResultlist.add(dateTime);
+      if (!testEquationParameterEle.isEmpty()) {
+        for (TestEquationParameter testEquationParameter : testEquationParameterEle) {
+          if (finishProductTrial.getTestParameter() != null && testEquationParameter
+              .getTestParameter().getId() == finishProductTrial.getTestParameter().getId()) {
+            TestParameter testParameter = testParameterRepository
+                .findById(finishProductTrial.getTestParameter().getId()).get();
+            if (testParameter.getParameter().getParameterDataType()
+                .equals(ParameterDataType.DATETIME)) {
+              if ((testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                  && testParameter.getType().equals(TestParameterType.INPUT))
+                  || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                      && testParameter.getType().equals(TestParameterType.RESULT))
+                  || (testParameter.getInputMethods().equals(InputMethod.OBSERVE)
+                      && testParameter.getType().equals(TestParameterType.CONFIG))) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime dateTime =
+                    LocalDateTime.parse(finishProductTrial.getDateValue(), formatter);
+                dateResultlist.add(dateTime);
+              }
+            }
           }
         }
       }
+
     }
     if (!dateResultlist.isEmpty()) {
       finishProductResult = findTimeDifference(dateResultlist);
