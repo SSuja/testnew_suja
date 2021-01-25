@@ -25,6 +25,7 @@ import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.MixDesignConfirmationToken;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.entities.TestEquationParameter;
 import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
@@ -809,9 +810,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
 
   public double getDateTimeResults(String finishProductTestCode, Long testConfigId, Long trialNo,
       Long testParameterId) {
+    TestEquation testEquation = testEquationRepository
+        .findByTestConfigureIdAndTestParameterId(testConfigId, testParameterId);
     List<TestEquationParameter> testEquationParameterEle =
-        testEquationParameterRepository.findByTestParameterId(testParameterId);
-
+        testEquationParameterRepository.findByTestEquationId(testEquation.getId());
     double finishProductResult = 0.0;
     List<LocalDateTime> dateResultlist = new ArrayList<>();
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
