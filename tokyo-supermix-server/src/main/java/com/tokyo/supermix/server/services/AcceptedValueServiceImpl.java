@@ -15,10 +15,11 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.QAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
-import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.TestResultType;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -32,7 +33,8 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private TestConfigureService testConfigureService;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
-
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -179,11 +181,22 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
     }
   }
 
-  @Override
-  public List<AcceptedValue> searchAcceptedValue(String testName, MainType mainType,
-      String mainCategoryName, String subCategoryName, String materialName,
-      BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination) {
-    // TODO Auto-generated method stub
-    return null;
+  @Transactional(readOnly = true)
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
+      Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination) {
+    if (testParamName != null && !testParamName.isEmpty()) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.testParameter.name.contains(testParamName));
+    }
+    if (testConfigId != null) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.testConfigure.id.eq(testConfigId));
+    }
+    if (condition != null) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.conditionRange.eq(condition));
+    }
+    pagination.setTotalRecords(
+        (long) ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).size());
+    return mapper.map(acceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
+        AccepetedValueDto.class);
   }
 }

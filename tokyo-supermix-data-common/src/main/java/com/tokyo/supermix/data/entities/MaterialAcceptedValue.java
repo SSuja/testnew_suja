@@ -41,7 +41,7 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   private TestParameter testParameter;
   private boolean finalResult;
   @ManyToOne
-  @JoinColumn(name = "subCategoryId", nullable = true)
+  @JoinColumn(name = "materialSubCategoryId", nullable = true)
   private MaterialSubCategory materialSubCategory;
   @Enumerated(EnumType.ORDINAL)
   private CategoryAcceptedType categoryAcceptedType;
