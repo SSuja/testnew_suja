@@ -51,6 +51,13 @@ public interface MaterialAcceptedValueService {
 
   public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureId(Long testConfigureId);
 
+  public List<RawMaterial> getRawMaterialByTesConfigureId(Long testConfigureId);
+
+  public List<RawMaterial> getRawMaterialByTesConfigureIdAndTestParameterId(Long testConfigureId,
+      Long testParameterId);
+
+  public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureIdAndTestParameterId(
+      Long testConfigureId, Long testParameterId);
   public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId,
       String testParamName, Condition condition, String materialName, BooleanBuilder booleanBuilder,
       int page, int size, Pageable pageable, Pagination pagination);

@@ -30,6 +30,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
@@ -47,6 +48,8 @@ public class TestConfigureController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  CoreTestConfigureService coreTestConfigureService;
 
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
@@ -103,6 +106,54 @@ public class TestConfigureController {
           testConfigureRequestDto.getPrefix())) {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      TestConfigure testConfigure =
+          testConfigureService.getTestConfigureById(testConfigureRequestDto.getId());
+      if (testConfigureRequestDto.getMaterialCategoryId() != testConfigure.getMaterialCategory()
+          .getId()) {
+        testConfigureService
+            .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
+        Long id = testConfigureRequestDto.getId();
+        coreTestConfigureService.updatetestConfigureByTestConfigureId(id);
+        coreTestConfigureService.createCoreTestConfigure(id);
+        return new ResponseEntity<>(
+            new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
+            HttpStatus.OK);
+      } else if (testConfigureRequestDto.getMaterialCategoryId() == testConfigure
+          .getMaterialCategory().getId()) {
+        if (!(testConfigureRequestDto.getMaterialSubCategoryId() == null
+            && testConfigure.getMaterialSubCategory() == null)) {
+          if ((testConfigureRequestDto.getMaterialSubCategoryId() != null
+              && testConfigure.getMaterialSubCategory() == null)
+              || (testConfigureRequestDto.getMaterialSubCategoryId() == null
+                  && testConfigure.getMaterialSubCategory() != null)
+              || !(testConfigureRequestDto.getMaterialSubCategoryId()
+                  .equals(testConfigure.getMaterialSubCategory().getId()))) {
+            testConfigureService
+                .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
+            Long id = testConfigureRequestDto.getId();
+            coreTestConfigureService.updatetestConfigureByTestConfigureId(id);
+            coreTestConfigureService.createCoreTestConfigure(id);
+            return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+                Constants.UPDATE_TEST_CONFIGURE_SUCCESS), HttpStatus.OK);
+          } else if (!(testConfigureRequestDto.getRawMaterialId() == null
+              && testConfigure.getRawMaterial() == null)) {
+            if ((testConfigureRequestDto.getRawMaterialId() != null
+                && testConfigure.getRawMaterial() == null)
+                || (testConfigureRequestDto.getRawMaterialId() == null
+                    && testConfigure.getRawMaterial() != null)
+                || !(testConfigureRequestDto.getRawMaterialId()
+                    .equals(testConfigure.getRawMaterial().getId()))) {
+              testConfigureService
+                  .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
+              Long id = testConfigureRequestDto.getId();
+              coreTestConfigureService.updatetestConfigureByTestConfigureId(id);
+              coreTestConfigureService.createCoreTestConfigure(id);
+              return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+                  Constants.UPDATE_TEST_CONFIGURE_SUCCESS), HttpStatus.OK);
+            }
+          }
+        }
       }
       testConfigureService
           .updateTestConfigure(mapper.map(testConfigureRequestDto, TestConfigure.class));
