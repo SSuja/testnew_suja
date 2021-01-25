@@ -101,12 +101,29 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return finishProductTrialRepository.findById(id).get();
   }
 
-  public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrial) {
-    FinishProductTest finishProductTest = finishProductTestRepository
-        .findById(finishProductTrial.get(0).getFinishProductTest().getCode()).get();
-    finishProductTest.setStatus(Status.PROCESS);
-    finishProductTestRepository.save(finishProductTest);
-    finishProductTrialRepository.saveAll(finishProductTrial);
+  public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrialList) {
+    if (finishProductTrialRepository.existsByFinishProductTestCode(
+        finishProductTrialList.get(0).getFinishProductTest().getCode())
+        && (finishProductTrialRepository.findByFinishProductTestCodeAndTestParameterIdAndTrialNo(
+            finishProductTrialList.get(0).getFinishProductTest().getCode(),
+            finishProductTrialList.get(0).getTestParameter().getId(),
+            finishProductTrialList.get(0).getTrialNo()).size() == 1)) {
+      for (FinishProductTrial finishProductTrial : finishProductTrialList) {
+        List<FinishProductTrial> finishProductTrialAlready =
+            finishProductTrialRepository.findByFinishProductTestCodeAndTestParameterIdAndTrialNo(
+                finishProductTrial.getFinishProductTest().getCode(),
+                finishProductTrial.getTestParameter().getId(), finishProductTrial.getTrialNo());
+        finishProductTrialAlready.get(0).setDateValue(finishProductTrial.getDateValue());
+        finishProductTrialAlready.get(0).setValue(finishProductTrial.getValue());
+        finishProductTrialRepository.save(finishProductTrialAlready.get(0));
+      }
+    } else {
+      FinishProductTest finishProductTest = finishProductTestRepository
+          .findById(finishProductTrialList.get(0).getFinishProductTest().getCode()).get();
+      finishProductTest.setStatus(Status.PROCESS);
+      finishProductTestRepository.save(finishProductTest);
+      finishProductTrialRepository.saveAll(finishProductTrialList);
+    }
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -256,16 +273,17 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                 finishProductParameterResultRepository
                     .findByTestParameterIdAndFinishProductTestCode(testParameter.getId(),
                         finishProductTestCode);
-            finishProductAlready.setResult(
-                roundDoubleValue(finalDateValue(finishProductTestCode, testParameter.getId())));
+            finishProductAlready.setResult(roundDoubleValue(finalDateValue(finishProductTestCode,
+                testParameter.getId(), finishproductTest.getNoOfTrial())));
             finishProductParameterResultRepository.save(finishProductAlready);
           } else {
             FinishProductParameterResult finishProductParameterResult =
                 new FinishProductParameterResult();
             finishProductParameterResult.setFinishProductTest(finishproductTest);
             finishProductParameterResult.setTestParameter(testParameter);
-            finishProductParameterResult.setResult(
-                roundDoubleValue(finalDateValue(finishProductTestCode, testParameter.getId())));
+            finishProductParameterResult
+                .setResult(roundDoubleValue(finalDateValue(finishProductTestCode,
+                    testParameter.getId(), finishproductTest.getNoOfTrial())));
             finishProductParameterResultRepository.save(finishProductParameterResult);
           }
         }
@@ -343,11 +361,28 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   @Transactional
   public void saveAverageCalculationFinishProductTrials(
       List<FinishProductTrial> finishProductTrialList) {
-    FinishProductTest finishProductTest = finishProductTestRepository
-        .findById(finishProductTrialList.get(0).getFinishProductTest().getCode()).get();
-    finishProductTest.setStatus(Status.PROCESS);
-    finishProductTestRepository.save(finishProductTest);
-    finishProductTrialRepository.saveAll(finishProductTrialList);
+    if (finishProductTrialRepository.existsByFinishProductTestCode(
+        finishProductTrialList.get(0).getFinishProductTest().getCode())
+        && (finishProductTrialRepository.findByFinishProductTestCodeAndTestParameterIdAndTrialNo(
+            finishProductTrialList.get(0).getFinishProductTest().getCode(),
+            finishProductTrialList.get(0).getTestParameter().getId(),
+            finishProductTrialList.get(0).getTrialNo()).size() == 1)) {
+      for (FinishProductTrial finishProductTrial : finishProductTrialList) {
+        List<FinishProductTrial> finishProductTrialAlready =
+            finishProductTrialRepository.findByFinishProductTestCodeAndTestParameterIdAndTrialNo(
+                finishProductTrial.getFinishProductTest().getCode(),
+                finishProductTrial.getTestParameter().getId(), finishProductTrial.getTrialNo());
+        finishProductTrialAlready.get(0).setDateValue(finishProductTrial.getDateValue());
+        finishProductTrialAlready.get(0).setValue(finishProductTrial.getValue());
+        finishProductTrialRepository.save(finishProductTrialAlready.get(0));
+      }
+    } else {
+      FinishProductTest finishProductTest = finishProductTestRepository
+          .findById(finishProductTrialList.get(0).getFinishProductTest().getCode()).get();
+      finishProductTest.setStatus(Status.PROCESS);
+      finishProductTestRepository.save(finishProductTest);
+      finishProductTrialRepository.saveAll(finishProductTrialList);
+    }
   }
 
   @Transactional
@@ -773,7 +808,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     double finishProductResult = 0.0;
     List<LocalDateTime> dateResultlist = new ArrayList<>();
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
-        .findByFinishProductTestCodeAndTrialNo(finishProductTestCode, trialNo)) {
+        .findByFinishProductTestCodeAndTrialNoOrderByCreatedAtDesc(finishProductTestCode,
+            trialNo)) {
       if (finishProductTrial.getTestParameter() != null) {
         TestParameter testParameter =
             testParameterRepository.findById(finishProductTrial.getTestParameter().getId()).get();
@@ -799,8 +835,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return roundDoubleValue(finishProductResult);
   }
 
-  public double finalDateValue(String finishProductTestCode, Long testParameterId) {
-    double finalValue = 0;
+  public double finalDateValue(String finishProductTestCode, Long testParameterId, Long noOfTrial) {
+    List<Double> trialValue = new ArrayList<Double>();
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
         .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
             testParameterId)) {
@@ -808,11 +844,16 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
           .equals(ParameterDataType.DATETIME)) {
         if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
             && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
-          finalValue = finishProductTrial.getValue();
+          trialValue.add(finishProductTrial.getValue());
         }
       }
     }
-    return finalValue;
+
+    double sumOfValue = 0.0;
+    for (int i = 0; i < noOfTrial; i++) {
+      sumOfValue = sumOfValue + trialValue.get(i);
+    }
+    return (sumOfValue / noOfTrial);
   }
 
 }

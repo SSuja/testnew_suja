@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.InputMethod;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 
 public class FinishProductTestTrialDto {
@@ -11,6 +12,8 @@ public class FinishProductTestTrialDto {
   private Long finishProductTestNoOfTrial;
   private String testParameterParameterName;
   private String testParameterAbbreviation;
+  private ParameterDataType testParameterParameterParameterDataType;
+  private String dateValue;
 
   public String getTestParameterParameterName() {
     return testParameterParameterName;
@@ -66,5 +69,22 @@ public class FinishProductTestTrialDto {
 
   public void setTestParameterAbbreviation(String testParameterAbbreviation) {
     this.testParameterAbbreviation = testParameterAbbreviation;
+  }
+
+  public ParameterDataType getTestParameterParameterParameterDataType() {
+    return testParameterParameterParameterDataType;
+  }
+
+  public void setTestParameterParameterParameterDataType(
+      ParameterDataType testParameterParameterParameterDataType) {
+    this.testParameterParameterParameterDataType = testParameterParameterParameterDataType;
+  }
+
+  public String getDateValue() {
+    return dateValue;
+  }
+
+  public void setDateValue(String dateValue) {
+    this.dateValue = dateValue;
   }
 }
