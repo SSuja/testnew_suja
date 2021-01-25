@@ -4,20 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
+import com.tokyo.supermix.data.entities.QMaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueService {
@@ -32,6 +37,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -202,7 +209,7 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     }
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureId(Long testConfigureId) {
     TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
     List<MaterialSubCategory> materialSubCategoryList = new ArrayList<>();
@@ -214,5 +221,30 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           .findByMaterialCategory(testConfigure.getMaterialCategory()));
     }
     return materialSubCategoryList;
+  }
+
+  @Transactional(readOnly = true)
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
+      Condition condition, String materialName, BooleanBuilder booleanBuilder, int page, int size,
+      Pageable pageable, Pagination pagination) {
+    if (testParamName != null && !testParamName.isEmpty()) {
+      booleanBuilder.and(
+          QMaterialAcceptedValue.materialAcceptedValue.testParameter.name.contains(testParamName));
+    }
+    if (testConfigId != null) {
+      booleanBuilder
+          .and(QMaterialAcceptedValue.materialAcceptedValue.testConfigure.id.eq(testConfigId));
+    }
+    if (condition != null) {
+      booleanBuilder.and(QMaterialAcceptedValue.materialAcceptedValue.conditionRange.eq(condition));
+    }
+    if (materialName != null && !materialName.isEmpty()) {
+      booleanBuilder.and(
+          QMaterialAcceptedValue.materialAcceptedValue.rawMaterial.name.contains(materialName));
+    }
+    pagination.setTotalRecords((long) ((List<MaterialAcceptedValue>) materialAcceptedValueRepository
+        .findAll(booleanBuilder)).size());
+    return mapper.map(materialAcceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
+        AccepetedValueDto.class);
   }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
@@ -47,7 +48,7 @@ public interface AcceptedValueService {
 
   public void upDateTesConfigureType(Long testConfigureId);
 
-  public List<AcceptedValue> searchAcceptedValue(Long testConfigId, String testParamName,
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
       Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
       Pagination pagination);
 }

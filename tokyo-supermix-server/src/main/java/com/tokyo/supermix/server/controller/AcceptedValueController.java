@@ -158,14 +158,10 @@ public class AcceptedValueController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.ACCEPTED_VALUES,
-            mapper.map(
-                acceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
-                    booleanBuilder, totalpage, size, pageable, pagination),
-                AcceptedValueResponseDto.class),
-            RestApiResponseStatus.OK, pagination),
-        null, HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.ACCEPTED_VALUES,
+        acceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
+            booleanBuilder, totalpage, size, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_ACCEPTED_VALUE_DTO_BY_TEST_CONFIGURE_ID)

@@ -1,9 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,10 +16,10 @@ import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.QAcceptedValue;
-import com.tokyo.supermix.data.entities.Test;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -35,6 +33,8 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private TestConfigureService testConfigureService;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private Mapper mapper;
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -182,25 +182,21 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   }
 
   @Transactional(readOnly = true)
-  public List<AcceptedValue> searchAcceptedValue(Long testConfigId, String testParamName,
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
       Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
       Pagination pagination) {
-    System.out.println("mmmmmmmmmmmmmmmm" + booleanBuilder + "test" + testConfigId);
     if (testParamName != null && !testParamName.isEmpty()) {
       booleanBuilder.and(QAcceptedValue.acceptedValue.testParameter.name.contains(testParamName));
+    }
+    if (testConfigId != null) {
+      booleanBuilder.and(QAcceptedValue.acceptedValue.testConfigure.id.eq(testConfigId));
     }
     if (condition != null) {
       booleanBuilder.and(QAcceptedValue.acceptedValue.conditionRange.eq(condition));
     }
     pagination.setTotalRecords(
-        (long) ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).stream()
-            .filter(ac -> ac.getTestConfigure().getId() == testConfigId)
-            .collect(Collectors.toList()).size());
-    return ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).stream()
-        .filter(ac -> ac.getTestConfigure().getId() == testConfigId).collect(Collectors.toList());
-    // pagination.setTotalRecords(
-    // ((Collection<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).stream()
-    // .count());
-    // return acceptedValueRepository.findAll(booleanBuilder, pageable).toList();
+        (long) ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).size());
+    return mapper.map(acceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
+        AccepetedValueDto.class);
   }
 }
