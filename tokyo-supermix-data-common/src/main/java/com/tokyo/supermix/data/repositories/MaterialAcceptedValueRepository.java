@@ -59,4 +59,7 @@ public interface MaterialAcceptedValueRepository
 
   MaterialAcceptedValue findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(
       Long testConfigureId, Long testParameterId, Long MaterialSubCategoryId);
+  
+  public boolean existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(Long testConfigureId,
+      Long MaterialSubCategoryId, Long testParameterId);
 }

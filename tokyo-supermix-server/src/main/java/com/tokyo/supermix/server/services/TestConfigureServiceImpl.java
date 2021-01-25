@@ -177,8 +177,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     materialAcceptedValueRepository.findByTestConfigureId(testConfigId)
         .forEach(materialAcceptedValue -> {
           AccepetedValueDto materialAcceptedValueDto = new AccepetedValueDto();
-          materialAcceptedValueDto
-              .setMaterialName(materialAcceptedValue.getRawMaterial().getName());
+          if (materialAcceptedValue.getRawMaterial() != null) {
+            materialAcceptedValueDto
+                .setMaterialName(materialAcceptedValue.getRawMaterial().getName());
+          } else {
+            materialAcceptedValueDto.setMaterialSubCategoryName(
+                materialAcceptedValue.getMaterialSubCategory().getName());;
+          }
+
           materialAcceptedValueDto
               .setConditionRange(materialAcceptedValue.getConditionRange().toString());
           materialAcceptedValueDto.setMaxValue(materialAcceptedValue.getMaxValue());
