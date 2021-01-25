@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import javax.annotation.Nullable;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 
 public class AccepetedValueDto {
   private Long id;
@@ -21,6 +22,9 @@ public class AccepetedValueDto {
   @Nullable
   private String testParameterName;
   private String parameterName;
+  private Long materialSubCategoryId;
+  private String materialSubCategoryName;
+  private CategoryAcceptedType categoryAcceptedType;
 
   public Long getId() {
     return id;
@@ -117,11 +121,36 @@ public class AccepetedValueDto {
   public void setTestParameterName(String testParameterName) {
     this.testParameterName = testParameterName;
   }
+
   public String getTestEquationFormula() {
     return testEquationFormula;
   }
 
   public void setTestEquationFormula(String testEquationFormula) {
     this.testEquationFormula = testEquationFormula;
+  }
+
+  public Long getMaterialSubCategoryId() {
+    return materialSubCategoryId;
+  }
+
+  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
+    this.materialSubCategoryId = materialSubCategoryId;
+  }
+
+  public String getMaterialSubCategoryName() {
+    return materialSubCategoryName;
+  }
+
+  public void setMaterialSubCategoryName(String materialSubCategoryName) {
+    this.materialSubCategoryName = materialSubCategoryName;
+  }
+
+  public CategoryAcceptedType getCategoryAcceptedType() {
+    return categoryAcceptedType;
+  }
+
+  public void setCategoryAcceptedType(CategoryAcceptedType categoryAcceptedType) {
+    this.categoryAcceptedType = categoryAcceptedType;
   }
 }
