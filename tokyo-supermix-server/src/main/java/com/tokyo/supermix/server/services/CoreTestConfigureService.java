@@ -44,4 +44,6 @@ public interface CoreTestConfigureService {
 	public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndApplicableTest(Long rawMaterialId);
 	
 	public void updateCoreTestByNewRawMaterial(Long rawMaterialId);
+	
+	public void updatetestConfigureByTestConfigureId(Long testConfigureId);
 }
