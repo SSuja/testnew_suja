@@ -175,14 +175,14 @@ public class MixDesignServiceImpl implements MixDesignService {
 
   @Transactional(readOnly = true)
   public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
-      String materialName, String subCategoryName, String plantName, String plantCode,
+      String rawMaterialName, String subCategoryName, String plantName, String plantCode,
       Status status, String date, Pageable pageable, Pagination pagination) {
 
     if (code != null && !code.isEmpty()) {
       booleanBuilder.and(QMixDesign.mixDesign.code.contains(code));
     }
-    if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.contains(materialName));
+    if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
+      booleanBuilder.and(QMixDesign.mixDesign.rawMaterial.name.contains(rawMaterialName));
     }
     if (subCategoryName != null && !subCategoryName.isEmpty()) {
       booleanBuilder

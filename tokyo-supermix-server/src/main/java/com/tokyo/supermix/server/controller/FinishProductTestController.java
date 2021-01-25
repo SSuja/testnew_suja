@@ -198,6 +198,7 @@ public class FinishProductTestController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_SEARCH)
   public ResponseEntity<Object> getFinishProductTest(@PathVariable String plantCode,
+      @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "specimenCode", required = false) String specimenCode,
       @RequestParam(name = "finishProductSampleCode",
           required = false) String finishProductSampleCode,
@@ -216,7 +217,7 @@ public class FinishProductTestController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_TEST, mapper.map(
-            finishProductTestService.searchFinishProductTest(booleanBuilder, specimenCode,
+            finishProductTestService.searchFinishProductTest(booleanBuilder, code,specimenCode,
                 finishProductSampleCode, mixDesignCode, testName, materialName, mainCategoryName,
                 subCategoryName, status, date, plantName, plantCode, pageable, pagination),
             FinishProductTestResponseDto.class), RestApiResponseStatus.OK, pagination),

@@ -49,7 +49,7 @@ public interface MixDesignService {
   public Long getCountMixDesignByPlantCode(String plantCode);
 
   public List<MixDesignResponseDto> searchMixDesign(BooleanBuilder booleanBuilder, String code,
-      String materialName, String subCategoryName, String plantName, String plantCode,
+      String rawMaterialName, String subCategoryName, String plantName, String plantCode,
       Status status, String date, Pageable pageable, Pagination pagination);
 
   public List<MixDesign> getCodeByPlantCode(String plantCode, String code);

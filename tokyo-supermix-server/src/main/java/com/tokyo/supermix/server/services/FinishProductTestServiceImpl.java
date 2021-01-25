@@ -546,10 +546,13 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,
+  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,String code,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
       String materialName, String mainCategoryName, String subCategoryName, Status status,
       String date, String plantName, String plantCode, Pageable pageable, Pagination pagination) {
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QFinishProductTest.finishProductTest.code.contains(code));
+    }
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(QFinishProductTest.finishProductTest.specimenCode.contains(specimenCode));
     }
