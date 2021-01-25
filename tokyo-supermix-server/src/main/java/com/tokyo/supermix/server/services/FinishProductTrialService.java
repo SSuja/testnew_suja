@@ -14,7 +14,7 @@ public interface FinishProductTrialService {
 
   public FinishProductTrial getFinishProductTrialByCode(Long id);
 
-  public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrial);
+  public void saveFinishProductTrial(List<FinishProductTrial> finishProductTrialList);
 
   public void deleteFinishProductTrial(Long id);
 
@@ -25,7 +25,7 @@ public interface FinishProductTrialService {
 
   public boolean isFinishProductTestExists(String finishProductTestCode);
 
-  public void saveFinishproductResult(String finishProductTestCode ,HttpServletRequest request);
+  public void saveFinishproductResult(String finishProductTestCode, HttpServletRequest request);
 
   public void updateFinishProductTestTrial(FinishProductTrial finishProductTrial);
 
@@ -34,7 +34,8 @@ public interface FinishProductTrialService {
   public void saveAverageCalculationResult(String finishProductCode);
 
 
-  public void saveAverageCalculationFinishProductTrials(List<FinishProductTrial> finishProductTrialList);
+  public void saveAverageCalculationFinishProductTrials(
+      List<FinishProductTrial> finishProductTrialList);
 
   public boolean getEquationCheck(String finishProductTestCode);
 }

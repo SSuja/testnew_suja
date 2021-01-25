@@ -26,6 +26,7 @@ public class FinishProductTestResultDto {
   private String testParameterAbbreviation;
   private String finishProductTestFinishProductSampleFinishProductCode;
   private ReportFormat finishProductTestTestConfigureReportFormat;
+  private Long finishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId;
 
   public String getTestParameterAbbreviation() {
     return testParameterAbbreviation;
@@ -180,5 +181,15 @@ public class FinishProductTestResultDto {
   public void setFinishProductTestTestConfigureReportFormat(
       ReportFormat finishProductTestTestConfigureReportFormat) {
     this.finishProductTestTestConfigureReportFormat = finishProductTestTestConfigureReportFormat;
+  }
+
+  public Long getFinishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId() {
+    return finishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId;
+  }
+
+  public void setFinishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId(
+      Long finishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId) {
+    this.finishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId =
+        finishProductTestFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId;
   }
 }
