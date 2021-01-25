@@ -42,7 +42,6 @@ public interface MaterialAcceptedValueService {
 
   public List<RawMaterial> findRawMaterialByTestConfigureId(Long testConfigureId);
 
-
   public void upDateTesConfigureType(Long testConfigureId);
   
   public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureId(Long testConfigureId);
