@@ -546,7 +546,7 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder,String code,
+  public List<FinishProductTest> searchFinishProductTest(BooleanBuilder booleanBuilder, String code,
       String specimenCode, String finishProductSampleCode, String mixDesignCode, String testName,
       String materialName, String mainCategoryName, String subCategoryName, Status status,
       String date, String plantName, String plantCode, Pageable pageable, Pagination pagination) {
@@ -581,7 +581,8 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       booleanBuilder.and(QFinishProductTest.finishProductTest.testConfigure.materialSubCategory.name
           .contains(subCategoryName));
     }
-    if (plantName != null && !plantName.isEmpty()) {
+    if (plantName != null && !plantName.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
       booleanBuilder
           .and(QFinishProductTest.finishProductTest.finishProductSample.mixDesign.plant.name
               .contains(plantName));
