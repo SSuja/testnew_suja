@@ -139,19 +139,21 @@ public class MaterialAcceptedValueController {
       @Valid @RequestBody MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto) {
     if (materialAcceptedValueService
         .isMaterialAcceptedValueExist(materialAcceptedValueRequestDto.getId())) {
-      if (materialTestService.isMaterialTestByTestConfigureAndRawMaterialExists(
-          materialAcceptedValueRequestDto.getTestConfigureId(),
-          materialAcceptedValueRequestDto.getRawMaterialId())) {
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
+      if (materialAcceptedValueRequestDto.getRawMaterialId() != null) {
+        if (materialTestService.isMaterialTestByTestConfigureAndRawMaterialExists(
+            materialAcceptedValueRequestDto.getTestConfigureId(),
+            materialAcceptedValueRequestDto.getRawMaterialId())) {
+          return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+              Constants.MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
+        }
       }
-//      if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
-//          materialAcceptedValueRequestDto.getId(),
-//          materialAcceptedValueRequestDto.getTestConfigureId(),
-//          materialAcceptedValueRequestDto.getRawMaterialId())) {
-//        return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL,
-//            validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
-//      }
+      // if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
+      // materialAcceptedValueRequestDto.getId(),
+      // materialAcceptedValueRequestDto.getTestConfigureId(),
+      // materialAcceptedValueRequestDto.getRawMaterialId())) {
+      // return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL,
+      // validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
+      // }
       materialAcceptedValueService.updateMaterialAcceptedValue(
           mapper.map(materialAcceptedValueRequestDto, MaterialAcceptedValue.class));
       materialAcceptedValueService
