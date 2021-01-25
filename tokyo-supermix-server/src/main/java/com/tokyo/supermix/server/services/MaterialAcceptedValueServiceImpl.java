@@ -146,6 +146,7 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           accepetedValueDto.setMaxValue(acceptedValue.getMaxValue());
           accepetedValueDto.setFinalResult(acceptedValue.isFinalResult());
           accepetedValueDto.setValue(acceptedValue.getValue());
+          accepetedValueDto.setCategoryAcceptedType(acceptedValue.getCategoryAcceptedType());
           if (acceptedValue.getTestEquation() != null) {
             accepetedValueDto.setTestEquationId(acceptedValue.getTestEquation().getId());
             accepetedValueDto
@@ -160,6 +161,12 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
           if (acceptedValue.getTestParameter().getName() != null) {
             accepetedValueDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+          }
+          if (acceptedValue.getMaterialSubCategory() != null) {
+            accepetedValueDto
+                .setMaterialSubCategoryId(acceptedValue.getMaterialSubCategory().getId());
+            accepetedValueDto
+                .setMaterialSubCategoryName(acceptedValue.getMaterialSubCategory().getName());
           }
           accepetedValueDtolist.add(accepetedValueDto);
         });
