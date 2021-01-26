@@ -15,6 +15,7 @@ import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.QMaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -275,9 +276,9 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   }
 
   @Transactional(readOnly = true)
-  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
-      Condition condition, String materialName, BooleanBuilder booleanBuilder, int page, int size,
-      Pageable pageable, Pagination pagination) {
+  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, CategoryAcceptedType categoryAcceptedType,
+      String testParamName, Condition condition, String materialName, BooleanBuilder booleanBuilder,
+      int page, int size, Pageable pageable, Pagination pagination) {
     if (testParamName != null && !testParamName.isEmpty()) {
       booleanBuilder.and(
           QMaterialAcceptedValue.materialAcceptedValue.testParameter.name.contains(testParamName));
@@ -288,6 +289,9 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     }
     if (condition != null) {
       booleanBuilder.and(QMaterialAcceptedValue.materialAcceptedValue.conditionRange.eq(condition));
+    }
+    if (categoryAcceptedType != null) {
+      booleanBuilder.and(QMaterialAcceptedValue.materialAcceptedValue.categoryAcceptedType.eq(categoryAcceptedType));
     }
     if (materialName != null && !materialName.isEmpty()) {
       booleanBuilder.and(
