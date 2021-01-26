@@ -84,6 +84,18 @@ public class AcceptedValueController {
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 
+  @GetMapping(value = EndpointURI.ACCEPTED_VALUES_PAGINATION)
+  public ResponseEntity<Object> getAllAcceptedValuesPagination(@PathVariable Long testConfigureId,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(acceptedValueService.countByTestConfig(testConfigureId));
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+        acceptedValueService.getAllAcceptedValuesByPage(pageable, testConfigureId),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+  }
+
   @GetMapping(value = EndpointURI.ACCEPTED_VALUE_BY_ID)
   public ResponseEntity<Object> getAcceptedValueById(@PathVariable Long id) {
     if (acceptedValueService.isAcceptedValueExist(id)) {
@@ -100,10 +112,10 @@ public class AcceptedValueController {
   @DeleteMapping(value = EndpointURI.ACCEPTED_VALUE_BY_ID)
   public ResponseEntity<Object> deleteAcceptedValue(@PathVariable Long id) {
     if (acceptedValueService.isAcceptedValueExist(id)) {
-      
-      AcceptedValue acceptedValue=acceptedValueService.getAcceptedValueById(id);
+
+      AcceptedValue acceptedValue = acceptedValueService.getAcceptedValueById(id);
       coreTestConfigureService
-      .updateApplicableTestByTestConfigureId(acceptedValue.getTestConfigure().getId(), false);
+          .updateApplicableTestByTestConfigureId(acceptedValue.getTestConfigure().getId(), false);
       acceptedValueService.deleteAcceptedValue(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.ACCEPTED_VALUE_DELETED),
@@ -149,15 +161,6 @@ public class AcceptedValueController {
     }
   }
 
-  // @GetMapping(value = EndpointURI.SEARCH_ACCEPTED_VALUE)
-  // public ResponseEntity<Object> getAcceptedValueSearch(
-  // @QuerydslPredicate(root = AcceptedValue.class) Predicate predicate,
-  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.ACCEPTED_VALUES,
-  // acceptedValueService.searchAcceptedValue(predicate, size, page), RestApiResponseStatus.OK),
-  // null, HttpStatus.OK);
-  // }
-
   @GetMapping(value = EndpointURI.SEARCH_ACCEPTED_VALUE)
   public ResponseEntity<Object> searchAcceptedValues(@PathVariable Long testConfigId,
       @RequestParam(name = "testParamName", required = false) String testParamName,
@@ -167,7 +170,7 @@ public class AcceptedValueController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.ACCEPTED_VALUES,
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
         acceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
             booleanBuilder, totalpage, size, pageable, pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
