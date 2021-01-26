@@ -31,8 +31,8 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.MaterialAcceptedValueService;
 import com.tokyo.supermix.server.services.MaterialTestService;
@@ -115,6 +115,23 @@ public class MaterialAcceptedValueController {
             mapper.map(materialAcceptedValueService.getAllMaterialAcceptedValues(),
                 MaterialAcceptedValueResponseDto.class),
             RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUES_PAGINATION)
+  public ResponseEntity<Object> getAllMaterialAcceptedValuesByPagination(
+      @PathVariable Long testConfigureId, @PathVariable CategoryAcceptedType categoryAcceptedType,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(materialAcceptedValueService
+        .countMaterialAcceptedValues(testConfigureId, categoryAcceptedType));
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+            materialAcceptedValueService.getAllMaterialAcceptedValuesByPage(pageable,
+                testConfigureId, categoryAcceptedType),
+            RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
   }
 
@@ -283,6 +300,7 @@ public class MaterialAcceptedValueController {
 
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_ACCEPTED_VALUE)
   public ResponseEntity<Object> searchMaterialAcceptedValues(@PathVariable Long testConfigId,
+      @PathVariable CategoryAcceptedType categoryAcceptedType,
       @RequestParam(name = "testParamName", required = false) String testParamName,
       @RequestParam(name = "condition", required = false) Condition condition,
       @RequestParam(name = "materialName", required = false) String materialName,
@@ -291,9 +309,10 @@ public class MaterialAcceptedValueController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MATERIAL_ACCEPTED_VALUE,
-        materialAcceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
-            materialName, booleanBuilder, totalpage, size, pageable, pagination),
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+        materialAcceptedValueService.searchAcceptedValue(testConfigId, categoryAcceptedType,
+            testParamName, condition, materialName, booleanBuilder, totalpage, size, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }

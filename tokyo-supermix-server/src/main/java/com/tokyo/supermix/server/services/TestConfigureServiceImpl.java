@@ -333,4 +333,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
             .count());
     return testConfigureRepository.findAll(booleanBuilder, pageable).toList();
   }
+
+  @Transactional(readOnly = true)
+  public List<TestConfigure> getAllTestConfigureByDecending(Pageable pageable) {
+    return testConfigureRepository.findAllByOrderByIdDesc(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long countTestConfigure() {
+    return testConfigureRepository.count();
+  }
 }

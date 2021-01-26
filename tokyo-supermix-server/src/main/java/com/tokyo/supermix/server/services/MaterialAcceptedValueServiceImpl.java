@@ -15,9 +15,9 @@ import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.QMaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
@@ -37,8 +37,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
-  @Autowired
-  private Mapper mapper;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -275,9 +273,13 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   }
 
   @Transactional(readOnly = true)
-  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
-      Condition condition, String materialName, BooleanBuilder booleanBuilder, int page, int size,
-      Pageable pageable, Pagination pagination) {
+  public AcceptedValueMainDto searchAcceptedValue(Long testConfigId,
+      CategoryAcceptedType categoryAcceptedType, String testParamName, Condition condition,
+      String materialName, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination) {
+    AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigId));
     if (testParamName != null && !testParamName.isEmpty()) {
       booleanBuilder.and(
           QMaterialAcceptedValue.materialAcceptedValue.testParameter.name.contains(testParamName));
@@ -289,14 +291,20 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     if (condition != null) {
       booleanBuilder.and(QMaterialAcceptedValue.materialAcceptedValue.conditionRange.eq(condition));
     }
+    if (categoryAcceptedType != null) {
+      booleanBuilder.and(QMaterialAcceptedValue.materialAcceptedValue.categoryAcceptedType
+          .eq(categoryAcceptedType));
+    }
     if (materialName != null && !materialName.isEmpty()) {
       booleanBuilder.and(
           QMaterialAcceptedValue.materialAcceptedValue.rawMaterial.name.contains(materialName));
     }
+
     pagination.setTotalRecords((long) ((List<MaterialAcceptedValue>) materialAcceptedValueRepository
         .findAll(booleanBuilder)).size());
-    return mapper.map(materialAcceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
-        AccepetedValueDto.class);
+    acceptedValueMainDto.setAccepetedValueDto(getMaterialAccepetedValueDtoListPage(
+        materialAcceptedValueRepository.findAll(booleanBuilder, pageable).toList()));
+    return acceptedValueMainDto;
   }
 
   @Transactional(readOnly = true)
@@ -305,5 +313,62 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     return materialAcceptedValueRepository
         .existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(testConfigureId,
             materialSubCategoryId, testParameterId);
+  }
+
+
+
+  @Transactional(readOnly = true)
+  public Long countMaterialAcceptedValues(Long testConfigureId,
+      CategoryAcceptedType categoryAcceptedType) {
+    return materialAcceptedValueRepository
+        .countByTestConfigureIdAndCategoryAcceptedType(testConfigureId, categoryAcceptedType);
+  }
+
+  @Transactional(readOnly = true)
+  public AcceptedValueMainDto getAllMaterialAcceptedValuesByPage(Pageable pageable,
+      Long testConfigureId, CategoryAcceptedType categoryAcceptedType) {
+    AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigureId));
+    acceptedValueMainDto.setAccepetedValueDto(getMaterialAccepetedValueDtoListPage(
+        materialAcceptedValueRepository.findByTestConfigureIdAndCategoryAcceptedType(pageable,
+            testConfigureId, categoryAcceptedType).toList()));
+    return acceptedValueMainDto;
+  }
+
+  private List<AccepetedValueDto> getMaterialAccepetedValueDtoListPage(
+      List<MaterialAcceptedValue> materialAcc) {
+    List<AccepetedValueDto> accepetedValueDtolist = new ArrayList<>();
+    materialAcc.stream().forEach(acceptedValue -> {
+      AccepetedValueDto accepetedValueDto = new AccepetedValueDto();
+      accepetedValueDto.setId(acceptedValue.getId());
+      accepetedValueDto.setConditionRange(acceptedValue.getConditionRange().toString());
+      accepetedValueDto.setMinValue(acceptedValue.getMinValue());
+      accepetedValueDto.setMaxValue(acceptedValue.getMaxValue());
+      accepetedValueDto.setFinalResult(acceptedValue.isFinalResult());
+      accepetedValueDto.setValue(acceptedValue.getValue());
+      accepetedValueDto.setCategoryAcceptedType(acceptedValue.getCategoryAcceptedType());
+      if (acceptedValue.getTestEquation() != null) {
+        accepetedValueDto.setTestEquationId(acceptedValue.getTestEquation().getId());
+        accepetedValueDto
+            .setTestEquationFormula(acceptedValue.getTestEquation().getEquation().getFormula());
+      }
+      if (acceptedValue.getRawMaterial() != null) {
+        accepetedValueDto.setMaterialId(acceptedValue.getRawMaterial().getId());
+        accepetedValueDto.setMaterialName(acceptedValue.getRawMaterial().getName());
+      }
+      accepetedValueDto.setParameterName(acceptedValue.getTestParameter().getParameter().getName());
+      accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
+      if (acceptedValue.getTestParameter().getName() != null) {
+        accepetedValueDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+      }
+      if (acceptedValue.getMaterialSubCategory() != null) {
+        accepetedValueDto.setMaterialSubCategoryId(acceptedValue.getMaterialSubCategory().getId());
+        accepetedValueDto
+            .setMaterialSubCategoryName(acceptedValue.getMaterialSubCategory().getName());
+      }
+      accepetedValueDtolist.add(accepetedValueDto);
+    });
+    return accepetedValueDtolist;
   }
 }
