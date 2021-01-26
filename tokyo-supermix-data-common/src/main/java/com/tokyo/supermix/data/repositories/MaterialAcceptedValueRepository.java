@@ -1,13 +1,16 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 
-public interface MaterialAcceptedValueRepository
-    extends JpaRepository<MaterialAcceptedValue, Long>, QuerydslPredicateExecutor<MaterialAcceptedValue> {
+public interface MaterialAcceptedValueRepository extends JpaRepository<MaterialAcceptedValue, Long>,
+    QuerydslPredicateExecutor<MaterialAcceptedValue> {
   List<MaterialAcceptedValue> findByTestConfigure(TestConfigure testConfigure);
 
   public boolean existsByTestConfigureIdAndRawMaterialId(Long testConfigureId, Long rawMaterialId);
@@ -41,7 +44,6 @@ public interface MaterialAcceptedValueRepository
 
   List<MaterialAcceptedValue> findByTestConfigureIdAndFinalResultTrue(Long testConfigureId);
 
-
   MaterialAcceptedValue findByTestConfigureIdAndRawMaterialIdAndTestParameterIdAndFinalResultTrue(
       Long testConfigureId, Long rawMaterialId, Long testParameterId);
 
@@ -59,7 +61,13 @@ public interface MaterialAcceptedValueRepository
 
   MaterialAcceptedValue findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(
       Long testConfigureId, Long testParameterId, Long MaterialSubCategoryId);
-  
-  public boolean existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(Long testConfigureId,
-      Long MaterialSubCategoryId, Long testParameterId);
+
+  Long countByTestConfigureIdAndCategoryAcceptedType(Long testConfigureId,
+      CategoryAcceptedType categoryAcceptedType);
+
+  Page<MaterialAcceptedValue> findByTestConfigureIdAndCategoryAcceptedType(Pageable pageable,
+      Long testConfigureId, CategoryAcceptedType categoryAcceptedType);
+
+  public boolean existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(
+      Long testConfigureId, Long MaterialSubCategoryId, Long testParameterId);
 }

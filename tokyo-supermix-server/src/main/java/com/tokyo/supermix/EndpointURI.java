@@ -508,6 +508,9 @@ public final class EndpointURI {
    */
   public static final String MATERIAL_ACCEPTED_VALUE = BASE_API_PATH + "material-accepted-value";
   public static final String MATERIAL_ACCEPTED_VALUES = BASE_API_PATH + "material-accepted-values";
+  public static final String MATERIAL_ACCEPTED_VALUES_PAGINATION =
+      BASE_API_PATH + "material-accepted-values-pages" + SLASH + "test-configure" + SLASH
+          + "{testConfigureId}" + SLASH + "category-type" + SLASH + "{categoryAcceptedType}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_ID = MATERIAL_ACCEPTED_VALUE + ID;
   public static final String MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       MATERIAL_ACCEPTED_VALUE + "/dto" + "/test-configure" + "/{testConfigureId}";
