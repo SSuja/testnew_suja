@@ -67,10 +67,13 @@ public class CoreTestConfigureController {
   @GetMapping(value = EndpointURI.CORE_TEST_CONFIGURE_BY_RAWMATERIAL_ID)
   public ResponseEntity<Object> getCoreTestConfigureByMaterialSubCategoryAndTestType(
       @PathVariable Long rawMaterialId) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.CORE_TEST_CONFIGURES,
-        mapper.map(coreTestConfigureService.getCoreTestConfigureByRawMaterialId(rawMaterialId),
-            CoreTestConfigureDto.class),
-        RestApiResponseStatus.OK), HttpStatus.OK);
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.CORE_TEST_CONFIGURES,
+            mapper.map(coreTestConfigureService
+                .getCoreTestConfigureByRawMaterialIdAndApplicableTest(rawMaterialId),
+                CoreTestConfigureDto.class),
+            RestApiResponseStatus.OK),
+        HttpStatus.OK);
   }
 
   @PutMapping(value = EndpointURI.CORE_TEST_CONFIGURE)

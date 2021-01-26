@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -140,13 +137,15 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
                 materialTestResult.getTestParameter().getId(),
                 materialTest.getIncomingSample().getRawMaterial().getId());
 
-        if (materialAcceptedValue.isFinalResult()) {
-          status = compareAverage(materialAcceptedValue.getMinValue(),
-              materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
-              materialAcceptedValue.getConditionRange(), average, materialTestCode);
-          Boolean st = (status.equals(Status.PASS)) ? true : false;
-          acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
-          singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+        if (materialAcceptedValue != null) {
+          if (materialAcceptedValue.isFinalResult()) {
+            status = compareAverage(materialAcceptedValue.getMinValue(),
+                materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+                materialAcceptedValue.getConditionRange(), average, materialTestCode);
+            Boolean st = (status.equals(Status.PASS)) ? true : false;
+            acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
+            singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+          }
         }
       } else if (materialTestResult.getMaterialTest().getTestConfigure().getAcceptedType()
           .equals(AcceptedType.SUB_CATEGORY)) {
@@ -155,25 +154,29 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
                 materialTest.getTestConfigure().getId(),
                 materialTestResult.getTestParameter().getId(),
                 materialTest.getIncomingSample().getRawMaterial().getMaterialSubCategory().getId());
-        if (materialAcceptedValue.isFinalResult()) {
-          status = compareAverage(materialAcceptedValue.getMinValue(),
-              materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
-              materialAcceptedValue.getConditionRange(), average, materialTestCode);
-          Boolean st = (status.equals(Status.PASS)) ? true : false;
-          acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
-          singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+        if (materialAcceptedValue != null) {
+          if (materialAcceptedValue.isFinalResult()) {
+            status = compareAverage(materialAcceptedValue.getMinValue(),
+                materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
+                materialAcceptedValue.getConditionRange(), average, materialTestCode);
+            Boolean st = (status.equals(Status.PASS)) ? true : false;
+            acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
+            singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+          }
         }
       } else {
         AcceptedValue acceptedValue = acceptedValueRepository
             .findByTestParameterIdAndTestConfigureId(materialTestResult.getTestParameter().getId(),
                 materialTest.getTestConfigure().getId());
-        if (acceptedValue.isFinalResult()) {
-          status = compareAverage(acceptedValue.getMinValue(), acceptedValue.getMaxValue(),
-              acceptedValue.getValue(), acceptedValue.getConditionRange(), average,
-              materialTestCode);
-          Boolean st = (status.equals(Status.PASS)) ? true : false;
-          acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
-          singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+        if (acceptedValue != null) {
+          if (acceptedValue.isFinalResult()) {
+            status = compareAverage(acceptedValue.getMinValue(), acceptedValue.getMaxValue(),
+                acceptedValue.getValue(), acceptedValue.getConditionRange(), average,
+                materialTestCode);
+            Boolean st = (status.equals(Status.PASS)) ? true : false;
+            acceptedParameters.put(materialTestResult.getTestParameter().getAbbreviation(), st);
+            singleEquation = materialTestResult.getTestParameter().getAbbreviation();
+          }
         }
       }
     }

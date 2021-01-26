@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setTestConfigure(testConfigure);
         coreTestConfigure.setCoreTest(false);
-        coreTestConfigure.setApplicableTest(true);
+        coreTestConfigure.setApplicableTest(false);
 
         coreTestConfigurelist.add(coreTestConfigure);
       });
@@ -84,7 +85,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setTestConfigure(testConfigure);
         coreTestConfigure.setCoreTest(false);
-        coreTestConfigure.setApplicableTest(true);
+        coreTestConfigure.setApplicableTest(false);
 
         coreTestConfigurelist.add(coreTestConfigure);
       });
@@ -96,7 +97,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       coreTestConfigure.setRawMaterial(testConfigure.getRawMaterial());
       coreTestConfigure.setTestConfigure(testConfigure);
       coreTestConfigure.setCoreTest(false);
-      coreTestConfigure.setApplicableTest(true);
+      coreTestConfigure.setApplicableTest(false);
       coreTestConfigureRepository.save(coreTestConfigure);
     }
   }
@@ -167,8 +168,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   }
 
   @Transactional
-  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialId(Long rawMaterialId) {
-    return coreTestConfigureRepository.findByrawMaterialIdAndCoreTestTrue(rawMaterialId);
+  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(Long rawMaterialId) {
+    return coreTestConfigureRepository
+        .findByrawMaterialIdAndCoreTestTrueAndApplicableTestTrue(rawMaterialId);
   }
 
   @Transactional
@@ -181,8 +183,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 
     testConfigure.getMaterialCategory();
 
-    List<CoreTestConfigure> coreTestConfigurelist =
-        coreTestConfigureRepository.findByTestConfigureIdAndMaterialCategoryId(testConfigureId,
+    List<CoreTestConfigure> coreTestConfigurelist = coreTestConfigureRepository
+
+        .findByTestConfigureIdAndMaterialCategoryIdAndApplicableTestTrue(testConfigureId,
             testConfigure.getMaterialCategory().getId());
 
     List<CoreTestConfigureSubCatDto> coreTestConfigureSubCatDtoList = new ArrayList<>();
@@ -203,7 +206,10 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       coreTestConfigureSubCatDto.setMaterialCategoryId(c.getMaterialCategory().getId());
 
       List<CoreTestConfigure> coreTestConfigureSublist = coreTestConfigureRepository
-          .findByTestConfigureIdAndMaterialSubCategoryId(testConfigureId, c.getId());
+
+          .findByTestConfigureIdAndMaterialSubCategoryIdAndApplicableTestTrue(testConfigureId,
+              c.getId());
+
       List<CoreTestConfigureMaterialDto> CoreTestConfigureMaterialDtoList = new ArrayList<>();
       for (CoreTestConfigure coreSub : coreTestConfigureSublist) {
         CoreTestConfigureMaterialDto coreTestConfigureMaterialDto =
@@ -245,7 +251,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   @Transactional
   public List<TestOriginDto> getAllCoreTestConfigureByMainCategoryId(Long mainCategoryId) {
     List<TestOriginDto> testOriginDtoList = new ArrayList<>();
-    // testconfigureBymatrialCatId
+
     List<TestConfigure> testConfigureList =
         testConfigureRepository.findByMaterialCategoryIdAndMaterialSubCategoryNull(mainCategoryId);
 
@@ -253,12 +259,18 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       TestOriginDto testOriginDto = new TestOriginDto();
       testOriginDto.setTestConfigureId(testConfigure.getId());
       testOriginDto.setCoreTest(
-          coreTestConfigureRepository.existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrue(
-              testConfigure.getId(), mainCategoryId));
+
+          coreTestConfigureRepository
+              .existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrueAndApplicableTestTrue(
+                  testConfigure.getId(), mainCategoryId));
       testOriginDto.setTestOrigin(Origin.OWN);
       testOriginDto.setTestId(testConfigure.getTest().getId());
       testOriginDto.setTestName(testConfigure.getTest().getName());
-      testOriginDtoList.add(testOriginDto);
+      if (coreTestConfigureRepository
+          .existsBytestConfigureIdAndMaterialCategoryIdAndApplicableTestTrue(testConfigure.getId(),
+              mainCategoryId)) {
+        testOriginDtoList.add(testOriginDto);
+      }
     }
     return testOriginDtoList;
   }
@@ -268,14 +280,21 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       Long materialSubCategoryId) {
     MaterialSubCategory materialSubCategory =
         materialSubCategoryRepository.getOne(materialSubCategoryId);
-    List<TestOriginDto> testOriginDtoList =
+    List<TestOriginDto> lis =
         getAllCoreTestConfigureByMainCategoryId(materialSubCategory.getMaterialCategory().getId());
-    testOriginDtoList.forEach(testOrigin -> {
+    lis.forEach(testOrigin -> {
       testOrigin.setTestOrigin(Origin.MAIN);
       testOrigin.setCoreTest(coreTestConfigureRepository
-          .existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrue(
+
+          .existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrueAndApplicableTestTrue(
               testOrigin.getTestConfigureId(), materialSubCategoryId));
     });
+
+    List<TestOriginDto> testOriginDtoList = lis.stream()
+        .filter(testOriginDto -> coreTestConfigureRepository
+            .existsBytestConfigureIdAndMaterialSubCategoryIdAndApplicableTestTrue(
+                testOriginDto.getTestConfigureId(), materialSubCategoryId) == true)
+        .collect(Collectors.toList());
     List<TestConfigure> testConfigureList = testConfigureRepository
         .findByMaterialSubCategoryIdAndRawMaterialNull(materialSubCategoryId);
 
@@ -283,48 +302,59 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       TestOriginDto testOriginDto = new TestOriginDto();
       testOriginDto.setTestConfigureId(testConfigure.getId());
       testOriginDto.setCoreTest(coreTestConfigureRepository
-          .existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrue(testConfigure.getId(),
-              materialSubCategoryId));
+
+          .existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrueAndApplicableTestTrue(
+              testConfigure.getId(), materialSubCategoryId));
       testOriginDto.setTestOrigin(Origin.OWN);
       testOriginDto.setTestId(testConfigure.getTest().getId());
       testOriginDto.setTestName(testConfigure.getTest().getName());
-      testOriginDtoList.add(testOriginDto);
+      if (coreTestConfigureRepository
+          .existsBytestConfigureIdAndMaterialSubCategoryIdAndApplicableTestTrue(
+              testConfigure.getId(), materialSubCategoryId)) {
+        testOriginDtoList.add(testOriginDto);
+      }
     }
-
     return testOriginDtoList;
   }
 
   @Transactional
   public List<TestOriginDto> getAllCoreTestConfigureByRawMaterialId(Long rawMaterialId) {
-
     RawMaterial rawMaterial = rawMaterialRepository.getOne(rawMaterialId);
-
     List<TestOriginDto> testOriginDtoList = getAllCoreTestConfigureByMaterialSubCategoryId(
         rawMaterial.getMaterialSubCategory().getId());
     testOriginDtoList.forEach(testOrigin -> {
       if (testOrigin.getTestOrigin().equals(Origin.OWN)) {
         testOrigin.setTestOrigin(Origin.SUB);
       }
-      testOrigin.setCoreTest(
-          coreTestConfigureRepository.existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
+      testOrigin.setCoreTest(coreTestConfigureRepository
+          .existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
               testOrigin.getTestConfigureId(), rawMaterialId));
     });
+
+    List<TestOriginDto> lisSUbCat = testOriginDtoList.stream()
+        .filter(testOriginDto -> coreTestConfigureRepository
+            .existsBytestConfigureIdAndRawMaterialIdAndApplicableTestTrue(
+                testOriginDto.getTestConfigureId(), rawMaterialId) == true)
+        .collect(Collectors.toList());
 
     List<TestConfigure> testConfigureList =
         testConfigureRepository.findByRawMaterialId(rawMaterial.getId());
     for (TestConfigure testConfigure : testConfigureList) {
       TestOriginDto testOriginDto = new TestOriginDto();
       testOriginDto.setTestConfigureId(testConfigure.getId());
-      testOriginDto.setCoreTest(
-          coreTestConfigureRepository.existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
+      testOriginDto.setCoreTest(coreTestConfigureRepository
+          .existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
               testConfigure.getId(), rawMaterial.getId()));
       testOriginDto.setTestOrigin(Origin.OWN);
       testOriginDto.setTestId(testConfigure.getTest().getId());
       testOriginDto.setTestName(testConfigure.getTest().getName());
-      testOriginDtoList.add(testOriginDto);
+      if (coreTestConfigureRepository.existsBytestConfigureIdAndRawMaterialIdAndApplicableTestTrue(
+          testConfigure.getId(), rawMaterial.getId())) {
+        lisSUbCat.add(testOriginDto);
+      }
     }
 
-    return testOriginDtoList;
+    return lisSUbCat;
   }
 
   @Transactional
@@ -334,18 +364,21 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 
       if (testOriginRequestDto.getMaterialCategoryId() != null) {
         coreTestConfigureRepository
-            .findByTestConfigureIdAndMaterialCategoryId(testOriginRequestDto.getTestConfigureId(),
+            .findByTestConfigureIdAndMaterialCategoryIdAndApplicableTestTrue(
+                testOriginRequestDto.getTestConfigureId(),
                 testOriginRequestDto.getMaterialCategoryId())
+
             .stream().forEach(coreTest -> {
               coreTest.setCoreTest(testOriginRequestDto.isCoreTest());
               coreTestConfigureRepository.save(coreTest);
             });
       }
       if (testOriginRequestDto.getMaterialSubCategoryId() != null) {
-
-        coreTestConfigureRepository.findByTestConfigureIdAndMaterialSubCategoryId(
-            testOriginRequestDto.getTestConfigureId(),
-            testOriginRequestDto.getMaterialSubCategoryId()).stream().forEach(coreTest -> {
+        coreTestConfigureRepository
+            .findByTestConfigureIdAndMaterialSubCategoryIdAndApplicableTestTrue(
+                testOriginRequestDto.getTestConfigureId(),
+                testOriginRequestDto.getMaterialSubCategoryId())
+            .stream().forEach(coreTest -> {
               coreTest.setCoreTest(testOriginRequestDto.isCoreTest());
               coreTestConfigureRepository.save(coreTest);
             });
@@ -353,8 +386,8 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       if (testOriginRequestDto.getRawMaterialId() != null) {
 
         coreTestConfigureRepository
-            .findByTestConfigureIdAndRawMaterialId(testOriginRequestDto.getTestConfigureId(),
-                testOriginRequestDto.getRawMaterialId())
+            .findByTestConfigureIdAndRawMaterialIdAndApplicableTestTrue(
+                testOriginRequestDto.getTestConfigureId(), testOriginRequestDto.getRawMaterialId())
             .stream().forEach(coreTest -> {
               coreTest.setCoreTest(testOriginRequestDto.isCoreTest());
               coreTestConfigureRepository.save(coreTest);
@@ -452,5 +485,31 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     coreTestConfigures.forEach(coreTest -> {
       coreTestConfigureRepository.deleteById(coreTest.getId());
     });
+  }
+
+  @Transactional
+  public void updateApplicableTestByMaterialSubCategoryId(Long testConfigureId,
+      Long materialSubCategoryId, boolean applicable) {
+    List<CoreTestConfigure> coreTestConfigureList = coreTestConfigureRepository
+        .findBytestConfigureIdAndMaterialSubCategoryId(testConfigureId, materialSubCategoryId);
+    coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
+    coreTestConfigureRepository.saveAll(coreTestConfigureList);
+  }
+
+  @Transactional
+  public void updateApplicableTestByRawMaterialId(Long testConfigureId, Long rawMaterialId,
+      boolean applicable) {
+    CoreTestConfigure coreTestConfigure = coreTestConfigureRepository
+        .findBytestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
+    coreTestConfigure.setApplicableTest(applicable);
+    coreTestConfigureRepository.save(coreTestConfigure);
+  }
+
+  @Transactional
+  public void updateApplicableTestByTestConfigureId(Long testConfigureId, boolean applicable) {
+    List<CoreTestConfigure> coreTestConfigureList =
+        coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
+    coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
+    coreTestConfigureRepository.saveAll(coreTestConfigureList);
   }
 }
