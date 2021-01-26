@@ -538,6 +538,8 @@ public final class EndpointURI {
    */
   public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
   public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
+  public static final String ACCEPTED_VALUES_PAGINATION = BASE_API_PATH + "accepted-values-page"
+      + SLASH + "test-configure" + SLASH + "{testConfigureId}";;
   public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "dto" + SLASH + "test-configure" + SLASH + "{testConfigureId}";

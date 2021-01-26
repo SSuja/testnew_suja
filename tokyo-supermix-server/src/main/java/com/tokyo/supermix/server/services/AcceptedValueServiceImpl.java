@@ -19,7 +19,6 @@ import com.tokyo.supermix.data.entities.QAcceptedValue;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -33,8 +32,6 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private TestConfigureService testConfigureService;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
-  @Autowired
-  private Mapper mapper;
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -182,9 +179,12 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   }
 
   @Transactional(readOnly = true)
-  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId, String testParamName,
+  public AcceptedValueMainDto searchAcceptedValue(Long testConfigId, String testParamName,
       Condition condition, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
       Pagination pagination) {
+    AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigId));
     if (testParamName != null && !testParamName.isEmpty()) {
       booleanBuilder.and(QAcceptedValue.acceptedValue.testParameter.name.contains(testParamName));
     }
@@ -196,7 +196,48 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
     }
     pagination.setTotalRecords(
         (long) ((List<AcceptedValue>) acceptedValueRepository.findAll(booleanBuilder)).size());
-    return mapper.map(acceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
-        AccepetedValueDto.class);
+    acceptedValueMainDto.setAccepetedValueDto(
+        getAccepetedValueDto(acceptedValueRepository.findAll(booleanBuilder, pageable).toList()));
+    return acceptedValueMainDto;
+  }
+
+  private List<AccepetedValueDto> getAccepetedValueDto(List<AcceptedValue> acceptedValues) {
+    List<AccepetedValueDto> accepetedValueDtolist = new ArrayList<>();
+    acceptedValues.stream().forEach(acceptedValue -> {
+      AccepetedValueDto accepetedValueDto = new AccepetedValueDto();
+      accepetedValueDto.setId(acceptedValue.getId());
+      accepetedValueDto.setConditionRange(acceptedValue.getConditionRange().toString());
+      accepetedValueDto.setMinValue(acceptedValue.getMinValue());
+      accepetedValueDto.setMaxValue(acceptedValue.getMaxValue());
+      accepetedValueDto.setFinalResult(acceptedValue.isFinalResult());
+      accepetedValueDto.setValue(acceptedValue.getValue());
+      if (acceptedValue.getTestEquation() != null) {
+        accepetedValueDto.setTestEquationId(acceptedValue.getTestEquation().getId());
+        accepetedValueDto
+            .setTestEquationFormula(acceptedValue.getTestEquation().getEquation().getFormula());
+      }
+      accepetedValueDto.setParameterName(acceptedValue.getTestParameter().getParameter().getName());
+      accepetedValueDto.setTestParameterId(acceptedValue.getTestParameter().getId());
+      if (acceptedValue.getTestParameter().getName() != null) {
+        accepetedValueDto.setTestParameterName(acceptedValue.getTestParameter().getName());
+      }
+      accepetedValueDtolist.add(accepetedValueDto);
+    });
+    return accepetedValueDtolist;
+  }
+
+  @Transactional(readOnly = true)
+  public Long countByTestConfig(Long testConfigureId) {
+    return acceptedValueRepository.countByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public AcceptedValueMainDto getAllAcceptedValuesByPage(Pageable pageable, Long testConfigureId) {
+    AcceptedValueMainDto acceptedValueMainDto = new AcceptedValueMainDto();
+    acceptedValueMainDto.setTestConfigureResDto(
+        testConfigureService.getTestConfigureForAcceptedValue(testConfigureId));
+    acceptedValueMainDto.setAccepetedValueDto(getAccepetedValueDto(acceptedValueRepository
+        .findByTestConfigureIdOrderByUpdatedAtDesc(pageable, testConfigureId).toList()));
+    return acceptedValueMainDto;
   }
 }
