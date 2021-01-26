@@ -5,7 +5,7 @@ import java.util.List;
 public class TrailValueDto {
   private String parameterName;
   private String abbreviation;
-  private List<Double> values;
+  private List<String> values;
 
   public String getParameterName() {
     return parameterName;
@@ -15,11 +15,11 @@ public class TrailValueDto {
     this.parameterName = parameterName;
   }
 
-  public List<Double> getValues() {
+  public List<String> getValues() {
     return values;
   }
 
-  public void setValues(List<Double> values) {
+  public void setValues(List<String> values) {
     this.values = values;
   }
 

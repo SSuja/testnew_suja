@@ -61,4 +61,7 @@ public interface MaterialAcceptedValueService {
   public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId,
       String testParamName, Condition condition, String materialName, BooleanBuilder booleanBuilder,
       int page, int size, Pageable pageable, Pagination pagination);
+  
+  public boolean isTestConfigureIdAndSubCategoryAndTestParameterId(Long testConfigureId,
+      Long materialSubCategoryId, Long testParameterId);
 }

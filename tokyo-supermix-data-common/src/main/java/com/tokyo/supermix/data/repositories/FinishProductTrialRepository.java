@@ -32,4 +32,9 @@ public interface FinishProductTrialRepository extends JpaRepository<FinishProduc
   List<FinishProductTrial> findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(
       String finishProductTestCode, Long testParameterId);
 
+  List<FinishProductTrial> findByFinishProductTestCodeAndTrialNoOrderByCreatedAtDesc(
+      String finishProductTestCode, Long trialNo);
+
+  List<FinishProductTrial> findByFinishProductTestCodeAndTestParameterIdAndTrialNo(
+      String finishProductTestCode, Long testParameterId, Long trialNo);
 }

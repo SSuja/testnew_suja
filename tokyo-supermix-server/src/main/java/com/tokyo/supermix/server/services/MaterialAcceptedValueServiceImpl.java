@@ -298,4 +298,12 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     return mapper.map(materialAcceptedValueRepository.findAll(booleanBuilder, pageable).toList(),
         AccepetedValueDto.class);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isTestConfigureIdAndSubCategoryAndTestParameterId(Long testConfigureId,
+      Long materialSubCategoryId, Long testParameterId) {
+    return materialAcceptedValueRepository
+        .existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(testConfigureId,
+            materialSubCategoryId, testParameterId);
+  }
 }
