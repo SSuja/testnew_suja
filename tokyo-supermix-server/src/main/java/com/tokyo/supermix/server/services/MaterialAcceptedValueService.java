@@ -3,7 +3,6 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
-import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
@@ -21,6 +20,12 @@ public interface MaterialAcceptedValueService {
   public void updateMaterialAcceptedValue(MaterialAcceptedValue materialAcceptedValue);
 
   public List<MaterialAcceptedValue> getAllMaterialAcceptedValues();
+
+  public AcceptedValueMainDto getAllMaterialAcceptedValuesByPage(Pageable pageable,
+      Long testConfigureId, CategoryAcceptedType categoryAcceptedType);
+
+  public Long countMaterialAcceptedValues(Long testConfigureId,
+      CategoryAcceptedType categoryAcceptedType);
 
   boolean isMaterialAcceptedValueExist(Long id);
 
@@ -60,7 +65,7 @@ public interface MaterialAcceptedValueService {
   public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureIdAndTestParameterId(
       Long testConfigureId, Long testParameterId);
 
-  public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId,
+  public AcceptedValueMainDto searchAcceptedValue(Long testConfigId,
       CategoryAcceptedType categoryAcceptedType, String testParamName, Condition condition,
       String materialName, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
       Pagination pagination);
