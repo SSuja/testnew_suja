@@ -9,6 +9,7 @@ import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
@@ -58,10 +59,12 @@ public interface MaterialAcceptedValueService {
 
   public List<MaterialSubCategory> getMaterialSubCategoryByTesConfigureIdAndTestParameterId(
       Long testConfigureId, Long testParameterId);
+
   public List<AccepetedValueDto> searchAcceptedValue(Long testConfigId,
-      String testParamName, Condition condition, String materialName, BooleanBuilder booleanBuilder,
-      int page, int size, Pageable pageable, Pagination pagination);
-  
+      CategoryAcceptedType categoryAcceptedType, String testParamName, Condition condition,
+      String materialName, BooleanBuilder booleanBuilder, int page, int size, Pageable pageable,
+      Pagination pagination);
+
   public boolean isTestConfigureIdAndSubCategoryAndTestParameterId(Long testConfigureId,
       Long materialSubCategoryId, Long testParameterId);
 }

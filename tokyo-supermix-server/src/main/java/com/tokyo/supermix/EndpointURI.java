@@ -526,7 +526,8 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + SLASH + "material-sub-categories" + SLASH + "test-configure" + SLASH
           + "{testConfigureId}" + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   public static final String SEARCH_MATERIAL_ACCEPTED_VALUE =
-      MATERIAL_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigId}" + SEARCH;
+      MATERIAL_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigId}" + SLASH
+          + "category-type" + SLASH + "{categoryAcceptedType}" + SEARCH;
   /*
    * AcceptedValue
    */

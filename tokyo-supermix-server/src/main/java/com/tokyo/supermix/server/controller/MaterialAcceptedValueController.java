@@ -283,6 +283,7 @@ public class MaterialAcceptedValueController {
 
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_ACCEPTED_VALUE)
   public ResponseEntity<Object> searchMaterialAcceptedValues(@PathVariable Long testConfigId,
+      @PathVariable CategoryAcceptedType categoryAcceptedType,
       @RequestParam(name = "testParamName", required = false) String testParamName,
       @RequestParam(name = "condition", required = false) Condition condition,
       @RequestParam(name = "materialName", required = false) String materialName,
@@ -292,8 +293,9 @@ public class MaterialAcceptedValueController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MATERIAL_ACCEPTED_VALUE,
-        materialAcceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
-            materialName, booleanBuilder, totalpage, size, pageable, pagination),
+        materialAcceptedValueService.searchAcceptedValue(testConfigId, categoryAcceptedType,
+            testParamName, condition, materialName, booleanBuilder, totalpage, size, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }
