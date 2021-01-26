@@ -55,4 +55,8 @@ public interface TestConfigureService {
   public List<TestConfigure> searchTestConfigure(String testName, MainType mainType,
       String mainCategoryName, String subCategoryName, String materialName,
       BooleanBuilder booleanBuilder, int page, int size, Pageable pageable, Pagination pagination);
+
+  public List<TestConfigure> getAllTestConfigureByDecending(Pageable pageable);
+
+  public Long countTestConfigure();
 }

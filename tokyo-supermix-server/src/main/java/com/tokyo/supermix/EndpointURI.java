@@ -143,6 +143,8 @@ public final class EndpointURI {
       + "{testConfigureId}" + SLASH + "accepted-type" + SLASH + "{acceptedType}";
   public static final String GET_TEST_CONFIGURE_BY_MATERIAL_CATEGORY =
       TEST_CONFIGURE + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+  public static final String TEST_CONFIGURE_PAGINATION =
+      BASE_API_PATH + "test-configure-pagination";
   /*
    * Material State
    */
