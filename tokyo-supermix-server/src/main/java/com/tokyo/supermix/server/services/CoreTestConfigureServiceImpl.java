@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.QCoreTestConfigure;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Origin;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
@@ -454,7 +455,12 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialCategory(materialCategory);
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
-        coreTestConfigure.setApplicableTest(true);
+        if(testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+        coreTestConfigure.setApplicableTest(false);
+        }
+        else {
+          coreTestConfigure.setApplicableTest(true);
+        }
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setCoreTest(false);
         coreTestConfigureRepository.save(coreTestConfigure);
@@ -470,7 +476,12 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialCategory(materialCategory);
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
-        coreTestConfigure.setApplicableTest(true);
+        if(testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+          coreTestConfigure.setApplicableTest(false);
+          }
+          else {
+            coreTestConfigure.setApplicableTest(true);
+          }
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setCoreTest(false);
         coreTestConfigureRepository.save(coreTestConfigure);
