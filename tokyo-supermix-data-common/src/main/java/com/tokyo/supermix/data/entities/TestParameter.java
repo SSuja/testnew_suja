@@ -37,7 +37,7 @@ public class TestParameter extends DateAudit implements Serializable {
   @Enumerated(EnumType.ORDINAL)
   private TestParameterType type;
   private Double value;
-  private LocalDateTime dateValue;
+  private String dateValue;
   private String name;
   private String groupKey;
   @ManyToOne
@@ -167,11 +167,11 @@ public class TestParameter extends DateAudit implements Serializable {
     return serialVersionUID;
   }
 
-  public LocalDateTime getDateValue() {
+  public String getDateValue() {
     return dateValue;
   }
 
-  public void setDateValue(LocalDateTime dateValue) {
+  public void setDateValue(String dateValue) {
     this.dateValue = dateValue;
   }
 }

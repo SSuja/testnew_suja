@@ -143,6 +143,8 @@ public final class EndpointURI {
       + "{testConfigureId}" + SLASH + "accepted-type" + SLASH + "{acceptedType}";
   public static final String GET_TEST_CONFIGURE_BY_MATERIAL_CATEGORY =
       TEST_CONFIGURE + SLASH + "material-category" + SLASH + "{materialCategoryId}";
+  public static final String TEST_CONFIGURE_PAGINATION =
+      BASE_API_PATH + "test-configure-pagination";
   /*
    * Material State
    */
@@ -508,6 +510,9 @@ public final class EndpointURI {
    */
   public static final String MATERIAL_ACCEPTED_VALUE = BASE_API_PATH + "material-accepted-value";
   public static final String MATERIAL_ACCEPTED_VALUES = BASE_API_PATH + "material-accepted-values";
+  public static final String MATERIAL_ACCEPTED_VALUES_PAGINATION =
+      BASE_API_PATH + "material-accepted-values-pages" + SLASH + "test-configure" + SLASH
+          + "{testConfigureId}" + SLASH + "category-type" + SLASH + "{categoryAcceptedType}";
   public static final String MATERIAL_ACCEPTED_VALUE_BY_ID = MATERIAL_ACCEPTED_VALUE + ID;
   public static final String MATERIAL_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       MATERIAL_ACCEPTED_VALUE + "/dto" + "/test-configure" + "/{testConfigureId}";
@@ -526,12 +531,15 @@ public final class EndpointURI {
       MATERIAL_ACCEPTED_VALUE + SLASH + "material-sub-categories" + SLASH + "test-configure" + SLASH
           + "{testConfigureId}" + SLASH + "test-parameter" + SLASH + "{testParameterId}";
   public static final String SEARCH_MATERIAL_ACCEPTED_VALUE =
-      MATERIAL_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigId}" + SEARCH;
+      MATERIAL_ACCEPTED_VALUE + SLASH + "test-configure" + SLASH + "{testConfigId}" + SLASH
+          + "category-type" + SLASH + "{categoryAcceptedType}" + SEARCH;
   /*
    * AcceptedValue
    */
   public static final String ACCEPTED_VALUE = BASE_API_PATH + "accepted-value";
   public static final String ACCEPTED_VALUES = BASE_API_PATH + "accepted-values";
+  public static final String ACCEPTED_VALUES_PAGINATION = BASE_API_PATH + "accepted-values-page"
+      + SLASH + "test-configure" + SLASH + "{testConfigureId}";;
   public static final String ACCEPTED_VALUE_BY_ID = ACCEPTED_VALUE + ID;
   public static final String GET_ACCEPTED_VALUE_BY_TEST_CONFIGURE_ID =
       ACCEPTED_VALUE + SLASH + "dto" + SLASH + "test-configure" + SLASH + "{testConfigureId}";

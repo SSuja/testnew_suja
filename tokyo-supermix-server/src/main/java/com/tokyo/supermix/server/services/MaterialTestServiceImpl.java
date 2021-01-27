@@ -170,8 +170,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String createdAt,
-      String specimenCode, Status status, String supplierName, String testName,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode,
+      String createdAt, String specimenCode, Status status, String supplierName, String testName,
       String mainCategoryName, String materialSubCategory, BooleanBuilder booleanBuilder, int page,
       int size, Pageable pageable, String plantCode, Pagination pagination) {
 
@@ -183,8 +183,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           .and(QMaterialTest.materialTest.incomingSample.code.contains(incomingSampleCode));
     }
     if (createdAt != null && !createdAt.isEmpty()) {
-      booleanBuilder
-          .and(QMaterialTest.materialTest.createdAt.stringValue().contains(createdAt));
+      booleanBuilder.and(QMaterialTest.materialTest.createdAt.stringValue().contains(createdAt));
     }
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder.and(QMaterialTest.materialTest.specimenCode.contains(specimenCode));
@@ -328,11 +327,16 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
     IncomingSample incomingSample = materialTestObj.getIncomingSample();
-    if (coreTestConfigureRepository.existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
-        materialTestObj.getTestConfigure().getId(), incomingSample.getRawMaterial().getId())) {
+    if (coreTestConfigureRepository.
+    // existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
+        existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
+            materialTestObj.getTestConfigure().getId(), incomingSample.getRawMaterial().getId())) {
       List<CoreTestConfigure> coreTestConfigureList =
-          coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
-              incomingSample.getRawMaterial().getId());
+          // coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
+          // getCoreTestConfigureByRawMaterialId
+          coreTestConfigureService
+              .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
+                  incomingSample.getRawMaterial().getId());
       List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
           .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
       Status status = Status.NEW;

@@ -290,4 +290,19 @@ public class TestConfigureController {
             TestConfigureResponseDto.class),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.TEST_CONFIGURE_PAGINATION)
+  public ResponseEntity<Object> getAllTestConfigureForPagination(
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(testConfigureService.countTestConfigure());
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+            mapper.map(testConfigureService.getAllTestConfigureByDecending(pageable),
+                TestConfigureResponseDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
+  }
 }

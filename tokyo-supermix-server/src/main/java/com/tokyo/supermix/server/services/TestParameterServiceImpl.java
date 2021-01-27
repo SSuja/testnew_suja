@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.services;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -146,8 +148,10 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
         testParameterResponseDto.setInputMethods(test.getInputMethods());
         testParameterResponseDto.setUnit(test.getUnit());
-        if (test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)) {
-          testParameterResponseDto.setDateValue(test.getDateValue());
+        if (test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)&& test.getDateValue()!=null) {
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+          LocalDateTime dateTime = LocalDateTime.parse(test.getDateValue(), formatter);
+          testParameterResponseDto.setDateValue(dateTime);
         } else {
           testParameterResponseDto.setValue(test.getValue());
         }

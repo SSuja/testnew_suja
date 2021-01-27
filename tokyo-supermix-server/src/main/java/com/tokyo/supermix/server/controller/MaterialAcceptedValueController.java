@@ -31,8 +31,9 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.MaterialAcceptedValueService;
 import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
@@ -53,33 +54,45 @@ public class MaterialAcceptedValueController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  CoreTestConfigureService configureService;
   private static final Logger logger = Logger.getLogger(MaterialAcceptedValueController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE)
   public ResponseEntity<Object> createMaterialAcceptedValue(
       @Valid @RequestBody List<MaterialAcceptedValueRequestDto> materialAcceptedValueRequestDtoList) {
     for (MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto : materialAcceptedValueRequestDtoList) {
-      if (materialAcceptedValueRequestDto.getCategoryAcceptedType()
-          .equals(CategoryAcceptedType.MATERIAL)) {
-        if (materialAcceptedValueService.isTestConfigureIdAndRawMaterialIdAndTestParameterId(
+      // if (materialAcceptedValueRequestDto.getCategoryAcceptedType()
+      // .equals(CategoryAcceptedType.MATERIAL)) {
+      // if (materialAcceptedValueService.isTestConfigureIdAndRawMaterialIdAndTestParameterId(
+      // materialAcceptedValueRequestDto.getTestConfigureId(),
+      // materialAcceptedValueRequestDto.getRawMaterialId(),
+      // materialAcceptedValueRequestDto.getTestParameterId())) {
+      // return new ResponseEntity<>(
+      // new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+      // validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+      // HttpStatus.BAD_REQUEST);
+      // }
+      // } else {
+      // if (materialAcceptedValueService.isTestConfigureIdAndSubCategoryAndTestParameterId(
+      // materialAcceptedValueRequestDto.getTestConfigureId(),
+      // materialAcceptedValueRequestDto.getMaterialSubCategoryId(),
+      // materialAcceptedValueRequestDto.getTestParameterId())) {
+      // return new ResponseEntity<>(
+      // new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+      // validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+      // HttpStatus.BAD_REQUEST);
+      // }
+      // }
+      if (materialAcceptedValueRequestDto.getMaterialSubCategoryId() != null) {
+        configureService.updateApplicableTestByMaterialSubCategoryId(
             materialAcceptedValueRequestDto.getTestConfigureId(),
-            materialAcceptedValueRequestDto.getRawMaterialId(),
-            materialAcceptedValueRequestDto.getTestParameterId())) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
-                  validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
-      } else {
-        if (materialAcceptedValueService.isTestConfigureIdAndSubCategoryAndTestParameterId(
+            materialAcceptedValueRequestDto.getMaterialSubCategoryId(), true);
+      }
+      if (materialAcceptedValueRequestDto.getRawMaterialId() != null) {
+        configureService.updateApplicableTestByRawMaterialId(
             materialAcceptedValueRequestDto.getTestConfigureId(),
-            materialAcceptedValueRequestDto.getMaterialSubCategoryId(),
-            materialAcceptedValueRequestDto.getTestParameterId())) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
-                  validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
+            materialAcceptedValueRequestDto.getRawMaterialId(), true);
       }
     }
     if (materialAcceptedValueService.isCheckValidation(
@@ -105,6 +118,23 @@ public class MaterialAcceptedValueController {
         null, HttpStatus.OK);
   }
 
+  @GetMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUES_PAGINATION)
+  public ResponseEntity<Object> getAllMaterialAcceptedValuesByPagination(
+      @PathVariable Long testConfigureId, @PathVariable CategoryAcceptedType categoryAcceptedType,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(materialAcceptedValueService
+        .countMaterialAcceptedValues(testConfigureId, categoryAcceptedType));
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+            materialAcceptedValueService.getAllMaterialAcceptedValuesByPage(pageable,
+                testConfigureId, categoryAcceptedType),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
+  }
+
   @GetMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_ID)
   public ResponseEntity<Object> getMaterialAcceptedValueById(@PathVariable Long id) {
     if (materialAcceptedValueService.isMaterialAcceptedValueExist(id)) {
@@ -124,6 +154,18 @@ public class MaterialAcceptedValueController {
   @DeleteMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_ID)
   public ResponseEntity<Object> deleteAcceptedValue(@PathVariable Long id) {
     if (materialAcceptedValueService.isMaterialAcceptedValueExist(id)) {
+      MaterialAcceptedValue materialAcceptedValue =
+          materialAcceptedValueService.getMaterialAcceptedValueById(id);
+      if (materialAcceptedValue.getMaterialSubCategory() != null) {
+        configureService.updateApplicableTestByMaterialSubCategoryId(
+            materialAcceptedValue.getTestConfigure().getId(),
+            materialAcceptedValue.getMaterialSubCategory().getId(), false);
+      }
+      if (materialAcceptedValue.getRawMaterial() != null) {
+        configureService.updateApplicableTestByRawMaterialId(
+            materialAcceptedValue.getTestConfigure().getId(),
+            materialAcceptedValue.getRawMaterial().getId(), false);
+      }
       materialAcceptedValueService.deleteMaterialAcceptedValue(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_ACCEPTED_VALUE_DELETED),
@@ -146,6 +188,16 @@ public class MaterialAcceptedValueController {
           return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
               Constants.MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
         }
+      }
+      if (materialAcceptedValueRequestDto.getMaterialSubCategoryId() != null) {
+        configureService.updateApplicableTestByMaterialSubCategoryId(
+            materialAcceptedValueRequestDto.getTestConfigureId(),
+            materialAcceptedValueRequestDto.getMaterialSubCategoryId(), true);
+      }
+      if (materialAcceptedValueRequestDto.getRawMaterialId() != null) {
+        configureService.updateApplicableTestByRawMaterialId(
+            materialAcceptedValueRequestDto.getTestConfigureId(),
+            materialAcceptedValueRequestDto.getRawMaterialId(), true);
       }
       // if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
       // materialAcceptedValueRequestDto.getId(),
@@ -248,6 +300,7 @@ public class MaterialAcceptedValueController {
 
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_ACCEPTED_VALUE)
   public ResponseEntity<Object> searchMaterialAcceptedValues(@PathVariable Long testConfigId,
+      @PathVariable CategoryAcceptedType categoryAcceptedType,
       @RequestParam(name = "testParamName", required = false) String testParamName,
       @RequestParam(name = "condition", required = false) Condition condition,
       @RequestParam(name = "materialName", required = false) String materialName,
@@ -256,9 +309,10 @@ public class MaterialAcceptedValueController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MATERIAL_ACCEPTED_VALUE,
-        materialAcceptedValueService.searchAcceptedValue(testConfigId, testParamName, condition,
-            materialName, booleanBuilder, totalpage, size, pageable, pagination),
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST_CONFIGURE,
+        materialAcceptedValueService.searchAcceptedValue(testConfigId, categoryAcceptedType,
+            testParamName, condition, materialName, booleanBuilder, totalpage, size, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 }
