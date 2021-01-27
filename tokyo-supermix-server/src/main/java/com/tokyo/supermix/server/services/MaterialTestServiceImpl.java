@@ -567,7 +567,7 @@ public class MaterialTestServiceImpl implements MaterialTestService {
                 incomingSample.getRawMaterial().getMaterialSubCategory().getId())) {
               if (materialAcceptedValue.getCategoryAcceptedType()
                   .equals(CategoryAcceptedType.SUB_CATEGORY)
-                  && materialAcceptedValue.getRawMaterial().getId() == incomingSample
+                  && materialAcceptedValue.getMaterialSubCategory().getId() == incomingSample
                       .getRawMaterial().getMaterialSubCategory().getId()) {
                 setMaterialTestsAlready(materialTestDto, materialTest.getCreatedAt().toString(),
                     materialTest.getUpdatedAt().toString(), materialTest.getTestConfigure().getId(),
@@ -683,9 +683,10 @@ public class MaterialTestServiceImpl implements MaterialTestService {
                         testConfigureMaterial.getId(),
                         incomingSample.getRawMaterial().getMaterialSubCategory().getId())) {
                       if (materialAcceptedValue.getCategoryAcceptedType()
-                          .equals(CategoryAcceptedType.MATERIAL)
-                          && materialAcceptedValue.getRawMaterial().getId() == incomingSample
-                              .getRawMaterial().getId()) {
+                          .equals(CategoryAcceptedType.SUB_CATEGORY)
+                          && materialAcceptedValue.getMaterialSubCategory()
+                              .getId() == incomingSample.getRawMaterial().getMaterialSubCategory()
+                                  .getId()) {
                         setMaterialTestsNew(materialTestDto, testConfigureMaterial.getId(),
                             testConfigureMaterial.getTest().getName(), incomingSampleCode,
                             testConfigureMaterial.getTestType(),

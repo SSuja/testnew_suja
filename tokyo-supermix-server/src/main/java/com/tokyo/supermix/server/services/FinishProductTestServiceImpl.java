@@ -386,8 +386,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
                         .getRawMaterial().getMaterialSubCategory().getId())) {
                   if (materialAcceptedValue.getCategoryAcceptedType()
                       .equals(CategoryAcceptedType.SUB_CATEGORY)
-                      && materialAcceptedValue.getRawMaterial().getId() == finishProductSample
-                          .getMixDesign().getRawMaterial().getMaterialSubCategory().getId()) {
+                      && materialAcceptedValue.getMaterialSubCategory()
+                          .getId() == finishProductSample.getMixDesign().getRawMaterial()
+                              .getMaterialSubCategory().getId()) {
                     setFinishProductTestsAlready(finishProductTestDto,
                         finishProductTest.getCreatedAt().toString(),
                         finishProductTest.getUpdatedAt().toString(),
@@ -515,9 +516,10 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
                         testConfigureMaterial.getId(), finishProductSample.getMixDesign()
                             .getRawMaterial().getMaterialSubCategory().getId())) {
                       if (materialAcceptedValue.getCategoryAcceptedType()
-                          .equals(CategoryAcceptedType.MATERIAL)
-                          && materialAcceptedValue.getRawMaterial().getId() == finishProductSample
-                              .getMixDesign().getRawMaterial().getId()) {
+                          .equals(CategoryAcceptedType.SUB_CATEGORY)
+                          && materialAcceptedValue.getMaterialSubCategory()
+                              .getId() == finishProductSample.getMixDesign().getRawMaterial()
+                                  .getMaterialSubCategory().getId()) {
                         setFinishProductTestsNew(finishProductTestDto,
                             testConfigureMaterial.getId(),
                             testConfigureMaterial.getTest().getName(), finishProductSampleCode,
