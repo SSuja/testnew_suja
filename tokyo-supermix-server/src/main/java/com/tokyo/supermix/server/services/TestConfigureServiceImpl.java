@@ -23,6 +23,7 @@ import com.tokyo.supermix.data.dto.TestParametersDto;
 import com.tokyo.supermix.data.entities.QTestConfigure;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
@@ -230,7 +231,12 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       testParametersDto.setParameterName(testPara.getParameter().getName());
       testParametersDto.setType(testPara.getType());
       testParametersDto.setUnit(testPara.getUnit());
-      testParametersDto.setValue(testPara.getValue());
+      if (testPara.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
+        testParametersDto.setValue(testPara.getValue().toString());
+      } else {
+        testParametersDto.setValue(testPara.getDateValue().toString());
+      }
+      testParametersDto.setParameterDataType(testPara.getParameter().getParameterDataType());
       testParametersDto.setInputMethods(testPara.getInputMethods());
       testParametersDtoList.add(testParametersDto);
     });
