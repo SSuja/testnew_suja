@@ -232,9 +232,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       testParametersDto.setType(testPara.getType());
       testParametersDto.setUnit(testPara.getUnit());
       if (testPara.getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)) {
-        testParametersDto.setValue(testPara.getValue().toString());
+        if (testPara.getValue() != null) {
+          testParametersDto.setValue(testPara.getValue().toString());
+        }
       } else {
-        testParametersDto.setValue(testPara.getDateValue().toString());
+        if (testPara.getDateValue() != null) {
+          testParametersDto.setValue(testPara.getDateValue().toString());
+        }
       }
       testParametersDto.setParameterDataType(testPara.getParameter().getParameterDataType());
       testParametersDto.setInputMethods(testPara.getInputMethods());
