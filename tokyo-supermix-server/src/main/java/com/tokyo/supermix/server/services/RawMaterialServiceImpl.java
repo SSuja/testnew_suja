@@ -98,33 +98,66 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       String materialSubCategoryName, String plantName, String prefix, String plantCode,
       String erpCode, String mainCategoryName, String subBusinessUnitName, Pageable pageable,
       Pagination pagination) {
-    if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.name.containsIgnoreCase(name));
-    }
-    if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name
-          .containsIgnoreCase(materialSubCategoryName));
-    }
-    if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.containsIgnoreCase(plantName));
-    }
-    if (prefix != null && !prefix.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.prefix.containsIgnoreCase(prefix));
-    }
     if (plantCode != null && !plantCode.isEmpty()
-        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.orAllOf(QRawMaterial.rawMaterial.plant.code.containsIgnoreCase(plantCode),
-          QRawMaterial.rawMaterial.plant.isNull());
-    }
-    if (erpCode != null && !erpCode.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.containsIgnoreCase(erpCode));
-    }
-    if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
-          .containsIgnoreCase(mainCategoryName));
-    }
-    if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.containsIgnoreCase(subBusinessUnitName));
+        && (plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (plantName != null && !plantName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.stringValue().contains(plantName));
+      }
+      if (prefix != null && !prefix.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.prefix.stringValue().contains(prefix));
+      }
+      if (erpCode != null && !erpCode.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.stringValue().contains(erpCode));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+      if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.stringValue()
+            .contains(subBusinessUnitName));
+      }
+
+    } else {
+      booleanBuilder.or(QRawMaterial.rawMaterial.subBusinessUnit.id
+          .eq(plantRepository.findById(plantCode).get().getSubBusinessUnit().getId()));
+      booleanBuilder.or(QRawMaterial.rawMaterial.materialType.eq(MaterialType.COMMON));
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (plantName != null && !plantName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.stringValue().contains(plantName));
+      }
+      if (prefix != null && !prefix.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.prefix.stringValue().contains(prefix));
+      }
+      if (plantCode != null && !plantCode.isEmpty()
+          && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+        booleanBuilder.or(QRawMaterial.rawMaterial.plant.code.eq(plantCode));
+
+      }
+      if (erpCode != null && !erpCode.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.stringValue().contains(erpCode));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+      if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.stringValue()
+            .contains(subBusinessUnitName));
+      }
     }
     pagination.setTotalRecords(
         ((Collection<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder)).stream().count());
