@@ -1,5 +1,6 @@
 package com.tokyo.supermix.server.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import org.springframework.data.domain.Page;
@@ -53,4 +54,6 @@ public interface TestParameterService {
   public boolean isUpdatedParameterExists(Long id, Long testConfigureId, Long parameterId);
 
   public boolean checkAbbreviation(List<TestParameterRequestDto> testParameterRequestDtos);
+
+  public boolean isValueNull(Double value,LocalDateTime dateValue,Long id);
 }

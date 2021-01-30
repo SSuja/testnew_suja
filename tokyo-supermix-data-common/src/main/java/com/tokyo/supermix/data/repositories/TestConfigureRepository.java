@@ -51,4 +51,7 @@ public interface TestConfigureRepository
   List<TestConfigure> findByTestTypeAndDueDayNotNull(MainType testType);
 
   List<TestConfigure> findAllByOrderByIdDesc(Pageable pageable);
+
+  boolean existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryIdAndRawMaterialId(Long testId,
+      Long materialCategoryId, Long materialSubCategoryId, Long rawMaterialId);
 }

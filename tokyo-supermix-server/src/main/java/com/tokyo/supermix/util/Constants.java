@@ -293,6 +293,8 @@ public class Constants {
   public static final String ABBREVIATION = "abbreviation";
   public static final String CHECK_EQUATION_TRUE = "TRUE";
   public static final String CHECK_EQUATION_FALSE = "FALSE";
+  public static final String VALUE = "value";
+  
 
   /*
    * Constants for Process Sample validation key & Success messages
@@ -354,6 +356,7 @@ public class Constants {
   public static final String ADD_ACCEPTED_VALUE_SUCCESS = "Accepted Value Added Successfully";
   public static final String ACCEPTED_VALUE_UPDATE_SUCCESS = "Accepted Value Updated Successfully";
   public static final String ACCEPTED_VALUE_ALREADY_DEPENDED = "Accepted Value is Already Depended";
+  public static final String CONDITION_RANGE = "conditionRange";
   /*
    * Constants for Material Test validation key & Success messages
    */
