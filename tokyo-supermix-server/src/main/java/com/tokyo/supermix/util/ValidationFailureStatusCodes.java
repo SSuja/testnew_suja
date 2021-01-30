@@ -1761,6 +1761,9 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.ratioConfig.alreadyExist}")
   private String ratioConfigAlreadyExist;
 
+  @Value("${validation.ratioConfig.ratiParaNotExists}")
+  private String ratioConfigRatioParaNotExists;
+
   public String getRatioConfigNotExist() {
     return ratioConfigNotExist;
   }
@@ -1775,6 +1778,14 @@ public class ValidationFailureStatusCodes {
 
   public void setRatioConfigAlreadyExist(String ratioConfigAlreadyExist) {
     this.ratioConfigAlreadyExist = ratioConfigAlreadyExist;
+  }
+
+  public String getRatioConfigRatioParaNotExists() {
+    return ratioConfigRatioParaNotExists;
+  }
+
+  public void setRatioConfigRatioParaNotExists(String ratioConfigRatioParaNotExists) {
+    this.ratioConfigRatioParaNotExists = ratioConfigRatioParaNotExists;
   }
 
   // ratio config parameter
