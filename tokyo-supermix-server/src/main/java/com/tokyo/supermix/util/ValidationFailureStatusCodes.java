@@ -1973,4 +1973,15 @@ public class ValidationFailureStatusCodes {
   public void setMultiResultFormulaNotExist(String multiResultFormulaNotExist) {
     this.multiResultFormulaNotExist = multiResultFormulaNotExist;
   }
+
+  @Value("${validation.mixDesignProportion.hasZero}")
+  private String mixDesignProportionHasZeroValue;
+
+  public String getMixDesignProportionHasZeroValue() {
+    return mixDesignProportionHasZeroValue;
+  }
+
+  public void setMixDesignProportionHasZeroValue(String mixDesignProportionHasZeroValue) {
+    this.mixDesignProportionHasZeroValue = mixDesignProportionHasZeroValue;
+  }
 }
