@@ -1995,4 +1995,15 @@ public class ValidationFailureStatusCodes {
   public void setMixDesignProportionHasZeroValue(String mixDesignProportionHasZeroValue) {
     this.mixDesignProportionHasZeroValue = mixDesignProportionHasZeroValue;
   }
+
+  @Value("${validation.rawMaterial.plantOrSbuNull}")
+  private String rawMaterialPlantOrSbuNull;
+
+  public String getRawMaterialPlantOrSbuNull() {
+    return rawMaterialPlantOrSbuNull;
+  }
+
+  public void setRawMaterialPlantOrSbuNull(String rawMaterialPlantOrSbuNull) {
+    this.rawMaterialPlantOrSbuNull = rawMaterialPlantOrSbuNull;
+  }
 }
