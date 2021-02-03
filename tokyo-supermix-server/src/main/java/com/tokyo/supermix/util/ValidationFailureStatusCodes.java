@@ -991,6 +991,16 @@ public class ValidationFailureStatusCodes {
 
   @Value("${mixDesignProportionRequestDto.quantity.empty}")
   private String quantityIsEmpty;
+  @Value("${validation.mixDesignProportion.deleteValid}")
+  private String mixDesignProportionDeleteValid;
+
+  public String getMixDesignProportionDeleteValid() {
+    return mixDesignProportionDeleteValid;
+  }
+
+  public void setMixDesignProportionDeleteValid(String mixDesignProportionDeleteValid) {
+    this.mixDesignProportionDeleteValid = mixDesignProportionDeleteValid;
+  }
 
   public String getMixDesignProportionNotExist() {
     return mixDesignProportionNotExist;
@@ -1763,6 +1773,16 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.ratioConfig.ratiParaNotExists}")
   private String ratioConfigRatioParaNotExists;
+  @Value("${validation.ratioConfig.deleteValidate}")
+  private String ratioConfigRatioParaDeleteValidate;
+
+  public String getRatioConfigRatioParaDeleteValidate() {
+    return ratioConfigRatioParaDeleteValidate;
+  }
+
+  public void setRatioConfigRatioParaDeleteValidate(String ratioConfigRatioParaDeleteValidate) {
+    this.ratioConfigRatioParaDeleteValidate = ratioConfigRatioParaDeleteValidate;
+  }
 
   public String getRatioConfigNotExist() {
     return ratioConfigNotExist;
