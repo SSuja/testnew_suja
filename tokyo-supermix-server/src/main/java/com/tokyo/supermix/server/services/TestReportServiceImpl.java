@@ -266,6 +266,7 @@ public class TestReportServiceImpl implements TestReportService {
     acceptedValueList.forEach(values -> {
       if (values.isFinalResult()) {
         AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
+        acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName());
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue());
@@ -310,6 +311,7 @@ public class TestReportServiceImpl implements TestReportService {
       materialAcceptedValues.forEach(materialAccepted -> {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
+          acceptedValueDto.setParameterName(materialAccepted.getTestParameter().getParameter().getName());
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
@@ -333,6 +335,7 @@ public class TestReportServiceImpl implements TestReportService {
       materialAcceptedValues.forEach(materialAccepted -> {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
+          acceptedValueDto.setParameterName(materialAccepted.getTestParameter().getParameter().getName());
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
