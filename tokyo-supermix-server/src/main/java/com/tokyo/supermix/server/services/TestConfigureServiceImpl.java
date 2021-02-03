@@ -354,6 +354,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     return testConfigureRepository.count();
   }
 
+  @Transactional
+  public boolean isTestConfigureByRawMaterialId(Long rawMaterialId) {
+    return testConfigureRepository.existsByRawMaterialId(rawMaterialId);
+  }
   @Transactional(readOnly = true)
   public boolean isDuplicateEntry(Long testId, Long materialCategoryId, Long materialSubCategoryId,
       Long rawMaterialId) {
