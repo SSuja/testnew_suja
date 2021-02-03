@@ -59,4 +59,6 @@ public interface TestConfigureService {
   public List<TestConfigure> getAllTestConfigureByDecending(Pageable pageable);
 
   public Long countTestConfigure();
+
+  public boolean isTestConfigureByRawMaterialId(Long rawMaterialId);
 }

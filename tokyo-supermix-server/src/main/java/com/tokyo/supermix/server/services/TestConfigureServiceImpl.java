@@ -353,4 +353,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public Long countTestConfigure() {
     return testConfigureRepository.count();
   }
+
+  @Transactional
+  public boolean isTestConfigureByRawMaterialId(Long rawMaterialId) {
+    return testConfigureRepository.existsByRawMaterialId(rawMaterialId);
+  }
 }
