@@ -12,6 +12,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -95,6 +96,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   MultiResultFormulaRepository multiResultFormulaRepository;
   @Autowired
   TestEquationParameterRepository testEquationParameterRepository;
+  HttpSession session;
 
   @Transactional(readOnly = true)
   public List<FinishProductTrial> getAllFinishProductTrials() {
@@ -546,8 +548,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   private void checkStatusAndSaveStatus(String finishProductTestCode, HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
+   
     FinishProductSample finishProductSample = finishProductSampleRepository
         .findById(finishproductTest.getFinishProductSample().getCode()).get();
+   
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     finishProductSample.setStatus(finishproductTest.getStatus());
@@ -558,10 +562,15 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     if (mixDesignObj.getStatus().equals(Status.PASS) && finishProductSampleobj.getWorkOrderNumber()==null) {
       MixDesignConfirmationToken mixDesignConfirmationToken =
           new MixDesignConfirmationToken(mixDesignObj);
-      mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);
-      emailNotification.sendMixdesinApprovelEmail(finishProductSampleobj,
-          mixDesignConfirmationToken, request);
-    }
+      mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);          
+      if (request != null) {
+          session = request.getSession();
+          session.setAttribute("url",
+                  request.getServerName() + ":" + request.getServerPort() + request.getContextPath());
+          emailNotification.sendMixdesinApprovelEmail(finishProductSampleobj,
+              mixDesignConfirmationToken, request, session.getAttribute("url").toString());
+      }
+         }
   }
 
   private void checkPassCountAndTestConfigKeyTestCount(String finishProductTestCode,
