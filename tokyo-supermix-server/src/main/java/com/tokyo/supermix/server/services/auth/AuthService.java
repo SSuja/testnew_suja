@@ -7,6 +7,6 @@ public interface AuthService {
   String generateUserToken(LoginRequestDto loginRequestDto);
   boolean checkIsValidOldPassword(User user, String currentPassword);
   void createForgotPasswordToken(String token,User user);
-  String validatePasswordResetToken(String token);
-  User getUserByPasswordResetToken(String token);
+  String validatePasswordResetToken(String token ,String email);
+  User getUserByPasswordResetToken(String token ,String email);
 }

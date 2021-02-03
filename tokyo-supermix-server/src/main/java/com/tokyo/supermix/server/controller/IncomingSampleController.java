@@ -67,7 +67,8 @@ public class IncomingSampleController {
   // @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   // public ResponseEntity<Object> getIncomingSamplesByUserPermission(
   // @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
-  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size)
+  // {
   // Pageable pageable = PageRequest.of(page, size);
   // int totalpage = 0;
   // Pagination pagination = new Pagination(page, size, totalpage, 0l);
@@ -76,19 +77,22 @@ public class IncomingSampleController {
   // return new ResponseEntity<>(
   // new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
   // mapper.map(
-  // incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser, pageable),
+  // incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser,
+  // pageable),
   // IncomingSampleResponseDto.class),
   // RestApiResponseStatus.OK, pagination),
   // HttpStatus.OK);
   // }
   // if (currentUserPermissionPlantService
-  // .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_INCOMING_SAMPLE)
+  // .getPermissionPlantCodeByCurrentUser(currentUser,
+  // PermissionConstants.VIEW_INCOMING_SAMPLE)
   // .contains(plantCode)) {
   // pagination
   // .setTotalRecords(incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
   // return new ResponseEntity<>(
   // new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode, pageable),
+  // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode,
+  // pageable),
   // IncomingSampleResponseDto.class),
   // RestApiResponseStatus.OK, pagination),
   // HttpStatus.OK);
@@ -121,7 +125,7 @@ public class IncomingSampleController {
       pagination.setTotalRecords(incomingSampleService
           .countByRawMaterialSampleTypeAndPlantCode(rawMaterialSampleType, plantCode));
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-          mapper.map(incomingSampleService.findByRawMaterialSampleTypeAndPlantCode(
+          mapper.map(incomingSampleService.findByRawMaterialSampleTypeAndPlantCodeByDecending(
               rawMaterialSampleType, plantCode, pageable), IncomingSampleResponseDto.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
@@ -208,9 +212,9 @@ public class IncomingSampleController {
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-
   // @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
-  // public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable String plantCode) {
+  // public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable
+  // String plantCode) {
   // if (plantService.isPlantExist(plantCode)) {
   // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
   // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
@@ -272,8 +276,8 @@ public class IncomingSampleController {
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
             mapper.map(
-                incomingSampleService.searchIncomingSample(code, date, status,
-                    rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
+                incomingSampleService.searchIncomingSample(code, date, status, rawMaterialName,
+                    plantName, supplierName, booleanBuilder, pageable,
                     RawMaterialSampleType.INCOMING_SAMPLE, plantCode, pagination),
                 IncomingSampleResponseDto.class),
             RestApiResponseStatus.OK, pagination),
@@ -295,8 +299,8 @@ public class IncomingSampleController {
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.INCOMING_SAMPLE,
             mapper.map(
-                incomingSampleService.searchIncomingSample(code, date, status,
-                    rawMaterialName, plantName, supplierName, booleanBuilder, pageable,
+                incomingSampleService.searchIncomingSample(code, date, status, rawMaterialName,
+                    plantName, supplierName, booleanBuilder, pageable,
                     RawMaterialSampleType.PROCESS_SAMPLE, plantCode, pagination),
                 IncomingSampleResponseDto.class),
             RestApiResponseStatus.OK, pagination),

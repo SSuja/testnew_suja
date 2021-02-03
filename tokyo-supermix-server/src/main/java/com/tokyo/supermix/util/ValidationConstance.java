@@ -30,6 +30,10 @@ public class ValidationConstance {
    * Prefix
    */
   public static final String PREFIX = "prefix already exist";
+  /*
+   * RawMaterial
+   */
+  public static final String RAWMATERIAL = "RawMaterial already depended";
 
   private ValidationConstance() {}
 }

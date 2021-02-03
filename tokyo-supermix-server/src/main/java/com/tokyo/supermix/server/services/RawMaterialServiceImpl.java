@@ -98,33 +98,62 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       String materialSubCategoryName, String plantName, String prefix, String plantCode,
       String erpCode, String mainCategoryName, String subBusinessUnitName, Pageable pageable,
       Pagination pagination) {
-    if (name != null && !name.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.name.containsIgnoreCase(name));
-    }
-    if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name
-          .containsIgnoreCase(materialSubCategoryName));
-    }
-    if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.containsIgnoreCase(plantName));
-    }
-    if (prefix != null && !prefix.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.prefix.containsIgnoreCase(prefix));
-    }
     if (plantCode != null && !plantCode.isEmpty()
-        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.orAllOf(QRawMaterial.rawMaterial.plant.code.containsIgnoreCase(plantCode),
-          QRawMaterial.rawMaterial.plant.isNull());
-    }
-    if (erpCode != null && !erpCode.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.containsIgnoreCase(erpCode));
-    }
-    if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
-          .containsIgnoreCase(mainCategoryName));
-    }
-    if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
-      booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.containsIgnoreCase(subBusinessUnitName));
+        && (plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (plantName != null && !plantName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.stringValue().contains(plantName));
+      }
+      if (prefix != null && !prefix.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.prefix.stringValue().contains(prefix));
+      }
+      if (erpCode != null && !erpCode.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.stringValue().contains(erpCode));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+      if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.stringValue()
+            .contains(subBusinessUnitName));
+      }
+
+    } else {
+      booleanBuilder.or(QRawMaterial.rawMaterial.plant.code.eq(plantCode));
+      booleanBuilder.or(QRawMaterial.rawMaterial.subBusinessUnit.id
+          .eq(plantRepository.findById(plantCode).get().getSubBusinessUnit().getId()));
+      booleanBuilder.or(QRawMaterial.rawMaterial.materialType.eq(MaterialType.COMMON));
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (plantName != null && !plantName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.plant.name.stringValue().contains(plantName));
+      }
+      if (prefix != null && !prefix.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.prefix.stringValue().contains(prefix));
+      }
+      if (erpCode != null && !erpCode.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.stringValue().contains(erpCode));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+      if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.subBusinessUnit.name.stringValue()
+            .contains(subBusinessUnitName));
+      }
     }
     pagination.setTotalRecords(
         ((Collection<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder)).stream().count());
@@ -273,9 +302,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public boolean isUpdatedPrefixAndRawMaterial(Long id, Long materialSubCategoryId, String prefix,
       MaterialType materialType) {
-    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (!getRawMaterialById(id).getMaterialType().equals(materialType))
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getMaterialType().equals(materialType)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialType(prefix,
             materialSubCategoryId, materialType)) {
       return true;
@@ -286,10 +315,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public boolean isUpdatedPlantWise(Long id, Long materialSubCategoryId, String prefix,
       MaterialType materialType, String plantCode) {
-    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (!getRawMaterialById(id).getMaterialType().equals(materialType))
-        && (!getRawMaterialById(id).getPlant().getCode().equals(plantCode))
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getMaterialType().equals(materialType))
+        && (getRawMaterialById(id).getPlant().getCode().equals(plantCode)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(
             prefix, materialSubCategoryId, materialType, plantCode)) {
       return true;
@@ -299,9 +328,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId) {
-    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
-        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (!getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId))
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
             materialCategoryId, sbuId)) {
       return true;

@@ -42,6 +42,13 @@ public class MixDesignProportionController {
   @PostMapping(value = EndpointURI.MIX_DESIGN_PROPORTION)
   public ResponseEntity<Object> saveMixDesignProportion(
       @Valid @RequestBody List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList) {
+    // if (mixDesignProportionService
+    // .checkMixDesignProportionQuantityHasZeroValues(mixDesignProportionRequestDtoList)) {
+    // return new ResponseEntity<>(
+    // new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION,
+    // validationFailureStatusCodes.getMixDesignProportionHasZeroValue()),
+    // HttpStatus.BAD_REQUEST);
+    // }
     return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION,
         mixDesignProportionService.saveMixDesignProportion(
             mapper.map(mixDesignProportionRequestDtoList, MixDesignProportion.class)),
@@ -63,8 +70,10 @@ public class MixDesignProportionController {
       @PathVariable String mixDesignCode) {
     if (mixDesignProportionService.isMixDesignProportionExist(id)) {
       if (mixDesignProportionService.deleteProportionCheck(id, mixDesignCode)) {
-        return new ResponseEntity<Object>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.MIX_DESIGN_PROPORTION_DELETED_BAD), HttpStatus.OK);
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION_ID,
+                validationFailureStatusCodes.getMixDesignProportionDeleteValid()),
+            HttpStatus.BAD_REQUEST);
       }
       mixDesignProportionService.deleteById(id);
       return new ResponseEntity<Object>(

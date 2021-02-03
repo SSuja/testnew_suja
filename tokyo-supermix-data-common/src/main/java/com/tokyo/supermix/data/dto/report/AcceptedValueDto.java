@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto.report;
 import com.tokyo.supermix.data.enums.Condition;
 
 public class AcceptedValueDto {
+  private String parameterName;
   private Double minValue;
   private Condition condition;
   private Double maxValue;
@@ -56,5 +57,13 @@ public class AcceptedValueDto {
 
   public void setValues(String values) {
     this.values = values;
+  }
+
+  public String getParameterName() {
+    return parameterName;
+  }
+
+  public void setParameterName(String parameterName) {
+    this.parameterName = parameterName;
   }
 }

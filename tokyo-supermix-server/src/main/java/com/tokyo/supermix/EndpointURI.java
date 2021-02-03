@@ -234,6 +234,10 @@ public final class EndpointURI {
   public static final String PARAMETER_BY_PARAMETER_TYPE =
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}";
   public static final String PARAMETER_SEARCH = PARAMETER + SEARCH;
+  public static final String PARAMETER_SEARCH_BY_TYPE =
+      PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}" + SEARCH;
+  public static final String PARAMETER_PAGE_BY_TYPE =
+      PARAMETER + SLASH + "parameter-type-page" + SLASH + "{parameterType}";
 
   /*
    * Project APIs
@@ -270,7 +274,8 @@ public final class EndpointURI {
           + "plant" + SLASH + "{plantCode}";
   public static final String INCOMING_SAMPLE_BY_MATERIAL_CATEGORY =
       INCOMING_SAMPLE + SLASH + "material-category" + SLASH + "{materialCategoryName}";
-  // public static final String INCOMING_SAMPLE_BY_PLANT = INCOMING_SAMPLE + PLANT_WISE;
+  // public static final String INCOMING_SAMPLE_BY_PLANT = INCOMING_SAMPLE +
+  // PLANT_WISE;
   public static final String INCOMING_SAMPLE_BY_PLANT =
       INCOMING_SAMPLE + SLASH + "sample-type" + SLASH + "{rawMaterialSampleType}" + PLANT_WISE;
   public static final String INCOMING_SAMPLES_BY_PLANT_CODE =

@@ -42,8 +42,12 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.FileStorageService;
+import com.tokyo.supermix.server.services.IncomingSampleService;
+import com.tokyo.supermix.server.services.MaterialAcceptedValueService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
+import com.tokyo.supermix.server.services.MixDesignService;
 import com.tokyo.supermix.server.services.RawMaterialService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.FileStorageConstants;
@@ -68,6 +72,14 @@ public class RawMaterialController {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  private TestConfigureService testConfigureService;
+  @Autowired
+  private IncomingSampleService incomingSampleService;
+  @Autowired
+  private MixDesignService mixDesignService;
+  @Autowired
+  private MaterialAcceptedValueService materialAcceptedValueService;
   private static final Logger logger = Logger.getLogger(RawMaterialController.class);
 
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
@@ -87,6 +99,13 @@ public class RawMaterialController {
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     } else if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.PLANT)) {
+      if (rawMaterialRequestDto.getPlantCode() == null
+          || rawMaterialRequestDto.getPlantCode().isEmpty()) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndPlant(
           rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
           rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
@@ -100,6 +119,12 @@ public class RawMaterialController {
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     } else {
+      if (rawMaterialRequestDto.getSubBusinessUnitId() == null) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndSbu(
           rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
           rawMaterialRequestDto.getSubBusinessUnitId())) {
@@ -115,7 +140,8 @@ public class RawMaterialController {
     }
     Long rawMaterialId =
         rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
-    coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialId);
+    coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialId,
+        rawMaterialRequestDto.getMaterialSubCategoryId());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_RAW_MATERIAL_SUCCESS),
         HttpStatus.OK);
@@ -165,6 +191,25 @@ public class RawMaterialController {
           return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
               validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
         }
+      }
+      RawMaterial rawMaterial =
+          rawMaterialService.getRawMaterialById(rawMaterialRequestDto.getId());
+      if (rawMaterial.getMaterialSubCategory().getId() != rawMaterialRequestDto
+          .getMaterialSubCategoryId()) {
+        if (testConfigureService.isTestConfigureByRawMaterialId(rawMaterialRequestDto.getId())
+            || incomingSampleService.isRawMaterialExist(rawMaterialRequestDto.getId())
+            || mixDesignService.isRawMaterialExists(rawMaterialRequestDto.getId())
+            || materialAcceptedValueService
+                .isRawMaterialIdExist(rawMaterialRequestDto.getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(ValidationConstance.RAWMATERIAL,
+                  validationFailureStatusCodes.getRawMaterialAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+        coreTestConfigureService
+            .deleteAllCoreTestConfigureByrawMaterialId(rawMaterialRequestDto.getId());
+        coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialRequestDto.getId(),
+            rawMaterialRequestDto.getMaterialSubCategoryId());
       }
       rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
       return new ResponseEntity<>(
@@ -268,7 +313,6 @@ public class RawMaterialController {
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "materialSubCategoryName",
           required = false) String materialSubCategoryName,
-      @RequestParam(name = "materialCategoryName", required = false) String materialCategoryName,
       @RequestParam(name = "plantName", required = false) String plantName,
       @RequestParam(name = "prefix", required = false) String prefix,
       @RequestParam(name = "erpCode", required = false) String erpCode,
@@ -281,7 +325,8 @@ public class RawMaterialController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
         rawMaterialService.searchRawMaterial(booleanBuilder, name, materialSubCategoryName,
-            plantName, prefix, plantCode, erpCode, mainCategoryName, subBusinessUnitName, pageable, pagination),
+            plantName, prefix, plantCode, erpCode, mainCategoryName, subBusinessUnitName, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 

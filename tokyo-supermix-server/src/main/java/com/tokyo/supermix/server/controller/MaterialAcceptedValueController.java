@@ -62,28 +62,6 @@ public class MaterialAcceptedValueController {
   public ResponseEntity<Object> createMaterialAcceptedValue(
       @Valid @RequestBody List<MaterialAcceptedValueRequestDto> materialAcceptedValueRequestDtoList) {
     for (MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto : materialAcceptedValueRequestDtoList) {
-      // if (materialAcceptedValueRequestDto.getCategoryAcceptedType()
-      // .equals(CategoryAcceptedType.MATERIAL)) {
-      // if (materialAcceptedValueService.isTestConfigureIdAndRawMaterialIdAndTestParameterId(
-      // materialAcceptedValueRequestDto.getTestConfigureId(),
-      // materialAcceptedValueRequestDto.getRawMaterialId(),
-      // materialAcceptedValueRequestDto.getTestParameterId())) {
-      // return new ResponseEntity<>(
-      // new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
-      // validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
-      // HttpStatus.BAD_REQUEST);
-      // }
-      // } else {
-      // if (materialAcceptedValueService.isTestConfigureIdAndSubCategoryAndTestParameterId(
-      // materialAcceptedValueRequestDto.getTestConfigureId(),
-      // materialAcceptedValueRequestDto.getMaterialSubCategoryId(),
-      // materialAcceptedValueRequestDto.getTestParameterId())) {
-      // return new ResponseEntity<>(
-      // new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
-      // validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
-      // HttpStatus.BAD_REQUEST);
-      // }
-      // }
       if (materialAcceptedValueRequestDto.getMaterialSubCategoryId() != null) {
         configureService.updateApplicableTestByMaterialSubCategoryId(
             materialAcceptedValueRequestDto.getTestConfigureId(),

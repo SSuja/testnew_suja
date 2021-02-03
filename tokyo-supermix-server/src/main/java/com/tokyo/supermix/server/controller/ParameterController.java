@@ -142,4 +142,35 @@ public class ParameterController {
             booleanBuilder, page, size, pageable, pagination), ParameterDto.class),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.PARAMETER_SEARCH_BY_TYPE)
+  public ResponseEntity<Object> searchParametersByType(@PathVariable ParameterType parameterType,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "parameterDataType",
+          required = false) ParameterDataType parameterDataType) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PARAMETER,
+        mapper.map(parameterService.searchParameters(name, parameterType, parameterDataType,
+            booleanBuilder, page, size, pageable, pagination), ParameterDto.class),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.PARAMETER_PAGE_BY_TYPE)
+  public ResponseEntity<Object> getAllParametersBYParameterType(
+      @PathVariable ParameterType parameterType, @RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(parameterService.getCountParametersByType(parameterType));
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.PARAMETERS,
+            mapper.map(parameterService.getAllParametersAndParameterTypeByDecending(parameterType,
+                pageable), ParameterDto.class),
+            RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
+  }
 }
