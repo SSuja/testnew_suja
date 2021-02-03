@@ -59,4 +59,7 @@ public interface TestConfigureService {
   public List<TestConfigure> getAllTestConfigureByDecending(Pageable pageable);
 
   public Long countTestConfigure();
+
+  public boolean isDuplicateEntry(Long testId, Long materialCategoryId, Long materialSubCategoryId,
+      Long rawMaterialId);
 }

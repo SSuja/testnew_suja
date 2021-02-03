@@ -831,6 +831,8 @@ public class ValidationFailureStatusCodes {
   private String equationNotExist;
   @Value("${validation.equation.alreadyExist}")
   private String equationAlreadyExist;
+  @Value("${validation.formula.null}")
+  private String formulaIsNull;
 
   public String getEquationNotExist() {
     return equationNotExist;
@@ -846,6 +848,14 @@ public class ValidationFailureStatusCodes {
 
   public void setEquationAlreadyExist(String equationAlreadyExist) {
     this.equationAlreadyExist = equationAlreadyExist;
+  }
+
+  public String getFormulaIsNull() {
+    return formulaIsNull;
+  }
+
+  public void setFormulaIsNull(String formulaIsNull) {
+    this.formulaIsNull = formulaIsNull;
   }
 
   // For Material Category
@@ -1498,6 +1508,9 @@ public class ValidationFailureStatusCodes {
   @Value("${testParameterDto.abbreviation.alreadyExist}")
   private String abbreviationAlreadyExit;
 
+  @Value("${testParameterDto.value.null}")
+  private String valueIsNull;
+
   public String getAbbreviationAlreadyExit() {
     return abbreviationAlreadyExit;
   }
@@ -1512,6 +1525,14 @@ public class ValidationFailureStatusCodes {
 
   public void setAbbreviationIsNull(String abbreviationIsNull) {
     this.abbreviationIsNull = abbreviationIsNull;
+  }
+
+  public String getValueIsNull() {
+    return valueIsNull;
+  }
+
+  public void setValueIsNull(String valueIsNull) {
+    this.valueIsNull = valueIsNull;
   }
 
   /*

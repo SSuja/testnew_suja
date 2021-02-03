@@ -353,4 +353,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   public Long countTestConfigure() {
     return testConfigureRepository.count();
   }
+
+  @Transactional(readOnly = true)
+  public boolean isDuplicateEntry(Long testId, Long materialCategoryId, Long materialSubCategoryId,
+      Long rawMaterialId) {
+    if (testConfigureRepository
+        .existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryIdAndRawMaterialId(testId,
+            materialCategoryId, materialSubCategoryId, rawMaterialId)) {
+      return true;
+    }
+    return false;
+  }
 }

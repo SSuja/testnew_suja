@@ -66,13 +66,13 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
       String name, Long sbuId);
 
   boolean existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(String prefix,
-      Long materialCategoryId, Long sbuId);
+      Long materialSubCategoryId, Long sbuId);
 
   boolean existsByMaterialSubCategoryIdAndNameAndMaterialTypeAndPlantCode(Long materialCategoryId,
       String name, MaterialType materialType, String plantCode);
 
   boolean existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(String prefix,
-      Long materialCategoryId, MaterialType materialType, String plantCode);
+      Long materialSubCategoryId, MaterialType materialType, String plantCode);
 
   List<RawMaterial> findByPlantCodeOrMaterialTypeOrSubBusinessUnitIdAndNameStartsWith(
       String plantCode, MaterialType materialType, Long subId, String name);
