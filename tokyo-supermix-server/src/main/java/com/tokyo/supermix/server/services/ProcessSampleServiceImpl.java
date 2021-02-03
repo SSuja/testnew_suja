@@ -21,7 +21,6 @@ import com.tokyo.supermix.data.entities.QProcessSample;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.ProcessSampleRepository;
-import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -36,8 +35,6 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
   private IncomingSampleService incomingSampleService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  @Autowired
-  private EmailNotification emailNotification;
   @Autowired
   private IncomingSampleRepository incomingSampleRepository;
   @Autowired
@@ -67,11 +64,8 @@ public class ProcessSampleServiceImpl implements ProcessSampleService {
     IncomingSample incomingSample =
         incomingSampleService.getIncomingSampleById(processSample.getIncomingSample().getCode());
     processSample.setRawMaterial(incomingSample.getRawMaterial());
-    ProcessSample processSampleObj = processSampleRepository.save(processSample);
-    if (processSampleObj != null) {
-      emailNotification.sendProcessSampleCreationEmail(processSampleObj);
-    }
-  }
+            processSampleRepository.save(processSample);
+ }
 
   private Integer getNumberFromCode(String code) {
     String numberOnly = code.replaceAll("[^0-9]", "");

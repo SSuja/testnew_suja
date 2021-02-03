@@ -127,14 +127,14 @@ public class AuthController {
   @PutMapping(value = PrivilegeEndpointURI.RESET_PASSWORD)
   public ResponseEntity<?> resetPassword(@RequestParam("token") String token,
       @RequestBody ResetPasswordDto passwordDto) {
-    String result = authService.validatePasswordResetToken(token);
+    String result = authService.validatePasswordResetToken(token, passwordDto.getUsernameOrEmail());
     if (result != null) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(result,
               privilegeValidationFailureStatusCodes.getIsPasswordTokenFailed()),
           HttpStatus.BAD_REQUEST);
     }
-    User user = authService.getUserByPasswordResetToken(token);
+  User user = authService.getUserByPasswordResetToken(token ,passwordDto.getUsernameOrEmail());
     userService.changeUserPassword(user, passwordDto.getPassword());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_PASSWORD_SUCCESS),

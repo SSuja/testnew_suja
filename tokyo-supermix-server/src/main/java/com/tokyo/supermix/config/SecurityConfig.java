@@ -522,6 +522,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, EndpointURI.RATIO_CONFIG_PARAMETER_BY_ID)
         .hasAuthority(PermissionConstants.DELETE_RATIO_PARAMATER)
         
+        // edit key test
+        .antMatchers(HttpMethod.GET, EndpointURI.CORE_TEST_CONFIGURE_TEST_ORIGIN)
+        .hasAuthority(PermissionConstants.EDIT_KEY_TEST)
+        .antMatchers(HttpMethod.GET, EndpointURI.CORE_TEST_CONFIGURE_UPDATE)
+        .hasAuthority(PermissionConstants.EDIT_KEY_TEST_CONFIGURATION)
+        
         .anyRequest().authenticated();
     // Add our custom JWT security filter
     http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -54,12 +54,16 @@ public class AuthServiceImpl implements AuthService {
   @Transactional
   public void createForgotPasswordToken(String token, User user) {
     VerificationToken verificationToken = new VerificationToken(token, user);
-    verificationTokenRepository.save(verificationToken);
+    if(verificationTokenRepository.existsByUser(user)) {
+      
+      verificationTokenRepository.delete(verificationTokenRepository.findByUser(user));
+    }
+      verificationTokenRepository.save(verificationToken);
   }
 
   @Transactional(readOnly = true)
-  public String validatePasswordResetToken(String token) {
-    final VerificationToken passToken = verificationTokenRepository.findByToken(token);
+  public String validatePasswordResetToken(String token ,String email) {
+    final VerificationToken passToken = verificationTokenRepository. findByTokenAndUserEmail(token,email);
     return !isTokenFound(passToken) ? "tokenString"
         : isTokenExpired(passToken) ? "expiryDate" : null;
   }
@@ -74,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Transactional(readOnly = true)
-  public User getUserByPasswordResetToken(String token) {
-    return verificationTokenRepository.findByToken(token).getUser();
+  public User getUserByPasswordResetToken(String token, String email) {
+    return verificationTokenRepository.findByTokenAndUserEmail(token,email).getUser();
   }
 }

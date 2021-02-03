@@ -280,6 +280,10 @@ public final class PermissionConstants {
   public static final String EDIT_RATIO_EQUATION = "edit_ratio_equation";
   public static final String ADD_RATIO_EQUATION = "create_ratio_equation";
   public static final String DELETE_RATIO_EQUATION = "delete_ratio_equation";
+  
+  /* Edit*/
+  public static final String EDIT_KEY_TEST= "edit_key_test";
+  public static final String EDIT_KEY_TEST_CONFIGURATION= "edit_key_test_configuration";
 
 
 

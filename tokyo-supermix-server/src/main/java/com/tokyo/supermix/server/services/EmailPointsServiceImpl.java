@@ -92,18 +92,11 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
     emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
     emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
-    if (testConfigureRequestDto.getMaterialSubCategoryId() != null) {
-      String materialSubCategoryName = materialSubCategoryService
-          .getMaterialSubCategoryById(testConfigureRequestDto.getMaterialSubCategoryId()).getName();
-      emailPointsRequestDto.setName(materialSubCategoryName + "_" + testName);
-      emailPointsRequestDto
-          .setMaterialSubCategoryId(testConfigureRequestDto.getMaterialSubCategoryId());
-    } else {
-      String materialCategoryName = materialCategoryService
+    String materialCategoryName = materialCategoryService
           .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
       emailPointsRequestDto.setName(materialCategoryName + "_" + testName);
       emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
-    }
+
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
   }
   
@@ -114,19 +107,12 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
     emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
     emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
-    emailPointsRequestDto.setSchedule(true);
-    if (testConfigureRequestDto.getMaterialSubCategoryId() != null) {
-      String materialSubCategoryName = materialSubCategoryService
-          .getMaterialSubCategoryById(testConfigureRequestDto.getMaterialSubCategoryId()).getName();
-      emailPointsRequestDto.setName(materialSubCategoryName+ "_"  +"Schedule"+ "_" + testName);
-      emailPointsRequestDto
-          .setMaterialSubCategoryId(testConfigureRequestDto.getMaterialSubCategoryId());
-    } else {
-      String materialCategoryName = materialCategoryService
+    emailPointsRequestDto.setSchedule(true);  
+    String materialCategoryName = materialCategoryService
           .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
-      emailPointsRequestDto.setName(materialCategoryName +"_"  +"Schedule"+ "_"+ testName);
-      emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
-    }
+    emailPointsRequestDto.setName(materialCategoryName +"_"  +"Schedule"+ "_"+ testName);
+    emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
+    
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
   }
 
