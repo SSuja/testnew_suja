@@ -4,15 +4,12 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-
 import com.tokyo.supermix.data.dto.auth.UserCredentialDto;
 import com.tokyo.supermix.data.entities.AcceptedValue;
 import com.tokyo.supermix.data.entities.ConfirmationToken;
@@ -34,7 +31,6 @@ import com.tokyo.supermix.data.entities.NotificationDays;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.PlantEquipment;
 import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
-import com.tokyo.supermix.data.entities.ProcessSample;
 import com.tokyo.supermix.data.entities.Project;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
@@ -210,7 +206,7 @@ public class EmailNotification {
 	@Async
 	public void sendTestEmail(MaterialTest materialTest) {
 		EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-				materialTest.getTestConfigure().getMaterialSubCategory().getId(),
+				materialTest.getTestConfigure().getMaterialCategory().getId(),
 				materialTest.getTestConfigure().getTest().getId(), false);
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
 				materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
@@ -240,7 +236,7 @@ public class EmailNotification {
 	@Async
 	public void sendFinishProductTestEmail(FinishProductTest finishProductTest) {
 		EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-				finishProductTest.getTestConfigure().getMaterialSubCategory().getId(),
+				finishProductTest.getTestConfigure().getMaterialCategory().getId(),
 				finishProductTest.getTestConfigure().getTest().getId(), false);
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
 				finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode(), emailPoints.getName());
@@ -271,7 +267,7 @@ public class EmailNotification {
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
 				finishProductSample.getMixDesign().getPlant().getCode(), MailGroupConstance.MIX_DESIGN_CONFIRMATION);
 		if (emailGroup != null) {
-			String body = "<a href=http://" + session.getAttribute("url") + "/api/v1/mix-design/confirmation/"
+			String body = "<a href=http://" + session.getAttribute("url").toString() + "/api/v1/mix-design/confirmation/"
 					+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
 					+ "#008CBA" + "}}>Approve</button>" + "</a>";
 			if (emailGroup.isStatus()) {
@@ -281,7 +277,6 @@ public class EmailNotification {
 				String acceptedValue = " ";
 				String testMailBody = " ";
 				request.getPathInfo();
-
 				for (FinishProductTest finishProductTest : finishProductTestRepository
 						.findByFinishProductSampleCode(finishProductSample.getCode())) {
 					for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
@@ -305,14 +300,14 @@ public class EmailNotification {
 							} else if (value.getConditionRange() == Condition.LESS_THAN) {
 								acceptedValue = acceptedValue + "Less than - " + value.getValue().toString();
 							}
-						} else {
+						} else if(finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
 							MaterialAcceptedValue materialValue = materialAcceptedValueRepository
 									.findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
 											finishProductTest.getTestConfigure().getId(),
 											finishProductParameterResult.getTestParameter().getId(),
 											finishProductParameterResult.getFinishProductTest().getFinishProductSample()
 													.getMixDesign().getRawMaterial().getId());
-							if (materialValue.getConditionRange() == Condition.BETWEEN) {
+							if (materialValue.getConditionRange().equals(Condition.BETWEEN)) {
 								acceptedValue = acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
 										+ " - minValue - " + materialValue.getMinValue().toString();
 							} else if (materialValue.getConditionRange() == Condition.EQUAL) {
@@ -324,21 +319,37 @@ public class EmailNotification {
 								acceptedValue = acceptedValue + "Less than - " + materialValue.getValue().toString();
 							}
 						}
-						;
+						else {
+						  MaterialAcceptedValue materialValue = materialAcceptedValueRepository
+						      .findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(                              
+                                      finishProductTest.getTestConfigure().getId(),
+                                      finishProductParameterResult.getTestParameter().getId(),
+                                      finishProductParameterResult.getFinishProductTest().getFinishProductSample()
+                                              .getMixDesign().getRawMaterial().getMaterialSubCategory().getId());
+                      if (materialValue.getConditionRange().equals(Condition.BETWEEN)) {
+                          acceptedValue = acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
+                                  + " - minValue - " + materialValue.getMinValue().toString();
+                      } else if (materialValue.getConditionRange() == Condition.EQUAL) {
+                          acceptedValue = acceptedValue + "Equal to - " + materialValue.getValue().toString();
+                      } else if (materialValue.getConditionRange() == Condition.GREATER_THAN) {
+                          acceptedValue = acceptedValue + " Greater than - : "
+                                  + materialValue.getValue().toString();
+                      } else if (materialValue.getConditionRange() == Condition.LESS_THAN) {
+                          acceptedValue = acceptedValue + "Less than - " + materialValue.getValue().toString();
+                      }
+						};
 					}
 					testMailBody = testMailBody + "</br><li> Test: <b>"
 							+ finishProductTest.getTestConfigure().getTest().getName() + "</b></li>" + result
 							+ "<li> Acceptance Range:<b>" + acceptedValue + "</b></li>" + "<li>Status:<b>"
 							+ finishProductTest.getStatus() + "</b></li>" + "<li>Tested Date:<b>"
-							+ finishProductTest.getDate() + "</b></li></n>";
-				}
-				;
+							+ finishProductTest.getDate() + "</b></li></n> </br>";
+				};
 				String message = "<ul><li>Finish Product: <b>" + finishProductSample.getFinishProductCode()
 						+ "</b></li>" + "<li> Mix Design Code: <b>" + finishProductSample.getMixDesign().getCode()
 						+ "</b></li>" + "<li> Plant-Lab-Trial Sample: <b>" + finishProductSample.getCode() + "</b></li>"
 						+ "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt() + "</b></li></br>"
 						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>";
-
 				String mailBody = message + body;
 				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
 						Constants.SUBJECT_MIX_DESIGN_APPROVEL, mailBody);
@@ -521,22 +532,19 @@ public class EmailNotification {
 	}
 
 	@Async
-	public void sendProcessSampleCreationEmail(ProcessSample processSample) {
+	public void sendProcessSampleCreationEmail(IncomingSample incomingSample) {
 		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-				processSample.getIncomingSample().getPlant().getCode(), MailGroupConstance.CREATE_PROCESS_SAMPLE);
+		    incomingSample.getPlant().getCode(), MailGroupConstance.CREATE_PROCESS_SAMPLE);
 		if (emailGroup != null) {
-			if (emailGroup.isStatus()) {
-				String rawMaterialName = rawMaterialRepository.findById(processSample.getRawMaterial().getId()).get()
-						.getName();
-				String supplierName = incomingSampleRepository.findById(processSample.getIncomingSample().getCode())
-						.get().getSupplier().getName();
-				String IncomingSample = incomingSampleRepository.findById(processSample.getIncomingSample().getCode())
-						.get().getCode();
-				String mailBody = "Material Load  is arrived from " + supplierName
-						+ " for the Passed Incoming sample - " + IncomingSample + ", " + rawMaterialName;
+			if (emailGroup.isStatus()) {			  
+			  String suplierName = supplierRepository.findById(incomingSample.getSupplier().getId()).get().getName();
+              String rawMaterialName = rawMaterialRepository.findById(incomingSample.getRawMaterial().getId()).get()
+                      .getName();
+              String mailBody = "New Process sample is created for  " + rawMaterialName + " from the Supplier "
+                      + suplierName + ".";		
 				List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
 						MailGroupConstance.CREATE_PROCESS_SAMPLE,
-						processSample.getIncomingSample().getPlant().getCode());
+						incomingSample.getPlant().getCode());
 				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
 						Constants.SUBJECT_PROCESS_SAMPLE, mailBody);
 			}
