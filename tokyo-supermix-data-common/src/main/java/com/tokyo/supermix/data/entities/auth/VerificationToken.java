@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Table(schema = "tokyo-supermix", name = "verification_token")
 public class VerificationToken implements Serializable {
   private static final long serialVersionUID = 1L;
-  private static final int EXPIRATION = 30;
+  private static final int EXPIRATION = 6;
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Id
   private Long id;
