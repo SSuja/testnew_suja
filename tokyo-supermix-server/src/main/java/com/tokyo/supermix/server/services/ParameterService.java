@@ -41,4 +41,9 @@ public interface ParameterService {
   public List<Parameter> searchParameters(String name, ParameterType parameterType,
       ParameterDataType parameterDataType, BooleanBuilder booleanBuilder, int page, int size,
       Pageable pageable, Pagination pagination);
+
+  public List<Parameter> getAllParametersAndParameterTypeByDecending(ParameterType parameterType,
+      Pageable pageable);
+
+  public Long getCountParametersByType(ParameterType parameterType);
 }

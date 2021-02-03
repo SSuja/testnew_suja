@@ -112,4 +112,15 @@ public class ParametersServiceImpl implements ParameterService {
         ((Collection<Parameter>) parameterRepository.findAll(booleanBuilder)).stream().count());
     return parameterRepository.findAll(booleanBuilder, pageable).toList();
   }
+
+  @Transactional(readOnly = true)
+  public List<Parameter> getAllParametersAndParameterTypeByDecending(ParameterType parameterType,
+      Pageable pageable) {
+    return parameterRepository.findByParameterTypeOrderByIdDesc(parameterType, pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public Long getCountParametersByType(ParameterType parameterType) {
+    return parameterRepository.countByParameterType(parameterType);
+  }
 }

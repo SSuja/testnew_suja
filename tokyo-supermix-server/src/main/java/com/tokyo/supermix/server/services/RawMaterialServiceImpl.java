@@ -126,6 +126,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       }
 
     } else {
+      booleanBuilder.or(QRawMaterial.rawMaterial.plant.code.eq(plantCode));
       booleanBuilder.or(QRawMaterial.rawMaterial.subBusinessUnit.id
           .eq(plantRepository.findById(plantCode).get().getSubBusinessUnit().getId()));
       booleanBuilder.or(QRawMaterial.rawMaterial.materialType.eq(MaterialType.COMMON));
@@ -141,11 +142,6 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       }
       if (prefix != null && !prefix.isEmpty()) {
         booleanBuilder.and(QRawMaterial.rawMaterial.prefix.stringValue().contains(prefix));
-      }
-      if (plantCode != null && !plantCode.isEmpty()
-          && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-        booleanBuilder.or(QRawMaterial.rawMaterial.plant.code.eq(plantCode));
-
       }
       if (erpCode != null && !erpCode.isEmpty()) {
         booleanBuilder.and(QRawMaterial.rawMaterial.erpCode.stringValue().contains(erpCode));
