@@ -991,6 +991,16 @@ public class ValidationFailureStatusCodes {
 
   @Value("${mixDesignProportionRequestDto.quantity.empty}")
   private String quantityIsEmpty;
+  @Value("${validation.mixDesignProportion.deleteValid}")
+  private String mixDesignProportionDeleteValid;
+
+  public String getMixDesignProportionDeleteValid() {
+    return mixDesignProportionDeleteValid;
+  }
+
+  public void setMixDesignProportionDeleteValid(String mixDesignProportionDeleteValid) {
+    this.mixDesignProportionDeleteValid = mixDesignProportionDeleteValid;
+  }
 
   public String getMixDesignProportionNotExist() {
     return mixDesignProportionNotExist;
@@ -1761,6 +1771,19 @@ public class ValidationFailureStatusCodes {
   @Value("${validation.ratioConfig.alreadyExist}")
   private String ratioConfigAlreadyExist;
 
+  @Value("${validation.ratioConfig.ratiParaNotExists}")
+  private String ratioConfigRatioParaNotExists;
+  @Value("${validation.ratioConfig.deleteValidate}")
+  private String ratioConfigRatioParaDeleteValidate;
+
+  public String getRatioConfigRatioParaDeleteValidate() {
+    return ratioConfigRatioParaDeleteValidate;
+  }
+
+  public void setRatioConfigRatioParaDeleteValidate(String ratioConfigRatioParaDeleteValidate) {
+    this.ratioConfigRatioParaDeleteValidate = ratioConfigRatioParaDeleteValidate;
+  }
+
   public String getRatioConfigNotExist() {
     return ratioConfigNotExist;
   }
@@ -1775,6 +1798,14 @@ public class ValidationFailureStatusCodes {
 
   public void setRatioConfigAlreadyExist(String ratioConfigAlreadyExist) {
     this.ratioConfigAlreadyExist = ratioConfigAlreadyExist;
+  }
+
+  public String getRatioConfigRatioParaNotExists() {
+    return ratioConfigRatioParaNotExists;
+  }
+
+  public void setRatioConfigRatioParaNotExists(String ratioConfigRatioParaNotExists) {
+    this.ratioConfigRatioParaNotExists = ratioConfigRatioParaNotExists;
   }
 
   // ratio config parameter
@@ -1972,5 +2003,27 @@ public class ValidationFailureStatusCodes {
 
   public void setMultiResultFormulaNotExist(String multiResultFormulaNotExist) {
     this.multiResultFormulaNotExist = multiResultFormulaNotExist;
+  }
+
+  @Value("${validation.mixDesignProportion.hasZero}")
+  private String mixDesignProportionHasZeroValue;
+
+  public String getMixDesignProportionHasZeroValue() {
+    return mixDesignProportionHasZeroValue;
+  }
+
+  public void setMixDesignProportionHasZeroValue(String mixDesignProportionHasZeroValue) {
+    this.mixDesignProportionHasZeroValue = mixDesignProportionHasZeroValue;
+  }
+
+  @Value("${validation.rawMaterial.plantOrSbuNull}")
+  private String rawMaterialPlantOrSbuNull;
+
+  public String getRawMaterialPlantOrSbuNull() {
+    return rawMaterialPlantOrSbuNull;
+  }
+
+  public void setRawMaterialPlantOrSbuNull(String rawMaterialPlantOrSbuNull) {
+    this.rawMaterialPlantOrSbuNull = rawMaterialPlantOrSbuNull;
   }
 }

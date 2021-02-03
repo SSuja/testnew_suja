@@ -113,8 +113,12 @@ public class RatioConfigParameterController {
   public ResponseEntity<Object> deleteRatioConfigParameter(@PathVariable Long id) {
     if (ratioConfigParameterService.isRatioConfigParameterExist(id)) {
       if (ratioConfigParameterService.deleteCheck(id)) {
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.RATIO_CONFIG_PARAMETER_DELETED_FAIL), HttpStatus.OK);
+        // return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        // Constants.RATIO_CONFIG_PARAMETER_DELETED_FAIL), HttpStatus.OK);
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getRatioConfigRatioParaDeleteValidate()),
+            HttpStatus.BAD_REQUEST);
       }
       ratioConfigParameterService.deleteRatioConfigParameter(id);
       return new ResponseEntity<>(

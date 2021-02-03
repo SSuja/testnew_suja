@@ -52,7 +52,8 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndDateAndPlantCode(
       Long materialSubCategoryId, Date sqlDate, String plantCode);
 
-  // List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+  // List<IncomingSample> findByRawMaterialMaterialSubCategoryId(Long
+  // materialSubCategoryId);
 
   // List<IncomingSample> findByRawMaterialMaterialSubCategoryIdAndPlantCode(
   // Long materialSubCategoryId, String plantCode);
@@ -93,6 +94,9 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
   List<IncomingSample> findAllByRawMaterialSampleTypeAndPlantCode(
       RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable);
 
+  List<IncomingSample> findAllByRawMaterialSampleTypeAndPlantCodeOrderByUpdatedAtDesc(
+      RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable);
+
   List<IncomingSample> findByPlantCodeInAndRawMaterialSampleTypeOrderByUpdatedAtDesc(
       List<String> permissionPlantCodeByCurrentUser, RawMaterialSampleType rawMaterialSampleType,
       Pageable pageable);
@@ -101,7 +105,6 @@ public interface IncomingSampleRepository extends JpaRepository<IncomingSample, 
 
   Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
       String plantCode);
-
 
   List<IncomingSample> findByRawMaterialMaterialSubCategoryMaterialCategoryId(
       Long materialCategoryId);

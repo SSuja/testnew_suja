@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.MixDesignProportionRequestDto;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 import com.tokyo.supermix.data.entities.MixDesignRatioConfig;
 import com.tokyo.supermix.data.entities.QMixDesignProportion;
@@ -126,5 +127,18 @@ public class MixDesignProportionServiceImpl implements MixDesignProportionServic
       }
     }
     return deleteCheck;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean checkMixDesignProportionQuantityHasZeroValues(
+      List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList) {
+    for (MixDesignProportionRequestDto mixDesignProportionRequestDto : mixDesignProportionRequestDtoList) {
+      if (mixDesignProportionRequestDto.getQuantity() != null
+          || mixDesignProportionRequestDto.getQuantity() == 0) {
+        return true;
+      }
+    }
+    return false;
+
   }
 }
