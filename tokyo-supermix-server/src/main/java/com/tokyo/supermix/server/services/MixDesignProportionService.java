@@ -2,6 +2,7 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import org.springframework.data.domain.Page;
+import com.tokyo.supermix.data.dto.MixDesignProportionRequestDto;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
 
 public interface MixDesignProportionService {
@@ -26,4 +27,7 @@ public interface MixDesignProportionService {
   public void updateMixDesignProportion(MixDesignProportion mixDesignProportion);
 
   public boolean deleteProportionCheck(Long id, String mixDesignCode);
+
+  public boolean checkMixDesignProportionQuantityHasZeroValues(
+      List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList);
 }

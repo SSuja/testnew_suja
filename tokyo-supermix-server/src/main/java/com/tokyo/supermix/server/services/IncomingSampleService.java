@@ -11,96 +11,97 @@ import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface IncomingSampleService {
-  public void deleteIncomingSample(String code);
+	public void deleteIncomingSample(String code);
 
-  public IncomingSample getIncomingSampleById(String code);
+	public IncomingSample getIncomingSampleById(String code);
 
-  public List<IncomingSample> getAllIncomingSamples();
+	public List<IncomingSample> getAllIncomingSamples();
 
-  // public List<IncomingSample> getAllIncomingSamplesByCurrentUser(
-  // @CurrentUser UserPrincipal currentUser);
+	// public List<IncomingSample> getAllIncomingSamplesByCurrentUser(
+	// @CurrentUser UserPrincipal currentUser);
 
-  boolean isIncomingSampleExist(String code);
+	boolean isIncomingSampleExist(String code);
 
-  public void updateStatusForIncomingSample(String code, Status status);
+	public void updateStatusForIncomingSample(String code, Status status);
 
-  boolean isIncomingSampleStatusExist(Status status);
+	boolean isIncomingSampleStatusExist(Status status);
 
-  public void createIncomingSample(IncomingSample incomingSample);
+	public void createIncomingSample(IncomingSample incomingSample);
 
-  public void updateIncomingSample(IncomingSample incomingSample);
+	public void updateIncomingSample(IncomingSample incomingSample);
 
-  public List<IncomingSample> getIncomingSampleByStatus(Status status);
+	public List<IncomingSample> getIncomingSampleByStatus(Status status);
 
-  // public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size);
+	// public Page<IncomingSample> searchIncomingSample(Predicate predicate, int
+	// page, int size);
 
-  // public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
+	// public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode);
 
-  // public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
-  // String plantCode);
+	// public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long
+	// materialSubCategoryId,
+	// String plantCode);
 
-  // public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
+	// public List<IncomingSample> getByMaterialSubCategory(Long
+	// materialSubCategoryId);
 
-  public List<IncomingSample> getAllIncomingSamplesByCurrentUser(
-      @CurrentUser UserPrincipal currentUser, Pageable pageable);
+	public List<IncomingSample> getAllIncomingSamplesByCurrentUser(@CurrentUser UserPrincipal currentUser,
+			Pageable pageable);
 
-  public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode, Pageable pageable);
+	public List<IncomingSample> getIncomingSampleByPlantCode(String plantCode, Pageable pageable);
 
-  public Long getCountIncomingSample();
+	public Long getCountIncomingSample();
 
-  public Long getCountIncomingSampleByPlantCode(String plantCode);
+	public Long getCountIncomingSampleByPlantCode(String plantCode);
 
-  public List<IncomingSample> getIncomingSampleCodeByPlantCode(String plantCode, String code);
+	public List<IncomingSample> getIncomingSampleCodeByPlantCode(String plantCode, String code);
 
-  public List<IncomingSample> getIncomingSampleCode(String code);
+	public List<IncomingSample> getIncomingSampleCode(String code);
 
-  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId, String code);
+	public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId, String code);
 
-  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
-      String plantCode, String code);
+	public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId, String plantCode,
+			String code);
 
-  public List<IncomingSample> searchIncomingSample(String code, String date,
-      Status status, String rawMaterialName, String plantName, String supplierName,
-      BooleanBuilder booleanBuilder, Pageable pageable, RawMaterialSampleType rawMaterialSampleType,
-      String plantCode, Pagination pagination);
+	public List<IncomingSample> searchIncomingSample(String code, String date, Status status, String rawMaterialName,
+			String plantName, String supplierName, BooleanBuilder booleanBuilder, Pageable pageable,
+			RawMaterialSampleType rawMaterialSampleType, String plantCode, Pagination pagination);
 
-  public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
+	public List<IncomingSample> getByMaterialSubCategory(Long materialSubCategoryId);
 
-  public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
-      String plantCode);
+	public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId, String plantCode);
 
-  public List<IncomingSample> getBySupplierId(Long supplierId);
+	public List<IncomingSample> getBySupplierId(Long supplierId);
 
-  // new service
+	// new service
 
-  boolean isSampleExistsByRawMaterialSample(RawMaterialSampleType rawMaterialSampleType);
+	boolean isSampleExistsByRawMaterialSample(RawMaterialSampleType rawMaterialSampleType);
 
-  public List<IncomingSample> findByRawMaterialSampleType(
-      RawMaterialSampleType rawMaterialSampleType, Pageable pageable);
+	public List<IncomingSample> findByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType,
+			Pageable pageable);
 
-  public List<IncomingSample> findByRawMaterialSampleTypeAndPlantCode(
-      RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable);
+	public List<IncomingSample> findByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
+			String plantCode, Pageable pageable);
 
-  public List<IncomingSample> findAllByPlantCodeAndRawMaterialSampleTypeInOrderByUpdatedAtDesc(
-      UserPrincipal currentUser, RawMaterialSampleType rawMaterialSampleType, Pageable pageable);
+	public List<IncomingSample> findByRawMaterialSampleTypeAndPlantCodeByDecending(
+			RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable);
 
-  public Long countAllSampleByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType);
+	public List<IncomingSample> findAllByPlantCodeAndRawMaterialSampleTypeInOrderByUpdatedAtDesc(
+			UserPrincipal currentUser, RawMaterialSampleType rawMaterialSampleType, Pageable pageable);
 
-  public Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType,
-      String plantCode);
+	public Long countAllSampleByRawMaterialSampleType(RawMaterialSampleType rawMaterialSampleType);
 
-  public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId);
+	public Long countByRawMaterialSampleTypeAndPlantCode(RawMaterialSampleType rawMaterialSampleType, String plantCode);
 
-  public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId,
-      String plantCode);
+	public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId);
 
-  public List<IncomingSample> getByRawMaterialId(Long rawMaterialId);
+	public List<IncomingSample> getByMaterialCategoryPlantWise(Long materialCategoryId, String plantCode);
 
-  public boolean isRawMaterialExist(Long rawMaterialId);
+	public List<IncomingSample> getByRawMaterialId(Long rawMaterialId);
 
-  public List<IncomingSample> getInComingSampleBySampleType(
-      RawMaterialSampleType rawMaterialSampleType);
+	public boolean isRawMaterialExist(Long rawMaterialId);
 
-  public List<IncomingSample> getInComingSampleBySampleTypeAndPlant(
-      RawMaterialSampleType rawMaterialSampleType, String plantCode);
+	public List<IncomingSample> getInComingSampleBySampleType(RawMaterialSampleType rawMaterialSampleType);
+
+	public List<IncomingSample> getInComingSampleBySampleTypeAndPlant(RawMaterialSampleType rawMaterialSampleType,
+			String plantCode);
 }

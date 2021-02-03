@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.QIncomingSample;
@@ -123,7 +125,8 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   // @Transactional(readOnly = true)
-  // public Page<IncomingSample> searchIncomingSample(Predicate predicate, int page, int size) {
+  // public Page<IncomingSample> searchIncomingSample(Predicate predicate, int
+  // page, int size) {
   // return incomingSampleRepository.findAll(predicate,
   // PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "code")));
   // }
@@ -177,7 +180,6 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     return incomingSampleRepository.findByPlantCodeAndCodeStartsWith(plantCode, code);
   }
 
-
   @Transactional(readOnly = true)
   public List<IncomingSample> getIncomingSampleCode(String code) {
     if (code.isEmpty()) {
@@ -216,6 +218,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
         (long) ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).stream()
             .filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
             .collect(Collectors.toList()).size());
+    Collections.reverse(((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder))
+        .stream().filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
+        .collect(Collectors.toList()));
     return ((List<IncomingSample>) incomingSampleRepository.findAll(booleanBuilder)).stream()
         .filter(sample -> sample.getRawMaterialSampleType().equals(rawMaterialSampleType))
         .collect(Collectors.toList());
@@ -280,7 +285,8 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   // @Transactional(readOnly = true)
   // public List<IncomingSample> findAllByRawMaterialSampleType(
   // RawMaterialSampleType rawMaterialSampleType) {
-  // return incomingSampleRepository.findAllByRawMaterialSampleType(rawMaterialSampleType);
+  // return
+  // incomingSampleRepository.findAllByRawMaterialSampleType(rawMaterialSampleType);
   // }
   public List<IncomingSample> getByMaterialCategoryId(Long materialCategoryId) {
     return incomingSampleRepository
@@ -316,5 +322,12 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       RawMaterialSampleType rawMaterialSampleType, String plantCode) {
     return incomingSampleRepository.findByRawMaterialSampleTypeAndPlantCode(rawMaterialSampleType,
         plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<IncomingSample> findByRawMaterialSampleTypeAndPlantCodeByDecending(
+      RawMaterialSampleType rawMaterialSampleType, String plantCode, Pageable pageable) {
+    return incomingSampleRepository.findAllByRawMaterialSampleTypeAndPlantCodeOrderByUpdatedAtDesc(
+        rawMaterialSampleType, plantCode, pageable);
   }
 }

@@ -5,14 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.RatioConfigEquationRequestDto;
 import com.tokyo.supermix.data.entities.RatioConfigEquation;
+import com.tokyo.supermix.data.entities.RatioConfigParameter;
 import com.tokyo.supermix.data.repositories.RatioConfigEquationRepository;
+import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
 
 @Service
 public class RatioConfigEquationServiceImpl implements RatioConfigEquationService {
 
   @Autowired
   private RatioConfigEquationRepository ratioConfigEquationRepository;
+
+  @Autowired
+  private RatioConfigParameterRepository ratioConfigParameterRepository;
 
   @Transactional
   public void saveRatioConfigEquation(RatioConfigEquation ratioConfigEquation) {
@@ -57,5 +63,17 @@ public class RatioConfigEquationServiceImpl implements RatioConfigEquationServic
   @Transactional(readOnly = true)
   public boolean isRatioExistsByRatioConfig(Long ratioConfigId, String ratio) {
     return ratioConfigEquationRepository.existsByRatioConfigIdAndRatio(ratioConfigId, ratio);
+  }
+
+  public boolean checkRatioEquationContainsRatioConfigParameter(
+      RatioConfigEquationRequestDto ratioConfigEquationRequestDto) {
+    for (RatioConfigParameter ratioConfigParameter : ratioConfigParameterRepository
+        .findByRatioConfigId(ratioConfigEquationRequestDto.getRatioConfigId())) {
+      if (ratioConfigEquationRequestDto.getRatio()
+          .contains(ratioConfigParameter.getAbbreviation())) {
+        return false;
+      }
+    }
+    return true;
   }
 }

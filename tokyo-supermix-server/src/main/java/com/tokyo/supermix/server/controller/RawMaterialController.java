@@ -87,6 +87,13 @@ public class RawMaterialController {
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     } else if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.PLANT)) {
+      if (rawMaterialRequestDto.getPlantCode() == null
+          || rawMaterialRequestDto.getPlantCode().isEmpty()) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndPlant(
           rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
           rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
@@ -100,6 +107,12 @@ public class RawMaterialController {
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     } else {
+      if (rawMaterialRequestDto.getSubBusinessUnitId() == null) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndSbu(
           rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
           rawMaterialRequestDto.getSubBusinessUnitId())) {
@@ -280,7 +293,8 @@ public class RawMaterialController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.RAW_MATERIAL,
         rawMaterialService.searchRawMaterial(booleanBuilder, name, materialSubCategoryName,
-            plantName, prefix, plantCode, erpCode, mainCategoryName, subBusinessUnitName, pageable, pagination),
+            plantName, prefix, plantCode, erpCode, mainCategoryName, subBusinessUnitName, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
