@@ -1,7 +1,9 @@
 package com.tokyo.supermix.data.dto.auth;
 
 public class ResetPasswordDto {
+  
   private String password;
+  private String usernameOrEmail;
 
   public String getPassword() {
     return password;
@@ -11,4 +13,13 @@ public class ResetPasswordDto {
     this.password = password;
   }
 
+  public String getUsernameOrEmail() {
+    return usernameOrEmail;
+  }
+
+  public void setUsernameOrEmail(String usernameOrEmail) {
+    this.usernameOrEmail = usernameOrEmail;
+  }
+
+  
 }
