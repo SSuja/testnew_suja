@@ -25,4 +25,8 @@ public interface ParameterRepository extends JpaRepository<Parameter, Long>,
       ParameterDataType parameterDataType);
 
   List<Parameter> findAllByOrderByIdDesc(Pageable pageable);
+
+  List<Parameter> findByParameterTypeOrderByIdDesc(ParameterType parameterType, Pageable pageable);
+  
+  Long countByParameterType(ParameterType parameterType);
 }

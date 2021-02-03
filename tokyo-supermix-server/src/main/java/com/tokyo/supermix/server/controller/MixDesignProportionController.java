@@ -42,13 +42,13 @@ public class MixDesignProportionController {
   @PostMapping(value = EndpointURI.MIX_DESIGN_PROPORTION)
   public ResponseEntity<Object> saveMixDesignProportion(
       @Valid @RequestBody List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList) {
-    if (mixDesignProportionService
-        .checkMixDesignProportionQuantityHasZeroValues(mixDesignProportionRequestDtoList)) {
-      return new ResponseEntity<>(
-          new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION,
-              validationFailureStatusCodes.getMixDesignProportionHasZeroValue()),
-          HttpStatus.BAD_REQUEST);
-    }
+    // if (mixDesignProportionService
+    // .checkMixDesignProportionQuantityHasZeroValues(mixDesignProportionRequestDtoList)) {
+    // return new ResponseEntity<>(
+    // new ValidationFailureResponse(Constants.MIX_DESIGN_PROPORTION,
+    // validationFailureStatusCodes.getMixDesignProportionHasZeroValue()),
+    // HttpStatus.BAD_REQUEST);
+    // }
     return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_PROPORTION,
         mixDesignProportionService.saveMixDesignProportion(
             mapper.map(mixDesignProportionRequestDtoList, MixDesignProportion.class)),
