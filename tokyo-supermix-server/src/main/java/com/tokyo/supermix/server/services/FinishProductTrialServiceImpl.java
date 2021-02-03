@@ -555,7 +555,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSampleRepository.save(finishProductSample);
     mixDesign.setStatus(finishproductTest.getStatus());
     MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
-    if (mixDesignObj.getStatus().equals(Status.PASS)) {
+    if (mixDesignObj.getStatus().equals(Status.PASS) && finishProductSampleobj.getWorkOrderNumber()==null) {
       MixDesignConfirmationToken mixDesignConfirmationToken =
           new MixDesignConfirmationToken(mixDesignObj);
       mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);
