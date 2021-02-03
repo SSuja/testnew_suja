@@ -505,6 +505,16 @@ public class ValidationFailureStatusCodes {
   private String materialSubCategoryNameIsEmpty;
   @Value("${validation.prefix.alreadyExist}")
   private String prefixAlreadyExist;
+  @Value("${validation.rawMaterial.alreadyDepended}")
+  private String rawMaterialAlreadyDepended;
+
+  public String getRawMaterialAlreadyDepended() {
+    return rawMaterialAlreadyDepended;
+  }
+
+  public void setRawMaterialAlreadyDepended(String rawMaterialAlreadyDepended) {
+    this.rawMaterialAlreadyDepended = rawMaterialAlreadyDepended;
+  }
 
   public String getPrefixAlreadyExist() {
     return prefixAlreadyExist;
@@ -831,6 +841,8 @@ public class ValidationFailureStatusCodes {
   private String equationNotExist;
   @Value("${validation.equation.alreadyExist}")
   private String equationAlreadyExist;
+  @Value("${validation.formula.null}")
+  private String formulaIsNull;
 
   public String getEquationNotExist() {
     return equationNotExist;
@@ -846,6 +858,14 @@ public class ValidationFailureStatusCodes {
 
   public void setEquationAlreadyExist(String equationAlreadyExist) {
     this.equationAlreadyExist = equationAlreadyExist;
+  }
+
+  public String getFormulaIsNull() {
+    return formulaIsNull;
+  }
+
+  public void setFormulaIsNull(String formulaIsNull) {
+    this.formulaIsNull = formulaIsNull;
   }
 
   // For Material Category
@@ -1498,6 +1518,9 @@ public class ValidationFailureStatusCodes {
   @Value("${testParameterDto.abbreviation.alreadyExist}")
   private String abbreviationAlreadyExit;
 
+  @Value("${testParameterDto.value.null}")
+  private String valueIsNull;
+
   public String getAbbreviationAlreadyExit() {
     return abbreviationAlreadyExit;
   }
@@ -1512,6 +1535,14 @@ public class ValidationFailureStatusCodes {
 
   public void setAbbreviationIsNull(String abbreviationIsNull) {
     this.abbreviationIsNull = abbreviationIsNull;
+  }
+
+  public String getValueIsNull() {
+    return valueIsNull;
+  }
+
+  public void setValueIsNull(String valueIsNull) {
+    this.valueIsNull = valueIsNull;
   }
 
   /*

@@ -38,8 +38,8 @@ public interface MaterialTestService {
 
   public List<MaterialTest> findByIncomingSampleCode(String incomingSampleCode);
 
-  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode, String createdAt,
-      String specimenCode, Status status, String supplierName, String testName,
+  public List<MaterialTest> searchMaterialTest(String code, String incomingSampleCode,
+      String createdAt, String specimenCode, Status status, String supplierName, String testName,
       String mainCategoryName, String materialSubCategory, BooleanBuilder booleanBuilder, int page,
       int size, Pageable pageable, String plantCode, Pagination pagination);
 
@@ -73,4 +73,8 @@ public interface MaterialTestService {
   public Long getCountMaterialTestByPlantCode(String plantCode);
 
   public List<MaterialTestDto> getMaterialTestsByIncomingSample(String incomingSampleCode);
+
+  public List<MaterialTest> getAllMaterialTestDesc(Pageable pageable);
+
+  public List<MaterialTest> getAllMaterialTestByPlantCodeDesc(String plantCode, Pageable pageable);
 }

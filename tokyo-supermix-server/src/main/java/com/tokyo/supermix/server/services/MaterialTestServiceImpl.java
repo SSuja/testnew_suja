@@ -192,7 +192,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
       booleanBuilder.and(QMaterialTest.materialTest.status.eq(status));
     }
     if (testName != null && !testName.isEmpty()) {
-      booleanBuilder.and(QMaterialTest.materialTest.testConfigure.test.name.contains(testName));
+      booleanBuilder
+          .and(QMaterialTest.materialTest.testConfigure.test.name.containsIgnoreCase(testName));
     }
     if (supplierName != null && !supplierName.isEmpty()) {
       booleanBuilder
@@ -210,9 +211,8 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     if (!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QMaterialTest.materialTest.incomingSample.plant.code.contains(plantCode));
     }
-    pagination
-        .setTotalRecords(((Collection<MaterialTest>) materialTestRepository.findAll(booleanBuilder))
-            .stream().count());
+    pagination.setTotalRecords(
+        ((List<MaterialTest>) materialTestRepository.findAll(booleanBuilder)).stream().count());
     return materialTestRepository.findAll(booleanBuilder, pageable).toList();
   }
 
@@ -706,5 +706,16 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   @Transactional(readOnly = true)
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
     return materialAcceptedValueRepository.existsByTestConfigureId(testConfigureId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getAllMaterialTestDesc(Pageable pageable) {
+    return materialTestRepository.findAllByOrderByUpdatedAtDesc(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getAllMaterialTestByPlantCodeDesc(String plantCode, Pageable pageable) {
+    return materialTestRepository.findByIncomingSamplePlantCodeOrderByUpdatedAtDesc(plantCode,
+        pageable);
   }
 }

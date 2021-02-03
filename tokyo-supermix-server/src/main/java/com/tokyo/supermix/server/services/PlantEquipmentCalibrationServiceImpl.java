@@ -105,7 +105,7 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
     }
     if (accuracy != null && !accuracy.isEmpty()) {
       booleanBuilder
-          .and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.contains(accuracy));
+          .and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.stringValue().contains(accuracy));
     }
     if (status != null) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.status.eq(status));
@@ -114,7 +114,6 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.employee.firstName
           .contains(employeeName));
     }
-
     if (!plantCode.equals("ADMIN")) {
       booleanBuilder.and(QPlantEquipment.plantEquipment.plant.code.contains(plantCode));
     }
@@ -122,7 +121,6 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
         (long) ((List<PlantEquipmentCalibration>) plantEquipmentCalibrationRepository
             .findAll(booleanBuilder)).size());
     return plantEquipmentCalibrationRepository.findAll(booleanBuilder, pageable).toList();
-
   }
 
   @Transactional(readOnly = true)

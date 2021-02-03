@@ -94,8 +94,9 @@ public class TestConfigureController {
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
-      if (testConfigureService.isUpdatedMaterialSubCategoryAndTest(testConfigureRequestDto.getId(),
-          testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId(),
+      if (testConfigureService.isDuplicateEntry(testConfigureRequestDto.getTestId(),
+          testConfigureRequestDto.getMaterialCategoryId(),
+          testConfigureRequestDto.getMaterialSubCategoryId(),
           testConfigureRequestDto.getRawMaterialId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_CONFIGURE,

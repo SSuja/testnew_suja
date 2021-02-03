@@ -165,15 +165,13 @@ public class MaterialTestController {
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if (plantCode.equalsIgnoreCase(Constants.ADMIN) || plantRepository.existsByCode(plantCode)) {
-      return new ResponseEntity<>(
-          new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-              mapper.map(
-                  materialTestService.searchMaterialTest(code, incomingSampleCode, createdAt,
-                      specimenCode, status, supplierName, testName, materialCategory,
-                      materialSubCategory, booleanBuilder, page, size, pageable, plantCode, pagination),
-                  MaterialTestResponseDto.class),
-              RestApiResponseStatus.OK, pagination),
-          HttpStatus.OK);
+      return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+          mapper.map(
+              materialTestService.searchMaterialTest(code, incomingSampleCode, createdAt,
+                  specimenCode, status, supplierName, testName, materialCategory,
+                  materialSubCategory, booleanBuilder, page, size, pageable, plantCode, pagination),
+              MaterialTestResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
@@ -299,7 +297,7 @@ public class MaterialTestController {
       pagination.setTotalRecords(materialTestService.getCountMaterialTest());
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-              mapper.map(materialTestService.getAllMaterialTests(pageable),
+              mapper.map(materialTestService.getAllMaterialTestDesc(pageable),
                   MaterialTestResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);
@@ -308,7 +306,7 @@ public class MaterialTestController {
       pagination.setTotalRecords(materialTestService.getCountMaterialTestByPlantCode(plantCode));
       return new ResponseEntity<>(
           new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-              mapper.map(materialTestService.getMaterialTestByPlant(plantCode, pageable),
+              mapper.map(materialTestService.getAllMaterialTestByPlantCodeDesc(plantCode, pageable),
                   MaterialTestResponseDto.class),
               RestApiResponseStatus.OK, pagination),
           HttpStatus.OK);

@@ -24,7 +24,8 @@ public interface CoreTestConfigureService {
   public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
       Long rawMaterialId);
 
-  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(Long rawMaterialId);
+  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
+      Long rawMaterialId);
 
   public CoreTestConfigureResponseDto getAllCoreTestConfigureByTestConfigureId(
       Long testConfigureId);
@@ -48,7 +49,7 @@ public interface CoreTestConfigureService {
   public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndApplicableTest(
       Long rawMaterialId);
 
-  public void updateCoreTestByNewRawMaterial(Long rawMaterialId);
+  public void updateCoreTestByNewRawMaterial(Long rawMaterialId, Long materialSubCategoryId);
 
   public void updatetestConfigureByTestConfigureId(Long testConfigureId);
 
@@ -59,5 +60,9 @@ public interface CoreTestConfigureService {
       boolean applicable);
 
   public void updateApplicableTestByTestConfigureId(Long testConfigureId, boolean applicable);
-  
+
+  public void getAllCoreTestConfigureByrawMaterialId(Long rawMaterialId);
+
+  public void deleteAllCoreTestConfigureByrawMaterialId(Long rawMaterialId);
+
 }

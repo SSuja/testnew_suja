@@ -169,7 +169,8 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   }
 
   @Transactional
-  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(Long rawMaterialId) {
+  public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
+      Long rawMaterialId) {
     return coreTestConfigureRepository
         .findByrawMaterialIdAndCoreTestTrueAndApplicableTestTrue(rawMaterialId);
   }
@@ -438,11 +439,11 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   }
 
   @Transactional
-  public void updateCoreTestByNewRawMaterial(Long rawMaterialId) {
+  public void updateCoreTestByNewRawMaterial(Long rawMaterialId, Long materialSubCategoryId) {
     RawMaterial rawMaterial = rawMaterialRepository.findById(rawMaterialId).get();
 
     MaterialSubCategory materialSubCategory =
-        materialSubCategoryRepository.findById(rawMaterial.getMaterialSubCategory().getId()).get();
+        materialSubCategoryRepository.findById(materialSubCategoryId).get();
 
     MaterialCategory materialCategory = materialSubCategory.getMaterialCategory();
 
@@ -455,14 +456,15 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialCategory(materialCategory);
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
-        if(testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
-        coreTestConfigure.setApplicableTest(false);
-        }
-        else {
+        if (testConfigure.getAcceptedType() != null
+            && testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+          coreTestConfigure.setApplicableTest(false);
+        } else {
           coreTestConfigure.setApplicableTest(true);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
-        coreTestConfigure.setCoreTest(false);
+        coreTestConfigure.setCoreTest(coreTestConfigureRepository.existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrueAndApplicableTestTrue(testConfigure.getId(),materialCategory.getId()));
+        
         coreTestConfigureRepository.save(coreTestConfigure);
       });
     }
@@ -476,14 +478,14 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialCategory(materialCategory);
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
-        if(testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
+        if (testConfigure.getAcceptedType() != null
+            && testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
           coreTestConfigure.setApplicableTest(false);
-          }
-          else {
-            coreTestConfigure.setApplicableTest(true);
-          }
+        } else {
+          coreTestConfigure.setApplicableTest(true);
+        }
         coreTestConfigure.setRawMaterial(rawMaterial);
-        coreTestConfigure.setCoreTest(false);
+        coreTestConfigure.setCoreTest(coreTestConfigureRepository.existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrueAndApplicableTestTrue(testConfigure.getId(),materialSubCategory.getId()));
         coreTestConfigureRepository.save(coreTestConfigure);
       });
     }
@@ -522,5 +524,16 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
     coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
     coreTestConfigureRepository.saveAll(coreTestConfigureList);
+  }
+
+  @Transactional
+  public void getAllCoreTestConfigureByrawMaterialId(Long rawMaterialId) {
+    coreTestConfigureRepository.findByrawMaterialId(rawMaterialId);
+  }
+
+  @Transactional
+  public void deleteAllCoreTestConfigureByrawMaterialId(Long rawMaterialId) {
+    coreTestConfigureRepository
+        .deleteAll(coreTestConfigureRepository.findByrawMaterialId(rawMaterialId));
   }
 }
