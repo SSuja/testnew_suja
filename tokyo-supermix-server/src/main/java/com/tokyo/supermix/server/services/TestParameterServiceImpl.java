@@ -28,6 +28,7 @@ import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
+import com.tokyo.supermix.data.repositories.ParameterRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
@@ -42,6 +43,8 @@ public class TestParameterServiceImpl implements TestParameterService {
   private ParameterEquationRepository parameterEquationRepository;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private ParameterRepository parameterRepository;
 
   @Transactional
   public void saveTestParameterAll(List<TestParameter> testParameter) {
@@ -148,7 +151,8 @@ public class TestParameterServiceImpl implements TestParameterService {
         testParameterResponseDto.setTestConfigure(getTestConfigureDetails(testConfigureId));
         testParameterResponseDto.setInputMethods(test.getInputMethods());
         testParameterResponseDto.setUnit(test.getUnit());
-        if (test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)&& test.getDateValue()!=null) {
+        if (test.getParameter().getParameterDataType().equals(ParameterDataType.DATETIME)
+            && test.getDateValue() != null) {
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
           LocalDateTime dateTime = LocalDateTime.parse(test.getDateValue(), formatter);
           testParameterResponseDto.setDateValue(dateTime);
@@ -273,6 +277,17 @@ public class TestParameterServiceImpl implements TestParameterService {
     }
     if (testParameterList.size() != testParameterList.stream().distinct()
         .collect(Collectors.toList()).size()) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isValueNull(Double value, LocalDateTime dateValue, Long id) {
+    if ((value == null && parameterRepository.findById(id).get().getParameterDataType()
+        .equals(ParameterDataType.NUMBER))
+        || (dateValue == null && parameterRepository.findById(id).get().getParameterDataType()
+            .equals(ParameterDataType.DATETIME))) {
       return true;
     }
     return false;

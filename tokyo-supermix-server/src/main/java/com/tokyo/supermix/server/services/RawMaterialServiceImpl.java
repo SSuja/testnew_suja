@@ -306,9 +306,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public boolean isUpdatedPrefixAndRawMaterial(Long id, Long materialSubCategoryId, String prefix,
       MaterialType materialType) {
-    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (!getRawMaterialById(id).getMaterialType().equals(materialType))
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getMaterialType().equals(materialType)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialType(prefix,
             materialSubCategoryId, materialType)) {
       return true;
@@ -319,10 +319,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   @Transactional(readOnly = true)
   public boolean isUpdatedPlantWise(Long id, Long materialSubCategoryId, String prefix,
       MaterialType materialType, String plantCode) {
-    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (!getRawMaterialById(id).getMaterialType().equals(materialType))
-        && (!getRawMaterialById(id).getPlant().getCode().equals(plantCode))
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getMaterialType().equals(materialType))
+        && (getRawMaterialById(id).getPlant().getCode().equals(plantCode)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(
             prefix, materialSubCategoryId, materialType, plantCode)) {
       return true;
@@ -332,9 +332,9 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId) {
-    if ((!getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
-        && (!getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (!getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId))
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
             materialCategoryId, sbuId)) {
       return true;

@@ -42,6 +42,10 @@ public class EquationController {
   @PostMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> createEquation(
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
+    if (equationService.isEmptyFormula(equationRequestDto.getFormula())) {
+      return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_FORMULA,
+          validationFailureStatusCodes.getFormulaIsNull()), HttpStatus.BAD_REQUEST);
+    }
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATION,
         equationService.saveEquation(mapper.map(equationRequestDto, Equation.class)),
         RestApiResponseStatus.OK), HttpStatus.OK);

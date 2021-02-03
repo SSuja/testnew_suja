@@ -153,7 +153,7 @@ public class PlantEquipmentCalibrationController {
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
   }
-
+//  plant-equipment-calibration/search/ADMIN
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_SEARCH)
   public ResponseEntity<Object> getPlantEquipmentCalibrationSearch(@PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,

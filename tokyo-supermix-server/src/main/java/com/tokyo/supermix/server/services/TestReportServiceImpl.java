@@ -795,6 +795,7 @@ public class TestReportServiceImpl implements TestReportService {
         && materialTestRepository.existsByIncomingSamplePlantCode(plantCode)) {
       MaterialTest materialTest =
           materialTestRepository.findByCodeAndIncomingSamplePlantCode(materialTestCode, plantCode);
+      seiveTestReportResponseDto.setTest(materialTest.getTestConfigure().getTest().getName());
       seiveTestReportResponseDto
           .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
       seiveTestReportResponseDto.setIncomingSample(
@@ -807,6 +808,7 @@ public class TestReportServiceImpl implements TestReportService {
   public SeiveTestReportResponseDto getSieveTestReport(String materialTestCode) {
     SeiveTestReportResponseDto seiveTestReportResponseDto = new SeiveTestReportResponseDto();
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    seiveTestReportResponseDto.setTest(materialTest.getTestConfigure().getTest().getName());
     seiveTestReportResponseDto
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     seiveTestReportResponseDto.setIncomingSample(
