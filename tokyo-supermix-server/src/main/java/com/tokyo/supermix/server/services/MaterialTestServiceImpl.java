@@ -706,4 +706,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public boolean isMaterialTestByTestConfigureExists(Long testConfigureId) {
     return materialAcceptedValueRepository.existsByTestConfigureId(testConfigureId);
   }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getAllMaterialTestDesc(Pageable pageable) {
+    return materialTestRepository.findAllByOrderByUpdatedAtDesc(pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialTest> getAllMaterialTestByPlantCodeDesc(String plantCode, Pageable pageable) {
+    return materialTestRepository.findByIncomingSamplePlantCodeOrderByUpdatedAtDesc(plantCode,
+        pageable);
+  }
 }
