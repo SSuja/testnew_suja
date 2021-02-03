@@ -489,7 +489,7 @@ public class EmailNotification {
 				String materialSubCategoryName = materialSubCategoryRepository
 						.findById(rawMaterial.getMaterialSubCategory().getId()).get().getName();
 				String mailBody = "Material " + rawMaterial.getName() + " is newly added under "
-						+ materialSubCategoryName;
+						+ materialSubCategoryName+ "and"+rawMaterial.getMaterialSubCategory().getMaterialCategory().getName() ;
 				List<String> reciepientList = emailRecipientService
 						.getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
 				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
