@@ -507,6 +507,26 @@ public class ValidationFailureStatusCodes {
   private String prefixAlreadyExist;
   @Value("${validation.rawMaterial.alreadyDepended}")
   private String rawMaterialAlreadyDepended;
+  @Value("${validation.subMaterialCategory.alreadyDepended}")
+  private String SubMaterialCategoryAlreadyDepended;
+  @Value("${validation.materialCategory.alreadyDepended}")
+  private String MaterialCategoryAlreadyDepended;
+
+  public String getSubMaterialCategoryAlreadyDepended() {
+    return SubMaterialCategoryAlreadyDepended;
+  }
+
+  public void setSubMaterialCategoryAlreadyDepended(String subMaterialCategoryAlreadyDepended) {
+    SubMaterialCategoryAlreadyDepended = subMaterialCategoryAlreadyDepended;
+  }
+
+  public String getMaterialCategoryAlreadyDepended() {
+    return MaterialCategoryAlreadyDepended;
+  }
+
+  public void setMaterialCategoryAlreadyDepended(String materialCategoryAlreadyDepended) {
+    MaterialCategoryAlreadyDepended = materialCategoryAlreadyDepended;
+  }
 
   public String getRawMaterialAlreadyDepended() {
     return rawMaterialAlreadyDepended;

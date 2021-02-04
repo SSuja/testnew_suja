@@ -70,4 +70,8 @@ public interface MaterialAcceptedValueRepository extends JpaRepository<MaterialA
 
   public boolean existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(
       Long testConfigureId, Long MaterialSubCategoryId, Long testParameterId);
+
+  public boolean existsByMaterialSubCategoryId(Long materialSubCategoryId);
+  
+  boolean existsByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
 }

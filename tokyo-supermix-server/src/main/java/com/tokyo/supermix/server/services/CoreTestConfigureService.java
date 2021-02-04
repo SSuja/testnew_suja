@@ -64,5 +64,9 @@ public interface CoreTestConfigureService {
   public void getAllCoreTestConfigureByrawMaterialId(Long rawMaterialId);
 
   public void deleteAllCoreTestConfigureByrawMaterialId(Long rawMaterialId);
+  
+  public void deleteAllCoreTestConfigureByMaterialSubCategoryId(Long materialSubCategoryId);
+  
+  public void updateCoreTestByNewMaterialSubCategoryId(Long materialSubCategoryId, Long materialCategoryId);
 
 }

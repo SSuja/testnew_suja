@@ -54,4 +54,6 @@ public interface CoreTestConfigureRepository
   CoreTestConfigure findBytestConfigureIdAndRawMaterialId(Long testConfigureId, Long rawMaterialId);
   
   List<CoreTestConfigure> findByrawMaterialId(Long rawMaterialId);
+  
+  List<CoreTestConfigure> findByMaterialSubCategoryId(Long materialSubCategoryId);
 }

@@ -26,12 +26,17 @@ import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.util.Constants;
@@ -49,6 +54,16 @@ public class MaterialSubCategoryController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  TestConfigureRepository testConfigureRepository;
+  @Autowired
+  MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private MixDesignRepository mixDesignRepository;
+  @Autowired
+  IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  CoreTestConfigureService coreTestConfigureService;
   private static final Logger logger = Logger.getLogger(MaterialSubCategoryController.class);
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
@@ -128,6 +143,31 @@ public class MaterialSubCategoryController {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
+      MaterialSubCategory materialSubCategory = materialSubCategoryService
+          .getMaterialSubCategoryById(materialSubCategoryRequestDto.getId());
+      if (materialSubCategory.getMaterialCategory().getId() != materialSubCategoryRequestDto
+          .getMaterialCategoryId()) {
+        if (testConfigureRepository
+            .existsByMaterialSubCategoryId(materialSubCategoryRequestDto.getId())
+            || materialAcceptedValueRepository
+                .existsByMaterialSubCategoryId(materialSubCategoryRequestDto.getId())
+            || materialAcceptedValueRepository
+                .existsByRawMaterialMaterialSubCategoryId(materialSubCategoryRequestDto.getId())
+            || mixDesignRepository
+                .existsByRawMaterialMaterialSubCategoryId(materialSubCategoryRequestDto.getId())
+            || incomingSampleRepository
+                .existsByRawMaterialMaterialSubCategoryId(materialSubCategoryRequestDto.getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(ValidationConstance.MATERIALSUBCATEGORY,
+                  validationFailureStatusCodes.getSubMaterialCategoryAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+        coreTestConfigureService.deleteAllCoreTestConfigureByMaterialSubCategoryId(
+            materialSubCategoryRequestDto.getId());
+        coreTestConfigureService.updateCoreTestByNewMaterialSubCategoryId(
+            materialSubCategoryRequestDto.getId(),
+            materialSubCategoryRequestDto.getMaterialCategoryId());
+      }
       materialSubCategoryService.saveMaterialSubCategory(
           mapper.map(materialSubCategoryRequestDto, MaterialSubCategory.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
@@ -189,7 +229,8 @@ public class MaterialSubCategoryController {
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "materialCategoryName", required = false) String materialCategoryName,
       @RequestParam(name = "prefix", required = false) String prefix,
-      @RequestParam(name = "materialCategoryMainType", required = false) MainType materialCategoryMainType,
+      @RequestParam(name = "materialCategoryMainType",
+          required = false) MainType materialCategoryMainType,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;

@@ -34,6 +34,14 @@ public class ValidationConstance {
    * RawMaterial
    */
   public static final String RAWMATERIAL = "RawMaterial already depended";
+  /*
+   * SubMaterial
+   */
+  public static final String MATERIALSUBCATEGORY = "MaterialSubCategory already depended";
+  /*
+   * RawMaterial
+   */
+  public static final String MATERIALCATEGORY = "MaterialCategory already depended";
 
   private ValidationConstance() {}
 }

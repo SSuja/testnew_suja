@@ -384,4 +384,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     }
     return false;
   }
+
+  @Transactional
+  public boolean isMaterialCategory(Long materialCategoryId) {
+    return testConfigureRepository.existsByMaterialCategoryId(materialCategoryId);
+  }
 }

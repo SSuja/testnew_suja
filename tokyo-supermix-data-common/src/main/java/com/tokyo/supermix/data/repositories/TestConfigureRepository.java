@@ -60,4 +60,8 @@ public interface TestConfigureRepository
   boolean existsByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
 
   boolean existsByTestIdAndRawMaterialId(Long testId, Long rawMaterialId);
+
+  boolean existsByMaterialSubCategoryId(Long materialSubCategoryId);
+
+  boolean existsByMaterialCategoryId(Long materialCategoryId);
 }
