@@ -362,8 +362,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   @Transactional(readOnly = true)
   public boolean isDuplicateEntry(Long id, Long testId, Long materialCategoryId,
       Long materialSubCategoryId, Long rawMaterialId) {
-    TestConfigure testConfigure = testConfigureRepository.findById(id).get();
-    if (testConfigure.getMaterialSubCategory() == null) {
+    if (materialSubCategoryId == null) {
       if (!((getTestConfigureById(id).getTest().getId().toString().equals(testId.toString()))
           && getTestConfigureById(id).getMaterialCategory().getId().toString()
               .equals(materialCategoryId.toString()))
@@ -371,23 +370,18 @@ public class TestConfigureServiceImpl implements TestConfigureService {
               materialCategoryId)) {
         return true;
       }
-    } else if (testConfigure.getRawMaterial() != null) {
-      if (!((getTestConfigureById(id).getTest().getId().toString().equals(testId.toString()))
-          && getTestConfigureById(id).getRawMaterial().getId().toString()
-              .equals(rawMaterialId.toString()))
+    } else if (rawMaterialId != null) {
+      if (!((getTestConfigureById(id).getTest().getId().toString().equals(testId.toString())))
           && testConfigureRepository.existsByTestIdAndRawMaterialId(testId, rawMaterialId)) {
         return true;
       }
     } else {
-      if (!((getTestConfigureById(id).getTest().getId().toString().equals(testId.toString()))
-          && getTestConfigureById(id).getMaterialSubCategory().getId().toString()
-              .equals(materialSubCategoryId.toString()))
+      if (!((getTestConfigureById(id).getTest().getId().toString().equals(testId.toString())))
           && testConfigureRepository.existsByTestIdAndMaterialSubCategoryId(testId,
               materialSubCategoryId)) {
         return true;
       }
     }
-
     return false;
   }
 }
