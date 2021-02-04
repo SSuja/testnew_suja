@@ -25,6 +25,7 @@ import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Origin;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.MaterialCategoryRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -46,6 +47,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
 
   @Autowired
   Mapper mapper;
+
+  @Autowired
+  MaterialCategoryRepository materialCategoryRepository;
 
   @Transactional
   public List<CoreTestConfigure> saveCoreTestConfigure(List<CoreTestConfigure> CoreTestConfigure) {
@@ -463,8 +467,10 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
           coreTestConfigure.setApplicableTest(true);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
-        coreTestConfigure.setCoreTest(coreTestConfigureRepository.existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrueAndApplicableTestTrue(testConfigure.getId(),materialCategory.getId()));
-        
+        coreTestConfigure.setCoreTest(coreTestConfigureRepository
+            .existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrueAndApplicableTestTrue(
+                testConfigure.getId(), materialCategory.getId()));
+
         coreTestConfigureRepository.save(coreTestConfigure);
       });
     }
@@ -485,7 +491,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
           coreTestConfigure.setApplicableTest(true);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
-        coreTestConfigure.setCoreTest(coreTestConfigureRepository.existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrueAndApplicableTestTrue(testConfigure.getId(),materialSubCategory.getId()));
+        coreTestConfigure.setCoreTest(coreTestConfigureRepository
+            .existsBytestConfigureIdAndMaterialSubCategoryIdAndCoreTestTrueAndApplicableTestTrue(
+                testConfigure.getId(), materialSubCategory.getId()));
         coreTestConfigureRepository.save(coreTestConfigure);
       });
     }
@@ -535,5 +543,47 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   public void deleteAllCoreTestConfigureByrawMaterialId(Long rawMaterialId) {
     coreTestConfigureRepository
         .deleteAll(coreTestConfigureRepository.findByrawMaterialId(rawMaterialId));
+  }
+
+  @Transactional
+  public void deleteAllCoreTestConfigureByMaterialSubCategoryId(Long materialSubCategoryId) {
+    coreTestConfigureRepository
+        .deleteAll(coreTestConfigureRepository.findByMaterialSubCategoryId(materialSubCategoryId));
+  }
+
+  @Transactional
+  public void updateCoreTestByNewMaterialSubCategoryId(Long materialSubCategoryId,
+      Long materialCategoryId) {
+    MaterialSubCategory materialSubCategory =
+        materialSubCategoryRepository.findById(materialSubCategoryId).get();
+    MaterialCategory materialCategory =
+        materialCategoryRepository.findById(materialCategoryId).get();
+    List<TestConfigure> testConfigures = testConfigureRepository
+        .findByMaterialCategoryIdAndMaterialSubCategoryNull(materialCategoryId);
+    List<CoreTestConfigure> configures = new ArrayList<>();
+    if (!testConfigures.isEmpty()) {
+      testConfigures.forEach(testConfigure -> {
+        List<RawMaterial> rawMateriallist =
+            rawMaterialRepository.findByMaterialSubCategoryId(materialSubCategoryId);
+        for (RawMaterial rawMaterial : rawMateriallist) {
+          CoreTestConfigure coreTestConfigure = new CoreTestConfigure();
+          coreTestConfigure.setMaterialCategory(materialCategory);
+          coreTestConfigure.setMaterialSubCategory(materialSubCategory);
+          coreTestConfigure.setTestConfigure(testConfigure);
+          if (testConfigure.getAcceptedType() != null
+              && testConfigure.getAcceptedType().equals(AcceptedType.TEST)) {
+            coreTestConfigure.setApplicableTest(true);
+          } else {
+            coreTestConfigure.setApplicableTest(false);
+          }
+          coreTestConfigure.setRawMaterial(rawMaterial);
+          coreTestConfigure.setCoreTest(coreTestConfigureRepository
+              .existsBytestConfigureIdAndMaterialCategoryIdAndCoreTestTrueAndApplicableTestTrue(
+                  testConfigure.getId(), materialCategory.getId()));
+          configures.add(coreTestConfigure);
+        }
+      });
+      coreTestConfigureRepository.saveAll(configures);
+    }
   }
 }

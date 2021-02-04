@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationConstance;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -36,6 +37,8 @@ public class MaterialCategoryController {
   private Mapper mapper;
   @Autowired
   private MaterialCategoryService materialCategoryService;
+  @Autowired
+  TestConfigureService testConfigureService;
   private static final Logger logger = Logger.getLogger(MaterialCategoryController.class);
 
   // Add Material Category
@@ -114,6 +117,12 @@ public class MaterialCategoryController {
           materialCategoryDto.getPrefix())) {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      if (testConfigureService.isMaterialCategory(materialCategoryDto.getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(ValidationConstance.MATERIALCATEGORY,
+                validationFailureStatusCodes.getMaterialCategoryAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
       }
       materialCategoryService
           .saveMaterialCategory(mapper.map(materialCategoryDto, MaterialCategory.class));
