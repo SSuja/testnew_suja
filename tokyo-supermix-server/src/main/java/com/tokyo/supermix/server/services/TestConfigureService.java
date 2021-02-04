@@ -62,6 +62,6 @@ public interface TestConfigureService {
 
   public boolean isTestConfigureByRawMaterialId(Long rawMaterialId);
 
-  public boolean isDuplicateEntry(Long testId, Long materialCategoryId, Long materialSubCategoryId,
-      Long rawMaterialId);
+  public boolean isDuplicateEntry(Long id, Long testId, Long materialCategoryId,
+      Long materialSubCategoryId, Long rawMaterialId);
 }
