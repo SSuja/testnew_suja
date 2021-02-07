@@ -194,13 +194,22 @@ public class RawMaterialController {
       }
       RawMaterial rawMaterial =
           rawMaterialService.getRawMaterialById(rawMaterialRequestDto.getId());
+      if (!rawMaterial.getPrefix().equalsIgnoreCase(rawMaterialRequestDto.getPrefix())||
+          !rawMaterial.getName().equalsIgnoreCase(rawMaterialRequestDto.getName())) {
+        if (incomingSampleService.isRawMaterialExist(rawMaterialRequestDto.getId())
+            || mixDesignService.isRawMaterialExists(rawMaterialRequestDto.getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(ValidationConstance.RAWMATERIAL,
+                  validationFailureStatusCodes.getRawMaterialAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+      }
       if (rawMaterial.getMaterialSubCategory().getId() != rawMaterialRequestDto
           .getMaterialSubCategoryId()) {
         if (testConfigureService.isTestConfigureByRawMaterialId(rawMaterialRequestDto.getId())
             || incomingSampleService.isRawMaterialExist(rawMaterialRequestDto.getId())
             || mixDesignService.isRawMaterialExists(rawMaterialRequestDto.getId())
-            || materialAcceptedValueService
-                .isRawMaterialIdExist(rawMaterialRequestDto.getId())) {
+            || materialAcceptedValueService.isRawMaterialIdExist(rawMaterialRequestDto.getId())) {
           return new ResponseEntity<>(
               new ValidationFailureResponse(ValidationConstance.RAWMATERIAL,
                   validationFailureStatusCodes.getRawMaterialAlreadyDepended()),
