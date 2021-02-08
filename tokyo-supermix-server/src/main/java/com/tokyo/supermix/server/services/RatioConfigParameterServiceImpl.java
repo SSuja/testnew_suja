@@ -103,9 +103,10 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
   @Transactional(readOnly = true)
   public boolean checkValidationForRawMaterialAndAbbre(Long id, Long ratioConfigId,
       Long rawMaterialId, String abbre) {
-    if ((!ratioConfigParameterRepository.findById(id).get().getAbbreviation().equals(abbre))
-        && (ratioConfigParameterRepository.existsByRatioConfigIdAndAbbreviation(ratioConfigId,
-            abbre))) {
+    if ((!ratioConfigParameterRepository.findById(id).get().getRawMaterial().getId()
+        .equals(rawMaterialId))
+        && (ratioConfigParameterRepository.existsByRatioConfigIdAndRawMaterialId(ratioConfigId,
+            rawMaterialId))) {
       return true;
     }
     return false;
