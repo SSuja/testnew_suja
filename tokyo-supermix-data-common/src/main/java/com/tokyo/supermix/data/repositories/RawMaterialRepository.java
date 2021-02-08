@@ -76,4 +76,8 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
 
   List<RawMaterial> findByPlantCodeOrMaterialTypeOrSubBusinessUnitIdAndNameStartsWith(
       String plantCode, MaterialType materialType, Long subId, String name);
+
+  boolean existsByIdAndSubBusinessUnitId(Long id, Long sbuId);
+
+  boolean existsByIdAndPlantCode(Long id, String plantCode);
 }
