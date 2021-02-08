@@ -286,7 +286,7 @@ public class RawMaterialController {
   @DeleteMapping(EndpointURI.DELETE_RAW_MATERIAL)
   public ResponseEntity<Object> deleteRawMaterial(@PathVariable Long id) {
     if (rawMaterialService.isRawMaterialExist(id)) {
-      rawMaterialService.deleteRawMaterial(id);
+      rawMaterialService.deleteMaterialByCoreTestConfigure(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_RAW_MATERIAL_SCCESS),
           HttpStatus.OK);

@@ -19,10 +19,13 @@ import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.MaterialType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.util.Constants;
@@ -41,6 +44,12 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   MixDesignRepository mixDesignRepository;
   @Autowired
   IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  TestConfigureRepository testConfigureRepository;
+  @Autowired
+  MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public Long saveRawMaterial(RawMaterial rawMaterial) {
@@ -396,5 +405,18 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     }
 
     return false;
+  }
+
+  @Transactional
+  public void deleteMaterialByCoreTestConfigure(Long rawMaterialId) {
+    if (coreTestConfigureRepository.existsByRawMaterialId(rawMaterialId)) {
+      if (!testConfigureRepository.existsByRawMaterialId(rawMaterialId)
+          || !materialAcceptedValueRepository.existsByRawMaterialId(rawMaterialId)) {
+        coreTestConfigureRepository.deleteByRawMaterialId(rawMaterialId);
+        rawMaterialRepository.deleteById(rawMaterialId);
+      }
+    } else {
+      rawMaterialRepository.deleteById(rawMaterialId);
+    }
   }
 }
