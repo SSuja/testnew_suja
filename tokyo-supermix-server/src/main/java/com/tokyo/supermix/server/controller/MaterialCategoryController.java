@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MaterialCategoryService;
+import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationConstance;
@@ -39,6 +40,8 @@ public class MaterialCategoryController {
   private MaterialCategoryService materialCategoryService;
   @Autowired
   TestConfigureService testConfigureService;
+  @Autowired
+  MaterialSubCategoryService materialSubCategoryService;
   private static final Logger logger = Logger.getLogger(MaterialCategoryController.class);
 
   // Add Material Category
@@ -120,19 +123,21 @@ public class MaterialCategoryController {
       }
       MaterialCategory materialCategory =
           materialCategoryService.getMaterialCategoryById(materialCategoryDto.getId());
-      if(!materialCategory.getPrefix().equalsIgnoreCase(materialCategoryDto.getPrefix())) {
+      if (!materialCategory.getPrefix().equalsIgnoreCase(materialCategoryDto.getPrefix())
+          && materialSubCategoryService.isMaterialCategoryIdExist(materialCategoryDto.getId())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(ValidationConstance.MATERIALCATEGORY,
                 validationFailureStatusCodes.getMaterialCategoryAlreadyDepended()),
             HttpStatus.BAD_REQUEST);
       }
-      if(!materialCategory.getMainType().equals(materialCategoryDto.getMainType())) {
-      if (testConfigureService.isMaterialCategory(materialCategoryDto.getId())) {
-        return new ResponseEntity<>(
-            new ValidationFailureResponse(ValidationConstance.MATERIALCATEGORY,
-                validationFailureStatusCodes.getMaterialCategoryAlreadyDepended()),
-            HttpStatus.BAD_REQUEST);
-      }}
+      if (!materialCategory.getMainType().equals(materialCategoryDto.getMainType())) {
+        if (testConfigureService.isMaterialCategory(materialCategoryDto.getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(ValidationConstance.MATERIALCATEGORY,
+                  validationFailureStatusCodes.getMaterialCategoryAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+      }
       materialCategoryService
           .saveMaterialCategory(mapper.map(materialCategoryDto, MaterialCategory.class));
       return new ResponseEntity<>(
