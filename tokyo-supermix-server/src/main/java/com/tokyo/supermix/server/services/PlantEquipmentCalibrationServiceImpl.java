@@ -35,14 +35,20 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
   @Transactional
   public PlantEquipmentCalibration savePlantEquipmentCalibration(
       PlantEquipmentCalibration plantEquipmentCalibration) {
+    PlantEquipmentCalibration plantEquipmentCalibrationobj = null;
     LocalDate localDueDate = plantEquipmentCalibration.getCalibratedDate().toLocalDate()
         .plusDays(plantEquipmentCalibration.getNoOfDays());
     java.sql.Date dueDate = java.sql.Date.valueOf(localDueDate);
     plantEquipmentCalibration.setDueDate(dueDate);
-    PlantEquipmentCalibration plantEquipmentCalibrationobj =
-        plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
-    if (plantEquipmentCalibrationobj != null) {
-      emailNotification.sendcalibrationCreationEmail(plantEquipmentCalibrationobj);
+    if (plantEquipmentCalibration.getId() == null) {
+      plantEquipmentCalibrationobj =
+          plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+      if (plantEquipmentCalibrationobj != null) {
+        emailNotification.sendcalibrationCreationEmail(plantEquipmentCalibrationobj);
+      }
+    } else {
+      plantEquipmentCalibrationobj =
+          plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
     }
     return plantEquipmentCalibrationobj;
 
@@ -104,8 +110,8 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
           .contains(supplierName));
     }
     if (accuracy != null && !accuracy.isEmpty()) {
-      booleanBuilder
-          .and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.stringValue().contains(accuracy));
+      booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.accuracy.stringValue()
+          .contains(accuracy));
     }
     if (status != null) {
       booleanBuilder.and(QPlantEquipmentCalibration.plantEquipmentCalibration.status.eq(status));

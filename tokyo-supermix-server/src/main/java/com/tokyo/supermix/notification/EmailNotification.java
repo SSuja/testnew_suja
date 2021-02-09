@@ -619,7 +619,7 @@ public class EmailNotification {
           String supplierName = supplierRepository
               .findById(plantEquipmentCalibration.getSupplier().getId()).get().getName();
           String mailBody = equipmentName + " is Calibrated by "
-              + plantEquipmentCalibration.getCalibrationType() + " by the supplier," + supplierName
+              + plantEquipmentCalibration.getCalibrationType() + " by the supplier :-" + supplierName
               + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
               emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
@@ -630,7 +630,7 @@ public class EmailNotification {
           String userName = userRepository.findById(plantEquipmentCalibration.getUser().getId())
               .get().getUserName();
           String mailBody = equipmentName + " is Calibrated by "
-              + plantEquipmentCalibration.getCalibrationType() + " by the user," + userName
+              + plantEquipmentCalibration.getCalibrationType() + " by the user :-" + userName
               + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
               emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
