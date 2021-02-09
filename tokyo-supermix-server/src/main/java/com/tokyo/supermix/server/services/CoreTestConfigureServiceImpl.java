@@ -419,7 +419,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     }
     coreTestConfigureRepository.findAll(booleanBuilder)
         .forEach(coreTest -> coretestlist.add(coreTest));
-    return mapper.map(coretestlist, CoreTestConfigureDto.class);
+    return mapper.map(
+        coretestlist.stream().filter(core -> core.isApplicableTest()).collect(Collectors.toList()),
+        CoreTestConfigureDto.class);
   }
 
   @Transactional
