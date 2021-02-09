@@ -19,10 +19,10 @@ import com.tokyo.supermix.data.entities.EmailPoints;
 import com.tokyo.supermix.data.entities.Employee;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
-import com.tokyo.supermix.data.entities.FinishProductSampleIssue;
 import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
+import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestResult;
 import com.tokyo.supermix.data.entities.MixDesign;
@@ -132,7 +132,7 @@ public class EmailNotification {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CoreTestConfigureRepository coreTestConfigureRepository;
-
+ 
   HttpSession session;
 
   @Scheduled(cron = "${mail.notificationTime.plantEquipment}")
@@ -469,18 +469,18 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendFinishProductSampleIssueEmail(FinishProductSampleIssue finishProductSampleIssue) {
+  public void sendFinishProductSampleIssueEmail(FinishProductSample finishProductSample) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        finishProductSampleIssue.getMixDesign().getPlant().getCode(),
+        finishProductSample.getMixDesign().getPlant().getCode(),
         MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
         String customerName = customerRepository
-            .findById(finishProductSampleIssue.getProject().getCustomer().getId()).get().getName();
+            .findById(finishProductSample.getProject().getCustomer().getId()).get().getName();
         String RawMaterialName =
-            mixDesignRepository.findByCode(finishProductSampleIssue.getMixDesign().getCode())
+            mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode())
                 .getRawMaterial().getName();
-        String mailBody = "Finish product " + RawMaterialName + " is deliveried for the customer, "
+        String mailBody = "Material name " + RawMaterialName + " is deliveried for the customer, "
             + customerName;
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
@@ -517,11 +517,12 @@ public class EmailNotification {
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String materialSubCategoryName = materialSubCategoryRepository
+        MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findById(rawMaterial.getMaterialSubCategory().getId()).get();
+        String materialSubCategoryName =  materialSubCategoryRepository
             .findById(rawMaterial.getMaterialSubCategory().getId()).get().getName();
+        String materialCategoryName =materialSubCategory.getMaterialCategory().getName();
         String mailBody =
-            "Material " + rawMaterial.getName() + " is newly added under " + materialSubCategoryName
-                + "and" + rawMaterial.getMaterialSubCategory().getMaterialCategory().getName();
+            "Material " + rawMaterial.getName() + " is newly added under  Main category - " +materialCategoryName +" and  Sub category - "+ materialSubCategoryName ;              ;
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -543,7 +544,6 @@ public class EmailNotification {
               .getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CUSTOMER, mailBody);
-
         }
       }
     });

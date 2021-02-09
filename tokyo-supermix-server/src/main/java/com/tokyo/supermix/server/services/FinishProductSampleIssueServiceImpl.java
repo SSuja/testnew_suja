@@ -26,7 +26,6 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
-import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
@@ -42,9 +41,6 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   public FinishProductSampleRepository finishProductSampleRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-
-  @Autowired
-  private EmailNotification emailNotification;
   @Autowired
   private MixDesignRepository mixDesignRepository;
   @Autowired
@@ -70,11 +66,11 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
             + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
       }
     }
-    FinishProductSampleIssue finishProductSampleIssueObj =
+//    FinishProductSampleIssue finishProductSampleIssueObj =
         finishProductSampleIssueRepository.save(finishProductSampleIssue);
-    if (finishProductSampleIssueObj != null) {
-      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);
-    }
+//    if (finishProductSampleIssueObj != null) {
+//      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);
+//    }
   }
 
   private Integer getNumberFromCode(String code) {
