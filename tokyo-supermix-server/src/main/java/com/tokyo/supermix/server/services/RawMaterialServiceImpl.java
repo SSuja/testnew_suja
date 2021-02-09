@@ -300,22 +300,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId) {
-    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
-        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
-        && (getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId)))
-        && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
-            materialCategoryId, sbuId)) {
-      return true;
-    }
-    return false;
-  }
-
-  @Transactional(readOnly = true)
   public boolean isUpdatedSubCategoryIdAndRawMaterialNameForCommonWise(Long id,
       Long materialSubCategoryId, String rawMaterialName, MaterialType materialType) {
     if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (getRawMaterialById(materialSubCategoryId).getName().equalsIgnoreCase(rawMaterialName))
+        && (getRawMaterialById(id).getName().equalsIgnoreCase(rawMaterialName))
         && (getRawMaterialById(id).getMaterialType().equals(materialType)))
         && rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndMaterialType(
             materialSubCategoryId, rawMaterialName, materialType)) {
@@ -342,7 +330,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
       Long materialSubCategoryId, String rawMaterialName, MaterialType materialType,
       String plantCode) {
     if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (getRawMaterialById(materialSubCategoryId).getName().equalsIgnoreCase(rawMaterialName))
+        && (getRawMaterialById(id).getName().equalsIgnoreCase(rawMaterialName))
         && (getRawMaterialById(id).getMaterialType().equals(materialType))
         && (getRawMaterialById(id).getPlant().getCode().equals(plantCode)))
         && rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndMaterialTypeAndPlantCode(
