@@ -12,14 +12,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.MaterialType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.util.Constants;
@@ -34,6 +40,16 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   private Mapper mapper;
   @Autowired
   PlantRepository plantRepository;
+  @Autowired
+  MixDesignRepository mixDesignRepository;
+  @Autowired
+  IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  TestConfigureRepository testConfigureRepository;
+  @Autowired
+  MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public Long saveRawMaterial(RawMaterial rawMaterial) {
@@ -328,6 +344,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
 
   @Transactional(readOnly = true)
   public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId) {
+    // if (rawMaterialRepository.existsByIdAndSubBusinessUnitId(id, sbuId)) {
     if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
         && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
         && (getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId)))
@@ -335,6 +352,71 @@ public class RawMaterialServiceImpl implements RawMaterialService {
             materialCategoryId, sbuId)) {
       return true;
     }
+    // }
     return false;
+  }
+
+  public boolean checkPlantDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto) {
+    boolean check = true;
+    if (mixDesignRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())
+        || incomingSampleRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())) {
+      if (mixDesignRepository.existsByRawMaterialIdAndPlantCode(rawMaterialRequestDto.getId(),
+          rawMaterialRequestDto.getPlantCode())
+          || incomingSampleRepository.existsByRawMaterialIdAndPlantCode(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getPlantCode())) {
+        return check = false;
+      } else {
+        return check;
+      }
+    } else {
+      return check = false;
+    }
+  }
+
+  public boolean checkSbuDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto) {
+    boolean check = true;
+    if (mixDesignRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())
+        || incomingSampleRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())) {
+      if (mixDesignRepository.existsByRawMaterialIdAndPlantSubBusinessUnitId(
+          rawMaterialRequestDto.getId(), rawMaterialRequestDto.getSubBusinessUnitId())
+          || incomingSampleRepository.existsByRawMaterialIdAndPlantSubBusinessUnitId(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getSubBusinessUnitId())) {
+        return check = false;
+      } else {
+        return check;
+      }
+    } else {
+      return check = false;
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistsSBU(Long id, Long sbuId) {
+    if (rawMaterialRepository.existsByIdAndSubBusinessUnitId(id, sbuId)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistsByPlant(Long id, String plantCode) {
+    if (rawMaterialRepository.existsByIdAndPlantCode(id, plantCode)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @Transactional
+  public void deleteMaterialByCoreTestConfigure(Long rawMaterialId) {
+    if (coreTestConfigureRepository.existsByRawMaterialId(rawMaterialId)) {
+      if (!testConfigureRepository.existsByRawMaterialId(rawMaterialId)
+          || !materialAcceptedValueRepository.existsByRawMaterialId(rawMaterialId)) {
+        coreTestConfigureRepository.deleteByRawMaterialId(rawMaterialId);
+        rawMaterialRepository.deleteById(rawMaterialId);
+      }
+    } else {
+      rawMaterialRepository.deleteById(rawMaterialId);
+    }
   }
 }
