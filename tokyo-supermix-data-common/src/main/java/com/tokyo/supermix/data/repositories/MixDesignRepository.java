@@ -41,8 +41,13 @@ public interface MixDesignRepository extends JpaRepository<MixDesign, String>,
 
   List<MixDesign> findByCodeContainsIgnoreCase(String code);
 
-  List<MixDesign> findByRawMaterialIdAndStatusAndCodeContainsIgnoreCase(Long rawMaterialId, Status status,
-      String code);
-  
+  List<MixDesign> findByRawMaterialIdAndStatusAndCodeContainsIgnoreCase(Long rawMaterialId,
+      Status status, String code);
+
   boolean existsByRawMaterialMaterialSubCategoryId(Long materialSubCategoryId);
+
+  boolean existsByRawMaterialIdAndPlantCode(Long rawMaterialId, String plantCode);
+
+  boolean existsByRawMaterialIdAndPlantSubBusinessUnitId(Long rawMaterialId,
+      Long subBusinessUnitId);
 }
