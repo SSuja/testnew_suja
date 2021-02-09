@@ -2077,4 +2077,15 @@ public class ValidationFailureStatusCodes {
   public void setRawMaterialPlantOrSbuNull(String rawMaterialPlantOrSbuNull) {
     this.rawMaterialPlantOrSbuNull = rawMaterialPlantOrSbuNull;
   }
+
+  @Value("${validation.rawMaterial.plantOrSbuAlreadyDepended}")
+  private String rawMaterialPlantOrSbuAlreadyDepended;
+
+  public String getRawMaterialPlantOrSbuAlreadyDepended() {
+    return rawMaterialPlantOrSbuAlreadyDepended;
+  }
+
+  public void setRawMaterialPlantOrSbuAlreadyDepended(String rawMaterialPlantOrSbuAlreadyDepended) {
+    this.rawMaterialPlantOrSbuAlreadyDepended = rawMaterialPlantOrSbuAlreadyDepended;
+  }
 }
