@@ -186,28 +186,59 @@ public class RawMaterialController {
               validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
         }
       } else if (rawMaterialRequestDto.getMaterialType().equals(MaterialType.PLANT)) {
-        if (rawMaterialRequestDto.getPlantCode() == null
-            || rawMaterialRequestDto.getPlantCode().isEmpty()) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
-                  validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
-              HttpStatus.BAD_REQUEST);
-        }
-        if (rawMaterialService.isUpdatedSubCategoryIdAndRawMaterialNameForPlantWise(
-            rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
-            rawMaterialRequestDto.getName(), rawMaterialRequestDto.getMaterialType(),
+        if (rawMaterialService.isExistsByPlant(rawMaterialRequestDto.getId(),
             rawMaterialRequestDto.getPlantCode())) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
-                  validationFailureStatusCodes.getRawMaterialAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
-        if (rawMaterialService.isUpdatedSubCategoryIdAndPrefixForPlantWise(
-            rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
-            rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialType(),
-            rawMaterialRequestDto.getPlantCode())) {
-          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
-              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+          if (rawMaterialRequestDto.getPlantCode() == null
+              || rawMaterialRequestDto.getPlantCode().isEmpty()) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
+                HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.isUpdatedSubCategoryIdAndRawMaterialNameForPlantWise(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+              rawMaterialRequestDto.getName(), rawMaterialRequestDto.getMaterialType(),
+              rawMaterialRequestDto.getPlantCode())) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialAlreadyExist()),
+                HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.isUpdatedSubCategoryIdAndPrefixForPlantWise(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+              rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialType(),
+              rawMaterialRequestDto.getPlantCode())) {
+            return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+                validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+          }
+        } else {
+          if (rawMaterialRequestDto.getPlantCode() == null
+              || rawMaterialRequestDto.getPlantCode().isEmpty()) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
+                HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndPlant(
+              rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
+              rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialAlreadyExist()),
+                HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.isRawMaterialNameAndPrefixAndMaterialTypeAndPlant(
+              rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+              rawMaterialRequestDto.getMaterialType(), rawMaterialRequestDto.getPlantCode())) {
+            return new ResponseEntity<>(new ValidationFailureResponse(Constants.PREFIX,
+                validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.checkPlantDependForCommonMaterial(rawMaterialRequestDto)) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialPlantOrSbuAlreadyDepended()),
+                HttpStatus.BAD_REQUEST);
+          }
         }
       } else {
         if (rawMaterialRequestDto.getSubBusinessUnitId() == null) {
@@ -216,19 +247,43 @@ public class RawMaterialController {
                   validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
               HttpStatus.BAD_REQUEST);
         }
-        if (rawMaterialService.isUpdatedSubCategoryIdAndRawMaterialNameForSBUWise(
-            rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
-            rawMaterialRequestDto.getName(), rawMaterialRequestDto.getSubBusinessUnitId())) {
-          return new ResponseEntity<>(
-              new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
-                  validationFailureStatusCodes.getRawMaterialAlreadyExist()),
-              HttpStatus.BAD_REQUEST);
-        }
-        if (rawMaterialService.isUpdatedSubCategoryIdAndPrefixForSBUWise(
-            rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
-            rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getSubBusinessUnitId())) {
-          return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
-              validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+        if (rawMaterialService.isExistsSBU(rawMaterialRequestDto.getId(),
+            rawMaterialRequestDto.getSubBusinessUnitId())) {
+          if (rawMaterialService.isUpdatedSubCategoryIdAndRawMaterialNameForSBUWise(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+              rawMaterialRequestDto.getName(), rawMaterialRequestDto.getSubBusinessUnitId())) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialAlreadyExist()),
+                HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.isUpdatedSubCategoryIdAndPrefixForSBUWise(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+              rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getSubBusinessUnitId())) {
+            return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
+                validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+          }
+        } else {
+          if (rawMaterialService.isMaterialSubCategoryAndRawMaterialNameAndMaterialTypeAndSbu(
+              rawMaterialRequestDto.getMaterialSubCategoryId(), rawMaterialRequestDto.getName(),
+              rawMaterialRequestDto.getSubBusinessUnitId())) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialAlreadyExist()),
+                HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.isRawMaterialNameAndPrefixAndMaterialTypeAndSbu(
+              rawMaterialRequestDto.getPrefix(), rawMaterialRequestDto.getMaterialSubCategoryId(),
+              rawMaterialRequestDto.getSubBusinessUnitId())) {
+            return new ResponseEntity<>(new ValidationFailureResponse(Constants.PREFIX,
+                validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
+          }
+          if (rawMaterialService.checkSbuDependForCommonMaterial(rawMaterialRequestDto)) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
+                    validationFailureStatusCodes.getRawMaterialPlantOrSbuAlreadyDepended()),
+                HttpStatus.BAD_REQUEST);
+          }
         }
       }
       RawMaterial rawMaterial =
@@ -262,7 +317,7 @@ public class RawMaterialController {
   @DeleteMapping(EndpointURI.DELETE_RAW_MATERIAL)
   public ResponseEntity<Object> deleteRawMaterial(@PathVariable Long id) {
     if (rawMaterialService.isRawMaterialExist(id)) {
-      rawMaterialService.deleteRawMaterial(id);
+      rawMaterialService.deleteMaterialByCoreTestConfigure(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_RAW_MATERIAL_SCCESS),
           HttpStatus.OK);

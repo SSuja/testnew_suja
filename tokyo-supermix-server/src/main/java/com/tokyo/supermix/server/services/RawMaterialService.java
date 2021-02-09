@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -102,4 +103,14 @@ public interface RawMaterialService {
 
   public boolean isUpdatedSubCategoryIdAndPrefixForSBUWise(Long id, Long materialSubCategoryId,
       String prefix, Long sbuId);
+
+  public boolean checkPlantDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto);
+
+  public boolean checkSbuDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto);
+
+  public boolean isExistsSBU(Long id, Long sbuId);
+
+  public boolean isExistsByPlant(Long id, String plantCode);
+
+  public void deleteMaterialByCoreTestConfigure(Long rawMaterialId);
 }
