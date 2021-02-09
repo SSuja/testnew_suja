@@ -271,7 +271,7 @@ public class TestReportServiceImpl implements TestReportService {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue());
           acceptedValueDtos.setMinValue(values.getMinValue());
-          acceptedValueDtos.setValues(values.getMinValue().toString() + "-"
+          acceptedValueDtos.setValues("Between  "+values.getMinValue().toString() + "-"
               + values.getMaxValue().toString());
         } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
@@ -323,7 +323,7 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  "+materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -354,7 +354,7 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  "+materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -391,7 +391,7 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  "+materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -1389,7 +1389,7 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValue("Between  "+materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -1412,7 +1412,7 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValue("Between  "+materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -1443,7 +1443,7 @@ public class TestReportServiceImpl implements TestReportService {
         AcceptedValueDtoForStrength acceptedValueDtos = new AcceptedValueDtoForStrength();
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
-          acceptedValueDtos.setValue(values.getMinValue().toString() + "-"
+          acceptedValueDtos.setValue("Between  "+values.getMinValue().toString() + "-"
               + values.getMaxValue().toString());
         } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
