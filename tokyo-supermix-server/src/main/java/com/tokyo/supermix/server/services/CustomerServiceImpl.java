@@ -64,8 +64,12 @@ public class CustomerServiceImpl implements CustomerService {
     List<Plant> plantList = new ArrayList<Plant>();
     plantCodes.forEach(code -> plantList.add(plantRepository.findById(code).get()));
     customer.setPlant(plantList);
-    customerRepository.save(customer);
-    emailNotification.sendCustomerCreationEmail(customer);
+    if (customer.getId() == null) {
+      customerRepository.save(customer);
+      emailNotification.sendCustomerCreationEmail(customer);
+    } else {
+      customerRepository.save(customer);
+    }
   }
 
   @Transactional(readOnly = true)
