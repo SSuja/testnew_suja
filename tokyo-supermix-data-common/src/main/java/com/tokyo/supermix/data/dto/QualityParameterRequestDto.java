@@ -8,8 +8,6 @@ public class QualityParameterRequestDto {
   @NotNull(message = "{qualityParameterRequestDto.name.null}")
   @NotEmpty(message = "{qualityParameterRequestDto.name.empty}")
   private String name;
-  @NotNull(message = "{qualityParameterRequestDto.materialSubCategoryId.null}")
-  private Long materialSubCategoryId;
 
   public Long getId() {
     return id;
@@ -25,13 +23,5 @@ public class QualityParameterRequestDto {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Long getMaterialSubCategoryId() {
-    return materialSubCategoryId;
-  }
-
-  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
-    this.materialSubCategoryId = materialSubCategoryId;
   }
 }

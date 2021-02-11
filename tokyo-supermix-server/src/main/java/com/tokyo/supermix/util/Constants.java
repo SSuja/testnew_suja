@@ -294,7 +294,7 @@ public class Constants {
   public static final String CHECK_EQUATION_TRUE = "TRUE";
   public static final String CHECK_EQUATION_FALSE = "FALSE";
   public static final String VALUE = "value";
-  
+
 
   /*
    * Constants for Process Sample validation key & Success messages
@@ -471,6 +471,22 @@ public class Constants {
   public static final String DELETED_QUALITY_PARAMETER = "Quality Parameter Successfully Deleted";
   public static final String UPDATE_QUALITY_PARAMETER_SUCCESS =
       "Quality Parameter Updated Successfully";
+  /*
+   * Constants for Material Quality Parameter validation key && success messages
+   */
+  public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
+  public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
+  public static final String MATERIAL_QUALITY_PARAMETER_TYPES = "materialQualityParameterType";
+  public static final String MATERIAL_QUALITY_PARAMETER_CONDITION =
+      "materialQualityParameterCondition";
+  public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS =
+      "Material Quality Parameter Added SuccessFully";
+  public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
+      "Material Quality Parameter Updated SuccessFully";
+  public static final String DELETE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
+      "Material Quality Parameter Deleted SuccessFully";
+
   /*
    * Constants for report
    */

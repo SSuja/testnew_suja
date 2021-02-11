@@ -40,9 +40,7 @@ public class QualityParameterController {
   @PostMapping(value = EndpointURI.QUALITY_PARAMETER)
   public ResponseEntity<Object> createQualityParameter(
       @Valid @RequestBody QualityParameterRequestDto qualityParameterRequestDto) {
-    if (qualityParameterService.isDuplicateRowExists(qualityParameterRequestDto.getName(),
-        qualityParameterRequestDto.getMaterialSubCategoryId())) {
-      logger.debug("row is already exists: createQualityParameter(), isDuplicateRowExists: {}");
+    if (qualityParameterService.isNameExists(qualityParameterRequestDto.getName())) {
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.QUALITY_PARAMETER,
               validationFailureStatusCodes.getQualityParameterAlreadyExist()),
@@ -53,6 +51,8 @@ public class QualityParameterController {
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_QUALITY_PARAMETER_SUCCESS),
         HttpStatus.OK);
+
+
   }
 
   @GetMapping(value = EndpointURI.QUALITY_PARAMETERS)
@@ -75,18 +75,6 @@ public class QualityParameterController {
         validationFailureStatusCodes.getQualityParameterNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  @GetMapping(value = EndpointURI.GET_QUALITY_PARAMETERS_BY_MATERIAL_SUB_CATEGORY_ID)
-  public ResponseEntity<Object> getAllQualityParameterByMaterialSubCategoryId(
-      @PathVariable Long materialSubCategoryId) {
-    if (qualityParameterService.isMaterialSubCategoryIdExist(materialSubCategoryId)) {
-      return new ResponseEntity<>(new ContentResponse<>(Constants.QUALITY_PARAMETERS,
-          mapper.map(qualityParameterService.getQualityParametersByMaterialSubCategoryId(
-              materialSubCategoryId), QualityParameterResponseDto.class),
-          RestApiResponseStatus.OK), null, HttpStatus.OK);
-    }
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
-        validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
-  }
 
   @GetMapping(value = EndpointURI.QUALITY_PARAMETER_BY_ID)
   public ResponseEntity<Object> getQualityParameterById(@PathVariable Long id) {
@@ -105,9 +93,8 @@ public class QualityParameterController {
   public ResponseEntity<Object> updateQualityParameter(
       @RequestBody QualityParameterRequestDto qualityParameterRequestDto) {
     if (qualityParameterService.isQualityParameterIdExist(qualityParameterRequestDto.getId())) {
-      if (qualityParameterService.isDuplicateRowExists(qualityParameterRequestDto.getName(),
-          qualityParameterRequestDto.getMaterialSubCategoryId())) {
-        logger.debug("row is already exists: updateQualityParameter(), isDuplicateRowExists: {}");
+      if (qualityParameterService.isDuplicateEnty(qualityParameterRequestDto.getId(),
+          qualityParameterRequestDto.getName())) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.QUALITY_PARAMETER,
                 validationFailureStatusCodes.getQualityParameterAlreadyExist()),
