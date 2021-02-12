@@ -94,6 +94,12 @@ public class TestConfigureController {
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
+      if (testConfigureService.isAlreadyDepended(testConfigureRequestDto.getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (testConfigureService.isDuplicateEntry(testConfigureRequestDto.getId(),
           testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId(),
           testConfigureRequestDto.getMaterialSubCategoryId(),

@@ -371,4 +371,21 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     });
     return accepetedValueDtolist;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isCheckValidations(MaterialAcceptedValue materialAcceptedValue) {
+      if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+        if (materialAcceptedValue.getMaxValue() == null
+            || materialAcceptedValue.getMinValue() == null) {
+          return true;
+        }
+      } else if (materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+          || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+          || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
+        if (materialAcceptedValue.getValue() == null) {
+          return true;
+        }
+    }
+    return false;
+  }
 }

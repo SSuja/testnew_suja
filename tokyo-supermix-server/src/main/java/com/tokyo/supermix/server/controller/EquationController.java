@@ -24,6 +24,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EquationService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -36,6 +37,8 @@ public class EquationController {
   private Mapper mapper;
   @Autowired
   private EquationService equationService;
+  @Autowired
+  private TestConfigureService testConfigureService;
 
   private static final Logger logger = Logger.getLogger(EquationController.class);
 
@@ -88,6 +91,12 @@ public class EquationController {
   public ResponseEntity<Object> updateEquation(
       @Valid @RequestBody EquationRequestDto equationRequestDto) {
     if (equationService.isEquationExist(equationRequestDto.getId())) {
+      if (testConfigureService.isAlreadyDepended(equationRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       equationService.saveEquation(mapper.map(equationRequestDto, Equation.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EQUATION_SUCCESS),
