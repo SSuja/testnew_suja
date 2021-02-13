@@ -24,12 +24,14 @@ import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.ParameterService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
@@ -45,6 +47,8 @@ public class TestParameterController {
   @Autowired
   private TestConfigureService testConfigureService;
   @Autowired
+  ParameterService parameterService;
+  @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(TestParameterController.class);
 
@@ -52,9 +56,17 @@ public class TestParameterController {
   public ResponseEntity<Object> createTestParameter(
       @Valid @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList)
       throws ScriptException {
-    List<TestParameterRequestDto> listTestParameter = testParameterRequestDtoList
-        .stream().filter(testPara -> (testPara.getInputMethods() == null)
-            || (testPara.getType() == null) || (testPara.getUnitId() == null))
+    List<TestParameterRequestDto> listTestParameter = testParameterRequestDtoList.stream()
+        .filter(testPara -> (testPara.getInputMethods() == null) || (testPara.getType() == null)
+            || (testPara.getUnitId() == null)
+            || ((testPara.getType().equals(TestParameterType.CONFIG))
+                && parameterService.getParameterById(testPara.getParameterId())
+                    .getParameterDataType().equals(ParameterDataType.NUMBER)
+                && (testPara.getValue() == null))
+            || (testPara.getType().equals(TestParameterType.CONFIG)
+                && parameterService.getParameterById(testPara.getParameterId())
+                    .getParameterDataType().equals(ParameterDataType.DATETIME)
+                && (testPara.getDateValue() == null)))
         .collect(Collectors.toList());
     if (listTestParameter.isEmpty()) {
       if (testParameterService.checkAbbreviation(testParameterRequestDtoList)) {
