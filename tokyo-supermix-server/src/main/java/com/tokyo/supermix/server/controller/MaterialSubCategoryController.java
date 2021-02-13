@@ -121,11 +121,10 @@ public class MaterialSubCategoryController {
       return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
           validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
-    materialSubCategoryService.saveMaterialSubCategory(
+    Long subCategoryId = materialSubCategoryService.saveMaterialSubCategory(
         mapper.map(materialSubCategoryRequestDto, MaterialSubCategory.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_MATERIAL_SUB_CATEGORY_SUCCESS),
-        HttpStatus.OK);
+    return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
+        subCategoryId, RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @PutMapping(value = EndpointURI.MATERIAL_SUB_CATEGORY)
@@ -148,14 +147,15 @@ public class MaterialSubCategoryController {
       }
       MaterialSubCategory materialSubCategory = materialSubCategoryService
           .getMaterialSubCategoryById(materialSubCategoryRequestDto.getId());
-      if(!materialSubCategory.getPrefix().equalsIgnoreCase(materialSubCategoryRequestDto.getPrefix())) {
-        if(rawMaterialRepository.existsByMaterialSubCategoryId(materialSubCategory.getId())) {
+      if (!materialSubCategory.getPrefix()
+          .equalsIgnoreCase(materialSubCategoryRequestDto.getPrefix())) {
+        if (rawMaterialRepository.existsByMaterialSubCategoryId(materialSubCategory.getId())) {
           return new ResponseEntity<>(
               new ValidationFailureResponse(ValidationConstance.MATERIALSUBCATEGORY,
                   validationFailureStatusCodes.getSubMaterialCategoryAlreadyDepended()),
-              HttpStatus.BAD_REQUEST); 
+              HttpStatus.BAD_REQUEST);
         }
-        
+
       }
       if (materialSubCategory.getMaterialCategory().getId() != materialSubCategoryRequestDto
           .getMaterialCategoryId()) {

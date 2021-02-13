@@ -46,7 +46,7 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
   public boolean checkCommonNullFieldValues(
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList) {
     for (MaterialQualityParameterRequestDto materialQualityParameterRequestDto : materialQualityParameterRequestDtoList) {
-      if ((materialQualityParameterRequestDto.getQualityParameterId() == null)
+      if ((materialQualityParameterRequestDto.getParameterId() == null)
           || (materialQualityParameterRequestDto.getQualityParamaterType() == null)
           || materialQualityParameterRequestDto.getConditionRange() == null
           || materialQualityParameterRequestDto.getUnitId() == null) {
@@ -94,23 +94,52 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
   }
 
   // check duplicate entry
+  @Transactional(readOnly = true)
   public boolean checkDuplicateEntry(
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList) {
     for (MaterialQualityParameterRequestDto materialQualityParameterRequestDto : materialQualityParameterRequestDtoList) {
       if ((materialQualityParameterRequestDto.getQualityParamaterType()
           .equals(QualityParamaterType.SUB_CATEGORY)
-          && materialQualityParameterRepository.existsByQualityParameterIdAndMaterialSubCategoryId(
-              materialQualityParameterRequestDto.getQualityParameterId(),
+          && materialQualityParameterRepository.existsByParameterIdAndMaterialSubCategoryId(
+              materialQualityParameterRequestDto.getParameterId(),
               materialQualityParameterRequestDto.getMaterialSubCategoryId()))
           || (materialQualityParameterRequestDto.getQualityParamaterType()
               .equals(QualityParamaterType.MATERIAL)
-              && materialQualityParameterRepository.existsByQualityParameterIdAndRawMaterialId(
-                  materialQualityParameterRequestDto.getQualityParameterId(),
+              && materialQualityParameterRepository.existsByParameterIdAndRawMaterialId(
+                  materialQualityParameterRequestDto.getParameterId(),
                   materialQualityParameterRequestDto.getRawMaterialId()))) {
         return true;
       }
     }
     return false;
   }
-}
 
+  // check duplicate entry for update
+  @Transactional(readOnly = true)
+  public boolean checkAlreadyExistsForUpdate(
+      MaterialQualityParameterRequestDto materialQualityParameterRequestDto) {
+    MaterialQualityParameter materialQualityParameter = materialQualityParameterRepository
+        .findById(materialQualityParameterRequestDto.getId()).get();
+    if ((materialQualityParameterRequestDto.getQualityParamaterType()
+        .equals(QualityParamaterType.MATERIAL)
+        && !(materialQualityParameter.getParameter().getId()
+            .equals(materialQualityParameterRequestDto.getParameterId())
+            && materialQualityParameter.getRawMaterial().getId()
+                .equals(materialQualityParameterRequestDto.getRawMaterialId()))
+        && materialQualityParameterRepository.existsByParameterIdAndRawMaterialId(
+            materialQualityParameterRequestDto.getParameterId(),
+            materialQualityParameterRequestDto.getRawMaterialId()))
+        || (materialQualityParameterRequestDto.getQualityParamaterType()
+            .equals(QualityParamaterType.SUB_CATEGORY)
+            && !(materialQualityParameter.getParameter().getId()
+                .equals(materialQualityParameterRequestDto.getParameterId())
+                && materialQualityParameter.getMaterialSubCategory().getId()
+                    .equals(materialQualityParameterRequestDto.getMaterialSubCategoryId()))
+            && materialQualityParameterRepository.existsByParameterIdAndMaterialSubCategoryId(
+                materialQualityParameterRequestDto.getParameterId(),
+                materialQualityParameterRequestDto.getMaterialSubCategoryId()))) {
+      return true;
+    }
+    return false;
+  }
+}

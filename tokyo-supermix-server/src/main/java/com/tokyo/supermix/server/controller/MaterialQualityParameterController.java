@@ -100,7 +100,20 @@ public class MaterialQualityParameterController {
   public ResponseEntity<Object> updateMaterialQualityParameter(
       @Valid @RequestBody MaterialQualityParameterRequestDto materialQualityParameterRequestDto) {
     if (materialQualityParameterService.isExistsById(materialQualityParameterRequestDto.getId())) {
-
+      if (materialQualityParameterService
+          .checkAlreadyExistsForUpdate(materialQualityParameterRequestDto)) {
+        if (materialQualityParameterService
+            .checkAlreadyExistsForUpdate(materialQualityParameterRequestDto)) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER,
+                  validationFailureStatusCodes.getMaterialQualityParameterAlreadyExists()),
+              HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER,
+                validationFailureStatusCodes.getMaterialQualityParameterAlreadyExists()),
+            HttpStatus.BAD_REQUEST);
+      }
       materialQualityParameterService.updateMaterialQualityParameter(
           mapper.map(materialQualityParameterRequestDto, MaterialQualityParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

@@ -18,7 +18,7 @@ public interface MaterialSubCategoryService {
 
   public void deleteMaterialSubCategory(Long id);
 
-  public void saveMaterialSubCategory(MaterialSubCategory materialSubCategory);
+  public Long saveMaterialSubCategory(MaterialSubCategory materialSubCategory);
 
   public List<MaterialSubCategory> getMaterialSubCategoryByCategory(
       MaterialCategory materialCategory);

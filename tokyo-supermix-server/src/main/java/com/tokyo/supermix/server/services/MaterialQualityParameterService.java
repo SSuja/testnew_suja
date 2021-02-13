@@ -28,4 +28,7 @@ public interface MaterialQualityParameterService {
 
   public boolean checkDuplicateEntry(
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList);
+
+  public boolean checkAlreadyExistsForUpdate(
+      MaterialQualityParameterRequestDto materialQualityParameterRequestDto);
 }

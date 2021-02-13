@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;

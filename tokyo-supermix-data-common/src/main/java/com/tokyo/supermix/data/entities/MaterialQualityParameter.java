@@ -39,8 +39,8 @@ public class MaterialQualityParameter extends DateAudit implements Serializable 
   @JoinColumn(name = "materialCategoryId", nullable = true)
   private MaterialCategory materialCategory;
   @ManyToOne
-  @JoinColumn(name = "qualityParameterId", nullable = false)
-  private QualityParameter qualityParameter;
+  @JoinColumn(name = "parameterId", nullable = false)
+  private Parameter parameter;
   @Enumerated(EnumType.ORDINAL)
   private QualityParamaterType qualityParamaterType;
 
@@ -116,14 +116,6 @@ public class MaterialQualityParameter extends DateAudit implements Serializable 
     this.materialCategory = materialCategory;
   }
 
-  public QualityParameter getQualityParameter() {
-    return qualityParameter;
-  }
-
-  public void setQualityParameter(QualityParameter qualityParameter) {
-    this.qualityParameter = qualityParameter;
-  }
-
   public QualityParamaterType getQualityParamaterType() {
     return qualityParamaterType;
   }
@@ -134,5 +126,13 @@ public class MaterialQualityParameter extends DateAudit implements Serializable 
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public Parameter getParameter() {
+    return parameter;
+  }
+
+  public void setParameter(Parameter parameter) {
+    this.parameter = parameter;
   }
 }

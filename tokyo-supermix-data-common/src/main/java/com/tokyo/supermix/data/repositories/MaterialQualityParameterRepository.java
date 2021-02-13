@@ -7,10 +7,10 @@ import com.tokyo.supermix.data.entities.MaterialQualityParameter;
 
 @Repository
 public interface MaterialQualityParameterRepository
-    extends JpaRepository<MaterialQualityParameter, Long> ,QuerydslPredicateExecutor<MaterialQualityParameter> {
+    extends JpaRepository<MaterialQualityParameter, Long>,
+    QuerydslPredicateExecutor<MaterialQualityParameter> {
 
-  boolean existsByQualityParameterIdAndRawMaterialId(Long qualityParameterId, Long rawMaterialId);
+  boolean existsByParameterIdAndRawMaterialId(Long parameterId, Long rawMaterialId);
 
-  boolean existsByQualityParameterIdAndMaterialSubCategoryId(Long qualityParameterId,
-      Long subCategoryId);
+  boolean existsByParameterIdAndMaterialSubCategoryId(Long parameterId, Long subCategoryId);
 }

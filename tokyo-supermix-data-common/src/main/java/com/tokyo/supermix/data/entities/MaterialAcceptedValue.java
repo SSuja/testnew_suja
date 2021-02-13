@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.MaterialParamType;
 
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_accepted_value")
@@ -45,6 +46,11 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
   private MaterialSubCategory materialSubCategory;
   @Enumerated(EnumType.ORDINAL)
   private CategoryAcceptedType categoryAcceptedType;
+  @ManyToOne
+  @JoinColumn(name = "materialQulityParameterId", nullable = true)
+  private MaterialQualityParameter materialQualityParameter;
+  @Enumerated(EnumType.ORDINAL)
+  private MaterialParamType materialParamType;
 
   public Long getId() {
     return id;
@@ -144,5 +150,21 @@ public class MaterialAcceptedValue extends DateAudit implements Serializable {
 
   public void setCategoryAcceptedType(CategoryAcceptedType categoryAcceptedType) {
     this.categoryAcceptedType = categoryAcceptedType;
+  }
+
+  public MaterialParamType getMaterialParamType() {
+    return materialParamType;
+  }
+
+  public void setMaterialParamType(MaterialParamType materialParamType) {
+    this.materialParamType = materialParamType;
+  }
+
+  public MaterialQualityParameter getMaterialQualityParameter() {
+    return materialQualityParameter;
+  }
+
+  public void setMaterialQualityParameter(MaterialQualityParameter materialQualityParameter) {
+    this.materialQualityParameter = materialQualityParameter;
   }
 }

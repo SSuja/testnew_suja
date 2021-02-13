@@ -13,7 +13,7 @@ public class MaterialQualityParameterRequestDto {
   private Long rawMaterialId;
   private Long materialSubCategoryId;
   private Long materialCategoryId;
-  private Long qualityParameterId;
+  private Long parameterId;
   private QualityParamaterType qualityParamaterType;
 
   public Long getId() {
@@ -88,19 +88,19 @@ public class MaterialQualityParameterRequestDto {
     this.materialCategoryId = materialCategoryId;
   }
 
-  public Long getQualityParameterId() {
-    return qualityParameterId;
-  }
-
-  public void setQualityParameterId(Long qualityParameterId) {
-    this.qualityParameterId = qualityParameterId;
-  }
-
   public QualityParamaterType getQualityParamaterType() {
     return qualityParamaterType;
   }
 
   public void setQualityParamaterType(QualityParamaterType qualityParamaterType) {
     this.qualityParamaterType = qualityParamaterType;
+  }
+
+  public Long getParameterId() {
+    return parameterId;
+  }
+
+  public void setParameterId(Long parameterId) {
+    this.parameterId = parameterId;
   }
 }

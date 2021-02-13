@@ -17,8 +17,8 @@ public class MaterialQualityParameterResponseDto {
   private String materialSubCategoryName;
   private Long materialCategoryId;
   private String materialCategoryName;
-  private Long qualityParameterId;
-  private String qualityParameterName;
+  private Long parameterId;
+  private String parameterName;
   private QualityParamaterType qualityParamaterType;
 
   public Long getId() {
@@ -125,27 +125,27 @@ public class MaterialQualityParameterResponseDto {
     this.materialCategoryName = materialCategoryName;
   }
 
-  public Long getQualityParameterId() {
-    return qualityParameterId;
-  }
-
-  public void setQualityParameterId(Long qualityParameterId) {
-    this.qualityParameterId = qualityParameterId;
-  }
-
-  public String getQualityParameterName() {
-    return qualityParameterName;
-  }
-
-  public void setQualityParameterName(String qualityParameterName) {
-    this.qualityParameterName = qualityParameterName;
-  }
-
   public QualityParamaterType getQualityParamaterType() {
     return qualityParamaterType;
   }
 
   public void setQualityParamaterType(QualityParamaterType qualityParamaterType) {
     this.qualityParamaterType = qualityParamaterType;
+  }
+
+  public Long getParameterId() {
+    return parameterId;
+  }
+
+  public void setParameterId(Long parameterId) {
+    this.parameterId = parameterId;
+  }
+
+  public String getParameterName() {
+    return parameterName;
+  }
+
+  public void setParameterName(String parameterName) {
+    this.parameterName = parameterName;
   }
 }
