@@ -271,7 +271,7 @@ public class TestReportServiceImpl implements TestReportService {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue());
           acceptedValueDtos.setMinValue(values.getMinValue());
-          acceptedValueDtos.setValues("Between  "+values.getMinValue().toString() + "-"
+          acceptedValueDtos.setValues("Between  " + values.getMinValue().toString() + "-"
               + values.getMaxValue().toString());
         } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
@@ -323,7 +323,7 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues("Between  "+materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -354,7 +354,7 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues("Between  "+materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -391,7 +391,7 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues("Between  "+materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -866,12 +866,16 @@ public class TestReportServiceImpl implements TestReportService {
     List<ParameterResult> parameterResultList = parameterResultRepository
         .findByTestParameterLevelAndTestParameterTestConfigureIdAndMaterialTestCode(level,
             testConfigId, materialTestCode);
+    AcceptedValueForSieveTest acceptedValueForSieveTest = new AcceptedValueForSieveTest();
     for (ParameterResult parameterResult : parameterResultList) {
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
         SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
         sieveResultAndParameter.setParameter(parts[0].toString());
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        sieveResultAndParameter
+            .setInputMethods(parameterResult.getTestParameter().getInputMethods());
+        sieveResultAndParameter.setTestParameterType(parameterResult.getTestParameter().getType());
         sieveResultAndParameterList.add(sieveResultAndParameter);
         if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
           AcceptedValue acceptedValue = acceptedValueRepository
@@ -883,11 +887,22 @@ public class TestReportServiceImpl implements TestReportService {
               String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
               sieveResultAndParameterAcc
                   .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
+              sieveResultAndParameterAcc
+                  .setInputMethods(acceptedValue.getTestParameter().getInputMethods());
+              sieveResultAndParameterAcc
+                  .setTestParameterType(acceptedValue.getTestParameter().getType());
               if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
                 sieveResultAndParameterAcc.setVale(acceptedValue.getMinValue().toString() + " - "
                     + acceptedValue.getMaxValue().toString());
+                acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+                acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               } else {
                 sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
+                acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setValue(acceptedValue.getValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               }
               sieveResultAndParameterList.add(sieveResultAndParameterAcc);
             }
@@ -906,8 +921,17 @@ public class TestReportServiceImpl implements TestReportService {
               if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
                 sieveResultAndParameterAcc.setVale(materialAcceptedValue.getMinValue().toString()
                     + " - " + materialAcceptedValue.getMaxValue().toString());
+                acceptedValueForSieveTest
+                    .setConditionRange(materialAcceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setMaxValue(materialAcceptedValue.getMaxValue());
+                acceptedValueForSieveTest.setMinValue(materialAcceptedValue.getMinValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               } else {
                 sieveResultAndParameterAcc.setVale(materialAcceptedValue.getValue().toString());
+                acceptedValueForSieveTest
+                    .setConditionRange(materialAcceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setValue(materialAcceptedValue.getValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               }
               sieveResultAndParameterList.add(sieveResultAndParameterAcc);
             }
@@ -926,6 +950,9 @@ public class TestReportServiceImpl implements TestReportService {
         sieveResultAndParameter
             .setParameter(parameterResult.getTestParameter().getParameter().getName());
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        sieveResultAndParameter
+            .setInputMethods(parameterResult.getTestParameter().getInputMethods());
+        sieveResultAndParameter.setTestParameterType(parameterResult.getTestParameter().getType());
         sieveResultAndParameterList.add(sieveResultAndParameter);
       }
     }
@@ -1389,7 +1416,7 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue("Between  "+materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValue("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -1412,7 +1439,7 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue("Between  "+materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValue("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
           } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
@@ -1443,7 +1470,7 @@ public class TestReportServiceImpl implements TestReportService {
         AcceptedValueDtoForStrength acceptedValueDtos = new AcceptedValueDtoForStrength();
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
-          acceptedValueDtos.setValue("Between  "+values.getMinValue().toString() + "-"
+          acceptedValueDtos.setValue("Between  " + values.getMinValue().toString() + "-"
               + values.getMaxValue().toString());
         } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
