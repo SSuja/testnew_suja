@@ -840,6 +840,10 @@ public class TestReportServiceImpl implements TestReportService {
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     seiveTestReportResponseDto.setIncomingSample(
         mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
+    java.sql.Date date = new java.sql.Date(materialTest.getIncomingSample().getCreatedAt().getTime());
+    java.sql.Date date1 = new java.sql.Date(materialTest.getUpdatedAt().getTime());
+    seiveTestReportResponseDto.setSamplingDate(date);
+    seiveTestReportResponseDto.setTestingDate(date1);
     seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     return seiveTestReportResponseDto;
   }
@@ -876,6 +880,7 @@ public class TestReportServiceImpl implements TestReportService {
         sieveResultAndParameter
             .setInputMethods(parameterResult.getTestParameter().getInputMethods());
         sieveResultAndParameter.setTestParameterType(parameterResult.getTestParameter().getType());
+        sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
         sieveResultAndParameterList.add(sieveResultAndParameter);
         if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
           AcceptedValue acceptedValue = acceptedValueRepository
@@ -891,6 +896,7 @@ public class TestReportServiceImpl implements TestReportService {
                   .setInputMethods(acceptedValue.getTestParameter().getInputMethods());
               sieveResultAndParameterAcc
                   .setTestParameterType(acceptedValue.getTestParameter().getType());
+              sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
               if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
                 sieveResultAndParameterAcc.setVale(acceptedValue.getMinValue().toString() + " - "
                     + acceptedValue.getMaxValue().toString());
@@ -953,6 +959,7 @@ public class TestReportServiceImpl implements TestReportService {
         sieveResultAndParameter
             .setInputMethods(parameterResult.getTestParameter().getInputMethods());
         sieveResultAndParameter.setTestParameterType(parameterResult.getTestParameter().getType());
+        sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
         sieveResultAndParameterList.add(sieveResultAndParameter);
       }
     }

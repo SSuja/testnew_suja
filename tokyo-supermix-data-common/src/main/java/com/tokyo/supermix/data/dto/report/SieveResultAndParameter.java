@@ -9,6 +9,7 @@ public class SieveResultAndParameter {
   private TestParameterType testParameterType;
   private String vale;
   private AcceptedValueForSieveTest acceptedValueForSieveTest;
+  private String unit;
 
   public String getParameter() {
     return parameter;
@@ -48,5 +49,13 @@ public class SieveResultAndParameter {
 
   public void setTestParameterType(TestParameterType testParameterType) {
     this.testParameterType = testParameterType;
+  }
+
+  public String getUnit() {
+    return unit;
+  }
+
+  public void setUnit(String unit) {
+    this.unit = unit;
   }
 }
