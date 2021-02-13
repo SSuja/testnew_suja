@@ -232,22 +232,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
   }
 
-  private void calculateTest(Integer count, Integer failCount, Integer testSize,
-      IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    updateStatusSample(
-        (count == testSize && testSize != 0) ? Status.PASS
-            : (failCount == 1) ? Status.FAIL : Status.PROCESS,
-        incomingSample, bodyMessage, materialTestObj);
-  }
-
-  public boolean getMaterialAcceptedForTest(TestConfigure testConfigure, Long rawMaterialId) {
-    return (testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL))
-        ? (materialAcceptedValueRepository
-            .existsByTestConfigureIdAndRawMaterialId(testConfigure.getId(), rawMaterialId)) ? true
-                : false
-        : true;
-  }
-
   private void updateStatusSample(Status status, IncomingSample incomingSample, String bodyMessage,
       MaterialTest materialTestObj) {
     incomingSample.setStatus(status);

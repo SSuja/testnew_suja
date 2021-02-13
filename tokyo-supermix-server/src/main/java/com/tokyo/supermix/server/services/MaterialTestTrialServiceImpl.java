@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.AcceptedValue;
+import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
 import com.tokyo.supermix.data.entities.MaterialTestResult;
@@ -20,6 +21,7 @@ import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
@@ -56,6 +58,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   private EmailNotification emailNotification;
   @Autowired
   private MultiResultFormulaRepository multiResultFormulaRepository;
+  @Autowired
+  IncomingSampleRepository incomingSampleRepository;
 
   @Transactional
   public String saveMaterialTestTrial(MaterialTestTrial materialTestTrial) {
@@ -124,6 +128,13 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     List<MaterialTestResult> materialTestResults =
         materialTestResultRepository.findByMaterialTestCode(materialTestCode);
     MaterialTest materialTest = materialTestRepository.getOne(materialTestCode);
+    
+    if(materialTest.getIncomingSample().getStatus().equals(Status.NEW)){
+      IncomingSample incomingSample= incomingSampleRepository.getOne(materialTest.getIncomingSample().getCode());
+      incomingSample.setStatus(Status.PROCESS);
+      incomingSampleRepository.save(incomingSample);
+    }
+    
     HashMap<String, Boolean> acceptedParameters = new HashMap<>();
     String singleEquation = null;
     for (MaterialTestResult materialTestResult : materialTestResults) {
@@ -182,13 +193,28 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     }
     if (acceptedParameters.size() == 1) {
       updateMaterialTestStatus(materialTestCode,
-          resultAccepted(acceptedParameters, singleEquation) ? Status.PASS : Status.FAIL);
+          resultAccepted(acceptedParameters, singleEquation) ? Status.PENDING_PASS
+              : Status.PENDING_FAIL,false);
     } else {
       String eqation = multiResultFormulaRepository
           .findByTestConfigureId(materialTest.getTestConfigure().getId()).getLogicalFormula();
       updateMaterialTestStatus(materialTestCode,
-          resultAccepted(acceptedParameters, eqation) ? Status.PASS : Status.FAIL);
+          resultAccepted(acceptedParameters, eqation) ? Status.PENDING_PASS : Status.PENDING_FAIL,false);
     }
+  }
+
+  public void materialTestApproved(String materialTestCode) {
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    Status finalStatus = null;
+    if (materialTest.getStatus().equals(Status.PENDING_PASS)) {
+      finalStatus = Status.PASS;
+    } else if (materialTest.getStatus().equals(Status.PENDING_FAIL)) {
+      finalStatus = Status.FAIL;
+    } else {
+      finalStatus = Status.PROCESS;
+    }
+    
+    updateMaterialTestStatus(materialTestCode, finalStatus,true);
   }
 
   private Status compareAverage(Double minValue, Double maxValue, Double value, Condition condition,
@@ -208,11 +234,12 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
   }
 
   @Transactional
-  public MaterialTest updateMaterialTestStatus(String code, Status status) {
+  public MaterialTest updateMaterialTestStatus(String code, Status status,boolean approved) {
     MaterialTest materialTest = materialTestRepository.findByCode(code);
     materialTest.setStatus(status);
+    materialTest.setApproved(approved);
     MaterialTest materialTestObj = materialTestRepository.save(materialTest);
-    if (materialTestObj != null) {
+    if (materialTestObj != null && approved) {
       emailNotification.sendTestEmail(materialTestObj);
     }
     return materialTest;
