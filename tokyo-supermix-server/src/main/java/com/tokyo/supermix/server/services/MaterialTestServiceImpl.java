@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -73,6 +72,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     String specimenCode = (materialTestTrialList.size() == 0) ? subPrefix + String.format("%02d", 1)
         : subPrefix + String.format("%02d", materialTestTrialList.size() + 1);
     materialTest.setSpecimenCode(specimenCode);
+    IncomingSample incomingSample =
+        incomingSampleRepository.getOne(materialTest.getIncomingSample().getCode());
+    if (incomingSample.getStatus().equals(Status.NEW)) {
+      incomingSample.setStatus(Status.PROCESS);
+      incomingSampleRepository.save(incomingSample);
+    }
     materialTestRepository.save(materialTest);
     return materialTest.getCode();
   }
@@ -232,22 +237,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
   }
 
-  private void calculateTest(Integer count, Integer failCount, Integer testSize,
-      IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    updateStatusSample(
-        (count == testSize && testSize != 0) ? Status.PASS
-            : (failCount == 1) ? Status.FAIL : Status.PROCESS,
-        incomingSample, bodyMessage, materialTestObj);
-  }
-
-  public boolean getMaterialAcceptedForTest(TestConfigure testConfigure, Long rawMaterialId) {
-    return (testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL))
-        ? (materialAcceptedValueRepository
-            .existsByTestConfigureIdAndRawMaterialId(testConfigure.getId(), rawMaterialId)) ? true
-                : false
-        : true;
-  }
-
   private void updateStatusSample(Status status, IncomingSample incomingSample, String bodyMessage,
       MaterialTest materialTestObj) {
     incomingSample.setStatus(status);
@@ -327,19 +316,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
     IncomingSample incomingSample = materialTestObj.getIncomingSample();
-    if (coreTestConfigureRepository.
-    // existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
-        existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
+    if (coreTestConfigureRepository
+        .existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
             materialTestObj.getTestConfigure().getId(), incomingSample.getRawMaterial().getId())) {
-      List<CoreTestConfigure> coreTestConfigureList =
-          // coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
-          // getCoreTestConfigureByRawMaterialId
-          coreTestConfigureService
-              .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
-                  incomingSample.getRawMaterial().getId());
+      List<CoreTestConfigure> coreTestConfigureList = coreTestConfigureService
+          .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
+              incomingSample.getRawMaterial().getId());
       List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
           .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
-      Status status = Status.NEW;
+      Status status = Status.PROCESS;
       List<MaterialTest> materialTestlist = new ArrayList<>();
       for (TestConfigure testconfigure : testConfigureList) {
         if (!materialTestRepository
