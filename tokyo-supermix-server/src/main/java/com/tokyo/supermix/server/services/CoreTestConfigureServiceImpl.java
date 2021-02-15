@@ -484,7 +484,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       coreTestConfigure.setApplicableTest(applicable);
       coreTestConfigureRepository.save(coreTestConfigure);
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 
@@ -496,7 +496,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
       coreTestConfigureRepository.saveAll(coreTestConfigureList);
     } catch (Exception e) {
-      System.out.println(e);
+      e.printStackTrace();
     }
   }
 

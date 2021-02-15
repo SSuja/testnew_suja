@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -311,19 +310,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
     IncomingSample incomingSample = materialTestObj.getIncomingSample();
-    if (coreTestConfigureRepository.
-    // existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
-        existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
+    if (coreTestConfigureRepository
+        .existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
             materialTestObj.getTestConfigure().getId(), incomingSample.getRawMaterial().getId())) {
-      List<CoreTestConfigure> coreTestConfigureList =
-          // coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
-          // getCoreTestConfigureByRawMaterialId
-          coreTestConfigureService
-              .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
-                  incomingSample.getRawMaterial().getId());
+      List<CoreTestConfigure> coreTestConfigureList = coreTestConfigureService
+          .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
+              incomingSample.getRawMaterial().getId());
       List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
           .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
-      Status status = Status.NEW;
+      Status status = Status.PROCESS;
       List<MaterialTest> materialTestlist = new ArrayList<>();
       for (TestConfigure testconfigure : testConfigureList) {
         if (!materialTestRepository

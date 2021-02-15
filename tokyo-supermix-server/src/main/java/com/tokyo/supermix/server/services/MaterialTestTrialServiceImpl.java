@@ -205,7 +205,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
 
   public void materialTestApproved(String materialTestCode) {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
-    Status finalStatus = null;
+    if(!materialTest.isApproved()) {
+    Status finalStatus = Status.PROCESS;
     if (materialTest.getStatus().equals(Status.PENDING_PASS)) {
       finalStatus = Status.PASS;
     } else if (materialTest.getStatus().equals(Status.PENDING_FAIL)) {
@@ -213,9 +214,8 @@ public class MaterialTestTrialServiceImpl implements MaterialTestTrialService {
     } else {
       finalStatus = Status.PROCESS;
     }
-    
     updateMaterialTestStatus(materialTestCode, finalStatus,true);
-  }
+  }}
 
   private Status compareAverage(Double minValue, Double maxValue, Double value, Condition condition,
       Double average, String materialTestCode) {
