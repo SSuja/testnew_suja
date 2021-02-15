@@ -56,7 +56,11 @@ public class TestEquationServiceImpl implements TestEquationService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteTestEquation(Long id) {
-    testEquationRepository.deleteById(id);
+    TestEquation testEquation = testEquationRepository.findById(id).get();
+    if (equationRepository.existsById(testEquation.getEquation().getId())) {
+      testEquationRepository.deleteById(id);
+      equationRepository.deleteById(testEquation.getEquation().getId());
+    }
   }
 
   @Transactional

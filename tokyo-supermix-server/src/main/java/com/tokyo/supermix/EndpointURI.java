@@ -125,8 +125,10 @@ public final class EndpointURI {
    * Test Configure
    */
   public static final String TEST_CONFIGURE = BASE_API_PATH + "test-configure";
+  public static final String TEST_CONFIGURE_RESET = BASE_API_PATH + "test-configure-reset";
   public static final String TEST_CONFIGURES = BASE_API_PATH + "test-configures";
   public static final String TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
+  public static final String TEST_CONFIGURE_RESET_BY_ID = TEST_CONFIGURE_RESET + ID;
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testType}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =
@@ -661,6 +663,8 @@ public final class EndpointURI {
    * Finish Product Test
    */
   public static final String FINISH_PRODUCT_TEST = BASE_API_PATH + "finish-product-test";
+  public static final String FINISH_PRODUCT_TEST_APROVE =
+      BASE_API_PATH + "finish-product-test-aprove";
   public static final String FINISH_PRODUCT_TESTS = BASE_API_PATH + "finish-product-tests";
   public static final String FINISH_PRODUCT_TEST_BY_CODE = FINISH_PRODUCT_TEST + CODE;
   public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
@@ -668,7 +672,6 @@ public final class EndpointURI {
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_TESTCONFIGURE =
       FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}"
           + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-
   public static final String FINISH_PRODUCT_TEST_BY_PLANT = FINISH_PRODUCT_TEST + PLANT_WISE;
   public static final String FINISH_PRODUCT_TEST_COMMENT = FINISH_PRODUCT_TEST + SLASH + "comment";
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE =
@@ -677,6 +680,8 @@ public final class EndpointURI {
       FINISH_PRODUCT_TEST + SEARCH + SLASH + "{plantCode}";
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_CODE =
       FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}";
+  public static final String FINISH_PRODUCT_TEST_APROVE_BY_CODE =
+      FINISH_PRODUCT_TEST_APROVE + SLASH + "{finishProductTestCode}";
 
   /*
    * Employee apis
