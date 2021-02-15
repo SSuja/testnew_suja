@@ -174,6 +174,6 @@ public class MaterialTestTrialController {
     materialTestTrialService.materialTestApproved(materialTestCode);
     materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-        Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
+        Constants.MATERIAL_TEST_APPROVED_SUCCESS), HttpStatus.OK);
   }
 }

@@ -383,6 +383,8 @@ public class Constants {
       "Material Test Trial Updated Successfully";
   public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
       "Material Test Trial Average & Status Updated Successfully";
+  public static final String MATERIAL_TEST_APPROVED_SUCCESS =
+      "Material Test Approved Successfully";
   /*
    * Constants for Parameter Result validation key & Success messages
    */
