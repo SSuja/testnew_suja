@@ -10,7 +10,11 @@ public interface TestEquationParameterRepository
   public List<TestEquationParameter> findByTestParameterId(Long testParameterId);
 
   public List<TestEquationParameter> findByTestEquationId(Long testEquationId);
-  
+
   public List<TestEquationParameter> findByTestEquationTestConfigureId(Long testConfigureId);
+
+  Long deleteByTestEquationTestConfigureId(Long testConfigureId);
+
+  boolean existsByTestEquationTestConfigureId(Long testConfigureId);
 }
 

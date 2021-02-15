@@ -58,7 +58,11 @@ public class ParameterEquationServiceImpl implements ParameterEquationService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteParameterEquation(Long id) {
-    parameterEquationRepository.deleteById(id);
+    ParameterEquation parameterEquation = parameterEquationRepository.findById(id).get();
+    if (equationRepository.existsById(parameterEquation.getEquation().getId())) {
+      parameterEquationRepository.deleteById(id);
+      equationRepository.deleteById(parameterEquation.getEquation().getId());
+    }
   }
 
   @Transactional(readOnly = true)

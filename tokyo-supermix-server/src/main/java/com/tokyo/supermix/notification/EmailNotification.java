@@ -132,7 +132,7 @@ public class EmailNotification {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CoreTestConfigureRepository coreTestConfigureRepository;
- 
+
   HttpSession session;
 
   @Scheduled(cron = "${mail.notificationTime.plantEquipment}")
@@ -266,108 +266,117 @@ public class EmailNotification {
   }
 
   @Async
-	public void sendMixdesinApprovelEmail(FinishProductSample finishProductSample,
-			MixDesignConfirmationToken mixDesignConfirmationToken, HttpServletRequest request, String url) {
-	 
+  public void sendMixdesinApprovelEmail(FinishProductSample finishProductSample,
+      MixDesignConfirmationToken mixDesignConfirmationToken, HttpServletRequest request,
+      String url) {
+
     Integer seconds = 5;
-	  try {
-        Thread.sleep(seconds*1000);
+    try {
+      Thread.sleep(seconds * 1000);
     } catch (InterruptedException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
-		EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-				finishProductSample.getMixDesign().getPlant().getCode(), MailGroupConstance.MIX_DESIGN_CONFIRMATION);
-		if (emailGroup != null) {
-			String body = "<a href=http://" + url + "/api/v1/mix-design/confirmation/"
-					+ mixDesignConfirmationToken.getConfirmationToken() + ">" + "<button style={{background-color:"
-					+ "#008CBA" + "}}>Approve</button>" + "</a>";
-			if (emailGroup.isStatus()) {
-				List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-						emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
-								String testMailBody = " ";
-				request.getPathInfo();
-				for (FinishProductTest finishProductTest : finishProductTestRepository
-						.findByFinishProductSampleCode(finishProductSample.getCode())) {
-				  String result = " ";
-	              String acceptedValue = " ";
-				  
-					for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
-							.findByFinishProductTestCode(finishProductTest.getCode())) {
-						result = result + "<li> Result: <b>"
-								+ finishProductParameterResult.getTestParameter().getParameter().getName() + "- "
-								+ finishProductParameterResult.getResult() + "</b></li>";
-						if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
-							AcceptedValue value = acceptedValueRepository.findByTestParameterIdAndTestConfigureId(
-									finishProductParameterResult.getTestParameter().getId(),
-									finishProductTest.getTestConfigure().getId());
-							if (value.getConditionRange() == Condition.BETWEEN) {
-								acceptedValue = acceptedValue + "maxValue - " + value.getMaxValue().toString()
-										+ "minValue - " + value.getMaxValue().toString();
-							} else if (value.getConditionRange() == Condition.EQUAL) {
-								acceptedValue = acceptedValue + "Equal to - " + value.getValue().toString();
+    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
+        finishProductSample.getMixDesign().getPlant().getCode(),
+        MailGroupConstance.MIX_DESIGN_CONFIRMATION);
+    if (emailGroup != null) {
+      String body = "<a href=http://" + url + "/api/v1/mix-design/confirmation/"
+          + mixDesignConfirmationToken.getConfirmationToken() + ">"
+          + "<button style={{background-color:" + "#008CBA" + "}}>Approve</button>" + "</a>";
+      if (emailGroup.isStatus()) {
+        List<String> reciepientList =
+            emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
+                emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
+        String testMailBody = " ";
+        request.getPathInfo();
+        for (FinishProductTest finishProductTest : finishProductTestRepository
+            .findByFinishProductSampleCode(finishProductSample.getCode())) {
+          String result = " ";
+          String acceptedValue = " ";
 
-							} else if (value.getConditionRange() == Condition.GREATER_THAN) {
-								acceptedValue = acceptedValue + "Greater than - " + value.getValue().toString();
+          for (FinishProductParameterResult finishProductParameterResult : finishProductParameterResultRepository
+              .findByFinishProductTestCode(finishProductTest.getCode())) {
+            result = result + "<li> Result: <b>"
+                + finishProductParameterResult.getTestParameter().getParameter().getName() + "- "
+                + finishProductParameterResult.getResult() + "</b></li>";
+            if (finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
+              AcceptedValue value = acceptedValueRepository.findByTestParameterIdAndTestConfigureId(
+                  finishProductParameterResult.getTestParameter().getId(),
+                  finishProductTest.getTestConfigure().getId());
+              if (value.getConditionRange() == Condition.BETWEEN) {
+                acceptedValue = acceptedValue + "maxValue - " + value.getMaxValue().toString()
+                    + "minValue - " + value.getMaxValue().toString();
+              } else if (value.getConditionRange() == Condition.EQUAL) {
+                acceptedValue = acceptedValue + "Equal to - " + value.getValue().toString();
 
-							} else if (value.getConditionRange() == Condition.LESS_THAN) {
-								acceptedValue = acceptedValue + "Less than - " + value.getValue().toString();
-							}
-						} else if(finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL)) {
-							MaterialAcceptedValue materialValue = materialAcceptedValueRepository
-									.findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
-											finishProductTest.getTestConfigure().getId(),
-											finishProductParameterResult.getTestParameter().getId(),
-											finishProductParameterResult.getFinishProductTest().getFinishProductSample()
-													.getMixDesign().getRawMaterial().getId());
-							if (materialValue.getConditionRange().equals(Condition.BETWEEN)) {
-								acceptedValue = acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
-										+ " - minValue - " + materialValue.getMinValue().toString();
-							} else if (materialValue.getConditionRange() == Condition.EQUAL) {
-								acceptedValue = acceptedValue + "Equal to - " + materialValue.getValue().toString();
-							} else if (materialValue.getConditionRange() == Condition.GREATER_THAN) {
-								acceptedValue = acceptedValue + " Greater than - : "
-										+ materialValue.getValue().toString();
-							} else if (materialValue.getConditionRange() == Condition.LESS_THAN) {
-								acceptedValue = acceptedValue + "Less than - " + materialValue.getValue().toString();
-							}
-						}
-						else {
-						  MaterialAcceptedValue materialValue = materialAcceptedValueRepository
-						      .findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(                              
-                                      finishProductTest.getTestConfigure().getId(),
-                                      finishProductParameterResult.getTestParameter().getId(),
-                                      finishProductParameterResult.getFinishProductTest().getFinishProductSample()
-                                              .getMixDesign().getRawMaterial().getMaterialSubCategory().getId());
-                      if (materialValue.getConditionRange().equals(Condition.BETWEEN)) {
-                          acceptedValue = acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
-                                  + " - minValue - " + materialValue.getMinValue().toString();
-                      } else if (materialValue.getConditionRange() == Condition.EQUAL) {
-                          acceptedValue = acceptedValue + "Equal to - " + materialValue.getValue().toString();
-                      } else if (materialValue.getConditionRange() == Condition.GREATER_THAN) {
-                          acceptedValue = acceptedValue + " Greater than - : "
-                                  + materialValue.getValue().toString();
-                      } else if (materialValue.getConditionRange() == Condition.LESS_THAN) {
-                          acceptedValue = acceptedValue + "Less than - " + materialValue.getValue().toString();
-                      }
-						};
-					}
-					testMailBody = testMailBody + "</br><li> Test: <b>"
-							+ finishProductTest.getTestConfigure().getTest().getName() + "</b></li>" + result
-							+ "<li> Acceptance Range:<b>" + acceptedValue + "</b></li>" + "<li>Status:<b>"
-							+ finishProductTest.getStatus() + "</b></li>" + "<li>Tested Date:<b>"
-							+ finishProductTest.getDate() + "</b></li></n> </br>";
-				};
-				String message = "<ul><li>Finish Product: <b>" + finishProductSample.getMixDesign().getRawMaterial().getName()
-						+ "</b></li>" + "<li> Mix Design Code: <b>" + finishProductSample.getMixDesign().getCode()
-						+ "</b></li>" + "<li> Plant-Lab-Trial Sample: <b>" + finishProductSample.getCode() + "</b></li>"
-						+ "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt() + "</b></li></br>"
-						+ "<li> <b>Conducted test Details: </b></li></br>" + "<ul>" + testMailBody + "</ul></ul>";
-				String mailBody = message + body;
-				emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-						Constants.SUBJECT_MIX_DESIGN_APPROVEL, mailBody);
-			}
-		}
-	}
+              } else if (value.getConditionRange() == Condition.GREATER_THAN) {
+                acceptedValue = acceptedValue + "Greater than - " + value.getValue().toString();
+
+              } else if (value.getConditionRange() == Condition.LESS_THAN) {
+                acceptedValue = acceptedValue + "Less than - " + value.getValue().toString();
+              }
+            } else if (finishProductTest.getTestConfigure().getAcceptedType()
+                .equals(AcceptedType.MATERIAL)) {
+              MaterialAcceptedValue materialValue = materialAcceptedValueRepository
+                  .findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
+                      finishProductTest.getTestConfigure().getId(),
+                      finishProductParameterResult.getTestParameter().getId(),
+                      finishProductParameterResult.getFinishProductTest().getFinishProductSample()
+                          .getMixDesign().getRawMaterial().getId());
+              if (materialValue.getConditionRange().equals(Condition.BETWEEN)) {
+                acceptedValue =
+                    acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
+                        + " - minValue - " + materialValue.getMinValue().toString();
+              } else if (materialValue.getConditionRange() == Condition.EQUAL) {
+                acceptedValue = acceptedValue + "Equal to - " + materialValue.getValue().toString();
+              } else if (materialValue.getConditionRange() == Condition.GREATER_THAN) {
+                acceptedValue =
+                    acceptedValue + " Greater than - : " + materialValue.getValue().toString();
+              } else if (materialValue.getConditionRange() == Condition.LESS_THAN) {
+                acceptedValue =
+                    acceptedValue + "Less than - " + materialValue.getValue().toString();
+              }
+            } else {
+              MaterialAcceptedValue materialValue = materialAcceptedValueRepository
+                  .findByTestConfigureIdAndTestParameterIdAndMaterialSubCategoryId(
+                      finishProductTest.getTestConfigure().getId(),
+                      finishProductParameterResult.getTestParameter().getId(),
+                      finishProductParameterResult.getFinishProductTest().getFinishProductSample()
+                          .getMixDesign().getRawMaterial().getMaterialSubCategory().getId());
+              if (materialValue.getConditionRange().equals(Condition.BETWEEN)) {
+                acceptedValue =
+                    acceptedValue + "maxValue - " + materialValue.getMaxValue().toString()
+                        + " - minValue - " + materialValue.getMinValue().toString();
+              } else if (materialValue.getConditionRange() == Condition.EQUAL) {
+                acceptedValue = acceptedValue + "Equal to - " + materialValue.getValue().toString();
+              } else if (materialValue.getConditionRange() == Condition.GREATER_THAN) {
+                acceptedValue =
+                    acceptedValue + " Greater than - : " + materialValue.getValue().toString();
+              } else if (materialValue.getConditionRange() == Condition.LESS_THAN) {
+                acceptedValue =
+                    acceptedValue + "Less than - " + materialValue.getValue().toString();
+              }
+            } ;
+          }
+          testMailBody = testMailBody + "</br><li> Test: <b>"
+              + finishProductTest.getTestConfigure().getTest().getName() + "</b></li>" + result
+              + "<li> Acceptance Range:<b>" + acceptedValue + "</b></li>" + "<li>Status:<b>"
+              + finishProductTest.getStatus() + "</b></li>" + "<li>Tested Date:<b>"
+              + finishProductTest.getDate() + "</b></li></n> </br>";
+        } ;
+        String message = "<ul><li>Finish Product: <b>"
+            + finishProductSample.getMixDesign().getRawMaterial().getName() + "</b></li>"
+            + "<li> Mix Design Code: <b>" + finishProductSample.getMixDesign().getCode()
+            + "</b></li>" + "<li> Plant-Lab-Trial Sample: <b>" + finishProductSample.getCode()
+            + "</b></li>" + "<li> Sample Created Date:<b>" + finishProductSample.getCreatedAt()
+            + "</b></li></br>" + "<li> <b>Conducted test Details: </b></li></br>" + "<ul>"
+            + testMailBody + "</ul></ul>";
+        String mailBody = message + body;
+        emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
+            Constants.SUBJECT_MIX_DESIGN_APPROVEL, mailBody);
+      }
+    }
+  }
 
   @Async
   public void sendSupplierEmail(Supplier supplier) {
@@ -471,13 +480,14 @@ public class EmailNotification {
         MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String customerName = customerRepository
-            .findById(finishProductSample.getProject().getCustomer().getId()).get().getName();
-        String RawMaterialName =
-            mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode())
-                .getRawMaterial().getName();
-        String mailBody = "Material name " + RawMaterialName + " is deliveried for the customer, "
-            + customerName;
+        String mailBody = "";
+        String RawMaterialName = finishProductSample.getMixDesign().getRawMaterial().getName();
+        if (finishProductSample.getProject() != null) {
+          mailBody = "Material name " + RawMaterialName + " is deliveried for the customer, "
+              + finishProductSample.getProject().getCustomer().getName();
+        } else {
+          mailBody = "Material name " + RawMaterialName + " is delivered";
+        }
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -513,12 +523,14 @@ public class EmailNotification {
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        MaterialSubCategory materialSubCategory = materialSubCategoryRepository.findById(rawMaterial.getMaterialSubCategory().getId()).get();
-        String materialSubCategoryName =  materialSubCategoryRepository
+        MaterialSubCategory materialSubCategory = materialSubCategoryRepository
+            .findById(rawMaterial.getMaterialSubCategory().getId()).get();
+        String materialSubCategoryName = materialSubCategoryRepository
             .findById(rawMaterial.getMaterialSubCategory().getId()).get().getName();
-        String materialCategoryName =materialSubCategory.getMaterialCategory().getName();
+        String materialCategoryName = materialSubCategory.getMaterialCategory().getName();
         String mailBody =
-            "Material " + rawMaterial.getName() + " is newly added under  Main category - " +materialCategoryName +" and  Sub category - "+ materialSubCategoryName ;              ;
+            "Material " + rawMaterial.getName() + " is newly added under  Main category - "
+                + materialCategoryName + " and  Sub category - " + materialSubCategoryName;;
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
@@ -614,9 +626,10 @@ public class EmailNotification {
         if (plantEquipmentCalibration.getSupplier() != null) {
           String supplierName = supplierRepository
               .findById(plantEquipmentCalibration.getSupplier().getId()).get().getName();
-          String mailBody = equipmentName + " is Calibrated by "
-              + plantEquipmentCalibration.getCalibrationType() + " by the supplier :-" + supplierName
-              + " and the " + plantEquipmentCalibration.getDueDate() + " at " + plantName;
+          String mailBody =
+              equipmentName + " is Calibrated by " + plantEquipmentCalibration.getCalibrationType()
+                  + " by the supplier :-" + supplierName + " and the "
+                  + plantEquipmentCalibration.getDueDate() + " at " + plantName;
           List<String> reciepientList =
               emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                   MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION, plantCode);

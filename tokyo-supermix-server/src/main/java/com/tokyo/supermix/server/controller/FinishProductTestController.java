@@ -1,7 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -28,11 +28,12 @@ import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
-import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
+import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FinishProductTestService;
+import com.tokyo.supermix.server.services.FinishProductTrialService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -47,6 +48,8 @@ public class FinishProductTestController {
   private Mapper mapper;
   @Autowired
   private FinishProductTestService finishProductTestService;
+  @Autowired
+  private FinishProductTrialService finishProductTrialService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   private static final Logger logger = Logger.getLogger(FinishProductTestController.class);
@@ -217,7 +220,7 @@ public class FinishProductTestController {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_TEST, mapper.map(
-            finishProductTestService.searchFinishProductTest(booleanBuilder, code,specimenCode,
+            finishProductTestService.searchFinishProductTest(booleanBuilder, code, specimenCode,
                 finishProductSampleCode, mixDesignCode, testName, materialName, mainCategoryName,
                 subCategoryName, status, date, plantName, plantCode, pageable, pagination),
             FinishProductTestResponseDto.class), RestApiResponseStatus.OK, pagination),
@@ -231,5 +234,13 @@ public class FinishProductTestController {
         mapper.map(finishProductTestService.getFinishProductTestsByFinishProductSampleCode(
             finishProductSampleCode), FinishProductTestResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_APROVE_BY_CODE)
+  public ResponseEntity<Object> finishproductTestsAproveUpdate(
+      @PathVariable String finishProductTestCode, HttpServletRequest request) {
+    finishProductTrialService.aprovedUpdateStatus(finishProductTestCode, request);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.UPDATE_FINISH_PRODUCT_TEST_APROVE_SUCCESS), HttpStatus.OK);
   }
 }

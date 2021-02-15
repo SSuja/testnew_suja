@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
 import com.tokyo.supermix.data.entities.CoreTestConfigure;
-import com.tokyo.supermix.data.entities.FinishProductTest;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -73,6 +71,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     String specimenCode = (materialTestTrialList.size() == 0) ? subPrefix + String.format("%02d", 1)
         : subPrefix + String.format("%02d", materialTestTrialList.size() + 1);
     materialTest.setSpecimenCode(specimenCode);
+    IncomingSample incomingSample =
+        incomingSampleRepository.getOne(materialTest.getIncomingSample().getCode());
+    if (incomingSample.getStatus().equals(Status.NEW)) {
+      incomingSample.setStatus(Status.PROCESS);
+      incomingSampleRepository.save(incomingSample);
+    }
     materialTestRepository.save(materialTest);
     return materialTest.getCode();
   }
@@ -139,26 +143,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     boolean check = false;
     TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
     if (testConfigure.getTestType().equals(MainType.RAW_MATERIAL)) {
-      List<MaterialTest> materialTestsList =
-          materialTestRepository.findByTestConfigureId(testConfigureId);
-      if (!materialTestsList.isEmpty()) {
-        for (MaterialTest materialTest : materialTestsList) {
-          if (materialTest.getIncomingSample().getRawMaterial().getId().toString()
-              .equalsIgnoreCase(rawMaterialId.toString())) {
-            return check = true;
-          }
-        }
+      if (materialTestRepository
+          .existsByTestConfigureIdAndIncomingSampleRawMaterialId(testConfigureId, rawMaterialId)) {
+        return check = true;
       }
     } else {
-      List<FinishProductTest> finishProductTestList =
-          finishProductTestRepository.findByTestConfigureId(testConfigureId);
-      if (!finishProductTestList.isEmpty()) {
-        for (FinishProductTest finishProductTest : finishProductTestList) {
-          if (finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial().getId()
-              .toString().equalsIgnoreCase(rawMaterialId.toString())) {
-            return check = true;
-          }
-        }
+      if (finishProductTestRepository
+          .existsByTestConfigureIdAndFinishProductSampleMixDesignRawMaterialId(testConfigureId,
+              rawMaterialId)) {
+        return check = true;
       }
     }
     return check;
@@ -230,22 +223,6 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public List<MaterialTest> getAllMaterialTestByPlant(UserPrincipal currentUser) {
     return materialTestRepository.findByIncomingSamplePlantCodeIn(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_MATERIAL_TEST));
-  }
-
-  private void calculateTest(Integer count, Integer failCount, Integer testSize,
-      IncomingSample incomingSample, String bodyMessage, MaterialTest materialTestObj) {
-    updateStatusSample(
-        (count == testSize && testSize != 0) ? Status.PASS
-            : (failCount == 1) ? Status.FAIL : Status.PROCESS,
-        incomingSample, bodyMessage, materialTestObj);
-  }
-
-  public boolean getMaterialAcceptedForTest(TestConfigure testConfigure, Long rawMaterialId) {
-    return (testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL))
-        ? (materialAcceptedValueRepository
-            .existsByTestConfigureIdAndRawMaterialId(testConfigure.getId(), rawMaterialId)) ? true
-                : false
-        : true;
   }
 
   private void updateStatusSample(Status status, IncomingSample incomingSample, String bodyMessage,
@@ -327,19 +304,15 @@ public class MaterialTestServiceImpl implements MaterialTestService {
 
   public void updateIncomingSampleStatusByIncomingSample(MaterialTest materialTestObj) {
     IncomingSample incomingSample = materialTestObj.getIncomingSample();
-    if (coreTestConfigureRepository.
-    // existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrue(
-        existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
+    if (coreTestConfigureRepository
+        .existsBytestConfigureIdAndRawMaterialIdAndCoreTestTrueAndApplicableTestTrue(
             materialTestObj.getTestConfigure().getId(), incomingSample.getRawMaterial().getId())) {
-      List<CoreTestConfigure> coreTestConfigureList =
-          // coreTestConfigureService.getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
-          // getCoreTestConfigureByRawMaterialId
-          coreTestConfigureService
-              .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
-                  incomingSample.getRawMaterial().getId());
+      List<CoreTestConfigure> coreTestConfigureList = coreTestConfigureService
+          .getCoreTestConfigureByRawMaterialIdCoreTestTrueAndApplicableTestTrue(
+              incomingSample.getRawMaterial().getId());
       List<TestConfigure> testConfigureList = coreTestConfigureList.stream()
           .map(testConfigure -> testConfigure.getTestConfigure()).collect(Collectors.toList());
-      Status status = Status.NEW;
+      Status status = Status.PROCESS;
       List<MaterialTest> materialTestlist = new ArrayList<>();
       for (TestConfigure testconfigure : testConfigureList) {
         if (!materialTestRepository
@@ -717,5 +690,26 @@ public class MaterialTestServiceImpl implements MaterialTestService {
   public List<MaterialTest> getAllMaterialTestByPlantCodeDesc(String plantCode, Pageable pageable) {
     return materialTestRepository.findByIncomingSamplePlantCodeOrderByUpdatedAtDesc(plantCode,
         pageable);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialTestByTestConfigureAndMaterialSubCategoryExists(Long testConfigureId,
+      Long materialSubCategoryId) {
+    boolean check = false;
+    TestConfigure testConfigure = testConfigureRepository.findById(testConfigureId).get();
+    if (testConfigure.getTestType().equals(MainType.RAW_MATERIAL)) {
+      if (materialTestRepository
+          .existsByTestConfigureIdAndIncomingSampleRawMaterialMaterialSubCategoryId(testConfigureId,
+              materialSubCategoryId)) {
+        return check = true;
+      }
+    } else {
+      if (finishProductTestRepository
+          .existsByTestConfigureIdAndFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId(
+              testConfigureId, materialSubCategoryId)) {
+        return check = true;
+      }
+    }
+    return check;
   }
 }

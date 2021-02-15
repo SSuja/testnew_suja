@@ -8,4 +8,6 @@ public interface MultiResultFormulaRepository extends JpaRepository<MultiResultF
   MultiResultFormula findByTestConfigureId(Long testConfigureId);
 
   boolean existsByTestConfigureId(Long testConfigureId);
+
+  Long deleteByTestConfigureId(Long testConfigureId);
 }

@@ -77,4 +77,7 @@ public interface MaterialTestService {
   public List<MaterialTest> getAllMaterialTestDesc(Pageable pageable);
 
   public List<MaterialTest> getAllMaterialTestByPlantCodeDesc(String plantCode, Pageable pageable);
+
+  public boolean isMaterialTestByTestConfigureAndMaterialSubCategoryExists(Long testConfigureId,
+      Long materialSubCategoryId);
 }

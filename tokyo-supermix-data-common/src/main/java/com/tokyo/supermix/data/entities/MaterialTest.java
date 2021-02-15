@@ -28,6 +28,7 @@ public class MaterialTest extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   private String specimenCode;
+  private boolean approved;
 
   public String getCode() {
     return code;
@@ -87,5 +88,13 @@ public class MaterialTest extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isApproved() {
+    return approved;
+  }
+
+  public void setApproved(boolean approved) {
+    this.approved = approved;
   }
 }

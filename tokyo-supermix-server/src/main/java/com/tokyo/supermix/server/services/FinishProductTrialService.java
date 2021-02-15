@@ -3,8 +3,9 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
+import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.security.UserPrincipal;
 
 public interface FinishProductTrialService {
@@ -38,5 +39,8 @@ public interface FinishProductTrialService {
       List<FinishProductTrial> finishProductTrialList);
 
   public boolean getEquationCheck(String finishProductTestCode);
+  
+  public void aprovedUpdateStatus(String finishProductTestCode,
+      HttpServletRequest request);
 }
 
