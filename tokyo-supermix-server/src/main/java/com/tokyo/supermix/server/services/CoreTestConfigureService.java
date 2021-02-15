@@ -16,9 +16,6 @@ public interface CoreTestConfigureService {
 
   public void createCoreTestConfigure(Long Id);
 
-  public void createCoreTestConfigureInTestConfig(Long Mainid, Long subId, Long RawMatId,
-      Long testId);
-
   public List<CoreTestConfigure> getCoreTestConfigureByTestConfigureId(Long testConfigureId);
 
   public List<CoreTestConfigure> getCoreTestConfigureByRawMaterialIdAndCoreTestTrue(
@@ -64,9 +61,9 @@ public interface CoreTestConfigureService {
   public void getAllCoreTestConfigureByrawMaterialId(Long rawMaterialId);
 
   public void deleteAllCoreTestConfigureByrawMaterialId(Long rawMaterialId);
-  
-  public void deleteAllCoreTestConfigureByMaterialSubCategoryId(Long materialSubCategoryId);
-  
-  public void updateCoreTestByNewMaterialSubCategoryId(Long materialSubCategoryId, Long materialCategoryId);
 
+  public void deleteAllCoreTestConfigureByMaterialSubCategoryId(Long materialSubCategoryId);
+
+  public void updateCoreTestByNewMaterialSubCategoryId(Long materialSubCategoryId,
+      Long materialCategoryId);
 }

@@ -24,12 +24,15 @@ import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.ParameterService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.server.services.TestParameterService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -42,6 +45,10 @@ public class TestParameterController {
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
+  private TestConfigureService testConfigureService;
+  @Autowired
+  ParameterService parameterService;
+  @Autowired
   private Mapper mapper;
   private static final Logger logger = Logger.getLogger(TestParameterController.class);
 
@@ -49,9 +56,17 @@ public class TestParameterController {
   public ResponseEntity<Object> createTestParameter(
       @Valid @RequestBody List<TestParameterRequestDto> testParameterRequestDtoList)
       throws ScriptException {
-    List<TestParameterRequestDto> listTestParameter = testParameterRequestDtoList
-        .stream().filter(testPara -> (testPara.getInputMethods() == null)
-            || (testPara.getType() == null) || (testPara.getUnitId() == null))
+    List<TestParameterRequestDto> listTestParameter = testParameterRequestDtoList.stream()
+        .filter(testPara -> (testPara.getInputMethods() == null) || (testPara.getType() == null)
+            || (testPara.getUnitId() == null)
+            || ((testPara.getType().equals(TestParameterType.CONFIG))
+                && parameterService.getParameterById(testPara.getParameterId())
+                    .getParameterDataType().equals(ParameterDataType.NUMBER)
+                && (testPara.getValue() == null))
+            || (testPara.getType().equals(TestParameterType.CONFIG)
+                && parameterService.getParameterById(testPara.getParameterId())
+                    .getParameterDataType().equals(ParameterDataType.DATETIME)
+                && (testPara.getDateValue() == null)))
         .collect(Collectors.toList());
     if (listTestParameter.isEmpty()) {
       if (testParameterService.checkAbbreviation(testParameterRequestDtoList)) {
@@ -118,7 +133,14 @@ public class TestParameterController {
 
   @DeleteMapping(EndpointURI.TEST_PARAMETER_BY_ID)
   public ResponseEntity<Object> deleteTestParameter(@PathVariable Long id) {
+    TestParameter testParameter = testParameterService.getTestParameterById(id);
     if (testParameterService.isTestParameterExist(id)) {
+      if (testConfigureService.isAlreadyDepended(testParameter.getTestConfigure().getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       testParameterService.deleteTestParameter(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.TEST_PARAMETER_DELETED),
@@ -146,6 +168,12 @@ public class TestParameterController {
   public ResponseEntity<Object> updateTestParameter(
       @RequestBody TestParameterRequestDto testParameterRequestDto) {
     if (testParameterService.isTestParameterExist(testParameterRequestDto.getId())) {
+      if (testConfigureService.isAlreadyDepended(testParameterRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (testParameterService.isAbbreviationNull(testParameterRequestDto.getAbbreviation())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.ABBREVIATION,
             validationFailureStatusCodes.getAbbreviationIsNull()), HttpStatus.BAD_REQUEST);

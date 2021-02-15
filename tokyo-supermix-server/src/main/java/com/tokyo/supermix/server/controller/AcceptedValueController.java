@@ -31,7 +31,6 @@ import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.AcceptedValueService;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
-import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
@@ -44,13 +43,14 @@ public class AcceptedValueController {
   @Autowired
   private TestConfigureService testService;
   @Autowired
-  private MaterialTestService materialTestService;
-  @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
   @Autowired
   CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  private TestConfigureService testConfigureService;
+
   private static final Logger logger = Logger.getLogger(AcceptedValueController.class);
 
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
@@ -112,8 +112,13 @@ public class AcceptedValueController {
   @DeleteMapping(value = EndpointURI.ACCEPTED_VALUE_BY_ID)
   public ResponseEntity<Object> deleteAcceptedValue(@PathVariable Long id) {
     if (acceptedValueService.isAcceptedValueExist(id)) {
-
       AcceptedValue acceptedValue = acceptedValueService.getAcceptedValueById(id);
+      if (testConfigureService.isAlreadyDepended(acceptedValue.getTestConfigure().getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       coreTestConfigureService
           .updateApplicableTestByTestConfigureId(acceptedValue.getTestConfigure().getId(), false);
       acceptedValueService.deleteAcceptedValue(id);
@@ -130,10 +135,16 @@ public class AcceptedValueController {
   public ResponseEntity<Object> updateAcceptedValue(
       @Valid @RequestBody AcceptedValueRequestDto acceptedValueRequestDto) {
     if (acceptedValueService.isAcceptedValueExist(acceptedValueRequestDto.getId())) {
-      if (materialTestService
-          .isMaterialTestByTestConfigureExists(acceptedValueRequestDto.getTestConfigureId())) {
-        return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-            Constants.ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
+      if (testConfigureService.isAlreadyDepended(acceptedValueRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (acceptedValueService
+          .isCheckValidation(mapper.map(acceptedValueRequestDto, AcceptedValue.class))) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+            validationFailureStatusCodes.getAcceptedValueNotNull()), HttpStatus.BAD_REQUEST);
       } else {
         acceptedValueService
             .saveAcceptedValue(mapper.map(acceptedValueRequestDto, AcceptedValue.class));
