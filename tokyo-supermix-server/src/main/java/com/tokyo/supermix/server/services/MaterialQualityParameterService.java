@@ -31,4 +31,12 @@ public interface MaterialQualityParameterService {
 
   public boolean checkAlreadyExistsForUpdate(
       MaterialQualityParameterRequestDto materialQualityParameterRequestDto);
+
+  public List<MaterialQualityParameter> getAllMaterialParametersByRawMaterial(Long rawMaterialId);
+
+  public List<MaterialQualityParameter> getAllMaterialParametersBySubCategory(Long subCategoryId);
+
+  public boolean existsMaterialParametersByRawMaterial(Long rawMaterialId);
+
+  public boolean existsMaterialParametersBySubCategory(Long subCategoryId);
 }

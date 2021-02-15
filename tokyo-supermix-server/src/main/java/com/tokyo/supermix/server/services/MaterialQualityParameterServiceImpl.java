@@ -41,6 +41,26 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
     materialQualityParameterRepository.save(materialQualityParameter);
   }
 
+  @Transactional(readOnly = true)
+  public List<MaterialQualityParameter> getAllMaterialParametersByRawMaterial(Long rawMaterialId) {
+    return materialQualityParameterRepository.findByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public List<MaterialQualityParameter> getAllMaterialParametersBySubCategory(Long subCategoryId) {
+    return materialQualityParameterRepository.findByMaterialSubCategoryId(subCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsMaterialParametersByRawMaterial(Long rawMaterialId) {
+    return materialQualityParameterRepository.existsByRawMaterialId(rawMaterialId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean existsMaterialParametersBySubCategory(Long subCategoryId) {
+    return materialQualityParameterRepository.existsByMaterialSubCategoryId(subCategoryId);
+  }
+
   // check common fields null
   @Transactional(readOnly = true)
   public boolean checkCommonNullFieldValues(

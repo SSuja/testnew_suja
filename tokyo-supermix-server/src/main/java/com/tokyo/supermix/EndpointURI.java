@@ -512,11 +512,14 @@ public final class EndpointURI {
 
   // Material Quality Parameter
   public static final String MATERIAL_QUALITY_PARAMETER =
-      BASE_API_PATH + "material_quality_parameter";
+      BASE_API_PATH + "material-quality-parameter";
   public static final String MATERIAL_QUALITY_PARAMETERS =
-      MATERIAL_QUALITY_PARAMETER + "material_quality_parameters";
-  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID =
-      MATERIAL_QUALITY_PARAMETER + "material_quality_parameter" + ID;
+      BASE_API_PATH + "material-quality-parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_RAWMATERIAL =
+      MATERIAL_QUALITY_PARAMETERS + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_SUBCATEGORY =
+      MATERIAL_QUALITY_PARAMETERS + SLASH + "sub-category" + SLASH + "{subCategoryId}";
 
 
   /*

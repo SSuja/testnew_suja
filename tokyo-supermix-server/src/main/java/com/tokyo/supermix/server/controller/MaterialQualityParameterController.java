@@ -124,4 +124,38 @@ public class MaterialQualityParameterController {
             validationFailureStatusCodes.getMaterialQualityParameterNotExist()),
         HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETER_BY_RAWMATERIAL)
+  public ResponseEntity<Object> getMaterialParametersByRawMaterial(
+      @PathVariable Long rawMaterialId) {
+    if (materialQualityParameterService.existsMaterialParametersByRawMaterial(rawMaterialId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.MATERIAL_QUALITY_PARAMETERS,
+              mapper.map(materialQualityParameterService.getAllMaterialParametersByRawMaterial(
+                  rawMaterialId), MaterialQualityParameterResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER,
+            validationFailureStatusCodes.getMaterialQualityParameterNotExist()),
+        HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETER_BY_SUBCATEGORY)
+  public ResponseEntity<Object> getMaterialParametersBySubCategory(
+      @PathVariable Long subCategoryId) {
+    if (materialQualityParameterService.existsMaterialParametersBySubCategory(subCategoryId)) {
+      return new ResponseEntity<>(
+          new ContentResponse<>(Constants.MATERIAL_QUALITY_PARAMETERS,
+              mapper.map(materialQualityParameterService.getAllMaterialParametersBySubCategory(
+                  subCategoryId), MaterialQualityParameterResponseDto.class),
+              RestApiResponseStatus.OK),
+          null, HttpStatus.OK);
+    }
+    return new ResponseEntity<>(
+        new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER,
+            validationFailureStatusCodes.getMaterialQualityParameterNotExist()),
+        HttpStatus.BAD_REQUEST);
+  }
 }
