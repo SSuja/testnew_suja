@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -84,11 +85,33 @@ public interface RawMaterialService {
   public boolean isRawMaterialNameAndPrefixAndMaterialTypeAndPlant(String prefix,
       Long materialCategoryId, MaterialType materialType, String plantCode);
 
-  public boolean isUpdatedPrefixAndRawMaterial(Long id, Long materialSubCategoryId, String prefix,
-      MaterialType materialType);
+  public boolean isUpdatedSubCategoryIdAndRawMaterialNameForCommonWise(Long id,
+      Long materialSubCategoryId, String rawMaterialName, MaterialType materialType);
 
-  public boolean isUpdatedPlantWise(Long id, Long materialSubCategoryId, String prefix,
-      MaterialType materialType, String plantCode);
+  public boolean isUpdatedSubCategoryIdAndPrefixForCommonWise(Long id, Long materialSubCategoryId,
+      String prefix, MaterialType materialType);
 
-  public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId);
+  public boolean isUpdatedSubCategoryIdAndRawMaterialNameForPlantWise(Long id,
+      Long materialSubCategoryId, String rawMaterialName, MaterialType materialType,
+      String plantCode);
+
+  public boolean isUpdatedSubCategoryIdAndPrefixForPlantWise(Long id, Long materialSubCategoryId,
+      String prefix, MaterialType materialType, String plantCode);
+
+  public boolean isUpdatedSubCategoryIdAndRawMaterialNameForSBUWise(Long id,
+      Long materialSubCategoryId, String rawMaterialName, Long sbuId);
+
+  public boolean isUpdatedSubCategoryIdAndPrefixForSBUWise(Long id, Long materialSubCategoryId,
+      String prefix, Long sbuId);
+
+  public boolean checkPlantDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto);
+
+  public boolean checkSbuDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto);
+
+  public boolean isExistsSBU(Long id, Long sbuId);
+
+  public boolean isExistsByPlant(Long id, String plantCode);
+
+  public void deleteMaterialByCoreTestConfigure(Long rawMaterialId);
+
 }

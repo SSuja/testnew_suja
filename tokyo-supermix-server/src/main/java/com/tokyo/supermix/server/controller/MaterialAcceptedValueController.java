@@ -78,6 +78,7 @@ public class MaterialAcceptedValueController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
+
     materialAcceptedValueService.saveAcceptedValue(
         mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
     materialAcceptedValueService
@@ -134,6 +135,25 @@ public class MaterialAcceptedValueController {
     if (materialAcceptedValueService.isMaterialAcceptedValueExist(id)) {
       MaterialAcceptedValue materialAcceptedValue =
           materialAcceptedValueService.getMaterialAcceptedValueById(id);
+      if (materialAcceptedValue.getCategoryAcceptedType().equals(CategoryAcceptedType.MATERIAL)) {
+        if (materialTestService.isMaterialTestByTestConfigureAndRawMaterialExists(
+            materialAcceptedValue.getTestConfigure().getId(),
+            materialAcceptedValue.getRawMaterial().getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                  validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        if (materialTestService.isMaterialTestByTestConfigureAndMaterialSubCategoryExists(
+            materialAcceptedValue.getTestConfigure().getId(),
+            materialAcceptedValue.getMaterialSubCategory().getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                  validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+      }
       if (materialAcceptedValue.getMaterialSubCategory() != null) {
         configureService.updateApplicableTestByMaterialSubCategoryId(
             materialAcceptedValue.getTestConfigure().getId(),
@@ -159,12 +179,24 @@ public class MaterialAcceptedValueController {
       @Valid @RequestBody MaterialAcceptedValueRequestDto materialAcceptedValueRequestDto) {
     if (materialAcceptedValueService
         .isMaterialAcceptedValueExist(materialAcceptedValueRequestDto.getId())) {
-      if (materialAcceptedValueRequestDto.getRawMaterialId() != null) {
+      if (materialAcceptedValueRequestDto.getCategoryAcceptedType()
+          .equals(CategoryAcceptedType.MATERIAL)) {
         if (materialTestService.isMaterialTestByTestConfigureAndRawMaterialExists(
             materialAcceptedValueRequestDto.getTestConfigureId(),
             materialAcceptedValueRequestDto.getRawMaterialId())) {
-          return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-              Constants.MATERIAL_ACCEPTED_VALUE_ALREADY_DEPENDED), HttpStatus.OK);
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                  validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        if (materialTestService.isMaterialTestByTestConfigureAndMaterialSubCategoryExists(
+            materialAcceptedValueRequestDto.getTestConfigureId(),
+            materialAcceptedValueRequestDto.getMaterialSubCategoryId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                  validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
         }
       }
       if (materialAcceptedValueRequestDto.getMaterialSubCategoryId() != null) {
@@ -177,13 +209,11 @@ public class MaterialAcceptedValueController {
             materialAcceptedValueRequestDto.getTestConfigureId(),
             materialAcceptedValueRequestDto.getRawMaterialId(), true);
       }
-      // if (materialAcceptedValueService.isUpdatedRawMaterialIdExist(
-      // materialAcceptedValueRequestDto.getId(),
-      // materialAcceptedValueRequestDto.getTestConfigureId(),
-      // materialAcceptedValueRequestDto.getRawMaterialId())) {
-      // return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL,
-      // validationFailureStatusCodes.getRawMaterialAlreadyExist()), HttpStatus.BAD_REQUEST);
-      // }
+      if (materialAcceptedValueService.isCheckValidations(
+          mapper.map(materialAcceptedValueRequestDto, MaterialAcceptedValue.class))) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+            validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
+      }
       materialAcceptedValueService.updateMaterialAcceptedValue(
           mapper.map(materialAcceptedValueRequestDto, MaterialAcceptedValue.class));
       materialAcceptedValueService

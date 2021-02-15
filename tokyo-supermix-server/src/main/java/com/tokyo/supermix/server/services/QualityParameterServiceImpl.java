@@ -18,13 +18,6 @@ public class QualityParameterServiceImpl implements QualityParameterService {
     qualityParameterRepository.save(qualityParameter);
   }
 
-  public boolean isDuplicateRowExists(String name, Long materialSubCategoryId) {
-    if (qualityParameterRepository.existsByNameAndMaterialSubCategoryId(name,
-        materialSubCategoryId)) {
-      return true;
-    }
-    return false;
-  }
 
   @Transactional(readOnly = true)
   public List<QualityParameter> getAllQualityParameters() {
@@ -42,18 +35,23 @@ public class QualityParameterServiceImpl implements QualityParameterService {
   }
 
   @Transactional(readOnly = true)
-  public List<QualityParameter> getQualityParametersByMaterialSubCategoryId(
-      Long materialSubCategoryId) {
-    return qualityParameterRepository.findByMaterialSubCategoryId(materialSubCategoryId);
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isMaterialSubCategoryIdExist(Long materialSubCategoryId) {
-    return qualityParameterRepository.existsByMaterialSubCategoryId(materialSubCategoryId);
-  }
-
-  @Transactional(readOnly = true)
   public QualityParameter getQualityParameterById(Long id) {
     return qualityParameterRepository.findById(id).get();
+  }
+
+
+  @Transactional(readOnly = true)
+  public boolean isNameExists(String name) {
+    return qualityParameterRepository.existsByName(name);
+  }
+
+
+  @Transactional(readOnly = true)
+  public boolean isDuplicateEnty(Long id, String name) {
+    if ((!qualityParameterRepository.findById(id).get().getName().equalsIgnoreCase(name))
+        && isNameExists(name)) {
+      return true;
+    }
+    return false;
   }
 }

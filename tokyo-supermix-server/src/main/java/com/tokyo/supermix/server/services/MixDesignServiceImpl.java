@@ -54,6 +54,11 @@ public class MixDesignServiceImpl implements MixDesignService {
 
   @Transactional
   public String saveMixDesign(MixDesign mixDesign) {
+    if (mixDesign.isApproved()) {
+      mixDesign.setApproved(true);
+    } else {
+      mixDesign.setApproved(false);
+    }
     if (mixDesign.getCode() == null) {
       String rawMaterialName =
           rawMaterialRepository.findById(mixDesign.getRawMaterial().getId()).get().getName();
@@ -64,16 +69,12 @@ public class MixDesignServiceImpl implements MixDesignService {
       } else {
         mixDesign.setCode(codePrefix + String.format("%03d", maxNumberFromCode(mixDesignList) + 1));
       }
-    }
-    if (mixDesign.isApproved()) {
-      mixDesign.setApproved(true);
-    } else {
-      mixDesign.setApproved(false);
-    }
-
-    MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
-    if (mixDesignObj != null) {
-      emailNotification.sendMixDesignCreationEmail(mixDesignObj);
+      MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
+      if (mixDesignObj != null) {
+        emailNotification.sendMixDesignCreationEmail(mixDesignObj);
+      }
+    }else {
+    mixDesignRepository.save(mixDesign);
     }
     return mixDesign.getCode();
   }

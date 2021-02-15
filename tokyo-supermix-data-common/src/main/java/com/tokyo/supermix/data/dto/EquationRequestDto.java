@@ -6,6 +6,7 @@ public class EquationRequestDto {
   private Long id;
   private String formula;
   private EquationType equationType;
+  private Long testConfigureId;
 
   public Long getId() {
     return id;
@@ -29,5 +30,13 @@ public class EquationRequestDto {
 
   public void setEquationType(EquationType equationType) {
     this.equationType = equationType;
+  }
+
+  public Long getTestConfigureId() {
+    return testConfigureId;
+  }
+
+  public void setTestConfigureId(Long testConfigureId) {
+    this.testConfigureId = testConfigureId;
   }
 }

@@ -726,6 +726,16 @@ public class ValidationFailureStatusCodes {
   private String testNameIsNull;
   @Value("${testConfigureRequestDto.name.empty")
   private String testNameIsEmpty;
+  @Value("${validation.testConfigure.alreadyDepended}")
+  private String testConfigureAlreadyDepended;
+
+  public String getTestConfigureAlreadyDepended() {
+    return testConfigureAlreadyDepended;
+  }
+
+  public void setTestConfigureAlreadyDepended(String testConfigureAlreadyDepended) {
+    this.testConfigureAlreadyDepended = testConfigureAlreadyDepended;
+  }
 
   public String getTestConfigureNotExist() {
     return testConfigureNotExist;
@@ -2076,5 +2086,77 @@ public class ValidationFailureStatusCodes {
 
   public void setRawMaterialPlantOrSbuNull(String rawMaterialPlantOrSbuNull) {
     this.rawMaterialPlantOrSbuNull = rawMaterialPlantOrSbuNull;
+  }
+
+  @Value("${validation.rawMaterial.plantOrSbuAlreadyDepended}")
+  private String rawMaterialPlantOrSbuAlreadyDepended;
+
+  public String getRawMaterialPlantOrSbuAlreadyDepended() {
+    return rawMaterialPlantOrSbuAlreadyDepended;
+  }
+
+  public void setRawMaterialPlantOrSbuAlreadyDepended(String rawMaterialPlantOrSbuAlreadyDepended) {
+    this.rawMaterialPlantOrSbuAlreadyDepended = rawMaterialPlantOrSbuAlreadyDepended;
+  }
+
+  /*
+   * Material Quality Parameter
+   */
+  @Value("${validation.materialQualityParameter.notExists}")
+  private String materialQualityParameterNotExist;
+
+  @Value("${validation.commonFields.notExists}")
+  private String commonFieldsNotExist;
+
+  @Value("${validation.materialQualityParameterTypes.notExists}")
+  private String materialQualityParameterTypesNotExist;
+
+  @Value("${validation.materialQualityConditionRanges.notExists}")
+  private String materialQualityConditionRangesNotExist;
+
+  @Value("${validation.materialQualityParameter.alreadyExists}")
+  private String materialQualityParameterAlreadyExists;
+
+  public String getCommonFieldsNotExist() {
+    return commonFieldsNotExist;
+  }
+
+  public void setCommonFieldsNotExist(String commonFieldsNotExist) {
+    this.commonFieldsNotExist = commonFieldsNotExist;
+  }
+
+  public String getMaterialQualityParameterTypesNotExist() {
+    return materialQualityParameterTypesNotExist;
+  }
+
+  public void setMaterialQualityParameterTypesNotExist(
+      String materialQualityParameterTypesNotExist) {
+    this.materialQualityParameterTypesNotExist = materialQualityParameterTypesNotExist;
+  }
+
+  public String getMaterialQualityConditionRangesNotExist() {
+    return materialQualityConditionRangesNotExist;
+  }
+
+  public void setMaterialQualityConditionRangesNotExist(
+      String materialQualityConditionRangesNotExist) {
+    this.materialQualityConditionRangesNotExist = materialQualityConditionRangesNotExist;
+  }
+
+  public String getMaterialQualityParameterNotExist() {
+    return materialQualityParameterNotExist;
+  }
+
+  public void setMaterialQualityParameterNotExist(String materialQualityParameterNotExist) {
+    this.materialQualityParameterNotExist = materialQualityParameterNotExist;
+  }
+
+  public String getMaterialQualityParameterAlreadyExists() {
+    return materialQualityParameterAlreadyExists;
+  }
+
+  public void setMaterialQualityParameterAlreadyExists(
+      String materialQualityParameterAlreadyExists) {
+    this.materialQualityParameterAlreadyExists = materialQualityParameterAlreadyExists;
   }
 }

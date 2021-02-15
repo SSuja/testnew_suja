@@ -30,11 +30,11 @@ public class Constants {
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE =
       "Notification : About Finish Product Sample Creation ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
-      "Notification : About Finish Product Sample Issue Creation ";
+      "Notification : About Delivery Sample Creation ";
   public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
-  public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
+  public static final String SUBJECT_RAW_MATERIAL = "Notification : About Material Creation";
   public static final String SUBJECT_PROCESS_SAMPLE =
       "Notification : About Process Sample Creation";
   public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
@@ -294,7 +294,7 @@ public class Constants {
   public static final String CHECK_EQUATION_TRUE = "TRUE";
   public static final String CHECK_EQUATION_FALSE = "FALSE";
   public static final String VALUE = "value";
-  
+
 
   /*
    * Constants for Process Sample validation key & Success messages
@@ -472,6 +472,22 @@ public class Constants {
   public static final String UPDATE_QUALITY_PARAMETER_SUCCESS =
       "Quality Parameter Updated Successfully";
   /*
+   * Constants for Material Quality Parameter validation key && success messages
+   */
+  public static final String MATERIAL_QUALITY_PARAMETER = "materialQualityParameter";
+  public static final String MATERIAL_QUALITY_PARAMETERS = "materialQualityParameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_ID = "materialQualityParameterId";
+  public static final String MATERIAL_QUALITY_PARAMETER_TYPES = "materialQualityParameterType";
+  public static final String MATERIAL_QUALITY_PARAMETER_CONDITION =
+      "materialQualityParameterCondition";
+  public static final String ADD_MATERIAL_QUALITY_PARAMETER_SUCCESS =
+      "Material Quality Parameter Added SuccessFully";
+  public static final String UPDATE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
+      "Material Quality Parameter Updated SuccessFully";
+  public static final String DELETE_MATERIAL_QUALITY_PARAMETER_SUCCESS =
+      "Material Quality Parameter Deleted SuccessFully";
+
+  /*
    * Constants for report
    */
   public static final String TEST_REPORT = "testReport";
@@ -537,6 +553,8 @@ public class Constants {
       "Finish Product Updated Successfully";
   public static final String FINISH_PRODUCT_TEST_STATUS = "finishProductTestStatus";
   public static final String FINISH_PRODUCT_TEST_COMMENT_UPDATED = "Test Comment is Updated";
+  public static final String UPDATE_FINISH_PRODUCT_TEST_APROVE_SUCCESS =
+      "Finish Product Test Aproved Successfully";
 
   public static final String ADD_EMAIL_RECIPIENT_SUCCESS = "Email Recipient Added Successfully";
   public static final String EMAIL_RECIPIENT = "emailRecipient";

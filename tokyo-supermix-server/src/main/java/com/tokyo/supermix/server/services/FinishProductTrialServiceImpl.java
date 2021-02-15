@@ -522,18 +522,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return parameterEquation;
   }
 
-  public void updateStatus(String finishProductTestCode, Status status,
-      HttpServletRequest request) {
-    FinishProductTest finishProductTest =
-        finishProductTestRepository.findById(finishProductTestCode).get();
-    finishProductTest.setStatus(status);
-    FinishProductTest finishProductTestObj = finishProductTestRepository.save(finishProductTest);
-    if (finishProductTestObj != null) {
-      emailNotification.sendFinishProductTestEmail(finishProductTestObj);
-    }
-    updateFinishProductSampleAndMixDesignStatus(finishProductTestCode, request);
-  }
-
   public double getFinishProductResultParameter(String finishProductTestCode, Long testConfigId,
       Long trialNo, Long testParameterId) {
     ScriptEngineManager engineManager = new ScriptEngineManager();
@@ -621,10 +609,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   private void checkStatusAndSaveStatus(String finishProductTestCode, HttpServletRequest request) {
     FinishProductTest finishproductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
-
     FinishProductSample finishProductSample = finishProductSampleRepository
         .findById(finishproductTest.getFinishProductSample().getCode()).get();
-
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     finishProductSample.setStatus(finishproductTest.getStatus());
@@ -717,15 +703,16 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       Condition condition, Double average) {
     switch (condition) {
       case BETWEEN:
-        return (minValue <= average && maxValue >= average) ? Status.PASS : Status.FAIL;
+        return (minValue <= average && maxValue >= average) ? Status.PENDING_PASS
+            : Status.PENDING_FAIL;
       case EQUAL:
-        return value.equals(average) ? Status.PASS : Status.FAIL;
+        return value.equals(average) ? Status.PENDING_PASS : Status.PENDING_FAIL;
       case GREATER_THAN:
-        return value <= average ? Status.PASS : Status.FAIL;
+        return value <= average ? Status.PENDING_PASS : Status.PENDING_FAIL;
       case LESS_THAN:
-        return value >= average ? Status.PASS : Status.FAIL;
+        return value >= average ? Status.PENDING_PASS : Status.PENDING_FAIL;
       default:
-        return Status.FAIL;
+        return Status.PENDING_FAIL;
     }
   }
 
@@ -751,10 +738,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             if (checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
                 materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
                 materialAcceptedValue.getConditionRange(), result.getResult())
-                    .equals(Status.PASS)) {
-              updateStatus(finishProductTestCode, Status.PASS, request);
+                    .equals(Status.PENDING_PASS)) {
+              updateStatus(finishProductTestCode, Status.PENDING_PASS, request);
             } else {
-              updateStatus(finishProductTestCode, Status.FAIL, request);
+              updateStatus(finishProductTestCode, Status.PENDING_FAIL, request);
             }
           } else {
             materialAcceptedValueRepository.findByTestConfigureIdAndRawMaterialIdAndFinalResultTrue(
@@ -768,9 +755,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                   }
                 });
             if (!getFinalResultStatus(status, testConfigureId)) {
-              updateStatus(finishProductTestCode, Status.FAIL, request);
+              updateStatus(finishProductTestCode, Status.PENDING_FAIL, request);
             } else {
-              updateStatus(finishProductTestCode, Status.PASS, request);
+              updateStatus(finishProductTestCode, Status.PENDING_PASS, request);
             }
           }
         }
@@ -786,10 +773,11 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                   .equals(TestResultType.SINGLE_RESULT)) {
                 if (checkFinishproductAcceptedValue(acceptedValue.getMinValue(),
                     acceptedValue.getMaxValue(), acceptedValue.getValue(),
-                    acceptedValue.getConditionRange(), finish.getResult()).equals(Status.PASS)) {
-                  updateStatus(finishProductTestCode, Status.PASS, request);
+                    acceptedValue.getConditionRange(), finish.getResult())
+                        .equals(Status.PENDING_PASS)) {
+                  updateStatus(finishProductTestCode, Status.PENDING_PASS, request);
                 } else {
-                  updateStatus(finishProductTestCode, Status.FAIL, request);
+                  updateStatus(finishProductTestCode, Status.PENDING_FAIL, request);
                 }
               } else {
                 status.put(acceptedValue.getTestParameter().getAbbreviation(),
@@ -797,9 +785,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                         acceptedValue.getMaxValue(), acceptedValue.getValue(),
                         acceptedValue.getConditionRange(), finish.getResult()));
                 if (!getFinalResultStatus(status, testConfigureId)) {
-                  updateStatus(finishProductTestCode, Status.FAIL, request);
+                  updateStatus(finishProductTestCode, Status.PENDING_FAIL, request);
                 } else {
-                  updateStatus(finishProductTestCode, Status.PASS, request);
+                  updateStatus(finishProductTestCode, Status.PENDING_PASS, request);
                 }
               }
             }
@@ -823,10 +811,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
             if (checkFinishproductAcceptedValue(materialAcceptedValue.getMinValue(),
                 materialAcceptedValue.getMaxValue(), materialAcceptedValue.getValue(),
                 materialAcceptedValue.getConditionRange(), result.getResult())
-                    .equals(Status.PASS)) {
-              updateStatus(finishProductTestCode, Status.PASS, request);
+                    .equals(Status.PENDING_PASS)) {
+              updateStatus(finishProductTestCode, Status.PENDING_PASS, request);
             } else {
-              updateStatus(finishProductTestCode, Status.FAIL, request);
+              updateStatus(finishProductTestCode, Status.PENDING_FAIL, request);
             }
           } else {
             materialAcceptedValueRepository
@@ -842,9 +830,9 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
                   }
                 });
             if (!getFinalResultStatus(status, testConfigureId)) {
-              updateStatus(finishProductTestCode, Status.FAIL, request);
+              updateStatus(finishProductTestCode, Status.PENDING_FAIL, request);
             } else {
-              updateStatus(finishProductTestCode, Status.PASS, request);
+              updateStatus(finishProductTestCode, Status.PENDING_PASS, request);
             }
           }
         }
@@ -887,26 +875,21 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     return statusFinal;
   }
 
-
   private Double findTimeDifference(List<LocalDateTime> lis) {
     Duration duration = Duration.between(lis.get(0), lis.get(1));
     Double value = Math.abs((double) duration.toMinutes());
     return value;
   }
 
-
   public double finalDateValue(String finishProductTestCode, Long testParameterId, Long noOfTrial) {
     List<Double> trialValue = new ArrayList<Double>();
     for (FinishProductTrial finishProductTrial : finishProductTrialRepository
         .findByFinishProductTestCodeAndTestParameterIdOrderByCreatedAtDesc(finishProductTestCode,
             testParameterId)) {
-      // if (finishProductTrial.getTestParameter().getParameter().getParameterDataType()
-      // .equals(ParameterDataType.DATETIME)) {
       if ((finishProductTrial.getTestParameter().getInputMethods().equals(InputMethod.CALCULATION)
           && finishProductTrial.getTestParameter().getType().equals(TestParameterType.RESULT))) {
         trialValue.add(finishProductTrial.getValue());
       }
-      // }
     }
 
     double sumOfValue = 0.0;
@@ -1030,5 +1013,30 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       finishProductResult = findTimeDifference(dateResultlist);
     }
     return roundDoubleValue(finishProductResult);
+  }
+
+  public void updateStatus(String finishProductTestCode, Status status,
+      HttpServletRequest request) {
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    finishProductTest.setStatus(status);
+    finishProductTestRepository.save(finishProductTest);
+  }
+
+  @Transactional
+  public void aprovedUpdateStatus(String finishProductTestCode, HttpServletRequest request) {
+    FinishProductTest finishProductTest =
+        finishProductTestRepository.findById(finishProductTestCode).get();
+    if (finishProductTest.getStatus().equals(Status.PENDING_PASS)) {
+      finishProductTest.setStatus(Status.PASS);
+    } else if (finishProductTest.getStatus().equals(Status.PENDING_FAIL)) {
+      finishProductTest.setStatus(Status.FAIL);
+    }
+    finishProductTest.setApproved(true);
+    FinishProductTest finishProductTestObj = finishProductTestRepository.save(finishProductTest);
+    if (finishProductTestObj != null) {
+      emailNotification.sendFinishProductTestEmail(finishProductTestObj);
+    }
+    updateFinishProductSampleAndMixDesignStatus(finishProductTestCode, request);
   }
 }

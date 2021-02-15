@@ -12,14 +12,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.MaterialType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
+import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.util.Constants;
@@ -34,12 +40,27 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   private Mapper mapper;
   @Autowired
   PlantRepository plantRepository;
+  @Autowired
+  MixDesignRepository mixDesignRepository;
+  @Autowired
+  IncomingSampleRepository incomingSampleRepository;
+  @Autowired
+  CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  TestConfigureRepository testConfigureRepository;
+  @Autowired
+  MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public Long saveRawMaterial(RawMaterial rawMaterial) {
-    RawMaterial rawMaterialObj = rawMaterialRepository.save(rawMaterial);
-    if (rawMaterialObj != null) {
-      emailNotification.sendRawmaterialCreationEmail(rawMaterial);
+    RawMaterial rawMaterialObj = null;
+    if (rawMaterial.getId() == null) {
+      rawMaterialObj = rawMaterialRepository.save(rawMaterial);
+      if (rawMaterialObj != null) {
+        emailNotification.sendRawmaterialCreationEmail(rawMaterial);
+      }
+    } else {
+      rawMaterialObj = rawMaterialRepository.save(rawMaterial);
     }
     return rawMaterialObj.getId();
   }
@@ -300,10 +321,23 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isUpdatedPrefixAndRawMaterial(Long id, Long materialSubCategoryId, String prefix,
-      MaterialType materialType) {
+  public boolean isUpdatedSubCategoryIdAndRawMaterialNameForCommonWise(Long id,
+      Long materialSubCategoryId, String rawMaterialName, MaterialType materialType) {
     if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getName().equalsIgnoreCase(rawMaterialName))
+        && (getRawMaterialById(id).getMaterialType().equals(materialType)))
+        && rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndMaterialType(
+            materialSubCategoryId, rawMaterialName, materialType)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedSubCategoryIdAndPrefixForCommonWise(Long id, Long materialSubCategoryId,
+      String prefix, MaterialType materialType) {
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equals(prefix))
         && (getRawMaterialById(id).getMaterialType().equals(materialType)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialType(prefix,
             materialSubCategoryId, materialType)) {
@@ -313,10 +347,25 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isUpdatedPlantWise(Long id, Long materialSubCategoryId, String prefix,
-      MaterialType materialType, String plantCode) {
+  public boolean isUpdatedSubCategoryIdAndRawMaterialNameForPlantWise(Long id,
+      Long materialSubCategoryId, String rawMaterialName, MaterialType materialType,
+      String plantCode) {
     if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
-        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getName().equalsIgnoreCase(rawMaterialName))
+        && (getRawMaterialById(id).getMaterialType().equals(materialType))
+        && (getRawMaterialById(id).getPlant().getCode().equals(plantCode)))
+        && rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndMaterialTypeAndPlantCode(
+            materialSubCategoryId, rawMaterialName, materialType, plantCode)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedSubCategoryIdAndPrefixForPlantWise(Long id, Long materialSubCategoryId,
+      String prefix, MaterialType materialType, String plantCode) {
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equals(prefix))
         && (getRawMaterialById(id).getMaterialType().equals(materialType))
         && (getRawMaterialById(id).getPlant().getCode().equals(plantCode)))
         && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndMaterialTypeAndPlantCode(
@@ -327,14 +376,94 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isUpdatedSBU(Long id, Long materialCategoryId, String prefix, Long sbuId) {
-    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialCategoryId))
-        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+  public boolean isUpdatedSubCategoryIdAndRawMaterialNameForSBUWise(Long id,
+      Long materialSubCategoryId, String rawMaterialName, Long sbuId) {
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getName().equalsIgnoreCase(rawMaterialName))
         && (getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId)))
-        && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
-            materialCategoryId, sbuId)) {
+        && rawMaterialRepository.existsByMaterialSubCategoryIdAndNameAndSubBusinessUnitId(
+            materialSubCategoryId, rawMaterialName, sbuId)) {
       return true;
     }
     return false;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedSubCategoryIdAndPrefixForSBUWise(Long id, Long materialSubCategoryId,
+      String prefix, Long sbuId) {
+    if (!((getRawMaterialById(id).getMaterialSubCategory().getId().equals(materialSubCategoryId))
+        && (getRawMaterialById(id).getPrefix().equalsIgnoreCase(prefix))
+        && (getRawMaterialById(id).getSubBusinessUnit().getId().equals(sbuId)))
+        && rawMaterialRepository.existsByPrefixAndMaterialSubCategoryIdAndSubBusinessUnitId(prefix,
+            materialSubCategoryId, sbuId)) {
+      return true;
+    }
+    // }
+    return false;
+  }
+
+  public boolean checkPlantDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto) {
+    boolean check = true;
+    if (mixDesignRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())
+        || incomingSampleRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())) {
+      if (mixDesignRepository.existsByRawMaterialIdAndPlantCode(rawMaterialRequestDto.getId(),
+          rawMaterialRequestDto.getPlantCode())
+          || incomingSampleRepository.existsByRawMaterialIdAndPlantCode(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getPlantCode())) {
+        return check = false;
+      } else {
+        return check;
+      }
+    } else {
+      return check = false;
+    }
+  }
+
+  public boolean checkSbuDependForCommonMaterial(RawMaterialRequestDto rawMaterialRequestDto) {
+    boolean check = true;
+    if (mixDesignRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())
+        || incomingSampleRepository.existsByRawMaterialId(rawMaterialRequestDto.getId())) {
+      if (mixDesignRepository.existsByRawMaterialIdAndPlantSubBusinessUnitId(
+          rawMaterialRequestDto.getId(), rawMaterialRequestDto.getSubBusinessUnitId())
+          || incomingSampleRepository.existsByRawMaterialIdAndPlantSubBusinessUnitId(
+              rawMaterialRequestDto.getId(), rawMaterialRequestDto.getSubBusinessUnitId())) {
+        return check = false;
+      } else {
+        return check;
+      }
+    } else {
+      return check = false;
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistsSBU(Long id, Long sbuId) {
+    if (rawMaterialRepository.existsByIdAndSubBusinessUnitId(id, sbuId)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isExistsByPlant(Long id, String plantCode) {
+    if (rawMaterialRepository.existsByIdAndPlantCode(id, plantCode)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @Transactional
+  public void deleteMaterialByCoreTestConfigure(Long rawMaterialId) {
+    if (coreTestConfigureRepository.existsByRawMaterialId(rawMaterialId)) {
+      if (!testConfigureRepository.existsByRawMaterialId(rawMaterialId)
+          || !materialAcceptedValueRepository.existsByRawMaterialId(rawMaterialId)) {
+        coreTestConfigureRepository.deleteByRawMaterialId(rawMaterialId);
+        rawMaterialRepository.deleteById(rawMaterialId);
+      }
+    } else {
+      rawMaterialRepository.deleteById(rawMaterialId);
+    }
+  }
+
 }

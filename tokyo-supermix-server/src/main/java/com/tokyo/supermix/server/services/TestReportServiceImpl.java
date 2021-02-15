@@ -271,14 +271,20 @@ public class TestReportServiceImpl implements TestReportService {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue());
           acceptedValueDtos.setMinValue(values.getMinValue());
-          acceptedValueDtos
-              .setValues(values.getMinValue().toString() + "-" + values.getMaxValue().toString());
-        } else if (values.getConditionRange() == Condition.EQUAL
-            || values.getConditionRange() == Condition.GREATER_THAN
-            || values.getConditionRange() == Condition.LESS_THAN) {
-          acceptedValueDtos.setValue(values.getValue());
-          acceptedValueDtos.setValues(values.getValue().toString());
+          acceptedValueDtos.setValues("Between  " + values.getMinValue().toString() + "-"
+              + values.getMaxValue().toString());
+        } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setValue(values.getValue());
+          acceptedValueDtos.setValues("Equal " + values.getValue().toString());
+        } else if (values.getConditionRange() == Condition.GREATER_THAN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setValue(values.getValue());
+          acceptedValueDtos.setValues("Greater Than " + values.getValue().toString());
+        } else {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setValue(values.getValue());
+          acceptedValueDtos.setValues("Less Than " + values.getValue().toString());
         }
         acceptedValueDtoList.add(acceptedValueDtos);
       }
@@ -311,19 +317,26 @@ public class TestReportServiceImpl implements TestReportService {
       materialAcceptedValues.forEach(materialAccepted -> {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-          acceptedValueDto.setParameterName(materialAccepted.getTestParameter().getParameter().getName());
+          acceptedValueDto
+              .setParameterName(materialAccepted.getTestParameter().getParameter().getName());
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
-          } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-              || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-              || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setValue(materialAccepted.getValue());
-            acceptedValueDto.setValues(materialAccepted.getValue().toString());
+            acceptedValueDto.setValues("Equal " + materialAccepted.getValue().toString());
+          } else if (materialAccepted.getConditionRange() == Condition.GREATER_THAN) {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue(materialAccepted.getValue());
+            acceptedValueDto.setValues("Greater Than " + materialAccepted.getValue().toString());
+          } else {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue(materialAccepted.getValue());
+            acceptedValueDto.setValues("Less Than " + materialAccepted.getValue().toString());
           }
           acceptedValueDtoList.add(acceptedValueDto);
         }
@@ -335,19 +348,26 @@ public class TestReportServiceImpl implements TestReportService {
       materialAcceptedValues.forEach(materialAccepted -> {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-          acceptedValueDto.setParameterName(materialAccepted.getTestParameter().getParameter().getName());
+          acceptedValueDto
+              .setParameterName(materialAccepted.getTestParameter().getParameter().getName());
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
-          } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-              || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-              || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setValue(materialAccepted.getValue());
-            acceptedValueDto.setValues(materialAccepted.getValue().toString());
+            acceptedValueDto.setValues("Equal " + materialAccepted.getValue().toString());
+          } else if (materialAccepted.getConditionRange() == Condition.GREATER_THAN) {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue(materialAccepted.getValue());
+            acceptedValueDto.setValues("Greater Than " + materialAccepted.getValue().toString());
+          } else {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue(materialAccepted.getValue());
+            acceptedValueDto.setValues("Less Than " + materialAccepted.getValue().toString());
           }
           acceptedValueDtoList.add(acceptedValueDto);
         }
@@ -371,16 +391,20 @@ public class TestReportServiceImpl implements TestReportService {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
             acceptedValueDto.setMinValue(materialAccepted.getMinValue());
-            acceptedValueDto.setValues(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValues("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
-            acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
-          } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-              || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-              || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setValue(materialAccepted.getValue());
-            acceptedValueDto.setValues(materialAccepted.getValue().toString());
-            acceptedValueDto.setMaterial(materialAccepted.getRawMaterial().getName());
+            acceptedValueDto.setValues("Equal " + materialAccepted.getValue().toString());
+          } else if (materialAccepted.getConditionRange() == Condition.GREATER_THAN) {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue(materialAccepted.getValue());
+            acceptedValueDto.setValues("Greater Than " + materialAccepted.getValue().toString());
+          } else {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue(materialAccepted.getValue());
+            acceptedValueDto.setValues("Less Than " + materialAccepted.getValue().toString());
           }
           acceptedValueDtoList.add(acceptedValueDto);
         }
@@ -816,6 +840,10 @@ public class TestReportServiceImpl implements TestReportService {
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
     seiveTestReportResponseDto.setIncomingSample(
         mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
+    java.sql.Date date = new java.sql.Date(materialTest.getIncomingSample().getCreatedAt().getTime());
+    java.sql.Date date1 = new java.sql.Date(materialTest.getUpdatedAt().getTime());
+    seiveTestReportResponseDto.setSamplingDate(date);
+    seiveTestReportResponseDto.setTestingDate(date1);
     seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     return seiveTestReportResponseDto;
   }
@@ -842,12 +870,17 @@ public class TestReportServiceImpl implements TestReportService {
     List<ParameterResult> parameterResultList = parameterResultRepository
         .findByTestParameterLevelAndTestParameterTestConfigureIdAndMaterialTestCode(level,
             testConfigId, materialTestCode);
+    AcceptedValueForSieveTest acceptedValueForSieveTest = new AcceptedValueForSieveTest();
     for (ParameterResult parameterResult : parameterResultList) {
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
         SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
         sieveResultAndParameter.setParameter(parts[0].toString());
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        sieveResultAndParameter
+            .setInputMethods(parameterResult.getTestParameter().getInputMethods());
+        sieveResultAndParameter.setTestParameterType(parameterResult.getTestParameter().getType());
+        sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
         sieveResultAndParameterList.add(sieveResultAndParameter);
         if (materialTest.getTestConfigure().getAcceptedType().equals(AcceptedType.TEST)) {
           AcceptedValue acceptedValue = acceptedValueRepository
@@ -859,11 +892,23 @@ public class TestReportServiceImpl implements TestReportService {
               String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
               sieveResultAndParameterAcc
                   .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
+              sieveResultAndParameterAcc
+                  .setInputMethods(acceptedValue.getTestParameter().getInputMethods());
+              sieveResultAndParameterAcc
+                  .setTestParameterType(acceptedValue.getTestParameter().getType());
+              sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
               if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
                 sieveResultAndParameterAcc.setVale(acceptedValue.getMinValue().toString() + " - "
                     + acceptedValue.getMaxValue().toString());
+                acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+                acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               } else {
                 sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
+                acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setValue(acceptedValue.getValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               }
               sieveResultAndParameterList.add(sieveResultAndParameterAcc);
             }
@@ -882,8 +927,17 @@ public class TestReportServiceImpl implements TestReportService {
               if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
                 sieveResultAndParameterAcc.setVale(materialAcceptedValue.getMinValue().toString()
                     + " - " + materialAcceptedValue.getMaxValue().toString());
+                acceptedValueForSieveTest
+                    .setConditionRange(materialAcceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setMaxValue(materialAcceptedValue.getMaxValue());
+                acceptedValueForSieveTest.setMinValue(materialAcceptedValue.getMinValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               } else {
                 sieveResultAndParameterAcc.setVale(materialAcceptedValue.getValue().toString());
+                acceptedValueForSieveTest
+                    .setConditionRange(materialAcceptedValue.getConditionRange());
+                acceptedValueForSieveTest.setValue(materialAcceptedValue.getValue());
+                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
               }
               sieveResultAndParameterList.add(sieveResultAndParameterAcc);
             }
@@ -902,6 +956,10 @@ public class TestReportServiceImpl implements TestReportService {
         sieveResultAndParameter
             .setParameter(parameterResult.getTestParameter().getParameter().getName());
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
+        sieveResultAndParameter
+            .setInputMethods(parameterResult.getTestParameter().getInputMethods());
+        sieveResultAndParameter.setTestParameterType(parameterResult.getTestParameter().getType());
+        sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
         sieveResultAndParameterList.add(sieveResultAndParameter);
       }
     }
@@ -1365,13 +1423,17 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValue("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
-          } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-              || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-              || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getValue().toString());
+            acceptedValueDto.setValue("Equal " + materialAccepted.getValue().toString());
+          } else if (materialAccepted.getConditionRange() == Condition.GREATER_THAN) {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue("Greater Than " + materialAccepted.getValue().toString());
+          } else {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue("Less Than " + materialAccepted.getValue().toString());
           }
           acceptedValueDtoList.add(acceptedValueDto);
         }
@@ -1384,13 +1446,17 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValueDtoForStrength acceptedValueDto = new AcceptedValueDtoForStrength();
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getMinValue().toString() + "-"
+            acceptedValueDto.setValue("Between  " + materialAccepted.getMinValue().toString() + "-"
                 + materialAccepted.getMaxValue().toString());
-          } else if (materialAccepted.getConditionRange() == Condition.EQUAL
-              || materialAccepted.getConditionRange() == Condition.GREATER_THAN
-              || materialAccepted.getConditionRange() == Condition.LESS_THAN) {
+          } else if (materialAccepted.getConditionRange() == Condition.EQUAL) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
-            acceptedValueDto.setValue(materialAccepted.getValue().toString());
+            acceptedValueDto.setValue("Equal " + materialAccepted.getValue().toString());
+          } else if (materialAccepted.getConditionRange() == Condition.GREATER_THAN) {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue("Greater Than " + materialAccepted.getValue().toString());
+          } else {
+            acceptedValueDto.setCondition(materialAccepted.getConditionRange());
+            acceptedValueDto.setValue("Less Than " + materialAccepted.getValue().toString());
           }
           acceptedValueDtoList.add(acceptedValueDto);
         }
@@ -1411,13 +1477,17 @@ public class TestReportServiceImpl implements TestReportService {
         AcceptedValueDtoForStrength acceptedValueDtos = new AcceptedValueDtoForStrength();
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
-          acceptedValueDtos
-              .setValue(values.getMinValue().toString() + "-" + values.getMaxValue().toString());
-        } else if (values.getConditionRange() == Condition.EQUAL
-            || values.getConditionRange() == Condition.GREATER_THAN
-            || values.getConditionRange() == Condition.LESS_THAN) {
-          acceptedValueDtos.setValue(values.getValue().toString());
+          acceptedValueDtos.setValue("Between  " + values.getMinValue().toString() + "-"
+              + values.getMaxValue().toString());
+        } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setValue("Equal " + values.getValue().toString());
+        } else if (values.getConditionRange() == Condition.GREATER_THAN) {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setValue("Greater Than " + values.getValue().toString());
+        } else {
+          acceptedValueDtos.setCondition(values.getConditionRange());
+          acceptedValueDtos.setValue("Less Than " + values.getValue().toString());
         }
         acceptedValueDtoList.add(acceptedValueDtos);
       }

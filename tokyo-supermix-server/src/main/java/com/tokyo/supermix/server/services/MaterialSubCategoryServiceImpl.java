@@ -44,8 +44,9 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
   }
 
   @Transactional
-  public void saveMaterialSubCategory(MaterialSubCategory materialSubCategory) {
+  public Long saveMaterialSubCategory(MaterialSubCategory materialSubCategory) {
     materialSubCategoryRepository.save(materialSubCategory);
+    return materialSubCategory.getId();
   }
 
   @Transactional(readOnly = true)

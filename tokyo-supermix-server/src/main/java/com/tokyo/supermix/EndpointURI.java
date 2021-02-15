@@ -125,8 +125,10 @@ public final class EndpointURI {
    * Test Configure
    */
   public static final String TEST_CONFIGURE = BASE_API_PATH + "test-configure";
+  public static final String TEST_CONFIGURE_RESET = BASE_API_PATH + "test-configure-reset";
   public static final String TEST_CONFIGURES = BASE_API_PATH + "test-configures";
   public static final String TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
+  public static final String TEST_CONFIGURE_RESET_BY_ID = TEST_CONFIGURE_RESET + ID;
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testType}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =
@@ -238,6 +240,8 @@ public final class EndpointURI {
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}" + SEARCH;
   public static final String PARAMETER_PAGE_BY_TYPE =
       PARAMETER + SLASH + "parameter-type-page" + SLASH + "{parameterType}";
+  public static final String PARAMETER_COMMON_SEARCH =
+      PARAMETER + SLASH + "common" + SLASH + "type" + SLASH + "{parameterType}" + SEARCH;
 
   /*
    * Project APIs
@@ -427,6 +431,8 @@ public final class EndpointURI {
   public static final String GET_MATERIAL_TEST_TRIAL_BY_TEST_CONFIGURE = MATERIAL_TEST_TRIAL + SLASH
       + "test-configure" + SLASH + "{testConfigureId}" + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String MATERIAL_TEST_TRIAL_BY_PLANT = MATERIAL_TEST_TRIAL + PLANT_WISE;
+  public static final String MATERIAL_TEST_APPROVED_BY_MATERIAL_TEST_CODE =
+      MATERIAL_TEST_TRIAL + "/material-test" + "/approved" + "/{materialTestCode}";
 
   /*
    * Test
@@ -506,9 +512,21 @@ public final class EndpointURI {
   public static final String QUALITY_PARAMETER = BASE_API_PATH + "quality-parameter";
   public static final String QUALITY_PARAMETER_BY_ID = QUALITY_PARAMETER + ID;
   public static final String QUALITY_PARAMETERS = BASE_API_PATH + "quality-parameters";
-  public static final String MATERIAL_SUB_CATEGORY_ID = "/{materialSubCategoryId}";
+  public static final String MATERIAL_SUB_CATEGORY_ID = "/{​​​​​​​materialSubCategoryId}​​​​​​​";
   public static final String GET_QUALITY_PARAMETERS_BY_MATERIAL_SUB_CATEGORY_ID =
       QUALITY_PARAMETER + "/qualityparameter" + MATERIAL_SUB_CATEGORY_ID;
+
+  // Material Quality Parameter
+  public static final String MATERIAL_QUALITY_PARAMETER =
+      BASE_API_PATH + "material-quality-parameter";
+  public static final String MATERIAL_QUALITY_PARAMETERS =
+      BASE_API_PATH + "material-quality-parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_RAWMATERIAL =
+      MATERIAL_QUALITY_PARAMETERS + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_SUBCATEGORY =
+      MATERIAL_QUALITY_PARAMETERS + SLASH + "sub-category" + SLASH + "{subCategoryId}";
+
 
   /*
    * MaterialAcceptedValue Apis
@@ -659,6 +677,8 @@ public final class EndpointURI {
    * Finish Product Test
    */
   public static final String FINISH_PRODUCT_TEST = BASE_API_PATH + "finish-product-test";
+  public static final String FINISH_PRODUCT_TEST_APROVE =
+      BASE_API_PATH + "finish-product-test-aprove";
   public static final String FINISH_PRODUCT_TESTS = BASE_API_PATH + "finish-product-tests";
   public static final String FINISH_PRODUCT_TEST_BY_CODE = FINISH_PRODUCT_TEST + CODE;
   public static final String GET_FINISH_PRODUCT_TESTS_BY_TESTCONFIGURE =
@@ -666,7 +686,6 @@ public final class EndpointURI {
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_TESTCONFIGURE =
       FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}"
           + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-
   public static final String FINISH_PRODUCT_TEST_BY_PLANT = FINISH_PRODUCT_TEST + PLANT_WISE;
   public static final String FINISH_PRODUCT_TEST_COMMENT = FINISH_PRODUCT_TEST + SLASH + "comment";
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE =
@@ -675,6 +694,8 @@ public final class EndpointURI {
       FINISH_PRODUCT_TEST + SEARCH + SLASH + "{plantCode}";
   public static final String GET_FINISH_PRODUCT_TESTS_BY_FINISH_PRODUCT_SAMPLE_CODE =
       FINISH_PRODUCT_TESTS + SLASH + "finish-product-sample" + SLASH + "{finishProductSampleCode}";
+  public static final String FINISH_PRODUCT_TEST_APROVE_BY_CODE =
+      FINISH_PRODUCT_TEST_APROVE + SLASH + "{finishProductTestCode}";
 
   /*
    * Employee apis

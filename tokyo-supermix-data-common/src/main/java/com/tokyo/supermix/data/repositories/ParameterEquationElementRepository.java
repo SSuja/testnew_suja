@@ -17,4 +17,8 @@ public interface ParameterEquationElementRepository
 
   public List<ParameterEquationElement> findByParameterEquationTestParameterId(
       Long testParameterId);
+
+  boolean existsByParameterEquationTestParameterTestConfigureId(Long testConfigureid);
+
+  Long deleteByParameterEquationTestParameterTestConfigureId(Long testConfigureid);
 }
