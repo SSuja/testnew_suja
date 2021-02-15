@@ -72,6 +72,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
     String specimenCode = (materialTestTrialList.size() == 0) ? subPrefix + String.format("%02d", 1)
         : subPrefix + String.format("%02d", materialTestTrialList.size() + 1);
     materialTest.setSpecimenCode(specimenCode);
+    IncomingSample incomingSample =
+        incomingSampleRepository.getOne(materialTest.getIncomingSample().getCode());
+    if (incomingSample.getStatus().equals(Status.NEW)) {
+      incomingSample.setStatus(Status.PROCESS);
+      incomingSampleRepository.save(incomingSample);
+    }
     materialTestRepository.save(materialTest);
     return materialTest.getCode();
   }
