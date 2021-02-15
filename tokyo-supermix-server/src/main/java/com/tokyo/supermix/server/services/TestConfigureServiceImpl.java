@@ -73,6 +73,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EquationRepository euationRepository;
   @Autowired
   private MultiResultFormulaRepository multiResultFormulaRepository;
+  @Autowired
   private MaterialTestRepository materialTestRepository;
   @Autowired
   private FinishProductTestRepository finishProductTestRepository;
