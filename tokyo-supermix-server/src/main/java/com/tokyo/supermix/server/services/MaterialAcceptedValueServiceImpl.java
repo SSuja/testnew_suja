@@ -108,12 +108,14 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   @Transactional(readOnly = true)
   public boolean isCheckValidation(List<MaterialAcceptedValue> materialAcceptedValueList) {
     for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
-      if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
-        if (materialAcceptedValue.getMaxValue() == null
-            || materialAcceptedValue.getMinValue() == null) {
-          return true;
-        }
-      } else if (materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+      if ((materialAcceptedValue.getConditionRange() == null)
+          || (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)
+              && (materialAcceptedValue.getMaxValue() == null
+                  || materialAcceptedValue.getMinValue() == null))) {
+        return true;
+
+      } else if (((materialAcceptedValue.getConditionRange() == null))
+          || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
           || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
           || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
         if (materialAcceptedValue.getValue() == null) {
@@ -122,6 +124,7 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       }
     }
     return false;
+
   }
 
   @Transactional(readOnly = true)
@@ -370,5 +373,22 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       accepetedValueDtolist.add(accepetedValueDto);
     });
     return accepetedValueDtolist;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isCheckValidations(MaterialAcceptedValue materialAcceptedValue) {
+    if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+      if (materialAcceptedValue.getMaxValue() == null
+          || materialAcceptedValue.getMinValue() == null) {
+        return true;
+      }
+    } else if (materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+        || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+        || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
+      if (materialAcceptedValue.getValue() == null) {
+        return true;
+      }
+    }
+    return false;
   }
 }

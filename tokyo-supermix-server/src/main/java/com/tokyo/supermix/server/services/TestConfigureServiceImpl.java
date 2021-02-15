@@ -26,7 +26,9 @@ import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -47,6 +49,10 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  private MaterialTestRepository materialTestRepository;
+  @Autowired
+  private FinishProductTestRepository finishProductTestRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -388,5 +394,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   @Transactional
   public boolean isMaterialCategory(Long materialCategoryId) {
     return testConfigureRepository.existsByMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAlreadyDepended(Long testConfigureId) {
+    if (materialTestRepository.existsByTestConfigureId(testConfigureId)
+        || finishProductTestRepository.existsByTestConfigureId(testConfigureId)) {
+      return true;
+    }
+    return false;
   }
 }

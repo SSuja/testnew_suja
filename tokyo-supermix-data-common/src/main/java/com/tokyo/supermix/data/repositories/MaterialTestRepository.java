@@ -92,4 +92,10 @@ public interface MaterialTestRepository extends JpaRepository<MaterialTest, Stri
 
   List<MaterialTest> findByIncomingSamplePlantCodeOrderByUpdatedAtDesc(String plantCode,
       Pageable pageable);
+
+  boolean existsByTestConfigureIdAndIncomingSampleRawMaterialId(Long testConfigureId,
+      Long rawMaterialId);
+
+  boolean existsByTestConfigureIdAndIncomingSampleRawMaterialMaterialSubCategoryId(
+      Long testConfigureId, Long materialSubCategoryId);
 }

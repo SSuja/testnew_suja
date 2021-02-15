@@ -73,4 +73,10 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
       String mixDesignCode, String finishProductSampleCode, Status status);
 
   FinishProductTest findByCode(String code);
+
+  boolean existsByTestConfigureIdAndFinishProductSampleMixDesignRawMaterialId(Long testConfigureId,
+      Long rawMaterialId);
+
+  boolean existsByTestConfigureIdAndFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId(
+      Long testConfigureId, Long materialSubCategoryId);
 }
