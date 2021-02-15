@@ -27,6 +27,7 @@ public class FinishProductTest extends DateAudit implements Serializable {
   private Date date;
   private String comments;
   private String specimenCode;
+  private boolean approved;
 
   public String getCode() {
     return code;
@@ -94,5 +95,13 @@ public class FinishProductTest extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isApproved() {
+    return approved;
+  }
+
+  public void setApproved(boolean approved) {
+    this.approved = approved;
   }
 }
