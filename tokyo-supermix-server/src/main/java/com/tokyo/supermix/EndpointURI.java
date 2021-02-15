@@ -125,8 +125,10 @@ public final class EndpointURI {
    * Test Configure
    */
   public static final String TEST_CONFIGURE = BASE_API_PATH + "test-configure";
+  public static final String TEST_CONFIGURE_RESET = BASE_API_PATH + "test-configure-reset";
   public static final String TEST_CONFIGURES = BASE_API_PATH + "test-configures";
   public static final String TEST_CONFIGURE_BY_ID = TEST_CONFIGURE + ID;
+  public static final String TEST_CONFIGURE_RESET_BY_ID = TEST_CONFIGURE_RESET + ID;
   public static final String GET_TEST_CONFIGURE_BY_TEST_TYPE =
       TEST_CONFIGURE + SLASH + "test-type" + SLASH + "{testType}";
   public static final String GET_TEST_CONFIGURE_BY_CORE_TEST =

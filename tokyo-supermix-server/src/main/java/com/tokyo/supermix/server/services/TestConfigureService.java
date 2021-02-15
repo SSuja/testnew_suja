@@ -66,4 +66,6 @@ public interface TestConfigureService {
       Long materialSubCategoryId, Long rawMaterialId);
 
   public boolean isMaterialCategory(Long materialCategoryId);
+
+  public void deleteTestConfigureReset(Long testConfigureId);
 }
