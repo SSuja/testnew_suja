@@ -123,4 +123,17 @@ public class ParametersServiceImpl implements ParameterService {
   public Long getCountParametersByType(ParameterType parameterType) {
     return parameterRepository.countByParameterType(parameterType);
   }
+
+  @Transactional(readOnly = true)
+  public List<Parameter> searchCommonParameters(String name, ParameterType parameterType,
+      BooleanBuilder booleanBuilder) {
+
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QParameter.parameter.name.contains(name));
+    }
+    if (parameterType != null) {
+      booleanBuilder.and(QParameter.parameter.parameterType.eq(parameterType));
+    }
+    return (List<Parameter>) parameterRepository.findAll(booleanBuilder);
+  }
 }
