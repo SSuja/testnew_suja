@@ -113,4 +113,5 @@ public interface RawMaterialService {
   public boolean isExistsByPlant(Long id, String plantCode);
 
   public void deleteMaterialByCoreTestConfigure(Long rawMaterialId);
+
 }

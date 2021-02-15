@@ -46,4 +46,7 @@ public interface ParameterService {
       Pageable pageable);
 
   public Long getCountParametersByType(ParameterType parameterType);
+
+  public List<Parameter> searchCommonParameters(String name, ParameterType parameterType,
+      BooleanBuilder booleanBuilder);
 }

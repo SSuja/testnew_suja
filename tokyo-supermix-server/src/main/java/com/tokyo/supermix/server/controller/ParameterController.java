@@ -173,4 +173,14 @@ public class ParameterController {
             RestApiResponseStatus.OK, pagination),
         null, HttpStatus.OK);
   }
+
+  @GetMapping(value = EndpointURI.PARAMETER_COMMON_SEARCH)
+  public ResponseEntity<Object> searchAllParameters(@PathVariable ParameterType parameterType,
+      @RequestParam(name = "name", required = false) String name) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER,
+        mapper.map(parameterService.searchCommonParameters(name, parameterType, booleanBuilder),
+            ParameterDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
 }
