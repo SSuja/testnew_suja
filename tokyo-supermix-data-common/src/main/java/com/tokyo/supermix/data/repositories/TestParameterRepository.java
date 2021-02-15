@@ -34,4 +34,6 @@ public interface TestParameterRepository
   public boolean existsByTestConfigureIdAndParameterId(Long testConfigureId, Long parameterId);
 
   public boolean existsByTestConfigureIdAndAbbreviation(Long testConfigureId, String abbreviation);
+
+  Long deleteByTestConfigureId(Long testConfigureId);
 }

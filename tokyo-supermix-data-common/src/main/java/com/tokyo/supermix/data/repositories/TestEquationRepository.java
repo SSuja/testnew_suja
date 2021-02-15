@@ -21,4 +21,8 @@ public interface TestEquationRepository extends JpaRepository<TestEquation, Long
 
   public TestEquation findByTestConfigureIdAndTestParameterId(Long testConfigId,
       Long testParameterId);
+
+  boolean existsByTestConfigureId(Long testConfigureId);
+
+  Long deleteByTestConfigureId(Long testConfigureId);
 }
