@@ -23,6 +23,7 @@ import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.MultiResultFormulaService;
+import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -35,6 +36,8 @@ public class MultiResultFormulaController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private TestConfigureService testConfigureService;
 
   @GetMapping(value = EndpointURI.MULTI_RESULT_FORMULA_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getMultiResultFormulaByTestConfigureId(
@@ -68,6 +71,13 @@ public class MultiResultFormulaController {
   public ResponseEntity<Object> updateMultiResultFormula(
       @Valid @RequestBody MultiResultFormulaRequestDto multiResultFormulaRequestDto) {
     if (multiResultFormulaService.isExistById(multiResultFormulaRequestDto.getId())) {
+      if (testConfigureService
+          .isAlreadyDepended(multiResultFormulaRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       multiResultFormulaService.saveMultiResultFormula(
           mapper.map(multiResultFormulaRequestDto, MultiResultFormula.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
@@ -79,7 +89,14 @@ public class MultiResultFormulaController {
 
   @DeleteMapping(value = EndpointURI.MULTI_RESULT_FORMULA_BY_ID)
   public ResponseEntity<Object> deleteMultiResultFormula(@PathVariable Long id) {
+    MultiResultFormula multiResultFormula = multiResultFormulaService.getById(id);
     if (multiResultFormulaService.isExistById(id)) {
+      if (testConfigureService.isAlreadyDepended(multiResultFormula.getTestConfigure().getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       multiResultFormulaService.deleteMultiResultFormula(id);;
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.DELETE_MULTI_RESULT_FORMULA_SUCCESS), HttpStatus.OK);

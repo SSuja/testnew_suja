@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.TestEquationDto;
 import com.tokyo.supermix.data.dto.TestEquationResponseDto;
+import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -84,7 +85,14 @@ public class TestEquationController {
   // Delete Test Equation API
   @DeleteMapping(value = EndpointURI.TEST_EQUATION_BY_ID)
   public ResponseEntity<Object> deleteTestEquation(@PathVariable Long id) {
+    TestEquation testEquation = testEquationService.getByTestEquationId(id);
     if (testEquationService.isTestEquationExists(id)) {
+      if (testConfigureService.isAlreadyDepended(testEquation.getTestConfigure().getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       testEquationService.deleteTestEquation(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_EQUATION_SCCESS),
