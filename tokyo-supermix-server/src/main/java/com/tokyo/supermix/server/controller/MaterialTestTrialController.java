@@ -1,7 +1,6 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.MaterialTestTrialRequestDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResponseDto;
@@ -165,10 +163,17 @@ public class MaterialTestTrialController {
   @PutMapping(value = EndpointURI.MATERIAL_RESULT_BY_MATERIAL_TEST_CODE)
   public ResponseEntity<Object> getMaterialTestAverageBycode(
       @PathVariable String materialTestCode) {
-    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     materialTestTrialService.getAverageAndStatus(materialTestCode);
-    materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS), HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.MATERIAL_TEST_APPROVED_BY_MATERIAL_TEST_CODE)
+  public ResponseEntity<Object> MaterialTestApproved(@PathVariable String materialTestCode) {
+    MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
+    materialTestTrialService.materialTestApproved(materialTestCode);
+    materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        Constants.MATERIAL_TEST_APPROVED_SUCCESS), HttpStatus.OK);
   }
 }

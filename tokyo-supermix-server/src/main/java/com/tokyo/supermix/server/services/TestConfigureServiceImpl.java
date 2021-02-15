@@ -21,13 +21,25 @@ import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParametersDto;
 import com.tokyo.supermix.data.entities.QTestConfigure;
+import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestEquationParameterRepository;
+import com.tokyo.supermix.data.repositories.TestEquationRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
@@ -47,6 +59,23 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private MaterialAcceptedValueRepository materialAcceptedValueRepository;
   @Autowired
   private CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  private TestEquationParameterRepository testEquationParameterRepository;
+  @Autowired
+  private TestEquationRepository testEquationRepository;
+  @Autowired
+  private ParameterEquationElementRepository parameterEquationElementRepository;
+  @Autowired
+  private ParameterEquationRepository parameterEquationRepository;
+  @Autowired
+  private CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  private EquationRepository euationRepository;
+  @Autowired
+  private MultiResultFormulaRepository multiResultFormulaRepository;
+  private MaterialTestRepository materialTestRepository;
+  @Autowired
+  private FinishProductTestRepository finishProductTestRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -388,5 +417,62 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   @Transactional
   public boolean isMaterialCategory(Long materialCategoryId) {
     return testConfigureRepository.existsByMaterialCategoryId(materialCategoryId);
+  }
+
+  @Transactional
+  public void deleteTestConfigureReset(Long testConfigureId) {
+    if (multiResultFormulaRepository.existsByTestConfigureId(testConfigureId)) {
+      multiResultFormulaRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (materialAcceptedValueRepository.existsByTestConfigureId(testConfigureId)) {
+      materialAcceptedValueRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (acceptedValueRepository.existsByTestConfigureId(testConfigureId)) {
+      acceptedValueRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (testEquationParameterRepository.existsByTestEquationTestConfigureId(testConfigureId)) {
+      testEquationParameterRepository.deleteByTestEquationTestConfigureId(testConfigureId);
+    }
+    if (testEquationRepository.existsByTestConfigureId(testConfigureId)) {
+      for (TestEquation testEquation : testEquationRepository
+          .findByTestConfigureId(testConfigureId)) {
+        if (euationRepository.existsById(testEquation.getEquation().getId())) {
+          euationRepository.deleteById(testEquation.getEquation().getId());
+        }
+      }
+      testEquationRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (parameterEquationElementRepository
+        .existsByParameterEquationTestParameterTestConfigureId(testConfigureId)) {
+      parameterEquationElementRepository
+          .deleteByParameterEquationTestParameterTestConfigureId(testConfigureId);
+    }
+    if (parameterEquationRepository.existsByTestParameterTestConfigureId(testConfigureId)) {
+      for (ParameterEquation parameterEquation : parameterEquationRepository
+          .findByTestParameterTestConfigureId(testConfigureId)) {
+        if (euationRepository.existsById(parameterEquation.getEquation().getId())) {
+          euationRepository.deleteById(parameterEquation.getEquation().getId());
+        }
+      }
+      parameterEquationRepository.deleteByTestParameterTestConfigureId(testConfigureId);
+    }
+    if (testParameterRepository.existsByTestConfigureId(testConfigureId)) {
+      testParameterRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (coreTestConfigureRepository.existsByTestConfigureId(testConfigureId)) {
+      coreTestConfigureRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (testConfigureRepository.existsById(testConfigureId)) {
+      testConfigureRepository.deleteById(testConfigureId);
+    }
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAlreadyDepended(Long testConfigureId) {
+    if (materialTestRepository.existsByTestConfigureId(testConfigureId)
+        || finishProductTestRepository.existsByTestConfigureId(testConfigureId)) {
+      return true;
+    }
+    return false;
   }
 }

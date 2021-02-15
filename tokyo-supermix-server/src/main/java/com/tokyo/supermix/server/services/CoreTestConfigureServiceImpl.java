@@ -25,6 +25,7 @@ import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Origin;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialCategoryRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
@@ -51,6 +52,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   @Autowired
   MaterialCategoryRepository materialCategoryRepository;
 
+  @Autowired
+  MaterialAcceptedValueRepository MaterialAcceptedValueRepository;
+
   @Transactional
   public List<CoreTestConfigure> saveCoreTestConfigure(List<CoreTestConfigure> CoreTestConfigure) {
     return coreTestConfigureRepository.saveAll(CoreTestConfigure);
@@ -64,6 +68,7 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   public void createCoreTestConfigure(Long Id) {
     List<CoreTestConfigure> coreTestConfigurelist = new ArrayList<>();
     TestConfigure testConfigure = testConfigureRepository.findById(Id).get();
+
     if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() != null) {
       List<RawMaterial> rawMaterialslist = rawMaterialRepository
           .findByMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId());
@@ -103,60 +108,6 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       coreTestConfigure.setTestConfigure(testConfigure);
       coreTestConfigure.setCoreTest(false);
       coreTestConfigure.setApplicableTest(false);
-      coreTestConfigureRepository.save(coreTestConfigure);
-    }
-  }
-
-  @Transactional
-  public void createCoreTestConfigureInTestConfig(Long Mainid, Long subId, Long RawMatId,
-      Long testId) {
-
-    List<CoreTestConfigure> coreTestConfigurelist = new ArrayList<>();
-    TestConfigure testConfigure = testConfigureRepository.findById(470l).get();
-
-    if (RawMatId == null) {
-
-      List<RawMaterial> rawMaterialslist = rawMaterialRepository.findByMaterialSubCategoryId(subId);
-
-      rawMaterialslist.forEach(rawMaterial -> {
-        CoreTestConfigure coreTestConfigure = new CoreTestConfigure();
-        coreTestConfigure.setMaterialCategory(testConfigure.getMaterialCategory());
-        coreTestConfigure.setMaterialSubCategory(testConfigure.getMaterialSubCategory());
-        coreTestConfigure.setRawMaterial(rawMaterial);
-        coreTestConfigure.setTestConfigure(testConfigure);
-        coreTestConfigure.setCoreTest(true);
-        coreTestConfigure.setApplicableTest(true);
-
-        coreTestConfigurelist.add(coreTestConfigure);
-      });
-      coreTestConfigureRepository.saveAll(coreTestConfigurelist);
-    } else if (testConfigure.getMaterialSubCategory() == null) {
-
-      List<RawMaterial> rawMaterialslist = rawMaterialRepository
-          .findByMaterialSubCategoryMaterialCategoryId(testConfigure.getMaterialCategory().getId());
-      rawMaterialslist.forEach(rawMaterial -> {
-        CoreTestConfigure coreTestConfigure = new CoreTestConfigure();
-        coreTestConfigure.setMaterialCategory(testConfigure.getMaterialCategory());
-        coreTestConfigure.setMaterialSubCategory(rawMaterial.getMaterialSubCategory());
-        coreTestConfigure.setRawMaterial(rawMaterial);
-        coreTestConfigure.setTestConfigure(testConfigure);
-        coreTestConfigure.setCoreTest(true);
-        coreTestConfigure.setApplicableTest(true);
-
-        coreTestConfigurelist.add(coreTestConfigure);
-      });
-      coreTestConfigureRepository.saveAll(coreTestConfigurelist);
-    } else {
-      CoreTestConfigure coreTestConfigure = new CoreTestConfigure();
-      coreTestConfigure.setMaterialCategory(testConfigure.getMaterialCategory());
-      coreTestConfigure.setMaterialSubCategory(testConfigure.getMaterialSubCategory());
-      coreTestConfigure.setRawMaterial(testConfigure.getRawMaterial());
-      coreTestConfigure.setTestConfigure(testConfigure);
-      coreTestConfigure.setCoreTest(true);
-
-      coreTestConfigurelist.add(coreTestConfigure);
-      coreTestConfigure.setApplicableTest(true);
-
       coreTestConfigureRepository.save(coreTestConfigure);
     }
   }
@@ -463,10 +414,15 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
         if (testConfigure.getAcceptedType() != null
-            && testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
-          coreTestConfigure.setApplicableTest(false);
-        } else {
+            && testConfigure.getAcceptedType().equals(AcceptedType.TEST)) {
           coreTestConfigure.setApplicableTest(true);
+        } else if (testConfigure.getAcceptedType() != null
+            && testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)) {
+          coreTestConfigure.setApplicableTest(
+              MaterialAcceptedValueRepository.existsByTestConfigureIdAndMaterialSubCategoryId(
+                  testConfigure.getId(), materialSubCategoryId));
+        } else {
+          coreTestConfigure.setApplicableTest(false);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setCoreTest(coreTestConfigureRepository
@@ -487,10 +443,10 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
         if (testConfigure.getAcceptedType() != null
-            && testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
-          coreTestConfigure.setApplicableTest(false);
-        } else {
+            && testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)) {
           coreTestConfigure.setApplicableTest(true);
+        } else {
+          coreTestConfigure.setApplicableTest(false);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setCoreTest(coreTestConfigureRepository
@@ -522,18 +478,26 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
   @Transactional
   public void updateApplicableTestByRawMaterialId(Long testConfigureId, Long rawMaterialId,
       boolean applicable) {
-    CoreTestConfigure coreTestConfigure = coreTestConfigureRepository
-        .findBytestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
-    coreTestConfigure.setApplicableTest(applicable);
-    coreTestConfigureRepository.save(coreTestConfigure);
+    try {
+      CoreTestConfigure coreTestConfigure = coreTestConfigureRepository
+          .findBytestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
+      coreTestConfigure.setApplicableTest(applicable);
+      coreTestConfigureRepository.save(coreTestConfigure);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Transactional
   public void updateApplicableTestByTestConfigureId(Long testConfigureId, boolean applicable) {
-    List<CoreTestConfigure> coreTestConfigureList =
-        coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
-    coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
-    coreTestConfigureRepository.saveAll(coreTestConfigureList);
+    try {
+      List<CoreTestConfigure> coreTestConfigureList =
+          coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
+      coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
+      coreTestConfigureRepository.saveAll(coreTestConfigureList);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Transactional

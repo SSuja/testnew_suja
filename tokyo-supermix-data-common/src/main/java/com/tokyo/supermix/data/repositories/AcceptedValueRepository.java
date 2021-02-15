@@ -38,4 +38,5 @@ public interface AcceptedValueRepository extends JpaRepository<AcceptedValue, Lo
 
   Page<AcceptedValue> findByTestConfigureIdOrderByUpdatedAtDesc(Pageable pageable,
       Long testConfigureId);
+  Long deleteByTestConfigureId(Long testConfigureId);
 }

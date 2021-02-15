@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.RawMaterialSampleType;
@@ -17,7 +18,8 @@ public class IncomingSampleRequestDto {
   private RawMaterialSampleType rawMaterialSampleType;
   private Long userId;
   private boolean sentMail;
-  
+  private Date date;
+
 
   public String getCode() {
     return code;
@@ -75,20 +77,28 @@ public class IncomingSampleRequestDto {
     this.rawMaterialSampleType = rawMaterialSampleType;
   }
 
-public Long getUserId() {
-	return userId;
-}
+  public Long getUserId() {
+    return userId;
+  }
 
-public void setUserId(Long userId) {
-	this.userId = userId;
-}
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
 
-public boolean isSentMail() {
-  return sentMail;
-}
+  public boolean isSentMail() {
+    return sentMail;
+  }
 
-public void setSentMail(boolean sentMail) {
-  this.sentMail = sentMail;
-}
-  
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
 }

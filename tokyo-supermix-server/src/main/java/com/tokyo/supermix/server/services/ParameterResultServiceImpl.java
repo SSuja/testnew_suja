@@ -236,18 +236,16 @@ public class ParameterResultServiceImpl implements ParameterResultService {
         testParameterRepository.findByTestConfigureIdAndInputMethods(
             materialTestTrial.getMaterialTest().getTestConfigure().getId(),
             InputMethod.CALCULATION);
-       if (calculationTestParameterList.isEmpty()) {
-           testparameters.forEach(testparameter -> {
+    if (calculationTestParameterList.isEmpty()) {
+      testparameters.forEach(testparameter -> {
         getResults(testparameter, materialTestTrial);
       });
     }
-   
     if (!calculationTestParameterList.isEmpty()) {
       calculationTestParameterList.forEach(testparameter -> {
         calculateEquation(materialTestTrialCode, testparameter);
       });
     }
-  
     if (testparameters.stream()
         .anyMatch(tespa -> tespa.getInputMethods().equals(InputMethod.OBSERVE)
             && tespa.getType().equals(TestParameterType.RESULT))) {
@@ -277,7 +275,7 @@ public class ParameterResultServiceImpl implements ParameterResultService {
                 .findByTestParameterIdAndMaterialTestTrialCode(
                     testEquationElement.getTestParameter().getId(), materialTestTrialCode)
                 .getValue() == null) {
-          calculateEquation(materialTestTrialCode, testparameter);
+          calculateEquation(materialTestTrialCode, testEquationElement.getTestParameter());
         }
         if (testEquationElement.getTestParameter().getParameter().getParameterDataType()
             .equals(ParameterDataType.DATETIME)) {
@@ -286,7 +284,6 @@ public class ParameterResultServiceImpl implements ParameterResultService {
                   testEquationElement.getTestParameter().getId(), materialTestTrialCode);
           dateResultlist.add(parameterResult.getDateValue());
         } else {
-
           ParameterResult parameterResult =
               parameterResultRepository.findByTestParameterIdAndMaterialTestTrialCode(
                   testEquationElement.getTestParameter().getId(), materialTestTrialCode);
