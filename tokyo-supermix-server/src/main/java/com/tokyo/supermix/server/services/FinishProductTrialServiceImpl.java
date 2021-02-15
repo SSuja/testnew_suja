@@ -1028,7 +1028,7 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     } else if (finishProductTest.getStatus().equals(Status.PENDING_FAIL)) {
       finishProductTest.setStatus(Status.FAIL);
     }
-    finishProductTest.setAproved(true);
+    finishProductTest.setApproved(true);
     FinishProductTest finishProductTestObj = finishProductTestRepository.save(finishProductTest);
     if (finishProductTestObj != null) {
       emailNotification.sendFinishProductTestEmail(finishProductTestObj);
