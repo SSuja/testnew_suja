@@ -414,15 +414,15 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
         if (testConfigure.getAcceptedType() != null
-            && testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
-          coreTestConfigure.setApplicableTest(false);
+            && testConfigure.getAcceptedType().equals(AcceptedType.TEST)) {
+          coreTestConfigure.setApplicableTest(true);
         } else if (testConfigure.getAcceptedType() != null
             && testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)) {
           coreTestConfigure.setApplicableTest(
               MaterialAcceptedValueRepository.existsByTestConfigureIdAndMaterialSubCategoryId(
                   testConfigure.getId(), materialSubCategoryId));
         } else {
-          coreTestConfigure.setApplicableTest(true);
+          coreTestConfigure.setApplicableTest(false);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setCoreTest(coreTestConfigureRepository
@@ -443,10 +443,10 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
         if (testConfigure.getAcceptedType() != null
-            && testConfigure.getAcceptedType().equals(AcceptedType.MATERIAL)) {
-          coreTestConfigure.setApplicableTest(false);
-        } else {
+            && testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)) {
           coreTestConfigure.setApplicableTest(true);
+        } else {
+          coreTestConfigure.setApplicableTest(false);
         }
         coreTestConfigure.setRawMaterial(rawMaterial);
         coreTestConfigure.setCoreTest(coreTestConfigureRepository
