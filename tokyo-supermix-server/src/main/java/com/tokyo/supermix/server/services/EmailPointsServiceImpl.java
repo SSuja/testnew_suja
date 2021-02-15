@@ -155,15 +155,17 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   @Transactional(propagation = Propagation.NEVER)
   public void deleteByTestConfigureId(Long testConfigureId) {
     emailPointsRepository.findByTestConfigureId(testConfigureId).forEach(emailpoints -> {
-      emailGroupRepository.findByEmailPointsId(emailpoints.getId()).forEach(emailGroup -> {
-        emailRecipientRepository.findByEmailGroupId(emailGroup.getId()).stream()
-            .filter(n -> n != null)
-            .forEach(emailRecipient -> emailRecipientRepository.deleteById(emailRecipient.getId()));
-        emailNotificationDaysRepository.findByEmailGroupId(emailGroup.getId())
-            .forEach(emailNotificationDays -> emailNotificationDaysRepository
-                .deleteById(emailNotificationDays.getId()));
-        emailGroupRepository.deleteById(emailGroup.getId());
-      });
+      emailGroupRepository.findByEmailPointsId(emailpoints.getId()).stream().filter(n -> n != null)
+          .forEach(emailGroup -> {
+            emailRecipientRepository.findByEmailGroupId(emailGroup.getId()).stream()
+                .filter(n -> n != null).forEach(
+                    emailRecipient -> emailRecipientRepository.deleteById(emailRecipient.getId()));
+            emailNotificationDaysRepository.findByEmailGroupId(emailGroup.getId()).stream()
+                .filter(n -> n != null)
+                .forEach(emailNotificationDays -> emailNotificationDaysRepository
+                    .deleteById(emailNotificationDays.getId()));
+            emailGroupRepository.deleteById(emailGroup.getId());
+          });
       emailPointsRepository.deleteById(emailpoints.getId());
     });
   }
