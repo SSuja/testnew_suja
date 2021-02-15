@@ -34,6 +34,7 @@ import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.Status;
@@ -617,8 +618,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
         finishProductSampleRepository.save(finishProductSample);
     mixDesign.setStatus(finishproductTest.getStatus());
     MixDesign mixDesignObj = mixDesignRepository.save(mixDesign);
-    if (mixDesignObj.getStatus().equals(Status.PASS)
-        && finishProductSampleobj.getWorkOrderNumber() == null) {
+    if (mixDesignObj.getStatus().equals(Status.PASS) && finishProductSampleobj
+        .getFinishProductSampleType().equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
       MixDesignConfirmationToken mixDesignConfirmationToken =
           new MixDesignConfirmationToken(mixDesignObj);
       mixDesignConfirmationTokenRepository.save(mixDesignConfirmationToken);
@@ -647,7 +648,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
     } else {
       finishProductSample.setStatus(Status.PROCESS);
       finishProductSampleRepository.save(finishProductSample);
-      if (finishProductSample.getWorkOrderNumber() == null) {
+      if (finishProductSample.getFinishProductSampleType()
+          .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
         mixDesign.setStatus(Status.PROCESS);
         mixDesignRepository.save(mixDesign);
       }
@@ -669,7 +671,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       } else {
         finishProductSample.setStatus(Status.FAIL);
         finishProductSampleRepository.save(finishProductSample);
-        if (finishProductSample.getWorkOrderNumber() == null) {
+        if (finishProductSample.getFinishProductSampleType()
+            .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
           mixDesign.setStatus(Status.FAIL);
           mixDesignRepository.save(mixDesign);
         }
@@ -678,7 +681,8 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       if (finishProductSample.getStatus().equals(Status.NEW)) {
         finishProductSample.setStatus(Status.PROCESS);
         finishProductSampleRepository.save(finishProductSample);
-        if (finishProductSample.getWorkOrderNumber() == null) {
+        if (finishProductSample.getFinishProductSampleType()
+            .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
           mixDesign.setStatus(Status.PROCESS);
           mixDesignRepository.save(mixDesign);
         }

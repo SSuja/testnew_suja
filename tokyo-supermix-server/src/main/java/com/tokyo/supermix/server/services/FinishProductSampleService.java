@@ -8,6 +8,7 @@ import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
@@ -19,7 +20,8 @@ public interface FinishProductSampleService {
 
   public List<FinishProductSample> getAllFinishProductSamples();
 
-  public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser,
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(
+      FinishProductSampleType finishProductSampleType, UserPrincipal currentUser,
       Pageable pageable);
 
   boolean isFinishProductSampleExist(String code);
@@ -37,8 +39,8 @@ public interface FinishProductSampleService {
   public Page<FinishProductSample> searchFinishProductSample(Predicate predicate, int page,
       int size);
 
-  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode,
-      Pageable pageable);
+  public List<FinishProductSample> getFinishProductSampleByPlantCode(
+      FinishProductSampleType finishProductSampleType, String plantCode, Pageable pageable);
 
   public List<FinishProductSample> getFinishProductSampleByStatus(Status status);
 
@@ -46,15 +48,16 @@ public interface FinishProductSampleService {
 
   public void updateFinishProductSample(FinishProductSample finishProductSample);
 
-  public Long getCountFinishProductSample();
+  public Long getCountFinishProductSampleByType(FinishProductSampleType finishProductSampleType);
 
-  public Long getCountFinishProductSampleByPlantCode(String plantCode);
+  public Long getCountFinishProductSampleTypeByPlantCode(String plantCode,
+      FinishProductSampleType finishProductSampleType);
 
   public List<FinishProductSampleResponseDto> searchFinishProductSample(
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, Status status, String date,
       String code, String rawMaterialName, String workOrderNumber, String customer,
-      Pageable pageable, Pagination pagination);
+      FinishProductSampleType finishProductSampleType, Pageable pageable, Pagination pagination);
 
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryIdAndPlantCode(
       Long subCategoryId, String plantCode);
