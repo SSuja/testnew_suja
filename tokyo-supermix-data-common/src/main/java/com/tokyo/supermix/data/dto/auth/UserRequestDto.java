@@ -15,6 +15,7 @@ public class UserRequestDto {
   private Long employeeId;
   private String email;
   private List<Long> roleIds;
+  private boolean sentMail;
   
   public Long getId() {
     return id;
@@ -62,6 +63,14 @@ public class UserRequestDto {
 
   public void setRoleIds(List<Long> roleIds) {
     this.roleIds = roleIds;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 
 }

@@ -16,6 +16,7 @@ public class FinishProductSampleResponseDto {
   private ProjectResponseDto project;
   private PourDtoResponse pour;
   private String workOrderNumber;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -111,5 +112,13 @@ public class FinishProductSampleResponseDto {
 
   public void setWorkOrderNumber(String workOrderNumber) {
     this.workOrderNumber = workOrderNumber;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

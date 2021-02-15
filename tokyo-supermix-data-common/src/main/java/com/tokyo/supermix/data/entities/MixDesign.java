@@ -26,6 +26,7 @@ public class MixDesign extends DateAudit implements Serializable {
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
   private boolean checkDepend;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -85,5 +86,13 @@ public class MixDesign extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

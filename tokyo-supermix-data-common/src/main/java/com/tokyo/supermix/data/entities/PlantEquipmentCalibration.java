@@ -43,6 +43,7 @@ public class PlantEquipmentCalibration implements Serializable {
   private Employee employee;
   private String accuracy;
   private Long noOfDays;
+  private boolean sentMail;
 
   public Long getNoOfDays() {
     return noOfDays;
@@ -142,5 +143,13 @@ public class PlantEquipmentCalibration implements Serializable {
 
   public void setAccuracy(String accuracy) {
     this.accuracy = accuracy;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

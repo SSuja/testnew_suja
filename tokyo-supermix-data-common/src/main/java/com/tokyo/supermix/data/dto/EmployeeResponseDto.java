@@ -16,6 +16,7 @@ public class EmployeeResponseDto {
   private String updatedAt;
   private boolean isEnabled;
   private String profilePicPath;
+  private boolean sentMail;
 
   public boolean isEnabled() {
     return isEnabled;
@@ -135,5 +136,13 @@ public class EmployeeResponseDto {
 
   public void setProfilePicPath(String profilePicPath) {
     this.profilePicPath = profilePicPath;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

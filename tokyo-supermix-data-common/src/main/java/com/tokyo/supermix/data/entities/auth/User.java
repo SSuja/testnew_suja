@@ -37,6 +37,7 @@ public class User extends DateAudit {
   private Set<UserPlantRole> userPlantRoles;
   @OneToMany(mappedBy = "user")
   private Set<UserPlantPermission> userPlantPermissions;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -116,6 +117,14 @@ public class User extends DateAudit {
 
   public void setUserPlantPermissions(Set<UserPlantPermission> userPlantPermissions) {
     this.userPlantPermissions = userPlantPermissions;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 
 }

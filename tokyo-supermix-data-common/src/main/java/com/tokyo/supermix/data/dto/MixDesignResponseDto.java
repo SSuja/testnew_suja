@@ -16,6 +16,7 @@ public class MixDesignResponseDto {
   private Long rawMaterialId;
   private Long rawMaterialMaterialSubCategoryId;
   private boolean approved;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -111,5 +112,13 @@ public class MixDesignResponseDto {
 
   public void setApproved(boolean approved) {
     this.approved = approved;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

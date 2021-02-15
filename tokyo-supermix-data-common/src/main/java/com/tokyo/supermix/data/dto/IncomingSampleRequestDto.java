@@ -16,6 +16,7 @@ public class IncomingSampleRequestDto {
   private Long supplierId;
   private RawMaterialSampleType rawMaterialSampleType;
   private Long userId;
+  private boolean sentMail;
   
 
   public String getCode() {
@@ -80,6 +81,14 @@ public Long getUserId() {
 
 public void setUserId(Long userId) {
 	this.userId = userId;
+}
+
+public boolean isSentMail() {
+  return sentMail;
+}
+
+public void setSentMail(boolean sentMail) {
+  this.sentMail = sentMail;
 }
   
 }

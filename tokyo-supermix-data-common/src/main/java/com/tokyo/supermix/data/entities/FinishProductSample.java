@@ -38,6 +38,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @ManyToOne
 	@JoinColumn(name = "userId", nullable = true)
 	private User user;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -129,6 +130,14 @@ public User getUser() {
 
 public void setUser(User user) {
 	this.user = user;
+}
+
+public boolean isSentMail() {
+  return sentMail;
+}
+
+public void setSentMail(boolean sentMail) {
+  this.sentMail = sentMail;
 }
   
 }

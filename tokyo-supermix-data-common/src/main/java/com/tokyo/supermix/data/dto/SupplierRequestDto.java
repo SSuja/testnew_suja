@@ -12,6 +12,7 @@ public class SupplierRequestDto {
   private String address;
   private String phoneNumber;
   private String email;
+  private boolean sentMail;
   @NotNull(message = "{supplierRequestDto.plantCode.null}")
   @NotEmpty(message = "{supplierRequestDto.plantCode.empty}")
   private String plantCode;
@@ -71,5 +72,13 @@ public class SupplierRequestDto {
 
   public void setSuppilerCategoryIds(List<Long> suppilerCategoryIds) {
     this.suppilerCategoryIds = suppilerCategoryIds;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

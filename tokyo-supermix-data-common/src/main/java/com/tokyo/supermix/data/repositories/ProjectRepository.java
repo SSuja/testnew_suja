@@ -35,4 +35,6 @@ public interface ProjectRepository
   List<Project> findByPlantCodeAndNameContaining(String plantCode, String name);
 
   Project findByName(String name);
+  
+  List<Project> findBySentMail(boolean sentMail);
 }
