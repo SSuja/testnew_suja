@@ -175,9 +175,8 @@ public class ParameterController {
   }
 
   @GetMapping(value = EndpointURI.PARAMETER_COMMON_SEARCH)
-  public ResponseEntity<Object> searchAllParameters(
-      @RequestParam(name = "name", required = false) String name,
-      @RequestParam(name = "parameterType", required = false) ParameterType parameterType) {
+  public ResponseEntity<Object> searchAllParameters(@PathVariable ParameterType parameterType,
+      @RequestParam(name = "name", required = false) String name) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER,
         mapper.map(parameterService.searchCommonParameters(name, parameterType, booleanBuilder),

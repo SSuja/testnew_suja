@@ -238,7 +238,8 @@ public final class EndpointURI {
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}" + SEARCH;
   public static final String PARAMETER_PAGE_BY_TYPE =
       PARAMETER + SLASH + "parameter-type-page" + SLASH + "{parameterType}";
-  public static final String PARAMETER_COMMON_SEARCH = PARAMETER + SLASH + "common" + SEARCH;
+  public static final String PARAMETER_COMMON_SEARCH =
+      PARAMETER + SLASH + "common" + SLASH + "type" + SLASH + "{parameterType}" + SEARCH;
 
   /*
    * Project APIs
