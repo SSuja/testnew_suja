@@ -81,7 +81,15 @@ public class ParameterEquationController {
 
   @DeleteMapping(EndpointURI.PARAMETER_EQUATION_BY_ID)
   public ResponseEntity<Object> deleteParameterEquation(@PathVariable Long id) {
+    ParameterEquation parameterEquation = parameterEquationService.getParameterEquationById(id);
     if (parameterEquationService.isParameterEquationExist(id)) {
+      if (testConfigureService
+          .isAlreadyDepended(parameterEquation.getTestParameter().getTestConfigure().getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       parameterEquationService.deleteParameterEquation(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_PARAMETER_EQUATION_SCCESS),

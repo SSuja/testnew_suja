@@ -97,6 +97,12 @@ public class TestConfigureController {
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
+      if (testConfigureService.isAlreadyDepended(testConfigureRequestDto.getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (testConfigureService.isDuplicateEntry(testConfigureRequestDto.getId(),
           testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId(),
           testConfigureRequestDto.getMaterialSubCategoryId(),
@@ -312,6 +318,12 @@ public class TestConfigureController {
 
   @DeleteMapping(EndpointURI.TEST_CONFIGURE_RESET_BY_ID)
   public ResponseEntity<Object> deleteTestConfigureReset(@PathVariable Long id) {
+    if (testConfigureService.isAlreadyDepended(id)) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+              validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+          HttpStatus.BAD_REQUEST);
+    }
     testConfigureService.deleteTestConfigureReset(id);
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_CONFIGURE_SCCESS),

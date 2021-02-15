@@ -726,6 +726,16 @@ public class ValidationFailureStatusCodes {
   private String testNameIsNull;
   @Value("${testConfigureRequestDto.name.empty")
   private String testNameIsEmpty;
+  @Value("${validation.testConfigure.alreadyDepended}")
+  private String testConfigureAlreadyDepended;
+
+  public String getTestConfigureAlreadyDepended() {
+    return testConfigureAlreadyDepended;
+  }
+
+  public void setTestConfigureAlreadyDepended(String testConfigureAlreadyDepended) {
+    this.testConfigureAlreadyDepended = testConfigureAlreadyDepended;
+  }
 
   public String getTestConfigureNotExist() {
     return testConfigureNotExist;
@@ -2076,5 +2086,16 @@ public class ValidationFailureStatusCodes {
 
   public void setRawMaterialPlantOrSbuNull(String rawMaterialPlantOrSbuNull) {
     this.rawMaterialPlantOrSbuNull = rawMaterialPlantOrSbuNull;
+  }
+
+  @Value("${validation.rawMaterial.plantOrSbuAlreadyDepended}")
+  private String rawMaterialPlantOrSbuAlreadyDepended;
+
+  public String getRawMaterialPlantOrSbuAlreadyDepended() {
+    return rawMaterialPlantOrSbuAlreadyDepended;
+  }
+
+  public void setRawMaterialPlantOrSbuAlreadyDepended(String rawMaterialPlantOrSbuAlreadyDepended) {
+    this.rawMaterialPlantOrSbuAlreadyDepended = rawMaterialPlantOrSbuAlreadyDepended;
   }
 }

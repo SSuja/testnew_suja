@@ -34,6 +34,9 @@ import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
+import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestEquationParameterRepository;
 import com.tokyo.supermix.data.repositories.TestEquationRepository;
@@ -70,6 +73,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EquationRepository euationRepository;
   @Autowired
   private MultiResultFormulaRepository multiResultFormulaRepository;
+  private MaterialTestRepository materialTestRepository;
+  @Autowired
+  private FinishProductTestRepository finishProductTestRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
@@ -459,5 +465,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testConfigureRepository.existsById(testConfigureId)) {
       testConfigureRepository.deleteById(testConfigureId);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isAlreadyDepended(Long testConfigureId) {
+    if (materialTestRepository.existsByTestConfigureId(testConfigureId)
+        || finishProductTestRepository.existsByTestConfigureId(testConfigureId)) {
+      return true;
+    }
+    return false;
   }
 }

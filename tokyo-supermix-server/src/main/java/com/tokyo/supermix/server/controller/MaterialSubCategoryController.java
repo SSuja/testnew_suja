@@ -29,6 +29,7 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -64,6 +65,8 @@ public class MaterialSubCategoryController {
   IncomingSampleRepository incomingSampleRepository;
   @Autowired
   CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  RawMaterialRepository rawMaterialRepository;
   private static final Logger logger = Logger.getLogger(MaterialSubCategoryController.class);
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
@@ -145,6 +148,15 @@ public class MaterialSubCategoryController {
       }
       MaterialSubCategory materialSubCategory = materialSubCategoryService
           .getMaterialSubCategoryById(materialSubCategoryRequestDto.getId());
+      if(!materialSubCategory.getPrefix().equalsIgnoreCase(materialSubCategoryRequestDto.getPrefix())) {
+        if(rawMaterialRepository.existsByMaterialSubCategoryId(materialSubCategory.getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(ValidationConstance.MATERIALSUBCATEGORY,
+                  validationFailureStatusCodes.getSubMaterialCategoryAlreadyDepended()),
+              HttpStatus.BAD_REQUEST); 
+        }
+        
+      }
       if (materialSubCategory.getMaterialCategory().getId() != materialSubCategoryRequestDto
           .getMaterialCategoryId()) {
         if (testConfigureRepository

@@ -60,4 +60,8 @@ public interface CoreTestConfigureRepository
   boolean existsByTestConfigureId(Long testConfigureId);
 
   Long deleteByTestConfigureId(Long testConfigureId);
+
+  boolean existsByRawMaterialId(Long rawMaterialId);
+
+  Long deleteByRawMaterialId(Long rawMaterialId);
 }

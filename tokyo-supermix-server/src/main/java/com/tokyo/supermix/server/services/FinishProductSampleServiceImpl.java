@@ -78,6 +78,9 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     if (finishProductSampleObj != null && finishProductSampleObj.getWorkOrderNumber()== null) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
+    else {
+      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleObj);
+    }
   }
 
   @Transactional()
