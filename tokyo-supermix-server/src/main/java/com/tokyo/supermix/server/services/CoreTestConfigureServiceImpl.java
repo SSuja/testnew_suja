@@ -443,7 +443,8 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
         if (testConfigure.getAcceptedType() != null
-            && testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)) {
+            && (testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)||
+                testConfigure.getAcceptedType().equals(AcceptedType.TEST))) {
           coreTestConfigure.setApplicableTest(true);
         } else {
           coreTestConfigure.setApplicableTest(false);
