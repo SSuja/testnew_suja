@@ -213,9 +213,7 @@ public class EmailNotification {
 
   @Async
   public void sendTestEmail(MaterialTest materialTest) {
-    EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-        materialTest.getTestConfigure().getMaterialCategory().getId(),
-        materialTest.getTestConfigure().getTest().getId(), false);
+    EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule(materialTest.getTestConfigure().getId(), false);
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
     if (emailGroup != null) {
@@ -245,9 +243,7 @@ public class EmailNotification {
 
   @Async
   public void sendFinishProductTestEmail(FinishProductTest finishProductTest) {
-    EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-        finishProductTest.getTestConfigure().getMaterialCategory().getId(),
-        finishProductTest.getTestConfigure().getTest().getId(), false);
+    EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule(finishProductTest.getTestConfigure().getId(), false);
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode(),
         emailPoints.getName());
@@ -738,10 +734,7 @@ public class EmailNotification {
             long noOfDays = ChronoUnit.DAYS.between(
                 finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(),
                 today.toLocalDate());
-            EmailPoints emailPoints =
-                emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-                    testconfigure.getMaterialCategory().getId(), testconfigure.getTest().getId(),
-                    true);
+            EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule( testconfigure.getId(), true);
             String plantCode = finishProductSample.getMixDesign().getPlant().getCode();
             List<NotificationDays> notificationDaysList =
                 emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
@@ -790,11 +783,8 @@ public class EmailNotification {
               || incomingSample.getStatus().equals(Status.PROCESS)) {
             long noOfDays = ChronoUnit.DAYS.between(
                 incomingSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
-            EmailPoints emailPoints =
-                emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-                    testconfigure.getMaterialCategory().getId(), testconfigure.getTest().getId(),
-                    true);
-            String plantCode = incomingSample.getPlant().getCode();
+            EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule( testconfigure.getId(), true);
+                       String plantCode = incomingSample.getPlant().getCode();
             List<NotificationDays> notificationDaysList =
                 emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
             notificationDaysList.forEach(notificationday -> {

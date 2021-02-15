@@ -2,8 +2,8 @@ package com.tokyo.supermix.server.services;
 
 import java.util.List;
 import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
-import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.entities.EmailPoints;
+import com.tokyo.supermix.data.entities.TestConfigure;
 
 public interface EmailPointsService {
 
@@ -19,11 +19,11 @@ public interface EmailPointsService {
 
   boolean isEmailPointIdExists(Long id);
 
-  void createEmailPoints(TestConfigureRequestDto testConfigureRequestDto);
+  void createEmailPoints(TestConfigure testConfigure);
 
   List<EmailPoints> getAllEmailPointsByAdminStatus(boolean status);
 
-  void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
+  public void deleteByTestConfigureId(Long testConfigureId);
 
   void deleteByTestIdAndMaterialCategoryId(Long testId, Long materialCategoryId);
 
@@ -31,5 +31,9 @@ public interface EmailPointsService {
 
   EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId);
   
-  public void createScheduleEmailPoints(TestConfigureRequestDto testConfigureRequestDto);
+  public void createScheduleEmailPoints(TestConfigure testConfigure);
+  
+  public void updateEmailPoints(TestConfigure testConfigure);
+  
+  public void updateScheduleEmailPoints(TestConfigure testConfigure);
 }

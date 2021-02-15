@@ -6,12 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
-import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.entities.EmailGroup;
 import com.tokyo.supermix.data.entities.EmailPoints;
+import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.EmailGroupRepository;
+import com.tokyo.supermix.data.repositories.EmailNotificationDaysRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
+import com.tokyo.supermix.data.repositories.EmailRecipientRepository;
 import com.tokyo.supermix.util.MailGroupConstance;
 
 @Service
@@ -23,11 +25,17 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   @Autowired
   private MaterialCategoryService materialCategoryService;
   @Autowired
+  private RawMaterialService rawMaterialService;
+  @Autowired
   private TestService testService;
   @Autowired
   private EmailGroupRepository emailGroupRepository;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private EmailRecipientRepository emailRecipientRepository;
+  @Autowired
+  private EmailNotificationDaysRepository emailNotificationDaysRepository;
 
   @Transactional(readOnly = true)
   public boolean isEmailPointsExist(EmailPointsRequestDto emailPointsRequestDto) {
@@ -61,6 +69,7 @@ public class EmailPointsServiceImpl implements EmailPointsService {
     emailPoints.setName(emailPoint.getName());
     emailPoints.setMaterialCategory(emailPoint.getMaterialCategory());
     emailPoints.setMaterialSubCategory(emailPoint.getMaterialSubCategory());
+    emailPoints.setTestConfigure(emailPoint.getTestConfigure());
     emailPoints.setTest(emailPoint.getTest());
     if (emailPointsRepository.findById(emailPoints.getId()).get().getName()
         .equalsIgnoreCase(MailGroupConstance.CREATE_PLANT)
@@ -86,34 +95,56 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   }
 
   @Transactional
-  public void createEmailPoints(TestConfigureRequestDto testConfigureRequestDto) {
+  public void createEmailPoints(TestConfigure testConfigure) {
     EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
-    String testName = testService.getTestById(testConfigureRequestDto.getTestId()).getName();
-    emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
-    emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
+    String testName = testService.getTestById(testConfigure.getTest().getId()).getName();
+    emailPointsRequestDto.setActive(false);
+    emailPointsRequestDto.setTestId(testConfigure.getTest().getId());
     emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
-    String materialCategoryName = materialCategoryService
-          .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
+    emailPointsRequestDto.setTestConfigureId(testConfigure.getId());
+    emailPointsRequestDto.setSchedule(false);
+    if (testConfigure.getRawMaterial() != null) {
+      String materialName =
+          rawMaterialService.getRawMaterialById(testConfigure.getRawMaterial().getId()).getName();
+      emailPointsRequestDto.setName(materialName + "_" + testName);
+    } else if (testConfigure.getMaterialSubCategory() != null) {
+      String materialSubCategoryName = materialSubCategoryService
+          .getMaterialSubCategoryById(testConfigure.getMaterialSubCategory().getId()).getName();
+      emailPointsRequestDto.setName(materialSubCategoryName + "_" + testName);
+    } else {
+      String materialCategoryName = materialCategoryService
+          .getMaterialCategoryById(testConfigure.getMaterialCategory().getId()).getName();
       emailPointsRequestDto.setName(materialCategoryName + "_" + testName);
-      emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
-
+    }
+    emailPointsRequestDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
   }
-  
+
   @Transactional
-  public void createScheduleEmailPoints(TestConfigureRequestDto testConfigureRequestDto) {
+  public void createScheduleEmailPoints(TestConfigure testConfigure) {
     EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
-    String testName = testService.getTestById(testConfigureRequestDto.getTestId()).getName();
-    emailPointsRequestDto.setActive(testConfigureRequestDto.isActive());
-    emailPointsRequestDto.setTestId(testConfigureRequestDto.getTestId());
+    String testName = testService.getTestById(testConfigure.getTest().getId()).getName();
+    emailPointsRequestDto.setActive(false);
+    emailPointsRequestDto.setTestId(testConfigure.getTest().getId());
     emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
-    emailPointsRequestDto.setSchedule(true);  
-    String materialCategoryName = materialCategoryService
-          .getMaterialCategoryById(testConfigureRequestDto.getMaterialCategoryId()).getName();
-    emailPointsRequestDto.setName(materialCategoryName +"_"  +"Schedule"+ "_"+ testName);
-    emailPointsRequestDto.setMaterialCategoryId(testConfigureRequestDto.getMaterialCategoryId());
-    
+    emailPointsRequestDto.setSchedule(true);
+    emailPointsRequestDto.setTestConfigureId(testConfigure.getId());
+    if (testConfigure.getRawMaterial() != null) {
+      String materialName =
+          rawMaterialService.getRawMaterialById(testConfigure.getRawMaterial().getId()).getName();
+      emailPointsRequestDto.setName(materialName + "_" + "Schedule" + "_" + testName);
+    } else if (testConfigure.getMaterialSubCategory() != null) {
+      String materialSubCategoryName = materialSubCategoryService
+          .getMaterialSubCategoryById(testConfigure.getMaterialSubCategory().getId()).getName();
+      emailPointsRequestDto.setName(materialSubCategoryName + "_" + "Schedule" + "_" + testName);
+    } else {
+      String materialCategoryName = materialCategoryService
+          .getMaterialCategoryById(testConfigure.getMaterialCategory().getId()).getName();
+      emailPointsRequestDto.setName(materialCategoryName + "_" + "Schedule" + "_" + testName);
+    }
+    emailPointsRequestDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
     emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
+
   }
 
   @Transactional(readOnly = true)
@@ -122,10 +153,19 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   }
 
   @Transactional(propagation = Propagation.NEVER)
-  public void deleteByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
-    Long emailPointId = emailPointsRepository
-        .findByMaterialSubCategoryIdAndTestId(materialSubCategoryId, testId).getId();
-    emailPointsRepository.deleteById(emailPointId);
+  public void deleteByTestConfigureId(Long testConfigureId) {
+    emailPointsRepository.findByTestConfigureId(testConfigureId).forEach(emailpoints -> {
+      emailGroupRepository.findByEmailPointsId(emailpoints.getId()).forEach(emailGroup -> {
+        emailRecipientRepository.findByEmailGroupId(emailGroup.getId()).stream()
+            .filter(n -> n != null)
+            .forEach(emailRecipient -> emailRecipientRepository.deleteById(emailRecipient.getId()));
+        emailNotificationDaysRepository.findByEmailGroupId(emailGroup.getId())
+            .forEach(emailNotificationDays -> emailNotificationDaysRepository
+                .deleteById(emailNotificationDays.getId()));
+        emailGroupRepository.deleteById(emailGroup.getId());
+      });
+      emailPointsRepository.deleteById(emailpoints.getId());
+    });
   }
 
   @Transactional(propagation = Propagation.NEVER)
@@ -144,5 +184,68 @@ public class EmailPointsServiceImpl implements EmailPointsService {
   public EmailPoints findByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId) {
     return emailPointsRepository.findByTestIdAndMaterialSubCategoryId(testId,
         materialSubCategoryId);
+  }
+
+  @Transactional
+  public void updateEmailPoints(TestConfigure testConfigure) {
+    EmailPoints emailpoint =
+        emailPointsRepository.findByTestConfigureIdAndSchedule(testConfigure.getId(), false);
+
+    EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
+    emailPointsRequestDto.setId(emailpoint.getId());
+    String testName = testConfigure.getTest().getName();
+    emailPointsRequestDto.setActive(emailpoint.isActive());
+    emailPointsRequestDto.setTestId(testConfigure.getTest().getId());
+    emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
+    emailPointsRequestDto.setTestConfigureId(testConfigure.getId());
+    emailPointsRequestDto.setSchedule(emailpoint.isSchedule());
+    if (testConfigure.getRawMaterial() != null) {
+      String materialName =
+          rawMaterialService.getRawMaterialById(testConfigure.getRawMaterial().getId()).getName();
+      emailPointsRequestDto.setName(materialName + "_" + testName);
+    } else if (testConfigure.getMaterialSubCategory() != null) {
+      String materialSubCategoryName = materialSubCategoryService
+          .getMaterialSubCategoryById(testConfigure.getMaterialSubCategory().getId()).getName();
+      emailPointsRequestDto.setName(materialSubCategoryName + "_" + testName);
+    } else {
+      String materialCategoryName = materialCategoryService
+          .getMaterialCategoryById(testConfigure.getMaterialCategory().getId()).getName();
+      emailPointsRequestDto.setName(materialCategoryName + "_" + testName);
+    }
+    emailPointsRequestDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
+    emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
+  }
+
+  @Transactional
+  public void updateScheduleEmailPoints(TestConfigure testConfigure) {
+    EmailPoints emailpoint =
+        emailPointsRepository.findByTestConfigureIdAndSchedule(testConfigure.getId(), true);
+    if (!(emailpoint == null)) {
+      EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
+      emailPointsRequestDto.setId(emailpoint.getId());
+      String testName = testConfigure.getTest().getName();
+      emailPointsRequestDto.setActive(emailpoint.isActive());
+      emailPointsRequestDto.setTestId(testConfigure.getTest().getId());
+      emailPointsRequestDto.setAdminLevelEmailConfiguration(false);
+      emailPointsRequestDto.setSchedule(emailpoint.isSchedule());
+      emailPointsRequestDto.setTestConfigureId(testConfigure.getId());
+      if (testConfigure.getRawMaterial() != null) {
+        String materialName =
+            rawMaterialService.getRawMaterialById(testConfigure.getRawMaterial().getId()).getName();
+        emailPointsRequestDto.setName(materialName + "_" + "Schedule" + "_" + testName);
+      } else if (testConfigure.getMaterialSubCategory() != null) {
+        String materialSubCategoryName = materialSubCategoryService
+            .getMaterialSubCategoryById(testConfigure.getMaterialSubCategory().getId()).getName();
+        emailPointsRequestDto.setName(materialSubCategoryName + "_" + "Schedule" + "_" + testName);
+      } else {
+        String materialCategoryName = materialCategoryService
+            .getMaterialCategoryById(testConfigure.getMaterialCategory().getId()).getName();
+        emailPointsRequestDto.setName(materialCategoryName + "_" + "Schedule" + "_" + testName);
+      }
+      emailPointsRequestDto.setMaterialCategoryId(testConfigure.getMaterialCategory().getId());
+      emailPointsRepository.save(mapper.map(emailPointsRequestDto, EmailPoints.class));
+    } else {
+      createScheduleEmailPoints(testConfigure);
+    }
   }
 }

@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,6 +26,9 @@ public class EmailPoints {
   @ManyToOne
   @JoinColumn(name = "testId", nullable = true)
   private Test test;
+  @OneToOne
+  @JoinColumn(name = "testConfigureId", nullable = true)
+  private TestConfigure testConfigure;
   private boolean adminLevelEmailConfiguration;
   private boolean schedule;
   
@@ -75,5 +79,11 @@ public boolean isSchedule() {
 }
 public void setSchedule(boolean schedule) {
 	this.schedule = schedule;
+}
+public TestConfigure getTestConfigure() {
+  return testConfigure;
+}
+public void setTestConfigure(TestConfigure testConfigure) {
+  this.testConfigure = testConfigure;
 }
 }
