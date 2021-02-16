@@ -19,8 +19,8 @@ import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParametersDto;
-import com.tokyo.supermix.data.entities.QTestConfigure;
 import com.tokyo.supermix.data.entities.ParameterEquation;
+import com.tokyo.supermix.data.entities.QTestConfigure;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.TestEquation;
 import com.tokyo.supermix.data.enums.MainType;
@@ -28,14 +28,14 @@ import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
+import com.tokyo.supermix.data.repositories.EmailPointsRepository;
 import com.tokyo.supermix.data.repositories.EquationRepository;
-import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
-import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
-import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
-import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
+import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
+import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.TestEquationParameterRepository;
 import com.tokyo.supermix.data.repositories.TestEquationRepository;
@@ -76,12 +76,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private MaterialTestRepository materialTestRepository;
   @Autowired
   private FinishProductTestRepository finishProductTestRepository;
+  @Autowired
+  private EmailPointsRepository emailPointsRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
-    TestConfigure testConfigureobj  = testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class));
+    TestConfigure testConfigureobj =
+        testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class));
     emailPointsService.createEmailPoints(testConfigureobj);
-    if (!(testConfigureobj.getDueDay()== null|| testConfigureobj.getDueDay().isEmpty())) {   
+    if (!(testConfigureobj.getDueDay() == null || testConfigureobj.getDueDay().isEmpty())) {
       emailPointsService.createScheduleEmailPoints(testConfigureobj);
     }
     coreTestConfigureService.createCoreTestConfigure(testConfigureobj.getId());
@@ -260,14 +263,14 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional
   public Long updateTestConfigure(TestConfigure testConfigure) {
-    TestConfigure testConfigureObj= testConfigureRepository.save(testConfigure);
-    if(testConfigureObj!=null){
+    TestConfigure testConfigureObj = testConfigureRepository.save(testConfigure);
+    if (testConfigureObj != null) {
       emailPointsService.updateEmailPoints(testConfigureObj);
-      if(!(testConfigureObj.getDueDay() == null)) {
+      if (!(testConfigureObj.getDueDay() == null)) {
         emailPointsService.updateScheduleEmailPoints(testConfigureObj);
-        
+
       }
-      
+
     }
     return testConfigure.getId();
   }
@@ -419,7 +422,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (testEquationRepository.existsByTestConfigureId(testConfigureId)) {
       for (TestEquation testEquation : testEquationRepository
           .findByTestConfigureId(testConfigureId)) {
-        if (euationRepository.existsById(testEquation.getEquation().getId())) {
+        if (testEquation.getEquation() != null
+            && euationRepository.existsById(testEquation.getEquation().getId())) {
           euationRepository.deleteById(testEquation.getEquation().getId());
         }
       }
@@ -433,7 +437,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     if (parameterEquationRepository.existsByTestParameterTestConfigureId(testConfigureId)) {
       for (ParameterEquation parameterEquation : parameterEquationRepository
           .findByTestParameterTestConfigureId(testConfigureId)) {
-        if (euationRepository.existsById(parameterEquation.getEquation().getId())) {
+        if (parameterEquation.getEquation() != null
+            && euationRepository.existsById(parameterEquation.getEquation().getId())) {
           euationRepository.deleteById(parameterEquation.getEquation().getId());
         }
       }
@@ -444,6 +449,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     }
     if (coreTestConfigureRepository.existsByTestConfigureId(testConfigureId)) {
       coreTestConfigureRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    if (emailPointsRepository.existsByTestConfigureId(testConfigureId)) {
+      emailPointsRepository.deleteByTestConfigureId(testConfigureId);
     }
     if (testConfigureRepository.existsById(testConfigureId)) {
       testConfigureRepository.deleteById(testConfigureId);
