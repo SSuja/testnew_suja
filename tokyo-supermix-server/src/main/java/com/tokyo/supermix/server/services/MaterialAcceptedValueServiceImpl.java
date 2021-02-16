@@ -118,6 +118,30 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
 
   @Transactional
   public void updateMaterialAcceptedValue(MaterialAcceptedValue materialAcceptedValue) {
+    if (materialAcceptedValue.getMaterialParamType().equals(MaterialParamType.QUALITY_VALUE)) {
+      MaterialQualityParameter materialQualityParameter = materialQualityParameterRepository
+          .findById(materialAcceptedValue.getMaterialQualityParameter().getId()).get();
+      if (materialAcceptedValue.getConditionRange() != null) {
+        if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+          materialQualityParameter.setConditionRange(materialAcceptedValue.getConditionRange());
+          materialQualityParameter.setMaxValue(materialAcceptedValue.getMaxValue());
+          materialQualityParameter.setMinValue(materialAcceptedValue.getMinValue());
+        } else if (materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)
+            || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+            || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)) {
+          materialQualityParameter.setConditionRange(materialAcceptedValue.getConditionRange());
+          materialQualityParameter.setValue(materialAcceptedValue.getValue());
+        }
+      }
+      TestParameter testParameter =
+          testParameterRepository.findById(materialAcceptedValue.getTestParameter().getId()).get();
+      materialQualityParameter
+          .setUnit(unitRepository.findById(testParameter.getUnit().getId()).get());
+      Parameter parameter =
+          parameterRepository.findById(testParameter.getParameter().getId()).get();
+      materialQualityParameter.setParameter(parameter);
+      materialQualityParameterRepository.save(materialQualityParameter);
+    }
     materialAcceptedValueRepository.save(materialAcceptedValue);
   }
 
@@ -426,6 +450,11 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       accepetedValueDto.setFinalResult(acceptedValue.isFinalResult());
       accepetedValueDto.setValue(acceptedValue.getValue());
       accepetedValueDto.setCategoryAcceptedType(acceptedValue.getCategoryAcceptedType());
+      accepetedValueDto.setMaterialParamType(acceptedValue.getMaterialParamType());
+      if (acceptedValue.getMaterialQualityParameter() != null) {
+        accepetedValueDto
+            .setMaterialQualityParameterId(acceptedValue.getMaterialQualityParameter().getId());
+      }
       if (acceptedValue.getTestEquation() != null) {
         accepetedValueDto.setTestEquationId(acceptedValue.getTestEquation().getId());
         accepetedValueDto
