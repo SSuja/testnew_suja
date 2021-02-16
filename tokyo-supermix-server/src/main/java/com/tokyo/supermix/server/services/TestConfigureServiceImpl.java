@@ -306,6 +306,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       testConfigureResDto.setRawMaterialId(testConfigure.getRawMaterial().getId());
       testConfigureResDto.setRawMaterialName(testConfigure.getRawMaterial().getName());
     }
+    if (testConfigure.getTestResultType() != null) {
+      testConfigureResDto.setTestResultType(testConfigure.getTestResultType());
+    }
     return testConfigureResDto;
   }
 
@@ -420,13 +423,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       testEquationParameterRepository.deleteByTestEquationTestConfigureId(testConfigureId);
     }
     if (testEquationRepository.existsByTestConfigureId(testConfigureId)) {
-      for (TestEquation testEquation : testEquationRepository
-          .findByTestConfigureId(testConfigureId)) {
-        if (testEquation.getEquation() != null
-            && euationRepository.existsById(testEquation.getEquation().getId())) {
-          euationRepository.deleteById(testEquation.getEquation().getId());
-        }
-      }
+      // for (TestEquation testEquation : testEquationRepository
+      // .findByTestConfigureId(testConfigureId)) {
+      // if (testEquation.getEquation() != null
+      // && euationRepository.existsById(testEquation.getEquation().getId())) {
+      // euationRepository.deleteById(testEquation.getEquation().getId());
+      // }
+      // }
       testEquationRepository.deleteByTestConfigureId(testConfigureId);
     }
     if (parameterEquationElementRepository
@@ -435,13 +438,13 @@ public class TestConfigureServiceImpl implements TestConfigureService {
           .deleteByParameterEquationTestParameterTestConfigureId(testConfigureId);
     }
     if (parameterEquationRepository.existsByTestParameterTestConfigureId(testConfigureId)) {
-      for (ParameterEquation parameterEquation : parameterEquationRepository
-          .findByTestParameterTestConfigureId(testConfigureId)) {
-        if (parameterEquation.getEquation() != null
-            && euationRepository.existsById(parameterEquation.getEquation().getId())) {
-          euationRepository.deleteById(parameterEquation.getEquation().getId());
-        }
-      }
+      // for (ParameterEquation parameterEquation : parameterEquationRepository
+      // .findByTestParameterTestConfigureId(testConfigureId)) {
+      // if (parameterEquation.getEquation() != null
+      // && euationRepository.existsById(parameterEquation.getEquation().getId())) {
+      // euationRepository.deleteById(parameterEquation.getEquation().getId());
+      // }
+      // }
       parameterEquationRepository.deleteByTestParameterTestConfigureId(testConfigureId);
     }
     if (testParameterRepository.existsByTestConfigureId(testConfigureId)) {
