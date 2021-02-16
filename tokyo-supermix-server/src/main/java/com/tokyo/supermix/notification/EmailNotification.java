@@ -39,7 +39,9 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.RawMaterialSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.enums.UserType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
@@ -61,10 +63,12 @@ import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
+import com.tokyo.supermix.data.repositories.ProjectRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.SupplierRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.data.repositories.auth.RoleRepository;
+import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.privilege.PlantRoleRepository;
 import com.tokyo.supermix.server.services.EmailNotificationDaysService;
@@ -132,6 +136,10 @@ public class EmailNotification {
   private TestConfigureRepository testConfigureRepository;
   @Autowired
   private CoreTestConfigureRepository coreTestConfigureRepository;
+  @Autowired
+  private ProjectRepository projectRepository;
+  @Autowired
+  private  UserPlantRoleRepository userPlantRoleRepository;
 
   HttpSession session;
 
@@ -193,6 +201,13 @@ public class EmailNotification {
         Constants.SUBJECT_MIX_DESIGN, mailBody);
   }
 
+  @Scheduled(cron = "0 0/5 * * *  ? ")
+  public void projectalert() {
+    projectRepository.findBySentMail(false).forEach(project -> {
+      sendProjectEmail(project);
+    });
+  }
+
   @Async
   public void sendProjectEmail(Project project) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
@@ -207,13 +222,20 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_NEW_PROJECT, mailBody);
+        project.setSentMail(true);
+        projectRepository.save(project);
       }
+      project.setSentMail(true);
+      projectRepository.save(project);
     }
+    project.setSentMail(true);
+    projectRepository.save(project);
   }
 
   @Async
   public void sendTestEmail(MaterialTest materialTest) {
-    EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule(materialTest.getTestConfigure().getId(), false);
+    EmailPoints emailPoints = emailPointsRepository
+        .findByTestConfigureIdAndSchedule(materialTest.getTestConfigure().getId(), false);
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         materialTest.getIncomingSample().getPlant().getCode(), emailPoints.getName());
     if (emailGroup != null) {
@@ -243,7 +265,8 @@ public class EmailNotification {
 
   @Async
   public void sendFinishProductTestEmail(FinishProductTest finishProductTest) {
-    EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule(finishProductTest.getTestConfigure().getId(), false);
+    EmailPoints emailPoints = emailPointsRepository
+        .findByTestConfigureIdAndSchedule(finishProductTest.getTestConfigure().getId(), false);
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductTest.getFinishProductSample().getMixDesign().getPlant().getCode(),
         emailPoints.getName());
@@ -378,6 +401,13 @@ public class EmailNotification {
     }
   }
 
+  @Scheduled(cron = "0 0/5 * * *  ? ")
+  public void supplieralert() {
+    supplierRepository.findBySentMail(false).forEach(supplier -> {
+      sendSupplierEmail(supplier);
+    });
+  }
+
   @Async
   public void sendSupplierEmail(Supplier supplier) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
@@ -397,8 +427,21 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_NEW_SUPPLIER, mailBody);
+        supplier.setSentMail(true);
+        supplierRepository.save(supplier);
       }
+      supplier.setSentMail(true);
+      supplierRepository.save(supplier);
     }
+    supplier.setSentMail(true);
+    supplierRepository.save(supplier);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void employeealert() {
+    employeeRepository.findBySentMail(false).forEach(employee -> {
+      sendEmployeeEmail(employee);
+    });
   }
 
   @Async
@@ -422,16 +465,33 @@ public class EmailNotification {
                   emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_NEW_EMPLOYEE, mailBody);
+          employee.setSentMail(true);
+          employeeRepository.save(employee);
         }
+        employee.setSentMail(true);
+        employeeRepository.save(employee);
       }
+      employee.setSentMail(true);
+      employeeRepository.save(employee);
     } else {
       if (employee.getEmail() != null) {
         String mailBody =
             "Dear " + employee.getFirstName() + " Welcome to our company as " + designationName;
         emailService.sendMail(employee.getEmail(), Constants.SUBJECT_NEW_EMPLOYEE, mailBody);
+        employee.setSentMail(true);
+        employeeRepository.save(employee);
       }
 
     }
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void IncomingSamplealert() {
+    incomingSampleRepository
+        .findBySentMailAndRawMaterialSampleType(false, RawMaterialSampleType.INCOMING_SAMPLE)
+        .forEach(incoming -> {
+          sendIncomingSampleEmail(incoming);
+        });
   }
 
   @Async
@@ -451,8 +511,23 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_NEW_INCOMING_SAMPLE, mailBody);
+        incomingSample.setSentMail(true);
+        incomingSampleRepository.save(incomingSample);
       }
+      incomingSample.setSentMail(true);
+      incomingSampleRepository.save(incomingSample);
     }
+    incomingSample.setSentMail(true);
+    incomingSampleRepository.save(incomingSample);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void finishProductSamplealert() {
+    finishProductSampleRepository
+        .findBySentMailAndFinishProductSampleType(false, FinishProductSampleType.LAB_TRIAL_SAMPLE)
+        .forEach(finishProduct -> {
+          sendFinishProductSampleEmail(finishProduct);
+        });
   }
 
   @Async
@@ -469,8 +544,22 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_FINISH_PRODUCT_SAMPLE, mailBody);
+        finishProductSample.setSentMail(true);
+        finishProductSampleRepository.save(finishProductSample);
       }
+      finishProductSample.setSentMail(true);
+      finishProductSampleRepository.save(finishProductSample);
     }
+    finishProductSample.setSentMail(true);
+    finishProductSampleRepository.save(finishProductSample);
+  }
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void DeliverySamplealert() {
+    finishProductSampleRepository
+        .findBySentMailAndFinishProductSampleType(false, FinishProductSampleType.DELIVERY_SAMPLE)
+        .forEach(finishProduct -> {
+          sendFinishProductSampleIssueEmail(finishProduct);
+        });
   }
 
   @Async
@@ -497,6 +586,13 @@ public class EmailNotification {
     }
   }
 
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void plantEquipmentalert() {
+    plantEquipmentRepository.findBySentMail(false).forEach(plantequipment -> {
+      sendPlantEquipmentEmail(plantequipment);
+    });
+  }
+
   @Async
   public void sendPlantEquipmentEmail(PlantEquipment plantequipment) {
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
@@ -513,8 +609,21 @@ public class EmailNotification {
                 MailGroupConstance.CREATE_PLANT_EQUIPMENT, plantequipment.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_PLANT_EQUIPMENT, mailBody);
+        plantequipment.setSentMail(true);
+        plantEquipmentRepository.save(plantequipment);
       }
+      plantequipment.setSentMail(true);
+      plantEquipmentRepository.save(plantequipment);
     }
+    plantequipment.setSentMail(true);
+    plantEquipmentRepository.save(plantequipment);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void rawmaterialalert() {
+    rawMaterialRepository.findBySentMail(false).forEach(rawmaterial -> {
+      sendRawmaterialCreationEmail(rawmaterial);
+    });
   }
 
   @Async
@@ -535,8 +644,21 @@ public class EmailNotification {
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_RAW_MATERIAL);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_RAW_MATERIAL, mailBody);
+        rawMaterial.setSentMail(true);
+        rawMaterialRepository.save(rawMaterial);
       }
+      rawMaterial.setSentMail(true);
+      rawMaterialRepository.save(rawMaterial);
     }
+    rawMaterial.setSentMail(true);
+    rawMaterialRepository.save(rawMaterial);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void customeralert() {
+    customerRepository.findBySentMail(false).forEach(customer -> {
+      sendCustomerCreationEmail(customer);
+    });
   }
 
   @Async
@@ -552,8 +674,21 @@ public class EmailNotification {
               .getEmailsByEmailNotification(MailGroupConstance.CREATE_CUSTOMER);
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CUSTOMER, mailBody);
+          customer.setSentMail(true);
+          customerRepository.save(customer);
         }
+        customer.setSentMail(true);
+        customerRepository.save(customer);
       }
+      customer.setSentMail(true);
+      customerRepository.save(customer);
+    });
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void plantalert() {
+    plantRepository.findBySentMail(false).forEach(plant -> {
+      sendPlantCreationEmail(plant);
     });
   }
 
@@ -568,8 +703,23 @@ public class EmailNotification {
             emailRecipientService.getEmailsByEmailNotification(MailGroupConstance.CREATE_PLANT);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_PLANT, mailBody);
+        plant.setSentMail(true);
+        plantRepository.save(plant);
       }
+      plant.setSentMail(true);
+      plantRepository.save(plant);
     }
+    plant.setSentMail(true);
+    plantRepository.save(plant);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void sendProcessSample() {
+    incomingSampleRepository
+        .findBySentMailAndRawMaterialSampleType(false, RawMaterialSampleType.PROCESS_SAMPLE)
+        .forEach(incoming -> {
+          sendProcessSampleCreationEmail(incoming);
+        });
   }
 
   @Async
@@ -589,8 +739,21 @@ public class EmailNotification {
                 MailGroupConstance.CREATE_PROCESS_SAMPLE, incomingSample.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_PROCESS_SAMPLE, mailBody);
+        incomingSample.setSentMail(true);
+        incomingSampleRepository.save(incomingSample);
       }
+      incomingSample.setSentMail(true);
+      incomingSampleRepository.save(incomingSample);
     }
+    incomingSample.setSentMail(true);
+    incomingSampleRepository.save(incomingSample);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void mixdesignalert() {
+    mixDesignRepository.findBySentMail(false).forEach(mixdesign -> {
+      sendMixDesignCreationEmail(mixdesign);
+    });
   }
 
   @Async
@@ -606,8 +769,21 @@ public class EmailNotification {
                 MailGroupConstance.CREATE_MIX_DESIGN, mixDesign.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_MIX_DESIGN, mailBody);
+        mixDesign.setSentMail(true);
+        mixDesignRepository.save(mixDesign);
       }
+      mixDesign.setSentMail(true);
+      mixDesignRepository.save(mixDesign);
     }
+    mixDesign.setSentMail(true);
+    mixDesignRepository.save(mixDesign);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void calibrationalert() {
+    plantEquipmentCalibrationRepository.findBySentMail(false).forEach(calibration -> {
+      sendcalibrationCreationEmail(calibration);
+    });
   }
 
   @Async
@@ -635,6 +811,8 @@ public class EmailNotification {
                   MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION, plantCode);
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CALIBRATED, mailBody);
+          plantEquipmentCalibration.setSentMail(true);
+          plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
         } else {
           String userName = userRepository.findById(plantEquipmentCalibration.getUser().getId())
               .get().getUserName();
@@ -646,10 +824,24 @@ public class EmailNotification {
                   MailGroupConstance.CREATE_PLANT_EQUIPMENT_CALIBRATION, plantCode);
           emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
               Constants.SUBJECT_CALIBRATED, mailBody);
+          plantEquipmentCalibration.setSentMail(true);
+          plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
         }
 
       }
+      plantEquipmentCalibration.setSentMail(true);
+      plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
     }
+    plantEquipmentCalibration.setSentMail(true);
+    plantEquipmentCalibrationRepository.save(plantEquipmentCalibration);
+  }
+
+  @Scheduled(cron = "0 0/5 * * * ? ")
+  public void useralert() {
+    userRepository.findBySentMailAndUserType(false, UserType.PLANT_USER).forEach(user -> {
+      List<Long> roleIds = userPlantRoleRepository.findByUserId(user.getId()).stream().map(role->role.getId()).collect(Collectors.toList());
+      sendPlantUserCreationEmail(user, roleIds);
+    });
   }
 
   @Async
@@ -675,8 +867,14 @@ public class EmailNotification {
                 MailGroupConstance.CREATE_PLANT_USER, user.getEmployee().getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_USER_CREATION, mailBody);
+        user.setSentMail(true);
+        userRepository.save(user);
       }
+      user.setSentMail(true);
+      userRepository.save(user);
     }
+    user.setSentMail(true);
+    userRepository.save(user);
   }
 
   @Async
@@ -747,7 +945,8 @@ public class EmailNotification {
             long noOfDays = ChronoUnit.DAYS.between(
                 finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(),
                 today.toLocalDate());
-            EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule( testconfigure.getId(), true);
+            EmailPoints emailPoints =
+                emailPointsRepository.findByTestConfigureIdAndSchedule(testconfigure.getId(), true);
             String plantCode = finishProductSample.getMixDesign().getPlant().getCode();
             List<NotificationDays> notificationDaysList =
                 emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
@@ -777,7 +976,6 @@ public class EmailNotification {
     reciepientList.add(finishProductSample.getUser().getEmail());
     emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
         Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER, mailBody);
-
   }
 
   @Scheduled(cron = "0 05 08 * * * ")
@@ -796,8 +994,9 @@ public class EmailNotification {
               || incomingSample.getStatus().equals(Status.PROCESS)) {
             long noOfDays = ChronoUnit.DAYS.between(
                 incomingSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
-            EmailPoints emailPoints = emailPointsRepository.findByTestConfigureIdAndSchedule( testconfigure.getId(), true);
-                       String plantCode = incomingSample.getPlant().getCode();
+            EmailPoints emailPoints =
+                emailPointsRepository.findByTestConfigureIdAndSchedule(testconfigure.getId(), true);
+            String plantCode = incomingSample.getPlant().getCode();
             List<NotificationDays> notificationDaysList =
                 emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
             notificationDaysList.forEach(notificationday -> {

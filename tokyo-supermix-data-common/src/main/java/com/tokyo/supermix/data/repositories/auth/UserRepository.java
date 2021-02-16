@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.stereotype.Repository;
-import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.UserType;
 
@@ -38,6 +37,6 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
 
   List<User> findAllByEmployeePlantCode(String plantCode, Pageable pageable);
   
-  List<PlantEquipmentCalibration> findBySentMailAndUserType(boolean sentMail, UserType userType);
+  List<User> findBySentMailAndUserType(boolean sentMail, UserType userType);
 
 }
