@@ -81,7 +81,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
         .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
-    else {
+    else if(finishProductSampleObj != null && finishProductSampleObj.getFinishProductSampleType()==FinishProductSampleType.DELIVERY_SAMPLE)  {
       emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleObj);
     }
   }
