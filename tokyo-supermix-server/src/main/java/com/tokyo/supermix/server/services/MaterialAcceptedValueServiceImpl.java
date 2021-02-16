@@ -210,7 +210,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
                 && (materialAcceptedValue.getMaxValue() == null
                     || materialAcceptedValue.getMinValue() == null))) {
           return true;
-
         } else if (((materialAcceptedValue.getConditionRange() == null))
             || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
             || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
@@ -220,8 +219,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           }
         }
       }
-      return false;
-
     }
     return false;
   }
