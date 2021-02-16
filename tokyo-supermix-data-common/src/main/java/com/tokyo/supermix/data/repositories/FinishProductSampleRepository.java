@@ -8,6 +8,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import com.tokyo.supermix.data.entities.FinishProductSample;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 @Repository
@@ -61,32 +62,20 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
   List<FinishProductSample> findByMixDesignRawMaterialIdAndMixDesignPlantCode(Long rawMaterialId,
       String plantCode);
 
-  Long countByMixDesignPlantCodeAndWorkOrderNumberNull(String plantCode);
+  Long countByMixDesignPlantCodeAndFinishProductSampleType(String plantCode,
+      FinishProductSampleType finishProductSampleType);
 
-  Long countByWorkOrderNumberNull();
+  Long countByFinishProductSampleType(FinishProductSampleType finishProductSampleType);
 
-  Long countByMixDesignPlantCodeAndWorkOrderNumberNotNull(String plantCode);
+  Page<FinishProductSample> findByFinishProductSampleTypeAndMixDesignPlantCodeOrderByUpdatedAtDesc(
+      FinishProductSampleType finishProductSampleType, String plantCode, Pageable pageable);
 
-  Long countByWorkOrderNumberNotNull();
-
-  Page<FinishProductSample> findByWorkOrderNumberNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(
-      String plantCode, Pageable pageable);
-
-  Page<FinishProductSample> findByWorkOrderNumberNotNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(
-      String plantCode, Pageable pageable);
-
-  Page<FinishProductSample> findByWorkOrderNumberNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
-      List<String> plantCodes, Pageable pageable);
-
-  Page<FinishProductSample> findByWorkOrderNumberNotNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
-      List<String> plantCodes, Pageable pageable);
-
-  List<FinishProductSample> findByWorkOrderNumberNotNull();
+  Page<FinishProductSample> findByFinishProductSampleTypeAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
+      FinishProductSampleType finishProductSampleType, List<String> plantCodes, Pageable pageable);
 
   FinishProductSample findByCode(String code);
 
   FinishProductSample findByProjectName(String projectName);
 
   List<FinishProductSample> findBySentMail(boolean sentMail);
-
 }

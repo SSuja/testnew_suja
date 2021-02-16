@@ -11,14 +11,18 @@ import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
+import com.tokyo.supermix.data.entities.MaterialQualityParameter;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.QMaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.MaterialParamType;
+import com.tokyo.supermix.data.enums.QualityParamaterType;
 import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -37,11 +41,62 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private RawMaterialRepository rawMaterialRepository;
   @Autowired
   private MaterialSubCategoryRepository materialSubCategoryRepository;
+  @Autowired
+  private MaterialQualityParameterRepository materialQualityParameterRepository;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
       List<MaterialAcceptedValue> materialAcceptedValue) {
+    for (MaterialAcceptedValue materialAcceptedValue2 : materialAcceptedValue) {
+      if (materialAcceptedValue2.getMaterialParamType().equals(MaterialParamType.QUALITY_VALUE)) {
+        if (materialAcceptedValue2.getMaterialQualityParameter() == null) {
+          saveToMQParameterFromMAValue(materialAcceptedValue2);
+        } else {
+          saveToMAValueFromMQP(materialAcceptedValue2);
+        }
+      }
+    }
     return materialAcceptedValueRepository.saveAll(materialAcceptedValue);
+  }
+
+  private void saveToMAValueFromMQP(MaterialAcceptedValue materialAcceptedValue2) {
+    MaterialQualityParameter materialQualityParameter = materialQualityParameterRepository
+        .findById(materialAcceptedValue2.getMaterialQualityParameter().getId()).get();
+    if (materialQualityParameter.getConditionRange().equals(Condition.BETWEEN)) {
+      materialAcceptedValue2.setConditionRange(materialQualityParameter.getConditionRange());
+      materialAcceptedValue2.setMaxValue(materialQualityParameter.getMaxValue());
+      materialAcceptedValue2.setMinValue(materialQualityParameter.getMinValue());
+    } else if (materialQualityParameter.getConditionRange().equals(Condition.EQUAL)
+        || materialQualityParameter.getConditionRange().equals(Condition.GREATER_THAN)
+        || materialQualityParameter.getConditionRange().equals(Condition.LESS_THAN)) {
+      materialAcceptedValue2.setConditionRange(materialQualityParameter.getConditionRange());
+      materialAcceptedValue2.setValue(materialQualityParameter.getValue());
+    }
+  }
+
+  private void saveToMQParameterFromMAValue(MaterialAcceptedValue materialAcceptedValue2) {
+    MaterialQualityParameter materialQualityParameter = new MaterialQualityParameter();
+    if (materialAcceptedValue2.getCategoryAcceptedType().equals(CategoryAcceptedType.MATERIAL)) {
+      materialQualityParameter.setRawMaterial(materialAcceptedValue2.getRawMaterial());
+      materialQualityParameter.setQualityParamaterType(QualityParamaterType.MATERIAL);
+    } else {
+      materialQualityParameter
+          .setMaterialSubCategory(materialAcceptedValue2.getMaterialSubCategory());
+      materialQualityParameter.setQualityParamaterType(QualityParamaterType.SUB_CATEGORY);
+    }
+    if (materialAcceptedValue2.getConditionRange().equals(Condition.BETWEEN)) {
+      materialQualityParameter.setConditionRange(materialAcceptedValue2.getConditionRange());
+      materialQualityParameter.setMaxValue(materialAcceptedValue2.getMaxValue());
+      materialQualityParameter.setMinValue(materialAcceptedValue2.getMinValue());
+    } else if (materialAcceptedValue2.getConditionRange().equals(Condition.EQUAL)
+        || materialQualityParameter.getConditionRange().equals(Condition.GREATER_THAN)
+        || materialQualityParameter.getConditionRange().equals(Condition.LESS_THAN)) {
+      materialQualityParameter.setConditionRange(materialAcceptedValue2.getConditionRange());
+      materialQualityParameter.setValue(materialAcceptedValue2.getValue());
+    }
+    materialQualityParameter.setUnit(materialAcceptedValue2.getTestParameter().getUnit());
+    materialQualityParameter.setParameter(materialAcceptedValue2.getTestParameter().getParameter());
+    materialQualityParameterRepository.save(materialQualityParameter);
   }
 
   @Transactional
@@ -108,23 +163,26 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   @Transactional(readOnly = true)
   public boolean isCheckValidation(List<MaterialAcceptedValue> materialAcceptedValueList) {
     for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
-      if ((materialAcceptedValue.getConditionRange() == null)
-          || (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)
-              && (materialAcceptedValue.getMaxValue() == null
-                  || materialAcceptedValue.getMinValue() == null))) {
-        return true;
-
-      } else if (((materialAcceptedValue.getConditionRange() == null))
-          || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
-          || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
-          || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
-        if (materialAcceptedValue.getValue() == null) {
+      if (materialAcceptedValue.getMaterialParamType().equals(MaterialParamType.ACCEPTED_VALUE)) {
+        if ((materialAcceptedValue.getConditionRange() == null)
+            || (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)
+                && (materialAcceptedValue.getMaxValue() == null
+                    || materialAcceptedValue.getMinValue() == null))) {
           return true;
+
+        } else if (((materialAcceptedValue.getConditionRange() == null))
+            || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+            || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+            || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
+          if (materialAcceptedValue.getValue() == null) {
+            return true;
+          }
         }
       }
+      return false;
+
     }
     return false;
-
   }
 
   @Transactional(readOnly = true)

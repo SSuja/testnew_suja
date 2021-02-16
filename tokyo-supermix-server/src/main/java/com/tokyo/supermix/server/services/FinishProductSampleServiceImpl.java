@@ -19,6 +19,7 @@ import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QFinishProductSample;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
@@ -56,7 +57,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       String rawMaterialName = mixDesignRepository
           .getOne(finishProductSample.getMixDesign().getCode()).getRawMaterial().getName();
       String codePrefix = " ";
-      if (finishProductSample.getWorkOrderNumber() == null) {
+      if (finishProductSample.getFinishProductSampleType()
+          .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
         codePrefix = rawMaterialName + "-PP-";
       } else {
         codePrefix = rawMaterialName + "-PO-";
@@ -75,7 +77,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     finishProductSample.setFinishProductCode(finishProductSample.getCode());
     FinishProductSample finishProductSampleObj =
         finishProductSampleRepository.save(finishProductSample);
-    if (finishProductSampleObj != null && finishProductSampleObj.getWorkOrderNumber()== null) {
+    if (finishProductSampleObj != null && finishProductSampleObj.getFinishProductSampleType()
+        .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
     }
     else {
@@ -155,10 +158,11 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSampleByPlantCode(String plantCode,
-      Pageable pageable) {
+  public List<FinishProductSample> getFinishProductSampleByPlantCode(
+      FinishProductSampleType finishProductSampleType, String plantCode, Pageable pageable) {
     return finishProductSampleRepository
-        .findByWorkOrderNumberNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
+        .findByFinishProductSampleTypeAndMixDesignPlantCodeOrderByUpdatedAtDesc(
+            finishProductSampleType, plantCode, pageable)
         .toList();
   }
 
@@ -173,10 +177,12 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductSample> getAllFinishProductSamplesByPlant(UserPrincipal currentUser,
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(
+      FinishProductSampleType finishProductSampleType, UserPrincipal currentUser,
       Pageable pageable) {
     return finishProductSampleRepository
-        .findByWorkOrderNumberNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
+        .findByFinishProductSampleTypeAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
+            finishProductSampleType,
             currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
                 PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
             pageable)
@@ -184,13 +190,15 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   }
 
   @Transactional(readOnly = true)
-  public Long getCountFinishProductSample() {
-    return finishProductSampleRepository.countByWorkOrderNumberNull();
+  public Long getCountFinishProductSampleByType(FinishProductSampleType finishProductSampleType) {
+    return finishProductSampleRepository.countByFinishProductSampleType(finishProductSampleType);
   }
 
   @Transactional(readOnly = true)
-  public Long getCountFinishProductSampleByPlantCode(String plantCode) {
-    return finishProductSampleRepository.countByMixDesignPlantCodeAndWorkOrderNumberNull(plantCode);
+  public Long getCountFinishProductSampleTypeByPlantCode(String plantCode,
+      FinishProductSampleType finishProductSampleType) {
+    return finishProductSampleRepository
+        .countByMixDesignPlantCodeAndFinishProductSampleType(plantCode, finishProductSampleType);
   }
 
   @Transactional(readOnly = true)
@@ -198,39 +206,39 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
       String mixDesignCode, String plantName, String plantCode, Status status, String date,
       String code, String rawMaterialName, String workOrderNumber, String customer,
-      Pageable pageable, Pagination pagination) {
+      FinishProductSampleType finishProductSampleType, Pageable pageable, Pagination pagination) {
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
-          .contains(finishProductCode));
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.finishProductCode.contains(finishProductCode));
     }
     if (equipmentName != null && !equipmentName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.plantEquipment.serialNo
-          .contains(equipmentName));
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.plantEquipment.serialNo.contains(equipmentName));
     }
     if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.code
-          .contains(mixDesignCode));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.mixDesign.code.contains(mixDesignCode));
     }
     if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.name
-          .contains(plantName));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.mixDesign.plant.name.contains(plantName));
     }
 
     if (plantCode != null && !plantCode.isEmpty()
         && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
-          .contains(plantCode));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.mixDesign.plant.code.contains(plantCode));
     }
     if (status != null) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
     }
     if (date != null) {
-      booleanBuilder.and(
-          QFinishProductSample.finishProductSample.date.stringValue().contains(date));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.date.stringValue().contains(date));
     }
     if (code != null && !code.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductSample.finishProductSample.code.stringValue().contains(code));
+      booleanBuilder
+          .and(QFinishProductSample.finishProductSample.code.stringValue().contains(code));
     }
     if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
@@ -244,13 +252,19 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
           .stringValue().stringValue().contains(customer));
     }
+    if (finishProductSampleType != null) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductSampleType
+          .eq(finishProductSampleType));
+    }
     pagination.setTotalRecords(
-        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
-            .filter(sample -> sample.getWorkOrderNumber() == null)
+        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
+            .stream()
+            .filter(sample -> sample.getFinishProductSampleType().equals(finishProductSampleType))
             .collect(Collectors.toList()).size());
     return mapper.map(
         ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
-            .filter(sample -> sample.getWorkOrderNumber() == null).collect(Collectors.toList()),
+            .filter(sample -> sample.getFinishProductSampleType().equals(finishProductSampleType))
+            .collect(Collectors.toList()),
         FinishProductSampleResponseDto.class);
   }
 
@@ -347,5 +361,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
     return false;
   }
+  
 
 }

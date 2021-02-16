@@ -46,211 +46,214 @@ public class FinishProductSampleIssueServiceImpl implements FinishProductSampleI
   @Autowired
   private Mapper mapper;
 
-  @Transactional(readOnly = true)
-  public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
-    return finishProductSampleIssueRepository.findAll();
-  }
-
-  @Transactional
-  public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
-    if (finishProductSampleIssue.getCode() == null) {
-      String rawMaterialName = mixDesignRepository
-          .getOne(finishProductSampleIssue.getMixDesign().getCode()).getRawMaterial().getName();
-      String codePrefix = rawMaterialName + "-PO-";
-      List<FinishProductSampleIssue> finishProductSampleIssueList =
-          finishProductSampleIssueRepository.findByCodeContaining(codePrefix);
-      if (finishProductSampleIssueList.size() == 0) {
-        finishProductSampleIssue.setCode(codePrefix + String.format("%04d", 1));
-      } else {
-        finishProductSampleIssue.setCode(codePrefix
-            + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
-      }
-    }
-//    FinishProductSampleIssue finishProductSampleIssueObj =
-        finishProductSampleIssueRepository.save(finishProductSampleIssue);
-//    if (finishProductSampleIssueObj != null) {
-//      emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);
-//    }
-  }
-
-  private Integer getNumberFromCode(String code) {
-    String numberOnly = code.replaceAll("[^0-9]", "");
-    return Integer.parseInt(numberOnly);
-  }
-
-  private Integer maxNumberFromCode(List<FinishProductSampleIssue> finishProductSampleIssueList) {
-    List<Integer> list = new ArrayList<Integer>();
-    finishProductSampleIssueList.forEach(obj -> {
-      String code = obj.getCode();
-      list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
-    });
-    return Collections.max(list);
-  }
-
-  @Transactional(propagation = Propagation.NEVER)
-  public void deleteFinishProductSampleIssue(String code) {
-    finishProductSampleIssueRepository.deleteById(code);
-  }
-
-  @Transactional(readOnly = true)
-  public FinishProductSampleIssue getFinishProductSampleIssueById(String code) {
-    return finishProductSampleIssueRepository.findById(code).get();
-  }
-
-  @Transactional(readOnly = true)
-  public boolean isCodeExists(String code) {
-    return finishProductSampleIssueRepository.existsById(code);
-  }
-
-  @Transactional(readOnly = true)
-  public Page<FinishProductSampleIssue> searchFinishProductSampleIssue(Predicate predicate,
-      int size, int page) {
-    return finishProductSampleIssueRepository.findAll(predicate,
-        PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
-  }
-
-  @Transactional(readOnly = true)
-  public List<FinishProductSample> getFinishProductSampleIssueByPlantCode(String plantCode,
-      Pageable pageable) {
-    return finishProductSampleRepository
-        .findByWorkOrderNumberNotNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
-        .toList();
-  }
-
-  @Transactional(readOnly = true)
-  public List<FinishProductSample> getAllFinishProductSampleIssueByPlant(UserPrincipal currentUser,
-      Pageable pageable) {
-    return finishProductSampleRepository
-        .findByWorkOrderNumberNotNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
-            currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-                PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
-            pageable)
-        .toList();
-  }
-
-  @Transactional(readOnly = true)
-  public Long countFinishProductSampleIssue() {
-    return finishProductSampleRepository.countByWorkOrderNumberNotNull();
-  }
-
-  @Transactional(readOnly = true)
-  public Long countFinishProductSampleIssueByPlant(String plantCode) {
-    return finishProductSampleRepository
-        .countByMixDesignPlantCodeAndWorkOrderNumberNotNull(plantCode);
-  }
-
-  @Transactional(readOnly = true)
-  public List<FinishProductSampleIssueResponseDto> searchFinishProductSampleIssue(
-      BooleanBuilder booleanBuilder, String workOrderNumber, String materialName,
-      String mixDesignCode, String pourName, String projectName, String customerName,
-      String plantCode, Pageable pageable, Pagination pagination) {
-
-    if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
-      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.workOrderNumber
-          .startsWithIgnoreCase(workOrderNumber));
-    }
-    if (materialName != null && !materialName.isEmpty()) {
-      booleanBuilder
-          .and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.rawMaterial.name
-              .startsWithIgnoreCase(materialName));
-    }
-    if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
-      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.code
-          .startsWithIgnoreCase(mixDesignCode));
-    }
-
-    if (pourName != null && !pourName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.pour.name
-          .startsWithIgnoreCase(pourName));
-    }
-    if (projectName != null && !projectName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.project.name
-          .startsWithIgnoreCase(projectName));
-    }
-    if (customerName != null && !customerName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.project.customer.name
-          .startsWithIgnoreCase(customerName));
-    }
-
-    if (plantCode != null && !plantCode.isEmpty()
-        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.plant.code
-          .startsWithIgnoreCase(plantCode));
-    }
-    pagination
-        .setTotalRecords(((Collection<FinishProductSampleIssue>) finishProductSampleIssueRepository
-            .findAll(booleanBuilder)).stream().count());
-    return mapper.map(finishProductSampleIssueRepository.findAll(booleanBuilder, pageable).toList(),
-        FinishProductSampleIssueResponseDto.class);
-  }
-
-  @Transactional(readOnly = true)
-  public List<FinishProductSample> getAllFinishProductSampleIssue() {
-    return finishProductSampleRepository.findByWorkOrderNumberNotNull();
-  }
-
-
-  public List<FinishProductSampleResponseDto> searchFinishProductSampleIssue(
-      BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
-      String mixDesignCode, String plantName, String plantCode, Status status, String date,
-      String code, String rawMaterialName, String workOrderNumber, String customer, String project,
-      Pageable pageable, Pagination pagination) {
-    if (finishProductCode != null && !finishProductCode.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductSample.finishProductSample.finishProductCode.contains(finishProductCode));
-    }
-    if (equipmentName != null && !equipmentName.isEmpty()) {
-      booleanBuilder.and(
-          QFinishProductSample.finishProductSample.plantEquipment.serialNo.contains(equipmentName));
-    }
-    if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
-      booleanBuilder
-          .and(QFinishProductSample.finishProductSample.mixDesign.code.contains(mixDesignCode));
-    }
-    if (plantName != null && !plantName.isEmpty()) {
-      booleanBuilder
-          .and(QFinishProductSample.finishProductSample.mixDesign.plant.name.contains(plantName));
-    }
-
-    if (plantCode != null && !plantCode.isEmpty()
-        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
-      booleanBuilder
-          .and(QFinishProductSample.finishProductSample.mixDesign.plant.code.contains(plantCode));
-    }
-    if (status != null) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
-    }
-    if (date != null) {
-      booleanBuilder
-          .and(QFinishProductSample.finishProductSample.date.stringValue().contains(date));
-    }
-    if (code != null && !code.isEmpty()) {
-      booleanBuilder
-          .and(QFinishProductSample.finishProductSample.code.stringValue().contains(code));
-    }
-    if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
-          .stringValue().contains(rawMaterialName));
-    }
-    if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.stringValue()
-          .stringValue().contains(workOrderNumber));
-    }
-    if (customer != null && !customer.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
-          .stringValue().stringValue().contains(customer));
-    }
-    if (project != null && !project.isEmpty()) {
-      booleanBuilder.and(QFinishProductSample.finishProductSample.project.name.stringValue()
-          .stringValue().contains(project));
-    }
-    pagination.setTotalRecords(
-        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
-            .stream().filter(sample -> sample.getWorkOrderNumber() != null)
-            .collect(Collectors.toList()).size());
-    return mapper.map(
-        ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
-            .filter(sample -> sample.getWorkOrderNumber() != null).collect(Collectors.toList()),
-        FinishProductSampleResponseDto.class);
-  }
+  // @Transactional(readOnly = true)
+  // public List<FinishProductSampleIssue> getAllFinishProductSampleIssues() {
+  // return finishProductSampleIssueRepository.findAll();
+  // }
+  //
+  // @Transactional
+  // public void saveFinishProductSampleIssue(FinishProductSampleIssue finishProductSampleIssue) {
+  // if (finishProductSampleIssue.getCode() == null) {
+  // String rawMaterialName = mixDesignRepository
+  // .getOne(finishProductSampleIssue.getMixDesign().getCode()).getRawMaterial().getName();
+  // String codePrefix = rawMaterialName + "-PO-";
+  // List<FinishProductSampleIssue> finishProductSampleIssueList =
+  // finishProductSampleIssueRepository.findByCodeContaining(codePrefix);
+  // if (finishProductSampleIssueList.size() == 0) {
+  // finishProductSampleIssue.setCode(codePrefix + String.format("%04d", 1));
+  // } else {
+  // finishProductSampleIssue.setCode(codePrefix
+  // + String.format("%04d", maxNumberFromCode(finishProductSampleIssueList) + 1));
+  // }
+  // }
+  // FinishProductSampleIssue finishProductSampleIssueObj =
+  // finishProductSampleIssueRepository.save(finishProductSampleIssue);
+  // if (finishProductSampleIssueObj != null) {
+  // emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleIssueObj);
+  // }
+  // }
+  //
+  // private Integer getNumberFromCode(String code) {
+  // String numberOnly = code.replaceAll("[^0-9]", "");
+  // return Integer.parseInt(numberOnly);
+  // }
+  //
+  // private Integer maxNumberFromCode(List<FinishProductSampleIssue> finishProductSampleIssueList)
+  // {
+  // List<Integer> list = new ArrayList<Integer>();
+  // finishProductSampleIssueList.forEach(obj -> {
+  // String code = obj.getCode();
+  // list.add(getNumberFromCode(code.substring(code.length() - code.indexOf("-"))));
+  // });
+  // return Collections.max(list);
+  // }
+  //
+  // @Transactional(propagation = Propagation.NEVER)
+  // public void deleteFinishProductSampleIssue(String code) {
+  // finishProductSampleIssueRepository.deleteById(code);
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public FinishProductSampleIssue getFinishProductSampleIssueById(String code) {
+  // return finishProductSampleIssueRepository.findById(code).get();
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public boolean isCodeExists(String code) {
+  // return finishProductSampleIssueRepository.existsById(code);
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public Page<FinishProductSampleIssue> searchFinishProductSampleIssue(Predicate predicate,
+  // int size, int page) {
+  // return finishProductSampleIssueRepository.findAll(predicate,
+  // PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "id")));
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public List<FinishProductSample> getFinishProductSampleIssueByPlantCode(String plantCode,
+  // Pageable pageable) {
+  // return finishProductSampleRepository
+  // .findByWorkOrderNumberNotNullAndMixDesignPlantCodeOrderByUpdatedAtDesc(plantCode, pageable)
+  // .toList();
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public List<FinishProductSample> getAllFinishProductSampleIssueByPlant(UserPrincipal
+  // currentUser,
+  // Pageable pageable) {
+  // return finishProductSampleRepository
+  // .findByWorkOrderNumberNotNullAndMixDesignPlantCodeInOrderByUpdatedAtDesc(
+  // currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+  // PermissionConstants.VIEW_FINISH_PRODUCT_SAMPLE),
+  // pageable)
+  // .toList();
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public Long countFinishProductSampleIssue() {
+  // return finishProductSampleRepository.countByWorkOrderNumberNotNull();
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public Long countFinishProductSampleIssueByPlant(String plantCode) {
+  // return finishProductSampleRepository
+  // .countByMixDesignPlantCodeAndWorkOrderNumberNotNull(plantCode);
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public List<FinishProductSampleIssueResponseDto> searchFinishProductSampleIssue(
+  // BooleanBuilder booleanBuilder, String workOrderNumber, String materialName,
+  // String mixDesignCode, String pourName, String projectName, String customerName,
+  // String plantCode, Pageable pageable, Pagination pagination) {
+  //
+  // if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.workOrderNumber
+  // .startsWithIgnoreCase(workOrderNumber));
+  // }
+  // if (materialName != null && !materialName.isEmpty()) {
+  // booleanBuilder
+  // .and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.rawMaterial.name
+  // .startsWithIgnoreCase(materialName));
+  // }
+  // if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.code
+  // .startsWithIgnoreCase(mixDesignCode));
+  // }
+  //
+  // if (pourName != null && !pourName.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.pour.name
+  // .startsWithIgnoreCase(pourName));
+  // }
+  // if (projectName != null && !projectName.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.project.name
+  // .startsWithIgnoreCase(projectName));
+  // }
+  // if (customerName != null && !customerName.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.project.customer.name
+  // .startsWithIgnoreCase(customerName));
+  // }
+  //
+  // if (plantCode != null && !plantCode.isEmpty()
+  // && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+  // booleanBuilder.and(QFinishProductSampleIssue.finishProductSampleIssue.mixDesign.plant.code
+  // .startsWithIgnoreCase(plantCode));
+  // }
+  // pagination
+  // .setTotalRecords(((Collection<FinishProductSampleIssue>) finishProductSampleIssueRepository
+  // .findAll(booleanBuilder)).stream().count());
+  // return mapper.map(finishProductSampleIssueRepository.findAll(booleanBuilder,
+  // pageable).toList(),
+  // FinishProductSampleIssueResponseDto.class);
+  // }
+  //
+  // @Transactional(readOnly = true)
+  // public List<FinishProductSample> getAllFinishProductSampleIssue() {
+  // return finishProductSampleRepository.findByWorkOrderNumberNotNull();
+  // }
+  //
+  //
+  // public List<FinishProductSampleResponseDto> searchFinishProductSampleIssue(
+  // BooleanBuilder booleanBuilder, String finishProductCode, String equipmentName,
+  // String mixDesignCode, String plantName, String plantCode, Status status, String date,
+  // String code, String rawMaterialName, String workOrderNumber, String customer, String project,
+  // Pageable pageable, Pagination pagination) {
+  // if (finishProductCode != null && !finishProductCode.isEmpty()) {
+  // booleanBuilder.and(
+  // QFinishProductSample.finishProductSample.finishProductCode.contains(finishProductCode));
+  // }
+  // if (equipmentName != null && !equipmentName.isEmpty()) {
+  // booleanBuilder.and(
+  // QFinishProductSample.finishProductSample.plantEquipment.serialNo.contains(equipmentName));
+  // }
+  // if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
+  // booleanBuilder
+  // .and(QFinishProductSample.finishProductSample.mixDesign.code.contains(mixDesignCode));
+  // }
+  // if (plantName != null && !plantName.isEmpty()) {
+  // booleanBuilder
+  // .and(QFinishProductSample.finishProductSample.mixDesign.plant.name.contains(plantName));
+  // }
+  //
+  // if (plantCode != null && !plantCode.isEmpty()
+  // && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+  // booleanBuilder
+  // .and(QFinishProductSample.finishProductSample.mixDesign.plant.code.contains(plantCode));
+  // }
+  // if (status != null) {
+  // booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
+  // }
+  // if (date != null) {
+  // booleanBuilder
+  // .and(QFinishProductSample.finishProductSample.date.stringValue().contains(date));
+  // }
+  // if (code != null && !code.isEmpty()) {
+  // booleanBuilder
+  // .and(QFinishProductSample.finishProductSample.code.stringValue().contains(code));
+  // }
+  // if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
+  // .stringValue().contains(rawMaterialName));
+  // }
+  // if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.stringValue()
+  // .stringValue().contains(workOrderNumber));
+  // }
+  // if (customer != null && !customer.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
+  // .stringValue().stringValue().contains(customer));
+  // }
+  // if (project != null && !project.isEmpty()) {
+  // booleanBuilder.and(QFinishProductSample.finishProductSample.project.name.stringValue()
+  // .stringValue().contains(project));
+  // }
+  // pagination.setTotalRecords(
+  // (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
+  // .stream().filter(sample -> sample.getWorkOrderNumber() != null)
+  // .collect(Collectors.toList()).size());
+  // return mapper.map(
+  // ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder)).stream()
+  // .filter(sample -> sample.getWorkOrderNumber() != null).collect(Collectors.toList()),
+  // FinishProductSampleResponseDto.class);
+  // }
 }

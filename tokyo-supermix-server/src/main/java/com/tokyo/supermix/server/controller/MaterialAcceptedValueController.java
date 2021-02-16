@@ -78,6 +78,7 @@ public class MaterialAcceptedValueController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
+
     materialAcceptedValueService.saveAcceptedValue(
         mapper.map(materialAcceptedValueRequestDtoList, MaterialAcceptedValue.class));
     materialAcceptedValueService
@@ -134,8 +135,7 @@ public class MaterialAcceptedValueController {
     if (materialAcceptedValueService.isMaterialAcceptedValueExist(id)) {
       MaterialAcceptedValue materialAcceptedValue =
           materialAcceptedValueService.getMaterialAcceptedValueById(id);
-      if (materialAcceptedValue.getCategoryAcceptedType()
-          .equals(CategoryAcceptedType.MATERIAL)) {
+      if (materialAcceptedValue.getCategoryAcceptedType().equals(CategoryAcceptedType.MATERIAL)) {
         if (materialTestService.isMaterialTestByTestConfigureAndRawMaterialExists(
             materialAcceptedValue.getTestConfigure().getId(),
             materialAcceptedValue.getRawMaterial().getId())) {

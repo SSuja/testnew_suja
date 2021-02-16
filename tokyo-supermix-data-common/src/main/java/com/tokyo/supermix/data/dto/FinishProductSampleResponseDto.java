@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
 import java.sql.Date;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleResponseDto {
@@ -17,6 +18,7 @@ public class FinishProductSampleResponseDto {
   private PourDtoResponse pour;
   private String workOrderNumber;
   private boolean sentMail;
+  private FinishProductSampleType finishProductSampleType;
 
   public String getCode() {
     return code;
@@ -120,5 +122,13 @@ public class FinishProductSampleResponseDto {
 
   public void setSentMail(boolean sentMail) {
     this.sentMail = sentMail;
+  }
+
+  public FinishProductSampleType getFinishProductSampleType() {
+    return finishProductSampleType;
+  }
+
+  public void setFinishProductSampleType(FinishProductSampleType finishProductSampleType) {
+    this.finishProductSampleType = finishProductSampleType;
   }
 }

@@ -15,7 +15,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.dto.AccepetedValueDto;
 import com.tokyo.supermix.data.dto.AcceptedValuesDto;
-import com.tokyo.supermix.data.dto.EmailPointsRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
@@ -73,30 +72,20 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private EquationRepository euationRepository;
   @Autowired
   private MultiResultFormulaRepository multiResultFormulaRepository;
+  @Autowired
   private MaterialTestRepository materialTestRepository;
   @Autowired
   private FinishProductTestRepository finishProductTestRepository;
 
   @Transactional
   public Long saveTestConfigure(TestConfigureRequestDto testConfigureRequestDto) {
-    EmailPointsRequestDto emailPointsRequestDto = new EmailPointsRequestDto();
-    if (testConfigureRequestDto.getMaterialSubCategoryId() != null && (emailPointsService
-        .findByTestIdAndMaterialSubCategoryId(testConfigureRequestDto.getTestId(),
-            testConfigureRequestDto.getMaterialSubCategoryId())) == null) {
-      emailPointsService.createEmailPoints(testConfigureRequestDto);
-    } else if (testConfigureRequestDto.getMaterialSubCategoryId() == null
-        && emailPointsService.findByTestIdAndMaterialCategoryId(testConfigureRequestDto.getTestId(),
-            testConfigureRequestDto.getMaterialCategoryId()) == null) {
-      emailPointsService.createEmailPoints(testConfigureRequestDto);
+    TestConfigure testConfigureobj  = testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class));
+    emailPointsService.createEmailPoints(testConfigureobj);
+    if (!(testConfigureobj.getDueDay()== null|| testConfigureobj.getDueDay().isEmpty())) {   
+      emailPointsService.createScheduleEmailPoints(testConfigureobj);
     }
-    if (testConfigureRequestDto.getDueDay() != null) {
-      emailPointsRequestDto.setSchedule(true);
-      emailPointsService.createScheduleEmailPoints(testConfigureRequestDto);
-    }
-    Long id = testConfigureRepository.save(mapper.map(testConfigureRequestDto, TestConfigure.class))
-        .getId();
-    coreTestConfigureService.createCoreTestConfigure(id);
-    return id;
+    coreTestConfigureService.createCoreTestConfigure(testConfigureobj.getId());
+    return testConfigureobj.getId();
   }
 
   @Transactional(readOnly = true)
@@ -116,21 +105,7 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteTestConfigure(Long id) {
-    TestConfigure testconfigure = testConfigureRepository.findById(id).get();
-    Long testId = testconfigure.getTest().getId();
-    if (testconfigure.getMaterialSubCategory() != null) {
-      Long materialSubCategoryId = testconfigure.getMaterialSubCategory().getId();
-      if (emailPointsService.findByTestIdAndMaterialSubCategoryId(testId,
-          materialSubCategoryId) != null) {
-        emailPointsService.deleteByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId);
-      }
-    } else {
-      Long materialCategoryId = testconfigure.getMaterialCategory().getId();
-      if (emailPointsService.findByTestIdAndMaterialCategoryId(testId,
-          materialCategoryId) != null) {
-        emailPointsService.deleteByTestIdAndMaterialCategoryId(testId, materialCategoryId);
-      }
-    }
+    emailPointsService.deleteByTestConfigureId(id);
     testConfigureRepository.deleteById(id);
   }
 
@@ -285,7 +260,15 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   @Transactional
   public Long updateTestConfigure(TestConfigure testConfigure) {
-    testConfigureRepository.save(testConfigure);
+    TestConfigure testConfigureObj= testConfigureRepository.save(testConfigure);
+    if(testConfigureObj!=null){
+      emailPointsService.updateEmailPoints(testConfigureObj);
+      if(!(testConfigureObj.getDueDay() == null)) {
+        emailPointsService.updateScheduleEmailPoints(testConfigureObj);
+        
+      }
+      
+    }
     return testConfigure.getId();
   }
 

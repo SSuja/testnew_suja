@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
+import com.tokyo.supermix.data.enums.MaterialParamType;
 
 public class MaterialAcceptedValueResponseDto {
   private Long id;
@@ -16,6 +17,8 @@ public class MaterialAcceptedValueResponseDto {
   private TestEquationResponseDto testEquation;
   private Long materialSubCategoryId;
   private CategoryAcceptedType categoryAcceptedType;
+  private Long materialQualityParameterId;
+  private MaterialParamType materialParamType;
 
   public Long getId() {
     return id;
@@ -111,5 +114,21 @@ public class MaterialAcceptedValueResponseDto {
 
   public void setCategoryAcceptedType(CategoryAcceptedType categoryAcceptedType) {
     this.categoryAcceptedType = categoryAcceptedType;
+  }
+
+  public MaterialParamType getMaterialParamType() {
+    return materialParamType;
+  }
+
+  public void setMaterialParamType(MaterialParamType materialParamType) {
+    this.materialParamType = materialParamType;
+  }
+
+  public Long getMaterialQualityParameterId() {
+    return materialQualityParameterId;
+  }
+
+  public void setMaterialQualityParameterId(Long materialQualityParameterId) {
+    this.materialQualityParameterId = materialQualityParameterId;
   }
 }

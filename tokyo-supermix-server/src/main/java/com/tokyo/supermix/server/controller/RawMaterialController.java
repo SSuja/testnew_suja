@@ -142,8 +142,8 @@ public class RawMaterialController {
         rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialId,
         rawMaterialRequestDto.getMaterialSubCategoryId());
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_RAW_MATERIAL_SUCCESS),
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        rawMaterialId, RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
 

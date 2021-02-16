@@ -240,6 +240,8 @@ public final class EndpointURI {
       PARAMETER + SLASH + "parameter-type" + SLASH + "{parameterType}" + SEARCH;
   public static final String PARAMETER_PAGE_BY_TYPE =
       PARAMETER + SLASH + "parameter-type-page" + SLASH + "{parameterType}";
+  public static final String PARAMETER_COMMON_SEARCH =
+      PARAMETER + SLASH + "common" + SLASH + "type" + SLASH + "{parameterType}" + SEARCH;
 
   /*
    * Project APIs
@@ -510,9 +512,21 @@ public final class EndpointURI {
   public static final String QUALITY_PARAMETER = BASE_API_PATH + "quality-parameter";
   public static final String QUALITY_PARAMETER_BY_ID = QUALITY_PARAMETER + ID;
   public static final String QUALITY_PARAMETERS = BASE_API_PATH + "quality-parameters";
-  public static final String MATERIAL_SUB_CATEGORY_ID = "/{materialSubCategoryId}";
+  public static final String MATERIAL_SUB_CATEGORY_ID = "/{​​​​​​​materialSubCategoryId}​​​​​​​";
   public static final String GET_QUALITY_PARAMETERS_BY_MATERIAL_SUB_CATEGORY_ID =
       QUALITY_PARAMETER + "/qualityparameter" + MATERIAL_SUB_CATEGORY_ID;
+
+  // Material Quality Parameter
+  public static final String MATERIAL_QUALITY_PARAMETER =
+      BASE_API_PATH + "material-quality-parameter";
+  public static final String MATERIAL_QUALITY_PARAMETERS =
+      BASE_API_PATH + "material-quality-parameters";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_ID = MATERIAL_QUALITY_PARAMETER + ID;
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_RAWMATERIAL =
+      MATERIAL_QUALITY_PARAMETERS + SLASH + "raw-material" + SLASH + "{rawMaterialId}";
+  public static final String MATERIAL_QUALITY_PARAMETER_BY_SUBCATEGORY =
+      MATERIAL_QUALITY_PARAMETERS + SLASH + "sub-category" + SLASH + "{subCategoryId}";
+
 
   /*
    * MaterialAcceptedValue Apis

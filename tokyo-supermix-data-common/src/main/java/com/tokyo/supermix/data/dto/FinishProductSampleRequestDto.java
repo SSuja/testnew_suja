@@ -3,6 +3,7 @@ package com.tokyo.supermix.data.dto;
 import java.sql.Date;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 public class FinishProductSampleRequestDto {
@@ -20,6 +21,7 @@ public class FinishProductSampleRequestDto {
   private String workOrderNumber;
   private Long userId;
   private boolean sentMail;
+  private FinishProductSampleType finishProductSampleType;
 
   public String getCode() {
     return code;
@@ -101,20 +103,27 @@ public class FinishProductSampleRequestDto {
     this.workOrderNumber = workOrderNumber;
   }
 
-public Long getUserId() {
-	return userId;
-}
+  public Long getUserId() {
+    return userId;
+  }
 
-public void setUserId(Long userId) {
-	this.userId = userId;
-}
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
 
-public boolean isSentMail() {
-  return sentMail;
-}
+  public boolean isSentMail() {
+    return sentMail;
+  }
 
-public void setSentMail(boolean sentMail) {
-  this.sentMail = sentMail;
-}
-  
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
+  }
+
+  public FinishProductSampleType getFinishProductSampleType() {
+    return finishProductSampleType;
+  }
+
+  public void setFinishProductSampleType(FinishProductSampleType finishProductSampleType) {
+    this.finishProductSampleType = finishProductSampleType;
+  }
 }

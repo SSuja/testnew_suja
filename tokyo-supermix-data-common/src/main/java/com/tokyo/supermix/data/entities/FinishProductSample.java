@@ -3,6 +3,8 @@ package com.tokyo.supermix.data.entities;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -10,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.entities.auth.User;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 
 @Entity
@@ -26,6 +29,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "mixDesignCode", nullable = false)
   private MixDesign mixDesign;
+  @Enumerated(EnumType.ORDINAL)
   private Status status;
   private String truckNo;
   @ManyToOne
@@ -35,10 +39,11 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @JoinColumn(name = "pourId", nullable = true)
   private Pour pour;
   private String workOrderNumber;
-  @ManyToOne
-	@JoinColumn(name = "userId", nullable = true)
-	private User user;
   private boolean sentMail;
+  @JoinColumn(name = "userId", nullable = true)
+  private User user;
+  @Enumerated(EnumType.ORDINAL)
+  private FinishProductSampleType finishProductSampleType;
 
   public String getCode() {
     return code;
@@ -124,20 +129,27 @@ public class FinishProductSample extends DateAudit implements Serializable {
     return serialVersionUID;
   }
 
-public User getUser() {
-	return user;
-}
+  public User getUser() {
+    return user;
+  }
 
-public void setUser(User user) {
-	this.user = user;
-}
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-public boolean isSentMail() {
-  return sentMail;
-}
+  public boolean isSentMail() {
+    return sentMail;
+  }
 
-public void setSentMail(boolean sentMail) {
-  this.sentMail = sentMail;
-}
-  
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
+  }
+
+  public FinishProductSampleType getFinishProductSampleType() {
+    return finishProductSampleType;
+  }
+
+  public void setFinishProductSampleType(FinishProductSampleType finishProductSampleType) {
+    this.finishProductSampleType = finishProductSampleType;
+  }
 }
