@@ -62,7 +62,6 @@ import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductParameterResultRepository;
-import com.tokyo.supermix.data.repositories.FinishProductSampleIssueRepository;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTrialRepository;
@@ -95,8 +94,6 @@ public class TestReportServiceImpl implements TestReportService {
   private SupplierRepository supplierRepository;
   @Autowired
   MaterialAcceptedValueRepository materialAcceptedValueRepository;
-  @Autowired
-  FinishProductSampleIssueRepository finishProductSampleIssueRepository;
   @Autowired
   FinishProductTestRepository finishProductTestRepository;
   @Autowired

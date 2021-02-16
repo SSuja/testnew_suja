@@ -13,9 +13,11 @@ import com.tokyo.supermix.data.dto.AcceptedValueMainDto;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialQualityParameter;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
+import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.entities.QMaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.TestConfigure;
+import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.MaterialParamType;
@@ -24,8 +26,11 @@ import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.ParameterRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
+import com.tokyo.supermix.data.repositories.UnitRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
@@ -43,6 +48,12 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private MaterialSubCategoryRepository materialSubCategoryRepository;
   @Autowired
   private MaterialQualityParameterRepository materialQualityParameterRepository;
+  @Autowired
+  private UnitRepository unitRepository;
+  @Autowired
+  private TestParameterRepository testParameterRepository;
+  @Autowired
+  private ParameterRepository parameterRepository;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -84,18 +95,24 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           .setMaterialSubCategory(materialAcceptedValue2.getMaterialSubCategory());
       materialQualityParameter.setQualityParamaterType(QualityParamaterType.SUB_CATEGORY);
     }
-    if (materialAcceptedValue2.getConditionRange().equals(Condition.BETWEEN)) {
-      materialQualityParameter.setConditionRange(materialAcceptedValue2.getConditionRange());
-      materialQualityParameter.setMaxValue(materialAcceptedValue2.getMaxValue());
-      materialQualityParameter.setMinValue(materialAcceptedValue2.getMinValue());
-    } else if (materialAcceptedValue2.getConditionRange().equals(Condition.EQUAL)
-        || materialQualityParameter.getConditionRange().equals(Condition.GREATER_THAN)
-        || materialQualityParameter.getConditionRange().equals(Condition.LESS_THAN)) {
-      materialQualityParameter.setConditionRange(materialAcceptedValue2.getConditionRange());
-      materialQualityParameter.setValue(materialAcceptedValue2.getValue());
+    if (materialAcceptedValue2.getConditionRange() != null) {
+      if (materialAcceptedValue2.getConditionRange().equals(Condition.BETWEEN)) {
+        materialQualityParameter.setConditionRange(materialAcceptedValue2.getConditionRange());
+        materialQualityParameter.setMaxValue(materialAcceptedValue2.getMaxValue());
+        materialQualityParameter.setMinValue(materialAcceptedValue2.getMinValue());
+      } else if (materialAcceptedValue2.getConditionRange().equals(Condition.EQUAL)
+          || materialAcceptedValue2.getConditionRange().equals(Condition.GREATER_THAN)
+          || materialAcceptedValue2.getConditionRange().equals(Condition.LESS_THAN)) {
+        materialQualityParameter.setConditionRange(materialAcceptedValue2.getConditionRange());
+        materialQualityParameter.setValue(materialAcceptedValue2.getValue());
+      }
     }
-    materialQualityParameter.setUnit(materialAcceptedValue2.getTestParameter().getUnit());
-    materialQualityParameter.setParameter(materialAcceptedValue2.getTestParameter().getParameter());
+    TestParameter testParameter =
+        testParameterRepository.findById(materialAcceptedValue2.getTestParameter().getId()).get();
+    materialQualityParameter
+        .setUnit(unitRepository.findById(testParameter.getUnit().getId()).get());
+    Parameter parameter = parameterRepository.findById(testParameter.getParameter().getId()).get();
+    materialQualityParameter.setParameter(parameter);
     materialQualityParameterRepository.save(materialQualityParameter);
   }
 
