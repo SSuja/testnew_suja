@@ -40,6 +40,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
   private Pour pour;
   private String workOrderNumber;
   private boolean sentMail;
+  @ManyToOne
   @JoinColumn(name = "userId", nullable = true)
   private User user;
   @Enumerated(EnumType.ORDINAL)
