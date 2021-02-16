@@ -15,7 +15,7 @@ import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.QualityParamaterType;
 
 @Entity
-@Table(schema = "tokyo-supermix", name = "marial_quality_parameter")
+@Table(schema = "tokyo-supermix", name = "material_quality_parameter")
 public class MaterialQualityParameter extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
