@@ -11,6 +11,7 @@ public class CustomerResponseDto {
   private List<PlantDto> plant;
   private String createdAt;
   private String updatedAt;
+  private boolean sentMail;
   public Long getId() {
     return id;
   }
@@ -59,6 +60,12 @@ public class CustomerResponseDto {
   }
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+  public boolean isSentMail() {
+    return sentMail;
+  }
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 
  

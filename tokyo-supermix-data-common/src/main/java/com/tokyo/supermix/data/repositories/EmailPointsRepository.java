@@ -33,8 +33,8 @@ public interface EmailPointsRepository extends JpaRepository<EmailPoints, Long> 
   EmailPoints findByTestConfigureIdAndSchedule(Long testConfigureId, boolean status);
 
   List<EmailPoints> findByTestConfigureId(Long testConfigureId);
-   
-  void deleteByTestConfigureId(Long testConfigureId);
-  
 
+  void deleteByTestConfigureId(Long testConfigureId);
+
+  boolean existsByTestConfigureId(Long testConfigId);
 }

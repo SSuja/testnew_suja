@@ -50,4 +50,6 @@ public interface MixDesignRepository extends JpaRepository<MixDesign, String>,
 
   boolean existsByRawMaterialIdAndPlantSubBusinessUnitId(Long rawMaterialId,
       Long subBusinessUnitId);
+  
+  List<MixDesign> findBySentMail(boolean sentMail);
 }

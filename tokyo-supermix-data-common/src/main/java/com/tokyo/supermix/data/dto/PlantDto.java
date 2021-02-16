@@ -15,6 +15,7 @@ public class PlantDto {
   private String faxNumber;
   private Long subBusinessUnitId;
   private String subBusinessUnitName;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -78,5 +79,13 @@ public class PlantDto {
 
   public void setSubBusinessUnitName(String subBusinessUnitName) {
     this.subBusinessUnitName = subBusinessUnitName;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

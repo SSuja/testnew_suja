@@ -31,6 +31,7 @@ public class Employee extends DateAudit implements Serializable {
   @JoinColumn(name = "designationId", nullable = false)
   private Designation designation;
   private String profilePicPath;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -122,5 +123,13 @@ public class Employee extends DateAudit implements Serializable {
 
   public void setProfilePicPath(String profilePicPath) {
     this.profilePicPath = profilePicPath;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

@@ -12,6 +12,7 @@ public class ProjectResponseDto {
   private CustomerResponseDto customer;
   private String createdAt;
   private String updatedAt;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -83,5 +84,13 @@ public class ProjectResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

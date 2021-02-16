@@ -25,6 +25,7 @@ public class Supplier extends DateAudit implements Serializable {
   private String address;
   private String phoneNumber;
   private String email;
+  private boolean sentMail;
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "supplier_supplierCategory",
       joinColumns = {@JoinColumn(name = "supplier_id", referencedColumnName = "id")},
@@ -92,5 +93,13 @@ public class Supplier extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

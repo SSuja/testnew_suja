@@ -27,4 +27,6 @@ public interface EmployeeRepository
   List<Employee> findByPlantCodeAndFirstNameStartsWith(String plantCode, String firstName);
 
   List<Employee> findByFirstNameStartsWith(String firstName);
+  
+  List<Employee> findBySentMail(boolean sentMail);
 }

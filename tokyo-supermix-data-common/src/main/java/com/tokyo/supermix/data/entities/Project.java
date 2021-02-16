@@ -19,6 +19,7 @@ public class Project extends DateAudit implements Serializable {
   private String contactNumber;
   private String contactPerson;
   private Date startDate;
+  private boolean sentMail;
   @ManyToOne
   @JoinColumn(name = "customerId", nullable = false)
   private Customer customer;
@@ -84,5 +85,13 @@ public class Project extends DateAudit implements Serializable {
 
   public static long getSerialversionuid() {
     return serialVersionUID;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

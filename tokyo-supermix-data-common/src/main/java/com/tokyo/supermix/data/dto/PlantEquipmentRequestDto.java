@@ -15,6 +15,7 @@ public class PlantEquipmentRequestDto {
   private String plantCode;
   private Long equipmentId;
   private boolean calibrationExists;
+  private boolean sentMail;
 
   public String getSerialNo() {
     return serialNo;
@@ -70,5 +71,13 @@ public class PlantEquipmentRequestDto {
 
   public void setCalibrationExists(boolean calibrationExists) {
     this.calibrationExists = calibrationExists;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

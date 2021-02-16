@@ -19,6 +19,7 @@ public class ProjectRequestDto {
   @NotNull(message = "{projectRequestDto.plantCode.null}")
   @NotEmpty(message = "{projectRequestDto.plantCode.empty}")
   private String plantCode;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -74,5 +75,13 @@ public class ProjectRequestDto {
 
   public void setPlantCode(String plantCode) {
     this.plantCode = plantCode;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

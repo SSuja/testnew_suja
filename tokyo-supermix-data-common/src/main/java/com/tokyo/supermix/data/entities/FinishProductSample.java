@@ -39,7 +39,7 @@ public class FinishProductSample extends DateAudit implements Serializable {
   @JoinColumn(name = "pourId", nullable = true)
   private Pour pour;
   private String workOrderNumber;
-  @ManyToOne
+  private boolean sentMail;
   @JoinColumn(name = "userId", nullable = true)
   private User user;
   @Enumerated(EnumType.ORDINAL)
@@ -135,6 +135,14 @@ public class FinishProductSample extends DateAudit implements Serializable {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 
   public FinishProductSampleType getFinishProductSampleType() {

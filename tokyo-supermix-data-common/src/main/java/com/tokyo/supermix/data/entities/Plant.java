@@ -30,6 +30,7 @@ public class Plant extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "subBusinessUnitId", nullable = true)
   private SubBusinessUnit subBusinessUnit;
+  private boolean sentMail;
 
   public Set<PlantRole> getPlantRole() {
     return plantRole;
@@ -105,5 +106,13 @@ public class Plant extends DateAudit implements Serializable {
 
   public void setSubBusinessUnit(SubBusinessUnit subBusinessUnit) {
     this.subBusinessUnit = subBusinessUnit;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

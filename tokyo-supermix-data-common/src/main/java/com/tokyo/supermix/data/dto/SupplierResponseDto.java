@@ -13,6 +13,7 @@ public class SupplierResponseDto {
   private List<SupplierCategory> supplierCategories;
   private String createdAt;
   private String updatedAt;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -84,5 +85,13 @@ public class SupplierResponseDto {
 
   public void setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

@@ -26,4 +26,6 @@ public interface PlantEquipmentCalibrationRepository
   List<PlantEquipmentCalibration> findAllByPlantEquipmentPlantCode(String plantCode, Pageable pageable);
 
   Long countByPlantEquipmentPlantCode(String plantCode);
+  
+  List<PlantEquipmentCalibration> findBySentMail(boolean sentMail);
 }

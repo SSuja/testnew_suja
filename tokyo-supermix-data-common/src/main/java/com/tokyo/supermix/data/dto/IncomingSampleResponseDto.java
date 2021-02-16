@@ -15,6 +15,7 @@ public class IncomingSampleResponseDto {
   private SupplierResponseDto supplier;
   private RawMaterialSampleType rawMaterialSampleType;
   private Date date;
+  private boolean sentMail;
 
   public String getCode() {
     return code;
@@ -94,5 +95,13 @@ public class IncomingSampleResponseDto {
 
   public void setDate(Date date) {
     this.date = date;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }
