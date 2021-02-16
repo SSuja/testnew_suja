@@ -5,15 +5,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.MaterialQualityParameterRequestDto;
+import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialQualityParameter;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.QualityParamaterType;
+import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 
 @Service
 public class MaterialQualityParameterServiceImpl implements MaterialQualityParameterService {
   @Autowired
   private MaterialQualityParameterRepository materialQualityParameterRepository;
+  @Autowired
+  private MaterialAcceptedValueRepository materialAcceptedValueRepository;
 
   @Transactional
   public void saveAllMaterialQualityParameter(
@@ -36,9 +40,53 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
     return materialQualityParameterRepository.existsById(id);
   }
 
+  // update materialAcceptedValue while edit materialQualityParameter
   @Transactional
   public void updateMaterialQualityParameter(MaterialQualityParameter materialQualityParameter) {
+    if (materialQualityParameter.getQualityParamaterType().equals(QualityParamaterType.MATERIAL)) {
+      if (materialAcceptedValueRepository.existsByTestParameterParameterIdAndRawMaterialId(
+          materialQualityParameter.getParameter().getId(),
+          materialQualityParameter.getRawMaterial().getId())) {
+        for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueRepository
+            .findByTestParameterParameterIdAndRawMaterialId(
+                materialQualityParameter.getParameter().getId(),
+                materialQualityParameter.getRawMaterial().getId())) {
+          setConditionRangeForMaterialAcceptedValue(materialQualityParameter,
+              materialAcceptedValue);
+        }
+      }
+    } else {
+      if (materialAcceptedValueRepository.existsByTestParameterParameterIdAndMaterialSubCategoryId(
+          materialQualityParameter.getParameter().getId(),
+          materialQualityParameter.getMaterialSubCategory().getId())) {
+        for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueRepository
+            .findByTestParameterParameterIdAndMaterialSubCategoryId(
+                materialQualityParameter.getParameter().getId(),
+                materialQualityParameter.getMaterialSubCategory().getId())) {
+          setConditionRangeForMaterialAcceptedValue(materialQualityParameter,
+              materialAcceptedValue);
+        }
+      }
+    }
     materialQualityParameterRepository.save(materialQualityParameter);
+  }
+
+  // set condition range for materialAcceptedValue while edit materialQualityParameter
+  public void setConditionRangeForMaterialAcceptedValue(
+      MaterialQualityParameter materialQualityParameter,
+      MaterialAcceptedValue materialAcceptedValue) {
+    if (materialQualityParameter.getConditionRange() != null) {
+      if (materialQualityParameter.getConditionRange().equals(Condition.BETWEEN)) {
+        materialAcceptedValue.setConditionRange(materialQualityParameter.getConditionRange());
+        materialAcceptedValue.setMaxValue(materialQualityParameter.getMaxValue());
+        materialAcceptedValue.setMinValue(materialQualityParameter.getMinValue());
+      } else if (materialQualityParameter.getConditionRange().equals(Condition.EQUAL)
+          || materialQualityParameter.getConditionRange().equals(Condition.GREATER_THAN)
+          || materialQualityParameter.getConditionRange().equals(Condition.LESS_THAN)) {
+        materialAcceptedValue.setConditionRange(materialQualityParameter.getConditionRange());
+        materialAcceptedValue.setValue(materialQualityParameter.getValue());
+      }
+    }
   }
 
   @Transactional(readOnly = true)

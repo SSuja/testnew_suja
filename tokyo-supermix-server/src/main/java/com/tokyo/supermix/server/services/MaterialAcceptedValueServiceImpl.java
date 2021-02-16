@@ -62,6 +62,7 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       if (materialAcceptedValue2.getMaterialParamType().equals(MaterialParamType.QUALITY_VALUE)) {
         if (materialAcceptedValue2.getMaterialQualityParameter() == null) {
           saveToMQParameterFromMAValue(materialAcceptedValue2);
+
         } else {
           saveToMAValueFromMQP(materialAcceptedValue2);
         }
@@ -114,11 +115,13 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     Parameter parameter = parameterRepository.findById(testParameter.getParameter().getId()).get();
     materialQualityParameter.setParameter(parameter);
     materialQualityParameterRepository.save(materialQualityParameter);
+    materialAcceptedValue2.setMaterialQualityParameter(materialQualityParameter);
   }
 
   @Transactional
   public void updateMaterialAcceptedValue(MaterialAcceptedValue materialAcceptedValue) {
-    if (materialAcceptedValue.getMaterialParamType().equals(MaterialParamType.QUALITY_VALUE)) {
+    if (materialAcceptedValue.getMaterialParamType().equals(MaterialParamType.QUALITY_VALUE)
+        && materialAcceptedValue.getMaterialQualityParameter() != null) {
       MaterialQualityParameter materialQualityParameter = materialQualityParameterRepository
           .findById(materialAcceptedValue.getMaterialQualityParameter().getId()).get();
       if (materialAcceptedValue.getConditionRange() != null) {
