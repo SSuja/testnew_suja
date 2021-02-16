@@ -29,6 +29,7 @@ public class Customer extends DateAudit implements Serializable {
       joinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "id")},
       inverseJoinColumns = {@JoinColumn(name = "plant_code", referencedColumnName = "code")})
   private List<Plant> plant;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -80,5 +81,13 @@ public class Customer extends DateAudit implements Serializable {
 
   public void setPlant(List<Plant> plant) {
     this.plant = plant;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

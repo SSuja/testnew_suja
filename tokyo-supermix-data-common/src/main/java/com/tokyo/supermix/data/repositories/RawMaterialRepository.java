@@ -82,4 +82,6 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
   boolean existsByIdAndSubBusinessUnitId(Long id, Long sbuId);
 
   boolean existsByIdAndPlantCode(Long id, String plantCode);
+  
+  List<RawMaterial> findBySentMail(boolean sentMail);
 }

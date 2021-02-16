@@ -13,6 +13,7 @@ public class PlantEquipmentResponseDto {
   private Long equipmentId;
   private boolean calibrationExists;
   private EquipmentType equipmentEquipmentType;
+  private boolean sentMail;
 
   public EquipmentType getEquipmentEquipmentType() {
     return equipmentEquipmentType;
@@ -92,5 +93,13 @@ public class PlantEquipmentResponseDto {
 
   public void setCalibrationExists(boolean calibrationExists) {
     this.calibrationExists = calibrationExists;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

@@ -21,6 +21,7 @@ public class EmployeeRequestDto {
   private boolean hasUser;
   private boolean isEnabled;
   private String profilePicPath;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -108,5 +109,13 @@ public class EmployeeRequestDto {
 
   public void setProfilePicPath(String profilePicPath) {
     this.profilePicPath = profilePicPath;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

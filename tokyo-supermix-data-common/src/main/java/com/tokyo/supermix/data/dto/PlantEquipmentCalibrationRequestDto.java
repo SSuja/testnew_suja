@@ -24,6 +24,7 @@ public class PlantEquipmentCalibrationRequestDto {
   private String accuracy;
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.noOfDays.null}")
   private Long noOfDays;
+  private boolean sentMail;
 
   public Long getNoOfDays() {
     return noOfDays;
@@ -111,5 +112,13 @@ public class PlantEquipmentCalibrationRequestDto {
 
   public void setAccuracy(String accuracy) {
     this.accuracy = accuracy;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

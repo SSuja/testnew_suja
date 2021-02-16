@@ -29,4 +29,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>,
   List<Customer> findByNameContaining(String customerName);
 
   List<Customer> findByPlantCodeAndNameContaining(String plantCode, String customerName);
+  
+  List<Customer> findBySentMail(boolean sentMail);
 }

@@ -17,8 +17,9 @@ public class IncomingSampleRequestDto {
   private Long supplierId;
   private RawMaterialSampleType rawMaterialSampleType;
   private Long userId;
+  private boolean sentMail;
   private Date date;
-  
+
 
   public String getCode() {
     return code;
@@ -76,20 +77,28 @@ public class IncomingSampleRequestDto {
     this.rawMaterialSampleType = rawMaterialSampleType;
   }
 
-public Long getUserId() {
-	return userId;
-}
+  public Long getUserId() {
+    return userId;
+  }
 
-public void setUserId(Long userId) {
-	this.userId = userId;
-}
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
 
-public Date getDate() {
-  return date;
-}
+  public boolean isSentMail() {
+    return sentMail;
+  }
 
-public void setDate(Date date) {
-  this.date = date;
-}
-  
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
+  }
+
 }

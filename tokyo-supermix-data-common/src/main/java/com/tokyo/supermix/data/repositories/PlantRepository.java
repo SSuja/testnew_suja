@@ -20,4 +20,6 @@ public interface PlantRepository
 
 
   List<Plant> findBySubBusinessUnitId(Long subUnitId);
+
+  List<Plant> findBySentMail(boolean sentMail);
 }

@@ -24,6 +24,7 @@ public class PlantEquipment extends DateAudit implements Serializable {
   @JoinColumn(name = "equipmentId", nullable = false)
   private Equipment equipment;
   private boolean calibrationExists;
+  private boolean sentMail;
 
   public String getSerialNo() {
     return serialNo;
@@ -83,5 +84,13 @@ public class PlantEquipment extends DateAudit implements Serializable {
 
   public void setCalibrationExists(boolean calibrationExists) {
     this.calibrationExists = calibrationExists;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

@@ -15,6 +15,7 @@ public class CustomerRequestDto {
   @NotNull(message = "{customerDto.plantCode.null}")
   @NotEmpty(message = "{customerDto.plantCode.empty}")
   private List<String> plantCodes;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -62,5 +63,13 @@ public class CustomerRequestDto {
 
   public void setPlantCodes(List<String> plantCodes) {
     this.plantCodes = plantCodes;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

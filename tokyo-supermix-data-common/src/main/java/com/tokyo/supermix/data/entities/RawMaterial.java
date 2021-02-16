@@ -39,6 +39,7 @@ public class RawMaterial extends DateAudit implements Serializable {
   private SubBusinessUnit subBusinessUnit;
   @Enumerated(EnumType.ORDINAL)
   private MaterialType materialType;
+  private boolean sentMail;
 
   public Plant getPlant() {
     return plant;
@@ -130,5 +131,13 @@ public class RawMaterial extends DateAudit implements Serializable {
 
   public void setMaterialType(MaterialType materialType) {
     this.materialType = materialType;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

@@ -20,6 +20,7 @@ public class RawMaterialRequestDto {
   private String erpCode;
   private Long subBusinessUnitId;
   private MaterialType materialType;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -107,5 +108,13 @@ public class RawMaterialRequestDto {
 
   public void setMaterialType(MaterialType materialType) {
     this.materialType = materialType;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }

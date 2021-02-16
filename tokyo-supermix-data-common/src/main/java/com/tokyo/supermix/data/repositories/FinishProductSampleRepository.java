@@ -1,14 +1,12 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
@@ -79,4 +77,5 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   FinishProductSample findByProjectName(String projectName);
 
+  List<FinishProductSample> findBySentMail(boolean sentMail);
 }

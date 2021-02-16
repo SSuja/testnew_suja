@@ -40,4 +40,6 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long>,
   List<Supplier> findByNameContaining(String name);
 
   List<Supplier> findByPlantCodeAndNameContaining(String plantCode, String name);
+  
+  List<Supplier> findBySentMail(boolean sentMail);
 }

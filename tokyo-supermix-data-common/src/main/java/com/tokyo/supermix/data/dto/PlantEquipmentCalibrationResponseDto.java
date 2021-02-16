@@ -17,6 +17,7 @@ public class PlantEquipmentCalibrationResponseDto {
   private SupplierResponseDto supplier;
   private EmployeeResponseDto employee;
   private PlantEquipmentResponseDto plantEquipment;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -104,6 +105,14 @@ public class PlantEquipmentCalibrationResponseDto {
 
   public void setPlantEquipment(PlantEquipmentResponseDto plantEquipment) {
     this.plantEquipment = plantEquipment;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 
 }

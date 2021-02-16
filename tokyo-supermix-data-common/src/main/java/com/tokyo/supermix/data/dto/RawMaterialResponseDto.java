@@ -15,6 +15,7 @@ public class RawMaterialResponseDto {
   private Long subBusinessUnitId;
   private String subBusinessUnitName;
   private MaterialType materialType;
+  private boolean sentMail;
 
   public Long getId() {
     return id;
@@ -112,5 +113,13 @@ public class RawMaterialResponseDto {
 
   public void setMaterialType(MaterialType materialType) {
     this.materialType = materialType;
+  }
+
+  public boolean isSentMail() {
+    return sentMail;
+  }
+
+  public void setSentMail(boolean sentMail) {
+    this.sentMail = sentMail;
   }
 }
