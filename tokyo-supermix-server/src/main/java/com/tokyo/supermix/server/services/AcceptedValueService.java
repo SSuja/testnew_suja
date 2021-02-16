@@ -54,4 +54,6 @@ public interface AcceptedValueService {
   public Long countByTestConfig(Long testConfigureId);
 
   public AcceptedValueMainDto getAllAcceptedValuesByPage(Pageable pageable, Long testConfigureId);
+
+  public boolean isUpdatedTestParameterAndTestConfigure(Long id, Long testParameterId, Long testConfiguraeId);
 }

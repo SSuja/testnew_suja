@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.dto;
 
 import javax.annotation.Nullable;
 import com.tokyo.supermix.data.enums.CategoryAcceptedType;
+import com.tokyo.supermix.data.enums.MaterialParamType;
 
 public class AccepetedValueDto {
   private Long id;
@@ -25,6 +26,8 @@ public class AccepetedValueDto {
   private Long materialSubCategoryId;
   private String materialSubCategoryName;
   private CategoryAcceptedType categoryAcceptedType;
+  private Long materialQualityParameterId;
+  private MaterialParamType materialParamType;
 
   public Long getId() {
     return id;
@@ -152,5 +155,21 @@ public class AccepetedValueDto {
 
   public void setCategoryAcceptedType(CategoryAcceptedType categoryAcceptedType) {
     this.categoryAcceptedType = categoryAcceptedType;
+  }
+
+  public Long getMaterialQualityParameterId() {
+    return materialQualityParameterId;
+  }
+
+  public void setMaterialQualityParameterId(Long materialQualityParameterId) {
+    this.materialQualityParameterId = materialQualityParameterId;
+  }
+
+  public MaterialParamType getMaterialParamType() {
+    return materialParamType;
+  }
+
+  public void setMaterialParamType(MaterialParamType materialParamType) {
+    this.materialParamType = materialParamType;
   }
 }

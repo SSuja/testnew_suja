@@ -383,8 +383,7 @@ public class Constants {
       "Material Test Trial Updated Successfully";
   public static final String UPDATE_MATERIAL_TEST_TRIAL_AVERAGE_SUCCESS =
       "Material Test Trial Average & Status Updated Successfully";
-  public static final String MATERIAL_TEST_APPROVED_SUCCESS =
-      "Material Test Approved Successfully";
+  public static final String MATERIAL_TEST_APPROVED_SUCCESS = "Material Test Approved Successfully";
   /*
    * Constants for Parameter Result validation key & Success messages
    */
@@ -450,19 +449,6 @@ public class Constants {
   public static final String UPDATE_TEST_SUCCESS = "Test Updated Successfully";
   public static final String DELETE_TEST_SCCESS = "Test successfully Deleted";
 
-  /*
-   * Constants for Mix Design validation key & Success messages
-   */
-
-  public static final String ADD_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS =
-      "Finish Product Sample Issue Added Successfully";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE = "finishProductSampleIssue";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUES = "finishProductSampleIssues";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_DELETED =
-      "Finish Product Sample Issue Successfully Deleted";
-  public static final String FINISH_PRODUCT_SAMPLE_ISSUE_ID = "finishProductSampleIssueId";
-  public static final String UPDATE_FINISH_PRODUCT_SAMPLE_ISSUE_SUCCESS =
-      "Finish Product Sample Issue Updated Successfully";
   /*
    * Constants for Quality Parameter validation key & Success messages
    */
