@@ -63,7 +63,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     if (incomingSampleObj != null && incomingSampleObj.getRawMaterialSampleType().equals(RawMaterialSampleType.INCOMING_SAMPLE)) {
       emailNotification.sendIncomingSampleEmail(incomingSampleObj);
     }
-    else {
+    else if (incomingSampleObj != null && incomingSampleObj.getRawMaterialSampleType().equals(RawMaterialSampleType.PROCESS_SAMPLE)){
       emailNotification.sendProcessSampleCreationEmail(incomingSampleObj);
     }
   }

@@ -139,7 +139,7 @@ public class EmailNotification {
   @Autowired
   private ProjectRepository projectRepository;
   @Autowired
-  private  UserPlantRoleRepository userPlantRoleRepository;
+  private UserPlantRoleRepository userPlantRoleRepository;
 
   HttpSession session;
 
@@ -209,7 +209,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendProjectEmail(Project project) {
+  public void sendProjectEmail(Project projectobj) {
+    Project project = projectRepository.getOne(projectobj.getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         project.getPlant().getCode(), MailGroupConstance.CREATE_PROJECT);
     String customerName =
@@ -409,7 +410,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendSupplierEmail(Supplier supplier) {
+  public void sendSupplierEmail(Supplier supplierObj) {
+    Supplier supplier = supplierRepository.getOne(supplierObj.getId());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         supplier.getPlant().getCode(), MailGroupConstance.CREATE_SUPPLIER);
     if (emailGroup != null) {
@@ -445,7 +447,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendEmployeeEmail(Employee employee) {
+  public void sendEmployeeEmail(Employee employeeObj) {
+    Employee employee = employeeRepository.getOne(employeeObj.getId());
     String designationName =
         designationRepository.findById(employee.getDesignation().getId()).get().getName();
     if (employee.getPlant() != null) {
@@ -495,7 +498,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendIncomingSampleEmail(IncomingSample incomingSample) {
+  public void sendIncomingSampleEmail(IncomingSample incomingSampleObj) {
+    IncomingSample incomingSample = incomingSampleRepository.getOne(incomingSampleObj.getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         incomingSample.getPlant().getCode(), MailGroupConstance.CREATE_INCOMING_SAMPLE);
     if (emailGroup != null) {
@@ -531,7 +535,9 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendFinishProductSampleEmail(FinishProductSample finishProductSample) {
+  public void sendFinishProductSampleEmail(FinishProductSample finishProductSampleObj) {
+    FinishProductSample finishProductSample =
+        finishProductSampleRepository.getOne(finishProductSampleObj.getCode());
     MixDesign mixDesign =
         mixDesignRepository.findByCode(finishProductSample.getMixDesign().getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
@@ -553,6 +559,7 @@ public class EmailNotification {
     finishProductSample.setSentMail(true);
     finishProductSampleRepository.save(finishProductSample);
   }
+
   @Scheduled(cron = "0 0/5 * * * ? ")
   public void DeliverySamplealert() {
     finishProductSampleRepository
@@ -563,7 +570,9 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendFinishProductSampleIssueEmail(FinishProductSample finishProductSample) {
+  public void sendFinishProductSampleIssueEmail(FinishProductSample finishProductSampleObj) {
+    FinishProductSample finishProductSample =
+        finishProductSampleRepository.getOne(finishProductSampleObj.getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductSample.getMixDesign().getPlant().getCode(),
         MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE_ISSUE_);
@@ -594,7 +603,9 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendPlantEquipmentEmail(PlantEquipment plantequipment) {
+  public void sendPlantEquipmentEmail(PlantEquipment plantequipmentObj) {
+    PlantEquipment plantequipment =
+        plantEquipmentRepository.getOne(plantequipmentObj.getSerialNo());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         plantequipment.getPlant().getCode(), MailGroupConstance.CREATE_PLANT_EQUIPMENT);
     String plantName =
@@ -627,7 +638,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendRawmaterialCreationEmail(RawMaterial rawMaterial) {
+  public void sendRawmaterialCreationEmail(RawMaterial rawMaterialob) {
+    RawMaterial rawMaterial = rawMaterialRepository.getOne(rawMaterialob.getId());
     EmailGroup emailGroup =
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_RAW_MATERIAL);
     if (emailGroup != null) {
@@ -662,7 +674,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendCustomerCreationEmail(Customer customer) {
+  public void sendCustomerCreationEmail(Customer customerObj) {
+    Customer customer = customerRepository.getOne(customerObj.getId());
     customer.getPlant().forEach(plant -> {
       EmailGroup emailGroup = emailGroupRepository
           .findByPlantCodeAndEmailPointsName(plant.getCode(), MailGroupConstance.CREATE_CUSTOMER);
@@ -693,7 +706,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendPlantCreationEmail(Plant plant) {
+  public void sendPlantCreationEmail(Plant plantObj) {
+    Plant plant = plantRepository.getOne(plantObj.getCode());
     String mailBody = plant.getName() + " Plant is created at " + plant.getAddress();
     EmailGroup emailGroup =
         emailGroupRepository.findByEmailPointsName(MailGroupConstance.CREATE_PLANT);
@@ -723,7 +737,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendProcessSampleCreationEmail(IncomingSample incomingSample) {
+  public void sendProcessSampleCreationEmail(IncomingSample incomingSampleObj) {
+    IncomingSample incomingSample = incomingSampleRepository.getOne(incomingSampleObj.getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         incomingSample.getPlant().getCode(), MailGroupConstance.CREATE_PROCESS_SAMPLE);
     if (emailGroup != null) {
@@ -757,7 +772,8 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendMixDesignCreationEmail(MixDesign mixDesign) {
+  public void sendMixDesignCreationEmail(MixDesign mixDesignObj) {
+    MixDesign mixDesign = mixDesignRepository.getOne(mixDesignObj.getCode());
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_MIX_DESIGN);
     if (emailGroup != null) {
@@ -787,7 +803,9 @@ public class EmailNotification {
   }
 
   @Async
-  public void sendcalibrationCreationEmail(PlantEquipmentCalibration plantEquipmentCalibration) {
+  public void sendcalibrationCreationEmail(PlantEquipmentCalibration plantEquipmentCalibrationObj) {
+    PlantEquipmentCalibration plantEquipmentCalibration =
+        plantEquipmentCalibrationRepository.getOne(plantEquipmentCalibrationObj.getId());
     String plantCode = plantEquipmentRepository
         .findById(plantEquipmentCalibration.getPlantEquipment().getSerialNo()).get().getPlant()
         .getCode();
@@ -839,13 +857,15 @@ public class EmailNotification {
   @Scheduled(cron = "0 0/5 * * * ? ")
   public void useralert() {
     userRepository.findBySentMailAndUserType(false, UserType.PLANT_USER).forEach(user -> {
-      List<Long> roleIds = userPlantRoleRepository.findByUserId(user.getId()).stream().map(role->role.getId()).collect(Collectors.toList());
+      List<Long> roleIds = userPlantRoleRepository.findByUserId(user.getId()).stream()
+          .map(role -> role.getId()).collect(Collectors.toList());
       sendPlantUserCreationEmail(user, roleIds);
     });
   }
 
   @Async
-  public void sendPlantUserCreationEmail(User user, List<Long> roles) {
+  public void sendPlantUserCreationEmail(User userObj, List<Long> roles) {
+    User user = userRepository.getOne(userObj.getId());
     Plant plant = employeeRepository.findById(user.getEmployee().getId()).get().getPlant();
     Employee employee = employeeRepository.findById(user.getEmployee().getId()).get();
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(plant.getCode(),

@@ -57,7 +57,7 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     if (rawMaterial.getId() == null) {
       rawMaterialObj = rawMaterialRepository.save(rawMaterial);
       if (rawMaterialObj != null) {
-        emailNotification.sendRawmaterialCreationEmail(rawMaterial);
+        emailNotification.sendRawmaterialCreationEmail(rawMaterialObj);
       }
     } else {
       rawMaterialObj = rawMaterialRepository.save(rawMaterial);
