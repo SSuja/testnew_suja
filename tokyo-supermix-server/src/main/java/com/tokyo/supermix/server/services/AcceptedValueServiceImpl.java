@@ -240,4 +240,16 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
         .findByTestConfigureIdOrderByUpdatedAtDesc(pageable, testConfigureId).toList()));
     return acceptedValueMainDto;
   }
+
+  @Transactional(readOnly = true)
+  public boolean isUpdatedTestParameterAndTestConfigure(Long id, Long testParameterId,
+      Long testConfiguraeId) {
+    if (!((getAcceptedValueById(id).getTestParameter().getId().equals(testParameterId))
+        && (getAcceptedValueById(id).getTestConfigure().getId().equals(testConfiguraeId)))
+        && acceptedValueRepository.existsByTestConfigureIdAndTestParameterId(testConfiguraeId,
+            testParameterId)) {
+      return true;
+    }
+    return false;
+  }
 }

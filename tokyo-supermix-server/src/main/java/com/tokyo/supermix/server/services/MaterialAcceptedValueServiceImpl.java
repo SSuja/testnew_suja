@@ -449,4 +449,31 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     }
     return false;
   }
+
+  public boolean isUpdatedTestParameterAndRawMaterialAndTestConfigure(Long id, Long testParameterId,
+      Long testConfigureId, Long rawMaterialId) {
+    if (!((getMaterialAcceptedValueById(id).getTestParameter().getId().equals(testParameterId))
+        && (getMaterialAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (getMaterialAcceptedValueById(id).getRawMaterial().getId().equals(rawMaterialId)))
+        && materialAcceptedValueRepository
+            .existsByTestConfigureIdAndRawMaterialIdAndTestParameterId(testConfigureId,
+                rawMaterialId, testParameterId)) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean isUpdatedTestParameterAndMaterialSubCategoryAndTestConfigure(Long id,
+      Long testParameterId, Long testConfigureId, Long materialSubCategoryId) {
+    if (!((getMaterialAcceptedValueById(id).getTestParameter().getId().equals(testParameterId))
+        && (getMaterialAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (getMaterialAcceptedValueById(id).getMaterialSubCategory().getId()
+            .equals(materialSubCategoryId)))
+        && materialAcceptedValueRepository
+            .existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(testConfigureId,
+                materialSubCategoryId, testParameterId)) {
+      return true;
+    }
+    return false;
+  }
 }
