@@ -210,7 +210,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
                 && (materialAcceptedValue.getMaxValue() == null
                     || materialAcceptedValue.getMinValue() == null))) {
           return true;
-
         } else if (((materialAcceptedValue.getConditionRange() == null))
             || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
             || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
@@ -220,8 +219,6 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
           }
         }
       }
-      return false;
-
     }
     return false;
   }
@@ -492,6 +489,33 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       if (materialAcceptedValue.getValue() == null) {
         return true;
       }
+    }
+    return false;
+  }
+
+  public boolean isUpdatedTestParameterAndRawMaterialAndTestConfigure(Long id, Long testParameterId,
+      Long testConfigureId, Long rawMaterialId) {
+    if (!((getMaterialAcceptedValueById(id).getTestParameter().getId().equals(testParameterId))
+        && (getMaterialAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (getMaterialAcceptedValueById(id).getRawMaterial().getId().equals(rawMaterialId)))
+        && materialAcceptedValueRepository
+            .existsByTestConfigureIdAndRawMaterialIdAndTestParameterId(testConfigureId,
+                rawMaterialId, testParameterId)) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean isUpdatedTestParameterAndMaterialSubCategoryAndTestConfigure(Long id,
+      Long testParameterId, Long testConfigureId, Long materialSubCategoryId) {
+    if (!((getMaterialAcceptedValueById(id).getTestParameter().getId().equals(testParameterId))
+        && (getMaterialAcceptedValueById(id).getTestConfigure().getId().equals(testConfigureId))
+        && (getMaterialAcceptedValueById(id).getMaterialSubCategory().getId()
+            .equals(materialSubCategoryId)))
+        && materialAcceptedValueRepository
+            .existsByTestConfigureIdAndMaterialSubCategoryIdAndTestParameterId(testConfigureId,
+                materialSubCategoryId, testParameterId)) {
+      return true;
     }
     return false;
   }

@@ -74,4 +74,10 @@ public interface MaterialAcceptedValueService {
       Long materialSubCategoryId, Long testParameterId);
 
   public boolean isCheckValidations(MaterialAcceptedValue materialAcceptedValue);
+
+  public boolean isUpdatedTestParameterAndRawMaterialAndTestConfigure(Long id, Long testParameterId,
+      Long testConfigureId, Long rawMaterialId);
+
+  public boolean isUpdatedTestParameterAndMaterialSubCategoryAndTestConfigure(Long id,
+      Long testParameterId, Long testConfigureId, Long materialSubCategoryId);
 }

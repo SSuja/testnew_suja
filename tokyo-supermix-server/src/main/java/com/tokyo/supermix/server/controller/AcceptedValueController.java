@@ -141,6 +141,14 @@ public class AcceptedValueController {
                 validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
             HttpStatus.BAD_REQUEST);
       }
+      if (acceptedValueService.isUpdatedTestParameterAndTestConfigure(
+          acceptedValueRequestDto.getId(), acceptedValueRequestDto.getTestParameterId(),
+          acceptedValueRequestDto.getTestConfigureId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
+                validationFailureStatusCodes.getAcceptedValueAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       if (acceptedValueService
           .isCheckValidation(mapper.map(acceptedValueRequestDto, AcceptedValue.class))) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.ACCEPTED_VALUE,
