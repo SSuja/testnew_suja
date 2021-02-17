@@ -207,17 +207,53 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   @Transactional(readOnly = true)
   public boolean isCheckValidation(List<MaterialAcceptedValue> materialAcceptedValueList) {
     for (MaterialAcceptedValue materialAcceptedValue : materialAcceptedValueList) {
-      if (materialAcceptedValue.getMaterialParamType().equals(MaterialParamType.ACCEPTED_VALUE)) {
-        if ((materialAcceptedValue.getConditionRange() == null)
-            || (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)
-                && (materialAcceptedValue.getMaxValue() == null
-                    || materialAcceptedValue.getMinValue() == null))) {
+      if (materialAcceptedValue.getMaterialParamType() == null) {
+        return true;
+      } else if (materialAcceptedValue.getMaterialParamType()
+          .equals(MaterialParamType.ACCEPTED_VALUE)) {
+        if (materialAcceptedValue.getConditionRange() == null) {
           return true;
-        } else if (((materialAcceptedValue.getConditionRange() == null))
-            || materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+        } else if ((materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)
+            && (materialAcceptedValue.getMaxValue() == null
+                || materialAcceptedValue.getMinValue() == null))) {
+          return true;
+        } else if (materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
             || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
             || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL)) {
           if (materialAcceptedValue.getValue() == null) {
+            return true;
+          }
+        }
+      } else if (materialAcceptedValue.getMaterialParamType()
+          .equals(MaterialParamType.QUALITY_VALUE)) {
+        if (materialAcceptedValue.getCategoryAcceptedType().equals(CategoryAcceptedType.MATERIAL)
+            && (materialQualityParameterRepository
+                .existsByRawMaterialId(materialAcceptedValue.getRawMaterial().getId()))
+            && materialAcceptedValue.getMaterialQualityParameter() == null
+            || (materialAcceptedValue.getCategoryAcceptedType()
+                .equals(CategoryAcceptedType.SUB_CATEGORY)
+                && (materialQualityParameterRepository.existsByMaterialSubCategoryId(
+                    materialAcceptedValue.getMaterialSubCategory().getId()))
+                && materialAcceptedValue.getMaterialQualityParameter() == null)) {
+          return true;
+        } else if (materialAcceptedValue.getCategoryAcceptedType()
+            .equals(CategoryAcceptedType.MATERIAL)
+            && (!materialQualityParameterRepository
+                .existsByRawMaterialId(materialAcceptedValue.getRawMaterial().getId()))
+            || materialAcceptedValue.getCategoryAcceptedType()
+                .equals(CategoryAcceptedType.SUB_CATEGORY)
+                && (!materialQualityParameterRepository.existsByMaterialSubCategoryId(
+                    materialAcceptedValue.getMaterialSubCategory().getId()))) {
+          if (materialAcceptedValue.getConditionRange() == null) {
+            return true;
+          } else if ((materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)
+              && (materialAcceptedValue.getMaxValue() == null
+                  || materialAcceptedValue.getMinValue() == null))) {
+            return true;
+          } else if ((materialAcceptedValue.getConditionRange().equals(Condition.GREATER_THAN)
+              || materialAcceptedValue.getConditionRange().equals(Condition.LESS_THAN)
+              || materialAcceptedValue.getConditionRange().equals(Condition.EQUAL))
+              && materialAcceptedValue.getValue() == null) {
             return true;
           }
         }
