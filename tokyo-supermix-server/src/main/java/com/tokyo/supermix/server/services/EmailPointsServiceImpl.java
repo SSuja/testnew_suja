@@ -190,6 +190,14 @@ public class EmailPointsServiceImpl implements EmailPointsService {
 
   @Transactional
   public void updateEmailPoints(TestConfigure testConfigure) {
+    if (testConfigure.getDueDay() == null || testConfigure.getDueDay().isEmpty()) {
+      EmailPoints emailpointsc =
+          emailPointsRepository.findByTestConfigureIdAndSchedule(testConfigure.getId(), true);
+      if (emailpointsc != null) {
+        emailPointsRepository.deleteById(emailpointsc.getId());
+      }
+    }
+
     EmailPoints emailpoint =
         emailPointsRepository.findByTestConfigureIdAndSchedule(testConfigure.getId(), false);
 

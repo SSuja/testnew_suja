@@ -266,11 +266,9 @@ public class TestConfigureServiceImpl implements TestConfigureService {
     TestConfigure testConfigureObj = testConfigureRepository.save(testConfigure);
     if (testConfigureObj != null) {
       emailPointsService.updateEmailPoints(testConfigureObj);
-      if (!(testConfigureObj.getDueDay() == null)) {
+      if (!(testConfigureObj.getDueDay() == null || testConfigureObj.getDueDay().isEmpty())) {
         emailPointsService.updateScheduleEmailPoints(testConfigureObj);
-
       }
-
     }
     return testConfigure.getId();
   }
