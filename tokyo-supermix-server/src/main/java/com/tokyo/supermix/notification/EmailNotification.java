@@ -984,8 +984,8 @@ public class EmailNotification {
 
   private void sendfinishProductSampleEmail(TestConfigure testconfigure, long noOfDays,
       FinishProductSample finishProductSample) {
-    EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-        testconfigure.getMaterialSubCategory().getId(), testconfigure.getTest().getId(), true);
+    EmailPoints emailPoints =
+        emailPointsRepository.findByTestConfigureIdAndSchedule(testconfigure.getId(),true);
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         finishProductSample.getMixDesign().getPlant().getCode(), emailPoints.getName());
 
@@ -1033,8 +1033,8 @@ public class EmailNotification {
 
   private void sendMixDesignTestEmail(TestConfigure testConfigure, long noOfDays,
       IncomingSample incomingSample) {
-    EmailPoints emailPoints = emailPointsRepository.findByMaterialCategoryIdAndTestIdAndSchedule(
-        testConfigure.getMaterialCategory().getId(), testConfigure.getTest().getId(), true);
+    EmailPoints emailPoints =
+        emailPointsRepository.findByTestConfigureIdAndSchedule(testConfigure.getId(),true);
     EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
         incomingSample.getPlant().getCode(), emailPoints.getName());
 
