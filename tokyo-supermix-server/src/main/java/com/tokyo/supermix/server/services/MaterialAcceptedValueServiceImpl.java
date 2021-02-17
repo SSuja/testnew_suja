@@ -419,8 +419,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
     acceptedValueMainDto.setTestConfigureResDto(
         testConfigureService.getTestConfigureForAcceptedValue(testConfigId));
     if (testParamName != null && !testParamName.isEmpty()) {
-      booleanBuilder.and(
-          QMaterialAcceptedValue.materialAcceptedValue.testParameter.name.contains(testParamName));
+      booleanBuilder.and(QMaterialAcceptedValue.materialAcceptedValue.testParameter.parameter.name
+          .contains(testParamName));
     }
     if (testConfigId != null) {
       booleanBuilder
