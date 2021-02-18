@@ -26,6 +26,7 @@ import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 import com.tokyo.supermix.data.repositories.ParameterRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
@@ -54,6 +55,8 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
   private TestParameterRepository testParameterRepository;
   @Autowired
   private ParameterRepository parameterRepository;
+  @Autowired
+  private MultiResultFormulaRepository multiResultFormulaRepository;
 
   @Transactional
   public List<MaterialAcceptedValue> saveAcceptedValue(
@@ -557,5 +560,13 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       return true;
     }
     return false;
+  }
+
+  @Transactional
+  public void deleteByTestConfigure(Long testConfigureId) {
+    if (multiResultFormulaRepository.existsByTestConfigureId(testConfigureId)) {
+      multiResultFormulaRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    materialAcceptedValueRepository.deleteByTestConfigureId(testConfigureId);
   }
 }
