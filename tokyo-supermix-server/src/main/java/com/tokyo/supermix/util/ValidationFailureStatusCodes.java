@@ -1834,8 +1834,20 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.ratioConfig.ratiParaNotExists}")
   private String ratioConfigRatioParaNotExists;
+
   @Value("${validation.ratioConfig.deleteValidate}")
   private String ratioConfigRatioParaDeleteValidate;
+
+  @Value("${validation.ratioConfig.alreadyDepended}")
+  private String ratioConfigAlreadyDepended;
+
+  public String getRatioConfigAlreadyDepended() {
+    return ratioConfigAlreadyDepended;
+  }
+
+  public void setRatioConfigAlreadyDepended(String ratioConfigAlreadyDepended) {
+    this.ratioConfigAlreadyDepended = ratioConfigAlreadyDepended;
+  }
 
   public String getRatioConfigRatioParaDeleteValidate() {
     return ratioConfigRatioParaDeleteValidate;

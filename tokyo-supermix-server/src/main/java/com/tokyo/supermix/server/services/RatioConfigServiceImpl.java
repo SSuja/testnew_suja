@@ -11,6 +11,7 @@ import com.tokyo.supermix.data.dto.RatioConfigParameterResponseDto;
 import com.tokyo.supermix.data.dto.RatioConfigResponseDto;
 import com.tokyo.supermix.data.entities.RatioConfig;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.MixDesignRatioConfigRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigEquationRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigRepository;
@@ -25,7 +26,9 @@ public class RatioConfigServiceImpl implements RatioConfigService {
   @Autowired
   private RatioConfigParameterRepository ratioConfigParameterRepository;
   @Autowired
-  private RatioConfigEquationRepository RatioConfigEquationRepository;
+  private RatioConfigEquationRepository ratioConfigEquationRepository;
+  @Autowired
+  private MixDesignRatioConfigRepository mixDesignRatioConfigRepository;
 
   @Transactional
   public RatioConfig saveRatioConfig(RatioConfig ratioConfig) {
@@ -76,8 +79,29 @@ public class RatioConfigServiceImpl implements RatioConfigService {
         mapper.map(ratioConfigParameterRepository.findByRatioConfigId(mixDesignConfigId),
             RatioConfigParameterResponseDto.class));
     mixDesignTestConfigDetailsDto.setRatioConfigEquationResponseDto(
-        mapper.map(RatioConfigEquationRepository.findByRatioConfigId(mixDesignConfigId),
+        mapper.map(ratioConfigEquationRepository.findByRatioConfigId(mixDesignConfigId),
             RatioConfigEquationResponseDto.class));
     return mixDesignTestConfigDetailsDto;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean checkRatioConfigDepend(Long ratioConfigId) {
+    if (mixDesignRatioConfigRepository.existsByRatioConfigId(ratioConfigId)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional
+  public void deleteRatioConfigReset(Long ratioConfigId) {
+    if (ratioConfigParameterRepository.existsByRatioConfigId(ratioConfigId)) {
+      ratioConfigParameterRepository.deleteByRatioConfigId(ratioConfigId);
+    }
+    if (ratioConfigEquationRepository.existsByRatioConfigId(ratioConfigId)) {
+      ratioConfigEquationRepository.deleteByRatioConfigId(ratioConfigId);
+    }
+    if (ratioConfigRepository.existsById(ratioConfigId)) {
+      ratioConfigRepository.deleteById(ratioConfigId);
+    }
   }
 }

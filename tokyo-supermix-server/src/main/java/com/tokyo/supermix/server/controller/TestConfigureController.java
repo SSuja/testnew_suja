@@ -32,7 +32,6 @@ import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
-import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationConstance;
@@ -51,8 +50,6 @@ public class TestConfigureController {
   private Mapper mapper;
   @Autowired
   CoreTestConfigureService coreTestConfigureService;
-  @Autowired
-  private MaterialTestService materialTestService;
 
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 

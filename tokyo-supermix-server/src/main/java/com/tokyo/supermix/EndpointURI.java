@@ -876,6 +876,8 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
   public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
       RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
+  public static final String RATIO_CONFIG_RESET = BASE_API_PATH + "ratio-config-reset";
+  public static final String RATIO_CONFIG_RESET_BY_ID = RATIO_CONFIG_RESET + ID;
 
   /*
    * ratioConfigParameter API
