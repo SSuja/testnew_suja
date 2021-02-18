@@ -55,5 +55,7 @@ public interface TestParameterService {
 
   public boolean checkAbbreviation(List<TestParameterRequestDto> testParameterRequestDtos);
 
-  public boolean isValueNull(Double value,LocalDateTime dateValue,Long id);
+  public boolean isValueNull(Double value, LocalDateTime dateValue, Long id);
+
+  public boolean checkDependForTestParameter(Long testParameterId);
 }
