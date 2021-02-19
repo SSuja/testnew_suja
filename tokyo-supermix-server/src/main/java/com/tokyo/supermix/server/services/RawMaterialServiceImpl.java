@@ -513,4 +513,46 @@ public class RawMaterialServiceImpl implements RawMaterialService {
         parameterRepository.findById(materialQualityParameterRequestDto.getParameterId()).get());
     materialQualityParameterRepository.save(materialQualityParameter);
   }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> searchRawMaterialByMainType(BooleanBuilder booleanBuilder, String name,
+      String materialSubCategoryName, String plantCode, String mainCategoryName) {
+    if (plantCode != null && !plantCode.isEmpty()
+        && (plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.mainType
+          .eq(MainType.RAW_MATERIAL));
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+
+    } else {
+      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.mainType
+          .eq(MainType.RAW_MATERIAL));
+      booleanBuilder.or(QRawMaterial.rawMaterial.plant.code.eq(plantCode));
+      booleanBuilder.or(QRawMaterial.rawMaterial.subBusinessUnit.id
+          .eq(plantRepository.findById(plantCode).get().getSubBusinessUnit().getId()));
+      booleanBuilder.or(QRawMaterial.rawMaterial.materialType.eq(MaterialType.COMMON));
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+
+    }
+    return (List<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder);
+  }
 }

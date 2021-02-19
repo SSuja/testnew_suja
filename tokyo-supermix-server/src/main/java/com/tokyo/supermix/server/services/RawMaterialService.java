@@ -119,4 +119,6 @@ public interface RawMaterialService {
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
       Long rawMaterialId);
 
+  public List<RawMaterial> searchRawMaterialByMainType(BooleanBuilder booleanBuilder, String name,
+      String materialSubCategoryName, String plantCode, String mainCategoryName);
 }

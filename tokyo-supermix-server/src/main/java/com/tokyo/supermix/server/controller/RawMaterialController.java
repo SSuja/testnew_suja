@@ -444,6 +444,22 @@ public class RawMaterialController {
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 
+  @GetMapping(value = EndpointURI.SEARCH_RAW_MATERIAL_MAINTYPE)
+  public ResponseEntity<Object> getRawMaterialSearchByMainType(@PathVariable String plantCode,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "materialSubCategoryName",
+          required = false) String materialSubCategoryName,
+      @RequestParam(name = "mainCategoryName", required = false) String mainCategoryName) {
+
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(
+            rawMaterialService.searchRawMaterialByMainType(booleanBuilder, name,
+                materialSubCategoryName, plantCode, mainCategoryName),
+            RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
+  }
+
   @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_PLANT)
   public ResponseEntity<Object> getNameSearch(@PathVariable String plantCode,
       @RequestParam(name = "name") String name) {
