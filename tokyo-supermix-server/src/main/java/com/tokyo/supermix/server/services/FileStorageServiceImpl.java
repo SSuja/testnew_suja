@@ -46,6 +46,7 @@ import com.tokyo.supermix.data.entities.RawMaterial;
 import com.tokyo.supermix.data.entities.Supplier;
 import com.tokyo.supermix.data.entities.SupplierCategory;
 import com.tokyo.supermix.data.entities.Unit;
+import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.repositories.CustomerRepository;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
@@ -556,11 +557,12 @@ public class FileStorageServiceImpl implements FileStorageService {
           if (row[6].isEmpty()) {
             finishProductSample.setProject(null);
           } else {
-            Project project = projectRepository.findByName(row[6]);
+            Project project = projectRepository.findByCode(row[6]);
             finishProductSample.setProject(project);
           }
           finishProductSample.setTruckNo(row[7]);
           finishProductSample.setStatus(Status.NEW);
+          finishProductSample.setFinishProductSampleType(FinishProductSampleType.DELIVERY_SAMPLE);
           count++;
           finishProductSampleRepository.save(finishProductSample);
         } else {

@@ -16,30 +16,32 @@ import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.config.export.EnrollWriter;
 import com.tokyo.supermix.config.export.MixDesignFillManager;
 import com.tokyo.supermix.config.export.MixDesignLayouter;
-import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
+import com.tokyo.supermix.security.CurrentUser;
+import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.FileStorageService;
+import com.tokyo.supermix.server.services.MixDesignProportionService;
 import com.tokyo.supermix.util.FileStorageConstants;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class MixDesignFileStorageController {
   @Autowired
-  private MixDesignProportionRepository mixDesignProportionRepository;
-  @Autowired
   private FileStorageService fileStorageService;
+  @Autowired
+  private MixDesignProportionService mixDesignProportionService;
 
   @GetMapping(value = EndpointURI.EXPORT_MIXDESIGN)
-  public ResponseEntity<Object> downloadXLSProfile(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> downloadXLSProfile(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.MIXDESIGN_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     MixDesignLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     MixDesignFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        mixDesignProportionRepository.getMixDesign());
+        mixDesignProportionService.getAllMixDesignProportionsByPlant(currentUser));
     String fileName = FileStorageConstants.MIXDESIGN_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");

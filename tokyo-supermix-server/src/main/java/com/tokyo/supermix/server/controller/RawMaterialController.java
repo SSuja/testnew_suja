@@ -142,8 +142,8 @@ public class RawMaterialController {
         rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialId,
         rawMaterialRequestDto.getMaterialSubCategoryId());
-    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
-        rawMaterialId, RestApiResponseStatus.OK),
+    return new ResponseEntity<>(
+        new ContentResponse<>(Constants.RAW_MATERIAL, rawMaterialId, RestApiResponseStatus.OK),
         HttpStatus.OK);
   }
 
@@ -288,8 +288,8 @@ public class RawMaterialController {
       }
       RawMaterial rawMaterial =
           rawMaterialService.getRawMaterialById(rawMaterialRequestDto.getId());
-      if (!rawMaterial.getPrefix().equalsIgnoreCase(rawMaterialRequestDto.getPrefix())||
-          !rawMaterial.getName().equalsIgnoreCase(rawMaterialRequestDto.getName())) {
+      if (!rawMaterial.getPrefix().equalsIgnoreCase(rawMaterialRequestDto.getPrefix())
+          || !rawMaterial.getName().equalsIgnoreCase(rawMaterialRequestDto.getName())) {
         if (incomingSampleService.isRawMaterialExist(rawMaterialRequestDto.getId())
             || mixDesignService.isRawMaterialExists(rawMaterialRequestDto.getId())) {
           return new ResponseEntity<>(
@@ -454,15 +454,20 @@ public class RawMaterialController {
   }
 
   @GetMapping(value = EndpointURI.EXPORT_RAW_MATERIAL)
-  public ResponseEntity<Object> exportRawMaterial(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> exportRawMaterial(HttpServletResponse response,
+      @PathVariable String plantCode, Long sbuId) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.RAW_MATERIAL_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     RawMaterialLayouter.buildReport(worksheet, startRowIndex, startColIndex);
-    RawMaterialFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        rawMaterialService.getAllActiveRawMaterials());
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      RawMaterialFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+          rawMaterialService.getAllActiveRawMaterials());
+    } else {
+      RawMaterialFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+          rawMaterialService.getAllMaterials(plantCode, MaterialType.COMMON, sbuId));
+    }
     String fileName = FileStorageConstants.RAW_MATERIAL_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");

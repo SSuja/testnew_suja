@@ -466,4 +466,10 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     }
   }
 
+  @Transactional(readOnly = true)
+  public List<RawMaterial> getAllMaterials(String plantCode, MaterialType materialType,
+      Long sbuId) {
+    return rawMaterialRepository.findByPlantCodeOrMaterialTypeOrPlantSubBusinessUnitId(plantCode,
+        MaterialType.COMMON, sbuId);
+  }
 }

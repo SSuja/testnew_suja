@@ -54,15 +54,14 @@ public class ProjectServiceImpl implements ProjectService {
       } else {
         project.setCode(codePrefix + String.format("%03d", maxNumberFromCode(projectList) + 1));
       }
-      Project projectObj = 
-          projectRepository.save(project);
+      Project projectObj = projectRepository.save(project);
       if (projectObj != null) {
         emailNotification.sendProjectEmail(projectObj);
       }
-    }else {
-     projectRepository.save(project);
+    } else {
+      projectRepository.save(project);
     }
-     }
+  }
 
   private Integer getNumberFromCode(String code) {
     String numberOnly = code.replaceAll("[^0-9]", "");

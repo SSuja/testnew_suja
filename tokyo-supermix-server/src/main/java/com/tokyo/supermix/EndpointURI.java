@@ -620,8 +620,8 @@ public final class EndpointURI {
   /*
    * File Export
    */
-  public static final String EXPORT_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "download";
-  public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + SLASH + "CSV" + SLASH + "upload";
+  public static final String EXPORT_MIXDESIGN = BASE_API_PATH + "CSV" + SLASH + "download";
+  public static final String UPLOAD_MIXDESIGN = BASE_API_PATH + "CSV" + SLASH + "upload";
   public static final String MAIL_REPORT = BASE_API_PATH + "mail-report";
 
   /*
@@ -782,29 +782,22 @@ public final class EndpointURI {
   /*
    * Export & Import
    */
-  public static final String EXPORT_CUSTOMER =
-      BASE_API_PATH + SLASH + "customer" + SLASH + "download";
-  public static final String IMPORT_CUSTOMER =
-      BASE_API_PATH + SLASH + "customer" + SLASH + "upload";
-  public static final String EXPORT_SUPPLIER =
-      BASE_API_PATH + SLASH + "supplier" + SLASH + "download";
-  public static final String IMPORT_SUPPLIER =
-      BASE_API_PATH + SLASH + "supplier" + SLASH + "upload";
-  public static final String EXPORT_EMPLOYEE =
-      BASE_API_PATH + SLASH + "employee" + SLASH + "download";
-  public static final String IMPORT_EMPLOYEE =
-      BASE_API_PATH + SLASH + "employee" + SLASH + "upload";
-  public static final String EXPORT_PROJECT =
-      BASE_API_PATH + SLASH + "project" + SLASH + "download";
-  public static final String IMPORT_PROJECT = BASE_API_PATH + SLASH + "project" + SLASH + "upload";
+  public static final String EXPORT_CUSTOMER = BASE_API_PATH + "customer" + SLASH + "download";
+  public static final String IMPORT_CUSTOMER = BASE_API_PATH + "customer" + SLASH + "upload";
+  public static final String EXPORT_SUPPLIER = BASE_API_PATH + "supplier" + SLASH + "download";
+  public static final String IMPORT_SUPPLIER = BASE_API_PATH + "supplier" + SLASH + "upload";
+  public static final String EXPORT_EMPLOYEE = BASE_API_PATH + "employee" + SLASH + "download";
+  public static final String IMPORT_EMPLOYEE = BASE_API_PATH + "employee" + SLASH + "upload";
+  public static final String EXPORT_PROJECT = BASE_API_PATH + "project" + SLASH + "download";
+  public static final String IMPORT_PROJECT = BASE_API_PATH + "project" + SLASH + "upload";
   public static final String EXPORT_PLANT_EQUIPMENT =
       PLANT_EQUIPMENT + SLASH + "CSV" + SLASH + "download";
   public static final String UPLOAD_PLANT_EQUIPMENT =
       PLANT_EQUIPMENT + SLASH + "CSV" + SLASH + "upload";
   public static final String EXPORT_RAW_MATERIAL =
-      BASE_API_PATH + SLASH + "raw-material" + SLASH + "download";
+      BASE_API_PATH + "raw-material" + SLASH + "download" + SLASH + "{plantCode}";
   public static final String IMPORT_RAW_MATERIAL =
-      BASE_API_PATH + SLASH + "raw-material" + SLASH + "upload";
+      BASE_API_PATH + "raw-material" + SLASH + "upload";
 
   /*
    * CoreTestConfigure

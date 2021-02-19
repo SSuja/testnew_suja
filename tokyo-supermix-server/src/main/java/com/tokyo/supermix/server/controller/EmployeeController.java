@@ -238,15 +238,15 @@ public class EmployeeController {
   }
 
   @GetMapping(value = EndpointURI.EXPORT_EMPLOYEE)
-  public ResponseEntity<Object> exportEmployee(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> exportEmployee(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.EMPLOYEE_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     EmployeeLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     EmployeeFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        employeeService.getAllEmployees());
+        employeeService.getAllEmployeesByPlant(currentUser, null));
     String fileName = FileStorageConstants.EMPLOYEE_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");
