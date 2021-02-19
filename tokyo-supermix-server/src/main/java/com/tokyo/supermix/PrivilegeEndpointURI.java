@@ -40,9 +40,9 @@ public final class PrivilegeEndpointURI {
       USER + SLASH + "{userId}" + SLASH + "status" + SLASH + "{status}";
   public static final String UPDATE_USER_ROLE = USER + SLASH + "role";
   public static final String USER_BY_PLANT = USER + PLANT_WISE;
-  public static final String USER_BY_PLANT_BY_USERTYPE = USER + "/plant"+SLASH+"{userType}";
-  public static final String USER_BY_USERTYPE = USER +SLASH+"user-type"+SLASH+"{userType}";
-  public static final String USER_SEARCH = USER + SEARCH+ SLASH + "{plantCode}";
+  public static final String USER_BY_PLANT_BY_USERTYPE = USER + "/plant" + SLASH + "{userType}";
+  public static final String USER_BY_USERTYPE = USER + SLASH + "user-type" + SLASH + "{userType}";
+  public static final String USER_SEARCH = USER + SEARCH + SLASH + "{plantCode}";
   /*
    * User Role
    */
@@ -53,10 +53,12 @@ public final class PrivilegeEndpointURI {
    * User Plant Role
    */
   public static final String USER_PLANT_ROLE = BASE_API_PATH + "user-plant-role";
-  public static final String USER_PLANT_ROLE_BY_USER = USER_PLANT_ROLE + SLASH + "user" + SLASH + "{userId}";
-  public static final String USER_PLANT_ROLE_BY_ROLE = USER_PLANT_ROLE + SLASH + "plant-role" + SLASH + "{plantRoleId}";
-  public static final String USER_PLANT_ROLE_BY_ROLE_BY_USERTYPE = USER_PLANT_ROLE + SLASH + "plant-role" + SLASH +
-      "{plantRoleId}"+SLASH+"user-type"+SLASH+"{userType}";
+  public static final String USER_PLANT_ROLE_BY_USER =
+      USER_PLANT_ROLE + SLASH + "user" + SLASH + "{userId}";
+  public static final String USER_PLANT_ROLE_BY_ROLE =
+      USER_PLANT_ROLE + SLASH + "plant-role" + SLASH + "{plantRoleId}";
+  public static final String USER_PLANT_ROLE_BY_ROLE_BY_USERTYPE = USER_PLANT_ROLE + SLASH
+      + "plant-role" + SLASH + "{plantRoleId}" + SLASH + "user-type" + SLASH + "{userType}";
   /*
    * Permission
    */
@@ -94,7 +96,8 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_PERMISSION_BY_ID = PLANT_PERMISSION + ID;
   public static final String PLANT_PERMISSION_BY_PERMISSION_NAME =
       PLANT_PERMISSION + SLASH + "{permissionName}";
-  public static final String PLANT_PERMISSION_BY_PLANT_CODE = PLANT_PERMISSION + SLASH +"plant"+ SLASH+ "{plantCode}";
+  public static final String PLANT_PERMISSION_BY_PLANT_CODE =
+      PLANT_PERMISSION + SLASH + "plant" + SLASH + "{plantCode}";
 
   /*
    * plant Role
@@ -104,6 +107,9 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLE_BY_ROLE_NAME =
       PLANT_ROLE + SLASH + "role-name" + SLASH + "{roleName}";
   public static final String PLANT_ROLES_BY_PLANT_CODE = PLANT_ROLE + SLASH + "{plantCode}";
+  public static final String PLANT_ROLES_BY_PLANT_WISE =
+      PLANT_ROLE + SLASH + "plant-wise/{plantCode}";
+  public static final String SEARCH_PLANT_ROLE = PLANT_ROLE + SLASH + "search" + "/{plantCode}";
   /*
    * plant Role Plant Permission
    */
@@ -115,9 +121,11 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLE_PERMISSION_MODULE_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "module" + SLASH + "status" + SLASH + "{plantRoleId}";
   public static final String PLANT_ROLE_PERMISSION_MODULE_STATUS_USER_ID =
-      PLANT_ROLE_PLANT_PERMISSION + SLASH + "module" + SLASH + "status" + SLASH + "{userId}"+ SLASH + "{plantCode}";
+      PLANT_ROLE_PLANT_PERMISSION + SLASH + "module" + SLASH + "status" + SLASH + "{userId}" + SLASH
+          + "{plantCode}";
   public static final String PLANT_ROLE_PLANT_PERMISSIONS_BY_PLANT_ROLE_ID_AND_STATUS =
-      BASE_API_PATH + "plant-role-plant-permission"+ SLASH + "{plantRoleId}" + SLASH +"update"+ SLASH +"{status}";
+      BASE_API_PATH + "plant-role-plant-permission" + SLASH + "{plantRoleId}" + SLASH + "update"
+          + SLASH + "{status}";
 
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
@@ -128,7 +136,7 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_SUBMODULE_ID_AND_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "subModuleId" + SLASH
           + "{subModuleId}" + SLASH + "status" + SLASH + "{status}";
-  
+
   public static final String PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_PERMISSION_NAME_AND_STATUS =
       PLANT_ROLE_PLANT_PERMISSION + SLASH + "{plantRoleId}" + SLASH + "permissionName" + SLASH
           + "{permissionName}" + SLASH + "status" + SLASH + "{status}";
@@ -143,19 +151,17 @@ public final class PrivilegeEndpointURI {
    * plant access level
    */
   public static final String PLANT_ACCESS_LEVEL = BASE_API_PATH + "plant-access-level";
-  public static final String PLANT_ROLE_BY_PLANT_CODE_AND_STATUS =
-      PLANT_ACCESS_LEVEL + SLASH + "plantCode" + SLASH
-          + "{plantCode}" + SLASH + "status" + SLASH + "{status}";
-  
+  public static final String PLANT_ROLE_BY_PLANT_CODE_AND_STATUS = PLANT_ACCESS_LEVEL + SLASH
+      + "plantCode" + SLASH + "{plantCode}" + SLASH + "status" + SLASH + "{status}";
+
   /*
-   * user  Plant Permission
+   * user Plant Permission
    */
-  public static final String USER_PLANT_PERMISSION =
-      BASE_API_PATH + "user-plant-permission";
+  public static final String USER_PLANT_PERMISSION = BASE_API_PATH + "user-plant-permission";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID =
       USER_PLANT_PERMISSION + SLASH + "{userId}";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
-      USER_PLANT_PERMISSION + SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
+      USER_PLANT_PERMISSION + SLASH + "{userId}" + SLASH + "{plantCode}" + SLASH + "{status}";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID_FOR_GET_PLANTS =
-	      USER_PLANT_PERMISSION + SLASH +"plants" +SLASH+"{userId}";
+      USER_PLANT_PERMISSION + SLASH + "plants" + SLASH + "{userId}";
 }
