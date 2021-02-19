@@ -443,8 +443,8 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
         coreTestConfigure.setMaterialSubCategory(materialSubCategory);
         coreTestConfigure.setTestConfigure(testConfigure);
         if (testConfigure.getAcceptedType() != null
-            && (testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)||
-                testConfigure.getAcceptedType().equals(AcceptedType.TEST))) {
+            && (testConfigure.getAcceptedType().equals(AcceptedType.SUB_CATEGORY)
+                || testConfigure.getAcceptedType().equals(AcceptedType.TEST))) {
           coreTestConfigure.setApplicableTest(true);
         } else {
           coreTestConfigure.setApplicableTest(false);
@@ -472,7 +472,12 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
       Long materialSubCategoryId, boolean applicable) {
     List<CoreTestConfigure> coreTestConfigureList = coreTestConfigureRepository
         .findBytestConfigureIdAndMaterialSubCategoryId(testConfigureId, materialSubCategoryId);
-    coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
+    coreTestConfigureList.forEach(testConfig -> {
+      if (!applicable) {
+        testConfig.setCoreTest(false);
+      }
+      testConfig.setApplicableTest(applicable);
+    });
     coreTestConfigureRepository.saveAll(coreTestConfigureList);
   }
 
@@ -482,6 +487,9 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     try {
       CoreTestConfigure coreTestConfigure = coreTestConfigureRepository
           .findBytestConfigureIdAndRawMaterialId(testConfigureId, rawMaterialId);
+      if (!applicable) {
+        coreTestConfigure.setCoreTest(false);
+      }
       coreTestConfigure.setApplicableTest(applicable);
       coreTestConfigureRepository.save(coreTestConfigure);
     } catch (Exception e) {
@@ -494,7 +502,12 @@ public class CoreTestConfigureServiceImpl implements CoreTestConfigureService {
     try {
       List<CoreTestConfigure> coreTestConfigureList =
           coreTestConfigureRepository.findBytestConfigureId(testConfigureId);
-      coreTestConfigureList.forEach(testConfig -> testConfig.setApplicableTest(applicable));
+      coreTestConfigureList.forEach(testConfig -> {
+        if (!applicable) {
+          testConfig.setCoreTest(false);
+        }
+        testConfig.setApplicableTest(applicable);
+      });
       coreTestConfigureRepository.saveAll(coreTestConfigureList);
     } catch (Exception e) {
       e.printStackTrace();
