@@ -2159,4 +2159,16 @@ public class ValidationFailureStatusCodes {
       String materialQualityParameterAlreadyExists) {
     this.materialQualityParameterAlreadyExists = materialQualityParameterAlreadyExists;
   }
+
+  @Value("${validation.parameter.parameterAlreadyDepended}")
+  private String parameterAlreadyDepended;
+
+  public String getParameterAlreadyDepended() {
+    return parameterAlreadyDepended;
+  }
+
+  public void setParameterAlreadyDepended(String parameterAlreadyDepended) {
+    this.parameterAlreadyDepended = parameterAlreadyDepended;
+  }
+
 }

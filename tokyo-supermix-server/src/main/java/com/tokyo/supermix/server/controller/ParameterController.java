@@ -23,6 +23,7 @@ import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
@@ -42,6 +43,8 @@ public class ParameterController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private TestParameterRepository testParameterRepository;
   private static final Logger logger = Logger.getLogger(ParameterController.class);
 
   @GetMapping(value = EndpointURI.PARAMETERS)
@@ -103,6 +106,13 @@ public class ParameterController {
       if (parameterService.isUpdatedNameExist(parameterDto.getId(), parameterDto.getName())) {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
             validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
+      }
+      Parameter parameter=parameterService.getParameterById(parameterDto.getId());
+      if(testParameterRepository.existsByParameterId(parameterDto.getId())
+          && (!parameter.getParameterDataType().equals(parameterDto.getParameterDataType())
+          ||!parameter.getParameterType().equals(parameterDto.getParameterType()))) {
+        return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER,
+            validationFailureStatusCodes.getParameterAlreadyDepended()), HttpStatus.BAD_REQUEST);  
       }
       parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
       return new ResponseEntity<>(
