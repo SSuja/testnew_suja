@@ -150,8 +150,8 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
       if (materialQualityParameterRequestDto.getConditionRange() == null) {
         return true;
       } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)
-          && materialQualityParameterRequestDto.getMaxValue() == null
-          && materialQualityParameterRequestDto.getMinValue() == null) {
+          && (materialQualityParameterRequestDto.getMaxValue() == null
+              || materialQualityParameterRequestDto.getMinValue() == null)) {
         return true;
       } else if ((materialQualityParameterRequestDto.getConditionRange()
           .equals(Condition.GREATER_THAN)
@@ -221,8 +221,8 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
     if (materialQualityParameterRequestDto.getConditionRange() == null) {
       return true;
     } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)
-        && materialQualityParameterRequestDto.getMaxValue() == null
-        && materialQualityParameterRequestDto.getMinValue() == null) {
+        && (materialQualityParameterRequestDto.getMaxValue() == null
+            || materialQualityParameterRequestDto.getMinValue() == null)) {
       return true;
     } else if ((materialQualityParameterRequestDto.getConditionRange()
         .equals(Condition.GREATER_THAN)
