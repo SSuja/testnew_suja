@@ -12,13 +12,20 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MaterialQualityParameterRequestDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.entities.MaterialCategory;
+import com.tokyo.supermix.data.entities.MaterialQualityParameter;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
 import com.tokyo.supermix.data.entities.QMaterialSubCategory;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.MainType;
+import com.tokyo.supermix.data.enums.QualityParamaterType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.ParameterRepository;
+import com.tokyo.supermix.data.repositories.UnitRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
@@ -27,6 +34,12 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
   private MaterialSubCategoryRepository materialSubCategoryRepository;
   @Autowired
   private Mapper mapper;
+  @Autowired
+  private MaterialQualityParameterRepository materialQualityParameterRepository;
+  @Autowired
+  private ParameterRepository parameterRepository;
+  @Autowired
+  private UnitRepository unitRepository;
 
   @Transactional(readOnly = true)
   public List<MaterialSubCategory> getMaterialSubCategories() {
@@ -150,5 +163,67 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
             .stream().count());
     return mapper.map(materialSubCategoryRepository.findAll(booleanBuilder, pageable).toList(),
         MaterialSubCategoryResponseDto.class);
+  }
+
+  // check validation for condition range - List of MQP
+  @Transactional(readOnly = true)
+  public boolean checkValidationForConditionalRange(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList) {
+    for (MaterialQualityParameterRequestDto materialQualityParameterRequestDto : materialQualityParameterRequestDtoList) {
+      if (materialQualityParameterRequestDto.getParameterId() == null) {
+        return true;
+      } else if (materialQualityParameterRequestDto.getConditionRange() == null) {
+        return true;
+      } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)
+          && (materialQualityParameterRequestDto.getMaxValue() == null
+              || materialQualityParameterRequestDto.getMinValue() == null)) {
+        return true;
+      } else if ((materialQualityParameterRequestDto.getConditionRange()
+          .equals(Condition.GREATER_THAN)
+          || materialQualityParameterRequestDto.getConditionRange().equals(Condition.LESS_THAN)
+          || materialQualityParameterRequestDto.getConditionRange().equals(Condition.EQUAL))
+          && materialQualityParameterRequestDto.getValue() == null) {
+        return true;
+      } else if (materialQualityParameterRequestDto.getUnitId() == null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Transactional
+  public void saveMQPForSubCategory(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
+      Long subCategoryId) {
+    for (MaterialQualityParameterRequestDto materialQualityParameterRequestDto : materialQualityParameterRequestDtoList) {
+      saveToMQParameterFromMAValue(materialQualityParameterRequestDto, subCategoryId);
+    }
+  }
+
+  private void saveToMQParameterFromMAValue(
+      MaterialQualityParameterRequestDto materialQualityParameterRequestDto, Long subCategoryId) {
+    MaterialQualityParameter materialQualityParameter = new MaterialQualityParameter();
+    materialQualityParameter
+        .setMaterialSubCategory(materialSubCategoryRepository.findById(subCategoryId).get());
+    materialQualityParameter.setQualityParamaterType(QualityParamaterType.SUB_CATEGORY);
+    if (materialQualityParameterRequestDto.getConditionRange() != null) {
+      if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)) {
+        materialQualityParameter
+            .setConditionRange(materialQualityParameterRequestDto.getConditionRange());
+        materialQualityParameter.setMaxValue(materialQualityParameterRequestDto.getMaxValue());
+        materialQualityParameter.setMinValue(materialQualityParameterRequestDto.getMinValue());
+      } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.EQUAL)
+          || materialQualityParameterRequestDto.getConditionRange().equals(Condition.GREATER_THAN)
+          || materialQualityParameterRequestDto.getConditionRange().equals(Condition.LESS_THAN)) {
+        materialQualityParameter
+            .setConditionRange(materialQualityParameterRequestDto.getConditionRange());
+        materialQualityParameter.setValue(materialQualityParameterRequestDto.getValue());
+      }
+    }
+    materialQualityParameter
+        .setUnit(unitRepository.findById(materialQualityParameterRequestDto.getUnitId()).get());
+    materialQualityParameter.setParameter(
+        parameterRepository.findById(materialQualityParameterRequestDto.getParameterId()).get());
+    materialQualityParameterRepository.save(materialQualityParameter);
   }
 }

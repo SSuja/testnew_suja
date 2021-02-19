@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.MaterialType;
@@ -21,6 +22,7 @@ public class RawMaterialRequestDto {
   private Long subBusinessUnitId;
   private MaterialType materialType;
   private boolean sentMail;
+  private List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDto;
 
   public Long getId() {
     return id;
@@ -116,5 +118,14 @@ public class RawMaterialRequestDto {
 
   public void setSentMail(boolean sentMail) {
     this.sentMail = sentMail;
+  }
+
+  public List<MaterialQualityParameterRequestDto> getMaterialQualityParameterRequestDto() {
+    return materialQualityParameterRequestDto;
+  }
+
+  public void setMaterialQualityParameterRequestDto(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDto) {
+    this.materialQualityParameterRequestDto = materialQualityParameterRequestDto;
   }
 }
