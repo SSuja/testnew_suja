@@ -12,6 +12,7 @@ import com.tokyo.supermix.data.dto.privilege.SubModulePlantRolePlantPermissionDt
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.UserPlantRole;
 import com.tokyo.supermix.data.entities.privilege.MainModule;
+import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.SubModule;
 import com.tokyo.supermix.data.entities.privilege.UserPlantPermission;
 import com.tokyo.supermix.data.enums.RoleType;
@@ -21,6 +22,7 @@ import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.auth.UserPlantRoleRepository;
 import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.privilege.MainModuleRepository;
+import com.tokyo.supermix.data.repositories.privilege.PlantPermissionRepository;
 import com.tokyo.supermix.data.repositories.privilege.SubModuleRepository;
 import com.tokyo.supermix.data.repositories.privilege.UserPlantPermissionRepository;
 
@@ -40,6 +42,8 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
   private PlantRepository plantRepository;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private  PlantPermissionRepository plantPermissionRepository;
 
   @Transactional(readOnly = true)
   public List<PlantRolePlantPermissionResponseDto> getPlantRolePermissionsByUserId(Long userId) {
@@ -253,6 +257,27 @@ public class UserPlantPermissionServiceImpl implements UserPlantPermissionServic
 		});
 		return plantList;
 	}
+	 @Transactional
+	  public void updateUserPlantPermission(String plantCode, Boolean status, Long userId) {
+	   List<PlantPermission> plantPermissionList =plantPermissionRepository.findByPlantCode(plantCode);
+      User user = userRepository.findUserById(userId);
+       plantPermissionList.parallelStream().forEach(plantPermission -> {
+	     UserPlantPermission userPlantPermission = userPlantPermissionRepository
+	          .findByUserIdAndPlantPermissionId(userId,plantPermission.getId());
+	    if(userPlantPermission!=null) {userPlantPermission.setStatus(status);
+	    userPlantPermissionRepository.save(userPlantPermission);
+	    }
+	    else {
+	      UserPlantPermission userPlantPermission1 = new UserPlantPermission();
+	      userPlantPermission1.setPlantPermission(plantPermission);
+	      userPlantPermission1.setUser(user);
+	      userPlantPermission1.setStatus(status);
+	      userPlantPermissionRepository.save(userPlantPermission1);
+	    }
+	    });
+  
+	  }
+	
 
 }
 
