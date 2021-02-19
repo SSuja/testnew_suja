@@ -7,7 +7,7 @@ public class Constants {
   public static final String SUBJECT_ADMIXTURE_EXPIRY = "Notification : expiry date for Admixture";
   public static final String SUBJECT_INCOMING_SAMPLES_PER_DAY =
       "Notification : Incoming Sample Reminder";
-  public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign ";
+  public static final String SUBJECT_MIX_DESIGN = "Notification : About Mixdesign Creation ";
   public static final String SUBJECT_CALIBRATED = "Notification :  Equipment is Calibrated ";
   public static final String SUBJECT_PENDING_SAMPLES = "Notification : Pending Incoming Sample";
   public static final String SUBJECT_NEW_USER = "Notification : Congratulations!";
@@ -28,7 +28,7 @@ public class Constants {
   public static final String SUBJECT_NEW_INCOMING_SAMPLE =
       "Notification : About Incoming Sample Creation ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE =
-      "Notification : About Finish Product Sample Creation ";
+      "Notification : About Plant-Lab Trial Sample Creation ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
       "Notification : About Delivery Sample Creation ";
   public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment";
@@ -37,10 +37,11 @@ public class Constants {
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Material Creation";
   public static final String SUBJECT_PROCESS_SAMPLE =
       "Notification : About Process Sample Creation";
-  public static final String SUBJECT_USER_CREATION = "Notification : User Role Allocation ";
+  public static final String SUBJECT_USER_CREATION = "Notification : About Plant User Creation ";
+  public static final String SUBJECT_USERS_CREATION = "Notification : About Non Plant User Creation  ";
   public static final String SUBJECT_EMPLOYEE_CREATION = "Notification : Complete Registration ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER =
-      "Notification : About Finish Product Sample Test Reminder ";
+      "Notification : About Plant-Lab Trial Sample Test Reminder ";
   public static final String SUBJECT_MATERIAL_TEST_REMINDER =
       "Notification : About Material Test Reminder ";
   public static final String SUBJECT_MIX_DESIGN_APPROVEL =
