@@ -1015,7 +1015,7 @@ public class EmailNotification {
         List<String> reciepientList = emailRecipientService
             .getEmailsByEmailNotification(MailGroupConstance.CREATE_NON_PLANT_USER);
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
-            Constants.SUBJECT_USER_CREATION, mailBody);
+            Constants.SUBJECT_USERS_CREATION, mailBody);
       }
     }
   }
