@@ -39,4 +39,7 @@ public interface MaterialQualityParameterService {
   public boolean existsMaterialParametersByRawMaterial(Long rawMaterialId);
 
   public boolean existsMaterialParametersBySubCategory(Long subCategoryId);
+
+  public boolean checkValidationForConditionalRangeUpdate(
+      MaterialQualityParameterRequestDto materialQualityParameterRequestDto);
 }

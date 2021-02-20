@@ -19,17 +19,15 @@ import com.tokyo.supermix.data.dto.TestConfigureDto;
 import com.tokyo.supermix.data.dto.TestConfigureRequestDto;
 import com.tokyo.supermix.data.dto.TestConfigureResDto;
 import com.tokyo.supermix.data.dto.TestParametersDto;
-import com.tokyo.supermix.data.entities.ParameterEquation;
 import com.tokyo.supermix.data.entities.QTestConfigure;
 import com.tokyo.supermix.data.entities.TestConfigure;
-import com.tokyo.supermix.data.entities.TestEquation;
+import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
 import com.tokyo.supermix.data.repositories.EmailPointsRepository;
-import com.tokyo.supermix.data.repositories.EquationRepository;
 import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestRepository;
@@ -68,8 +66,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   private ParameterEquationRepository parameterEquationRepository;
   @Autowired
   private CoreTestConfigureRepository coreTestConfigureRepository;
-  @Autowired
-  private EquationRepository euationRepository;
   @Autowired
   private MultiResultFormulaRepository multiResultFormulaRepository;
   @Autowired
@@ -421,13 +417,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       testEquationParameterRepository.deleteByTestEquationTestConfigureId(testConfigureId);
     }
     if (testEquationRepository.existsByTestConfigureId(testConfigureId)) {
-      // for (TestEquation testEquation : testEquationRepository
-      // .findByTestConfigureId(testConfigureId)) {
-      // if (testEquation.getEquation() != null
-      // && euationRepository.existsById(testEquation.getEquation().getId())) {
-      // euationRepository.deleteById(testEquation.getEquation().getId());
-      // }
-      // }
       testEquationRepository.deleteByTestConfigureId(testConfigureId);
     }
     if (parameterEquationElementRepository
@@ -436,13 +425,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
           .deleteByParameterEquationTestParameterTestConfigureId(testConfigureId);
     }
     if (parameterEquationRepository.existsByTestParameterTestConfigureId(testConfigureId)) {
-      // for (ParameterEquation parameterEquation : parameterEquationRepository
-      // .findByTestParameterTestConfigureId(testConfigureId)) {
-      // if (parameterEquation.getEquation() != null
-      // && euationRepository.existsById(parameterEquation.getEquation().getId())) {
-      // euationRepository.deleteById(parameterEquation.getEquation().getId());
-      // }
-      // }
       parameterEquationRepository.deleteByTestParameterTestConfigureId(testConfigureId);
     }
     if (testParameterRepository.existsByTestConfigureId(testConfigureId)) {
@@ -466,5 +448,52 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       return true;
     }
     return false;
+  }
+
+  @Transactional
+  public void resetAcceptedValueForCategories(TestConfigureRequestDto testConfigureRequestDto) {
+    TestConfigure testConfigure =
+        testConfigureRepository.findById(testConfigureRequestDto.getId()).get();
+    if (testConfigureRequestDto.getMaterialCategoryId() != null && (!testConfigureRequestDto
+        .getMaterialCategoryId().equals(testConfigure.getMaterialCategory().getId()))) {
+      dependedDelete(testConfigureRequestDto);
+    }
+    if (testConfigureRequestDto.getMaterialCategoryId()
+        .equals(testConfigure.getMaterialCategory().getId())) {
+      if (!(testConfigureRequestDto.getMaterialSubCategoryId() == null
+          && testConfigure.getMaterialSubCategory() == null)
+          && ((testConfigureRequestDto.getMaterialSubCategoryId() != null
+              && testConfigure.getMaterialSubCategory() == null)
+              || (testConfigureRequestDto.getMaterialSubCategoryId() == null
+                  && testConfigure.getMaterialSubCategory() != null)
+              || !(testConfigureRequestDto.getMaterialSubCategoryId()
+                  .equals(testConfigure.getMaterialSubCategory().getId())))) {
+        dependedDelete(testConfigureRequestDto);
+      }
+      if (!(testConfigureRequestDto.getRawMaterialId() == null
+          && testConfigure.getRawMaterial() == null)
+          && ((testConfigureRequestDto.getRawMaterialId() != null
+              && testConfigure.getRawMaterial() == null)
+              || (testConfigureRequestDto.getRawMaterialId() == null
+                  && testConfigure.getRawMaterial() != null)
+              || !(testConfigureRequestDto.getRawMaterialId()
+                  .equals(testConfigure.getRawMaterial().getId())))) {
+        dependedDelete(testConfigureRequestDto);
+      }
+    }
+  }
+
+  private void dependedDelete(TestConfigureRequestDto testConfigureRequestDto) {
+    if (testConfigureRequestDto.getAcceptedType().equals(AcceptedType.TEST)) {
+      if (materialAcceptedValueRepository
+          .existsByTestConfigureId(testConfigureRequestDto.getId())) {
+        materialAcceptedValueRepository.deleteByTestConfigureId(testConfigureRequestDto.getId());
+      }
+    } else {
+      if (materialAcceptedValueRepository
+          .existsByTestConfigureId(testConfigureRequestDto.getId())) {
+        materialAcceptedValueRepository.deleteByTestConfigureId(testConfigureRequestDto.getId());
+      }
+    }
   }
 }

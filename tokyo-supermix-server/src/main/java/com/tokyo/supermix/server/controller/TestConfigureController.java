@@ -32,7 +32,6 @@ import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
-import com.tokyo.supermix.server.services.MaterialTestService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationConstance;
@@ -51,8 +50,6 @@ public class TestConfigureController {
   private Mapper mapper;
   @Autowired
   CoreTestConfigureService coreTestConfigureService;
-  @Autowired
-  private MaterialTestService materialTestService;
 
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
@@ -96,6 +93,8 @@ public class TestConfigureController {
   @PutMapping(value = EndpointURI.TEST_CONFIGURE)
   public ResponseEntity<Object> updateTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
+    TestConfigure testConfigure =
+        testConfigureService.getTestConfigureById(testConfigureRequestDto.getId());
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
       if (testConfigureService.isAlreadyDepended(testConfigureRequestDto.getId())) {
         return new ResponseEntity<>(
@@ -117,8 +116,7 @@ public class TestConfigureController {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      TestConfigure testConfigure =
-          testConfigureService.getTestConfigureById(testConfigureRequestDto.getId());
+      testConfigureService.resetAcceptedValueForCategories(testConfigureRequestDto);
       if (testConfigureRequestDto.getMaterialCategoryId() != testConfigure.getMaterialCategory()
           .getId()) {
         testConfigureService
@@ -174,6 +172,7 @@ public class TestConfigureController {
     logger.debug("No Test Configure record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
+
   }
 
   @DeleteMapping(EndpointURI.TEST_CONFIGURE_BY_ID)

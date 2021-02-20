@@ -16,5 +16,7 @@ public interface TestEquationParameterRepository
   Long deleteByTestEquationTestConfigureId(Long testConfigureId);
 
   boolean existsByTestEquationTestConfigureId(Long testConfigureId);
+
+  boolean existsByTestParameterId(Long testParameterId);
 }
 

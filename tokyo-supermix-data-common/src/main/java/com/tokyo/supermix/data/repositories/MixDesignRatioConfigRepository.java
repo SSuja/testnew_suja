@@ -12,4 +12,6 @@ public interface MixDesignRatioConfigRepository extends JpaRepository<MixDesignR
 
   MixDesignRatioConfig findByMixDesignCodeAndRatioConfigId(String mixDesignCode,
       Long ratioConfigId);
+
+  boolean existsByRatioConfigId(Long ratioConfigId);
 }

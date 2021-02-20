@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import com.tokyo.supermix.data.dto.MixDesignProportionRequestDto;
 import com.tokyo.supermix.data.entities.MixDesignProportion;
+import com.tokyo.supermix.security.UserPrincipal;
 
 public interface MixDesignProportionService {
   public List<MixDesignProportion> getAllMixDesignProportions();
@@ -30,4 +31,6 @@ public interface MixDesignProportionService {
 
   public boolean checkMixDesignProportionQuantityHasZeroValues(
       List<MixDesignProportionRequestDto> mixDesignProportionRequestDtoList);
+
+  public List<MixDesignProportion> getAllMixDesignProportionsByPlant(UserPrincipal currentUser);
 }

@@ -45,7 +45,7 @@ public interface ProjectService {
 
   public List<Project> getProjectName(String name);
 
-  public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code, String plantName,
-      String name, String customerName, String contactPerson, String startDate, String plantCode,
-      Pageable pageable, Pagination pagination, String contactNumber);
+  public List<ProjectResponseDto> searchProject(BooleanBuilder booleanBuilder, String code,
+      String plantName, String name, String customerName, String contactPerson, String startDate,
+      String plantCode, Pageable pageable, Pagination pagination, String contactNumber);
 }

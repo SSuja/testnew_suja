@@ -55,5 +55,8 @@ public interface AcceptedValueService {
 
   public AcceptedValueMainDto getAllAcceptedValuesByPage(Pageable pageable, Long testConfigureId);
 
-  public boolean isUpdatedTestParameterAndTestConfigure(Long id, Long testParameterId, Long testConfiguraeId);
+  public boolean isUpdatedTestParameterAndTestConfigure(Long id, Long testParameterId,
+      Long testConfiguraeId);
+
+  public void deleteByTestConfigure(Long testConfigureId);
 }

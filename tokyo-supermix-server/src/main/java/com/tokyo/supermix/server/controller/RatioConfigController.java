@@ -64,18 +64,18 @@ public class RatioConfigController {
   }
 
   // delete api for RatioConfig
-  @DeleteMapping(value = EndpointURI.RATIO_CONFIG_BY_ID)
-  public ResponseEntity<Object> deleteRatioConfig(@PathVariable Long id) {
-    if (ratioConfigService.isRatioConfigExist(id)) {
-      ratioConfigService.deleteRatioConfig(id);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_DELETED),
-          HttpStatus.OK);
-    }
-    logger.debug("Invalid Id");
-    return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
-        validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
-  }
+  // @DeleteMapping(value = EndpointURI.RATIO_CONFIG_BY_ID)
+  // public ResponseEntity<Object> deleteRatioConfig(@PathVariable Long id) {
+  // if (ratioConfigService.isRatioConfigExist(id)) {
+  // ratioConfigService.deleteRatioConfig(id);
+  // return new ResponseEntity<>(
+  // new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_DELETED),
+  // HttpStatus.OK);
+  // }
+  // logger.debug("Invalid Id");
+  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG,
+  // validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
+  // }
 
   // post API for RatioConfig
   @PostMapping(value = EndpointURI.RATIO_CONFIG)
@@ -118,5 +118,19 @@ public class RatioConfigController {
     return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIGS,
         ratioConfigService.getMixDesignTestConfigDetails(ratioConfigId), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
+  }
+
+  @DeleteMapping(EndpointURI.RATIO_CONFIG_BY_ID)
+  public ResponseEntity<Object> deleteRatioConfigureReset(@PathVariable Long id) {
+    if (ratioConfigService.checkRatioConfigDepend(id)) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+              validationFailureStatusCodes.getRatioConfigAlreadyDepended()),
+          HttpStatus.BAD_REQUEST);
+    }
+    ratioConfigService.deleteRatioConfigReset(id);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_DELETED),
+        HttpStatus.OK);
   }
 }

@@ -111,8 +111,8 @@ public class FinishProductDeliveryLayouter {
     cell7.setCellValue("Project");
     cell7.setCellStyle(headerCellStyle);
     
-    HSSFCell cell9 = rowHeader.createCell(startColIndex + 7);
-    cell9.setCellValue("Vehicle No");
-    cell9.setCellStyle(headerCellStyle);
+    HSSFCell cell8 = rowHeader.createCell(startColIndex + 7);
+    cell8.setCellValue("Vehicle No");
+    cell8.setCellStyle(headerCellStyle);
   }
 }

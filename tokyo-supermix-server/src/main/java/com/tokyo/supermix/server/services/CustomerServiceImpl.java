@@ -65,9 +65,9 @@ public class CustomerServiceImpl implements CustomerService {
     plantCodes.forEach(code -> plantList.add(plantRepository.findById(code).get()));
     customer.setPlant(plantList);
     if (customer.getId() == null) {
-      Customer customerObj =customerRepository.save(customer);
-      if(customerObj!=null) {
-      emailNotification.sendCustomerCreationEmail(customer);
+      Customer customerObj = customerRepository.save(customer);
+      if (customerObj != null) {
+        emailNotification.sendCustomerCreationEmail(customer);
       }
     } else {
       customerRepository.save(customer);
@@ -246,5 +246,11 @@ public class CustomerServiceImpl implements CustomerService {
     pagination.setTotalRecords(
         ((Collection<Customer>) customerRepository.findAll(booleanBuilder)).stream().count());
     return mapper.map(customerList, CustomerResponseDto.class);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Customer> getAllCustomerByCurrentUser(UserPrincipal currentUser) {
+    return customerRepository.findByPlantCodeIn(currentUserPermissionPlantService
+        .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_CUSTOMER));
   }
 }

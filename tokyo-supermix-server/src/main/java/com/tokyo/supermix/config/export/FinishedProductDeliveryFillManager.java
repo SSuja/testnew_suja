@@ -65,7 +65,7 @@ public class FinishedProductDeliveryFillManager {
       // Retrieve the id value
       HSSFCell cell7 = row.createCell(startColIndex + 6);
       if (finishProductSamples.get(i - 1).getProject() != null) {
-        cell7.setCellValue(finishProductSamples.get(i - 1).getProject().getName());
+        cell7.setCellValue(finishProductSamples.get(i - 1).getProject().getCode());
         cell7.setCellStyle(bodyCellStyle);
       } else {
         cell7.setAsActiveCell();

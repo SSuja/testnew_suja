@@ -121,8 +121,20 @@ public class MaterialSubCategoryController {
       return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
           validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
+    if (materialSubCategoryRequestDto.getMaterialQualityParameterRequestDto() != null
+        && materialSubCategoryService.checkValidationForConditionalRange(
+            materialSubCategoryRequestDto.getMaterialQualityParameterRequestDto())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER_CONDITION,
+              validationFailureStatusCodes.getMaterialQualityConditionRangesNotExist()),
+          HttpStatus.BAD_REQUEST);
+    }
     Long subCategoryId = materialSubCategoryService.saveMaterialSubCategory(
         mapper.map(materialSubCategoryRequestDto, MaterialSubCategory.class));
+    if (materialSubCategoryRequestDto.getMaterialQualityParameterRequestDto() != null) {
+      materialSubCategoryService.saveMQPForSubCategory(
+          materialSubCategoryRequestDto.getMaterialQualityParameterRequestDto(), subCategoryId);
+    }
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_SUB_CATEGORY,
         subCategoryId, RestApiResponseStatus.OK), HttpStatus.OK);
   }

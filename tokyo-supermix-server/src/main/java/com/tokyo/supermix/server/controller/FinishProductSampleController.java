@@ -2,8 +2,11 @@ package com.tokyo.supermix.server.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
+import com.tokyo.supermix.config.export.EnrollWriter;
+import com.tokyo.supermix.config.export.FinishProductDeliveryLayouter;
+import com.tokyo.supermix.config.export.FinishedProductDeliveryFillManager;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
@@ -40,6 +46,7 @@ import com.tokyo.supermix.server.services.FinishProductSampleService;
 import com.tokyo.supermix.server.services.PlantService;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
+import com.tokyo.supermix.util.FileStorageConstants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 import com.tokyo.supermix.util.privilege.PermissionConstants;
 
@@ -325,25 +332,26 @@ public class FinishProductSampleController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // @GetMapping(value = EndpointURI.EXPORT_FINISHED_PRODUCT_DELIVERY)
-  // public ResponseEntity<Object> exportFinishProductDelivery(HttpServletResponse response)
-  // throws ClassNotFoundException {
-  // HSSFWorkbook workbook = new HSSFWorkbook();
-  // HSSFSheet worksheet =
-  // workbook.createSheet(FileStorageConstants.FINISHED_PRODUCT_DELIVERY_WORK_SHEET);
-  // int startRowIndex = 0;
-  // int startColIndex = 0;
-  // FinishProductDeliveryLayouter.buildReport(worksheet, startRowIndex, startColIndex);
-  // FinishedProductDeliveryFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-  // finishProductSampleIssueService.getAllFinishProductSampleIssue());
-  // String fileName = FileStorageConstants.FINISHED_PRODUCT_DELIVERY_FILE_NAME;
-  // response.setHeader("Content-Disposition", "inline; filename=" + fileName);
-  // response.setContentType("application/vnd.ms-excel");
-  // EnrollWriter.write(response, worksheet);
-  // return new ResponseEntity<>(
-  // new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
-  // HttpStatus.OK);
-  // }
+  @GetMapping(value = EndpointURI.EXPORT_FINISHED_PRODUCT_DELIVERY)
+  public ResponseEntity<Object> exportFinishProductDelivery(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
+    HSSFWorkbook workbook = new HSSFWorkbook();
+    HSSFSheet worksheet =
+        workbook.createSheet(FileStorageConstants.FINISHED_PRODUCT_DELIVERY_WORK_SHEET);
+    int startRowIndex = 0;
+    int startColIndex = 0;
+    FinishProductDeliveryLayouter.buildReport(worksheet, startRowIndex, startColIndex);
+    FinishedProductDeliveryFillManager.fillReport(worksheet, startRowIndex, startColIndex,
+        finishProductSampleService.getAllFinishProductSamplesByPlant(
+            FinishProductSampleType.DELIVERY_SAMPLE, currentUser));
+    String fileName = FileStorageConstants.FINISHED_PRODUCT_DELIVERY_FILE_NAME;
+    response.setHeader("Content-Disposition", "inline; filename=" + fileName);
+    response.setContentType("application/vnd.ms-excel");
+    EnrollWriter.write(response, worksheet);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, FileStorageConstants.EXPORT_SUCCESS),
+        HttpStatus.OK);
+  }
 
   @PostMapping(value = EndpointURI.IMPORT_FINISHED_PRODUCT_DELIVERY)
   public ArrayList<String> uploadFinishProductDelivery(@RequestParam("file") MultipartFile file) {

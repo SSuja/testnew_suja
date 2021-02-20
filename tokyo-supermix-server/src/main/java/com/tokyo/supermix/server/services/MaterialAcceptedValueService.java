@@ -80,4 +80,6 @@ public interface MaterialAcceptedValueService {
 
   public boolean isUpdatedTestParameterAndMaterialSubCategoryAndTestConfigure(Long id,
       Long testParameterId, Long testConfigureId, Long materialSubCategoryId);
+
+  public void deleteByTestConfigure(Long testConfigureId);
 }

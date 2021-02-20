@@ -224,15 +224,15 @@ public class SupplierController {
   }
 
   @GetMapping(value = EndpointURI.EXPORT_SUPPLIER)
-  public ResponseEntity<Object> exportSupplier(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> exportSupplier(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.SUPPLIER_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     SupplierLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     SupplierFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        supplierService.getSuppliers());
+        supplierService.getSuppliersByPlant(currentUser, null));
     String fileName = FileStorageConstants.SUPPLIER_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");

@@ -14,6 +14,7 @@ public class MixDesignRequestDto {
   private Long rawMaterialId;
   private boolean approved;
   private boolean sentMail;
+  private boolean checkDepend;
 
   public String getCode() {
     return code;
@@ -69,5 +70,13 @@ public class MixDesignRequestDto {
 
   public void setSentMail(boolean sentMail) {
     this.sentMail = sentMail;
+  }
+
+  public boolean isCheckDepend() {
+    return checkDepend;
+  }
+
+  public void setCheckDepend(boolean checkDepend) {
+    this.checkDepend = checkDepend;
   }
 }

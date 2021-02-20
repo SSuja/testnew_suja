@@ -77,5 +77,9 @@ public interface FinishProductSampleRepository extends JpaRepository<FinishProdu
 
   FinishProductSample findByProjectName(String projectName);
 
-  List<FinishProductSample> findBySentMailAndFinishProductSampleType(boolean sentMail,  FinishProductSampleType finishProductSampleType);
+  List<FinishProductSample> findBySentMailAndFinishProductSampleType(boolean sentMail,
+      FinishProductSampleType finishProductSampleType);
+
+  List<FinishProductSample> findByFinishProductSampleTypeAndMixDesignPlantCodeIn(
+      FinishProductSampleType finishProductSampleType, List<String> plantCodes);
 }

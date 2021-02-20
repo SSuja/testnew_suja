@@ -20,6 +20,7 @@ import com.tokyo.supermix.data.entities.TestConfigure;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.TestResultType;
 import com.tokyo.supermix.data.repositories.AcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MultiResultFormulaRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
@@ -32,6 +33,8 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
   private TestConfigureService testConfigureService;
   @Autowired
   private TestConfigureRepository testConfigureRepository;
+  @Autowired
+  private MultiResultFormulaRepository multiResultFormulaRepository;
 
   @Transactional
   public void saveAcceptedValue(AcceptedValue acceptedValue) {
@@ -251,5 +254,13 @@ public class AcceptedValueServiceImpl implements AcceptedValueService {
       return true;
     }
     return false;
+  }
+
+  @Transactional
+  public void deleteByTestConfigure(Long testConfigureId) {
+    if (multiResultFormulaRepository.existsByTestConfigureId(testConfigureId)) {
+      multiResultFormulaRepository.deleteByTestConfigureId(testConfigureId);
+    }
+    acceptedValueRepository.deleteByTestConfigureId(testConfigureId);
   }
 }

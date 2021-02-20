@@ -245,12 +245,11 @@ public class Constants {
   public static final String INCOMING_SAMPLE = "incomingSample";
   public static final String INCOMING_SAMPLES = "incomingSamples";
   public static final String INCOMING_SAMPLE_STATUS = "status";
-  public static final String INCOMING_SAMPLE_DELETED = "Incoming Sample Successfully Deleted";
+  public static final String INCOMING_SAMPLE_DELETED = "Sample Successfully Deleted";
   public static final String ADD_INCOMING_SAMPLE_SUCCESS = "Incoming Sample Added Successfully";
-  public static final String UPDATE_INCOMING_SAMPLE_SUCCESS =
-      "Incoming Sample Updated Successfully";
+  public static final String UPDATE_INCOMING_SAMPLE_SUCCESS = "Sample Updated Successfully";
   public static final String UPDATE_STATUS_INCOMING_SAMPLE_SUCCESS =
-      "Incoming Sample Status Updated Successfully";
+      "Sample Status Updated Successfully";
   /*
    * Constants for Project validation key & Success messages
    */
