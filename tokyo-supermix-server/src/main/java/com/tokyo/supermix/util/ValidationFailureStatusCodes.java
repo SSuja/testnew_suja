@@ -2159,4 +2159,15 @@ public class ValidationFailureStatusCodes {
       String materialQualityParameterAlreadyExists) {
     this.materialQualityParameterAlreadyExists = materialQualityParameterAlreadyExists;
   }
+
+  @Value("${validation.days.null}")
+  private String daysIsnull;
+
+  public String getDaysIsnull() {
+    return daysIsnull;
+  }
+
+  public void setDaysIsnull(String daysIsnull) {
+    this.daysIsnull = daysIsnull;
+  }
 }
