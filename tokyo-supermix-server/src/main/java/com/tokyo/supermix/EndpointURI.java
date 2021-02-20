@@ -924,9 +924,6 @@ public final class EndpointURI {
       + "multi-result-formula" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String MULTI_RESULT_PARAMETERS_BY_TEST_CONFIGURE_ID =
       BASE_API_PATH + "parameters" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-
-  public static final String SEARCH_RAW_MATERIAL_MAINTYPE =
-      RAW_MATERIAL + SLASH + "main-type" + SEARCH + SLASH + "{plantCode}";
   
   private EndpointURI() {}
 }
