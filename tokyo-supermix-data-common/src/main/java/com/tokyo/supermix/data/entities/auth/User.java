@@ -31,6 +31,7 @@ public class User extends DateAudit {
   @Enumerated(EnumType.ORDINAL)
   private UserType userType;
   private Boolean isActive = true;
+  private boolean TemporaryPassword;
   @OneToMany(mappedBy = "user")
   private Set<UserRole> userRoles;
   @OneToMany(mappedBy = "user")
@@ -126,5 +127,15 @@ public class User extends DateAudit {
   public void setSentMail(boolean sentMail) {
     this.sentMail = sentMail;
   }
+
+  public boolean isTemporaryPassword() {
+    return TemporaryPassword;
+  }
+
+  public void setTemporaryPassword(boolean temporaryPassword) {
+    TemporaryPassword = temporaryPassword;
+  }
+
+ 
 
 }

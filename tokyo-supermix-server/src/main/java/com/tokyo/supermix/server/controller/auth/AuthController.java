@@ -21,6 +21,7 @@ import com.tokyo.supermix.data.dto.auth.ResetPasswordDto;
 import com.tokyo.supermix.data.dto.auth.UserRequestDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
@@ -50,6 +51,8 @@ public class AuthController {
   MacAddressService macAddressService;
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
+  @Autowired
+  UserRepository userRepository;
 
   @PostMapping(value = PrivilegeEndpointURI.SIGNIN)
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
@@ -57,7 +60,14 @@ public class AuthController {
         || loginRequestDto.getUsernameOrEmail().equalsIgnoreCase(Constants.ADMIN)) {
       try {
         String jwt = authService.generateUserToken(loginRequestDto);
-        if (jwt != null) {
+        if (jwt == "FORGOT_PASSWORD") {
+          String userId = (userRepository.findByUserName(loginRequestDto.getUsernameOrEmail()))
+              .getId().toString();
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(userId,
+                  privilegeValidationFailureStatusCodes.getTemporaryPassword()),
+              HttpStatus.BAD_REQUEST);
+        } else if (jwt != null) {
           return ResponseEntity.ok(new JwtAuthenticationDtoResponse(jwt));
         } else {
           return new ResponseEntity<>(
@@ -134,10 +144,11 @@ public class AuthController {
               privilegeValidationFailureStatusCodes.getIsPasswordTokenFailed()),
           HttpStatus.BAD_REQUEST);
     }
-  User user = authService.getUserByPasswordResetToken(token ,passwordDto.getUsernameOrEmail());
+    User user = authService.getUserByPasswordResetToken(token, passwordDto.getUsernameOrEmail());
     userService.changeUserPassword(user, passwordDto.getPassword());
     return new ResponseEntity<>(
         new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.UPDATE_PASSWORD_SUCCESS),
         HttpStatus.OK);
   }
+
 }
