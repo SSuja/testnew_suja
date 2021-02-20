@@ -3,6 +3,7 @@ package com.tokyo.supermix.server.services;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.ParameterDto;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.ParameterType;
@@ -49,4 +50,6 @@ public interface ParameterService {
 
   public List<Parameter> searchCommonParameters(String name, ParameterType parameterType,
       BooleanBuilder booleanBuilder);
+
+  public boolean dependedParameter(ParameterDto parameterDto);
 }

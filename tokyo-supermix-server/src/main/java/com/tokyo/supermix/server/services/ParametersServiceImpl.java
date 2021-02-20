@@ -8,17 +8,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.ParameterDto;
 import com.tokyo.supermix.data.entities.Parameter;
 import com.tokyo.supermix.data.entities.QParameter;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.ParameterType;
 import com.tokyo.supermix.data.repositories.ParameterRepository;
+import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class ParametersServiceImpl implements ParameterService {
   @Autowired
   private ParameterRepository parameterRepository;
+  @Autowired
+  private TestParameterRepository testParameterRepository;
 
   @Transactional(readOnly = true)
   public List<Parameter> getAllParameters() {
@@ -135,5 +139,16 @@ public class ParametersServiceImpl implements ParameterService {
       booleanBuilder.and(QParameter.parameter.parameterType.eq(parameterType));
     }
     return (List<Parameter>) parameterRepository.findAll(booleanBuilder);
+  }
+
+  @Transactional(readOnly = true)
+  public boolean dependedParameter(ParameterDto parameterDto) {
+    Parameter parameter = parameterRepository.getOne(parameterDto.getId());
+    if (testParameterRepository.existsByParameterId(parameterDto.getId())
+        && (!parameter.getParameterDataType().equals(parameterDto.getParameterDataType())
+            || !parameter.getParameterType().equals(parameterDto.getParameterType()))) {
+      return true;
+    }
+    return false;
   }
 }

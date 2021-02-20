@@ -104,6 +104,12 @@ public class ParameterController {
         return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_NAME,
             validationFailureStatusCodes.getParameterAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
+      if (parameterService.dependedParameter(parameterDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.PARAMETER,
+                validationFailureStatusCodes.getParameterAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       parameterService.saveParameter(mapper.map(parameterDto, Parameter.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_PARAMETER_SUCCESS),
