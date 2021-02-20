@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.dto;
 
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +13,7 @@ public class MaterialSubCategoryRequestDto {
   @NotEmpty(message = "{materialSubCategoryRequestDto.prefix.empty}")
   private String prefix;
   private Long materialCategoryId;
+  private List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDto;
 
   public String getPrefix() {
     return prefix;
@@ -43,5 +45,14 @@ public class MaterialSubCategoryRequestDto {
 
   public void setMaterialCategoryId(Long materialCategoryId) {
     this.materialCategoryId = materialCategoryId;
+  }
+
+  public List<MaterialQualityParameterRequestDto> getMaterialQualityParameterRequestDto() {
+    return materialQualityParameterRequestDto;
+  }
+
+  public void setMaterialQualityParameterRequestDto(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDto) {
+    this.materialQualityParameterRequestDto = materialQualityParameterRequestDto;
   }
 }

@@ -138,10 +138,22 @@ public class RawMaterialController {
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
     }
+    if (rawMaterialRequestDto.getMaterialQualityParameterRequestDto() != null
+        && materialSubCategoryService.checkValidationForConditionalRange(
+            rawMaterialRequestDto.getMaterialQualityParameterRequestDto())) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER_CONDITION,
+              validationFailureStatusCodes.getMaterialQualityConditionRangesNotExist()),
+          HttpStatus.BAD_REQUEST);
+    }
     Long rawMaterialId =
         rawMaterialService.saveRawMaterial(mapper.map(rawMaterialRequestDto, RawMaterial.class));
     coreTestConfigureService.updateCoreTestByNewRawMaterial(rawMaterialId,
         rawMaterialRequestDto.getMaterialSubCategoryId());
+    if (rawMaterialRequestDto.getMaterialQualityParameterRequestDto() != null) {
+      rawMaterialService.saveMQPForRawMaterial(
+          rawMaterialRequestDto.getMaterialQualityParameterRequestDto(), rawMaterialId);
+    }
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.RAW_MATERIAL, rawMaterialId, RestApiResponseStatus.OK),
         HttpStatus.OK);
@@ -212,8 +224,7 @@ public class RawMaterialController {
                 validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
           }
         } else {
-          if (rawMaterialRequestDto.getPlantCode() == null
-              || rawMaterialRequestDto.getPlantCode().isEmpty()) {
+          if (rawMaterialRequestDto.getSubBusinessUnitId() == null) {
             return new ResponseEntity<>(
                 new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
                     validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),
@@ -431,6 +442,22 @@ public class RawMaterialController {
             plantName, prefix, plantCode, erpCode, mainCategoryName, subBusinessUnitName, pageable,
             pagination),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+  }
+
+  @GetMapping(value = EndpointURI.SEARCH_RAW_MATERIAL_MAINTYPE)
+  public ResponseEntity<Object> getRawMaterialSearchByMainType(@PathVariable String plantCode,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "materialSubCategoryName",
+          required = false) String materialSubCategoryName,
+      @RequestParam(name = "mainCategoryName", required = false) String mainCategoryName) {
+
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new ContentResponse<>(Constants.RAW_MATERIAL,
+        mapper.map(
+            rawMaterialService.searchRawMaterialByMainType(booleanBuilder, name,
+                materialSubCategoryName, plantCode, mainCategoryName),
+            RawMaterialResponseDto.class),
+        RestApiResponseStatus.OK), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_RAW_MATERIALS_BY_PLANT)

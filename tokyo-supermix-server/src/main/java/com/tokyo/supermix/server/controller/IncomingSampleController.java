@@ -157,8 +157,14 @@ public class IncomingSampleController {
     }
     incomingSampleService
         .createIncomingSample(mapper.map(incomingSampleRequestDto, IncomingSample.class));
-    return new ResponseEntity<>(
-        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_INCOMING_SAMPLE_SUCCESS),
+    String successMesagge = "";
+    if (incomingSampleRequestDto.getRawMaterialSampleType()
+        .equals(RawMaterialSampleType.INCOMING_SAMPLE)) {
+      successMesagge = Constants.ADD_INCOMING_SAMPLE_SUCCESS;
+    } else {
+      successMesagge = Constants.ADD_PROCESS_SAMPLE_SUCCESS;
+    }
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK, successMesagge),
         HttpStatus.OK);
   }
 

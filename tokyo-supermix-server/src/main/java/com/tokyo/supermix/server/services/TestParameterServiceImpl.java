@@ -27,9 +27,12 @@ import com.tokyo.supermix.data.entities.TestParameter;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.mapper.Mapper;
+import com.tokyo.supermix.data.repositories.ParameterEquationElementRepository;
 import com.tokyo.supermix.data.repositories.ParameterEquationRepository;
 import com.tokyo.supermix.data.repositories.ParameterRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.TestEquationParameterRepository;
+import com.tokyo.supermix.data.repositories.TestEquationRepository;
 import com.tokyo.supermix.data.repositories.TestParameterRepository;
 import com.tokyo.supermix.util.Constants;
 
@@ -45,6 +48,12 @@ public class TestParameterServiceImpl implements TestParameterService {
   private Mapper mapper;
   @Autowired
   private ParameterRepository parameterRepository;
+  @Autowired
+  private TestEquationParameterRepository testEquationParameterRepository;
+  @Autowired
+  private ParameterEquationElementRepository parameterEquationElementRepository;
+  @Autowired
+  private TestEquationRepository testEquationRepository;
 
   @Transactional
   public void saveTestParameterAll(List<TestParameter> testParameter) {
@@ -288,6 +297,17 @@ public class TestParameterServiceImpl implements TestParameterService {
         .equals(ParameterDataType.NUMBER))
         || (dateValue == null && parameterRepository.findById(id).get().getParameterDataType()
             .equals(ParameterDataType.DATETIME))) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean checkDependForTestParameter(Long testParameterId) {
+    if (testEquationParameterRepository.existsByTestParameterId(testParameterId)
+        || parameterEquationElementRepository.existsByTestParameterId(testParameterId)
+        || testEquationRepository.existsByTestParameterId(testParameterId)
+        || parameterEquationRepository.existsByTestParameterId(testParameterId)) {
       return true;
     }
     return false;

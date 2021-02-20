@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MaterialQualityParameterRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
 import com.tokyo.supermix.data.entities.RawMaterial;
@@ -115,4 +116,10 @@ public interface RawMaterialService {
   public void deleteMaterialByCoreTestConfigure(Long rawMaterialId);
 
   public List<RawMaterial> getAllMaterials(String plantCode, MaterialType materialType, Long sbuId);
+  public void saveMQPForRawMaterial(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
+      Long rawMaterialId);
+
+  public List<RawMaterial> searchRawMaterialByMainType(BooleanBuilder booleanBuilder, String name,
+      String materialSubCategoryName, String plantCode, String mainCategoryName);
 }

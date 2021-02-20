@@ -21,4 +21,6 @@ public interface ParameterEquationElementRepository
   boolean existsByParameterEquationTestParameterTestConfigureId(Long testConfigureid);
 
   Long deleteByParameterEquationTestParameterTestConfigureId(Long testConfigureid);
+
+  boolean existsByTestParameterId(Long testParameterId);
 }

@@ -14,4 +14,6 @@ public interface RatioConfigEquationRepository extends JpaRepository<RatioConfig
 
   boolean existsByRatioConfigIdAndRatio(Long ratioConfigId, String ratio);
 
+  Long deleteByRatioConfigId(Long ratioConfigId);
+
 }

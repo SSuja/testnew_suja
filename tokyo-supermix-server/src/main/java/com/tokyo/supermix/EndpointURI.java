@@ -869,6 +869,8 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
   public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
       RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
+  public static final String RATIO_CONFIG_RESET = BASE_API_PATH + "ratio-config-reset";
+  public static final String RATIO_CONFIG_RESET_BY_ID = RATIO_CONFIG_RESET + ID;
 
   /*
    * ratioConfigParameter API
@@ -921,5 +923,8 @@ public final class EndpointURI {
   public static final String MULTI_RESULT_PARAMETERS_BY_TEST_CONFIGURE_ID =
       BASE_API_PATH + "parameters" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
 
+  public static final String SEARCH_RAW_MATERIAL_MAINTYPE =
+      RAW_MATERIAL + SLASH + "main-type" + SEARCH + SLASH + "{plantCode}";
+  
   private EndpointURI() {}
 }

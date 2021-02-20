@@ -114,6 +114,13 @@ public class MaterialQualityParameterController {
                 validationFailureStatusCodes.getMaterialQualityParameterAlreadyExists()),
             HttpStatus.BAD_REQUEST);
       }
+      if (materialQualityParameterService
+          .checkValidationForConditionalRangeUpdate(materialQualityParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.MATERIAL_QUALITY_PARAMETER_CONDITION,
+                validationFailureStatusCodes.getMaterialQualityConditionRangesNotExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       materialQualityParameterService.updateMaterialQualityParameter(
           mapper.map(materialQualityParameterRequestDto, MaterialQualityParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

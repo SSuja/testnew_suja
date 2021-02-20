@@ -79,4 +79,8 @@ public interface FinishProductTestRepository extends JpaRepository<FinishProduct
 
   boolean existsByTestConfigureIdAndFinishProductSampleMixDesignRawMaterialMaterialSubCategoryId(
       Long testConfigureId, Long materialSubCategoryId);
+
+  Long countByFinishProductSampleCode(String finishProductSampleCode);
+
+  Long countByFinishProductSampleCodeAndStatus(String finishProductSampleCode, Status status);
 }
