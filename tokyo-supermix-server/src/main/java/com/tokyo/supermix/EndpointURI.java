@@ -161,6 +161,8 @@ public final class EndpointURI {
   public static final String GET_RAW_MATERIAL_BY_ID = RAW_MATERIAL + ID;
   public static final String DELETE_RAW_MATERIAL = RAW_MATERIAL + ID;
   public static final String SEARCH_RAW_MATERIAL = RAW_MATERIAL + SEARCH + SLASH + "{plantCode}";
+  public static final String SEARCH_RAW_MATERIAL_MAINTYPE =
+      RAW_MATERIAL + SLASH + "main-type" + SEARCH + SLASH + "{plantCode}";
   public static final String ACTIVE_RAW_MATERIALS =
       BASE_API_PATH + "active" + SLASH + "raw-materials";
   public static final String GET_BY_MATERIAL_SUB_CATEGORY =
@@ -839,7 +841,7 @@ public final class EndpointURI {
   public static final String STRENGTH_BY_FINISH_PRODUCT_TEST_CODE = BASE_API_PATH + "strength"
       + SLASH + "{finishProductTestCode}" + SLASH + "plant" + SLASH + "{plantCode}";
   public static final String EXPORT_FINISHED_PRODUCT_DELIVERY =
-      BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "download";
+      BASE_API_PATH + "finished-product-delivery" + SLASH + "download";
   public static final String IMPORT_FINISHED_PRODUCT_DELIVERY =
       BASE_API_PATH + SLASH + "finished-product-delivery" + SLASH + "upload";
   public static final String GET_MATERIAL_TESTS_BY_INCOMING_SAMPLE =
@@ -876,6 +878,8 @@ public final class EndpointURI {
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
   public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
       RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
+  public static final String RATIO_CONFIG_RESET = BASE_API_PATH + "ratio-config-reset";
+  public static final String RATIO_CONFIG_RESET_BY_ID = RATIO_CONFIG_RESET + ID;
 
   /*
    * ratioConfigParameter API

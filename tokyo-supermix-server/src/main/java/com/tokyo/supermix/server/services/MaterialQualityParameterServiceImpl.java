@@ -142,14 +142,16 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
     return false;
   }
 
-  // check validation for condition range
+  // check validation for condition range - List of MQP
   @Transactional(readOnly = true)
   public boolean checkValidationForConditionalRange(
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList) {
     for (MaterialQualityParameterRequestDto materialQualityParameterRequestDto : materialQualityParameterRequestDtoList) {
-      if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)
-          && materialQualityParameterRequestDto.getMaxValue() == null
-          && materialQualityParameterRequestDto.getMinValue() == null) {
+      if (materialQualityParameterRequestDto.getConditionRange() == null) {
+        return true;
+      } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)
+          && (materialQualityParameterRequestDto.getMaxValue() == null
+              || materialQualityParameterRequestDto.getMinValue() == null)) {
         return true;
       } else if ((materialQualityParameterRequestDto.getConditionRange()
           .equals(Condition.GREATER_THAN)
@@ -207,6 +209,26 @@ public class MaterialQualityParameterServiceImpl implements MaterialQualityParam
             && materialQualityParameterRepository.existsByParameterIdAndMaterialSubCategoryId(
                 materialQualityParameterRequestDto.getParameterId(),
                 materialQualityParameterRequestDto.getMaterialSubCategoryId()))) {
+      return true;
+    }
+    return false;
+  }
+
+  // check validation for condition range - Object of MQP
+  @Transactional(readOnly = true)
+  public boolean checkValidationForConditionalRangeUpdate(
+      MaterialQualityParameterRequestDto materialQualityParameterRequestDto) {
+    if (materialQualityParameterRequestDto.getConditionRange() == null) {
+      return true;
+    } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)
+        && (materialQualityParameterRequestDto.getMaxValue() == null
+            || materialQualityParameterRequestDto.getMinValue() == null)) {
+      return true;
+    } else if ((materialQualityParameterRequestDto.getConditionRange()
+        .equals(Condition.GREATER_THAN)
+        || materialQualityParameterRequestDto.getConditionRange().equals(Condition.LESS_THAN)
+        || materialQualityParameterRequestDto.getConditionRange().equals(Condition.EQUAL))
+        && materialQualityParameterRequestDto.getValue() == null) {
       return true;
     }
     return false;

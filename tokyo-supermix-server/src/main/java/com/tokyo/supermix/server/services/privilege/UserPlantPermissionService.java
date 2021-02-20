@@ -21,4 +21,6 @@ public interface UserPlantPermissionService {
   public boolean isPlantCodeExists(String plantCode,Long userId);
   
   public List<PlantResponseDto> getPlantsByNonPlantUserId(Long userId);
+  
+  public void updateUserPlantPermission(String plantCode, Boolean status, Long userId);
 }

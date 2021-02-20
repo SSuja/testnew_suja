@@ -161,7 +161,9 @@ public final class PrivilegeEndpointURI {
   public static final String USER_PLANT_PERMISSION_BY_USER_ID =
       USER_PLANT_PERMISSION + SLASH + "{userId}";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
-      USER_PLANT_PERMISSION + SLASH + "{userId}" + SLASH + "{plantCode}" + SLASH + "{status}";
+      USER_PLANT_PERMISSION + SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
+  public static final String USER_PLANT_PERMISSIONS_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
+      USER_PLANT_PERMISSION + SLASH +"userId"+SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID_FOR_GET_PLANTS =
       USER_PLANT_PERMISSION + SLASH + "plants" + SLASH + "{userId}";
 }

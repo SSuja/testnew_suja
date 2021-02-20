@@ -7,19 +7,23 @@ import com.tokyo.supermix.data.entities.RatioConfig;
 
 public interface RatioConfigService {
 
-	public RatioConfig saveRatioConfig(RatioConfig ratioConfig);
+  public RatioConfig saveRatioConfig(RatioConfig ratioConfig);
 
-	public List<RatioConfig> getAllRatioConfigs();
+  public List<RatioConfig> getAllRatioConfigs();
 
-	public boolean isRatioConfigExist(Long id);
+  public boolean isRatioConfigExist(Long id);
 
-	public RatioConfig getRatioConfigById(Long id);
+  public RatioConfig getRatioConfigById(Long id);
 
-	public void deleteRatioConfig(Long id);
+  public void deleteRatioConfig(Long id);
 
-	public boolean isRatioConfigExist(String name);
+  public boolean isRatioConfigExist(String name);
 
-	public boolean isUpdatedRatioConfigNameExist(Long id, String name);
+  public boolean isUpdatedRatioConfigNameExist(Long id, String name);
 
-	public MixDesignTestConfigDetailsDto getMixDesignTestConfigDetails(Long mixDesignConfigId);
+  public MixDesignTestConfigDetailsDto getMixDesignTestConfigDetails(Long mixDesignConfigId);
+
+  public void deleteRatioConfigReset(Long ratioConfigId);
+
+  public boolean checkRatioConfigDepend(Long ratioConfigId);
 }

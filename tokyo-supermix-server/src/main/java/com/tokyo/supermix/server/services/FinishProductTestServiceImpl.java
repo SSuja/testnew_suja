@@ -63,7 +63,13 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
             finishProductTestRepository.findByFinishProductSampleCodeAndTestConfigureId(
                 finishProductTest.getFinishProductSample().getCode(),
                 finishProductTest.getTestConfigure().getId()).size() + 1);
-
+    FinishProductSample finishProductSample = finishProductSampleRepository
+        .findByCode(finishProductTest.getFinishProductSample().getCode());
+    if (finishProductSample.getStatus().equals(Status.NEW)) {
+      finishProductSample.setStatus(Status.PROCESS);
+      finishProductSampleRepository.save(finishProductSample);
+    }
+    finishProductTest.setStatus(Status.PROCESS);
     finishProductTest.setSpecimenCode(specimenCode);
     finishProductTestRepository.save(finishProductTest);
     return finishProductTest.getCode();
@@ -94,6 +100,15 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
 
   @Transactional(propagation = Propagation.NEVER)
   public void deleteFinishProductTest(String code) {
+    // FinishProductTest finishProductTest = finishProductTestRepository.findByCode(code);
+    // FinishProductSample finishProductSample =
+    // finishProductSampleRepository.findByCode(finishProductTest.getCode());
+    // if (finishProductTestRepository.countByFinishProductSampleCode(finishProductSample.getCode())
+    // .equals(finishProductTestRepository
+    // .countByFinishProductSampleCodeAndStatus(finishProductSample.getCode(), Status.NEW))) {
+    // finishProductSample.setStatus(Status.NEW);
+    // finishProductSampleRepository.save(finishProductSample);
+    // }
     finishProductTestRepository.deleteById(code);
   }
 

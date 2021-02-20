@@ -12,20 +12,27 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MaterialQualityParameterRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialRequestDto;
 import com.tokyo.supermix.data.dto.RawMaterialResponseDto;
+import com.tokyo.supermix.data.entities.MaterialQualityParameter;
 import com.tokyo.supermix.data.entities.QRawMaterial;
 import com.tokyo.supermix.data.entities.RawMaterial;
+import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.MaterialType;
+import com.tokyo.supermix.data.enums.QualityParamaterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.CoreTestConfigureRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
+import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
+import com.tokyo.supermix.data.repositories.ParameterRepository;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.data.repositories.RawMaterialRepository;
 import com.tokyo.supermix.data.repositories.TestConfigureRepository;
+import com.tokyo.supermix.data.repositories.UnitRepository;
 import com.tokyo.supermix.notification.EmailNotification;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.util.Constants;
@@ -50,6 +57,12 @@ public class RawMaterialServiceImpl implements RawMaterialService {
   TestConfigureRepository testConfigureRepository;
   @Autowired
   MaterialAcceptedValueRepository materialAcceptedValueRepository;
+  @Autowired
+  private MaterialQualityParameterRepository materialQualityParameterRepository;
+  @Autowired
+  private ParameterRepository parameterRepository;
+  @Autowired
+  private UnitRepository unitRepository;
 
   @Transactional
   public Long saveRawMaterial(RawMaterial rawMaterial) {
@@ -466,4 +479,80 @@ public class RawMaterialServiceImpl implements RawMaterialService {
     }
   }
 
+  @Transactional
+  public void saveMQPForRawMaterial(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
+      Long rawMaterialId) {
+    for (MaterialQualityParameterRequestDto materialQualityParameterRequestDto : materialQualityParameterRequestDtoList) {
+      saveToMQParameterFromMAValue(materialQualityParameterRequestDto, rawMaterialId);
+    }
+  }
+
+  private void saveToMQParameterFromMAValue(
+      MaterialQualityParameterRequestDto materialQualityParameterRequestDto, Long rawMaterialId) {
+    MaterialQualityParameter materialQualityParameter = new MaterialQualityParameter();
+    materialQualityParameter.setRawMaterial(rawMaterialRepository.findById(rawMaterialId).get());
+    materialQualityParameter.setQualityParamaterType(QualityParamaterType.MATERIAL);
+    if (materialQualityParameterRequestDto.getConditionRange() != null) {
+      if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.BETWEEN)) {
+        materialQualityParameter
+            .setConditionRange(materialQualityParameterRequestDto.getConditionRange());
+        materialQualityParameter.setMaxValue(materialQualityParameterRequestDto.getMaxValue());
+        materialQualityParameter.setMinValue(materialQualityParameterRequestDto.getMinValue());
+      } else if (materialQualityParameterRequestDto.getConditionRange().equals(Condition.EQUAL)
+          || materialQualityParameterRequestDto.getConditionRange().equals(Condition.GREATER_THAN)
+          || materialQualityParameterRequestDto.getConditionRange().equals(Condition.LESS_THAN)) {
+        materialQualityParameter
+            .setConditionRange(materialQualityParameterRequestDto.getConditionRange());
+        materialQualityParameter.setValue(materialQualityParameterRequestDto.getValue());
+      }
+    }
+    materialQualityParameter
+        .setUnit(unitRepository.findById(materialQualityParameterRequestDto.getUnitId()).get());
+    materialQualityParameter.setParameter(
+        parameterRepository.findById(materialQualityParameterRequestDto.getParameterId()).get());
+    materialQualityParameterRepository.save(materialQualityParameter);
+  }
+
+  @Transactional(readOnly = true)
+  public List<RawMaterial> searchRawMaterialByMainType(BooleanBuilder booleanBuilder, String name,
+      String materialSubCategoryName, String plantCode, String mainCategoryName) {
+    if (plantCode != null && !plantCode.isEmpty()
+        && (plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.mainType
+          .eq(MainType.RAW_MATERIAL));
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+
+    } else {
+      booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.mainType
+          .eq(MainType.RAW_MATERIAL));
+      booleanBuilder.or(QRawMaterial.rawMaterial.plant.code.eq(plantCode));
+      booleanBuilder.or(QRawMaterial.rawMaterial.subBusinessUnit.id
+          .eq(plantRepository.findById(plantCode).get().getSubBusinessUnit().getId()));
+      booleanBuilder.or(QRawMaterial.rawMaterial.materialType.eq(MaterialType.COMMON));
+      if (name != null && !name.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.name.stringValue().contains(name));
+      }
+      if (materialSubCategoryName != null && !materialSubCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.name.stringValue()
+            .contains(materialSubCategoryName));
+      }
+      if (mainCategoryName != null && !mainCategoryName.isEmpty()) {
+        booleanBuilder.and(QRawMaterial.rawMaterial.materialSubCategory.materialCategory.name
+            .stringValue().contains(mainCategoryName));
+      }
+
+    }
+    return (List<RawMaterial>) rawMaterialRepository.findAll(booleanBuilder);
+  }
 }
