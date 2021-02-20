@@ -30,9 +30,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
-import com.tokyo.supermix.server.services.AcceptedValueService;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
-import com.tokyo.supermix.server.services.MaterialAcceptedValueService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
@@ -52,10 +50,6 @@ public class TestConfigureController {
   private Mapper mapper;
   @Autowired
   CoreTestConfigureService coreTestConfigureService;
-  @Autowired
-  private AcceptedValueService acceptedValueService;
-  @Autowired
-  private MaterialAcceptedValueService materialAcceptedValueService;
 
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
@@ -122,67 +116,7 @@ public class TestConfigureController {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      if (testConfigureRequestDto.getMaterialCategoryId() != null) {
-        if (!testConfigureRequestDto.getMaterialCategoryId()
-            .equals(testConfigure.getMaterialCategory().getId())) {
-          if (testConfigureRequestDto.getAcceptedType().equals(AcceptedType.TEST)) {
-            if (acceptedValueService
-                .existsAcceptedValueByTestConfigureId(testConfigureRequestDto.getId())) {
-              acceptedValueService.deleteByTestConfigure(testConfigureRequestDto.getId());
-            }
-          } else {
-            if (materialAcceptedValueService
-                .ExistsTestConfigureId(testConfigureRequestDto.getId())) {
-              materialAcceptedValueService.deleteByTestConfigure(testConfigureRequestDto.getId());
-            }
-          }
-        }
-      }
-      if (testConfigureRequestDto.getMaterialCategoryId() == testConfigure.getMaterialCategory()
-          .getId()) {
-        if (!(testConfigureRequestDto.getMaterialSubCategoryId() == null
-            && testConfigure.getMaterialSubCategory() == null)) {
-          if ((testConfigureRequestDto.getMaterialSubCategoryId() != null
-              && testConfigure.getMaterialSubCategory() == null)
-              || (testConfigureRequestDto.getMaterialSubCategoryId() == null
-                  && testConfigure.getMaterialSubCategory() != null)
-              || !(testConfigureRequestDto.getMaterialSubCategoryId()
-                  .equals(testConfigure.getMaterialSubCategory().getId()))) {
-            if (testConfigureRequestDto.getAcceptedType().equals(AcceptedType.TEST)) {
-              if (acceptedValueService
-                  .existsAcceptedValueByTestConfigureId(testConfigureRequestDto.getId())) {
-                acceptedValueService.deleteByTestConfigure(testConfigureRequestDto.getId());
-              }
-            } else {
-              if (materialAcceptedValueService
-                  .ExistsTestConfigureId(testConfigureRequestDto.getId())) {
-                materialAcceptedValueService.deleteByTestConfigure(testConfigureRequestDto.getId());
-              }
-            }
-          }
-        }
-        if (!(testConfigureRequestDto.getRawMaterialId() == null
-            && testConfigure.getRawMaterial() == null)) {
-          if ((testConfigureRequestDto.getRawMaterialId() != null
-              && testConfigure.getRawMaterial() == null)
-              || (testConfigureRequestDto.getRawMaterialId() == null
-                  && testConfigure.getRawMaterial() != null)
-              || !(testConfigureRequestDto.getRawMaterialId()
-                  .equals(testConfigure.getRawMaterial().getId()))) {
-            if (testConfigureRequestDto.getAcceptedType().equals(AcceptedType.TEST)) {
-              if (acceptedValueService
-                  .existsAcceptedValueByTestConfigureId(testConfigureRequestDto.getId())) {
-                acceptedValueService.deleteByTestConfigure(testConfigureRequestDto.getId());
-              }
-            } else {
-              if (materialAcceptedValueService
-                  .ExistsTestConfigureId(testConfigureRequestDto.getId())) {
-                materialAcceptedValueService.deleteByTestConfigure(testConfigureRequestDto.getId());
-              }
-            }
-          }
-        }
-      }
+      testConfigureService.resetAcceptedValueForCategories(testConfigureRequestDto);
       if (testConfigureRequestDto.getMaterialCategoryId() != testConfigure.getMaterialCategory()
           .getId()) {
         testConfigureService
