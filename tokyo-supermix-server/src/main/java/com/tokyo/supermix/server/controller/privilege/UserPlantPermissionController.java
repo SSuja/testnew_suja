@@ -89,5 +89,12 @@ public class UserPlantPermissionController {
 	    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_USER_ID,
 	        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
 	  }
+  
+  @PutMapping(value = PrivilegeEndpointURI.USER_PLANT_PERMISSIONS_BY_USER_ID_AND_PLANTCODE_AND_STATUS)
+  public ResponseEntity<Object> updateAllUserPlantPrivilage(@PathVariable Long userId,@PathVariable String plantCode,@PathVariable Boolean status ) {
+    userPlantPermissionService.updateUserPlantPermission(plantCode, status, userId);
+    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+        PrivilegeConstants.UPDATE_USER_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
+  }
 
 }
