@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.tokyo.supermix.data.dto.MaterialQualityParameterRequestDto;
 import com.tokyo.supermix.data.dto.MaterialSubCategoryResponseDto;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.entities.MaterialSubCategory;
@@ -48,4 +49,11 @@ public interface MaterialSubCategoryService {
   public List<MaterialSubCategoryResponseDto> searchByMaterialSubCategory(
       BooleanBuilder booleanBuilder, String name, String materialCategoryName, String prefix,
       MainType materialCategoryMainType, Pageable pageable, Pagination pagination);
+
+  public boolean checkValidationForConditionalRange(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList);
+
+  public void saveMQPForSubCategory(
+      List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
+      Long subCategoryId);
 }

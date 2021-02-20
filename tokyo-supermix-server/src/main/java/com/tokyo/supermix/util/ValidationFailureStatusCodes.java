@@ -1166,6 +1166,9 @@ public class ValidationFailureStatusCodes {
   @Value("${testParameterRequestDto.abbreviation.alreadyExist}")
   private String abbreviationAlreadyExist;
 
+  @Value("${validation.testParameter.alreadyDepended}")
+  private String testParameterAlreadyDepended;
+
   public String getTestParameterNotExist() {
     return testParameterNotExist;
   }
@@ -1188,6 +1191,14 @@ public class ValidationFailureStatusCodes {
 
   public void setAbbreviationAlreadyExist(String abbreviationAlreadyExist) {
     this.abbreviationAlreadyExist = abbreviationAlreadyExist;
+  }
+
+  public String getTestParameterAlreadyDepended() {
+    return testParameterAlreadyDepended;
+  }
+
+  public void setTestParameterAlreadyDepended(String testParameterAlreadyDepended) {
+    this.testParameterAlreadyDepended = testParameterAlreadyDepended;
   }
 
   // for ProcessSample
@@ -1834,8 +1845,20 @@ public class ValidationFailureStatusCodes {
 
   @Value("${validation.ratioConfig.ratiParaNotExists}")
   private String ratioConfigRatioParaNotExists;
+
   @Value("${validation.ratioConfig.deleteValidate}")
   private String ratioConfigRatioParaDeleteValidate;
+
+  @Value("${validation.ratioConfig.alreadyDepended}")
+  private String ratioConfigAlreadyDepended;
+
+  public String getRatioConfigAlreadyDepended() {
+    return ratioConfigAlreadyDepended;
+  }
+
+  public void setRatioConfigAlreadyDepended(String ratioConfigAlreadyDepended) {
+    this.ratioConfigAlreadyDepended = ratioConfigAlreadyDepended;
+  }
 
   public String getRatioConfigRatioParaDeleteValidate() {
     return ratioConfigRatioParaDeleteValidate;

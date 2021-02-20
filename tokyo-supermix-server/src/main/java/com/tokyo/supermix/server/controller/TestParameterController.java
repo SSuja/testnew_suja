@@ -198,6 +198,12 @@ public class TestParameterController {
               validationFailureStatusCodes.getValueIsNull()), HttpStatus.BAD_REQUEST);
         }
       }
+      if (testParameterService.checkDependForTestParameter(testParameterRequestDto.getId())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.ABBREVIATION,
+                validationFailureStatusCodes.getTestParameterAlreadyDepended()),
+            HttpStatus.BAD_REQUEST);
+      }
       testParameterService
           .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
       return new ResponseEntity<>(
