@@ -17,6 +17,9 @@ import com.tokyo.supermix.data.entities.RatioConfigParameter;
 import com.tokyo.supermix.data.repositories.MixDesignProportionRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRatioConfigRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
+import com.tokyo.supermix.security.UserPrincipal;
+import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
+import com.tokyo.supermix.util.privilege.PermissionConstants;
 
 @Service
 public class MixDesignProportionServiceImpl implements MixDesignProportionService {
@@ -27,7 +30,8 @@ public class MixDesignProportionServiceImpl implements MixDesignProportionServic
   public MixDesignRatioConfigRepository mixDesignRatioConfigRepository;
   @Autowired
   public RatioConfigParameterRepository ratioConfigParameterRepository;
-
+  @Autowired
+  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
   @Transactional(readOnly = true)
   public List<MixDesignProportion> getAllMixDesignProportions() {
@@ -140,5 +144,12 @@ public class MixDesignProportionServiceImpl implements MixDesignProportionServic
     }
     return false;
 
+  }
+
+  @Transactional(readOnly = true)
+  public List<MixDesignProportion> getAllMixDesignProportionsByPlant(UserPrincipal currentUser) {
+    return mixDesignProportionRepository.findByMixDesignPlantCodeIn(
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_MIX_DESIGN_PROPORTION));
   }
 }

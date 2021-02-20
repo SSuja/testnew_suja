@@ -80,8 +80,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     if (finishProductSampleObj != null && finishProductSampleObj.getFinishProductSampleType()
         .equals(FinishProductSampleType.LAB_TRIAL_SAMPLE)) {
       emailNotification.sendFinishProductSampleEmail(finishProductSampleObj);
-    }
-    else if(finishProductSampleObj != null && finishProductSampleObj.getFinishProductSampleType()==FinishProductSampleType.DELIVERY_SAMPLE)  {
+    } else if (finishProductSampleObj != null && finishProductSampleObj
+        .getFinishProductSampleType() == FinishProductSampleType.DELIVERY_SAMPLE) {
       emailNotification.sendFinishProductSampleIssueEmail(finishProductSampleObj);
     }
   }
@@ -361,6 +361,14 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
     return false;
   }
-  
+
+  @Transactional
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(
+      FinishProductSampleType finishProductSampleType, UserPrincipal currentUser) {
+    return finishProductSampleRepository.findByFinishProductSampleTypeAndMixDesignPlantCodeIn(
+        FinishProductSampleType.DELIVERY_SAMPLE,
+        currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
+            PermissionConstants.VIEW_MIX_DESIGN_PROPORTION));
+  }
 
 }

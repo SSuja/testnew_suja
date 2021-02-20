@@ -91,4 +91,7 @@ public interface FinishProductSampleService {
 
   public boolean checkAddValidation(
       List<FinishProductSampleRequestDto> finishProductSampleRequestDtoList);
+
+  public List<FinishProductSample> getAllFinishProductSamplesByPlant(
+      FinishProductSampleType finishProductSampleType, UserPrincipal currentUser);
 }

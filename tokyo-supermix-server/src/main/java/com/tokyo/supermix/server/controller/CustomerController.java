@@ -169,15 +169,15 @@ public class CustomerController {
   }
 
   @GetMapping(value = EndpointURI.EXPORT_CUSTOMER)
-  public ResponseEntity<Object> exportCustomer(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> exportCustomer(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.CUSTOMER_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     CustomerLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     CustomerFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        customerService.getAllCustomers());
+        customerService.getAllCustomerByCurrentUser(currentUser));
     String fileName = FileStorageConstants.CUSTOMER_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");

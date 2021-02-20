@@ -166,10 +166,10 @@ public class ProjectController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.PROJECTS,
-            projectService.searchProject(booleanBuilder, code, plantName, name, customerName, contactPerson, startDate , plantCode, pageable, pagination, contactNumber), RestApiResponseStatus.OK ,pagination),
-         HttpStatus.OK);
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PROJECTS,
+        projectService.searchProject(booleanBuilder, code, plantName, name, customerName,
+            contactPerson, startDate, plantCode, pageable, pagination, contactNumber),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 
   @GetMapping(value = EndpointURI.GET_PROJECTS_BY_PLANT_CODE)
@@ -218,15 +218,15 @@ public class ProjectController {
   }
 
   @GetMapping(value = EndpointURI.EXPORT_PROJECT)
-  public ResponseEntity<Object> exportProject(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> exportProject(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.PROJECT_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     ProjectLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     ProjectFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        projectService.getAllProjects());
+        projectService.getAllProjectsByPlant(currentUser, null));
     String fileName = FileStorageConstants.PROJECT_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");

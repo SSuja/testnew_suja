@@ -202,15 +202,15 @@ public class PlantEquipmentController {
   }
 
   @GetMapping(value = EndpointURI.EXPORT_PLANT_EQUIPMENT)
-  public ResponseEntity<Object> exportPlantEquiment(HttpServletResponse response)
-      throws ClassNotFoundException {
+  public ResponseEntity<Object> exportPlantEquiment(HttpServletResponse response,
+      @CurrentUser UserPrincipal currentUser) throws ClassNotFoundException {
     HSSFWorkbook workbook = new HSSFWorkbook();
     HSSFSheet worksheet = workbook.createSheet(FileStorageConstants.PLANT_EQUIPMENT_WORK_SHEET);
     int startRowIndex = 0;
     int startColIndex = 0;
     PlantEquipmentLayouter.buildReport(worksheet, startRowIndex, startColIndex);
     PlantEquipmentFillManager.fillReport(worksheet, startRowIndex, startColIndex,
-        plantEquipmentService.getAllPlantEquipments());
+        plantEquipmentService.getAllPlantEquipmentByPlant(currentUser));
     String fileName = FileStorageConstants.PLANT_EQUIPMENT_FILE_NAME;
     response.setHeader("Content-Disposition", "inline; filename=" + fileName);
     response.setContentType("application/vnd.ms-excel");

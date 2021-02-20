@@ -115,6 +115,7 @@ public interface RawMaterialService {
 
   public void deleteMaterialByCoreTestConfigure(Long rawMaterialId);
 
+  public List<RawMaterial> getAllMaterials(String plantCode, MaterialType materialType, Long sbuId);
   public void saveMQPForRawMaterial(
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
       Long rawMaterialId);
