@@ -29,6 +29,13 @@ public interface PlantEquipmentRepository extends JpaRepository<PlantEquipment, 
   List<PlantEquipment> findAllByPlantCode(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
-  
+
   List<PlantEquipment> findBySentMail(boolean sentMail);
+
+  Page<PlantEquipment> findAllByOrderByUpdatedAtDesc(Pageable pageable);
+
+  List<PlantEquipment> findByPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
+
+  List<PlantEquipment> findByPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes,
+      Pageable pageable);
 }
