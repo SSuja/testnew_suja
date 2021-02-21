@@ -28,6 +28,8 @@ public final class PrivilegeEndpointURI {
    */
   public static final String ROLE = BASE_API_PATH + "role";
   public static final String ROLES = BASE_API_PATH + "roles";
+  public static final String ROLES_PAGE = BASE_API_PATH + "roles-page";
+  public static final String ROLES_SEARCH = BASE_API_PATH + "roles-search";
   public static final String ROLE_BY_ID = ROLE + ID;
 
   /*
@@ -161,9 +163,10 @@ public final class PrivilegeEndpointURI {
   public static final String USER_PLANT_PERMISSION_BY_USER_ID =
       USER_PLANT_PERMISSION + SLASH + "{userId}";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
-      USER_PLANT_PERMISSION + SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
+      USER_PLANT_PERMISSION + SLASH + "{userId}" + SLASH + "{plantCode}" + SLASH + "{status}";
   public static final String USER_PLANT_PERMISSIONS_BY_USER_ID_AND_PLANTCODE_AND_STATUS =
-      USER_PLANT_PERMISSION + SLASH +"userId"+SLASH + "{userId}"+SLASH+"{plantCode}"+SLASH+ "{status}";
+      USER_PLANT_PERMISSION + SLASH + "userId" + SLASH + "{userId}" + SLASH + "{plantCode}" + SLASH
+          + "{status}";
   public static final String USER_PLANT_PERMISSION_BY_USER_ID_FOR_GET_PLANTS =
       USER_PLANT_PERMISSION + SLASH + "plants" + SLASH + "{userId}";
 }
