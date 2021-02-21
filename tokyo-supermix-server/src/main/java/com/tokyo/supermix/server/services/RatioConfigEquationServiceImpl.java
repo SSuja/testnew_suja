@@ -65,6 +65,7 @@ public class RatioConfigEquationServiceImpl implements RatioConfigEquationServic
     return ratioConfigEquationRepository.existsByRatioConfigIdAndRatio(ratioConfigId, ratio);
   }
 
+  @Transactional(readOnly = true)
   public boolean checkRatioEquationContainsRatioConfigParameter(
       RatioConfigEquationRequestDto ratioConfigEquationRequestDto) {
     for (RatioConfigParameter ratioConfigParameter : ratioConfigParameterRepository
@@ -73,6 +74,23 @@ public class RatioConfigEquationServiceImpl implements RatioConfigEquationServic
           .contains(ratioConfigParameter.getAbbreviation())) {
         return false;
       }
+    }
+    return true;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean checkRatioEquationContainsValid(
+      RatioConfigEquationRequestDto ratioConfigEquationRequestDto) {
+    if (ratioConfigEquationRequestDto.getRatio().isEmpty()) {
+      return true;
+    } else if (ratioConfigEquationRequestDto.getRatio().contains("+")
+        || ratioConfigEquationRequestDto.getRatio().contains("-")
+        || ratioConfigEquationRequestDto.getRatio().contains("*")
+        || ratioConfigEquationRequestDto.getRatio().contains("/")
+        || ratioConfigEquationRequestDto.getRatio().contains("(")
+        || ratioConfigEquationRequestDto.getRatio().contains(")")
+        || ratioConfigEquationRequestDto.getRatio().contains("²")) {
+      return false;
     }
     return true;
   }
