@@ -22,6 +22,7 @@ public final class EndpointURI {
   public static final String PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String SEARCH_PLANT = PLANT + SEARCH;
+  public static final String PLANT_PAGINATION = BASE_API_PATH + "plant-page";
 
   /*
    * Designation API
