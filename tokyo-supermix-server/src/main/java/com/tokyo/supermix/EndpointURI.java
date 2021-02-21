@@ -868,6 +868,8 @@ public final class EndpointURI {
    */
   public static final String RATIO_CONFIG = BASE_API_PATH + "ratio-config";
   public static final String RATIO_CONFIGS = BASE_API_PATH + "ratio-configs";
+  public static final String RATIO_CONFIGS_PAGE = BASE_API_PATH + "ratio-configs-page";
+  public static final String RATIO_CONFIGS_SERACH = BASE_API_PATH + "ratio-configs-search";
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
   public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
       RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
@@ -924,6 +926,6 @@ public final class EndpointURI {
       + "multi-result-formula" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String MULTI_RESULT_PARAMETERS_BY_TEST_CONFIGURE_ID =
       BASE_API_PATH + "parameters" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-  
+
   private EndpointURI() {}
 }
