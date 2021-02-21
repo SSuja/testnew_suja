@@ -27,8 +27,8 @@ public interface TestConfigureService {
 
   public TestConfigureDto getTestConfigureDetailsByConfigureId(Long id);
 
-  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId,
-      Long rawMaterialId);
+  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialCategory,
+      Long materialSubCategoryId, Long rawMaterialId);
 
   public List<TestConfigure> findByTestType(MainType testType);
 
@@ -40,9 +40,6 @@ public interface TestConfigureService {
       Long materialSubCategoryId, MainType testType);
 
   public Long updateTestConfigure(TestConfigure testConfigure);
-
-  public boolean isUpdatedMaterialSubCategoryAndTest(Long id, Long testId,
-      Long materialSubCategoryId, Long rawMaterialId);
 
   public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId);
 
