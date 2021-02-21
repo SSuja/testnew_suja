@@ -141,14 +141,14 @@ public class RatioConfigController {
   }
 
   @GetMapping(value = EndpointURI.RATIO_CONFIGS_PAGE)
-  public ResponseEntity<Object> getIncomingSamplesByUserPermission(
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+  public ResponseEntity<Object> getRatioConfigsWithPagination(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     pagination.setTotalRecords(ratioConfigService.getAllRatioConfigCount());
     return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
+        new PaginatedContentResponse<>(Constants.RATIO_CONFIGS,
             mapper.map(ratioConfigService.findAllWithPagination(pageable),
                 RatioConfigResponseDto.class),
             RestApiResponseStatus.OK, pagination),
@@ -156,7 +156,7 @@ public class RatioConfigController {
   }
 
   @GetMapping(value = EndpointURI.RATIO_CONFIGS_SERACH)
-  public ResponseEntity<Object> searchCustomer(@PathVariable String plantCode,
+  public ResponseEntity<Object> searchRatioConfig(
       @RequestParam(name = "name", required = false) String name,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
@@ -164,7 +164,7 @@ public class RatioConfigController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
-        new PaginatedContentResponse<>(Constants.CUSTOMERS,
+        new PaginatedContentResponse<>(Constants.RATIO_CONFIGS,
             mapper.map(
                 ratioConfigService.searchRatioConfig(name, booleanBuilder, pageable, pagination),
                 RatioConfigResponseDto.class),
