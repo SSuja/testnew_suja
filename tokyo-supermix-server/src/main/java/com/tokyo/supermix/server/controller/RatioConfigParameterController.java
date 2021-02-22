@@ -153,6 +153,20 @@ public class RatioConfigParameterController {
                 validationFailureStatusCodes.getAbbreviationAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
+      if (ratioConfigParameterService.checkValidationForAbbre(
+          ratioConfigParameterRequestDto.getId(), ratioConfigParameterRequestDto.getRatioConfigId(),
+          ratioConfigParameterRequestDto.getAbbreviation())) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
+      if (ratioConfigParameterService.updateCheck(ratioConfigParameterRequestDto)) {
+        return new ResponseEntity<>(
+            new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
+                validationFailureStatusCodes.getAbbreviationAlreadyExist()),
+            HttpStatus.BAD_REQUEST);
+      }
       ratioConfigParameterService.UpdateRatioConfigParameters(
           mapper.map(ratioConfigParameterRequestDto, RatioConfigParameter.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,

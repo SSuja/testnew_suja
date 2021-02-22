@@ -101,6 +101,16 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
   }
 
   @Transactional(readOnly = true)
+  public boolean checkValidationForAbbre(Long id, Long ratioConfigId, String abbre) {
+    if ((!ratioConfigParameterRepository.findById(id).get().getAbbreviation().equals(abbre)
+        && (ratioConfigParameterRepository.existsByRatioConfigIdAndAbbreviation(ratioConfigId,
+            abbre)))) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
   public boolean checkValidationForRawMaterialAndAbbre(Long id, Long ratioConfigId,
       Long rawMaterialId, String abbre) {
     if ((!ratioConfigParameterRepository.findById(id).get().getRawMaterial().getId()
@@ -154,6 +164,15 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
           || ratioConfigParameterRequestDto.getUnitId() == null) {
         return true;
       }
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean updateCheck(RatioConfigParameterRequestDto ratioConfigParameterRequestDto) {
+    if (ratioConfigParameterRequestDto.getAbbreviation() == null
+        || ratioConfigParameterRequestDto.getAbbreviation().isEmpty()) {
+      return true;
     }
     return false;
   }

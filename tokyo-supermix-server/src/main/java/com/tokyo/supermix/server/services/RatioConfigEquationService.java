@@ -26,4 +26,7 @@ public interface RatioConfigEquationService {
 
   public boolean checkRatioEquationContainsRatioConfigParameter(
       RatioConfigEquationRequestDto ratioConfigEquationRequestDto);
+
+  public boolean checkRatioEquationContainsValid(
+      RatioConfigEquationRequestDto ratioConfigEquationRequestDto);
 }

@@ -1,9 +1,11 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
-
+import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.MixDesignTestConfigDetailsDto;
 import com.tokyo.supermix.data.entities.RatioConfig;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface RatioConfigService {
 
@@ -26,4 +28,11 @@ public interface RatioConfigService {
   public void deleteRatioConfigReset(Long ratioConfigId);
 
   public boolean checkRatioConfigDepend(Long ratioConfigId);
+
+  public List<RatioConfig> findAllWithPagination(Pageable pageable);
+
+  public List<RatioConfig> searchRatioConfig(String name, BooleanBuilder booleanBuilder,
+      Pageable pageable, Pagination pagination);
+
+  public Long getAllRatioConfigCount();
 }
