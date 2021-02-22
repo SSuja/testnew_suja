@@ -22,6 +22,7 @@ public final class EndpointURI {
   public static final String PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String SEARCH_PLANT = PLANT + SEARCH;
+  public static final String PLANT_PAGINATION = BASE_API_PATH + "plant-page";
 
   /*
    * Designation API
@@ -36,6 +37,9 @@ public final class EndpointURI {
   public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
   public static final String SUPPLIER_CATEGORY_BY_ID = SUPPLIER_CATEGORY + ID;
   public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
+  public static final String SUPPLIER_CATEGORY_PAGINATION =
+      BASE_API_PATH + "supplier-category-page";
+  public static final String SEARCH_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + SEARCH;
 
   /*
    * Supplier Apis
@@ -924,6 +928,6 @@ public final class EndpointURI {
       + "multi-result-formula" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String MULTI_RESULT_PARAMETERS_BY_TEST_CONFIGURE_ID =
       BASE_API_PATH + "parameters" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-  
+
   private EndpointURI() {}
 }

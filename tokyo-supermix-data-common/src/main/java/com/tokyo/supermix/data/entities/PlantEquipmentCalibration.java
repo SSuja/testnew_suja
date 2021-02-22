@@ -44,6 +44,9 @@ public class PlantEquipmentCalibration implements Serializable {
   private String accuracy;
   private Long noOfDays;
   private boolean sentMail;
+  @ManyToOne
+  @JoinColumn(name = "unitId", nullable = true)
+  private Unit unit;
 
   public Long getNoOfDays() {
     return noOfDays;
@@ -151,5 +154,13 @@ public class PlantEquipmentCalibration implements Serializable {
 
   public void setSentMail(boolean sentMail) {
     this.sentMail = sentMail;
+  }
+
+  public Unit getUnit() {
+    return unit;
+  }
+
+  public void setUnit(Unit unit) {
+    this.unit = unit;
   }
 }

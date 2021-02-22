@@ -4,15 +4,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.tokyo.supermix.data.entities.Plant;
+import com.tokyo.supermix.data.entities.QPlant;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.repositories.PlantRepository;
 import com.tokyo.supermix.notification.EmailNotification;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.server.services.privilege.PlantPermissionService;
@@ -91,5 +95,39 @@ public class PlantServiceImpl implements PlantService {
       });
     }
     return plantRepository.save(plant);
+  }
+
+  @Transactional(readOnly = true)
+  public List<Plant> getAllPlantByPageable(Pageable pageable) {
+    return plantRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<Plant> searchPlant(String code, String name, String address,
+      String subBusinessUnitName, String phoneNumber, BooleanBuilder booleanBuilder, int page,
+      int size, Pageable pageable, Pagination pagination) {
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(QPlant.plant.code.contains(code));
+    }
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QPlant.plant.name.contains(name));
+    }
+    if (address != null && !address.isEmpty()) {
+      booleanBuilder.and(QPlant.plant.address.contains(address));
+    }
+    if (subBusinessUnitName != null && !subBusinessUnitName.isEmpty()) {
+      booleanBuilder.and(QPlant.plant.subBusinessUnit.name.contains(subBusinessUnitName));
+    }
+    if (phoneNumber != null && !phoneNumber.isEmpty()) {
+      booleanBuilder.and(QPlant.plant.phoneNumber.contains(phoneNumber));
+    }
+    pagination
+        .setTotalRecords(((List<Plant>) plantRepository.findAll(booleanBuilder)).stream().count());
+    return plantRepository.findAll(booleanBuilder, pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public Long countPlant() {
+    return plantRepository.count();
   }
 }
