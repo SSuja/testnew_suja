@@ -1,20 +1,28 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.Collection;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.DesignationDto;
 import com.tokyo.supermix.data.entities.Designation;
+import com.tokyo.supermix.data.entities.QDesignation;
+import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.DesignationRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class DesignationServiceImpl implements DesignationService {
 
   @Autowired
   private DesignationRepository designationRepository;
+
+  @Autowired
+  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public List<Designation> getAllDesignations() {
@@ -55,4 +63,28 @@ public class DesignationServiceImpl implements DesignationService {
     return false;
   }
 
+  @Transactional(readOnly = true)
+  public Long getCountDesignation() {
+    return designationRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public List<Designation> getAllDesignation(Pageable pageable) {
+    return designationRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<DesignationDto> searchDesignation(BooleanBuilder booleanBuilder, String name,
+      String description, Pageable pageable, Pagination pagination) {
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QDesignation.designation.name.contains(name));
+    }
+    if (description != null && !description.isEmpty()) {
+      booleanBuilder.and(QDesignation.designation.name.contains(description));
+    }
+    pagination.setTotalRecords(
+        ((Collection<Designation>) designationRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(designationRepository.findAll(booleanBuilder, pageable).toList(),
+        DesignationDto.class);
+  }
 }

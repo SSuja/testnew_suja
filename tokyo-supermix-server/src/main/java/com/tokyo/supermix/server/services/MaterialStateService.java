@@ -1,7 +1,11 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import org.springframework.data.domain.Pageable;
+import com.querydsl.core.BooleanBuilder;
+import com.tokyo.supermix.data.dto.MaterialStateDto;
 import com.tokyo.supermix.data.entities.MaterialState;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 public interface MaterialStateService {
   public MaterialState saveMaterialState(MaterialState materialState);
@@ -17,4 +21,12 @@ public interface MaterialStateService {
   public boolean isUpdatedMaterialStateExist(Long id, String materialState);
 
   public void deleteMaterialState(Long id);
+
+  public Long getCountMaterialState();
+
+  public List<MaterialState> getAllMaterialState(Pageable pageable);
+
+  public List<MaterialStateDto> searchMaterialState(BooleanBuilder booleanBuilder, String materialState,
+      Pageable pageable, Pagination pagination);
+
 }
