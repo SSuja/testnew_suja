@@ -126,6 +126,11 @@ public class UserServiceImpl implements UserService {
 
   private User saveUserPassword(User user, String password) {
     user.setPassword(passwordEncoder.encode(password));
+    return userRepository.save(user);
+  }
+
+  private User saveChangeUserPassword(User user, String password) {
+    user.setPassword(passwordEncoder.encode(password));
     user.setTemporaryPassword(true);
     return userRepository.save(user);
   }
@@ -192,7 +197,7 @@ public class UserServiceImpl implements UserService {
 
   @Transactional
   public void changeUserPassword(User user, String newPassword) {
-    saveUserPassword(user, newPassword);
+    saveChangeUserPassword(user, newPassword);
   }
 
   @Transactional(readOnly = true)
