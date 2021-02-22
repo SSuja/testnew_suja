@@ -133,7 +133,7 @@ public class MaterialStateController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MATERIAL_STATE,
-        materialStateService.searchDesignation(booleanBuilder, materialState,pageable, pagination),
+        materialStateService.searchMaterialState(booleanBuilder, materialState,pageable, pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

@@ -68,7 +68,7 @@ public class MaterialStateServiceImpl implements MaterialStateService {
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialStateDto> searchDesignation(BooleanBuilder booleanBuilder, String materialState,
+  public List<MaterialStateDto> searchMaterialState(BooleanBuilder booleanBuilder, String materialState,
      Pageable pageable, Pagination pagination) {  
     if (materialState != null && !materialState.isEmpty()) {
       booleanBuilder.and(QMaterialState.materialState1.materialState.contains(materialState));
