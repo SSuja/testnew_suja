@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.dto.auth.LoginRequestDto;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.auth.VerificationToken;
+import com.tokyo.supermix.data.repositories.auth.UserRepository;
 import com.tokyo.supermix.data.repositories.auth.VerificationTokenRepository;
 import com.tokyo.supermix.security.JwtTokenProvider;
 
@@ -28,11 +29,14 @@ public class AuthServiceImpl implements AuthService {
   PasswordEncoder passwordEncoder;
   @Autowired
   VerificationTokenRepository verificationTokenRepository;
+  @Autowired
+  UserRepository userRepository;
 
   @Transactional(readOnly = true)
   public String generateUserToken(LoginRequestDto loginRequestDto) {
     UserDetails userDetails =
         authUserDetailsService.loadUserByUsername(loginRequestDto.getUsernameOrEmail());
+    User user = userRepository.findByUserName(loginRequestDto.getUsernameOrEmail());
     if (userDetails != null) {
       UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
           new UsernamePasswordAuthenticationToken(userDetails, loginRequestDto.getPassword(),
@@ -40,10 +44,14 @@ public class AuthServiceImpl implements AuthService {
       if (authenticationManager.authenticate(usernamePasswordAuthenticationToken)
           .isAuthenticated()) {
         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        return tokenProvider.generateToken(usernamePasswordAuthenticationToken);
+        if (user.isTemporaryPassword()) {
+          return tokenProvider.generateToken(usernamePasswordAuthenticationToken);
+        } else {
+          return "FORGOT_PASSWORD";
+        }
       }
     }
-    return "FORGOT_PASSWORD";
+    return null;
   }
 
   @Transactional(readOnly = true)
@@ -54,16 +62,17 @@ public class AuthServiceImpl implements AuthService {
   @Transactional
   public void createForgotPasswordToken(String token, User user) {
     VerificationToken verificationToken = new VerificationToken(token, user);
-    if(verificationTokenRepository.existsByUser(user)) {
-      
+    if (verificationTokenRepository.existsByUser(user)) {
+
       verificationTokenRepository.delete(verificationTokenRepository.findByUser(user));
     }
-      verificationTokenRepository.save(verificationToken);
+    verificationTokenRepository.save(verificationToken);
   }
 
   @Transactional(readOnly = true)
-  public String validatePasswordResetToken(String token ,String email) {
-    final VerificationToken passToken = verificationTokenRepository. findByTokenAndUserEmail(token,email);
+  public String validatePasswordResetToken(String token, String email) {
+    final VerificationToken passToken =
+        verificationTokenRepository.findByTokenAndUserEmail(token, email);
     return !isTokenFound(passToken) ? "tokenString"
         : isTokenExpired(passToken) ? "expiryDate" : null;
   }
@@ -79,6 +88,6 @@ public class AuthServiceImpl implements AuthService {
 
   @Transactional(readOnly = true)
   public User getUserByPasswordResetToken(String token, String email) {
-    return verificationTokenRepository.findByTokenAndUserEmail(token,email).getUser();
+    return verificationTokenRepository.findByTokenAndUserEmail(token, email).getUser();
   }
 }
