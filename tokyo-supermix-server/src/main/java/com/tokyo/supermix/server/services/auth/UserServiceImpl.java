@@ -126,6 +126,7 @@ public class UserServiceImpl implements UserService {
 
   private User saveUserPassword(User user, String password) {
     user.setPassword(passwordEncoder.encode(password));
+    user.setTemporaryPassword(true);
     return userRepository.save(user);
   }
 

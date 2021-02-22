@@ -22,7 +22,7 @@ public class AuthUserDetailsService implements UserDetailsService {
     User user = userRepository.findByUserNameOrEmail(usernameOrEmail, usernameOrEmail)
         .orElseThrow(() -> new UsernameNotFoundException(
             "User not found with username or email :" + usernameOrEmail));
-    return user.getIsActive() ? UserPrincipal.create(user) : null;
+    return user.getIsActive() &&  user.isTemporaryPassword() ? UserPrincipal.create(user) : null;
   }
 
 

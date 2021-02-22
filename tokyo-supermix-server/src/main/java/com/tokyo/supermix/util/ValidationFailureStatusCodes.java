@@ -2183,6 +2183,16 @@ public class ValidationFailureStatusCodes {
     this.materialQualityParameterAlreadyExists = materialQualityParameterAlreadyExists;
   }
 
+  @Value("${validation.days.null}")
+  private String daysIsnull;
+
+  public String getDaysIsnull() {
+    return daysIsnull;
+  }
+
+  public void setDaysIsnull(String daysIsnull) {
+    this.daysIsnull = daysIsnull;
+  }
   @Value("${validation.parameter.parameterAlreadyDepended}")
   private String parameterAlreadyDepended;
 

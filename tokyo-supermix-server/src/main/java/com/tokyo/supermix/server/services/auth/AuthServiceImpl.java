@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
         return tokenProvider.generateToken(usernamePasswordAuthenticationToken);
       }
     }
-    return null;
+    return "FORGOT_PASSWORD";
   }
 
   @Transactional(readOnly = true)

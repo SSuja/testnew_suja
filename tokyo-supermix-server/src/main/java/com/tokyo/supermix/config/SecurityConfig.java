@@ -63,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/downloadFile/**").permitAll()
         .antMatchers(HttpMethod.GET,"/api/v1/employee/confirmation/**").permitAll() 
         .antMatchers(HttpMethod.GET,"/api/v1/mix-design/confirmation/**").permitAll() 
-        // plant
+        .antMatchers(HttpMethod.PUT,"/api/v1/auth/change-password/**").permitAll() 
+               // plant
         .antMatchers(HttpMethod.GET, EndpointURI.PLANTS)
         .hasAuthority(PermissionConstants.VIEW_PLANT)
         .antMatchers(HttpMethod.POST, EndpointURI.PLANT)

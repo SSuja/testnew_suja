@@ -22,6 +22,17 @@ public class PrivilegeValidationFailureStatusCodes {
   private String isPasswordTokenFailed;
   @Value("${auth.userNotActive.invalid}")
   private String userNotActive;
+  @Value("${auth.userTemporaryPassword.invalid}")
+  private String TemporaryPassword;
+
+ 
+   public String getTemporaryPassword() {
+    return TemporaryPassword;
+  }
+
+  public void setTemporaryPassword(String temporaryPassword) {
+    TemporaryPassword = temporaryPassword;
+  }
 
   public String getPassword() {
     return password;
