@@ -473,9 +473,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   private void dependedDelete(TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureRequestDto.getAcceptedType().equals(AcceptedType.TEST)) {
-      if (materialAcceptedValueRepository
-          .existsByTestConfigureId(testConfigureRequestDto.getId())) {
-        materialAcceptedValueRepository.deleteByTestConfigureId(testConfigureRequestDto.getId());
+      if (acceptedValueRepository.existsByTestConfigureId(testConfigureRequestDto.getId())) {
+        acceptedValueRepository.deleteByTestConfigureId(testConfigureRequestDto.getId());
       }
     } else {
       if (materialAcceptedValueRepository
