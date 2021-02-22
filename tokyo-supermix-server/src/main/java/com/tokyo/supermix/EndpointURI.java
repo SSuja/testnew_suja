@@ -97,8 +97,8 @@ public final class EndpointURI {
   public static final String UNIT = BASE_API_PATH + "unit";
   public static final String UNITS = BASE_API_PATH + "units";
   public static final String UNIT_BY_ID = UNIT + ID;
-  public static final String SEARCH_UNIT = UNIT + SEARCH + SLASH + "{plantCode}";
-  public static final String UNITS_PAGINATION=UNITS+"/pagination";
+  public static final String SEARCH_UNIT = UNIT + SEARCH;
+  public static final String UNITS_PAGINATION = UNITS + SLASH + "pagination";
 
   /*
    * MaterialSubCategory Apis
@@ -871,8 +871,9 @@ public final class EndpointURI {
   public static final String SUB_BUSINESS_UNIT = BASE_API_PATH + "sub-business-unit";
   public static final String SUB_BUSINESS_UNITS = BASE_API_PATH + "sub-business-units";
   public static final String SUB_BUSINESS_UNIT_BY_ID = SUB_BUSINESS_UNIT + ID;
-  public static final String SUB_BUSINESS_UNIT_SEARCH=SUB_BUSINESS_UNIT+SLASH +"search";
-  public static final String SUB_BUSINESS_UNITS_PAGINATION=SUB_BUSINESS_UNITS +"/pagination";
+  public static final String SUB_BUSINESS_UNIT_SEARCH = SUB_BUSINESS_UNIT + SLASH + "search";
+  public static final String SUB_BUSINESS_UNITS_PAGINATION =
+      SUB_BUSINESS_UNITS + SLASH + "pagination";
 
   /*
    * ratioConfig API

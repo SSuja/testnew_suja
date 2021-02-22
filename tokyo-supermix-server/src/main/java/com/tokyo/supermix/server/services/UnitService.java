@@ -23,7 +23,7 @@ public interface UnitService {
   public boolean isUpdatedUnitExist(Long id, String unit);
 
   public List<Unit> searchUnit(BooleanBuilder booleanBuilder, String unit, Pageable pageable,
-      String plantCode, Pagination pagination);
+      Pagination pagination);
 
   public List<Unit> getAllUnits(Pageable pageable);
 

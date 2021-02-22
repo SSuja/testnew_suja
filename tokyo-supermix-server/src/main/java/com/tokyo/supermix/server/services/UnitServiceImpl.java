@@ -59,7 +59,7 @@ public class UnitServiceImpl implements UnitService {
 
   @Transactional
   public List<Unit> searchUnit(BooleanBuilder booleanBuilder, String unit, Pageable pageable,
-      String plantCode, Pagination pagination) {
+      Pagination pagination) {
     if (unit != null && !unit.isEmpty()) {
       booleanBuilder.and(QUnit.unit1.unit.contains(unit));
     }

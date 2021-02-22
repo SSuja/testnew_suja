@@ -104,14 +104,14 @@ public class UnitController {
   }
 
   @GetMapping(value = EndpointURI.SEARCH_UNIT)
-  public ResponseEntity<Object> getUnitSearch(@PathVariable String plantCode,
+  public ResponseEntity<Object> getUnitSearch(
       @RequestParam(name = "unit", required = false) String unit,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.UNITS,
-        mapper.map(unitService.searchUnit(booleanBuilder, unit, pageable, plantCode, pagination),
+        mapper.map(unitService.searchUnit(booleanBuilder, unit, pageable,pagination),
             UnitDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
