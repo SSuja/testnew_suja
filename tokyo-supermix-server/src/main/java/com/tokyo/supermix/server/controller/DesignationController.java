@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.DesignationDto;
 import com.tokyo.supermix.data.entities.Designation;
@@ -20,6 +24,8 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.DesignationService;
 import com.tokyo.supermix.util.Constants;
@@ -112,4 +118,32 @@ public class DesignationController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION_NAME,
         validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
   }
+
+  @GetMapping(value = EndpointURI.DESIGNATION_PAGEABLE)
+  public ResponseEntity<Object> getAllDesignation(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(designationService.getCountDesignation());
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.DESIGNATIONS,
+        mapper.map(designationService.getAllDesignation(pageable), DesignationDto.class),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+  }
+  @GetMapping(value = EndpointURI.SEARCH_DESIGNATION)
+  public ResponseEntity<Object> getDesignationSearch(
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "description", required = false) String description,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.DESIGNATIONS,
+        designationService.searchDesignation(booleanBuilder, name, description,pageable, pagination),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+  }
+
+  
+  
 }

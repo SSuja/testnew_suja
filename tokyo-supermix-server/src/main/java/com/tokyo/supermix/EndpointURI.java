@@ -28,7 +28,9 @@ public final class EndpointURI {
    */
   public static final String DESIGNATION = BASE_API_PATH + "designation";
   public static final String DESIGNATIONS = BASE_API_PATH + "designations";
+  public static final String DESIGNATION_PAGEABLE = BASE_API_PATH + "designations"+  SLASH + "pageable";
   public static final String DESIGNATION_BY_ID = DESIGNATION + ID;
+  public static final String SEARCH_DESIGNATION =DESIGNATION +SEARCH;
 
   /*
    * Supplier Category apis
@@ -153,6 +155,8 @@ public final class EndpointURI {
   public static final String MATERIAL_STATE = BASE_API_PATH + "material-state";
   public static final String MATERIAL_STATES = BASE_API_PATH + "material-states";
   public static final String MATERIAL_STATE_BY_ID = MATERIAL_STATE + ID;
+  public static final String MATERIAL_STATE_PAGEABLE = MATERIAL_STATE +  SLASH + "pageable";
+  public static final String SEARCH_MATERIAL_STATE = MATERIAL_STATE +SEARCH;
   /*
    * Raw Material apis
    */
