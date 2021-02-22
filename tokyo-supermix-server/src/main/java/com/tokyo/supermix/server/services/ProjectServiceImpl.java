@@ -39,7 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Transactional(readOnly = true)
   public List<Project> getAllProjectsByPlant(UserPrincipal currentUser, Pageable pageable) {
-    return projectRepository.findByPlantCodeIn(currentUserPermissionPlantService
+    return projectRepository.findByPlantCodeInOrderByUpdatedAtDesc(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_PROJECT),
         pageable);
   }
@@ -142,7 +142,7 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Transactional(readOnly = true)
   public List<Project> getProjectByPlantCode(String plantCode, Pageable pageable) {
-    return projectRepository.findAllByPlantCode(plantCode, pageable);
+    return projectRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)

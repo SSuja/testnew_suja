@@ -3,7 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.EndpointURI;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.entities.Plant;
@@ -23,7 +24,9 @@ import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
 import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.security.CurrentUser;
 import com.tokyo.supermix.security.UserPrincipal;
 import com.tokyo.supermix.server.services.PlantService;
@@ -119,12 +122,32 @@ public class PlantController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
+  @GetMapping(value = EndpointURI.PLANT_PAGINATION)
+  public ResponseEntity<Object> getAllPlantsForPagination(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    pagination.setTotalRecords(plantService.countPlant());
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANT,
+        mapper.map(plantService.getAllPlantByPageable(pageable), PlantDto.class),
+        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+  }
+
   @GetMapping(value = EndpointURI.SEARCH_PLANT)
-  public ResponseEntity<Object> getPlantSearch(
-      @QuerydslPredicate(root = Plant.class) Predicate predicate,
-      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-    return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTS,
-        plantService.searchPlant(predicate, size, page), RestApiResponseStatus.OK), null,
-        HttpStatus.OK);
+  public ResponseEntity<Object> searchPlant(@RequestParam(name = "page") int page,
+      @RequestParam(name = "size") int size,
+      @RequestParam(name = "code", required = false) String code,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "address", required = false) String address,
+      @RequestParam(name = "subBusinessUnitName", required = false) String subBusinessUnitName,
+      @RequestParam(name = "phoneNumber", required = false) String phoneNumber) {
+    Pageable pageable = PageRequest.of(page, size);
+    Pagination pagination = new Pagination(0, 0, 0, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.PLANT,
+        mapper.map(plantService.searchPlant(code, name, address, subBusinessUnitName, phoneNumber,
+            booleanBuilder, page, size, pageable, pagination), PlantDto.class),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

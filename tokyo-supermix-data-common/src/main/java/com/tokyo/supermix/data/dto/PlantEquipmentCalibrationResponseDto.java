@@ -18,6 +18,7 @@ public class PlantEquipmentCalibrationResponseDto {
   private EmployeeResponseDto employee;
   private PlantEquipmentResponseDto plantEquipment;
   private boolean sentMail;
+  private UnitDto unit;
 
   public Long getId() {
     return id;
@@ -115,4 +116,11 @@ public class PlantEquipmentCalibrationResponseDto {
     this.sentMail = sentMail;
   }
 
+  public UnitDto getUnit() {
+    return unit;
+  }
+
+  public void setUnit(UnitDto unit) {
+    this.unit = unit;
+  }
 }

@@ -104,6 +104,12 @@ public class RatioConfigEquationController {
               validationFailureStatusCodes.getRatioConfigRatioParaNotExists()),
           HttpStatus.BAD_REQUEST);
     }
+    if (ratioConfigEquationService.checkRatioEquationContainsValid(ratioConfigEquationRequestDto)) {
+      return new ResponseEntity<>(
+          new ValidationFailureResponse(Constants.RATIO_CONFIG_EQUATION,
+              validationFailureStatusCodes.getRatioConfigRatioParaNotExists()),
+          HttpStatus.BAD_REQUEST);
+    }
     ratioConfigEquationService.saveRatioConfigEquation(
         mapper.map(ratioConfigEquationRequestDto, RatioConfigEquation.class));
     return new ResponseEntity<>(

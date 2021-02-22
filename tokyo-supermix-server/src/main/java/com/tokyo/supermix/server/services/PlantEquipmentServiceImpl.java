@@ -122,13 +122,12 @@ public class PlantEquipmentServiceImpl implements PlantEquipmentService {
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getAllPlantEquipment(Pageable pageable) {
-
-    return plantEquipmentRepository.findAll(pageable).toList();
+    return plantEquipmentRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipment> getPlantEquipmentByPlantCode(String plantCode, Pageable pageable) {
-    return plantEquipmentRepository.findAllByPlantCode(plantCode, pageable);
+    return plantEquipmentRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)

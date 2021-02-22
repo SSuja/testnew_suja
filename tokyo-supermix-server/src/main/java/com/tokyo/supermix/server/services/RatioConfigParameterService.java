@@ -40,4 +40,8 @@ public interface RatioConfigParameterService {
   public boolean editCheck(Long ratioParameter, String abbreViation);
 
   public boolean addCheckPost(List<RatioConfigParameterRequestDto> ratioConfigParameterRequestDto);
+
+  public boolean checkValidationForAbbre(Long id, Long ratioConfigId, String abbre);
+
+  public boolean updateCheck(RatioConfigParameterRequestDto ratioConfigParameterRequestDto);
 }

@@ -22,6 +22,7 @@ public final class EndpointURI {
   public static final String PLANT_BY_CODE = PLANT + CODE;
   public static final String PLANTS = BASE_API_PATH + "plants";
   public static final String SEARCH_PLANT = PLANT + SEARCH;
+  public static final String PLANT_PAGINATION = BASE_API_PATH + "plant-page";
 
   /*
    * Designation API
@@ -38,6 +39,9 @@ public final class EndpointURI {
   public static final String SUPPLIER_CATEGORY = BASE_API_PATH + "supplier-category";
   public static final String SUPPLIER_CATEGORY_BY_ID = SUPPLIER_CATEGORY + ID;
   public static final String SUPPLIER_CATEGORIES = BASE_API_PATH + "supplier-categories";
+  public static final String SUPPLIER_CATEGORY_PAGINATION =
+      BASE_API_PATH + "supplier-category-page";
+  public static final String SEARCH_SUPPLIER_CATEGORY = SUPPLIER_CATEGORY + SEARCH;
 
   /*
    * Supplier Apis
@@ -99,6 +103,8 @@ public final class EndpointURI {
   public static final String UNIT = BASE_API_PATH + "unit";
   public static final String UNITS = BASE_API_PATH + "units";
   public static final String UNIT_BY_ID = UNIT + ID;
+  public static final String SEARCH_UNIT = UNIT + SEARCH;
+  public static final String UNITS_PAGINATION = UNITS + SLASH + "pagination";
 
   /*
    * MaterialSubCategory Apis
@@ -866,12 +872,17 @@ public final class EndpointURI {
   public static final String SUB_BUSINESS_UNIT = BASE_API_PATH + "sub-business-unit";
   public static final String SUB_BUSINESS_UNITS = BASE_API_PATH + "sub-business-units";
   public static final String SUB_BUSINESS_UNIT_BY_ID = SUB_BUSINESS_UNIT + ID;
+  public static final String SUB_BUSINESS_UNIT_SEARCH = SUB_BUSINESS_UNIT + SLASH + "search";
+  public static final String SUB_BUSINESS_UNITS_PAGINATION =
+      SUB_BUSINESS_UNITS + SLASH + "pagination";
 
   /*
    * ratioConfig API
    */
   public static final String RATIO_CONFIG = BASE_API_PATH + "ratio-config";
   public static final String RATIO_CONFIGS = BASE_API_PATH + "ratio-configs";
+  public static final String RATIO_CONFIGS_PAGE = BASE_API_PATH + "ratio-configs-page";
+  public static final String RATIO_CONFIGS_SERACH = BASE_API_PATH + "ratio-configs-search";
   public static final String RATIO_CONFIG_BY_ID = RATIO_CONFIG + ID;
   public static final String RATIO_CONFIG_DETAILS_CONFIG_ID =
       RATIO_CONFIG + SLASH + "details" + SLASH + "{ratioConfigId}";
@@ -928,6 +939,6 @@ public final class EndpointURI {
       + "multi-result-formula" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
   public static final String MULTI_RESULT_PARAMETERS_BY_TEST_CONFIGURE_ID =
       BASE_API_PATH + "parameters" + SLASH + "test-configure" + SLASH + "{testConfigureId}";
-  
+
   private EndpointURI() {}
 }

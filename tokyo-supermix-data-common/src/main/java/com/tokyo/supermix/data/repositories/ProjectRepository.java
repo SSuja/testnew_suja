@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.repositories;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -35,6 +36,12 @@ public interface ProjectRepository
   List<Project> findByPlantCodeAndNameContaining(String plantCode, String name);
 
   Project findByName(String name);
-  
+
   List<Project> findBySentMail(boolean sentMail);
+
+  Page<Project> findAllByOrderByUpdatedAtDesc(Pageable pageable);
+
+  List<Project> findByPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
+
+  List<Project> findByPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes, Pageable pageable);
 }

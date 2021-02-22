@@ -25,6 +25,7 @@ public class PlantEquipmentCalibrationRequestDto {
   @NotNull(message = "{plantEquipmentCalibrationRequestDto.noOfDays.null}")
   private Long noOfDays;
   private boolean sentMail;
+  private Long unitId;
 
   public Long getNoOfDays() {
     return noOfDays;
@@ -120,5 +121,13 @@ public class PlantEquipmentCalibrationRequestDto {
 
   public void setSentMail(boolean sentMail) {
     this.sentMail = sentMail;
+  }
+
+  public Long getUnitId() {
+    return unitId;
+  }
+
+  public void setUnitId(Long unitId) {
+    this.unitId = unitId;
   }
 }

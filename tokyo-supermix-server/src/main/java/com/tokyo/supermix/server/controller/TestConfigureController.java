@@ -30,7 +30,9 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
+import com.tokyo.supermix.server.services.AcceptedValueService;
 import com.tokyo.supermix.server.services.CoreTestConfigureService;
+import com.tokyo.supermix.server.services.MaterialAcceptedValueService;
 import com.tokyo.supermix.server.services.MaterialSubCategoryService;
 import com.tokyo.supermix.server.services.TestConfigureService;
 import com.tokyo.supermix.util.Constants;
@@ -50,6 +52,10 @@ public class TestConfigureController {
   private Mapper mapper;
   @Autowired
   CoreTestConfigureService coreTestConfigureService;
+  @Autowired
+  private AcceptedValueService acceptedValueService;
+  @Autowired
+  private MaterialAcceptedValueService materialAcceptedValueService;
 
   private static final Logger logger = Logger.getLogger(TestConfigureController.class);
 
@@ -57,7 +63,8 @@ public class TestConfigureController {
   public ResponseEntity<Object> createTestConfigure(
       @Valid @RequestBody TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureService.isExistByTestIdAndMaterialSubCategoryId(
-        testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialSubCategoryId(),
+        testConfigureRequestDto.getTestId(), testConfigureRequestDto.getMaterialCategoryId(),
+        testConfigureRequestDto.getMaterialSubCategoryId(),
         testConfigureRequestDto.getRawMaterialId())) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE,
           validationFailureStatusCodes.getTestConfigureAlreadyExist()), HttpStatus.BAD_REQUEST);
@@ -116,7 +123,10 @@ public class TestConfigureController {
         return new ResponseEntity<>(new ValidationFailureResponse(ValidationConstance.PREFIX,
             validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
       }
-      testConfigureService.resetAcceptedValueForCategories(testConfigureRequestDto);
+      if (acceptedValueService.existsAcceptedValueByTestConfigureId(testConfigureRequestDto.getId())
+          || materialAcceptedValueService.ExistsTestConfigureId(testConfigureRequestDto.getId())) {
+        testConfigureService.resetAcceptedValueForCategories(testConfigureRequestDto);
+      }
       if (testConfigureRequestDto.getMaterialCategoryId() != testConfigure.getMaterialCategory()
           .getId()) {
         testConfigureService

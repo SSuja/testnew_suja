@@ -124,15 +124,11 @@ public class CustomerServiceImpl implements CustomerService {
     return false;
   }
 
-  // @Transactional(readOnly = true)
-  // public Iterable<Customer> searchCustomer(Predicate predicate) {
-  // return customerRepository.findAll(predicate, Sort.by(Sort.Direction.ASC, "id"));
-  // }
-
   @Transactional(readOnly = true)
   public List<CustomerResponseDto> getCustomerByPlantCode(String plantCode, Pageable pageable) {
     ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
-    List<Customer> customerList = customerRepository.findAllByPlantCode(plantCode, pageable);
+    List<Customer> customerList =
+        customerRepository.findByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
     for (Customer customer : customerList) {
       CustomerResponseDto customerResponseDto = new CustomerResponseDto();
       customerResponseDto.setId(customer.getId());
@@ -151,7 +147,8 @@ public class CustomerServiceImpl implements CustomerService {
 
   public List<CustomerResponseDto> getAllCustomer(Pageable pageable) {
     ArrayList<CustomerResponseDto> customerResponseDtoList = new ArrayList<CustomerResponseDto>();
-    List<Customer> customerList = customerRepository.findAll(pageable).toList();
+    List<Customer> customerList =
+        customerRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
     for (Customer customer : customerList) {
       CustomerResponseDto customerResponseDto = new CustomerResponseDto();
       customerResponseDto.setId(customer.getId());
@@ -185,7 +182,6 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Transactional(readOnly = true)
   public List<Customer> getAllCustomers() {
-
     return customerRepository.findAll();
   }
 

@@ -127,10 +127,11 @@ public class TestConfigureServiceImpl implements TestConfigureService {
   }
 
   @Transactional(readOnly = true)
-  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialSubCategoryId,
-      Long rawMaterialId) {
-    if (testConfigureRepository.existsByTestIdAndMaterialSubCategoryIdAndRawMaterialId(testId,
-        materialSubCategoryId, rawMaterialId)) {
+  public boolean isExistByTestIdAndMaterialSubCategoryId(Long testId, Long materialCategory,
+      Long materialSubCategoryId, Long rawMaterialId) {
+    if (testConfigureRepository
+        .existsByTestIdAndMaterialCategoryIdAndMaterialSubCategoryIdAndRawMaterialId(testId,
+            materialCategory, materialSubCategoryId, rawMaterialId)) {
       return true;
     }
     return false;
@@ -267,19 +268,6 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       }
     }
     return testConfigure.getId();
-  }
-
-  public boolean isUpdatedMaterialSubCategoryAndTest(Long id, Long testId,
-      Long materialSubCategoryId, Long rawMaterialId) {
-    if ((!getTestConfigureById(id).getTest().getId().equals(testId))
-        && (!getTestConfigureById(id).getMaterialSubCategory().getId()
-            .equals(materialSubCategoryId))
-        && (!getTestConfigureById(id).getRawMaterial().getId().equals(rawMaterialId))
-        && (isExistByTestIdAndMaterialSubCategoryId(testId, materialSubCategoryId,
-            rawMaterialId))) {
-      return true;
-    }
-    return false;
   }
 
   public TestConfigureResDto getTestConfigureForAcceptedValue(Long testConfigureId) {
@@ -485,9 +473,8 @@ public class TestConfigureServiceImpl implements TestConfigureService {
 
   private void dependedDelete(TestConfigureRequestDto testConfigureRequestDto) {
     if (testConfigureRequestDto.getAcceptedType().equals(AcceptedType.TEST)) {
-      if (materialAcceptedValueRepository
-          .existsByTestConfigureId(testConfigureRequestDto.getId())) {
-        materialAcceptedValueRepository.deleteByTestConfigureId(testConfigureRequestDto.getId());
+      if (acceptedValueRepository.existsByTestConfigureId(testConfigureRequestDto.getId())) {
+        acceptedValueRepository.deleteByTestConfigureId(testConfigureRequestDto.getId());
       }
     } else {
       if (materialAcceptedValueRepository

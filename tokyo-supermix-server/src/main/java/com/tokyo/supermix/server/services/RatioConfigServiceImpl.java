@@ -1,20 +1,25 @@
 package com.tokyo.supermix.server.services;
 
+import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.MixDesignTestConfigDetailsDto;
 import com.tokyo.supermix.data.dto.RatioConfigEquationResponseDto;
 import com.tokyo.supermix.data.dto.RatioConfigParameterResponseDto;
 import com.tokyo.supermix.data.dto.RatioConfigResponseDto;
+import com.tokyo.supermix.data.entities.QRatioConfig;
 import com.tokyo.supermix.data.entities.RatioConfig;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.MixDesignRatioConfigRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigEquationRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigParameterRepository;
 import com.tokyo.supermix.data.repositories.RatioConfigRepository;
+import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
 
 @Service
 public class RatioConfigServiceImpl implements RatioConfigService {
@@ -103,5 +108,26 @@ public class RatioConfigServiceImpl implements RatioConfigService {
     if (ratioConfigRepository.existsById(ratioConfigId)) {
       ratioConfigRepository.deleteById(ratioConfigId);
     }
+  }
+
+  @Transactional(readOnly = true)
+  public List<RatioConfig> findAllWithPagination(Pageable pageable) {
+    return ratioConfigRepository.findAll(pageable).toList();
+  }
+
+  @Transactional(readOnly = true)
+  public Long getAllRatioConfigCount() {
+    return ratioConfigRepository.count();
+  }
+
+  @Transactional(readOnly = true)
+  public List<RatioConfig> searchRatioConfig(String name, BooleanBuilder booleanBuilder,
+      Pageable pageable, Pagination pagination) {
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QRatioConfig.ratioConfig.name.containsIgnoreCase(name));
+    }
+    pagination.setTotalRecords(
+        ((Collection<RatioConfig>) ratioConfigRepository.findAll(booleanBuilder)).stream().count());
+    return (List<RatioConfig>) ratioConfigRepository.findAll(booleanBuilder);
   }
 }
