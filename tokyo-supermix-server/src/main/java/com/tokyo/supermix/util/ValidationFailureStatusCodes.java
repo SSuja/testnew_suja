@@ -2203,5 +2203,14 @@ public class ValidationFailureStatusCodes {
   public void setParameterAlreadyDepended(String parameterAlreadyDepended) {
     this.parameterAlreadyDepended = parameterAlreadyDepended;
   }
+  @Value("${validation.employee.imageFormatNotValid}")
+  private String imageFormatNotValid;
 
+  public String getImageFormatNotValid() {
+    return imageFormatNotValid;
+  }
+
+  public void setImageFormatNotValid(String imageFormatNotValid) {
+    this.imageFormatNotValid = imageFormatNotValid;
+  }
 }

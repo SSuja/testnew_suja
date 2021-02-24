@@ -33,6 +33,8 @@ public interface FileStorageService {
   public Resource loadFileAsResource(String fileName) throws TokyoSupermixFileNotFoundException;
 
   public ArrayList<String> importDeliverySample(MultipartFile file);
-
+  
   boolean isValid(MultipartFile[] file);
+
+  public boolean Valid(MultipartFile multipartFile);
 }

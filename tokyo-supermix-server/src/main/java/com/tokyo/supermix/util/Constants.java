@@ -93,6 +93,7 @@ public class Constants {
   public static final String UPDATE_SUPPLIER_SUCCESS = "Supplier Updated Successfully";
   public static final String DELETE_SUPPLIER_SUCCESS = "Supplier Successfully Deleted";
   public static final String SUPPLIER = "Supplier";
+  public static final String IMAGE = "image";
 
   /*
    * Constants for Pour validation key & Success messages

@@ -441,17 +441,13 @@ public class FileStorageServiceImpl implements FileStorageService {
   @Transactional
   public String storeFile(MultipartFile file)
       throws IOException, TokyoSupermixFileStorageException {
-    if (!(file.getOriginalFilename().endsWith(".png")
-        || file.getOriginalFilename().endsWith(".jpeg")
-        || file.getOriginalFilename().endsWith(".jpg")))
-      throw new TokyoSupermixFileStorageException("Only PNG, JPEG and JPG images are allowed");
     FileOutputStream fout = new FileOutputStream(new File(file.getOriginalFilename()));
     fout.write(file.getBytes());
     fout.close();
     BufferedImage image = ImageIO.read(new File(file.getOriginalFilename()));
     int height = image.getHeight();
     int width = image.getWidth();
-    if (width > 500 || height > 600) {
+    if (width > 5000 || height > 6000) {
       throw new TokyoSupermixFileStorageException(
           "Invalid file dimensions. File dimension should note be more than 500 X 600");
     }
@@ -497,11 +493,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
   }
 
-  public boolean isValid(MultipartFile[] multipartFile) {
-    for (MultipartFile multipartFile2 : Arrays.asList(multipartFile)) {
-      if (!(multipartFile2.getOriginalFilename().endsWith(".png")
-          || multipartFile2.getOriginalFilename().endsWith(".jpeg")
-          || multipartFile2.getOriginalFilename().endsWith(".jpg"))) {
+  public boolean isValid(MultipartFile[] multipartFilelist) {
+    for (MultipartFile multipartFile : Arrays.asList(multipartFilelist)) {
+      if ((multipartFile.getContentType().matches("image/png")
+          || multipartFile.getContentType().matches("image/jpeg")
+          ||multipartFile.getContentType().matches("image/jpg"))) {
         return true;
       }
     }
@@ -576,4 +572,14 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
     return (ArrayList<String>) codeArray.stream().distinct().collect(Collectors.toList());
   }
+  
+  public boolean Valid(MultipartFile multipartFile) {
+         if ((multipartFile.getContentType().matches("image/png")
+          || multipartFile.getContentType().matches("image/jpeg")
+          ||multipartFile.getContentType().matches("image/jpg"))) {
+        return true;
+      }    
+    return false;
+  }
+
 }

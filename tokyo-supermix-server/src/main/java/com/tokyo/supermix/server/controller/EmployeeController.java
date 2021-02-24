@@ -150,7 +150,14 @@ public class EmployeeController {
       }
       if (file != null) {
         try {
-          employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+          if (fileStorageService.Valid(file)) {
+            employeeRequestDto.setProfilePicPath(fileStorageService.storeFile(file));
+          } else {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.IMAGE,
+                    validationFailureStatusCodes.getImageFormatNotValid()),
+                HttpStatus.BAD_REQUEST);
+          }
         } catch (TokyoSupermixFileStorageException e) {
           e.printStackTrace();
         }
