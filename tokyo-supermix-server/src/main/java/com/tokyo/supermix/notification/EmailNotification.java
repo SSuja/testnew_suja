@@ -2,7 +2,6 @@ package com.tokyo.supermix.notification;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -1057,12 +1056,9 @@ public class EmailNotification {
 
   }
 
-  @Scheduled(cron = "0 35 23 * * * ")
+  @Scheduled(cron = "0 00 08 * * * ")
   public void reminderForFinishProductSampleTest() {
-    List<Status> statusli = new ArrayList<Status>();
-    statusli.add(Status.NEW);
-    statusli.add(Status.PROCESS);
-    final LocalDateTime today = LocalDateTime.now();
+      final LocalDateTime today = LocalDateTime.now();
     for (TestConfigure testconfigure : testConfigureRepository
         .findByTestTypeAndDueDayNotNull(MainType.FINISH_PRODUCT)) {
       List<RawMaterial> rawMaterialList =
@@ -1115,12 +1111,9 @@ public class EmailNotification {
         Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER, mailBody);
   }
 
-  @Scheduled(cron = "0 28 23 * * * ")
+  @Scheduled(cron = "0 05 08 * * * ")
   public void reminderForMaterialTest() {
     final LocalDateTime today = LocalDateTime.now();
-    List<Status> statusli = new ArrayList<Status>();
-    statusli.add(Status.NEW);
-    statusli.add(Status.PROCESS);
     for (TestConfigure testconfigure : testConfigureRepository
         .findByTestTypeAndDueDayNotNull(MainType.RAW_MATERIAL)) {
       List<RawMaterial> rawMaterialList =
