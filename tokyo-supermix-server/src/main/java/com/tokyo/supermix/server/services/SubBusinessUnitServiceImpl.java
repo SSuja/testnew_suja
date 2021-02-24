@@ -74,7 +74,7 @@ public class SubBusinessUnitServiceImpl implements SubBusinessUnitService {
 
   @Transactional
   public List<SubBusinessUnit> getAllSubBusinessUnits(Pageable pageable) {
-    return subBusinessUnitRepository.findAll(pageable).toList();
+    return subBusinessUnitRepository.findAllByOrderByIdDesc(pageable).toList();
   }
 
   @Transactional

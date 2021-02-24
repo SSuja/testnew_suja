@@ -46,7 +46,7 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
 
   List<RawMaterial> findBySubBusinessUnitId(Long id);
 
-  Page<RawMaterial> findByPlantCodeOrMaterialTypeOrSubBusinessUnitId(String plantCode,
+  Page<RawMaterial> findByPlantCodeOrMaterialTypeOrSubBusinessUnitIdOrderByUpdatedAtDesc(String plantCode,
       MaterialType materialType, Long subId, Pageable pageable);
 
   Long countByPlantCodeOrPlantNullOrSubBusinessUnitId(String plantCode, Long subId);
@@ -87,4 +87,6 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long>,
 
   List<RawMaterial> findByPlantCodeOrMaterialTypeOrPlantSubBusinessUnitId(String plantCode,
       MaterialType materialType, Long sbuId);
+
+  Page<RawMaterial> findAllByOrderByUpdatedAtDesc(Pageable pageable);
 }

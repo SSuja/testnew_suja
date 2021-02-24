@@ -261,7 +261,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<UserResponseDto> getUserByPlantCode(String plantCode, Pageable pageable) {
     ArrayList<UserResponseDto> userResponseDtoList = new ArrayList<UserResponseDto>();
-    List<User> userList = userRepository.findAllByEmployeePlantCode(plantCode, pageable);
+    List<User> userList =
+        userRepository.findAllByEmployeePlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
     userListGetterSetter(userList, userResponseDtoList);
     return userResponseDtoList;
   }
@@ -274,7 +275,7 @@ public class UserServiceImpl implements UserService {
   @Transactional(readOnly = true)
   public List<UserResponseDto> getAllUsersByPagination(Pageable pageable) {
     ArrayList<UserResponseDto> userResponseDtoList = new ArrayList<UserResponseDto>();
-    List<User> userList = userRepository.findAll(pageable).toList();
+    List<User> userList = userRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
     userListGetterSetter(userList, userResponseDtoList);
     return userResponseDtoList;
   }

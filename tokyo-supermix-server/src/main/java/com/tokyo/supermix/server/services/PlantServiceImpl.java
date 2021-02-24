@@ -99,7 +99,7 @@ public class PlantServiceImpl implements PlantService {
 
   @Transactional(readOnly = true)
   public List<Plant> getAllPlantByPageable(Pageable pageable) {
-    return plantRepository.findAll(pageable).toList();
+    return plantRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)

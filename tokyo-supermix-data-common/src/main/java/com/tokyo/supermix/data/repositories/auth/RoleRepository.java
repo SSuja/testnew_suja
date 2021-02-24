@@ -1,5 +1,7 @@
 package com.tokyo.supermix.data.repositories.auth;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -10,4 +12,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, QuerydslPredi
   Role findByName(String roleName);
 
   Boolean existsByName(String roleName);
+
+  Page<Role> findAllByOrderByUpdatedAtDesc(Pageable pageable);
 }

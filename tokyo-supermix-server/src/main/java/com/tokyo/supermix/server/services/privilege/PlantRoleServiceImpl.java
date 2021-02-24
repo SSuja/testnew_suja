@@ -67,7 +67,7 @@ public class PlantRoleServiceImpl implements PlantRoleService {
 
   @Transactional
   public List<PlantRole> getPlantRoleByPlantCode(String plantCode, Pageable pageable) {
-    return plantRoleRepository.findAllByPlantCode(plantCode, pageable);
+    return plantRoleRepository.findAllByPlantCodeOrderByIdDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
@@ -104,7 +104,7 @@ public class PlantRoleServiceImpl implements PlantRoleService {
 
   @Transactional(readOnly = true)
   public List<PlantRole> getAllPlantRole(Pageable pageable) {
-    return plantRoleRepository.findAll(pageable).toList();
+    return plantRoleRepository.findAllByOrderByIdDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)

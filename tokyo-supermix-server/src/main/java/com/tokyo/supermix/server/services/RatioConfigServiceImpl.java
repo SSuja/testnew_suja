@@ -112,7 +112,7 @@ public class RatioConfigServiceImpl implements RatioConfigService {
 
   @Transactional(readOnly = true)
   public List<RatioConfig> findAllWithPagination(Pageable pageable) {
-    return ratioConfigRepository.findAll(pageable).toList();
+    return ratioConfigRepository.findAllByOrderByIdDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)
