@@ -58,6 +58,7 @@ import com.tokyo.supermix.data.repositories.FinishProductTestRepository;
 import com.tokyo.supermix.data.repositories.IncomingSampleRepository;
 import com.tokyo.supermix.data.repositories.MaterialAcceptedValueRepository;
 import com.tokyo.supermix.data.repositories.MaterialSubCategoryRepository;
+import com.tokyo.supermix.data.repositories.MaterialTestRepository;
 import com.tokyo.supermix.data.repositories.MaterialTestResultRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.data.repositories.PlantEquipmentCalibrationRepository;
@@ -140,6 +141,8 @@ public class EmailNotification {
   private ProjectRepository projectRepository;
   @Autowired
   private UserPlantRoleRepository userPlantRoleRepository;
+  @Autowired
+  private MaterialTestRepository materialTestRepository;
 
   HttpSession session;
 
@@ -283,7 +286,7 @@ public class EmailNotification {
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
 
-        String mailBody = "<ul><li>Finish Product Sample <b>"
+        String mailBody = "<ul><li>Plant-Lab Trial Sample <b>"
             + finishProductTest.getFinishProductSample().getCode() + "</b></li><li> Test Name <b>"
             + finishProductTest.getTestConfigure().getTest().getName()
             + "</b></li><li> Material <b>"
@@ -575,7 +578,7 @@ public class EmailNotification {
         mixDesign.getPlant().getCode(), MailGroupConstance.CREATE_FINISH_PRODUCT_SAMPLE);
     if (emailGroup != null) {
       if (emailGroup.isStatus()) {
-        String mailBody = "Finish Product sample created for mix design - " + mixDesign.getCode();
+        String mailBody = "Plant-Lab Trial Sample created for mix design - " + mixDesign.getCode();
         List<String> reciepientList =
             emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
@@ -634,8 +637,14 @@ public class EmailNotification {
                 emailGroup.getEmailPoints().getName(), emailGroup.getPlant().getCode());
         emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
             Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE, mailBody);
+        finishProductSample.setSentMail(true);
+        finishProductSampleRepository.save(finishProductSample);
       }
+      finishProductSample.setSentMail(true);
+      finishProductSampleRepository.save(finishProductSample);
     }
+    finishProductSample.setSentMail(true);
+    finishProductSampleRepository.save(finishProductSample);
   }
 
   @Scheduled(cron = "0 0/5 * * * ? ")
@@ -1049,7 +1058,7 @@ public class EmailNotification {
 
   @Scheduled(cron = "0 00 08 * * * ")
   public void reminderForFinishProductSampleTest() {
-    final LocalDateTime today = LocalDateTime.now();
+      final LocalDateTime today = LocalDateTime.now();
     for (TestConfigure testconfigure : testConfigureRepository
         .findByTestTypeAndDueDayNotNull(MainType.FINISH_PRODUCT)) {
       List<RawMaterial> rawMaterialList =
@@ -1060,21 +1069,29 @@ public class EmailNotification {
             finishProductSampleRepository.findByMixDesignRawMaterialId(rawMaterial.getId());
         for (FinishProductSample finishProductSample : finishProductSamples) {
           if (finishProductSample.getStatus().equals(Status.NEW)
-              || finishProductSample.getStatus().equals(Status.PROCESS)) {
+              || !(finishProductTestRepository.existsByFinishProductSampleCodeAndTestConfigureId(
+                  finishProductSample.getCode(), testconfigure.getId()))) {
             long noOfDays = ChronoUnit.DAYS.between(
                 finishProductSample.getCreatedAt().toLocalDateTime().toLocalDate(),
                 today.toLocalDate());
             EmailPoints emailPoints =
                 emailPointsRepository.findByTestConfigureIdAndSchedule(testconfigure.getId(), true);
-            String plantCode = finishProductSample.getMixDesign().getPlant().getCode();
-            List<NotificationDays> notificationDaysList =
-                emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
-            notificationDaysList.forEach(notificationday -> {
-              if (noOfDays == notificationday.getDays()) {
-                System.out.println(notificationday.getDays());
-                sendfinishProductSampleEmail(testconfigure, noOfDays, finishProductSample);
+            if (emailPoints != null) {
+              String plantCode = finishProductSample.getMixDesign().getPlant().getCode();
+              EmailGroup emailGroup = emailGroupRepository
+                  .findByPlantCodeAndEmailPointsName(plantCode, emailPoints.getName());
+              if (emailGroup != null) {
+                List<NotificationDays> notificationDaysList =
+                    emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
+                if (notificationDaysList != null) {
+                  notificationDaysList.forEach(notificationday -> {
+                    if (noOfDays == notificationday.getDays()) {
+                      sendfinishProductSampleEmail(testconfigure, noOfDays, finishProductSample);
+                    }
+                  });
+                }
               }
-            });
+            }
           }
         }
       }
@@ -1085,13 +1102,10 @@ public class EmailNotification {
       FinishProductSample finishProductSample) {
     EmailPoints emailPoints =
         emailPointsRepository.findByTestConfigureIdAndSchedule(testconfigure.getId(), true);
-    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        finishProductSample.getMixDesign().getPlant().getCode(), emailPoints.getName());
-
-    String mailBody = "Today is the " + noOfDays + "th" + " day for the Finish Product Sample "
+    String mailBody = "Today is the " + noOfDays + "th" + " day for the Plant-Lab Trial Sample "
         + finishProductSample.getCode() + " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-        emailGroup.getName(), finishProductSample.getMixDesign().getPlant().getCode());
+        emailPoints.getName(), finishProductSample.getMixDesign().getPlant().getCode());
     reciepientList.add(finishProductSample.getUser().getEmail());
     emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
         Constants.SUBJECT_FINISH_PRODUCT_SAMPLE_REMINDER, mailBody);
@@ -1110,20 +1124,28 @@ public class EmailNotification {
             incomingSampleRepository.findByRawMaterialId(rawMaterial.getId());
         for (IncomingSample incomingSample : incomingSamples) {
           if (incomingSample.getStatus().equals(Status.NEW)
-              || incomingSample.getStatus().equals(Status.PROCESS)) {
+              || !(materialTestRepository.existsByIncomingSampleCodeAndTestConfigureId(
+                  incomingSample.getCode(), testconfigure.getId()))) {
             long noOfDays = ChronoUnit.DAYS.between(
                 incomingSample.getCreatedAt().toLocalDateTime().toLocalDate(), today.toLocalDate());
             EmailPoints emailPoints =
                 emailPointsRepository.findByTestConfigureIdAndSchedule(testconfigure.getId(), true);
-            String plantCode = incomingSample.getPlant().getCode();
-            List<NotificationDays> notificationDaysList =
-                emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
-            notificationDaysList.forEach(notificationday -> {
-              if (noOfDays == notificationday.getDays()) {
-                System.out.println(notificationday.getDays());
-                sendMixDesignTestEmail(testconfigure, noOfDays, incomingSample);
+            if (emailPoints != null) {
+              String plantCode = incomingSample.getPlant().getCode();
+              EmailGroup emailGroup = emailGroupRepository
+                  .findByPlantCodeAndEmailPointsName(plantCode, emailPoints.getName());
+              if (emailGroup != null) {
+                List<NotificationDays> notificationDaysList =
+                    emailNotificationDaysService.getByEmailGroup(emailPoints.getName(), plantCode);
+                if (notificationDaysList != null) {
+                  notificationDaysList.forEach(notificationday -> {
+                    if (noOfDays == notificationday.getDays()) {
+                      sendMixDesignTestEmail(testconfigure, noOfDays, incomingSample);
+                    }
+                  });
+                }
               }
-            });
+            }
           }
         }
       }
@@ -1134,13 +1156,10 @@ public class EmailNotification {
       IncomingSample incomingSample) {
     EmailPoints emailPoints =
         emailPointsRepository.findByTestConfigureIdAndSchedule(testConfigure.getId(), true);
-    EmailGroup emailGroup = emailGroupRepository.findByPlantCodeAndEmailPointsName(
-        incomingSample.getPlant().getCode(), emailPoints.getName());
-
     String mailBody = "Today is the " + noOfDays + "th" + " day for the Incoming sample "
         + incomingSample.getCode() + " to conduct the Test.";
     List<String> reciepientList = emailRecipientService.getEmailsByEmailNotificationAndPlantCode(
-        emailGroup.getName(), incomingSample.getPlant().getCode());
+        emailPoints.getName(), incomingSample.getPlant().getCode());
     reciepientList.add(incomingSample.getUser().getEmail());
     emailService.sendMailWithFormat(reciepientList.toArray(new String[reciepientList.size()]),
         Constants.SUBJECT_MATERIAL_TEST_REMINDER, mailBody);

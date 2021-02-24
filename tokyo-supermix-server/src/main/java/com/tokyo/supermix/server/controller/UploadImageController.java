@@ -61,7 +61,7 @@ public class UploadImageController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.UPLOAD_IMAGE,
           validationFailureStatusCodes.getFileNull()), HttpStatus.BAD_REQUEST);
     }
-    if (fileStorageService.isValid(file)) {
+    if (!fileStorageService.isValid(file)) {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.UPLOAD_IMAGE,
           validationFailureStatusCodes.getImageNotValidContent()), HttpStatus.BAD_REQUEST);
     }
