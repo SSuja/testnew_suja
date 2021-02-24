@@ -20,7 +20,7 @@ public class MaterialStateServiceImpl implements MaterialStateService {
 
   @Autowired
   private MaterialStateRepository materialStateRepository;
-  
+
   @Autowired
   private Mapper mapper;
 
@@ -61,20 +61,21 @@ public class MaterialStateServiceImpl implements MaterialStateService {
   public void deleteMaterialState(Long id) {
     materialStateRepository.deleteById(id);
   }
-  
+
   @Transactional(readOnly = true)
   public List<MaterialState> getAllMaterialState(Pageable pageable) {
-       return materialStateRepository.findAll(pageable).toList();
+    return materialStateRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)
-  public List<MaterialStateDto> searchMaterialState(BooleanBuilder booleanBuilder, String materialState,
-     Pageable pageable, Pagination pagination) {  
+  public List<MaterialStateDto> searchMaterialState(BooleanBuilder booleanBuilder,
+      String materialState, Pageable pageable, Pagination pagination) {
     if (materialState != null && !materialState.isEmpty()) {
       booleanBuilder.and(QMaterialState.materialState1.materialState.contains(materialState));
     }
-       pagination.setTotalRecords(
-        ((Collection<MaterialState>) materialStateRepository.findAll(booleanBuilder)).stream().count());
+    pagination.setTotalRecords(
+        ((Collection<MaterialState>) materialStateRepository.findAll(booleanBuilder)).stream()
+            .count());
     return mapper.map(materialStateRepository.findAll(booleanBuilder, pageable).toList(),
         MaterialStateDto.class);
   }

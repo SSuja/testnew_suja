@@ -10,7 +10,8 @@ import com.tokyo.supermix.data.entities.PlantEquipmentCalibration;
 
 public interface PlantEquipmentCalibrationRepository
     extends JpaRepository<PlantEquipmentCalibration, Long>,
-    QuerydslPredicateExecutor<PlantEquipmentCalibration> , PagingAndSortingRepository<PlantEquipmentCalibration, Long>{
+    QuerydslPredicateExecutor<PlantEquipmentCalibration>,
+    PagingAndSortingRepository<PlantEquipmentCalibration, Long> {
 
   List<PlantEquipmentCalibration> findByPlantEquipmentPlantCode(String plantCode);
 
@@ -20,12 +21,13 @@ public interface PlantEquipmentCalibrationRepository
       String plantEquipmentSerialNo);
 
   boolean existsByPlantEquipmentSerialNo(String plantEquipmentSerialNo);
-   
-  Page<PlantEquipmentCalibration> findAll(Pageable pageable);
 
-  List<PlantEquipmentCalibration> findAllByPlantEquipmentPlantCode(String plantCode, Pageable pageable);
+  Page<PlantEquipmentCalibration> findAllByOrderByIdDesc(Pageable pageable);
+
+  List<PlantEquipmentCalibration> findAllByPlantEquipmentPlantCodeOrderByIdDesc(String plantCode,
+      Pageable pageable);
 
   Long countByPlantEquipmentPlantCode(String plantCode);
-  
+
   List<PlantEquipmentCalibration> findBySentMail(boolean sentMail);
 }

@@ -70,7 +70,7 @@ public class DesignationServiceImpl implements DesignationService {
 
   @Transactional(readOnly = true)
   public List<Designation> getAllDesignation(Pageable pageable) {
-    return designationRepository.findAll(pageable).toList();
+    return designationRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)

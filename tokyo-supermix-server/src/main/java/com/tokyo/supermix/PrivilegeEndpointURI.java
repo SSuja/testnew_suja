@@ -112,6 +112,11 @@ public final class PrivilegeEndpointURI {
   public static final String PLANT_ROLES_BY_PLANT_WISE =
       PLANT_ROLE + SLASH + "plant-wise/{plantCode}";
   public static final String SEARCH_PLANT_ROLE = PLANT_ROLE + SLASH + "search" + "/{plantCode}";
+
+  public static final String PLANT_ROLES_BY_PLANT_WISE_PAGE =
+      PLANT_ROLE + SLASH + "plant-wise-page/{plantCode}";
+  public static final String SEARCH_PLANT_ROLE_PAGE =
+      PLANT_ROLE + SLASH + "page-search" + "/{plantCode}";
   /*
    * plant Role Plant Permission
    */

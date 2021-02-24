@@ -2,6 +2,7 @@ package com.tokyo.supermix.data.repositories.auth;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -35,8 +36,9 @@ public interface UserRepository extends JpaRepository<User, Long>, QuerydslPredi
 
   Long countByEmployeePlantCode(String plantCode);
 
-  List<User> findAllByEmployeePlantCode(String plantCode, Pageable pageable);
-  
+  List<User> findAllByEmployeePlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
+
   List<User> findBySentMailAndUserType(boolean sentMail, UserType userType);
 
+  Page<User> findAllByOrderByUpdatedAtDesc(Pageable pageable);
 }

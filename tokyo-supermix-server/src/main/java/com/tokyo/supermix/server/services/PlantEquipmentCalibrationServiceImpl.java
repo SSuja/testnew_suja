@@ -31,7 +31,6 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
   @Autowired
   private EmailNotification emailNotification;
 
-
   @Transactional
   public PlantEquipmentCalibration savePlantEquipmentCalibration(
       PlantEquipmentCalibration plantEquipmentCalibration) {
@@ -156,27 +155,23 @@ public class PlantEquipmentCalibrationServiceImpl implements PlantEquipmentCalib
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> getAllPlantEquipmentCalibration(Pageable pageable) {
-
-    return plantEquipmentCalibrationRepository.findAll(pageable).toList();
+    return plantEquipmentCalibrationRepository.findAllByOrderByIdDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)
   public List<PlantEquipmentCalibration> getPlantEquipmentCalibrationByPlantCode(String plantCode,
       Pageable pageable) {
-
-    return plantEquipmentCalibrationRepository.findAllByPlantEquipmentPlantCode(plantCode,
-        pageable);
+    return plantEquipmentCalibrationRepository
+        .findAllByPlantEquipmentPlantCodeOrderByIdDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipmentCalibration() {
-
     return plantEquipmentCalibrationRepository.count();
   }
 
   @Transactional(readOnly = true)
   public Long getCountPlantEquipmentCalibrationByPlantCode(String plantCode) {
-
     return plantEquipmentCalibrationRepository.countByPlantEquipmentPlantCode(plantCode);
   }
 }

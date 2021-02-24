@@ -224,7 +224,8 @@ public class RawMaterialController {
                 validationFailureStatusCodes.getPrefixAlreadyExist()), HttpStatus.BAD_REQUEST);
           }
         } else {
-          if (rawMaterialRequestDto.getSubBusinessUnitId() == null) {
+          if (rawMaterialRequestDto.getPlantCode() == null
+              || rawMaterialRequestDto.getPlantCode().isEmpty()) {
             return new ResponseEntity<>(
                 new ValidationFailureResponse(Constants.RAW_MATERIAL_NAME,
                     validationFailureStatusCodes.getRawMaterialPlantOrSbuNull()),

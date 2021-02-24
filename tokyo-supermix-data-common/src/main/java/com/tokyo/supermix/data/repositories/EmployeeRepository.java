@@ -14,7 +14,7 @@ public interface EmployeeRepository
 
   List<Employee> findByPlantCode(String plantCode);
 
-  List<Employee> findByPlantCodeIn(List<String> plantCodes);
+  List<Employee> findByPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes);
 
   Employee findByEmailIgnoreCase(String email);
 
@@ -22,11 +22,13 @@ public interface EmployeeRepository
 
   Long countByPlantCode(String plantCode);
 
-  List<Employee> findAllByPlantCode(String plantCode, Pageable pageable);
+  List<Employee> findAllByPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
 
   List<Employee> findByPlantCodeAndFirstNameStartsWith(String plantCode, String firstName);
 
   List<Employee> findByFirstNameStartsWith(String firstName);
-  
+
   List<Employee> findBySentMail(boolean sentMail);
+
+  List<Employee> findAllByOrderByUpdatedAtDesc();
 }

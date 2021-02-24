@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.tokyo.supermix.data.dto.privilege.PlantRoleDto;
+import com.tokyo.supermix.data.dto.privilege.PlantRoleResponseDto;
 import com.tokyo.supermix.data.entities.Plant;
 import com.tokyo.supermix.data.entities.auth.Role;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
@@ -66,7 +67,7 @@ public class PlantRoleServiceImpl implements PlantRoleService {
 
   @Transactional
   public List<PlantRole> getPlantRoleByPlantCode(String plantCode, Pageable pageable) {
-    return plantRoleRepository.findAllByPlantCode(plantCode, pageable);
+    return plantRoleRepository.findAllByPlantCodeOrderByIdDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)
@@ -81,7 +82,7 @@ public class PlantRoleServiceImpl implements PlantRoleService {
 
   @Transactional(readOnly = true)
   public List<PlantRoleDto> searchPlantRole(BooleanBuilder booleanBuilder, String roleName,
-      String name, String plantCode,String plantName, Pageable pageable, Pagination pagination) {
+      String name, String plantCode, String plantName, Pageable pageable, Pagination pagination) {
     if (roleName != null && !roleName.isEmpty()) {
       booleanBuilder.and(QPlantRole.plantRole.role.name.contains(roleName));
     }
@@ -103,7 +104,24 @@ public class PlantRoleServiceImpl implements PlantRoleService {
 
   @Transactional(readOnly = true)
   public List<PlantRole> getAllPlantRole(Pageable pageable) {
-    return plantRoleRepository.findAll(pageable).toList();
+    return plantRoleRepository.findAllByOrderByIdDesc(pageable).toList();
   }
 
+  @Transactional(readOnly = true)
+  public List<PlantRoleResponseDto> searchPlantRoleWithPagination(BooleanBuilder booleanBuilder,
+      String name, String plantCode, String plantName, Pageable pageable, Pagination pagination) {
+    if (name != null && !name.isEmpty()) {
+      booleanBuilder.and(QPlantRole.plantRole.role.name.contains(name));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QPlantRole.plantRole.plant.code.contains(plantName));
+    }
+    if (plantCode != null && !plantCode.isEmpty() && !(plantCode.equalsIgnoreCase("ADMIN"))) {
+      booleanBuilder.and(QPlantRole.plantRole.plant.code.contains(plantCode));
+    }
+    pagination.setTotalRecords(
+        ((Collection<PlantRole>) plantRoleRepository.findAll(booleanBuilder)).stream().count());
+    return mapper.map(plantRoleRepository.findAll(booleanBuilder, pageable).toList(),
+        PlantRoleResponseDto.class);
+  }
 }

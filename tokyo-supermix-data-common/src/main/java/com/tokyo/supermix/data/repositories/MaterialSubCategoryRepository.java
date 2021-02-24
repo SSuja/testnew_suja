@@ -23,4 +23,6 @@ public interface MaterialSubCategoryRepository extends JpaRepository<MaterialSub
   boolean existsByPrefix(String prifix);
 
   boolean existsByIdAndNameAndMaterialCategoryId(Long id, String name, Long materialCategoryId);
+
+  List<MaterialSubCategory> findAllByOrderByUpdatedAtDesc();
 }

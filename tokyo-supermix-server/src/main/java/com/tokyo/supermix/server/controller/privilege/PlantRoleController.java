@@ -114,7 +114,7 @@ public class PlantRoleController {
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(plantRoleService.getCountPlantRole());
       return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.PLANT_ROLES,
-          mapper.map(plantRoleService.getAllPlantRole(pageable),PlantRoleDto.class),        
+          mapper.map(plantRoleService.getAllPlantRole(pageable), PlantRoleDto.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
     }
     if (plantService.isPlantExist(plantCode)) {
@@ -138,10 +138,51 @@ public class PlantRoleController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
+    return new ResponseEntity<>(new PaginatedContentResponse<>(
+        PrivilegeConstants.PLANT_ROLES, plantRoleService.searchPlantRole(booleanBuilder, roleName,
+            name, plantCode, plantName, pageable, pagination),
+        RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+  }
+
+  @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLES_BY_PLANT_WISE_PAGE)
+  public ResponseEntity<Object> getAllPlantRolesWIhPagination(
+      @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
+    if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
+      pagination.setTotalRecords(plantRoleService.getCountPlantRole());
+      return new ResponseEntity<>(new PaginatedContentResponse<>(PrivilegeConstants.PLANT_ROLES,
+          mapper.map(plantRoleService.getAllPlantRole(pageable), PlantRoleResponseDto.class),
+          RestApiResponseStatus.OK, pagination), HttpStatus.OK);
+    }
+    if (plantService.isPlantExist(plantCode)) {
+      pagination.setTotalRecords(plantRoleService.getCountPlantRoleByPlantCode(plantCode));
+      return new ResponseEntity<>(
+          new PaginatedContentResponse<>(PrivilegeConstants.PLANT_ROLES,
+              mapper.map(plantRoleService.getPlantRoleByPlantCode(plantCode, pageable),
+                  PlantRoleResponseDto.class),
+              RestApiResponseStatus.OK, pagination),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_CODE,
+        privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
+  }
+
+  @GetMapping(value = PrivilegeEndpointURI.SEARCH_PLANT_ROLE_PAGE)
+  public ResponseEntity<Object> getPlantRoleSearchWithPagination(@PathVariable String plantCode,
+      @RequestParam(name = "name", required = false) String name,
+      @RequestParam(name = "plantName", required = false) String plantName,
+      @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
+    Pageable pageable = PageRequest.of(page, size);
+    int totalpage = 0;
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
-        new PaginatedContentResponse<>(
-            PrivilegeConstants.PLANT_ROLES, plantRoleService.searchPlantRole(booleanBuilder,
-                roleName, name, plantCode,plantName, pageable, pagination),
+        new PaginatedContentResponse<>(PrivilegeConstants.PLANT_ROLES,
+            plantRoleService.searchPlantRoleWithPagination(booleanBuilder, name, plantCode,
+                plantName, pageable, pagination),
             RestApiResponseStatus.OK, pagination),
         HttpStatus.OK);
   }
