@@ -24,5 +24,5 @@ public interface PlantRepository extends JpaRepository<Plant, String>,
 
   List<Plant> findBySentMail(boolean sentMail);
 
-  Page<Plant> findAll(Pageable pegeable);
+  Page<Plant> findAllByOrderByUpdatedAtDesc(Pageable pegeable);
 }

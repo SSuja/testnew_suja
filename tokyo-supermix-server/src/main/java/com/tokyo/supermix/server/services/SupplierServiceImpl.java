@@ -38,7 +38,7 @@ public class SupplierServiceImpl implements SupplierService {
 
   @Override
   public List<Supplier> getSuppliersByPlant(UserPrincipal currentUser, Pageable pageable) {
-    return supplierRepository.findAllByPlantCodeIn(currentUserPermissionPlantService
+    return supplierRepository.findAllByPlantCodeInOrderByUpdatedAtDesc(currentUserPermissionPlantService
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_SUPPLIER),
         pageable);
   }
@@ -113,7 +113,7 @@ public class SupplierServiceImpl implements SupplierService {
 
   @Transactional(readOnly = true)
   public List<Supplier> getSupplierByPlantCode(String plantCode, Pageable pageable) {
-    return supplierRepository.findAllByPlantCode(plantCode, pageable);
+    return supplierRepository.findAllByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional(readOnly = true)

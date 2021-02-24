@@ -19,4 +19,6 @@ public interface MaterialCategoryRepository extends JpaRepository<MaterialCatego
   boolean existsByNameAndMainType(String name, MainType mainType);
 
   boolean existsByPrefix(String prefix);
+
+  List<MaterialCategory> findAllByOrderByUpdatedAtDesc();
 }

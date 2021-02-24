@@ -90,8 +90,8 @@ public class EmployeeServiceImpl implements EmployeeService {
   public List<Employee> getAllEmployeesByPlant(UserPrincipal currentUser, Pageable pageable) {
     return currentUser.getUserType().name().equalsIgnoreCase(UserType.NON_PLANT_USER.name())
         && currentUser.getRoles().contains(1L)
-            ? employeeRepository.findAll()
-            : employeeRepository.findByPlantCodeIn(
+            ? employeeRepository.findAllByOrderByUpdatedAtDesc()
+            : employeeRepository.findByPlantCodeInOrderByUpdatedAtDesc(
                 currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
                     PermissionConstants.VIEW_EMPLOYEE));
   }
@@ -112,7 +112,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Transactional(readOnly = true)
   public List<Employee> getEmployeeByPlantCode(String plantCode, Pageable pageable) {
-    return employeeRepository.findAllByPlantCode(plantCode, pageable);
+    return employeeRepository.findAllByPlantCodeOrderByUpdatedAtDesc(plantCode, pageable);
   }
 
   @Transactional

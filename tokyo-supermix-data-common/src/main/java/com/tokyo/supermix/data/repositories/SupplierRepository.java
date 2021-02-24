@@ -28,9 +28,9 @@ public interface SupplierRepository extends JpaRepository<Supplier, Long>,
 
   Supplier findByEmail(String email);
 
-  List<Supplier> findAllByPlantCodeIn(List<String> plantCodes, Pageable pageable);
+  List<Supplier> findAllByPlantCodeInOrderByUpdatedAtDesc(List<String> plantCodes, Pageable pageable);
 
-  List<Supplier> findAllByPlantCode(String plantCode, Pageable pageable);
+  List<Supplier> findAllByPlantCodeOrderByUpdatedAtDesc(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
 

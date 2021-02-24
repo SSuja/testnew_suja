@@ -19,9 +19,9 @@ public interface PlantRoleRepository
 
   boolean existsByPlantCode(String plantCode);
 
-  List<PlantRole> findAllByPlantCode(String plantCode, Pageable pageable);
+  List<PlantRole> findAllByPlantCodeOrderByIdDesc(String plantCode, Pageable pageable);
 
   Long countByPlantCode(String plantCode);
 
-  Page<PlantRole> findAll(Pageable pageable);
+  Page<PlantRole> findAllByOrderByIdDesc(Pageable pageable);
 }

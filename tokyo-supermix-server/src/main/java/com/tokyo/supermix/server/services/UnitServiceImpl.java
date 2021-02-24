@@ -70,7 +70,7 @@ public class UnitServiceImpl implements UnitService {
 
   @Transactional
   public List<Unit> getAllUnits(Pageable pageable) {
-    return unitRepository.findAll(pageable).toList();
+    return unitRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
   }
 
   @Transactional

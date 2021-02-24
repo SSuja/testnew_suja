@@ -1,11 +1,16 @@
 package com.tokyo.supermix.data.repositories;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import com.tokyo.supermix.data.entities.MaterialState;
 
-public interface MaterialStateRepository extends JpaRepository<MaterialState, Long> , QuerydslPredicateExecutor<MaterialState>{
+public interface MaterialStateRepository
+    extends JpaRepository<MaterialState, Long>, QuerydslPredicateExecutor<MaterialState> {
   boolean existsByMaterialState(String materialState);
 
   public MaterialState findByMaterialState(String materialState);
+
+  Page<MaterialState> findAllByOrderByUpdatedAtDesc(Pageable pageable);
 }

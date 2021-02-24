@@ -68,7 +68,7 @@ public class RoleServiceImpl implements RoleService {
 
   @Transactional(readOnly = true)
   public List<Role> getAllWithPagination(Pageable pageable) {
-    return roleRepository.findAll(pageable).toList();
+    return roleRepository.findAllByOrderByUpdatedAtDesc(pageable).toList();
   }
 
   @Transactional(readOnly = true)
