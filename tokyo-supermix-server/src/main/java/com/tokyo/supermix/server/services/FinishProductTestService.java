@@ -55,4 +55,6 @@ public interface FinishProductTestService {
 
   public List<FinishProductTest> getFinishProductTestsByFinishProductSampleCode(
       String finishProductSampleCode);
+  
+  public void updateFinishProductTest(FinishProductTest finishProductTest);
 }
