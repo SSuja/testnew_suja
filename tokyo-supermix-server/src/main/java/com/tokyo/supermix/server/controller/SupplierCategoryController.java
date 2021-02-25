@@ -86,7 +86,7 @@ public class SupplierCategoryController {
       if (supplierCategoryService.isUpdatedCategoryExist(supplierCategoryDto.getId(),
           supplierCategoryDto.getCategory())) {
         return new ResponseEntity<>(
-            new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
+            new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY_NAME,
                 validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),
             HttpStatus.BAD_REQUEST);
       }
