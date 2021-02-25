@@ -112,7 +112,7 @@ public class FinishProductTestController {
       @Valid @RequestBody FinishProductTestRequestDto finishProductTestRequestDto) {
     if ((finishProductTestService
         .isFinishProductTestExists(finishProductTestRequestDto.getCode()))) {
-      finishProductTestService.createFinishProductTest(
+      finishProductTestService.updateFinishProductTest(
           mapper.map(finishProductTestRequestDto, FinishProductTest.class));
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_FINISH_PRODUCT_TEST_SUCCESS), HttpStatus.OK);

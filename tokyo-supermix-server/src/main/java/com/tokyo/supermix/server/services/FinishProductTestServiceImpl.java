@@ -628,4 +628,9 @@ public class FinishProductTestServiceImpl implements FinishProductTestService {
       String finishProductSampleCode) {
     return finishProductTestRepository.findByFinishProductSampleCode(finishProductSampleCode);
   }
+
+  @Transactional
+  public void updateFinishProductTest(FinishProductTest finishProductTest) {
+    finishProductTestRepository.save(finishProductTest);
+  }
 }
