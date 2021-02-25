@@ -52,7 +52,7 @@ public class MixDesignFillManager {
 
       // Retrieve the id value
       HSSFCell cell2 = row.createCell(startColIndex + 1);
-      cell2.setCellValue(list.get(i - 1).getMixDesign().getDate());
+      cell2.setCellValue(list.get(i - 1).getMixDesign().getDate().toString());
       cell2.setCellStyle(cellStyle);
 
       // Retrieve the id value

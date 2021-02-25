@@ -49,7 +49,7 @@ public class FinishedProductDeliveryFillManager {
 
       // Retrieve the id value
       HSSFCell cell4 = row.createCell(startColIndex + 3);
-      cell4.setCellValue(finishProductSamples.get(i - 1).getDate());
+      cell4.setCellValue(finishProductSamples.get(i - 1).getDate().toString());
       cell4.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value

@@ -1247,6 +1247,7 @@ public class TestReportServiceImpl implements TestReportService {
     strengthDto.setFinishProdutSampleCode(finishProductTest.getFinishProductSample().getCode());
     strengthDto.setTestDate(finishProductTest.getDate());
     strengthDto.setUpdatedDate(finishProductTest.getUpdatedAt());
+    strengthDto.setComments(finishProductTest.getComments());
     if (finishProductTest.getFinishProductSample().getProject() != null) {
       strengthDto.setProject(finishProductTest.getFinishProductSample().getProject().getCode());
       strengthDto.setCustomer(
@@ -1268,7 +1269,6 @@ public class TestReportServiceImpl implements TestReportService {
     if ((finishProductTest.getTestConfigure().getAcceptedType().equals(AcceptedType.MATERIAL))
         || (finishProductTest.getTestConfigure().getAcceptedType()
             .equals(AcceptedType.SUB_CATEGORY))) {
-      // if (finishProductTest.getTestConfigure().getRawMaterial() != null) {
       strengthDto
           .setAcceptanceCriterias(
               getMaterialAcceptedValueDtoForStrength(finishProductTest.getTestConfigure().getId(),
@@ -1277,10 +1277,6 @@ public class TestReportServiceImpl implements TestReportService {
                   finishProductTest.getTestConfigure().getAcceptedType(),
                   finishProductTest.getFinishProductSample().getMixDesign().getRawMaterial()
                       .getMaterialSubCategory().getId()));
-      // } else {
-      // strengthDto.setAcceptanceCriterias(getFinishProductMaterialValueIsNull(
-      // finishProductTest.getTestConfigure().getId(), finishProductTestCode));
-      // }
     } else {
       strengthDto.setAcceptanceCriterias(
           getAcceptedCriteriaDetailsForStrength(finishProductTest.getTestConfigure().getId()));
@@ -1335,6 +1331,7 @@ public class TestReportServiceImpl implements TestReportService {
     strengthDto.setFinishProdutSampleCode(finishProductTest.getFinishProductSample().getCode());
     strengthDto.setTestDate(finishProductTest.getDate());
     strengthDto.setUpdatedDate(finishProductTest.getUpdatedAt());
+    strengthDto.setComments(finishProductTest.getComments());
     if (finishProductTest.getFinishProductSample().getProject() != null) {
       strengthDto.setProject(finishProductTest.getFinishProductSample().getProject().getCode());
       strengthDto.setCustomer(

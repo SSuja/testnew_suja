@@ -24,6 +24,7 @@ import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.TestParameter;
+import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -99,6 +100,14 @@ public class TestParameterController {
               new ValidationFailureResponse(Constants.TEST_PARAMETER,
                   validationFailureStatusCodes.getTestParameterAlreadyExist()),
               HttpStatus.BAD_REQUEST);
+        }
+        if (testConfigureService.isAlreadyDepended(testParameterRequestDto.getTestConfigureId())) {
+          if (testParameterRequestDto.getType().equals(TestParameterType.RESULT)) {
+            return new ResponseEntity<>(
+                new ValidationFailureResponse(Constants.TEST_CONFIGURE,
+                    validationFailureStatusCodes.getTestConfigureAlreadyDepended()),
+                HttpStatus.BAD_REQUEST);
+          }
         }
       }
       testParameterService

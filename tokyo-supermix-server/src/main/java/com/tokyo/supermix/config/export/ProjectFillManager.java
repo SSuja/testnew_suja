@@ -58,7 +58,7 @@ public class ProjectFillManager {
 
       // Retrieve the id value
       HSSFCell cell5 = row.createCell(startColIndex + 4);
-      cell5.setCellValue(projects.get(i - 1).getStartDate());
+      cell5.setCellValue(projects.get(i - 1).getStartDate().toString());
       cell5.setCellStyle(bodyCellStyle);
 
       // Retrieve the id value

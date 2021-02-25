@@ -20,6 +20,7 @@ public class StrengthDto {
   private FinishProductResultDto finishProductResult;
   private List<AcceptedValueDtoForStrength> acceptanceCriterias;
   private List<StrengthResultDto> strengthResultDtos;
+  private String comments;
 
   public String getFinishProdutSampleCode() {
     return finishProdutSampleCode;
@@ -131,5 +132,13 @@ public class StrengthDto {
 
   public void setAcceptanceCriterias(List<AcceptedValueDtoForStrength> acceptanceCriterias) {
     this.acceptanceCriterias = acceptanceCriterias;
+  }
+
+  public String getComments() {
+    return comments;
+  }
+
+  public void setComments(String comments) {
+    this.comments = comments;
   }
 }
