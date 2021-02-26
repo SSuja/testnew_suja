@@ -9,4 +9,5 @@ import com.tokyo.supermix.data.entities.QualityParameter;
 public interface QualityParameterRepository
     extends JpaRepository<QualityParameter, Long>, QuerydslPredicateExecutor<QualityParameter> {
   boolean existsByName(String name);
+
 }

@@ -22,4 +22,10 @@ public interface MaterialQualityParameterRepository
   boolean existsByRawMaterialId(Long rawMaterialId);
 
   boolean existsByMaterialSubCategoryId(Long subCategoryId);
+
+  boolean existsByRawMaterialMaterialSubCategoryMaterialCategoryId(Long id);
+
+  boolean existsByMaterialSubCategoryMaterialCategoryId(Long id);
+
+  boolean existsByRawMaterialMaterialSubCategoryId(Long id);
 }

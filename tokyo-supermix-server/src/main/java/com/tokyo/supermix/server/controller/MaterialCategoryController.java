@@ -131,12 +131,20 @@ public class MaterialCategoryController {
             HttpStatus.BAD_REQUEST);
       }
       if (!materialCategory.getMainType().equals(materialCategoryDto.getMainType())) {
+        if (materialCategoryService
+            .isMaterialCategoryDependOnMaterialOrSubCategory(materialCategory.getId())) {
+          return new ResponseEntity<>(
+              new ValidationFailureResponse(ValidationConstance.MATERIALCATEGORY,
+                  validationFailureStatusCodes.getMaterialCategoryAlreadyDepended()),
+              HttpStatus.BAD_REQUEST);
+        }
         if (testConfigureService.isMaterialCategory(materialCategoryDto.getId())) {
           return new ResponseEntity<>(
               new ValidationFailureResponse(ValidationConstance.MATERIALCATEGORY,
                   validationFailureStatusCodes.getMaterialCategoryAlreadyDepended()),
               HttpStatus.BAD_REQUEST);
         }
+
       }
       materialCategoryService
           .saveMaterialCategory(mapper.map(materialCategoryDto, MaterialCategory.class));

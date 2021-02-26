@@ -8,11 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tokyo.supermix.data.entities.MaterialCategory;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.repositories.MaterialCategoryRepository;
+import com.tokyo.supermix.data.repositories.MaterialQualityParameterRepository;
 
 @Service
 public class MaterialCategoryServiceImpl implements MaterialCategoryService {
   @Autowired
   private MaterialCategoryRepository materialCategoryRepository;
+  @Autowired
+  private MaterialQualityParameterRepository materialQualityParameterRepository;
 
   @Transactional
   public void saveMaterialCategory(MaterialCategory materialCategory) {
@@ -83,6 +86,16 @@ public class MaterialCategoryServiceImpl implements MaterialCategoryService {
   public boolean isPrefixAlreadyExistsUpdate(Long id, String prefix) {
     if ((!getMaterialCategoryById(id).getPrefix().equalsIgnoreCase(prefix))
         && materialCategoryRepository.existsByPrefix(prefix)) {
+      return true;
+    }
+    return false;
+  }
+
+  @Transactional(readOnly = true)
+  public boolean isMaterialCategoryDependOnMaterialOrSubCategory(Long id) {
+    if (materialQualityParameterRepository
+        .existsByRawMaterialMaterialSubCategoryMaterialCategoryId(id)
+        || materialQualityParameterRepository.existsByMaterialSubCategoryMaterialCategoryId(id)) {
       return true;
     }
     return false;

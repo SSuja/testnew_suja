@@ -226,4 +226,12 @@ public class MaterialSubCategoryServiceImpl implements MaterialSubCategoryServic
         parameterRepository.findById(materialQualityParameterRequestDto.getParameterId()).get());
     materialQualityParameterRepository.save(materialQualityParameter);
   }
+
+  @Transactional(readOnly = true)
+  public boolean isRawMaterialDependOnSubCategory(Long id) {
+    if (materialQualityParameterRepository.existsByRawMaterialMaterialSubCategoryId(id)) {
+      return true;
+    }
+    return false;
+  }
 }
