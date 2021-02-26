@@ -131,7 +131,9 @@ public class RatioConfigParameterServiceImpl implements RatioConfigParameterServ
     if (!ratioConfigEquationList.isEmpty()) {
       if (ratioConfigEquationList.get(0).getRatio()
           .contains(ratioConfigParameter.getAbbreviation())) {
-        if (ratioConfigEquationList.get(0).getRatio().contains(abbreViation)) {
+
+        if (ratioConfigEquationList.get(0).getRatio().contains(abbreViation)
+            && ratioConfigParameter.getAbbreviation().length() == abbreViation.length()) {
           return false;
         } else {
           return true;
