@@ -116,7 +116,7 @@ public class TestParameterServiceImpl implements TestParameterService {
 
   @Transactional(readOnly = true)
   public boolean isAbbreviationNull(String abbreviation) {
-    if (abbreviation.isEmpty()) {
+    if (abbreviation==null  ||abbreviation.isEmpty()) {
       return true;
     }
     return false;
