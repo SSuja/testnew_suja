@@ -24,7 +24,6 @@ import com.tokyo.supermix.data.dto.TestParameterEquationDto;
 import com.tokyo.supermix.data.dto.TestParameterRequestDto;
 import com.tokyo.supermix.data.dto.TestParameterResponseDto;
 import com.tokyo.supermix.data.entities.TestParameter;
-import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -216,7 +215,10 @@ public class TestParameterController {
       testParameterService
           .saveTestParameter(mapper.map(testParameterRequestDto, TestParameter.class));
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_PARAMETER_SUCCESS),
+          new ContentResponse<>(Constants.TEST_CONFIGURE,
+              testParameterService.checkEqutaionExistsForTest(
+                  testParameterRequestDto.getTestConfigureId()),
+              RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
