@@ -377,12 +377,13 @@ public class MaterialAcceptedValueServiceImpl implements MaterialAcceptedValueSe
       rawMaterialList.add(testConfigure.getRawMaterial());
     }
     if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() != null) {
-      rawMaterialList.addAll(rawMaterialRepository
-          .findByMaterialSubCategoryId(testConfigure.getMaterialSubCategory().getId()));
+      rawMaterialList.addAll(rawMaterialRepository.findByMaterialSubCategoryIdAndActiveTrue(
+          testConfigure.getMaterialSubCategory().getId()));
     }
     if (testConfigure.getRawMaterial() == null && testConfigure.getMaterialSubCategory() == null) {
-      rawMaterialList.addAll(rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryId(
-          testConfigure.getMaterialCategory().getId()));
+      rawMaterialList
+          .addAll(rawMaterialRepository.findByMaterialSubCategoryMaterialCategoryIdAndActiveTrue(
+              testConfigure.getMaterialCategory().getId()));
     }
     return rawMaterialList;
   }
