@@ -11,7 +11,7 @@
             <level>info</level>
         </filter>
         <encoder>
-            <pattern>%d %-5p X-APPLICATION-ID:Tokyo-Supermix TraceId : [%X{X-B3-TraceId:-}] | SpanId : [%X{X-B3-SpanId:-}] [%c{50}:%M] %m%n%ex</pattern>
+            <pattern>%d %-5p APPLICATION-ID:Tokyo-Supermix TraceId : [%X{X-B3-TraceId:-}] | SpanId : [%X{X-B3-SpanId:-}] [%c{50}:%M] %m%n%ex</pattern>
         </encoder>
     </appender>
 
