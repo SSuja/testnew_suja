@@ -3,7 +3,13 @@ package com.tokyo.supermix.data.dto;
 import com.tokyo.supermix.data.enums.InputMethod;
 import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class FinishProductTestTrialDto {
   private Long trialNo;
   private double value;
@@ -14,77 +20,4 @@ public class FinishProductTestTrialDto {
   private String testParameterAbbreviation;
   private ParameterDataType testParameterParameterParameterDataType;
   private String dateValue;
-
-  public String getTestParameterParameterName() {
-    return testParameterParameterName;
-  }
-
-  public void setTestParameterParameterName(String testParameterParameterName) {
-    this.testParameterParameterName = testParameterParameterName;
-  }
-
-  public Long getTrialNo() {
-    return trialNo;
-  }
-
-  public void setTrialNo(Long trialNo) {
-    this.trialNo = trialNo;
-  }
-
-  public double getValue() {
-    return value;
-  }
-
-  public void setValue(double value) {
-    this.value = value;
-  }
-
-  public InputMethod getTestParameterInputMethods() {
-    return testParameterInputMethods;
-  }
-
-  public void setTestParameterInputMethods(InputMethod testParameterInputMethods) {
-    this.testParameterInputMethods = testParameterInputMethods;
-  }
-
-  public TestParameterType getTestParameterType() {
-    return testParameterType;
-  }
-
-  public void setTestParameterType(TestParameterType testParameterType) {
-    this.testParameterType = testParameterType;
-  }
-
-  public Long getFinishProductTestNoOfTrial() {
-    return finishProductTestNoOfTrial;
-  }
-
-  public void setFinishProductTestNoOfTrial(Long finishProductTestNoOfTrial) {
-    this.finishProductTestNoOfTrial = finishProductTestNoOfTrial;
-  }
-
-  public String getTestParameterAbbreviation() {
-    return testParameterAbbreviation;
-  }
-
-  public void setTestParameterAbbreviation(String testParameterAbbreviation) {
-    this.testParameterAbbreviation = testParameterAbbreviation;
-  }
-
-  public ParameterDataType getTestParameterParameterParameterDataType() {
-    return testParameterParameterParameterDataType;
-  }
-
-  public void setTestParameterParameterParameterDataType(
-      ParameterDataType testParameterParameterParameterDataType) {
-    this.testParameterParameterParameterDataType = testParameterParameterParameterDataType;
-  }
-
-  public String getDateValue() {
-    return dateValue;
-  }
-
-  public void setDateValue(String dateValue) {
-    this.dateValue = dateValue;
-  }
 }

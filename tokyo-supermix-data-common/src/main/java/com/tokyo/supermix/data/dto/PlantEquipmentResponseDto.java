@@ -1,7 +1,13 @@
 package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.EquipmentType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class PlantEquipmentResponseDto {
   private String serialNo;
   private String brandName;
@@ -14,92 +20,4 @@ public class PlantEquipmentResponseDto {
   private boolean calibrationExists;
   private EquipmentType equipmentEquipmentType;
   private boolean sentMail;
-
-  public EquipmentType getEquipmentEquipmentType() {
-    return equipmentEquipmentType;
-  }
-
-  public void setEquipmentEquipmentType(EquipmentType equipmentEquipmentType) {
-    this.equipmentEquipmentType = equipmentEquipmentType;
-  }
-
-  public String getSerialNo() {
-    return serialNo;
-  }
-
-  public void setSerialNo(String serialNo) {
-    this.serialNo = serialNo;
-  }
-
-  public String getBrandName() {
-    return brandName;
-  }
-
-  public void setBrandName(String brandName) {
-    this.brandName = brandName;
-  }
-
-  public String getModelName() {
-    return modelName;
-  }
-
-  public void setModelName(String modelName) {
-    this.modelName = modelName;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getPlantName() {
-    return plantName;
-  }
-
-  public void setPlantName(String plantName) {
-    this.plantName = plantName;
-  }
-
-  public String getEquipmentName() {
-    return equipmentName;
-  }
-
-  public void setEquipmentName(String equipmentName) {
-    this.equipmentName = equipmentName;
-  }
-
-  public PlantDto getPlant() {
-    return plant;
-  }
-
-  public void setPlant(PlantDto plant) {
-    this.plant = plant;
-  }
-
-  public Long getEquipmentId() {
-    return equipmentId;
-  }
-
-  public void setEquipmentId(Long equipmentId) {
-    this.equipmentId = equipmentId;
-  }
-
-  public boolean isCalibrationExists() {
-    return calibrationExists;
-  }
-
-  public void setCalibrationExists(boolean calibrationExists) {
-    this.calibrationExists = calibrationExists;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
 }

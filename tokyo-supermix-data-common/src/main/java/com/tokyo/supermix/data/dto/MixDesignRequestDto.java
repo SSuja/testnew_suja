@@ -4,7 +4,13 @@ import java.sql.Date;
 
 import javax.validation.constraints.NotNull;
 import com.tokyo.supermix.data.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class MixDesignRequestDto {
   private String code;
   @NotNull(message = "{mixDesignRequestDto.date.null}")
@@ -15,68 +21,4 @@ public class MixDesignRequestDto {
   private boolean approved;
   private boolean sentMail;
   private boolean checkDepend;
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
-  public String getPlantCode() {
-    return plantCode;
-  }
-
-  public void setPlantCode(String plantCode) {
-    this.plantCode = plantCode;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public Long getRawMaterialId() {
-    return rawMaterialId;
-  }
-
-  public void setRawMaterialId(Long rawMaterialId) {
-    this.rawMaterialId = rawMaterialId;
-  }
-
-  public boolean isApproved() {
-    return approved;
-  }
-
-  public void setApproved(boolean approved) {
-    this.approved = approved;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
-
-  public boolean isCheckDepend() {
-    return checkDepend;
-  }
-
-  public void setCheckDepend(boolean checkDepend) {
-    this.checkDepend = checkDepend;
-  }
 }

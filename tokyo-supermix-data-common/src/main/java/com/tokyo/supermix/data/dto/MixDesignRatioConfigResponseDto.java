@@ -1,5 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class MixDesignRatioConfigResponseDto {
 
   private Long id;
@@ -7,44 +14,4 @@ public class MixDesignRatioConfigResponseDto {
   private Long ratioConfigId;
   private Double value;
   private String ratioConfigName;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getMixDesignCode() {
-    return mixDesignCode;
-  }
-
-  public void setMixDesignCode(String mixDesignCode) {
-    this.mixDesignCode = mixDesignCode;
-  }
-
-  public Long getRatioConfigId() {
-    return ratioConfigId;
-  }
-
-  public void setRatioConfigId(Long ratioConfigId) {
-    this.ratioConfigId = ratioConfigId;
-  }
-
-  public Double getValue() {
-    return value;
-  }
-
-  public void setValue(Double value) {
-    this.value = value;
-  }
-
-  public String getRatioConfigName() {
-    return ratioConfigName;
-  }
-
-  public void setRatioConfigName(String ratioConfigName) {
-    this.ratioConfigName = ratioConfigName;
-  }
 }

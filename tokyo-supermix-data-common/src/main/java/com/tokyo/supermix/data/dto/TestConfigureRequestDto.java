@@ -7,7 +7,13 @@ import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.ReportFormat;
 import com.tokyo.supermix.data.enums.TestResultType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class TestConfigureRequestDto {
   private Long id;
   private Long testId;
@@ -31,148 +37,4 @@ public class TestConfigureRequestDto {
   private Long noOfTrial;
   private String dueDay;
   private TestResultType testResultType;
-
-  public boolean isName() {
-    return name;
-  }
-
-  public void setName(boolean name) {
-    this.name = name;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Long getTestId() {
-    return testId;
-  }
-
-  public void setTestId(Long testId) {
-    this.testId = testId;
-  }
-
-  public MainType getTestType() {
-    return testType;
-  }
-
-  public void setTestType(MainType testType) {
-    this.testType = testType;
-  }
-
-  public boolean isCoreTest() {
-    return coreTest;
-  }
-
-  public void setCoreTest(boolean coreTest) {
-    this.coreTest = coreTest;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getTestProcedure() {
-    return testProcedure;
-  }
-
-  public void setTestProcedure(String testProcedure) {
-    this.testProcedure = testProcedure;
-  }
-
-  public String getPrefix() {
-    return prefix;
-  }
-
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
-  }
-
-  public Long getMaterialCategoryId() {
-    return materialCategoryId;
-  }
-
-  public void setMaterialCategoryId(Long materialCategoryId) {
-    this.materialCategoryId = materialCategoryId;
-  }
-
-  public Long getMaterialSubCategoryId() {
-    return materialSubCategoryId;
-  }
-
-  public void setMaterialSubCategoryId(Long materialSubCategoryId) {
-    this.materialSubCategoryId = materialSubCategoryId;
-  }
-
-  public boolean isActive() {
-    return active;
-  }
-
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-
-  public boolean isAdminLevelEmailConfiguration() {
-    return adminLevelEmailConfiguration;
-  }
-
-  public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
-    this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
-  }
-
-  public ReportFormat getReportFormat() {
-    return reportFormat;
-  }
-
-  public void setReportFormat(ReportFormat reportFormat) {
-    this.reportFormat = reportFormat;
-  }
-
-  public AcceptedType getAcceptedType() {
-    return acceptedType;
-  }
-
-  public void setAcceptedType(AcceptedType acceptedType) {
-    this.acceptedType = acceptedType;
-  }
-
-  public Long getRawMaterialId() {
-    return rawMaterialId;
-  }
-
-  public void setRawMaterialId(Long rawMaterialId) {
-    this.rawMaterialId = rawMaterialId;
-  }
-
-  public Long getNoOfTrial() {
-    return noOfTrial;
-  }
-
-  public void setNoOfTrial(Long noOfTrial) {
-    this.noOfTrial = noOfTrial;
-  }
-
-  public String getDueDay() {
-    return dueDay;
-  }
-
-  public void setDueDay(String dueDay) {
-    this.dueDay = dueDay;
-  }
-
-  public TestResultType getTestResultType() {
-    return testResultType;
-  }
-
-  public void setTestResultType(TestResultType testResultType) {
-    this.testResultType = testResultType;
-  }
 }

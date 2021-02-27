@@ -1,13 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class TestEquationParameterDto {
   private Long testParameterId;
-
-  public Long getTestParameterId() {
-    return testParameterId;
-  }
-
-  public void setTestParameterId(Long testParameterId) {
-    this.testParameterId = testParameterId;
-  }
 }

@@ -1,43 +1,16 @@
 package com.tokyo.supermix.data.dto;
 
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class TestEquationDto {
   private Long testConfigId;
   private Long equationId;
   private Long testParameterId;
-
-  public Long getTestParameterId() {
-    return testParameterId;
-  }
-
-  public void setTestParameterId(Long testParameterId) {
-    this.testParameterId = testParameterId;
-  }
-
   private List<TestEquationParameterDto> testEquationParameters;
-
-  public Long getTestConfigId() {
-    return testConfigId;
-  }
-
-  public void setTestConfigId(Long testConfigId) {
-    this.testConfigId = testConfigId;
-  }
-
-  public Long getEquationId() {
-    return equationId;
-  }
-
-  public void setEquationId(Long equationId) {
-    this.equationId = equationId;
-  }
-
-  public List<TestEquationParameterDto> getTestEquationParameters() {
-    return testEquationParameters;
-  }
-
-  public void setTestEquationParameters(List<TestEquationParameterDto> testEquationParameters) {
-    this.testEquationParameters = testEquationParameters;
-  }
 }

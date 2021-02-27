@@ -2,7 +2,13 @@ package com.tokyo.supermix.data.dto;
 
 import com.tokyo.supermix.data.enums.MainType;
 import com.tokyo.supermix.data.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 public class FinishProductTestDto {
   private Status status;
   private Long testConfigId;
@@ -14,84 +20,4 @@ public class FinishProductTestDto {
   private MainType mainType;
   private Long rawMaterialId;
   private String specimenCode;
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public Long getTestConfigId() {
-    return testConfigId;
-  }
-
-  public void setTestConfigId(Long testConfigId) {
-    this.testConfigId = testConfigId;
-  }
-
-  public String getFinishproductTestCode() {
-    return finishproductTestCode;
-  }
-
-  public void setFinishproductTestCode(String finishproductTestCode) {
-    this.finishproductTestCode = finishproductTestCode;
-  }
-
-  public String getCreatedDate() {
-    return createdDate;
-  }
-
-  public void setCreatedDate(String createdDate) {
-    this.createdDate = createdDate;
-  }
-
-  public String getUpdatedDate() {
-    return updatedDate;
-  }
-
-  public void setUpdatedDate(String updatedDate) {
-    this.updatedDate = updatedDate;
-  }
-
-  public String getTestName() {
-    return testName;
-  }
-
-  public void setTestName(String testName) {
-    this.testName = testName;
-  }
-
-  public String getFinishProductSampleCode() {
-    return finishProductSampleCode;
-  }
-
-  public void setFinishProductSampleCode(String finishProductSampleCode) {
-    this.finishProductSampleCode = finishProductSampleCode;
-  }
-
-  public MainType getMainType() {
-    return mainType;
-  }
-
-  public void setMainType(MainType mainType) {
-    this.mainType = mainType;
-  }
-
-  public Long getRawMaterialId() {
-    return rawMaterialId;
-  }
-
-  public void setRawMaterialId(Long rawMaterialId) {
-    this.rawMaterialId = rawMaterialId;
-  }
-
-  public String getSpecimenCode() {
-    return specimenCode;
-  }
-
-  public void setSpecimenCode(String specimenCode) {
-    this.specimenCode = specimenCode;
-  }
 }
