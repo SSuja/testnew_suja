@@ -28,7 +28,6 @@ import com.tokyo.supermix.data.enums.ParameterDataType;
 import com.tokyo.supermix.data.enums.TestParameterType;
 import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.rest.enums.RestApiResponseStatus;
-import com.tokyo.supermix.rest.response.BasicResponse;
 import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.ParameterService;
@@ -151,7 +150,10 @@ public class TestParameterController {
       }
       testParameterService.deleteTestParameter(id);
       return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.TEST_PARAMETER_DELETED),
+          new ContentResponse<>(Constants.TEST_CONFIGURE,
+              testParameterService.checkEqutaionExistsForTest(
+                  testParameter.getTestConfigure().getId()),
+              RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
     logger.debug("No Test Parameter record exist for given id");
