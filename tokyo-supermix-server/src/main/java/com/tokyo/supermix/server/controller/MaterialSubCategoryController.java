@@ -180,7 +180,9 @@ public class MaterialSubCategoryController {
             || mixDesignRepository
                 .existsByRawMaterialMaterialSubCategoryId(materialSubCategoryRequestDto.getId())
             || incomingSampleRepository
-                .existsByRawMaterialMaterialSubCategoryId(materialSubCategoryRequestDto.getId())) {
+                .existsByRawMaterialMaterialSubCategoryId(materialSubCategoryRequestDto.getId())
+            || materialSubCategoryService
+                .isRawMaterialDependOnSubCategory(materialSubCategoryRequestDto.getId())) {
           return new ResponseEntity<>(
               new ValidationFailureResponse(ValidationConstance.MATERIALSUBCATEGORY,
                   validationFailureStatusCodes.getSubMaterialCategoryAlreadyDepended()),

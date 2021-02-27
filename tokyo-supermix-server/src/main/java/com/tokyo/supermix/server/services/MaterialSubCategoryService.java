@@ -56,4 +56,6 @@ public interface MaterialSubCategoryService {
   public void saveMQPForSubCategory(
       List<MaterialQualityParameterRequestDto> materialQualityParameterRequestDtoList,
       Long subCategoryId);
+
+  public boolean isRawMaterialDependOnSubCategory(Long id);
 }
