@@ -69,6 +69,13 @@
 			<artifactId>querydsl-jpa</artifactId>
 			<version>4.0.6</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+			<version>1.18.10</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
