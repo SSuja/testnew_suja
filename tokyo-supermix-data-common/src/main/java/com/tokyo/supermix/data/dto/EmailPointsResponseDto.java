@@ -1,5 +1,12 @@
 package com.tokyo.supermix.data.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class EmailPointsResponseDto {
   private Long id;
   private String name;
@@ -9,52 +16,4 @@ public class EmailPointsResponseDto {
   private TestDto test;
   private boolean adminLevelEmailConfiguration;
   private boolean schedule;
-  public Long getId() {
-    return id;
-  }
-  public void setId(Long id) {
-    this.id = id;
-  }
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
-  public boolean isActive() {
-    return active;
-  }
-  public void setActive(boolean active) {
-    this.active = active;
-  }
-  public MaterialSubCategoryResponseDto getMaterialSubCategory() {
-    return materialSubCategory;
-  }
-  public void setMaterialSubCategory(MaterialSubCategoryResponseDto materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
-  }
-  public MaterialCategoryDto getMaterialCategory() {
-    return materialCategory;
-  }
-  public void setMaterialCategory(MaterialCategoryDto materialCategory) {
-    this.materialCategory = materialCategory;
-  }
-  public TestDto getTest() {
-    return test;
-  }
-  public void setTest(TestDto test) {
-    this.test = test;
-  }
-  public boolean isAdminLevelEmailConfiguration() {
-    return adminLevelEmailConfiguration;
-  }
-  public void setAdminLevelEmailConfiguration(boolean adminLevelEmailConfiguration) {
-    this.adminLevelEmailConfiguration = adminLevelEmailConfiguration;
-  }
-public boolean isSchedule() {
-	return schedule;
-}
-public void setSchedule(boolean schedule) {
-	this.schedule = schedule;
-}
 }
