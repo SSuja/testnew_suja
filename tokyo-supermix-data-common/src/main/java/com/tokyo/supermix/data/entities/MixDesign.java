@@ -9,7 +9,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_design")
 public class MixDesign extends DateAudit implements Serializable {
@@ -27,72 +33,4 @@ public class MixDesign extends DateAudit implements Serializable {
   private RawMaterial rawMaterial;
   private boolean checkDepend;
   private boolean sentMail;
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public boolean isApproved() {
-    return approved;
-  }
-
-  public void setApproved(boolean approved) {
-    this.approved = approved;
-  }
-
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
-
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
-  }
-
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
-  }
-
-  public boolean isCheckDepend() {
-    return checkDepend;
-  }
-
-  public void setCheckDepend(boolean checkDepend) {
-    this.checkDepend = checkDepend;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
 }

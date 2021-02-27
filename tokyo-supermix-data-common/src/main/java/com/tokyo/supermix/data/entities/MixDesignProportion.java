@@ -10,7 +10,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_design_proportion")
 public class MixDesignProportion extends DateAudit implements Serializable {
@@ -28,48 +34,4 @@ public class MixDesignProportion extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "rawMaterialId", nullable = false)
   private RawMaterial rawMaterial;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Double getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(Double quantity) {
-    this.quantity = quantity;
-  }
-
-  public Unit getUnit() {
-    return unit;
-  }
-
-  public void setUnit(Unit unit) {
-    this.unit = unit;
-  }
-
-  public MixDesign getMixDesign() {
-    return mixDesign;
-  }
-
-  public void setMixDesign(MixDesign mixDesign) {
-    this.mixDesign = mixDesign;
-  }
-
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
-  }
-
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

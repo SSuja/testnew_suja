@@ -11,7 +11,13 @@ import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.entities.privilege.PlantPermission;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant")
 public class Plant extends DateAudit implements Serializable {
@@ -31,88 +37,4 @@ public class Plant extends DateAudit implements Serializable {
   @JoinColumn(name = "subBusinessUnitId", nullable = true)
   private SubBusinessUnit subBusinessUnit;
   private boolean sentMail;
-
-  public Set<PlantRole> getPlantRole() {
-    return plantRole;
-  }
-
-  public void setPlantRole(Set<PlantRole> plantRole) {
-    this.plantRole = plantRole;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
-  public String getPhoneNumber() {
-    return phoneNumber;
-  }
-
-  public void setPhoneNumber(String phoneNumber) {
-    this.phoneNumber = phoneNumber;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public String getFaxNumber() {
-    return faxNumber;
-  }
-
-  public void setFaxNumber(String faxNumber) {
-    this.faxNumber = faxNumber;
-  }
-
-  public Set<PlantPermission> getPlantPermission() {
-    return plantPermission;
-  }
-
-  public void setPlantPermission(Set<PlantPermission> plantPermission) {
-    this.plantPermission = plantPermission;
-  }
-
-  public SubBusinessUnit getSubBusinessUnit() {
-    return subBusinessUnit;
-  }
-
-  public void setSubBusinessUnit(SubBusinessUnit subBusinessUnit) {
-    this.subBusinessUnit = subBusinessUnit;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
 }

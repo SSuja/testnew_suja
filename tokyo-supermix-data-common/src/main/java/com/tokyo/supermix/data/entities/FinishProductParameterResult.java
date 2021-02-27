@@ -9,7 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_parameter_result")
 public class FinishProductParameterResult extends DateAudit implements Serializable {
@@ -24,40 +30,4 @@ public class FinishProductParameterResult extends DateAudit implements Serializa
   @ManyToOne
   @JoinColumn(name = "finishProductTestCode", nullable = false)
   private FinishProductTest finishProductTest;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Double getResult() {
-    return result;
-  }
-
-  public void setResult(Double result) {
-    this.result = result;
-  }
-
-  public TestParameter getTestParameter() {
-    return testParameter;
-  }
-
-  public void setTestParameter(TestParameter testParameter) {
-    this.testParameter = testParameter;
-  }
-
-  public FinishProductTest getFinishProductTest() {
-    return finishProductTest;
-  }
-
-  public void setFinishProductTest(FinishProductTest finishProductTest) {
-    this.finishProductTest = finishProductTest;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

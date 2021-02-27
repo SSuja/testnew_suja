@@ -13,7 +13,13 @@ import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Condition;
 import com.tokyo.supermix.data.enums.QualityParamaterType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_quality_parameter")
 public class MaterialQualityParameter extends DateAudit implements Serializable {
@@ -43,96 +49,4 @@ public class MaterialQualityParameter extends DateAudit implements Serializable 
   private Parameter parameter;
   @Enumerated(EnumType.ORDINAL)
   private QualityParamaterType qualityParamaterType;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Double getMinValue() {
-    return minValue;
-  }
-
-  public void setMinValue(Double minValue) {
-    this.minValue = minValue;
-  }
-
-  public Double getMaxValue() {
-    return maxValue;
-  }
-
-  public void setMaxValue(Double maxValue) {
-    this.maxValue = maxValue;
-  }
-
-  public Double getValue() {
-    return value;
-  }
-
-  public void setValue(Double value) {
-    this.value = value;
-  }
-
-  public Condition getConditionRange() {
-    return conditionRange;
-  }
-
-  public void setConditionRange(Condition conditionRange) {
-    this.conditionRange = conditionRange;
-  }
-
-  public Unit getUnit() {
-    return unit;
-  }
-
-  public void setUnit(Unit unit) {
-    this.unit = unit;
-  }
-
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
-  }
-
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
-  }
-
-  public MaterialSubCategory getMaterialSubCategory() {
-    return materialSubCategory;
-  }
-
-  public void setMaterialSubCategory(MaterialSubCategory materialSubCategory) {
-    this.materialSubCategory = materialSubCategory;
-  }
-
-  public MaterialCategory getMaterialCategory() {
-    return materialCategory;
-  }
-
-  public void setMaterialCategory(MaterialCategory materialCategory) {
-    this.materialCategory = materialCategory;
-  }
-
-  public QualityParamaterType getQualityParamaterType() {
-    return qualityParamaterType;
-  }
-
-  public void setQualityParamaterType(QualityParamaterType qualityParamaterType) {
-    this.qualityParamaterType = qualityParamaterType;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public Parameter getParameter() {
-    return parameter;
-  }
-
-  public void setParameter(Parameter parameter) {
-    this.parameter = parameter;
-  }
 }

@@ -10,7 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_test")
 public class MaterialTest extends DateAudit implements Serializable {
@@ -29,72 +35,4 @@ public class MaterialTest extends DateAudit implements Serializable {
   private TestConfigure testConfigure;
   private String specimenCode;
   private boolean approved;
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public Long getNoOfTrial() {
-    return noOfTrial;
-  }
-
-  public void setNoOfTrial(Long noOfTrial) {
-    this.noOfTrial = noOfTrial;
-  }
-
-  public String getComment() {
-    return comment;
-  }
-
-  public void setComment(String comment) {
-    this.comment = comment;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public IncomingSample getIncomingSample() {
-    return incomingSample;
-  }
-
-  public void setIncomingSample(IncomingSample incomingSample) {
-    this.incomingSample = incomingSample;
-  }
-
-  public TestConfigure getTestConfigure() {
-    return testConfigure;
-  }
-
-  public void setTestConfigure(TestConfigure testConfigure) {
-    this.testConfigure = testConfigure;
-  }
-
-  public String getSpecimenCode() {
-    return specimenCode;
-  }
-
-  public void setSpecimenCode(String specimenCode) {
-    this.specimenCode = specimenCode;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public boolean isApproved() {
-    return approved;
-  }
-
-  public void setApproved(boolean approved) {
-    this.approved = approved;
-  }
 }
