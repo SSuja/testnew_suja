@@ -282,7 +282,9 @@ public class TestParameterServiceImpl implements TestParameterService {
   public boolean checkAbbreviation(List<TestParameterRequestDto> testParameterRequestDtos) {
     ArrayList<String> testParameterList = new ArrayList<String>();
     for (TestParameterRequestDto testParameterRequestDto : testParameterRequestDtos) {
-      testParameterList.add(testParameterRequestDto.getAbbreviation());
+      if(testParameterRequestDto.getAbbreviation()!=null) {
+    	testParameterList.add(testParameterRequestDto.getAbbreviation());
+      }
     }
     if (testParameterList.size() != testParameterList.stream().distinct()
         .collect(Collectors.toList()).size()) {
