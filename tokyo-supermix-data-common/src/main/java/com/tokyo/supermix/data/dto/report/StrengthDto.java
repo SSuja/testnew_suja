@@ -1,14 +1,13 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 import com.tokyo.supermix.data.dto.PlantDto;
 
 public class StrengthDto {
   private String finishProdutSampleCode;
   private Date testDate;
-  private Timestamp updatedDate;
+  private Date updatedDate;
   private String project;
   private String customer;
   private String rawMaterialName;
@@ -38,12 +37,12 @@ public class StrengthDto {
     this.testDate = testDate;
   }
 
-  public Timestamp getUpdatedDate() {
+  public Date getUpdatedDate() {
     return updatedDate;
   }
 
-  public void setUpdatedDate(Timestamp timestamp) {
-    this.updatedDate = timestamp;
+  public void setUpdatedDate(Date updatedDate) {
+    this.updatedDate = updatedDate;
   }
 
   public String getProject() {
