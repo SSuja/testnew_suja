@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -55,7 +56,7 @@ public class MixDesignController {
   private Mapper mapper;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(MixDesignController.class);
+  private static final Logger logger = LoggerFactory.getLogger(MixDesignController.class);
 
   @PostMapping(value = EndpointURI.MIX_DESIGN)
   public String saveMixDesign(@Valid @RequestBody MixDesignRequestDto mixDesignRequestDto) {
@@ -77,7 +78,7 @@ public class MixDesignController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MIX_DESIGN_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_CODE,
         validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -85,12 +86,12 @@ public class MixDesignController {
   @GetMapping(value = EndpointURI.MIX_DESIGN_BY_CODE)
   public ResponseEntity<Object> getMixDesignById(@PathVariable String code) {
     if (mixDesignService.isCodeExist(code)) {
-      logger.debug("Get mix design by id ");
+      logger.info("Get mix design by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN,
           mapper.map(mixDesignService.getMixDesignByCode(code), MixDesignResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_CODE,
         validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -115,7 +116,7 @@ public class MixDesignController {
           .map(mixDesignService.getMixDesignByPlantCode(plantCode), MixDesignResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No MixDesign record exist for given Plant Code");
+      logger.info("No MixDesign record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -128,7 +129,7 @@ public class MixDesignController {
           mapper.map(mixDesignService.getMixDesignByStatus(status), MixDesignResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No MixDesign record exist for given Status");
+      logger.info("No MixDesign record exist for given Status");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -170,7 +171,7 @@ public class MixDesignController {
               MixDesignResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No MixDesign record exist for given rawMaterialId");
+      logger.info("No MixDesign record exist for given rawMaterialId");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN,
           validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
     }

@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller.auth;
 
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +42,7 @@ public class RoleController {
   private PrivilegeValidationFailureStatusCodes privilegeValidationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(RoleController.class);
+  private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 
   @PostMapping(value = PrivilegeEndpointURI.ROLE)
   public ResponseEntity<Object> createRole(@Valid @RequestBody RoleDto roleDto) {
@@ -73,7 +74,7 @@ public class RoleController {
           new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.ROLE_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE_ID,
         privilegeValidationFailureStatusCodes.getRoleNotExists()), HttpStatus.BAD_REQUEST);
   }
@@ -87,7 +88,7 @@ public class RoleController {
               mapper.map(roleService.findRoleById(id), RoleDto.class), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.ROLE_ID,
         privilegeValidationFailureStatusCodes.getRoleNotExists()), HttpStatus.BAD_REQUEST);
   }

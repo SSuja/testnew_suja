@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +34,8 @@ public class ParameterEquationElementController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(ParameterEquationElementController.class);
-
+  private static final Logger logger =
+      LoggerFactory.getLogger(ParameterEquationElementController.class);
 
   @GetMapping(value = EndpointURI.PARAMETER_EQUATION_ELEMENTS)
   public ResponseEntity<Object> getParameterEquationElements() {
@@ -96,5 +97,4 @@ public class ParameterEquationElementController {
           validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
-
 }

@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,7 +59,7 @@ public class MaterialTestController {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private PlantRepository plantRepository;
-  private static final Logger logger = Logger.getLogger(MaterialTestController.class);
+  private static final Logger logger = LoggerFactory.getLogger(MaterialTestController.class);
 
   // create material tests
   @PostMapping(value = EndpointURI.MATERIAL_TEST)
@@ -78,12 +79,12 @@ public class MaterialTestController {
   @GetMapping(value = EndpointURI.MATERIAL_TESTS_BY_CODE)
   public ResponseEntity<Object> getMaterialTestByCode(@PathVariable String code) {
     if (materialTestService.isMaterialTestExists(code)) {
-      logger.debug("Id Exists");
+      logger.info("Id Exists");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST, mapper
           .map(materialTestService.getMaterialTestByCode(code), MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -95,7 +96,7 @@ public class MaterialTestController {
       MaterialTest materialTest = materialTestService.getMaterialTestByCode(code);
       if ((materialTest.getStatus()).equals(Status.NEW)) {
         materialTestService.deleteMaterialTest(code);
-        logger.debug("Material Test deleted");
+        logger.info("Material Test deleted");
         return new ResponseEntity<>(
             new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_DELETED),
             HttpStatus.OK);
@@ -104,7 +105,7 @@ public class MaterialTestController {
             validationFailureStatusCodes.getMaterialTestStatusValid()), HttpStatus.BAD_REQUEST);
       }
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -114,13 +115,13 @@ public class MaterialTestController {
   public ResponseEntity<Object> updateMaterialTest(
       @Valid @RequestBody MaterialTestRequestDto materialTestDto) {
     if (materialTestService.isMaterialTestExists(materialTestDto.getCode())) {
-      logger.debug("Id exists");
+      logger.info("Id exists");
       materialTestService.saveMaterialTest(mapper.map(materialTestDto, MaterialTest.class));
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_UPDATED),
           HttpStatus.OK);
     }
-    logger.debug("Id not found");
+    logger.info("Id not found");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -144,7 +145,7 @@ public class MaterialTestController {
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANTS,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
-    logger.debug("No Material Test record exist for given Incoming Sample Code");
+    logger.info("No Material Test record exist for given Incoming Sample Code");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -185,7 +186,7 @@ public class MaterialTestController {
               MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Material Test record exist for given Plant Code");
+      logger.info("No Material Test record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -219,13 +220,13 @@ public class MaterialTestController {
   public ResponseEntity<Object> getMaterialTestByTestConfigureTestType(
       @PathVariable MainType testType) {
     if (!materialTestService.getMaterialTestByTestConfigureTestType(testType).isEmpty()) {
-      logger.debug("testType Exists");
+      logger.info("testType Exists");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TESTS,
           mapper.map(materialTestService.getMaterialTestByTestConfigureTestType(testType),
               MaterialTestResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid TestType");
+    logger.info("Invalid TestType");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -322,5 +323,4 @@ public class MaterialTestController {
         materialTestService.getMaterialTestsByIncomingSample(incomingSampleCode),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-
 }

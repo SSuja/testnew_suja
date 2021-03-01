@@ -3,7 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class RawMaterialController {
   private MixDesignService mixDesignService;
   @Autowired
   private MaterialAcceptedValueService materialAcceptedValueService;
-  private static final Logger logger = Logger.getLogger(RawMaterialController.class);
+  private static final Logger logger = LoggerFactory.getLogger(RawMaterialController.class);
 
   @PostMapping(value = EndpointURI.RAW_MATERIAL)
   public ResponseEntity<Object> createRawMaterial(
@@ -173,7 +174,7 @@ public class RawMaterialController {
           mapper.map(rawMaterialService.getRawMaterialById(id), RawMaterialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Raw Material record exist for given id");
+    logger.info("No Raw Material record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_ID,
         validationFailureStatusCodes.getRawMaterialNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -331,7 +332,7 @@ public class RawMaterialController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_RAW_MATERIAL_SUCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Raw Material record exist for given id");
+    logger.info("No Raw Material record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_ID,
         validationFailureStatusCodes.getRawMaterialNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -344,7 +345,7 @@ public class RawMaterialController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_RAW_MATERIAL_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Raw Material record exist for given id");
+    logger.info("No Raw Material record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RAW_MATERIAL_ID,
         validationFailureStatusCodes.getRawMaterialNotExist()), HttpStatus.BAD_REQUEST);
   }

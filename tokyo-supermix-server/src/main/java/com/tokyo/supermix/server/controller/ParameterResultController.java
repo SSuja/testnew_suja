@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.script.ScriptException;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,7 @@ public class ParameterResultController {
   private Mapper mapper;
   @Autowired
   ParameterResultRepository parameterResultRepository;
-  private static final Logger logger = Logger.getLogger(ParameterResultController.class);
+  private static final Logger logger = LoggerFactory.getLogger(ParameterResultController.class);
 
   @PostMapping(value = EndpointURI.PARAMETER_RESULT)
   public ResponseEntity<Object> createParameterResult(
@@ -70,7 +71,7 @@ public class ParameterResultController {
                 .getInputMethods().equals(InputMethod.OBSERVE)
             && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
                 .getType().equals(TestParameterType.INPUT)
-                &&testParameterService.getTestParameterById(parameterResult.getTestParameterId())
+            && testParameterService.getTestParameterById(parameterResult.getTestParameterId())
                 .getParameter().getParameterDataType().equals(ParameterDataType.NUMBER)))
         .collect(Collectors.toList());
     if (li.isEmpty()) {
@@ -92,12 +93,12 @@ public class ParameterResultController {
   @GetMapping(value = EndpointURI.GET_PARAMETER_RESULT_BY_ID)
   public ResponseEntity<Object> getParameterResultByID(@PathVariable Long id) {
     if (parameterResultService.isParameterResultExist(id)) {
-      logger.debug("Get ParameterResult by id ");
+      logger.info("Get ParameterResult by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.PARAMETER_RESULT_ID, mapper
           .map(parameterResultService.getParameterResultById(id), ParameterResultResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT,
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -110,7 +111,7 @@ public class ParameterResultController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.PARAMETER_RESULT_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_RESULT_ID,
         validationFailureStatusCodes.getParameterResultNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -138,7 +139,7 @@ public class ParameterResultController {
               ParameterResultResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Parameter Result record exist for given Material Test Trial code");
+      logger.info("No Parameter Result record exist for given Material Test Trial code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
           validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -152,7 +153,7 @@ public class ParameterResultController {
               ParameterResultResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Parameter Result record exist for given Plant Code");
+      logger.info("No Parameter Result record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -183,7 +184,7 @@ public class ParameterResultController {
               ParameterResultResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Parameter Result record exist for given Material Test code");
+      logger.info("No Parameter Result record exist for given Material Test code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
           validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -197,10 +198,9 @@ public class ParameterResultController {
           parameterResultService.findResultsByMaterialTestCode(materialTestCode),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Parameter Result record exist for given Material Test code");
+      logger.info("No Parameter Result record exist for given Material Test code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_CODE,
           validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
     }
   }
-
 }

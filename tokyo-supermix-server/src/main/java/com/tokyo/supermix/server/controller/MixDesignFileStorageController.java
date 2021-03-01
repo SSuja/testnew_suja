@@ -3,6 +3,8 @@ package com.tokyo.supermix.server.controller;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,8 @@ public class MixDesignFileStorageController {
   private FileStorageService fileStorageService;
   @Autowired
   private MixDesignProportionService mixDesignProportionService;
+  private static final Logger logger =
+      LoggerFactory.getLogger(MixDesignFileStorageController.class);
 
   @GetMapping(value = EndpointURI.EXPORT_MIXDESIGN)
   public ResponseEntity<Object> downloadXLSProfile(HttpServletResponse response,

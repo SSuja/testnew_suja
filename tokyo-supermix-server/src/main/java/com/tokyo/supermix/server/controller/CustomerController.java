@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class CustomerController {
   private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(CustomerController.class);
+  private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
   @GetMapping(value = EndpointURI.CUSTOMER_BY_PLANT)
   public ResponseEntity<Object> getAllCustomersByCurrentUserPermission(

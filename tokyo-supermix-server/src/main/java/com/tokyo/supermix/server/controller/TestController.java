@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,20 +38,18 @@ public class TestController {
 
   @Autowired
   private TestService testService;
-
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
 
-  private static final Logger logger = Logger.getLogger(TestController.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
   // Create Test API
   @PostMapping(value = EndpointURI.TEST)
   public ResponseEntity<Object> createTest(@Valid @RequestBody TestDto testDto) {
     if (testService.isTestExist(testDto.getName())) {
-      logger.debug("Test already exists: createTest(), test: {}");
+      logger.info("Test already exists: createTest(), test: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
           validationFailureStatusCodes.getTestAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -74,7 +73,6 @@ public class TestController {
     int totalpage = 0;
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     pagination.setTotalRecords(testService.countTest());
-
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.TEST,
         mapper.map(testService.getAllTestByPagination(pageable), TestDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
@@ -89,7 +87,7 @@ public class TestController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
         validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -98,13 +96,13 @@ public class TestController {
   @GetMapping(value = EndpointURI.TEST_BY_ID)
   public ResponseEntity<Object> getTestById(@PathVariable Long id) {
     if (testService.isTestExist(id)) {
-      logger.debug("Id found");
+      logger.info("Id found");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.TEST,
               mapper.map(testService.getTestById(id), TestDto.class), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST,
         validationFailureStatusCodes.getTestNotExist()), HttpStatus.BAD_REQUEST);
   }

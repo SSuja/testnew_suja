@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import java.io.FileNotFoundException;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,17 +18,17 @@ import net.sf.jasperreports.engine.JRException;
 public class GenerateReportController {
   @Autowired
   private GenerateReportService generateReportService;
-  private static final Logger logger = Logger.getLogger(GenerateReportController.class);
+  private static final Logger logger = LoggerFactory.getLogger(GenerateReportController.class);
 
   @GetMapping(value = "summary-report/{code}")
   public ResponseEntity<Object> generateSummaryReport(@PathVariable String code) {
     try {
       generateReportService.generatePdfSummaryDetailReport(code);
     } catch (FileNotFoundException e) {
-      logger.debug("FileNotFoundException");
+      logger.info("FileNotFoundException");
       e.printStackTrace();
     } catch (JRException e) {
-      logger.debug("JRException");
+      logger.info("JRException");
       e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
@@ -40,10 +41,10 @@ public class GenerateReportController {
     try {
       generateReportService.generatePdfDeliveryDetailReport(code);
     } catch (FileNotFoundException e) {
-      logger.debug("FileNotFoundException");
+      logger.info("FileNotFoundException");
       e.printStackTrace();
     } catch (JRException e) {
-      logger.debug("JRException");
+      logger.info("JRException");
       e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();

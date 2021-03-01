@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.script.ScriptException;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class TestParameterController {
   ParameterService parameterService;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(TestParameterController.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestParameterController.class);
 
   @PostMapping(value = EndpointURI.TEST_PARAMETER)
   public ResponseEntity<Object> createTestParameter(
@@ -93,7 +94,7 @@ public class TestParameterController {
         if (testParameterService.isDuplicateTestParameterEntryExist(
             testParameterRequestDto.getTestConfigureId(), testParameterRequestDto.getAbbreviation(),
             testParameterRequestDto.getParameterId())) {
-          logger.debug("");
+          logger.info("");
           return new ResponseEntity<>(
               new ValidationFailureResponse(Constants.TEST_PARAMETER,
                   validationFailureStatusCodes.getTestParameterAlreadyExist()),
@@ -156,7 +157,7 @@ public class TestParameterController {
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    logger.debug("No Test Parameter record exist for given id");
+    logger.info("No Test Parameter record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
         validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
   }

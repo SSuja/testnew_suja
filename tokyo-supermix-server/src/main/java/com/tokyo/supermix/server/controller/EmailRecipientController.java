@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class EmailRecipientController {
   private EmailRecipientService emailRecipientService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-  private static final Logger logger = Logger.getLogger(EmailRecipientController.class);
+  private static final Logger logger = LoggerFactory.getLogger(EmailRecipientController.class);
 
   @GetMapping(value = EndpointURI.EMAIL_RECIPIENTS_BY_RECIPIENT_TYPE)
   public ResponseEntity<Object> getAllEmailRecipientByRecipientType(@PathVariable Long emailGroupId,
@@ -43,12 +44,11 @@ public class EmailRecipientController {
             EmailRecipientResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.EMAIL_RECIPIENTS)
   public ResponseEntity<Object> getAllEmailRecipient() {
     return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_RECIPIENTS,
-        mapper.map(emailRecipientService.getEmailRecipient(),
-            EmailRecipientResponseDto.class),
+        mapper.map(emailRecipientService.getEmailRecipient(), EmailRecipientResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

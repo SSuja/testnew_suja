@@ -1,5 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +48,8 @@ public class TestReportController {
   PlantRepository plantRepository;
   @Autowired
   private PlantService plantService;
+
+  private static final Logger logger = LoggerFactory.getLogger(TestReportController.class);
 
   @GetMapping(value = EndpointURI.MATERIAL_TEST_REPORT_DETAIL)
   public ResponseEntity<Object> getMaterialTestReportDetails(@PathVariable String materialTestCode,

@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class ProjectController {
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
-  private static final Logger logger = Logger.getLogger(ProjectController.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
   @PostMapping(value = EndpointURI.PROJECT)
   public ResponseEntity<Object> createProject(
@@ -118,7 +119,7 @@ public class ProjectController {
   @DeleteMapping(value = EndpointURI.PROJECT_BY_ID)
   public ResponseEntity<Object> deleteProject(@PathVariable String code) {
     if (projectService.isProjectExist(code)) {
-      logger.debug("delete project by code");
+      logger.info("delete project by code");
       projectService.deleteProject(code);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.PROJECT_DELETED), HttpStatus.OK);
@@ -134,7 +135,7 @@ public class ProjectController {
           mapper.map(projectService.getProjectByCode(code), ProjectResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Project record exist for given code");
+    logger.info("No Project record exist for given code");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROJECT_CODE,
         validationFailureStatusCodes.getProjectNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -258,4 +259,3 @@ public class ProjectController {
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
 }
-

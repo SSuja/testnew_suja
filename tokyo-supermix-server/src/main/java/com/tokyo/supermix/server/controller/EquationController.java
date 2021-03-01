@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class EquationController {
   @Autowired
   private TestConfigureService testConfigureService;
 
-  private static final Logger logger = Logger.getLogger(EquationController.class);
+  private static final Logger logger = LoggerFactory.getLogger(EquationController.class);
 
   @PostMapping(value = EndpointURI.EQUATION)
   public ResponseEntity<Object> createEquation(
@@ -56,7 +57,7 @@ public class EquationController {
 
   @GetMapping(value = EndpointURI.EQUATIONS)
   public ResponseEntity<Object> getAllEquations() {
-    logger.debug("get all equations");
+    logger.info("get all equations");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUATIONS,
         mapper.map(equationService.getAllEquations(), Equation.class), RestApiResponseStatus.OK),
         null, HttpStatus.OK);
@@ -77,7 +78,7 @@ public class EquationController {
   @DeleteMapping(value = EndpointURI.EQUATION_BY_ID)
   public ResponseEntity<Object> deleteEquation(@PathVariable Long id) {
     if (equationService.isEquationExist(id)) {
-      logger.debug("delete equation by id");
+      logger.info("delete equation by id");
       equationService.deleteEquation(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_EQUATION_SUCCESS),

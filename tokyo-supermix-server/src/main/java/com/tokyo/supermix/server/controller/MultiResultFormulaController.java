@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,7 @@ public class MultiResultFormulaController {
   private Mapper mapper;
   @Autowired
   private TestConfigureService testConfigureService;
+  private static final Logger logger = LoggerFactory.getLogger(MultiResultFormulaController.class);
 
   @GetMapping(value = EndpointURI.MULTI_RESULT_FORMULA_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getMultiResultFormulaByTestConfigureId(

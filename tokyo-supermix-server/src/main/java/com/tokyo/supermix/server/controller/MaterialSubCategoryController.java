@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -67,7 +68,7 @@ public class MaterialSubCategoryController {
   CoreTestConfigureService coreTestConfigureService;
   @Autowired
   RawMaterialRepository rawMaterialRepository;
-  private static final Logger logger = Logger.getLogger(MaterialSubCategoryController.class);
+  private static final Logger logger = LoggerFactory.getLogger(MaterialSubCategoryController.class);
 
   @GetMapping(value = EndpointURI.MATERIAL_SUB_CATEGORIES)
   public ResponseEntity<Object> getMaterialSubCategory() {
@@ -89,7 +90,7 @@ public class MaterialSubCategoryController {
               RestApiResponseStatus.OK),
           null, HttpStatus.OK);
     }
-    logger.debug("MaterialSubCategory does not exist for given id");
+    logger.info("MaterialSubCategory does not exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -101,7 +102,7 @@ public class MaterialSubCategoryController {
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.DELETE_MATERIAL_SUB_CATEGORY_SUCCESS), HttpStatus.OK);
     }
-    logger.debug("MaterialSubCategory doesn't exist for given id");
+    logger.info("MaterialSubCategory doesn't exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY_ID,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }

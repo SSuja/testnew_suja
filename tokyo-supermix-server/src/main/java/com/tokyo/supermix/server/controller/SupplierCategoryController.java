@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,13 +41,13 @@ public class SupplierCategoryController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(SupplierCategoryController.class);
+  private static final Logger logger = LoggerFactory.getLogger(SupplierCategoryController.class);
 
   @PostMapping(value = EndpointURI.SUPPLIER_CATEGORY)
   public ResponseEntity<Object> createSupplierCategory(
       @Valid @RequestBody SupplierCategoryDto supplierCategoryDto) {
     if (supplierCategoryService.isSupplierCategoryExist(supplierCategoryDto.getCategory())) {
-      logger.debug("Supplier Category already exists: createSupplierCategory(), category: {}");
+      logger.info("Supplier Category already exists: createSupplierCategory(), category: {}");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY_NAME,
               validationFailureStatusCodes.getSupplierCategoryAlreadyExist()),
@@ -67,7 +68,7 @@ public class SupplierCategoryController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_SUPPLIER_CATEGORY_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Supplier Category record exist for given id");
+    logger.info("No Supplier Category record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
         validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -96,7 +97,7 @@ public class SupplierCategoryController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_SUPPLIER_CATEGORY_SUCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Supplier Category record exist for given id");
+    logger.info("No Supplier Category record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
         validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -109,7 +110,7 @@ public class SupplierCategoryController {
               .map(supplierCategoryService.getSupplierCategoryById(id), SupplierCategoryDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Supplier Category record exist for given id");
+    logger.info("No Supplier Category record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
         validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
   }

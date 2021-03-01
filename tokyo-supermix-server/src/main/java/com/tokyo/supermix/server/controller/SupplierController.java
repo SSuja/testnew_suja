@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class SupplierController {
   private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(SupplierController.class);
+  private static final Logger logger = LoggerFactory.getLogger(SupplierController.class);
 
   @GetMapping(value = EndpointURI.SUPPLIERS)
   public ResponseEntity<Object> getSuppliers() {
@@ -156,7 +157,7 @@ public class SupplierController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_SUPPLIER_SUCCESS),
           HttpStatus.OK);
     }
-    logger.debug("Supplier doesn't exist for given id");
+    logger.info("Supplier doesn't exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -168,7 +169,7 @@ public class SupplierController {
           mapper.map(supplierService.getSupplierById(id), SupplierResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Supplier record exist for given id");
+    logger.info("No Supplier record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER,
         validationFailureStatusCodes.getSupplierNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -189,23 +190,11 @@ public class SupplierController {
               SupplierResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Supplier record exist for given Supplier Category id");
+      logger.info("No Supplier record exist for given Supplier Category id");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUPPLIER_CATEGORY,
           validationFailureStatusCodes.getSupplierCategoryNotExit()), HttpStatus.BAD_REQUEST);
     }
   }
-
-
-  // @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE)
-  // public ResponseEntity<Object> getSupplierByPlantCode(@PathVariable String plantCode) {
-  // if (plantService.isPlantExist(plantCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.SUPPLIER,
-  // mapper.map(supplierService.getSupplierByPlantCode(plantCode), SupplierResponseDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
 
   @GetMapping(value = EndpointURI.GET_SUPPLIERS_BY_PLANT_CODE_AND_SUPPLIER_CATEGORY)
   public ResponseEntity<Object> getSupplierByPlantCodeAndSupplierCategoryId(
@@ -285,6 +274,5 @@ public class SupplierController {
                 updatedAt, supplierCategoryName, booleanBuilder, pageable, plantCode, pagination),
             SupplierResponseDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
-
   }
 }
