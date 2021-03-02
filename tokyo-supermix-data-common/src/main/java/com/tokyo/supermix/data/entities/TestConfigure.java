@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
+import javax.validation.constraints.Size;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.AcceptedType;
 import com.tokyo.supermix.data.enums.MainType;
@@ -26,7 +26,9 @@ public class TestConfigure extends DateAudit implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private boolean coreTest;
+  @Size(min = 3 , max = 500)
   private String description;
+  @Size(min = 3 , max = 500)
   private String testProcedure;
   private String prefix;
   @Enumerated(EnumType.ORDINAL)
