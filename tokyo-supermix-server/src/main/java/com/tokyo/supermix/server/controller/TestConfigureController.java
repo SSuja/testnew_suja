@@ -103,7 +103,7 @@ public class TestConfigureController {
     TestConfigure testConfigure =
         testConfigureService.getTestConfigureById(testConfigureRequestDto.getId());
     if (testConfigureService.isTestConfigureExist(testConfigureRequestDto.getId())) {
-      if (testConfigureService.isAlreadyDepended(testConfigureRequestDto.getId())) {
+      if (testConfigureService.isAlreadyDependedforTestConfigure(testConfigureRequestDto)) {
         return new ResponseEntity<>(
             new ValidationFailureResponse(Constants.TEST_CONFIGURE,
                 validationFailureStatusCodes.getTestConfigureAlreadyDepended()),

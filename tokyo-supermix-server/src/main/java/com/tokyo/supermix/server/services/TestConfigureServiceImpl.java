@@ -483,4 +483,51 @@ public class TestConfigureServiceImpl implements TestConfigureService {
       }
     }
   }
+
+  @Transactional(readOnly = true)
+  public boolean isAlreadyDependedforTestConfigure(
+      TestConfigureRequestDto testConfigureRequestDto) {
+    TestConfigure testConfigure =
+        testConfigureRepository.findById(testConfigureRequestDto.getId()).get();
+    if (testConfigureRequestDto.getMaterialCategoryId() != null && (!testConfigureRequestDto
+        .getMaterialCategoryId().equals(testConfigure.getMaterialCategory().getId()))) {
+      return true;
+    }
+    if (testConfigureRequestDto.getMaterialCategoryId()
+        .equals(testConfigure.getMaterialCategory().getId())) {
+      if (!(testConfigureRequestDto.getMaterialSubCategoryId() == null
+          && testConfigure.getMaterialSubCategory() == null)
+          && ((testConfigureRequestDto.getMaterialSubCategoryId() != null
+              && testConfigure.getMaterialSubCategory() == null)
+              || (testConfigureRequestDto.getMaterialSubCategoryId() == null
+                  && testConfigure.getMaterialSubCategory() != null)
+              || !(testConfigureRequestDto.getMaterialSubCategoryId()
+                  .equals(testConfigure.getMaterialSubCategory().getId())))) {
+        return true;
+      }
+      if (!(testConfigureRequestDto.getRawMaterialId() == null
+          && testConfigure.getRawMaterial() == null)
+          && ((testConfigureRequestDto.getRawMaterialId() != null
+              && testConfigure.getRawMaterial() == null)
+              || (testConfigureRequestDto.getRawMaterialId() == null
+                  && testConfigure.getRawMaterial() != null)
+              || !(testConfigureRequestDto.getRawMaterialId()
+                  .equals(testConfigure.getRawMaterial().getId())))) {
+        return true;
+      }
+    }
+    if (testConfigureRequestDto.getTestId() != null
+        && (!testConfigureRequestDto.getTestId().equals(testConfigure.getTest().getId()))) {
+      return true;
+    }
+    if (testConfigureRequestDto.getPrefix() != null
+        && (!testConfigureRequestDto.getPrefix().equals(testConfigure.getPrefix()))) {
+      return true;
+    }
+    if (testConfigureRequestDto.getReportFormat() != null
+        && (!testConfigureRequestDto.getReportFormat().equals(testConfigure.getReportFormat()))) {
+      return true;
+    }
+    return false;
+  }
 }

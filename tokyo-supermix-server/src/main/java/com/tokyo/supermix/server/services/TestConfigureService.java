@@ -69,4 +69,6 @@ public interface TestConfigureService {
   public boolean isAlreadyDepended(Long testConfigureId);
 
   public void resetAcceptedValueForCategories(TestConfigureRequestDto testConfigureRequestDto);
+
+  public boolean isAlreadyDependedforTestConfigure(TestConfigureRequestDto testConfigureRequestDto);
 }
