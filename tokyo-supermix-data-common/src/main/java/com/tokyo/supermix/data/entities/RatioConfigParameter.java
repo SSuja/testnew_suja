@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +19,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "ratio_config_parameter")
-public class RatioConfigParameter implements Serializable {
+public class RatioConfigParameter extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
