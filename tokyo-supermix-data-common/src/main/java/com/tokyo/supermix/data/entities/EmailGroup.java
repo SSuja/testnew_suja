@@ -9,7 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "email_group")
 public class EmailGroup extends DateAudit implements Serializable {
@@ -26,56 +32,4 @@ public class EmailGroup extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "plantCode", nullable = true)
   private Plant plant;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public boolean isSchedule() {
-    return schedule;
-  }
-
-  public void setSchedule(boolean schedule) {
-    this.schedule = schedule;
-  }
-
-  public EmailPoints getEmailPoints() {
-    return emailPoints;
-  }
-
-  public void setEmailPoints(EmailPoints emailPoints) {
-    this.emailPoints = emailPoints;
-  }
-
-  public boolean isStatus() {
-    return status;
-  }
-
-  public void setStatus(boolean status) {
-    this.status = status;
-  }
-
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
 }

@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,14 +39,11 @@ public class SubBusinessUnitController {
 
   @Autowired
   SubBusinessUnitService subBusinessUnitService;
-
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
-  private static final Logger logger = Logger.getLogger(SubBusinessUnitController.class);
+  private static final Logger logger = LoggerFactory.getLogger(SubBusinessUnitController.class);
 
   @GetMapping(value = EndpointURI.SUB_BUSINESS_UNITS)
   public ResponseEntity<Object> getAllSubBusinessUnits() {
@@ -57,7 +55,7 @@ public class SubBusinessUnitController {
   @GetMapping(value = EndpointURI.SUB_BUSINESS_UNIT_BY_ID)
   public ResponseEntity<Object> getSubBusinessUnitById(@PathVariable Long id) {
     if (subBusinessUnitService.isSubBusinessUnitExist(id)) {
-      logger.debug("Get SubBusinessUnit by id ");
+      logger.info("Get SubBusinessUnit by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.SUB_BUSINESS_UNIT, mapper
           .map(subBusinessUnitService.getSubBusinessUnitById(id), SubBusinessUnitResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -75,7 +73,7 @@ public class SubBusinessUnitController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.SUB_BUSINESS_UNIT_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.SUB_BUSINESS_UNIT,
         validationFailureStatusCodes.getSubBusinessUnitNotExist()), HttpStatus.BAD_REQUEST);
 
@@ -85,7 +83,7 @@ public class SubBusinessUnitController {
   public ResponseEntity<Object> createSubBusinessUnit(
       @Valid @RequestBody SubBusinessUnitRequestDto subBusinessUnitDto) {
     if (subBusinessUnitService.isSubBusinessUnitExist(subBusinessUnitDto.getName())) {
-      logger.debug("Already exists");
+      logger.info("Already exists");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.SUB_BUSINESS_UNIT_NAME,
               validationFailureStatusCodes.getSubBusinessUnitAlreadyExist()),

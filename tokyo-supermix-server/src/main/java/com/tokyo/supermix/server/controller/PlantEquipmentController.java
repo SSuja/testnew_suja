@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,14 +67,14 @@ public class PlantEquipmentController {
   private FileStorageService fileStorageService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(PlantEquipmentController.class);
+  private static final Logger logger = LoggerFactory.getLogger(PlantEquipmentController.class);
 
   // Add EquipmentPlant
   @PostMapping(value = EndpointURI.PLANT_EQUIPMENT)
   public ResponseEntity<Object> createEquipmentPlant(
       @Valid @RequestBody PlantEquipmentRequestDto plantequipmentRequestDto) {
     if (plantEquipmentService.isPlantEquipmentExist(plantequipmentRequestDto.getSerialNo())) {
-      logger.debug("PlantEquipment SerailNumber already exists: ");
+      logger.info("PlantEquipment SerailNumber already exists: ");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.PLANTEQUIPMENT_SERIALNO,
               validationFailureStatusCodes.getPlantEquipmentAlreadyExist()),
@@ -98,7 +99,7 @@ public class PlantEquipmentController {
   @DeleteMapping(value = EndpointURI.PLANTEQUIPMENT_BY_SERIALNO)
   public ResponseEntity<Object> deletePlantEquipment(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
-      logger.debug("delete Planteuipment by serialNo");
+      logger.info("delete Planteuipment by serialNo");
       plantEquipmentService.deletePlantEquipment(serialNo);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.PLANTEQUIPMENT_DELETED),
@@ -112,7 +113,7 @@ public class PlantEquipmentController {
   @GetMapping(value = EndpointURI.PLANTEQUIPMENT_BY_SERIALNO)
   public ResponseEntity<Object> getPlantEquipmentByserialNo(@PathVariable String serialNo) {
     if (plantEquipmentService.isPlantEquipmentExist(serialNo)) {
-      logger.debug("Get PlantEquipment by PlantEquipment Serial number");
+      logger.info("Get PlantEquipment by PlantEquipment Serial number");
       return new ResponseEntity<>(new ContentResponse<>(Constants.PLANTEQUIPMENT_SERIALNO,
           mapper.map(plantEquipmentService.getPlantEquipmentBySerialNo(serialNo),
               PlantEquipmentResponseDto.class),

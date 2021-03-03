@@ -2,6 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import java.util.List;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,8 @@ public class MaterialQualityParameterController {
   private Mapper mapper;
   @Autowired
   private MaterialQualityParameterService materialQualityParameterService;
+  private static final Logger logger =
+      LoggerFactory.getLogger(MaterialQualityParameterController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_QUALITY_PARAMETER)
   public ResponseEntity<Object> saveQualityParameter(

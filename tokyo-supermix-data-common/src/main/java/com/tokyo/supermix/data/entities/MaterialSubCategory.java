@@ -9,7 +9,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_sub_category")
 public class MaterialSubCategory extends DateAudit implements Serializable {
@@ -22,41 +28,4 @@ public class MaterialSubCategory extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "materialCategoryId", nullable = false)
   private MaterialCategory materialCategory;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public MaterialCategory getMaterialCategory() {
-    return materialCategory;
-  }
-
-  public void setMaterialCategory(MaterialCategory materialCategory) {
-    this.materialCategory = materialCategory;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public String getPrefix() {
-    return prefix;
-  }
-
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
-  }
-
 }

@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller.auth;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +58,7 @@ public class UserController {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-  private static final Logger logger = Logger.getLogger(UserController.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   @PostMapping(value = PrivilegeEndpointURI.USER)
   public ResponseEntity<Object> createUser(@Valid @RequestBody GenerateUserDto generateUserDto) {
@@ -68,7 +69,7 @@ public class UserController {
       return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.EMPLOYEE,
           privilegeValidationFailureStatusCodes.getEmployeeIdIsNull()), HttpStatus.BAD_REQUEST);
     } else if (userService.isEmployeeExist(generateUserDto.getEmployeeId())) {
-      logger.debug("Employee already exists: createUser(), employee: {}");
+      logger.info("Employee already exists: createUser(), employee: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER,
           privilegeValidationFailureStatusCodes.getUserAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -136,7 +137,7 @@ public class UserController {
       return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.USER,
           userService.getUserDetailById(id), RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No User record exist for given id");
+    logger.info("No User record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
         privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -149,7 +150,7 @@ public class UserController {
           new BasicResponse<>(RestApiResponseStatus.OK, PrivilegeConstants.DELETE_USER_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No User record exist for given id");
+    logger.info("No User record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.USER_ID,
         privilegeValidationFailureStatusCodes.getUserNotExist()), HttpStatus.BAD_REQUEST);
   }

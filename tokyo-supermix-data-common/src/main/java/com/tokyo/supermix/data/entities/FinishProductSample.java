@@ -14,7 +14,13 @@ import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.FinishProductSampleType;
 import com.tokyo.supermix.data.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "finish_product_sample")
 public class FinishProductSample extends DateAudit implements Serializable {
@@ -45,112 +51,4 @@ public class FinishProductSample extends DateAudit implements Serializable {
   private User user;
   @Enumerated(EnumType.ORDINAL)
   private FinishProductSampleType finishProductSampleType;
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public String getFinishProductCode() {
-    return finishProductCode;
-  }
-
-  public void setFinishProductCode(String finishProductCode) {
-    this.finishProductCode = finishProductCode;
-  }
-
-  public Date getDate() {
-    return date;
-  }
-
-  public void setDate(Date date) {
-    this.date = date;
-  }
-
-  public PlantEquipment getPlantEquipment() {
-    return plantEquipment;
-  }
-
-  public void setPlantEquipment(PlantEquipment plantEquipment) {
-    this.plantEquipment = plantEquipment;
-  }
-
-  public MixDesign getMixDesign() {
-    return mixDesign;
-  }
-
-  public void setMixDesign(MixDesign mixDesign) {
-    this.mixDesign = mixDesign;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public String getTruckNo() {
-    return truckNo;
-  }
-
-  public void setTruckNo(String truckNo) {
-    this.truckNo = truckNo;
-  }
-
-  public Project getProject() {
-    return project;
-  }
-
-  public void setProject(Project project) {
-    this.project = project;
-  }
-
-  public Pour getPour() {
-    return pour;
-  }
-
-  public void setPour(Pour pour) {
-    this.pour = pour;
-  }
-
-  public String getWorkOrderNumber() {
-    return workOrderNumber;
-  }
-
-  public void setWorkOrderNumber(String workOrderNumber) {
-    this.workOrderNumber = workOrderNumber;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
-
-  public FinishProductSampleType getFinishProductSampleType() {
-    return finishProductSampleType;
-  }
-
-  public void setFinishProductSampleType(FinishProductSampleType finishProductSampleType) {
-    this.finishProductSampleType = finishProductSampleType;
-  }
 }

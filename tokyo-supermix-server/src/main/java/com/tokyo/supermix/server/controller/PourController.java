@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +51,7 @@ public class PourController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(PourController.class);
+  private static final Logger logger = LoggerFactory.getLogger(PourController.class);
 
   @PostMapping(value = EndpointURI.POUR)
   public ResponseEntity<Object> createPour(@Valid @RequestBody PourDtoRequest pourDtoRequest) {
@@ -67,7 +68,7 @@ public class PourController {
   @GetMapping(value = EndpointURI.POUR_BY_ID)
   public ResponseEntity<Object> getPourById(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
-      logger.debug("get pour By Id");
+      logger.info("get pour By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.POUR,
           mapper.map(pourService.getPourById(id), PourDtoResponse.class), RestApiResponseStatus.OK),
           HttpStatus.OK);
@@ -78,7 +79,7 @@ public class PourController {
 
   @GetMapping(value = EndpointURI.POURS)
   public ResponseEntity<Object> getAllPour() {
-    logger.debug("gat all pour");
+    logger.info("gat all pour");
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.POUR,
             mapper.map(pourService.getAllPour(), PourDtoResponse.class), RestApiResponseStatus.OK),
@@ -88,7 +89,7 @@ public class PourController {
   @DeleteMapping(value = EndpointURI.POUR_BY_ID)
   public ResponseEntity<Object> deletePour(@PathVariable Long id) {
     if (pourService.isPourExit(id)) {
-      logger.debug("get pour By Id");
+      logger.info("get pour By Id");
       pourService.deletePour(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.POUR_DELETED), HttpStatus.OK);
@@ -134,7 +135,7 @@ public class PourController {
     Pagination pagination = new Pagination(page, size, totalpage, 0l);
     if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       pagination.setTotalRecords(pourService.getCountPour());
-      logger.debug("gat all pour");
+      logger.info("gat all pour");
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.POUR,
           mapper.map(pourService.getAllPourByPlant(currentUser, pageable), PourDtoResponse.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
@@ -143,7 +144,7 @@ public class PourController {
         .getPermissionPlantCodeByCurrentUser(currentUser, PermissionConstants.VIEW_POUR)
         .contains(plantCode)) {
       pagination.setTotalRecords(pourService.getCountPourByPlantCode(plantCode));
-      logger.debug("gat all pour");
+      logger.info("gat all pour");
       return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.POUR,
           mapper.map(pourService.getPoursByPlantCode(plantCode, pageable), PourDtoResponse.class),
           RestApiResponseStatus.OK, pagination), HttpStatus.OK);
@@ -174,8 +175,9 @@ public class PourController {
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.POUR,
-        pourService.searchPour(booleanBuilder, name, projectName, plantCode, pageable, pagination),
-        RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
+    return new ResponseEntity<>(
+        new PaginatedContentResponse<>(Constants.POUR, pourService.searchPour(booleanBuilder, name,
+            projectName, plantCode, pageable, pagination), RestApiResponseStatus.OK, pagination),
+        null, HttpStatus.OK);
   }
 }

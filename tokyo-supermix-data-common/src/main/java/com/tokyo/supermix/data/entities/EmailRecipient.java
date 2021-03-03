@@ -14,7 +14,13 @@ import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.entities.privilege.PlantRole;
 import com.tokyo.supermix.data.enums.RecipientType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "email_recipient")
 public class EmailRecipient extends DateAudit implements Serializable {
@@ -33,48 +39,4 @@ public class EmailRecipient extends DateAudit implements Serializable {
   private User user;
   @Enumerated(EnumType.ORDINAL)
   private RecipientType recipientType;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public EmailGroup getEmailGroup() {
-    return emailGroup;
-  }
-
-  public void setEmailGroup(EmailGroup emailGroup) {
-    this.emailGroup = emailGroup;
-  }
-
-  public PlantRole getPlantRole() {
-    return plantRole;
-  }
-
-  public void setPlantRole(PlantRole plantRole) {
-    this.plantRole = plantRole;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public RecipientType getRecipientType() {
-    return recipientType;
-  }
-
-  public void setRecipientType(RecipientType recipientType) {
-    this.recipientType = recipientType;
-  }
 }

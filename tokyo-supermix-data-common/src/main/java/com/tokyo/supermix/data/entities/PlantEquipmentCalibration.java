@@ -14,7 +14,13 @@ import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.User;
 import com.tokyo.supermix.data.enums.CalibrationType;
 import com.tokyo.supermix.data.enums.Status;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant_equipment_calibration")
 public class PlantEquipmentCalibration implements Serializable {
@@ -47,120 +53,4 @@ public class PlantEquipmentCalibration implements Serializable {
   @ManyToOne
   @JoinColumn(name = "unitId", nullable = true)
   private Unit unit;
-
-  public Long getNoOfDays() {
-    return noOfDays;
-  }
-
-  public void setNoOfDays(Long noOfDays) {
-    this.noOfDays = noOfDays;
-  }
-
-  public Employee getEmployee() {
-    return employee;
-  }
-
-  public void setEmployee(Employee employee) {
-    this.employee = employee;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Date getCalibratedDate() {
-    return calibratedDate;
-  }
-
-  public void setCalibratedDate(Date calibratedDate) {
-    this.calibratedDate = calibratedDate;
-  }
-
-  public Date getDueDate() {
-    return dueDate;
-  }
-
-  public void setDueDate(Date dueDate) {
-    this.dueDate = dueDate;
-  }
-
-  public CalibrationType getCalibrationType() {
-    return calibrationType;
-  }
-
-  public void setCalibrationType(CalibrationType calibrationType) {
-    this.calibrationType = calibrationType;
-  }
-
-  public User getUser() {
-    return user;
-  }
-
-  public void setUser(User user) {
-    this.user = user;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public PlantEquipment getPlantEquipment() {
-    return plantEquipment;
-  }
-
-  public void setPlantEquipment(PlantEquipment plantEquipment) {
-    this.plantEquipment = plantEquipment;
-  }
-
-  public Supplier getSupplier() {
-    return supplier;
-  }
-
-  public void setSupplier(Supplier supplier) {
-    this.supplier = supplier;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public String getAccuracy() {
-    return accuracy;
-  }
-
-  public void setAccuracy(String accuracy) {
-    this.accuracy = accuracy;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
-
-  public Unit getUnit() {
-    return unit;
-  }
-
-  public void setUnit(Unit unit) {
-    this.unit = unit;
-  }
 }

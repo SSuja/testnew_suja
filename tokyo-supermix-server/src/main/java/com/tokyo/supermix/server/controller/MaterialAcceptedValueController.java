@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,7 +57,8 @@ public class MaterialAcceptedValueController {
   private Mapper mapper;
   @Autowired
   CoreTestConfigureService configureService;
-  private static final Logger logger = Logger.getLogger(MaterialAcceptedValueController.class);
+  private static final Logger logger =
+      LoggerFactory.getLogger(MaterialAcceptedValueController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE)
   public ResponseEntity<Object> createMaterialAcceptedValue(
@@ -117,7 +119,7 @@ public class MaterialAcceptedValueController {
   @GetMapping(value = EndpointURI.MATERIAL_ACCEPTED_VALUE_BY_ID)
   public ResponseEntity<Object> getMaterialAcceptedValueById(@PathVariable Long id) {
     if (materialAcceptedValueService.isMaterialAcceptedValueExist(id)) {
-      logger.debug("Get AcceptedValue by id ");
+      logger.info("Get AcceptedValue by id ");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.MATERIAL_ACCEPTED_VALUE,
               mapper.map(materialAcceptedValueService.getMaterialAcceptedValueById(id),
@@ -125,7 +127,7 @@ public class MaterialAcceptedValueController {
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_ACCEPTED_VALUE,
         validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -263,7 +265,7 @@ public class MaterialAcceptedValueController {
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     } else {
-      logger.debug("No AcceptedValue record exist for given Test type id");
+      logger.info("No AcceptedValue record exist for given Test type id");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -277,7 +279,7 @@ public class MaterialAcceptedValueController {
           materialAcceptedValueService.findByTestConfigureId(testConfigureId),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No AcceptedValue record exist for given Test type id");
+      logger.info("No AcceptedValue record exist for given Test type id");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getAcceptedValueNotExist()), HttpStatus.BAD_REQUEST);
     }

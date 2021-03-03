@@ -7,7 +7,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "plant_equipment")
 public class PlantEquipment extends DateAudit implements Serializable {
@@ -25,72 +31,4 @@ public class PlantEquipment extends DateAudit implements Serializable {
   private Equipment equipment;
   private boolean calibrationExists;
   private boolean sentMail;
-
-  public String getSerialNo() {
-    return serialNo;
-  }
-
-  public void setSerialNo(String serialNo) {
-    this.serialNo = serialNo;
-  }
-
-  public String getBrandName() {
-    return brandName;
-  }
-
-  public void setBrandName(String brandName) {
-    this.brandName = brandName;
-  }
-
-  public String getModelName() {
-    return modelName;
-  }
-
-  public void setModelName(String modelName) {
-    this.modelName = modelName;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Plant getPlant() {
-    return plant;
-  }
-
-  public void setPlant(Plant plant) {
-    this.plant = plant;
-  }
-
-  public Equipment getEquipment() {
-    return equipment;
-  }
-
-  public void setEquipment(Equipment equipment) {
-    this.equipment = equipment;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public boolean isCalibrationExists() {
-    return calibrationExists;
-  }
-
-  public void setCalibrationExists(boolean calibrationExists) {
-    this.calibrationExists = calibrationExists;
-  }
-
-  public boolean isSentMail() {
-    return sentMail;
-  }
-
-  public void setSentMail(boolean sentMail) {
-    this.sentMail = sentMail;
-  }
 }

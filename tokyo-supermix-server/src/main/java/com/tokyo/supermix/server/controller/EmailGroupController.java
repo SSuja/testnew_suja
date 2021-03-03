@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,7 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.EmailGroupService;
 import com.tokyo.supermix.util.Constants;
-import com.tokyo.supermix.util.ValidationFailureStatusCodes;    
+import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -36,6 +38,8 @@ public class EmailGroupController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   EmailGroupRepository emailGroupRepository;
+
+  private static final Logger logger = LoggerFactory.getLogger(EmailGroupController.class);
 
   @GetMapping(value = EndpointURI.EMAIL_GROUPS)
   public ResponseEntity<Object> getAllEmailGroups() {
@@ -163,10 +167,10 @@ public class EmailGroupController {
     if (emailGroupService.isEmailGroupExist(emailGroupDto.getId())) {
       if (emailGroupDto.getPlantCode() == null
           && !emailGroupService.isEmailGroupName(emailGroupDto.getName())) {
-      emailGroupService.saveEmailGroup(emailGroupDto);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
-          HttpStatus.OK);
+        emailGroupService.saveEmailGroup(emailGroupDto);
+        return new ResponseEntity<>(
+            new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_EMAIL_GROUP_SUCCESS),
+            HttpStatus.OK);
       }
       if (!emailGroupService.isEmailGroupNameAndPlantCode(emailGroupDto.getName(),
           emailGroupDto.getPlantCode())) {

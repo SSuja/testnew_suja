@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,13 +43,13 @@ public class EquipmentController {
   private Mapper mapper;
   @Autowired
   private EquipmentService equipmentService;
-  private static final Logger logger = Logger.getLogger(EquipmentController.class);
+  private static final Logger logger = LoggerFactory.getLogger(EquipmentController.class);
 
   // Add Equipment
   @PostMapping(value = EndpointURI.EQUIPMENT)
   public ResponseEntity<Object> createEquipment(@Valid @RequestBody EquipmentDto equipmentDto) {
     if (equipmentService.isNameExist(equipmentDto.getName())) {
-      logger.debug("name is already exists: createEquipment(), isNameExist: {}");
+      logger.info("name is already exists: createEquipment(), isNameExist: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUIPMENT_NAME,
           validationFailureStatusCodes.getEquipmentAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -61,7 +62,7 @@ public class EquipmentController {
   // Get All Equipments
   @GetMapping(value = EndpointURI.EQUIPMENTS)
   public ResponseEntity<Object> getAllEquipments() {
-    logger.debug("get all equipments");
+    logger.info("get all equipments");
     return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENTS,
         mapper.map(equipmentService.getAllEquipments(), EquipmentDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -84,7 +85,7 @@ public class EquipmentController {
   @GetMapping(value = EndpointURI.GET_EQUIPMENT_BY_ID)
   public ResponseEntity<Object> getEquipmentById(@PathVariable Long id) {
     if (equipmentService.isEquipmentExist(id)) {
-      logger.debug("Get Equipment By Id");
+      logger.info("Get Equipment By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.EQUIPMENT,
           mapper.map(equipmentService.getEquipmentById(id), EquipmentDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
@@ -97,7 +98,7 @@ public class EquipmentController {
   @DeleteMapping(value = EndpointURI.DELETE_EQUIPMENT)
   public ResponseEntity<Object> deleteEquipment(@PathVariable Long id) {
     if (equipmentService.isEquipmentExist(id)) {
-      logger.debug("delete equipment by id");
+      logger.info("delete equipment by id");
       equipmentService.deleteEquipment(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.EQUIPMENT_DELETED),

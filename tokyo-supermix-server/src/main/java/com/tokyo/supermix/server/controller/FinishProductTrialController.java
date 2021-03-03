@@ -5,7 +5,8 @@ import java.util.stream.Collectors;
 import javax.script.ScriptException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,6 @@ import com.tokyo.supermix.rest.response.ContentResponse;
 import com.tokyo.supermix.rest.response.ValidationFailureResponse;
 import com.tokyo.supermix.server.services.FinishProductTrialService;
 import com.tokyo.supermix.server.services.TestParameterService;
-import com.tokyo.supermix.server.services.privilege.CurrentUserPermissionPlantService;
 import com.tokyo.supermix.util.Constants;
 import com.tokyo.supermix.util.ValidationFailureStatusCodes;
 
@@ -45,10 +45,8 @@ public class FinishProductTrialController {
   @Autowired
   private FinishProductTrialService finishProductTrialService;
   @Autowired
-  private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  @Autowired
   private TestParameterService testParameterService;
-  private static final Logger logger = Logger.getLogger(FinishProductTrialController.class);
+  private static final Logger logger = LoggerFactory.getLogger(FinishProductTrialController.class);
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIALS)
   public ResponseEntity<Object> getAllFinishProductTrials() {
@@ -120,7 +118,7 @@ public class FinishProductTrialController {
   public ResponseEntity<Object> getResultByFinishProductCode(@PathVariable String finishProductCode,
       HttpServletRequest request) {
     if (finishProductTrialService.isFinishProductTestExists(finishProductCode)) {
-      logger.debug("Get Finish Product Trial By Id");
+      logger.info("Get Finish Product Trial By Id");
       finishProductTrialService.saveFinishproductResult(finishProductCode, request);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.FINISH_PRODUCT_TRIAL_ID,
@@ -130,7 +128,7 @@ public class FinishProductTrialController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
   public ResponseEntity<Object> getFinishProductTrialByCode(@PathVariable Long id) {
     if (finishProductTrialService.isFinishProductTrialExists(id)) {
-      logger.debug("Get Finish Product Trial By Id");
+      logger.info("Get Finish Product Trial By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TRIAL,
           mapper.map(finishProductTrialService.getFinishProductTrialByCode(id),
               FinishProductTrialResponseDto.class),
@@ -143,7 +141,7 @@ public class FinishProductTrialController {
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TRIAL_BY_ID)
   public ResponseEntity<Object> deleteFinishProductTrial(@PathVariable Long id) {
     if (finishProductTrialService.isFinishProductTrialExists(id)) {
-      logger.debug("delete finishProductTrial by id");
+      logger.info("delete finishProductTrial by id");
       finishProductTrialService.deleteFinishProductTrial(id);
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.DELETE_FINISH_PRODUCT_TRIAL_SUCCESS), HttpStatus.OK);

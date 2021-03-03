@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +46,8 @@ public class UploadImageController {
   private FileStorageService fileStorageService;
   @Autowired
   private ObjectMapper objectMapper;
+
+  private static final Logger logger = LoggerFactory.getLogger(UploadImageController.class);
 
   @PostMapping(value = EndpointURI.UPLOAD_IMAGE)
   public ResponseEntity<Object> updateImages(

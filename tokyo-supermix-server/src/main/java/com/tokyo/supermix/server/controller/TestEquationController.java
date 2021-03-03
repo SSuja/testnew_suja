@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,14 +44,14 @@ public class TestEquationController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(TestEquationController.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestEquationController.class);
 
   // Create Test Equation API
   @PostMapping(value = EndpointURI.TEST_EQUATION)
   public ResponseEntity<Object> createTestEquation(
       @Valid @RequestBody TestEquationDto testEquationDto) {
     if (testEquationService.isTestParaneterExists(testEquationDto.getTestParameterId())) {
-      logger.debug("Test Equation already exists: createTestEquation(), testEquation: {}");
+      logger.info("Test Equation already exists: createTestEquation(), testEquation: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_EQUATION,
           validationFailureStatusCodes.getTestEquationAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -72,12 +73,12 @@ public class TestEquationController {
   @GetMapping(value = EndpointURI.TEST_EQUATION_BY_ID)
   public ResponseEntity<Object> getByTestEquationId(@PathVariable Long id) {
     if (testEquationService.isTestEquationExists(id)) {
-      logger.debug("Test Equation id is found");
+      logger.info("Test Equation id is found");
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
           mapper.map(testEquationService.getByTestEquationId(id), TestEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_EQUATION_ID,
         validationFailureStatusCodes.getTestEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -98,7 +99,7 @@ public class TestEquationController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_EQUATION_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_EQUATION_ID,
         validationFailureStatusCodes.getTestEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -107,13 +108,13 @@ public class TestEquationController {
   @GetMapping(value = EndpointURI.TEST_EQUATION_BY_TEST_CONFIGURE_ID)
   public ResponseEntity<Object> getByTestConfigureId(@PathVariable Long testConfigureId) {
     if (testConfigureService.isTestConfigureExist(testConfigureId)) {
-      logger.debug("Test Configure id is found");
+      logger.info("Test Configure id is found");
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
           mapper.map(testEquationService.getByTestConfigure(testConfigureId),
               TestEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -122,12 +123,12 @@ public class TestEquationController {
   @GetMapping(value = EndpointURI.TEST_EQUATION_BY_EQUATION_ID)
   public ResponseEntity<Object> getByEquationId(@PathVariable Long equationId) {
     if (equationService.isEquationExist(equationId)) {
-      logger.debug("Equation id is found");
+      logger.info("Equation id is found");
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
           mapper.map(testEquationService.getByEquation(equationId), TestEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.EQUATION_ID,
         validationFailureStatusCodes.getEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -135,13 +136,13 @@ public class TestEquationController {
   @GetMapping(value = EndpointURI.TEST_EQUATION_BY_TEST_PARAMETER_ID)
   public ResponseEntity<Object> getByTestParameter(@PathVariable Long testParameterId) {
     if (testParameterService.isTestParameterExist(testParameterId)) {
-      logger.debug("Test Parameter id is found");
+      logger.info("Test Parameter id is found");
       return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_EQUATION,
           mapper.map(testEquationService.getByTestParameter(testParameterId),
               TestEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
         validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
   }

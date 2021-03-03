@@ -9,7 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.enums.EquationType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "equation")
 public class Equation implements Serializable {
@@ -20,32 +26,4 @@ public class Equation implements Serializable {
   private String formula;
   @Enumerated(EnumType.ORDINAL)
   private EquationType equationType;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getFormula() {
-    return formula;
-  }
-
-  public void setFormula(String formula) {
-    this.formula = formula;
-  }
-
-  public EquationType getEquationType() {
-    return equationType;
-  }
-
-  public void setEquationType(EquationType equationType) {
-    this.equationType = equationType;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

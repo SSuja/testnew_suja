@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +53,7 @@ public class FinishProductTestController {
   private FinishProductTrialService finishProductTrialService;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(FinishProductTestController.class);
+  private static final Logger logger = LoggerFactory.getLogger(FinishProductTestController.class);
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TESTS)
   public ResponseEntity<Object> getAllFinishProductSampleTests() {
@@ -84,7 +85,7 @@ public class FinishProductTestController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
   public ResponseEntity<Object> getFinishProductSampleTestByCode(@PathVariable String code) {
     if (finishProductTestService.isFinishProductTestExists(code)) {
-      logger.debug("Get By Id");
+      logger.info("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
           mapper.map(finishProductTestService.getFinishProductTestByCode(code),
               FinishProductTestResponseDto.class),
@@ -97,7 +98,7 @@ public class FinishProductTestController {
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_TEST_BY_CODE)
   public ResponseEntity<Object> deleteFinishProductSampleTest(@PathVariable String code) {
     if (finishProductTestService.isFinishProductTestExists(code)) {
-      logger.debug("delete by id");
+      logger.info("delete by id");
       finishProductTestService.deleteFinishProductTest(code);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETED_FINISH_PRODUCT_TEST),
@@ -125,7 +126,7 @@ public class FinishProductTestController {
   public ResponseEntity<Object> getFinishProductSampleTestByTestConfigure(
       @PathVariable Long testConfigureId) {
     if (finishProductTestService.isFinishProductTestExistsByTestConfigure(testConfigureId)) {
-      logger.debug("Get By Id");
+      logger.info("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
           mapper.map(
               finishProductTestService.getAllFinishProductTestsByTestConfigure(testConfigureId),
@@ -140,7 +141,7 @@ public class FinishProductTestController {
   public ResponseEntity<Object> getFinishProductSampleTestByFinishProductSampleAndTestConfigure(
       @PathVariable String finishProductSampleCode, @PathVariable Long testConfigureId) {
     if (finishProductTestService.isFinishProductTestExistsByTestConfigure(testConfigureId)) {
-      logger.debug("Get By Id");
+      logger.info("Get By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_TEST,
           mapper.map(
               finishProductTestService

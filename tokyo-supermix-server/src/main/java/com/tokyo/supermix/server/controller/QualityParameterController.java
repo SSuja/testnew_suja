@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class QualityParameterController {
   private Mapper mapper;
   @Autowired
   private QualityParameterService qualityParameterService;
-  private static final Logger logger = Logger.getLogger(QualityParameterController.class);
+  private static final Logger logger = LoggerFactory.getLogger(QualityParameterController.class);
 
   @PostMapping(value = EndpointURI.QUALITY_PARAMETER)
   public ResponseEntity<Object> createQualityParameter(

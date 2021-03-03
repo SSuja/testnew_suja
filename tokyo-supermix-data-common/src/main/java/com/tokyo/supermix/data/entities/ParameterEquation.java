@@ -13,7 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "parameter_equation")
 public class ParameterEquation extends DateAudit implements Serializable {
@@ -30,32 +36,4 @@ public class ParameterEquation extends DateAudit implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterEquation")
   private List<ParameterEquationElement> parameterEquationElements =
       new ArrayList<ParameterEquationElement>();
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Equation getEquation() {
-    return equation;
-  }
-
-  public void setEquation(Equation equation) {
-    this.equation = equation;
-  }
-
-  public TestParameter getTestParameter() {
-    return testParameter;
-  }
-
-  public void setTestParameter(TestParameter testParameter) {
-    this.testParameter = testParameter;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

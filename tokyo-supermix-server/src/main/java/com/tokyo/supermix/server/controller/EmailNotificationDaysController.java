@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,9 @@ public class EmailNotificationDaysController {
   private Mapper mapper;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
+
+  private static final Logger logger =
+      LoggerFactory.getLogger(EmailNotificationDaysController.class);
 
   @PostMapping(value = EndpointURI.EMAIL_NOTIFICATION)
   public ResponseEntity<Object> createEmailNotificationDays(

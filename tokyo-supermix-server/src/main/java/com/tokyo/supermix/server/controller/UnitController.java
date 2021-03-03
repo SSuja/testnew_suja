@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,12 +41,12 @@ public class UnitController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   Mapper mapper;
-  private static final Logger logger = Logger.getLogger(UnitController.class);
+  private static final Logger logger = LoggerFactory.getLogger(UnitController.class);
 
   @PostMapping(value = EndpointURI.UNIT)
   public ResponseEntity<Object> createUnit(@Valid @RequestBody UnitDto unitDto) {
     if (unitService.isUnitExist(unitDto.getUnit())) {
-      logger.debug("Unit already exists: createUnit(), unit: {}");
+      logger.info("Unit already exists: createUnit(), unit: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.UNIT,
           validationFailureStatusCodes.getUnitAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -68,7 +69,7 @@ public class UnitController {
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UNIT_DELETED), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.UNIT,
         validationFailureStatusCodes.getUnitNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -76,13 +77,13 @@ public class UnitController {
   @GetMapping(value = EndpointURI.UNIT_BY_ID)
   public ResponseEntity<Object> getUnitById(@PathVariable Long id) {
     if (unitService.isUnitExist(id)) {
-      logger.debug("Id found");
+      logger.info("Id found");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.UNIT,
               mapper.map(unitService.getUnitById(id), UnitDto.class), RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.UNIT,
         validationFailureStatusCodes.getUnitNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -110,9 +111,9 @@ public class UnitController {
     Pageable pageable = PageRequest.of(page, size);
     Pagination pagination = new Pagination(0, 0, 0, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
-    return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.UNITS,
-        mapper.map(unitService.searchUnit(booleanBuilder, unit, pageable,pagination),
-            UnitDto.class),
+    return new ResponseEntity<>(new PaginatedContentResponse<>(
+        Constants.UNITS, mapper
+            .map(unitService.searchUnit(booleanBuilder, unit, pageable, pagination), UnitDto.class),
         RestApiResponseStatus.OK, pagination), null, HttpStatus.OK);
   }
 

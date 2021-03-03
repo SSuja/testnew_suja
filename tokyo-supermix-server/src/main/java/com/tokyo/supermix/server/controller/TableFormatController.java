@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,19 +35,19 @@ public class TableFormatController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   Mapper mapper;
-  private static final Logger logger = Logger.getLogger(TableFormatController.class);
+  private static final Logger logger = LoggerFactory.getLogger(TableFormatController.class);
 
   @PostMapping(value = EndpointURI.TABLE_FORMAT)
   public ResponseEntity<Object> createTableFormat(
       @Valid @RequestBody TableFormatDto tableFormatDto) {
-	  if(!tableFormatService.existsTableFormatName(tableFormatDto.getTableName())) {
-		  tableFormatService.saveTableFormat(mapper.map(tableFormatDto, TableFormat.class));
-		    return new ResponseEntity<>(
-		        new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TABLE_FORMAT_SUCCESS),
-		        HttpStatus.OK); 
-	  }
-	  return new ResponseEntity<>(new ValidationFailureResponse(Constants.TABLE_FORMAT,
-	          validationFailureStatusCodes.getTableFormatAlreadyExist()), HttpStatus.BAD_REQUEST);
+    if (!tableFormatService.existsTableFormatName(tableFormatDto.getTableName())) {
+      tableFormatService.saveTableFormat(mapper.map(tableFormatDto, TableFormat.class));
+      return new ResponseEntity<>(
+          new BasicResponse<>(RestApiResponseStatus.OK, Constants.ADD_TABLE_FORMAT_SUCCESS),
+          HttpStatus.OK);
+    }
+    return new ResponseEntity<>(new ValidationFailureResponse(Constants.TABLE_FORMAT,
+        validationFailureStatusCodes.getTableFormatAlreadyExist()), HttpStatus.BAD_REQUEST);
   }
 
   @GetMapping(value = EndpointURI.TABLE_FORMATS)
@@ -58,28 +59,29 @@ public class TableFormatController {
 
   @DeleteMapping(value = EndpointURI.TABLE_FORMAT_BY_ID)
   public ResponseEntity<Object> deleteUnit(@PathVariable Long id) {
-      tableFormatService.deleteTableFormat(id);
-      return new ResponseEntity<>(
-          new BasicResponse<>(RestApiResponseStatus.OK, Constants.TABLE_FORMAT_DELETED),
-          HttpStatus.OK);
-    
+    tableFormatService.deleteTableFormat(id);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.TABLE_FORMAT_DELETED),
+        HttpStatus.OK);
+
   }
 
   @GetMapping(value = EndpointURI.TABLE_FORMAT_BY_ID)
   public ResponseEntity<Object> getTableFormatById(@PathVariable Long id) {
     if (tableFormatService.isTableFormatExist(id)) {
-      logger.debug("Id found");
+      logger.info("Id found");
       return new ResponseEntity<>(new ContentResponse<>(Constants.TABLE_FORMAT,
           mapper.map(tableFormatService.getTableFormatById(id), TableFormatDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid id");
+    logger.info("Invalid id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TABLE_FORMAT,
         validationFailureStatusCodes.getUnitNotExist()), HttpStatus.BAD_REQUEST);
   }
 
   @PutMapping(value = EndpointURI.TABLE_FORMAT)
-  public ResponseEntity<Object> updateTableFormat(@Valid @RequestBody TableFormatDto tableFormatDto) {
+  public ResponseEntity<Object> updateTableFormat(
+      @Valid @RequestBody TableFormatDto tableFormatDto) {
     if (tableFormatService.isTableFormatExist(tableFormatDto.getId())) {
       tableFormatService.saveTableFormat(mapper.map(tableFormatDto, TableFormat.class));
       return new ResponseEntity<>(

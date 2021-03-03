@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,14 +37,12 @@ public class RatioConfigParameterController {
 
   @Autowired
   RatioConfigParameterService ratioConfigParameterService;
-
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
-  private static final Logger logger = Logger.getLogger(RatioConfigParameterController.class);
+  private static final Logger logger =
+      LoggerFactory.getLogger(RatioConfigParameterController.class);
 
   @GetMapping(value = EndpointURI.RATIO_CONFIG_PARAMETERS)
   public ResponseEntity<Object> getAllRatioConfigParameters() {
@@ -59,13 +58,13 @@ public class RatioConfigParameterController {
   public ResponseEntity<Object> getRatioConfigParameterByRatioConfig(
       @PathVariable Long ratioConfigId) {
     if (ratioConfigParameterService.isRatioConfigParameterExistByRatioConfig(ratioConfigId)) {
-      logger.debug("Get Parameter by id ");
+      logger.info("Get Parameter by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG_PARAMETER,
           mapper.map(ratioConfigParameterService.getAllRatioParametersByRatioConfig(ratioConfigId),
               RatioConfigParameterResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
         validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -127,7 +126,7 @@ public class RatioConfigParameterController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_PARAMETER_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_PARAMETER,
         validationFailureStatusCodes.getRatioConfigNotExist()), HttpStatus.BAD_REQUEST);
   }
