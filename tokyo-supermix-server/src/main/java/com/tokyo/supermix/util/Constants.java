@@ -31,8 +31,7 @@ public class Constants {
       "Notification : About Finish Product Sample Creation ";
   public static final String SUBJECT_FINISH_PRODUCT_SAMPLE_ISSUE =
       "Notification : About Finish Product Sample Issue Creation ";
-  public static final String SUBJECT_PLANT_EQUIPMENT =
-      "Notification : About Plant Equipment";
+  public static final String SUBJECT_PLANT_EQUIPMENT = "Notification : About Plant Equipment";
   public static final String SUBJECT_CUSTOMER = "Notification : About Customer Creation";
   public static final String SUBJECT_PLANT = "Notification : About Plant Creation";
   public static final String SUBJECT_RAW_MATERIAL = "Notification : About Raw Material Creation";
@@ -387,9 +386,9 @@ public class Constants {
    * Constants for Sieve Test Trial validation key & Success messages
    */
   public static final String TWO_DECIMAL_FORMAT = "#.##";
-  public static final String DECIMAL_FORMAT = "#.#####";
-  public static final String DECIMAL_FORMAT_FINISH = "#.#####";
-  
+  public static final String DECIMAL_FORMAT = "#.##";
+  public static final String DECIMAL_FORMAT_FINISH = "#.##";
+
   public static final String SIEVE_TEST_TRIALS = "sieveTestTrials";
   public static final String SIEVE_TEST_TRIAL_ID = "id";
   public static final String ADD_SIEVE_TEST_TRIAL_SUCCEESS = "Sieve Test Trial Added Successfully";
