@@ -11,6 +11,7 @@ public class IncomingSampleResponseDto {
   private RawMaterialResponseDto rawMaterial;
   private PlantDto plant;
   private SupplierResponseDto supplier;
+  private String date;
 
   public String getCode() {
     return code;
@@ -74,5 +75,13 @@ public class IncomingSampleResponseDto {
 
   public void setSupplier(SupplierResponseDto supplier) {
     this.supplier = supplier;
+  }
+
+  public String getDate() {
+    return date;
+  }
+
+  public void setDate(String date) {
+    this.date = date;
   }
 }

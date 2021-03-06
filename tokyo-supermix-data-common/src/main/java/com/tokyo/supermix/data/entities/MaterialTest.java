@@ -1,6 +1,7 @@
 package com.tokyo.supermix.data.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,6 +29,7 @@ public class MaterialTest extends DateAudit implements Serializable {
   @JoinColumn(name = "testConfigureId", nullable = false)
   private TestConfigure testConfigure;
   private String specimenCode;
+  private Date date;
 
   public String getCode() {
     return code;
@@ -83,6 +85,14 @@ public class MaterialTest extends DateAudit implements Serializable {
 
   public void setSpecimenCode(String specimenCode) {
     this.specimenCode = specimenCode;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
   }
 
   public static long getSerialversionuid() {

@@ -1,5 +1,7 @@
 package com.tokyo.supermix.data.dto;
 
+import java.sql.Date;
+
 public class MaterialTestResponseDto {
   private String code;
   private String createdAt;
@@ -10,6 +12,7 @@ public class MaterialTestResponseDto {
   private TestConfigureResponseDto testConfigure;
   private String specimenCode;
   private String comment;
+  private Date date;
 
   public String getCode() {
     return code;
@@ -81,5 +84,13 @@ public class MaterialTestResponseDto {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  public Date getDate() {
+    return date;
+  }
+
+  public void setDate(Date date) {
+    this.date = date;
   }
 }
