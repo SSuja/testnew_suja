@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class ParameterEquationController {
   private Mapper mapper;
   @Autowired
   private TestConfigureService testConfigureService;
-  private static final Logger logger = Logger.getLogger(ParameterEquationController.class);
+  private static final Logger logger = LoggerFactory.getLogger(ParameterEquationController.class);
 
   @PostMapping(value = EndpointURI.PARAMETER_EQUATION)
   public ResponseEntity<Object> createParameterEquation(
@@ -74,7 +75,7 @@ public class ParameterEquationController {
               ParameterEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Parameter Equation record exist for given id");
+    logger.info("No Parameter Equation record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_EQUATION_ID,
         validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -95,7 +96,7 @@ public class ParameterEquationController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_PARAMETER_EQUATION_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Parameter Equation record exist for given id");
+    logger.info("No Parameter Equation record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_EQUATION_ID,
         validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -109,7 +110,7 @@ public class ParameterEquationController {
               ParameterEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Parameter Equation record exist for given test parameter id");
+      logger.info("No Parameter Equation record exist for given test parameter id");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_PARAMETER_ID,
           validationFailureStatusCodes.getTestParameterNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -132,7 +133,7 @@ public class ParameterEquationController {
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.UPDATE_PARAMETER_EQUATION_SUCCESS), HttpStatus.OK);
     }
-    logger.debug("No Parameter Equation record exist for given id");
+    logger.info("No Parameter Equation record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PARAMETER_EQUATION_ID,
         validationFailureStatusCodes.getParameterEquationNotExit()), HttpStatus.BAD_REQUEST);
   }
@@ -147,7 +148,7 @@ public class ParameterEquationController {
               ParameterEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Parameter Equation record exist for given testconfigureid");
+      logger.info("No Parameter Equation record exist for given testconfigureid");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
           validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
     }

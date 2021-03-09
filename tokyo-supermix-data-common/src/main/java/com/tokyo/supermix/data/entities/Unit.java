@@ -7,7 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "unit")
 public class Unit extends DateAudit implements Serializable {
@@ -16,24 +22,4 @@ public class Unit extends DateAudit implements Serializable {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private String unit;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getUnit() {
-    return unit;
-  }
-
-  public void setUnit(String unit) {
-    this.unit = unit;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

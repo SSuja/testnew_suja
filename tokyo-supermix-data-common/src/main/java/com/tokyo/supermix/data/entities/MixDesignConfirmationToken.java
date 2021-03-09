@@ -13,58 +13,31 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "mix_Design_TOKEN")
 public class MixDesignConfirmationToken {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long mixDesignTokenId;
-	private String confirmationToken;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-	
-	@OneToOne(targetEntity = MixDesign.class, fetch = FetchType.EAGER)
-	  @JoinColumn(nullable = false, name = "mixDesign_id")
-	  private MixDesign mixDesign;
-	
-	public MixDesignConfirmationToken() {}
-	  public MixDesignConfirmationToken(MixDesign mixDesign) {
-	      this. mixDesign =  mixDesign;
-	      createdDate = new Date();
-	      confirmationToken = UUID.randomUUID().toString();
-	  }
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long mixDesignTokenId;
+  private String confirmationToken;
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date createdDate;
+  @OneToOne(targetEntity = MixDesign.class, fetch = FetchType.EAGER)
+  @JoinColumn(nullable = false, name = "mixDesign_id")
+  private MixDesign mixDesign;
 
-	public Long getMixDesignTokenId() {
-		return mixDesignTokenId;
-	}
+  public MixDesignConfirmationToken() {}
 
-	public void setMixDesignTokenId(Long mixDesignTokenId) {
-		this.mixDesignTokenId = mixDesignTokenId;
-	}
-
-	public String getConfirmationToken() {
-		return confirmationToken;
-	}
-
-	public void setConfirmationToken(String confirmationToken) {
-		this.confirmationToken = confirmationToken;
-	}
-
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public MixDesign getMixDesign() {
-		return mixDesign;
-	}
-
-	public void setMixDesign(MixDesign mixDesign) {
-		this.mixDesign = mixDesign;
-	}	
-
+  public MixDesignConfirmationToken(MixDesign mixDesign) {
+    this.mixDesign = mixDesign;
+    createdDate = new Date();
+    confirmationToken = UUID.randomUUID().toString();
+  }
 }

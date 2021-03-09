@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class FinishProductSampleController {
   @Autowired
   private FileStorageService fileStorageService;
 
-  private static final Logger logger = Logger.getLogger(FinishProductSampleController.class);
+  private static final Logger logger = LoggerFactory.getLogger(FinishProductSampleController.class);
 
   @PostMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE)
   public ResponseEntity<Object> createFinishProductSample(
@@ -80,7 +81,7 @@ public class FinishProductSampleController {
 
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLES)
   public ResponseEntity<Object> getAllFinishProductSamples() {
-    logger.debug("get all finish product samples");
+    logger.info("get all finish product samples");
     return new ResponseEntity<>(
         new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
             mapper.map(finishProductSampleService.getAllFinishProductSamples(),
@@ -129,7 +130,7 @@ public class FinishProductSampleController {
   @GetMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
   public ResponseEntity<Object> getFinishProductSampleById(@PathVariable String code) {
     if (finishProductSampleService.isFinishProductSampleExist(code)) {
-      logger.debug("Get Finish Product Sample By Id");
+      logger.info("Get Finish Product Sample By Id");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLE,
           mapper.map(finishProductSampleService.getFinishProductSampleById(code),
               FinishProductSampleResponseDto.class),
@@ -142,7 +143,7 @@ public class FinishProductSampleController {
   @DeleteMapping(value = EndpointURI.FINISH_PRODUCT_SAMPLE_BY_ID)
   public ResponseEntity<Object> deleteFinishProductSample(@PathVariable String code) {
     if (finishProductSampleService.isFinishProductSampleExist(code)) {
-      logger.debug("delete Finish Product Sample by id");
+      logger.info("delete Finish Product Sample by id");
       finishProductSampleService.deleteFinishProductSample(code);;
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.FINISH_PRODUCT_SAMPLE_DELETED),
@@ -180,7 +181,7 @@ public class FinishProductSampleController {
   public ResponseEntity<Object> getFinishProductSampleByMixDesignCode(
       @PathVariable String mixDesignCode) {
     if (finishProductSampleService.isMixDesignCodeExist(mixDesignCode)) {
-      logger.debug("Get Finish Product Sample By Mix Design Code");
+      logger.info("Get Finish Product Sample By Mix Design Code");
       return new ResponseEntity<>(new ContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
           mapper.map(
               finishProductSampleService.getFinishProductSampleByMixDesignCode(mixDesignCode),
@@ -222,7 +223,7 @@ public class FinishProductSampleController {
               FinishProductSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Finish Product Sample record exist for given Status");
+      logger.info("No Finish Product Sample record exist for given Status");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.FINISH_PRODUCT_SAMPLES,
               validationFailureStatusCodes.getFinishProductSampleNotExist()),

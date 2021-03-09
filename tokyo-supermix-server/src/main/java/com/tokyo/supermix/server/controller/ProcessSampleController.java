@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +52,7 @@ public class ProcessSampleController {
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
 
-  private static final Logger logger = Logger.getLogger(ProcessSampleController.class);
+  private static final Logger logger = LoggerFactory.getLogger(ProcessSampleController.class);
 
   @PostMapping(value = EndpointURI.PROCESS_SAMPLE)
   public ResponseEntity<Object> createProcessSample(
@@ -103,7 +104,7 @@ public class ProcessSampleController {
   @DeleteMapping(value = EndpointURI.PROCESS_SAMPLE_BY_CODE)
   public ResponseEntity<Object> deleteProcessSample(@PathVariable String code) {
     if (processSampleService.isProcessSampleExist(code)) {
-      logger.debug("delete ProcessSample by code");
+      logger.info("delete ProcessSample by code");
       processSampleService.deleteProcessSample(code);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.PROCESS_SAMPLE_DELETED),
@@ -120,7 +121,7 @@ public class ProcessSampleController {
           .map(processSampleService.getProcessSampleByCode(code), ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No ProcessSample record exist for given code");
+    logger.info("No ProcessSample record exist for given code");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PROCESS_SAMPLE_CODE,
         validationFailureStatusCodes.getProcessSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -147,7 +148,7 @@ public class ProcessSampleController {
               ProcessSampleResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No ProcessSample record exist for given plantCode");
+    logger.info("No ProcessSample record exist for given plantCode");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }

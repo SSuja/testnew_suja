@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,13 +45,13 @@ public class MaterialStateController {
   @Autowired
   private Mapper mapper;
 
-  private static final Logger logger = Logger.getLogger(MaterialStateController.class);
+  private static final Logger logger = LoggerFactory.getLogger(MaterialStateController.class);
 
   @PostMapping(value = EndpointURI.MATERIAL_STATE)
   public ResponseEntity<Object> createMaterialState(
       @Valid @RequestBody MaterialStateDto materialStateDto) {
     if (materialStateService.isMaterialStateExist(materialStateDto.getMaterialState())) {
-      logger.debug("Material State already exists: createMaterialState(), materialState: {}");
+      logger.info("Material State already exists: createMaterialState(), materialState: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_STATE,
           validationFailureStatusCodes.getMaterialStateAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -74,7 +75,7 @@ public class MaterialStateController {
           mapper.map(materialStateService.getMaterialStateById(id), MaterialStateDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Material State record exist for given id");
+    logger.info("No Material State record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_STATE_ID,
         validationFailureStatusCodes.getMaterialStateNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -95,7 +96,7 @@ public class MaterialStateController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_MATERIAL_STATE_SUCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Material State record exist for given id");
+    logger.info("No Material State record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_STATE_ID,
         validationFailureStatusCodes.getMaterialStateNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -108,11 +109,11 @@ public class MaterialStateController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_MATERIAL_STATE_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Material State record exist for given id");
+    logger.info("No Material State record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_STATE_ID,
         validationFailureStatusCodes.getMaterialStateNotExist()), HttpStatus.BAD_REQUEST);
   }
-  
+
   @GetMapping(value = EndpointURI.MATERIAL_STATE_PAGEABLE)
   public ResponseEntity<Object> getAllMaterialState(@RequestParam(name = "page") int page,
       @RequestParam(name = "size") int size) {
@@ -124,16 +125,18 @@ public class MaterialStateController {
         mapper.map(materialStateService.getAllMaterialState(pageable), MaterialStateDto.class),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.SEARCH_MATERIAL_STATE)
   public ResponseEntity<Object> getMaterialStateSearch(
-      @RequestParam(name = "materialState", required = false) String materialState,     
+      @RequestParam(name = "materialState", required = false) String materialState,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.MATERIAL_STATE,
-        materialStateService.searchMaterialState(booleanBuilder, materialState,pageable, pagination),
+        materialStateService.searchMaterialState(booleanBuilder, materialState, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
 }

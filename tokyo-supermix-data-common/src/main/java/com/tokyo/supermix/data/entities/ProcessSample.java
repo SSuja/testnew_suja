@@ -8,7 +8,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "process_sample")
 public class ProcessSample extends DateAudit implements Serializable {
@@ -25,48 +31,4 @@ public class ProcessSample extends DateAudit implements Serializable {
   @ManyToOne
   @JoinColumn(name = "rawMaterialId", nullable = true)
   private RawMaterial rawMaterial;
-
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
-  }
-
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
-  }
-
-  public String getCode() {
-    return code;
-  }
-
-  public void setCode(String code) {
-    this.code = code;
-  }
-
-  public Long getQuantity() {
-    return quantity;
-  }
-
-  public void setQuantity(Long quantity) {
-    this.quantity = quantity;
-  }
-
-  public IncomingSample getIncomingSample() {
-    return incomingSample;
-  }
-
-  public void setIncomingSample(IncomingSample incomingSample) {
-    this.incomingSample = incomingSample;
-  }
-
-  public Unit getUnit() {
-    return unit;
-  }
-
-  public void setUnit(Unit unit) {
-    this.unit = unit;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
 }

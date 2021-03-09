@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -55,7 +56,7 @@ public class IncomingSampleController {
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
   @Autowired
   private SupplierService supplierService;
-  private static final Logger logger = Logger.getLogger(IncomingSampleController.class);
+  private static final Logger logger = LoggerFactory.getLogger(IncomingSampleController.class);
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLES)
   public ResponseEntity<Object> getIncomingSamples() {
@@ -63,43 +64,6 @@ public class IncomingSampleController {
         mapper.map(incomingSampleService.getAllIncomingSamples(), IncomingSampleResponseDto.class),
         RestApiResponseStatus.OK), HttpStatus.OK);
   }
-
-  // @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
-  // public ResponseEntity<Object> getIncomingSamplesByUserPermission(
-  // @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,
-  // @RequestParam(name = "page") int page, @RequestParam(name = "size") int size)
-  // {
-  // Pageable pageable = PageRequest.of(page, size);
-  // int totalpage = 0;
-  // Pagination pagination = new Pagination(page, size, totalpage, 0l);
-  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-  // pagination.setTotalRecords(incomingSampleService.getCountIncomingSample());
-  // return new ResponseEntity<>(
-  // new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(
-  // incomingSampleService.getAllIncomingSamplesByCurrentUser(currentUser,
-  // pageable),
-  // IncomingSampleResponseDto.class),
-  // RestApiResponseStatus.OK, pagination),
-  // HttpStatus.OK);
-  // }
-  // if (currentUserPermissionPlantService
-  // .getPermissionPlantCodeByCurrentUser(currentUser,
-  // PermissionConstants.VIEW_INCOMING_SAMPLE)
-  // .contains(plantCode)) {
-  // pagination
-  // .setTotalRecords(incomingSampleService.getCountIncomingSampleByPlantCode(plantCode));
-  // return new ResponseEntity<>(
-  // new PaginatedContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode,
-  // pageable),
-  // IncomingSampleResponseDto.class),
-  // RestApiResponseStatus.OK, pagination),
-  // HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
 
   @GetMapping(value = EndpointURI.INCOMING_SAMPLE_BY_PLANT)
   public ResponseEntity<Object> getIncomingSamplesByUserPermission(
@@ -148,7 +112,7 @@ public class IncomingSampleController {
   public ResponseEntity<Object> createIncomingSample(
       @Valid @RequestBody IncomingSampleRequestDto incomingSampleRequestDto) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleRequestDto.getCode())) {
-      logger.debug(
+      logger.info(
           "IncomingSampleCode already exists: createIncomingSample(), IncomingSampleCode: {}");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.INCOMING_SAMPLE_CODE,
@@ -217,19 +181,6 @@ public class IncomingSampleController {
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.INCOMING_SAMPLE_STATUS,
         validationFailureStatusCodes.getIncomingSampleNotExist()), HttpStatus.BAD_REQUEST);
   }
-
-  // @GetMapping(value = EndpointURI.INCOMING_SAMPLES_BY_PLANT_CODE)
-  // public ResponseEntity<Object> getIncomingSampleByPlantCode(@PathVariable
-  // String plantCode) {
-  // if (plantService.isPlantExist(plantCode)) {
-  // return new ResponseEntity<>(new ContentResponse<>(Constants.INCOMING_SAMPLES,
-  // mapper.map(incomingSampleService.getIncomingSampleByPlantCode(plantCode),
-  // IncomingSampleResponseDto.class),
-  // RestApiResponseStatus.OK), HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
 
   @GetMapping(value = EndpointURI.GET_INCOMING_SAMPLES_BY_MATERIAL_SUB_CATEGORY)
   public ResponseEntity<Object> getIncomingSampleMaterialSubCategory(

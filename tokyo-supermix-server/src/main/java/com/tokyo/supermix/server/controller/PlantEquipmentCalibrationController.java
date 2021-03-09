@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import java.sql.Date;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +58,8 @@ public class PlantEquipmentCalibrationController {
   private PlantRepository plantRepository;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(PlantEquipmentCalibrationController.class);
+  private static final Logger logger =
+      LoggerFactory.getLogger(PlantEquipmentCalibrationController.class);
 
   // post API for PlantEquipmentCalibration
   @PostMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION)
@@ -104,7 +106,7 @@ public class PlantEquipmentCalibrationController {
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_BY_ID)
   public ResponseEntity<Object> getPlantEquipmentCalibrationById(@PathVariable Long id) {
     if (plantEquipmentCalibrationService.isPlantEquipmentCalibrationExit(id)) {
-      logger.debug("Get PlantEquipmentCalibration by id ");
+      logger.info("Get PlantEquipmentCalibration by id ");
       return new ResponseEntity<>(
           new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATION,
               mapper.map(plantEquipmentCalibrationService.getPlantEquipmentCalibrationById(id),
@@ -112,7 +114,7 @@ public class PlantEquipmentCalibrationController {
               RestApiResponseStatus.OK),
           HttpStatus.OK);
     }
-    logger.debug("invalid");
+    logger.info("invalid");
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.EQUIPMENT_PLANT_CALIBRATION,
             validationFailureStatusCodes.getPlantEquipmentCalibrationNotExist()),
@@ -127,7 +129,7 @@ public class PlantEquipmentCalibrationController {
       return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
           Constants.EQUIPMENT_PLANT_CALIBRATION_DELETED), HttpStatus.OK);
     }
-    logger.debug("invalid PlantEquipmentCalibration");
+    logger.info("invalid PlantEquipmentCalibration");
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.EQUIPMENT_PLANT_CALIBRATION,
             validationFailureStatusCodes.getPlantEquipmentCalibrationNotExist()),
@@ -153,7 +155,8 @@ public class PlantEquipmentCalibrationController {
     return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
         Constants.UPDATE_EQUIPMENT_PLANT_CALIBRATION_SUCCESS), HttpStatus.OK);
   }
-//  plant-equipment-calibration/search/ADMIN
+
+  // plant-equipment-calibration/search/ADMIN
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATION_SEARCH)
   public ResponseEntity<Object> getPlantEquipmentCalibrationSearch(@PathVariable String plantCode,
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size,
@@ -195,29 +198,6 @@ public class PlantEquipmentCalibrationController {
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }
 
-  // @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
-  // public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(
-  // @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode) {
-  // if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-  // return new ResponseEntity<Object>(
-  // new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-  // mapper.map(plantEquipmentCalibrationService.getAllPlantEquipmentCalibrationsByPlant(
-  // currentUser), PlantEquipmentCalibrationResponseDto.class),
-  // RestApiResponseStatus.OK),
-  // HttpStatus.OK);
-  // }
-  // if (currentUserPermissionPlantService.getPermissionPlantCodeByCurrentUser(currentUser,
-  // PermissionConstants.VIEW_PLANT_EQUIPMENT_CALIBRATION).contains(plantCode)) {
-  // return new ResponseEntity<Object>(
-  // new ContentResponse<>(Constants.EQUIPMENT_PLANT_CALIBRATIONS,
-  // mapper.map(plantEquipmentCalibrationService.getPlantEquipmentCalibrationsByPlantCode(
-  // plantCode), PlantEquipmentCalibrationResponseDto.class),
-  // RestApiResponseStatus.OK),
-  // HttpStatus.OK);
-  // }
-  // return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
-  // validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
-  // }
   @GetMapping(value = EndpointURI.EQUIPMENT_PLANT_CALIBRATIONS_BY_PLANT)
   public ResponseEntity<Object> getAllPlantEquipmentCalibrationsByplant(
       @CurrentUser UserPrincipal currentUser, @PathVariable String plantCode,

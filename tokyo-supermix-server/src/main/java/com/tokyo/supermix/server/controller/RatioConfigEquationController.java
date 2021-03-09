@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,14 +33,11 @@ public class RatioConfigEquationController {
 
   @Autowired
   RatioConfigEquationService ratioConfigEquationService;
-
   @Autowired
   ValidationFailureStatusCodes validationFailureStatusCodes;
-
   @Autowired
   private Mapper mapper;
-
-  private static final Logger logger = Logger.getLogger(RatioConfigController.class);
+  private static final Logger logger = LoggerFactory.getLogger(RatioConfigController.class);
 
   // get all Ratio Configuration
   @GetMapping(value = EndpointURI.RATIO_CONFIG_EQUATIONS)
@@ -56,13 +54,13 @@ public class RatioConfigEquationController {
   @GetMapping(value = EndpointURI.RATIO_CONFIG_EQUATION_BY_ID)
   public ResponseEntity<Object> getRatioConfigEquationById(@PathVariable Long id) {
     if (ratioConfigEquationService.isRatioConfigEquationExistsById(id)) {
-      logger.debug("Get Designation by id ");
+      logger.info("Get Designation by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG_EQUATION,
           mapper.map(ratioConfigEquationService.getRatioConfigEquationById(id),
               RatioConfigEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_EQUATION,
         validationFailureStatusCodes.getRatioConfigEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -76,7 +74,7 @@ public class RatioConfigEquationController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.RATIO_CONFIG_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_EQUATION,
         validationFailureStatusCodes.getRatioConfigEquationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -137,14 +135,14 @@ public class RatioConfigEquationController {
   public ResponseEntity<Object> getRatioConfigEquationByRatioConfigId(
       @PathVariable Long ratioConfigId) {
     if (ratioConfigEquationService.isRatioConfigEquationExistsByRatioConfigId(ratioConfigId)) {
-      logger.debug("Get Ratio config equation by id ");
+      logger.info("Get Ratio config equation by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.RATIO_CONFIG_EQUATION,
           mapper.map(
               ratioConfigEquationService.getAllRatioConfigEquationsByRatioConfig(ratioConfigId),
               RatioConfigEquationResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.RATIO_CONFIG_EQUATION,
         validationFailureStatusCodes.getRatioConfigEquationNotExist()), HttpStatus.BAD_REQUEST);
   }

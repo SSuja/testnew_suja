@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -51,7 +52,7 @@ public class AcceptedValueController {
   @Autowired
   private TestConfigureService testConfigureService;
 
-  private static final Logger logger = Logger.getLogger(AcceptedValueController.class);
+  private static final Logger logger = LoggerFactory.getLogger(AcceptedValueController.class);
 
   @PostMapping(value = EndpointURI.ACCEPTED_VALUE)
   public ResponseEntity<Object> createAcceptedValue(

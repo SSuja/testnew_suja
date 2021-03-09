@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,7 @@ public class MaterialCategoryController {
   TestConfigureService testConfigureService;
   @Autowired
   MaterialSubCategoryService materialSubCategoryService;
-  private static final Logger logger = Logger.getLogger(MaterialCategoryController.class);
+  private static final Logger logger = LoggerFactory.getLogger(MaterialCategoryController.class);
 
   // Add Material Category
   @PostMapping(value = EndpointURI.MATERIAL_CATEGORY)
@@ -50,7 +51,7 @@ public class MaterialCategoryController {
       @Valid @RequestBody MaterialCategoryDto materialCategoryDto) {
     if (materialCategoryService.isExistByNameAndMainType(materialCategoryDto.getName(),
         materialCategoryDto.getMainType())) {
-      logger.debug("name is already exists: createMaterialCategory(), isNameExist: {}");
+      logger.info("name is already exists: createMaterialCategory(), isNameExist: {}");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.MATERIAL_CATEGORY_NAME,
               validationFailureStatusCodes.getMaterialCategoryAlreadyExist()),
@@ -70,7 +71,7 @@ public class MaterialCategoryController {
   // Get All Material Category
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORIES)
   public ResponseEntity<Object> getAllMaterialCategory() {
-    logger.debug("get all material categories");
+    logger.info("get all material categories");
     return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORIES,
         mapper.map(materialCategoryService.getAllMainCategories(), MaterialCategoryDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
@@ -80,7 +81,7 @@ public class MaterialCategoryController {
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_ID)
   public ResponseEntity<Object> getMaterialCategoryById(@PathVariable Long id) {
     if (materialCategoryService.isMaterialCategoryExist(id)) {
-      logger.debug("Get Material Category By Id");
+      logger.info("Get Material Category By Id");
       return new ResponseEntity<>(new ContentResponse<>(
           Constants.MATERIAL_CATEGORY, mapper
               .map(materialCategoryService.getMaterialCategoryById(id), MaterialCategoryDto.class),
@@ -94,7 +95,7 @@ public class MaterialCategoryController {
   @DeleteMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_ID)
   public ResponseEntity<Object> deleteMaterialCategory(@PathVariable Long id) {
     if (materialCategoryService.isMaterialCategoryExist(id)) {
-      logger.debug("delete material by id");
+      logger.info("delete material by id");
       materialCategoryService.deleteMaterialCategory(id);
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_CATEGORY_DELETED),
@@ -159,7 +160,7 @@ public class MaterialCategoryController {
   @GetMapping(value = EndpointURI.MATERIAL_CATEGORY_BY_MAIN_TYPE)
   public ResponseEntity<Object> getMaterialCategoryByMainType(@PathVariable MainType mainType) {
     if (materialCategoryService.isMainTypeExist(mainType)) {
-      logger.debug("Get Material Category By Main Type");
+      logger.info("Get Material Category By Main Type");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_CATEGORY,
           mapper.map(materialCategoryService.getByMainType(mainType), MaterialCategoryDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);

@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -46,17 +47,17 @@ public class PlantController {
   private Mapper mapper;
   @Autowired
   private CurrentUserPermissionPlantService currentUserPermissionPlantService;
-  private static final Logger logger = Logger.getLogger(PlantController.class);
+  private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
 
   @PostMapping(value = EndpointURI.PLANT)
   public ResponseEntity<Object> createPlant(@Valid @RequestBody PlantDto plantDto) {
     if (plantService.isPlantNameExist(plantDto.getName())) {
-      logger.debug("PlantName already exists: createPlant(), plantName: {}");
+      logger.info("PlantName already exists: createPlant(), plantName: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_NAME,
           validationFailureStatusCodes.getPlantNameAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
     if (plantService.isPlantExist(plantDto.getCode())) {
-      logger.debug("PlantId already exists: createPlant(), plantId: {}");
+      logger.info("PlantId already exists: createPlant(), plantId: {}");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantIdAlreadyExist()), HttpStatus.BAD_REQUEST);
     }
@@ -117,7 +118,7 @@ public class PlantController {
       return new ResponseEntity<>(
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.PLANT_DELETED), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT,
         validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
   }

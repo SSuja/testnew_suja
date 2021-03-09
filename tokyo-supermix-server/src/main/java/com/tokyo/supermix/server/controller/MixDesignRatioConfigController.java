@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,8 @@ public class MixDesignRatioConfigController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(MixDesignRatioConfigController.class);
+  private static final Logger logger =
+      LoggerFactory.getLogger(MixDesignRatioConfigController.class);
 
   @PostMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG)
   public ResponseEntity<Object> createMixDesignRatioConfig(
@@ -60,8 +62,6 @@ public class MixDesignRatioConfigController {
         HttpStatus.OK);
   }
 
-
-
   @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIGS)
   public ResponseEntity<Object> getAllMixDesignRatios() {
     return new ResponseEntity<>(
@@ -75,13 +75,13 @@ public class MixDesignRatioConfigController {
   @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_BY_ID)
   public ResponseEntity<Object> getMixDesignRatiosById(@PathVariable Long id) {
     if (mixDesignRatioConfigService.isMixDesignRatioConfigExist(id)) {
-      logger.debug("Get Designation by id ");
+      logger.info("Get Designation by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_RATIO_CONFIG,
           mapper.map(mixDesignRatioConfigService.getMixDesignRatioConfigById(id),
               MixDesignRatioConfigResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
             validationFailureStatusCodes.getMixDesignRatioConfigNotExist()),
@@ -91,13 +91,13 @@ public class MixDesignRatioConfigController {
   @GetMapping(value = EndpointURI.MIX_DESIGN_RATIO_CONFIG_MIXDESIGN_CODE)
   public ResponseEntity<Object> getratiosByMixDesignCode(@PathVariable String mixDesignCode) {
     if (mixDesignRatioConfigService.isExistByMixDesignCode(mixDesignCode)) {
-      logger.debug("Get Designation by id ");
+      logger.info("Get Designation by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MIX_DESIGN_RATIO_CONFIG,
           mapper.map(mixDesignRatioConfigService.getAllRatiosByMixDesignCode(mixDesignCode),
               MixDesignRatioConfigResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
         validationFailureStatusCodes.getMixDesignNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -110,7 +110,7 @@ public class MixDesignRatioConfigController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_MIX_DESIGN_RATIO_CONFIG),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(
         new ValidationFailureResponse(Constants.MIX_DESIGN_RATIO_CONFIG,
             validationFailureStatusCodes.getMixDesignRatioConfigNotExist()),

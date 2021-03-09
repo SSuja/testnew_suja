@@ -24,8 +24,6 @@ import com.tokyo.supermix.server.services.privilege.PlantRolePlantPermissionServ
 import com.tokyo.supermix.util.privilege.PrivilegeConstants;
 import com.tokyo.supermix.util.privilege.PrivilegeValidationFailureStatusCodes;
 
-
-
 @CrossOrigin(origins = "*")
 @RestController
 public class PlantRolePlantPermissionController {
@@ -54,7 +52,6 @@ public class PlantRolePlantPermissionController {
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
   }
-
 
   @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSION_BY_PLANT_ROLE_ID_AND_STATUS)
   public ResponseEntity<Object> getAllRolePlantPermissionStatus(@PathVariable Long plantRoleId,
@@ -160,19 +157,22 @@ public class PlantRolePlantPermissionController {
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);
   }
+
   @GetMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PERMISSION_MODULE_STATUS_USER_ID)
   public ResponseEntity<Object> getModulePlantRolePermissionsByRoleAndModuleStatuswithCombine(
-      @PathVariable Long userId,  @PathVariable String plantCode) {
+      @PathVariable Long userId, @PathVariable String plantCode) {
     return new ResponseEntity<>(new ContentResponse<>(PrivilegeConstants.PLANT_PERMISSIONS,
-        plantRolePlantPermissionServices.getCombine(userId, plantCode),
-        RestApiResponseStatus.OK), null, HttpStatus.OK);
+        plantRolePlantPermissionServices.getCombine(userId, plantCode), RestApiResponseStatus.OK),
+        null, HttpStatus.OK);
   }
+
   @PutMapping(value = PrivilegeEndpointURI.PLANT_ROLE_PLANT_PERMISSIONS_BY_PLANT_ROLE_ID_AND_STATUS)
-  public ResponseEntity<Object> updateAllPlantPrivilage(@PathVariable Long plantRoleId,@PathVariable Boolean status ) {
+  public ResponseEntity<Object> updateAllPlantPrivilage(@PathVariable Long plantRoleId,
+      @PathVariable Boolean status) {
     if (plantRolePlantPermissionServices.isPlantRoleIdExist(plantRoleId)) {
-    plantRolePlantPermissionServices.UpdatePlantRolePlantPermission(plantRoleId,status);
-    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-        PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
+      plantRolePlantPermissionServices.UpdatePlantRolePlantPermission(plantRoleId, status);
+      return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
+          PrivilegeConstants.UPDATE_PLANT_ROLE_PLANT_PERMISSION_SUCCESS), HttpStatus.OK);
     }
     return new ResponseEntity<>(new ValidationFailureResponse(PrivilegeConstants.PLANT_ROLE_ID,
         privilegeValidationFailureStatusCodes.getPlantRoleNotExist()), HttpStatus.BAD_REQUEST);

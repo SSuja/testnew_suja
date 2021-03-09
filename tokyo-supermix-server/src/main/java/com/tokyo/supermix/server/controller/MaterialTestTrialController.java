@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class MaterialTestTrialController {
   private Mapper mapper;
   @Autowired
   private ValidationFailureStatusCodes validationFailureStatusCodes;
-  private static final Logger logger = Logger.getLogger(MaterialTestTrialController.class);
+  private static final Logger logger = LoggerFactory.getLogger(MaterialTestTrialController.class);
   @Autowired
   private MaterialTestRepository materialTestRepository;
   @Autowired
@@ -94,13 +95,13 @@ public class MaterialTestTrialController {
   @GetMapping(value = EndpointURI.MATERIAL_TEST_TRIAL_BY_CODE)
   public ResponseEntity<Object> getMaterialTestTrialByCode(@PathVariable String code) {
     if (materialTestTrialService.isMaterialTestTrialExits(code)) {
-      logger.debug("Get MaterialTestTrial by code ");
+      logger.info("Get MaterialTestTrial by code ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST_TRIAL,
           mapper.map(materialTestTrialService.getMaterialTestTrialByCode(code),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid code");
+    logger.info("Invalid code");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL_CODE,
         validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -114,7 +115,7 @@ public class MaterialTestTrialController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_TRIAL_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("invalid MaterialTestTrialCode");
+    logger.info("invalid MaterialTestTrialCode");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST_TRIAL,
         validationFailureStatusCodes.getMaterialTestTrailNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -124,14 +125,14 @@ public class MaterialTestTrialController {
   public ResponseEntity<Object> getAllMaterialTestTrialByMaterialTestCode(
       @PathVariable String materialTestCode) {
     if (materialTestTrialService.isMaterialTestIdExits(materialTestCode)) {
-      logger.debug("Get MaterialTest by code ");
+      logger.info("Get MaterialTest by code ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.MATERIAL_TEST,
           mapper.map(
               materialTestTrialService.getMaterialTestTrialByMaterialTestCode(materialTestCode),
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_TEST,
         validationFailureStatusCodes.getMaterialTestNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -154,7 +155,7 @@ public class MaterialTestTrialController {
               MaterialTestTrialResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     } else {
-      logger.debug("No Material Test Trial record exist for given Plant Code");
+      logger.info("No Material Test Trial record exist for given Plant Code");
       return new ResponseEntity<>(new ValidationFailureResponse(Constants.PLANT_ID,
           validationFailureStatusCodes.getPlantNotExist()), HttpStatus.BAD_REQUEST);
     }
@@ -173,7 +174,8 @@ public class MaterialTestTrialController {
     MaterialTest materialTest = materialTestRepository.findByCode(materialTestCode);
     materialTestTrialService.materialTestApproved(materialTestCode);
     materialTestService.updateIncomingSampleStatusByIncomingSample(materialTest);
-    return new ResponseEntity<>(new BasicResponse<>(RestApiResponseStatus.OK,
-        Constants.MATERIAL_TEST_APPROVED_SUCCESS), HttpStatus.OK);
+    return new ResponseEntity<>(
+        new BasicResponse<>(RestApiResponseStatus.OK, Constants.MATERIAL_TEST_APPROVED_SUCCESS),
+        HttpStatus.OK);
   }
 }

@@ -13,7 +13,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.Condition;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "accepted_value")
 public class AcceptedValue extends DateAudit implements Serializable {
@@ -36,80 +42,4 @@ public class AcceptedValue extends DateAudit implements Serializable {
   @JoinColumn(name = "testParameterId", nullable = true)
   private TestParameter testParameter;
   private boolean finalResult;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Double getMinValue() {
-    return minValue;
-  }
-
-  public void setMinValue(Double minValue) {
-    this.minValue = minValue;
-  }
-
-  public Double getMaxValue() {
-    return maxValue;
-  }
-
-  public void setMaxValue(Double maxValue) {
-    this.maxValue = maxValue;
-  }
-
-  public Double getValue() {
-    return value;
-  }
-
-  public void setValue(Double value) {
-    this.value = value;
-  }
-
-  public TestConfigure getTestConfigure() {
-    return testConfigure;
-  }
-
-  public void setTestConfigure(TestConfigure testConfigure) {
-    this.testConfigure = testConfigure;
-  }
-
-  public TestEquation getTestEquation() {
-    return testEquation;
-  }
-
-  public void setTestEquation(TestEquation testEquation) {
-    this.testEquation = testEquation;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public Condition getConditionRange() {
-    return conditionRange;
-  }
-
-  public void setConditionRange(Condition conditionRange) {
-    this.conditionRange = conditionRange;
-  }
-
-  public boolean isFinalResult() {
-    return finalResult;
-  }
-
-  public void setFinalResult(boolean finalResult) {
-    this.finalResult = finalResult;
-  }
-
-  public TestParameter getTestParameter() {
-    return testParameter;
-  }
-
-  public void setTestParameter(TestParameter testParameter) {
-    this.testParameter = testParameter;
-  }
 }

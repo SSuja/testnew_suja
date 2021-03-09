@@ -10,7 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import com.tokyo.supermix.data.entities.auth.DateAudit;
 import com.tokyo.supermix.data.enums.MainType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "material_category")
 public class MaterialCategory extends DateAudit implements Serializable {
@@ -22,40 +28,4 @@ public class MaterialCategory extends DateAudit implements Serializable {
   private String prefix;
   @Enumerated(EnumType.ORDINAL)
   private MainType mainType;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public String getPrefix() {
-    return prefix;
-  }
-
-  public void setPrefix(String prefix) {
-    this.prefix = prefix;
-  }
-
-  public MainType getMainType() {
-    return mainType;
-  }
-
-  public void setMainType(MainType mainType) {
-    this.mainType = mainType;
-  }
 }

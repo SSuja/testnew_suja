@@ -1,5 +1,6 @@
 package com.tokyo.supermix.data.entities;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,12 +9,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import com.tokyo.supermix.data.entities.auth.DateAudit;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(schema = "tokyo-supermix", name = "ratio_config_parameter")
-public class RatioConfigParameter {
+public class RatioConfigParameter extends DateAudit implements Serializable {
   private static final long serialVersionUID = 1L;
-
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -29,56 +36,4 @@ public class RatioConfigParameter {
   @JoinColumn(name = "unitId", nullable = false)
   private Unit unit;
   private Double value;
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public RatioConfig getRatioConfig() {
-    return ratioConfig;
-  }
-
-  public void setRatioConfig(RatioConfig ratioConfig) {
-    this.ratioConfig = ratioConfig;
-  }
-
-  public RawMaterial getRawMaterial() {
-    return rawMaterial;
-  }
-
-  public void setRawMaterial(RawMaterial rawMaterial) {
-    this.rawMaterial = rawMaterial;
-  }
-
-  public String getAbbreviation() {
-    return abbreviation;
-  }
-
-  public void setAbbreviation(String abbreviation) {
-    this.abbreviation = abbreviation;
-  }
-
-  public static long getSerialversionuid() {
-    return serialVersionUID;
-  }
-
-  public Unit getUnit() {
-    return unit;
-  }
-
-  public void setUnit(Unit unit) {
-    this.unit = unit;
-  }
-
-  public Double getValue() {
-    return value;
-  }
-
-  public void setValue(Double value) {
-    this.value = value;
-  }
 }

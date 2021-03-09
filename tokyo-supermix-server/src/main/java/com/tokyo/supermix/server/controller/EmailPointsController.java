@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import java.util.List;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,8 @@ public class EmailPointsController {
   private ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(EmailPointsController.class);
+
+  private static final Logger logger = LoggerFactory.getLogger(EmailPointsController.class);
 
   // Add API
   @PostMapping(value = EndpointURI.EMAIL_POINT)
@@ -68,12 +70,13 @@ public class EmailPointsController {
         .map(emailPointsService.getAllEmailPointsByStatus(status), EmailPointsResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
-  
+
   @GetMapping(value = EndpointURI.EMAIL_POINTS_BY_ADMIN_STATUS)
   public ResponseEntity<Object> getAllEmailPointsByAdminStatus(@PathVariable boolean status) {
     logger.debug("get all email points");
-    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_POINTS, mapper
-        .map(emailPointsService.getAllEmailPointsByAdminStatus(status), EmailPointsResponseDto.class),
+    return new ResponseEntity<>(new ContentResponse<>(Constants.EMAIL_POINTS,
+        mapper.map(emailPointsService.getAllEmailPointsByAdminStatus(status),
+            EmailPointsResponseDto.class),
         RestApiResponseStatus.OK), null, HttpStatus.OK);
   }
 

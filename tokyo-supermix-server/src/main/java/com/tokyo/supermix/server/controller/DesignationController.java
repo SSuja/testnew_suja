@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +45,7 @@ public class DesignationController {
   @Autowired
   private Mapper mapper;
 
-  private static final Logger logger = Logger.getLogger(DesignationController.class);
+  private static final Logger logger = LoggerFactory.getLogger(DesignationController.class);
 
   // get all designations
   @GetMapping(value = EndpointURI.DESIGNATIONS)
@@ -58,12 +59,12 @@ public class DesignationController {
   @GetMapping(value = EndpointURI.DESIGNATION_BY_ID)
   public ResponseEntity<Object> getDesignationById(@PathVariable Long id) {
     if (designationService.isDesignationExist(id)) {
-      logger.debug("Get Designation by id ");
+      logger.info("Get Designation by id ");
       return new ResponseEntity<>(new ContentResponse<>(Constants.DESIGNATION,
           mapper.map(designationService.getDesignationById(id), DesignationDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
         validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -77,7 +78,7 @@ public class DesignationController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DESIGNATION_DELETED),
           HttpStatus.OK);
     }
-    logger.debug("Invalid Id");
+    logger.info("Invalid Id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.DESIGNATION,
         validationFailureStatusCodes.getDesignationNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -87,7 +88,7 @@ public class DesignationController {
   public ResponseEntity<Object> createDesignation(
       @Valid @RequestBody DesignationDto designationDto) {
     if (designationService.isDesignationExist(designationDto.getName())) {
-      logger.debug("Designation already exists: createDesignation(), designationName: {}");
+      logger.info("Designation already exists: createDesignation(), designationName: {}");
       return new ResponseEntity<>(
           new ValidationFailureResponse(Constants.DESIGNATION_NAME,
               validationFailureStatusCodes.getDesignationNameAlreadyExist()),
@@ -103,7 +104,6 @@ public class DesignationController {
   @PutMapping(value = EndpointURI.DESIGNATION)
   public ResponseEntity<Object> updateDesignation(
       @Valid @RequestBody DesignationDto designationDto) {
-
     if (designationService.isDesignationExist(designationDto.getId())) {
       if (designationService.isUpdatedDesignationNameExist(designationDto.getId(),
           designationDto.getName())) {
@@ -130,6 +130,7 @@ public class DesignationController {
         mapper.map(designationService.getAllDesignation(pageable), DesignationDto.class),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
+
   @GetMapping(value = EndpointURI.SEARCH_DESIGNATION)
   public ResponseEntity<Object> getDesignationSearch(
       @RequestParam(name = "name", required = false) String name,
@@ -140,10 +141,8 @@ public class DesignationController {
     Pagination pagination = new Pagination(0, 0, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(new PaginatedContentResponse<>(Constants.DESIGNATIONS,
-        designationService.searchDesignation(booleanBuilder, name, description,pageable, pagination),
+        designationService.searchDesignation(booleanBuilder, name, description, pageable,
+            pagination),
         RestApiResponseStatus.OK, pagination), HttpStatus.OK);
   }
-
-  
-  
 }

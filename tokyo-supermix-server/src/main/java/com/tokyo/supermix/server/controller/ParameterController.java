@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ public class ParameterController {
   ValidationFailureStatusCodes validationFailureStatusCodes;
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(ParameterController.class);
+  private static final Logger logger = LoggerFactory.getLogger(ParameterController.class);
 
   @GetMapping(value = EndpointURI.PARAMETERS)
   public ResponseEntity<Object> getAllParameters(@RequestParam(name = "page") int page,

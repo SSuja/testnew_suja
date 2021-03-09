@@ -2,7 +2,8 @@ package com.tokyo.supermix.server.controller;
 
 import java.util.List;
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,9 @@ import com.tokyo.supermix.util.Constants;
 public class CoreTestConfigureController {
   @Autowired
   private CoreTestConfigureService coreTestConfigureService;
-
   @Autowired
   private Mapper mapper;
-  private static final Logger logger = Logger.getLogger(MaterialAcceptedValueController.class);
+  private static final Logger logger = LoggerFactory.getLogger(CoreTestConfigureController.class);
 
   @PostMapping(value = EndpointURI.CORE_TEST_CONFIGURE)
   public ResponseEntity<Object> createCoreTestConfigure(

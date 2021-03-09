@@ -1,7 +1,8 @@
 package com.tokyo.supermix.server.controller;
 
 import javax.validation.Valid;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -56,8 +57,7 @@ public class TestConfigureController {
   private AcceptedValueService acceptedValueService;
   @Autowired
   private MaterialAcceptedValueService materialAcceptedValueService;
-
-  private static final Logger logger = Logger.getLogger(TestConfigureController.class);
+  private static final Logger logger = LoggerFactory.getLogger(TestConfigureController.class);
 
   @PostMapping(value = EndpointURI.TEST_CONFIGURE)
   public ResponseEntity<Object> createTestConfigure(
@@ -92,7 +92,7 @@ public class TestConfigureController {
           mapper.map(testConfigureService.getTestConfigureById(id), TestConfigureResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Test record exist for given id");
+    logger.info("No Test record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -179,7 +179,7 @@ public class TestConfigureController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.UPDATE_TEST_CONFIGURE_SUCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Test Configure record exist for given id");
+    logger.info("No Test Configure record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
 
@@ -193,7 +193,7 @@ public class TestConfigureController {
           new BasicResponse<>(RestApiResponseStatus.OK, Constants.DELETE_TEST_CONFIGURE_SCCESS),
           HttpStatus.OK);
     }
-    logger.debug("No Test record exist for given id");
+    logger.info("No Test record exist for given id");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_CONFIGURE_ID,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -238,7 +238,7 @@ public class TestConfigureController {
           mapper.map(testConfigureService.findByTestType(testType), TestConfigureResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Test Configure record exist for given test type");
+    logger.info("No Test Configure record exist for given test type");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.TEST_TYPE,
         validationFailureStatusCodes.getTestConfigureNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -252,7 +252,7 @@ public class TestConfigureController {
               TestConfigureResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Test Configure record exist for given Material Sub Category");
+    logger.info("No Test Configure record exist for given Material Sub Category");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
@@ -266,7 +266,7 @@ public class TestConfigureController {
               materialSubCategoryId, testType), TestConfigureResponseDto.class),
           RestApiResponseStatus.OK), HttpStatus.OK);
     }
-    logger.debug("No Test Configure record exist for given Material Sub Category");
+    logger.info("No Test Configure record exist for given Material Sub Category");
     return new ResponseEntity<>(new ValidationFailureResponse(Constants.MATERIAL_SUB_CATEGORY,
         validationFailureStatusCodes.getMaterialSubCategoryNotExist()), HttpStatus.BAD_REQUEST);
   }
