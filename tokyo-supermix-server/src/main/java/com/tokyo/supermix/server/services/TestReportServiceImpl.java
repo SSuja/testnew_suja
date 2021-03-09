@@ -15,7 +15,6 @@ import com.tokyo.supermix.data.dto.CubeTestReportDto;
 import com.tokyo.supermix.data.dto.FinishProductTestReportDetailDto;
 import com.tokyo.supermix.data.dto.IncomingSampleJasperDeliveryDto;
 import com.tokyo.supermix.data.dto.IncomingSampleJasperTestDto;
-import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.dto.MaterialTestTrialResultDto;
 import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
@@ -203,12 +202,12 @@ public class TestReportServiceImpl implements TestReportService {
       if (results.getTestEquation() != null) {
         materialResult.setTestParameterName(
             results.getTestEquation().getTestParameter().getParameter().getName());
-        materialResult.setAverage(results.getResult());
+        materialResult.setAverage(roundDoubleValue(results.getResult()));
         materialResults.add(materialResult);
       } else {
         materialResult
             .setTestName(results.getMaterialTest().getTestConfigure().getTest().getName());
-        materialResult.setAverage(results.getResult());
+        materialResult.setAverage(roundDoubleValue(results.getResult()));
         materialResults.add(materialResult);
       }
     });
@@ -241,7 +240,7 @@ public class TestReportServiceImpl implements TestReportService {
         if (parameterResult.getTestParameter().getParameter() != null) {
           if (dto.getParameterName() == parameterResult.getTestParameter().getParameter()
               .getName()) {
-            values.add(parameterResult.getValue());
+            values.add(roundDoubleValue(parameterResult.getValue()));
           }
         }
       }
@@ -295,6 +294,7 @@ public class TestReportServiceImpl implements TestReportService {
     if (incomingSample.getDate() != null) {
       incomingSampleReportDto.setDate(incomingSample.getDate());
     }
+    incomingSampleReportDto.setSupplierName(incomingSample.getSupplier().getName());
     incomingSampleReportDto.setRawMaterialName(incomingSample.getRawMaterial().getName());
     incomingSampleReportDto
         .setMaterialSubCategory(incomingSample.getRawMaterial().getMaterialSubCategory().getName());

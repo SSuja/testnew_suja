@@ -11,6 +11,7 @@ public class IncomingSampleReportDto {
   private String materialSubCategory;
   private String status;
   private String time;
+  private String supplierName;
 
   public String getCode() {
     return code;
@@ -76,5 +77,11 @@ public class IncomingSampleReportDto {
     this.time = time;
   }
 
+  public String getSupplierName() {
+    return supplierName;
+  }
 
+  public void setSupplierName(String supplierName) {
+    this.supplierName = supplierName;
+  }
 }
