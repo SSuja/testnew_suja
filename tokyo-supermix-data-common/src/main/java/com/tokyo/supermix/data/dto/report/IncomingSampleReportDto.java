@@ -1,7 +1,6 @@
 package com.tokyo.supermix.data.dto.report;
 
 import java.sql.Date;
-import java.sql.Time;
 
 public class IncomingSampleReportDto {
   private String code;
@@ -11,7 +10,7 @@ public class IncomingSampleReportDto {
   private String materialCategory;
   private String materialSubCategory;
   private String status;
-  private Time time;
+  private String time;
 
   public String getCode() {
     return code;
@@ -65,16 +64,17 @@ public class IncomingSampleReportDto {
     return status;
   }
 
-  public Time getTime() {
-    return time;
-  }
-
-  public void setTime(Time time) {
-    this.time = time;
-  }
-
   public void setStatus(String status) {
     this.status = status;
   }
+
+  public String getTime() {
+    return time;
+  }
+
+  public void setTime(String time) {
+    this.time = time;
+  }
+
 
 }

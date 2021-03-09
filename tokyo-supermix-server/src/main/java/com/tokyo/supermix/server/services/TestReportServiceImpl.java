@@ -1,6 +1,8 @@
 package com.tokyo.supermix.server.services;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -287,8 +289,9 @@ public class TestReportServiceImpl implements TestReportService {
     incomingSampleReportDto.setCode(incomingSample.getCode());
     incomingSampleReportDto.setStatus(incomingSample.getStatus().name());
     incomingSampleReportDto.setVehicleNo(incomingSample.getVehicleNo());
-    java.sql.Time time = new java.sql.Time(incomingSample.getCreatedAt().getTime());
-    incomingSampleReportDto.setTime(time);
+    DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+    String dateString = dateFormat.format(incomingSample.getCreatedAt()).toString();
+    incomingSampleReportDto.setTime(dateString);
     if (incomingSample.getDate() != null) {
       incomingSampleReportDto.setDate(incomingSample.getDate());
     }
@@ -788,8 +791,8 @@ public class TestReportServiceImpl implements TestReportService {
       }
       seiveTestReportResponseDto
           .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-      seiveTestReportResponseDto.setIncomingSample(
-          mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
+      seiveTestReportResponseDto
+          .setIncomingSample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));
       seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     }
     return seiveTestReportResponseDto;
@@ -806,8 +809,8 @@ public class TestReportServiceImpl implements TestReportService {
     }
     seiveTestReportResponseDto
         .setPlant(mapper.map(materialTest.getIncomingSample().getPlant(), PlantDto.class));
-    seiveTestReportResponseDto.setIncomingSample(
-        mapper.map(materialTest.getIncomingSample(), IncomingSampleResponseDto.class));
+    seiveTestReportResponseDto
+        .setIncomingSample(getIncomingSampleDetails(materialTest.getIncomingSample().getCode()));;
     seiveTestReportResponseDto.setSieveTestTrial(getTrialResult(materialTestCode));
     return seiveTestReportResponseDto;
   }

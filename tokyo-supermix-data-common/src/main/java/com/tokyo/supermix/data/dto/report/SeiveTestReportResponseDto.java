@@ -7,7 +7,7 @@ import com.tokyo.supermix.data.dto.PlantDto;
 
 public class SeiveTestReportResponseDto {
   private PlantDto plant;
-  private IncomingSampleResponseDto incomingSample;
+  private IncomingSampleReportDto incomingSample;
   private List<SieveTestTrialDto> sieveTestTrial;
   private Date testingDate;
 
@@ -17,14 +17,6 @@ public class SeiveTestReportResponseDto {
 
   public void setPlant(PlantDto plant) {
     this.plant = plant;
-  }
-
-  public IncomingSampleResponseDto getIncomingSample() {
-    return incomingSample;
-  }
-
-  public void setIncomingSample(IncomingSampleResponseDto incomingSample) {
-    this.incomingSample = incomingSample;
   }
 
   public List<SieveTestTrialDto> getSieveTestTrial() {
@@ -41,5 +33,13 @@ public class SeiveTestReportResponseDto {
 
   public void setTestingDate(Date testingDate) {
     this.testingDate = testingDate;
+  }
+
+  public IncomingSampleReportDto getIncomingSample() {
+    return incomingSample;
+  }
+
+  public void setIncomingSample(IncomingSampleReportDto incomingSample) {
+    this.incomingSample = incomingSample;
   }
 }
