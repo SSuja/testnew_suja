@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.tokyo.supermix.data.dto.FinishProductTestTrialDto;
 import com.tokyo.supermix.data.entities.FinishProductParameterResult;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.FinishProductTest;
@@ -108,10 +109,29 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   }
 
   @Transactional(readOnly = true)
-  public List<FinishProductTrial> getFinishProductTrialsByFinishProductTestCode(
+  public List<FinishProductTestTrialDto> getFinishProductTrialsByFinishProductTestCode(
       String finishProductTestCode) {
-    return finishProductTrialRepository
-        .findByFinishProductTestCodeOrderByCreatedAtDesc(finishProductTestCode);
+    List<FinishProductTestTrialDto> finishProductTestTrialDtoList =
+        new ArrayList<FinishProductTestTrialDto>();
+    for (FinishProductTrial finishProductTrial : finishProductTrialRepository
+        .findByFinishProductTestCodeOrderByCreatedAtDesc(finishProductTestCode)) {
+      FinishProductTestTrialDto finishProductTestTrialDto = new FinishProductTestTrialDto();
+      finishProductTestTrialDto
+          .setFinishProductTestNoOfTrial(finishProductTrial.getFinishProductTest().getNoOfTrial());
+      finishProductTestTrialDto
+          .setTestParameterAbbreviation(finishProductTrial.getTestParameter().getAbbreviation());
+      finishProductTestTrialDto
+          .setTestParameterInputMethods(finishProductTrial.getTestParameter().getInputMethods());
+      finishProductTestTrialDto.setTestParameterParameterName(
+          finishProductTrial.getTestParameter().getParameter().getName() + "("
+              + finishProductTrial.getTestParameter().getUnit().getUnit() + ")" + " ");
+      finishProductTestTrialDto
+          .setTestParameterType(finishProductTrial.getTestParameter().getType());
+      finishProductTestTrialDto.setTrialNo(finishProductTrial.getTrialNo());
+      finishProductTestTrialDto.setValue(finishProductTrial.getValue());
+      finishProductTestTrialDtoList.add(finishProductTestTrialDto);
+    }
+    return finishProductTestTrialDtoList;
   }
 
   @Transactional(readOnly = true)

@@ -201,7 +201,8 @@ public class TestReportServiceImpl implements TestReportService {
       MaterialResult materialResult = new MaterialResult();
       if (results.getTestEquation() != null) {
         materialResult.setTestParameterName(
-            results.getTestEquation().getTestParameter().getParameter().getName());
+            results.getTestEquation().getTestParameter().getParameter().getName() + " " + "("
+                + results.getTestEquation().getTestParameter().getUnit().getUnit() + ")");
         materialResult.setAverage(roundDoubleValue(results.getResult()));
         materialResults.add(materialResult);
       } else {
@@ -223,7 +224,8 @@ public class TestReportServiceImpl implements TestReportService {
     parameterResults.forEach(paramResult -> {
       TrailValueDto trailValueDto = new TrailValueDto();
       if (paramResult.getTestParameter().getParameter() != null) {
-        trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName());
+        trailValueDto.setParameterName(paramResult.getTestParameter().getParameter().getName() + " "
+            + "(" + paramResult.getTestParameter().getUnit().getUnit() + ")");
         trailValueDto.setAbbreviation(paramResult.getTestParameter().getAbbreviation());
         trailValueDtoList.add(trailValueDto);
       }
@@ -238,8 +240,9 @@ public class TestReportServiceImpl implements TestReportService {
       }
       for (ParameterResult parameterResult : combined) {
         if (parameterResult.getTestParameter().getParameter() != null) {
-          if (dto.getParameterName() == parameterResult.getTestParameter().getParameter()
-              .getName()) {
+          if (dto.getParameterName()
+              .equals(parameterResult.getTestParameter().getParameter().getName() + " " + "("
+                  + parameterResult.getTestParameter().getUnit().getUnit() + ")")) {
             values.add(roundDoubleValue(parameterResult.getValue()));
           }
         }
@@ -256,13 +259,14 @@ public class TestReportServiceImpl implements TestReportService {
     acceptedValueList.forEach(values -> {
       if (values.isFinalResult()) {
         AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
-        acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName());
+        acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName() + "("
+            + values.getTestParameter().getUnit().getUnit() + ")");
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue());
           acceptedValueDtos.setMinValue(values.getMinValue());
           acceptedValueDtos.setValues("Between  " + values.getMinValue().toString() + "-"
-              + values.getMaxValue().toString());
+              + values.getMaxValue().toString() + " ");
         } else if (values.getConditionRange() == Condition.EQUAL) {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setValue(values.getValue());
@@ -320,7 +324,8 @@ public class TestReportServiceImpl implements TestReportService {
       if (materialAccepted.isFinalResult()) {
         AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
         acceptedValueDto
-            .setParameterName(materialAccepted.getTestParameter().getParameter().getName());
+            .setParameterName(materialAccepted.getTestParameter().getParameter().getName() + "("
+                + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
         if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDto.setCondition(materialAccepted.getConditionRange());
           acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
@@ -358,7 +363,8 @@ public class TestReportServiceImpl implements TestReportService {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
           acceptedValueDto
-              .setParameterName(materialAccepted.getTestParameter().getParameter().getName());
+              .setParameterName(materialAccepted.getTestParameter().getParameter().getName() + "("
+                  + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
@@ -842,7 +848,8 @@ public class TestReportServiceImpl implements TestReportService {
       if (parameterResult.getTestParameter().getName() != null) {
         String[] parts = parameterResult.getTestParameter().getName().split("_");
         SieveResultAndParameter sieveResultAndParameter = new SieveResultAndParameter();
-        sieveResultAndParameter.setParameter(parts[0].toString());
+        sieveResultAndParameter.setParameter(parts[0].toString() + " " + "("
+            + parameterResult.getTestParameter().getUnit().getUnit() + ")");
         sieveResultAndParameter.setVale(parameterResult.getValue().toString());
         sieveResultAndParameter
             .setInputMethods(parameterResult.getTestParameter().getInputMethods());
@@ -853,33 +860,33 @@ public class TestReportServiceImpl implements TestReportService {
           AcceptedValue acceptedValue = acceptedValueRepository
               .findByTestParameterIdAndTestConfigureId(parameterResult.getTestParameter().getId(),
                   parameterResult.getTestParameter().getTestConfigure().getId());
-          if (acceptedValue != null)
-            if (acceptedValue.isFinalResult()) {
-              SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
-              String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
-              sieveResultAndParameterAcc
-                  .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
-              sieveResultAndParameterAcc
-                  .setInputMethods(acceptedValue.getTestParameter().getInputMethods());
-              sieveResultAndParameterAcc
-                  .setTestParameterType(acceptedValue.getTestParameter().getType());
-              sieveResultAndParameter
-                  .setUnit(parameterResult.getTestParameter().getUnit().getUnit());
-              if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
-                sieveResultAndParameterAcc.setVale(acceptedValue.getMinValue().toString() + " - "
-                    + acceptedValue.getMaxValue().toString());
-                acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
-                acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
-                acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
-                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
-              } else {
-                sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
-                acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
-                acceptedValueForSieveTest.setValue(acceptedValue.getValue());
-                sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
-              }
-              sieveResultAndParameterList.add(sieveResultAndParameterAcc);
+          if (acceptedValue != null) {
+
+            SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
+            String[] parts1 = acceptedValue.getTestParameter().getName().split("_");
+            sieveResultAndParameterAcc
+                .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString() + " "
+                    + "(" + parameterResult.getTestParameter().getUnit().getUnit() + ")");
+            sieveResultAndParameterAcc
+                .setInputMethods(acceptedValue.getTestParameter().getInputMethods());
+            sieveResultAndParameterAcc
+                .setTestParameterType(acceptedValue.getTestParameter().getType());
+            sieveResultAndParameter.setUnit(parameterResult.getTestParameter().getUnit().getUnit());
+            if (acceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
+              sieveResultAndParameterAcc.setVale(acceptedValue.getMinValue().toString() + " - "
+                  + acceptedValue.getMaxValue().toString());
+              acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+              acceptedValueForSieveTest.setMaxValue(acceptedValue.getMaxValue());
+              acceptedValueForSieveTest.setMinValue(acceptedValue.getMinValue());
+              sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
+            } else {
+              sieveResultAndParameterAcc.setVale(acceptedValue.getValue().toString());
+              acceptedValueForSieveTest.setConditionRange(acceptedValue.getConditionRange());
+              acceptedValueForSieveTest.setValue(acceptedValue.getValue());
+              sieveResultAndParameterAcc.setAcceptedValueForSieveTest(acceptedValueForSieveTest);
             }
+            sieveResultAndParameterList.add(sieveResultAndParameterAcc);
+          }
         } else {
           MaterialAcceptedValue materialAcceptedValue = materialAcceptedValueRepository
               .findByTestConfigureIdAndTestParameterIdAndRawMaterialId(
@@ -890,7 +897,8 @@ public class TestReportServiceImpl implements TestReportService {
             SieveResultAndParameter sieveResultAndParameterAcc = new SieveResultAndParameter();
             String[] parts1 = materialAcceptedValue.getTestParameter().getName().split("_");
             sieveResultAndParameterAcc
-                .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString());
+                .setParameter(" Accepted Range " + "  " + " of " + "  " + parts1[0].toString() + " "
+                    + "(" + parameterResult.getTestParameter().getUnit().getUnit() + ")");
             if (materialAcceptedValue.getConditionRange().equals(Condition.BETWEEN)) {
               sieveResultAndParameterAcc.setVale(materialAcceptedValue.getMinValue().toString()
                   + " - " + materialAcceptedValue.getMaxValue().toString());
@@ -1125,7 +1133,8 @@ public class TestReportServiceImpl implements TestReportService {
         acceptedValueRepository.findByTestConfigureId(testConfigureId);
     AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
     acceptedValueList.forEach(values -> {
-      acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName());
+      acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName() + " "
+          + "(" + values.getTestParameter().getUnit().getUnit() + ")");
       if (values.getConditionRange() == Condition.BETWEEN) {
         acceptedValueDtos.setCondition(values.getConditionRange());
         acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
@@ -1159,7 +1168,8 @@ public class TestReportServiceImpl implements TestReportService {
     materialAcceptedValues.forEach(values -> {
       if (materialTestList.get(0).getIncomingSample().getRawMaterial().getId() == values
           .getRawMaterial().getId()) {
-        acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName());
+        acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName() + " "
+            + "(" + values.getTestParameter().getUnit().getUnit() + ")");
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
@@ -1190,7 +1200,8 @@ public class TestReportServiceImpl implements TestReportService {
         .findByTestConfigureIdAndTestConfigureRawMaterialId(testConfigureId, rawMaterialId);
     AcceptedValueJasperDto acceptedValueDtos = new AcceptedValueJasperDto();
     materialAcceptedValues.forEach(values -> {
-      acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName());
+      acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName() + " "
+          + "(" + values.getTestParameter().getUnit().getUnit() + ")");
       if (values.getConditionRange() == Condition.BETWEEN) {
         acceptedValueDtos.setCondition(values.getConditionRange());
         acceptedValueDtos.setMaxValue(values.getMaxValue().toString());
