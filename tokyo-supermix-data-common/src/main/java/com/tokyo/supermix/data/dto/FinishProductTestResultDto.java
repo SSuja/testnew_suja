@@ -24,6 +24,7 @@ public class FinishProductTestResultDto {
   private String finishProductTestFinishProductSampleMixDesignRawMaterialName;
   private String testParameterAbbreviation;
   private String finishProductTestFinishProductSampleFinishProductCode;
+  private String testParameterUnitUnit;
 
   public String getTestParameterAbbreviation() {
     return testParameterAbbreviation;
@@ -169,5 +170,13 @@ public class FinishProductTestResultDto {
       String finishProductTestFinishProductSampleFinishProductCode) {
     this.finishProductTestFinishProductSampleFinishProductCode =
         finishProductTestFinishProductSampleFinishProductCode;
+  }
+
+  public String getTestParameterUnitUnit() {
+    return testParameterUnitUnit;
+  }
+
+  public void setTestParameterUnitUnit(String testParameterUnitUnit) {
+    this.testParameterUnitUnit = testParameterUnitUnit;
   }
 }

@@ -1,6 +1,7 @@
 package com.tokyo.supermix.server.services;
 
 import java.util.List;
+import com.tokyo.supermix.data.dto.FinishProductTestTrialDto;
 import com.tokyo.supermix.data.entities.FinishProductTrial;
 import com.tokyo.supermix.security.UserPrincipal;
 
@@ -17,7 +18,7 @@ public interface FinishProductTrialService {
 
   public boolean isFinishProductTrialExists(Long id);
 
-  public List<FinishProductTrial> getFinishProductTrialsByFinishProductTestCode(
+  public List<FinishProductTestTrialDto> getFinishProductTrialsByFinishProductTestCode(
       String finishProductTestCode);
 
   public boolean isFinishProductTestExists(String finishProductTestCode);
@@ -31,7 +32,8 @@ public interface FinishProductTrialService {
   public void saveAverageCalculationResult(String finishProductCode);
 
 
-  public void saveAverageCalculationFinishProductTrials(List<FinishProductTrial> finishProductTrialList);
+  public void saveAverageCalculationFinishProductTrials(
+      List<FinishProductTrial> finishProductTrialList);
 
   public boolean getEquationCheck(String finishProductTestCode);
 }
