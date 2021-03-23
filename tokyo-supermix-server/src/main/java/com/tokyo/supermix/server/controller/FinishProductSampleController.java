@@ -28,7 +28,6 @@ import com.tokyo.supermix.config.export.FinishProductDeliveryLayouter;
 import com.tokyo.supermix.config.export.FinishedProductDeliveryFillManager;
 import com.tokyo.supermix.data.dto.FinishProductSampleRequestDto;
 import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
-import com.tokyo.supermix.data.dto.IncomingSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.data.mapper.Mapper;
@@ -259,8 +258,7 @@ public class FinishProductSampleController {
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
-    Pagination pagination = new Pagination(0, 0, totalpage, 0l);
-   
+    Pagination pagination = new Pagination(0, 0, totalpage, 0l);  
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,

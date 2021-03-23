@@ -14,13 +14,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
-import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MixDesign;
 import com.tokyo.supermix.data.entities.QFinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
-import com.tokyo.supermix.data.mapper.Mapper;
 import com.tokyo.supermix.data.repositories.FinishProductSampleRepository;
 import com.tokyo.supermix.data.repositories.MixDesignRepository;
 import com.tokyo.supermix.notification.EmailNotification;
@@ -40,8 +37,6 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
   private EmailNotification emailNotification;
   @Autowired
   private MixDesignRepository mixDesignRepository;
-  @Autowired
-  private Mapper mapper;
 
   @Transactional(readOnly = true)
   public boolean isFinishProductCodeExist(String code) {
@@ -323,5 +318,63 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       Long rawMaterialId, String plantCode) {
     return finishProductSampleRepository
         .findByMixDesignRawMaterialIdAndMixDesignPlantCode(rawMaterialId, plantCode);
+  }
+
+  @Transactional(readOnly = true)
+  public List<FinishProductSample> searchFinishProductSampleIssue(BooleanBuilder booleanBuilder,
+      String finishProductCode, String equipmentName, String mixDesignCode, String plantName,
+      String plantCode, Status status, String date, String code, String rawMaterialName,
+      String workOrderNumber, String customer, Pageable pageable, Pagination pagination) {
+    if (finishProductCode != null && !finishProductCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
+          .startsWithIgnoreCase(finishProductCode));
+    }
+    if (equipmentName != null && !equipmentName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.plantEquipment.serialNo
+          .startsWithIgnoreCase(equipmentName));
+    }
+    if (mixDesignCode != null && !mixDesignCode.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.code
+          .startsWithIgnoreCase(mixDesignCode));
+    }
+    if (plantName != null && !plantName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.name
+          .startsWithIgnoreCase(plantName));
+    }
+
+    if (plantCode != null && !plantCode.isEmpty()
+        && !(plantCode.equalsIgnoreCase(Constants.ADMIN))) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.plant.code
+          .startsWithIgnoreCase(plantCode));
+    }
+    if (status != null) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.status.eq(status));
+    }
+    if (date != null && !date.isEmpty()) {
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.date.stringValue().startsWithIgnoreCase(date));
+    }
+    if (code != null && !code.isEmpty()) {
+      booleanBuilder.and(
+          QFinishProductSample.finishProductSample.code.stringValue().startsWithIgnoreCase(code));
+    }
+    if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.mixDesign.rawMaterial.name
+          .stringValue().startsWithIgnoreCase(rawMaterialName));
+    }
+    if (workOrderNumber != null && !workOrderNumber.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.stringValue()
+          .stringValue().startsWithIgnoreCase(workOrderNumber));
+    }
+    if (customer != null && !customer.isEmpty()) {
+      booleanBuilder.and(QFinishProductSample.finishProductSample.project.customer.name
+          .stringValue().stringValue().startsWithIgnoreCase(customer));
+    }
+    pagination.setTotalRecords(
+        (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
+            .stream().filter(sample -> sample.getWorkOrderNumber() != null)
+            .collect(Collectors.toList()).size());
+    return finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
+        .filter(sample -> sample.getWorkOrderNumber() != null).collect(Collectors.toList());
   }
 }
