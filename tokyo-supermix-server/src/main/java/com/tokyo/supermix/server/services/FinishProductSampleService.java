@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.tokyo.supermix.data.dto.FinishProductSampleResponseDto;
 import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.enums.Status;
 import com.tokyo.supermix.rest.response.PaginatedContentResponse.Pagination;
@@ -83,4 +82,9 @@ public interface FinishProductSampleService {
       Long rawMaterialId, String plantCode);
 
   public List<FinishProductSample> getFinishProductSamplesBySubCategoryId(Long subCategoryId);
+
+  public List<FinishProductSample> searchFinishProductSampleIssue(BooleanBuilder booleanBuilder,
+      String finishProductCode, String equipmentName, String mixDesignCode, String plantName,
+      String plantCode, Status status, String date, String code, String rawMaterialName,
+      String workOrderNumber, String customer, Pageable pageable, Pagination pagination);
 }

@@ -195,7 +195,7 @@ public class FinishProductSampleIssueController {
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
             mapper.map(
-                finishProductSampleService.searchFinishProductSample(booleanBuilder,
+                finishProductSampleService.searchFinishProductSampleIssue(booleanBuilder,
                     finishProductCode, equipmentName, mixDesignCode, plantName, plantCode, status,
                     date, code, rawMaterialName, workOrderNumber, customer, pageable, pagination),
                 FinishProductSampleResponseDto.class),
