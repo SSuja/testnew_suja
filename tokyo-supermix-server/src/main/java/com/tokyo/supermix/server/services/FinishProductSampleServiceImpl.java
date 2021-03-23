@@ -3,7 +3,6 @@ package com.tokyo.supermix.server.services;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -187,6 +186,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       String finishProductCode, String equipmentName, String mixDesignCode, String plantName,
       String plantCode, Status status, String date, String code, String rawMaterialName,
       String workOrderNumber, String customer, Pageable pageable, Pagination pagination) {
+    booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.isNull());
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
           .startsWithIgnoreCase(finishProductCode));
@@ -234,10 +234,8 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
     pagination.setTotalRecords(
         (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
-            .stream().filter(sample -> sample.getWorkOrderNumber() == null)
-            .collect(Collectors.toList()).size());
-    return finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
-        .filter(sample -> sample.getWorkOrderNumber() == null).collect(Collectors.toList());
+            .size());
+    return finishProductSampleRepository.findAll(booleanBuilder, pageable).toList();
   }
 
   @Transactional(readOnly = true)
@@ -325,6 +323,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
       String finishProductCode, String equipmentName, String mixDesignCode, String plantName,
       String plantCode, Status status, String date, String code, String rawMaterialName,
       String workOrderNumber, String customer, Pageable pageable, Pagination pagination) {
+    booleanBuilder.and(QFinishProductSample.finishProductSample.workOrderNumber.isNotNull());
     if (finishProductCode != null && !finishProductCode.isEmpty()) {
       booleanBuilder.and(QFinishProductSample.finishProductSample.finishProductCode
           .startsWithIgnoreCase(finishProductCode));
@@ -372,9 +371,7 @@ public class FinishProductSampleServiceImpl implements FinishProductSampleServic
     }
     pagination.setTotalRecords(
         (long) ((List<FinishProductSample>) finishProductSampleRepository.findAll(booleanBuilder))
-            .stream().filter(sample -> sample.getWorkOrderNumber() != null)
-            .collect(Collectors.toList()).size());
-    return finishProductSampleRepository.findAll(booleanBuilder, pageable).toList().stream()
-        .filter(sample -> sample.getWorkOrderNumber() != null).collect(Collectors.toList());
+            .size());
+    return finishProductSampleRepository.findAll(booleanBuilder, pageable).toList();
   }
 }

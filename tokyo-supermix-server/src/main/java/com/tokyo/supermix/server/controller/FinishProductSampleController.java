@@ -258,7 +258,7 @@ public class FinishProductSampleController {
       @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
     Pageable pageable = PageRequest.of(page, size);
     int totalpage = 0;
-    Pagination pagination = new Pagination(0, 0, totalpage, 0l);  
+    Pagination pagination = new Pagination(page, size, totalpage, 0l);
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     return new ResponseEntity<>(
         new PaginatedContentResponse<>(Constants.FINISH_PRODUCT_SAMPLES,
