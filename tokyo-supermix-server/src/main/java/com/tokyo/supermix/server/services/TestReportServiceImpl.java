@@ -20,12 +20,13 @@ import com.tokyo.supermix.data.dto.PlantDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueDto;
 import com.tokyo.supermix.data.dto.report.AcceptedValueForSieveTest;
 import com.tokyo.supermix.data.dto.report.ConcreteStrengthDto;
+import com.tokyo.supermix.data.dto.report.InComingSampleSummaryDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleDeliveryReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleReportDto;
 import com.tokyo.supermix.data.dto.report.IncomingSampleStatusCount;
-import com.tokyo.supermix.data.dto.report.IncomingSampleTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialResult;
 import com.tokyo.supermix.data.dto.report.MaterialTestReportDto;
+import com.tokyo.supermix.data.dto.report.ResultsDto;
 import com.tokyo.supermix.data.dto.report.SeiveTestReportResponseDto;
 import com.tokyo.supermix.data.dto.report.SieveResultAndParameter;
 import com.tokyo.supermix.data.dto.report.SieveTestTrialDto;
@@ -259,8 +260,13 @@ public class TestReportServiceImpl implements TestReportService {
     acceptedValueList.forEach(values -> {
       if (values.isFinalResult()) {
         AcceptedValueDto acceptedValueDtos = new AcceptedValueDto();
-        acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName() + "("
-            + values.getTestParameter().getUnit().getUnit() + ")");
+        if (values.getTestParameter().getName() != null) {
+          acceptedValueDtos.setParameterName(values.getTestParameter().getName() + "("
+              + values.getTestParameter().getUnit().getUnit() + ")");
+        } else {
+          acceptedValueDtos.setParameterName(values.getTestParameter().getParameter().getName()
+              + "(" + values.getTestParameter().getUnit().getUnit() + ")");
+        }
         if (values.getConditionRange() == Condition.BETWEEN) {
           acceptedValueDtos.setCondition(values.getConditionRange());
           acceptedValueDtos.setMaxValue(values.getMaxValue());
@@ -323,6 +329,14 @@ public class TestReportServiceImpl implements TestReportService {
     materialAcceptedValues.forEach(materialAccepted -> {
       if (materialAccepted.isFinalResult()) {
         AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
+        if (materialAccepted.getTestParameter().getName() != null) {
+          acceptedValueDto.setParameterName(materialAccepted.getTestParameter().getName() + "("
+              + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
+        } else {
+          acceptedValueDto
+              .setParameterName(materialAccepted.getTestParameter().getParameter().getName() + "("
+                  + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
+        }
         acceptedValueDto
             .setParameterName(materialAccepted.getTestParameter().getParameter().getName() + "("
                 + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
@@ -362,9 +376,14 @@ public class TestReportServiceImpl implements TestReportService {
           .getRawMaterial().getId()) {
         if (materialAccepted.isFinalResult()) {
           AcceptedValueDto acceptedValueDto = new AcceptedValueDto();
-          acceptedValueDto
-              .setParameterName(materialAccepted.getTestParameter().getParameter().getName() + "("
-                  + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
+          if (materialAccepted.getTestParameter().getName() != null) {
+            acceptedValueDto.setParameterName(materialAccepted.getTestParameter().getName() + "("
+                + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
+          } else {
+            acceptedValueDto
+                .setParameterName(materialAccepted.getTestParameter().getParameter().getName() + "("
+                    + materialAccepted.getTestParameter().getUnit().getUnit() + ")");
+          }
           if (materialAccepted.getConditionRange() == Condition.BETWEEN) {
             acceptedValueDto.setCondition(materialAccepted.getConditionRange());
             acceptedValueDto.setMaxValue(materialAccepted.getMaxValue());
@@ -432,14 +451,36 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleDeliveryReportDto;
   }
 
-  private List<IncomingSampleTestDto> getIncomingSampleTestDtoReport(String incomingSampleCode) {
-    List<IncomingSampleTestDto> incomingSampleTestDtoList = new ArrayList<IncomingSampleTestDto>();
+  private List<InComingSampleSummaryDto> getIncomingSampleTestDtoReport(String incomingSampleCode) {
+    List<InComingSampleSummaryDto> incomingSampleTestDtoList =
+        new ArrayList<InComingSampleSummaryDto>();
     materialTestRepository.findByIncomingSampleCode(incomingSampleCode).forEach(test -> {
-      IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
+      InComingSampleSummaryDto incomingSampleTestDto = new InComingSampleSummaryDto();
       incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
-      List<MaterialTestResult> materialTestResult =
+      List<MaterialTestResult> materialTestResultList =
           materialTestResultRepository.findByMaterialTestCode(test.getCode());
-      incomingSampleTestDto.setAverage(materialTestResult.get(0).getResult());
+      List<ResultsDto> resultsDtoList = new ArrayList<ResultsDto>();
+      for (MaterialTestResult materialTestResult : materialTestResultList) {
+        ResultsDto resultsDto = new ResultsDto();
+        resultsDto.setResult(materialTestResult.getResult());
+        if (materialTestResult.getTestEquation() != null) {
+          if (materialTestResult.getTestEquation().getTestParameter().getName() != null) {
+            resultsDto.setParameterName(
+                materialTestResult.getTestEquation().getTestParameter().getName() + "("
+                    + materialTestResult.getTestEquation().getTestParameter().getUnit().getUnit()
+                    + ")");
+          } else {
+            resultsDto.setParameterName(
+                materialTestResult.getTestEquation().getTestParameter().getParameter().getName()
+                    + "("
+                    + materialTestResult.getTestEquation().getTestParameter().getUnit().getUnit()
+                    + ")");
+          }
+        }
+        incomingSampleTestDto.setAverage(materialTestResult.getResult());
+        resultsDtoList.add(resultsDto);
+      }
+      incomingSampleTestDto.setResultsDto(resultsDtoList);
       incomingSampleTestDto.setStatus(test.getStatus().name());
       incomingSampleTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
       incomingSampleTestDto.setComment(test.getComment());
@@ -460,17 +501,40 @@ public class TestReportServiceImpl implements TestReportService {
     return incomingSampleTestDtoList;
   }
 
-  private List<IncomingSampleTestDto> getIncomingSampleDeliveryReport(String incomingSampleCode,
+  private List<InComingSampleSummaryDto> getIncomingSampleDeliveryReport(String incomingSampleCode,
       ReportFormat reportFormat) {
-    List<IncomingSampleTestDto> incomingSampleTestDtoList = new ArrayList<IncomingSampleTestDto>();
+    List<InComingSampleSummaryDto> incomingSampleTestDtoList =
+        new ArrayList<InComingSampleSummaryDto>();
     materialTestRepository
         .findByIncomingSampleCodeAndTestConfigureReportFormat(incomingSampleCode, reportFormat)
         .forEach(test -> {
-          IncomingSampleTestDto incomingSampleTestDto = new IncomingSampleTestDto();
+          InComingSampleSummaryDto incomingSampleTestDto = new InComingSampleSummaryDto();
           incomingSampleTestDto.setTestName(test.getTestConfigure().getTest().getName());
-          List<MaterialTestResult> materialTestResult =
+          List<MaterialTestResult> materialTestResultList =
               materialTestResultRepository.findByMaterialTestCode(test.getCode());
-          incomingSampleTestDto.setAverage(materialTestResult.get(0).getResult());
+          List<ResultsDto> resultsDtoList = new ArrayList<ResultsDto>();
+          for (MaterialTestResult materialTestResult : materialTestResultList) {
+            ResultsDto resultsDto = new ResultsDto();
+            resultsDto.setResult(materialTestResult.getResult());
+            if (materialTestResult.getTestEquation() != null) {
+              if (materialTestResult.getTestEquation().getTestParameter().getName() != null) {
+                resultsDto.setParameterName(
+                    materialTestResult.getTestEquation().getTestParameter().getName() + "("
+                        + materialTestResult.getTestEquation().getTestParameter().getUnit()
+                            .getUnit()
+                        + ")");
+              } else {
+                resultsDto.setParameterName(
+                    materialTestResult.getTestEquation().getTestParameter().getParameter().getName()
+                        + "(" + materialTestResult.getTestEquation().getTestParameter().getUnit()
+                            .getUnit()
+                        + ")");
+              }
+            }
+            incomingSampleTestDto.setAverage(materialTestResult.getResult());
+            resultsDtoList.add(resultsDto);
+          }
+          incomingSampleTestDto.setResultsDto(resultsDtoList);
           incomingSampleTestDto.setStatus(test.getStatus().name());
           incomingSampleTestDto.setDate(new java.sql.Date(test.getCreatedAt().getTime()));
           incomingSampleTestDto.setComment(test.getComment());
