@@ -6,7 +6,7 @@ import com.tokyo.supermix.data.dto.PlantDto;
 public class IncomingSampleDeliveryReportDto {
   private PlantDto plant;
   private IncomingSampleReportDto incomingsample;
-  private List<IncomingSampleTestDto> incomingSampleTestDtos;
+  private List<InComingSampleSummaryDto> incomingSampleTestDtos;
   private List<IncomingSampleStatusCount> incomingSampleStatusCounts;
   private SupplierReportDto supplierReportDtos;
 
@@ -26,11 +26,11 @@ public class IncomingSampleDeliveryReportDto {
     this.incomingsample = incomingsample;
   }
 
-  public List<IncomingSampleTestDto> getIncomingSampleTestDtos() {
+  public List<InComingSampleSummaryDto> getIncomingSampleTestDtos() {
     return incomingSampleTestDtos;
   }
 
-  public void setIncomingSampleTestDtos(List<IncomingSampleTestDto> incomingSampleTestDtos) {
+  public void setIncomingSampleTestDtos(List<InComingSampleSummaryDto> incomingSampleTestDtos) {
     this.incomingSampleTestDtos = incomingSampleTestDtos;
   }
 
@@ -50,5 +50,4 @@ public class IncomingSampleDeliveryReportDto {
   public void setSupplierReportDtos(SupplierReportDto supplierReportDtos) {
     this.supplierReportDtos = supplierReportDtos;
   }
-
 }

@@ -85,12 +85,9 @@ public class TestReportController {
       @PathVariable String incomingSampleCode, @PathVariable String plantCode) {
     if (incomingSampleService.isIncomingSampleExist(incomingSampleCode)) {
       if (plantCode.equalsIgnoreCase(Constants.ADMIN)) {
-        return new ResponseEntity<>(
-            new ContentResponse<>(Constants.TEST_REPORT,
-                mapper.map(testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
-                    IncomingSampleDeliveryReportDto.class),
-                RestApiResponseStatus.OK),
-            HttpStatus.OK);
+        return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
+            testReportService.getIncomingSampleSummaryReport(incomingSampleCode),
+            RestApiResponseStatus.OK), HttpStatus.OK);
       } else {
         return new ResponseEntity<>(new ContentResponse<>(Constants.TEST_REPORT,
             mapper.map(testReportService.getIncomingSampleSummaryReportPlantWise(incomingSampleCode,
