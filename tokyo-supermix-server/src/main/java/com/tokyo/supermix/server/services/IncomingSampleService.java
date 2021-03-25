@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.sql.Date;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import com.querydsl.core.BooleanBuilder;
@@ -59,7 +58,7 @@ public interface IncomingSampleService {
   public List<IncomingSample> getByMaterialSubCategoryPlantWise(Long materialSubCategoryId,
       String plantCode, String code);
 
-  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
+  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, String date,
       String status, String rawMaterialName, String plantName, String supplierName,
       BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination);
 

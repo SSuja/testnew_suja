@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.controller;
 
-import java.sql.Date;
 import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -225,7 +224,7 @@ public class IncomingSampleController {
   public ResponseEntity<Object> getIncomingSampleSearch(@PathVariable String plantCode,
       @RequestParam(name = "code", required = false) String code,
       @RequestParam(name = "vehicleNo", required = false) String vehicleNo,
-      @RequestParam(name = "date", required = false) Date date,
+      @RequestParam(name = "date", required = false) String date,
       @RequestParam(name = "status", required = false) String status,
       @RequestParam(name = "rawMaterialName", required = false) String rawMaterialName,
       @RequestParam(name = "plantName", required = false) String plantName,

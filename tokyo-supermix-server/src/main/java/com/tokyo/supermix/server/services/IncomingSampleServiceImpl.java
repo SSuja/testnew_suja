@@ -1,6 +1,5 @@
 package com.tokyo.supermix.server.services;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -178,7 +177,7 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
   }
 
   @Transactional(readOnly = true)
-  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, Date date,
+  public List<IncomingSample> searchIncomingSample(String code, String vehicleNo, String date,
       String status, String rawMaterialName, String plantName, String supplierName,
       BooleanBuilder booleanBuilder, Pageable pageable, String plantCode, Pagination pagination) {
     if (code != null && !code.isEmpty()) {
@@ -187,8 +186,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
     if (vehicleNo != null && !vehicleNo.isEmpty()) {
       booleanBuilder.and(QIncomingSample.incomingSample.vehicleNo.startsWithIgnoreCase(vehicleNo));
     }
-    if (date != null) {
-      booleanBuilder.and(QIncomingSample.incomingSample.date.eq(date));
+    if (date != null && !date.isEmpty()) {
+      booleanBuilder
+          .and(QIncomingSample.incomingSample.date.stringValue().startsWithIgnoreCase(date));
     }
     if (rawMaterialName != null && !rawMaterialName.isEmpty()) {
       booleanBuilder.and(
@@ -201,9 +201,9 @@ public class IncomingSampleServiceImpl implements IncomingSampleService {
       booleanBuilder
           .and(QIncomingSample.incomingSample.supplier.name.startsWithIgnoreCase(supplierName));
     }
-    if (status != null ) {
-        booleanBuilder.and(QIncomingSample.incomingSample.status.stringValue().startsWith(status));
-      }
+    if (status != null) {
+      booleanBuilder.and(QIncomingSample.incomingSample.status.stringValue().startsWith(status));
+    }
     if (!plantCode.equalsIgnoreCase(Constants.ADMIN)) {
       booleanBuilder.and(QIncomingSample.incomingSample.plant.code.startsWithIgnoreCase(plantCode));
     }
