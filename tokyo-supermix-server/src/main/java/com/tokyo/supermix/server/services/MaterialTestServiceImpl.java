@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.querydsl.core.BooleanBuilder;
-import com.tokyo.supermix.data.dto.FinishProductTestDto;
 import com.tokyo.supermix.data.dto.report.MaterialTestDto;
-import com.tokyo.supermix.data.entities.FinishProductSample;
 import com.tokyo.supermix.data.entities.IncomingSample;
 import com.tokyo.supermix.data.entities.MaterialAcceptedValue;
 import com.tokyo.supermix.data.entities.MaterialTest;
@@ -144,8 +142,12 @@ public class MaterialTestServiceImpl implements MaterialTestService {
           QMaterialTest.materialTest.incomingSample.code.startsWithIgnoreCase(incomingSampleCode));
     }
     if (date != null && !date.isEmpty()) {
-      booleanBuilder
-          .and(QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
+      booleanBuilder.orAllOf(
+          QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date),
+          QMaterialTest.materialTest.date.isNull());
+      booleanBuilder.orAllOf(
+          QMaterialTest.materialTest.date.stringValue().startsWithIgnoreCase(date),
+          QMaterialTest.materialTest.createdAt.stringValue().startsWithIgnoreCase(date));
     }
     if (specimenCode != null && !specimenCode.isEmpty()) {
       booleanBuilder
