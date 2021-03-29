@@ -377,7 +377,6 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
   public double averageValue(String finishProductTestCode, Long testParameterId) {
     FinishProductTest finishProductTest =
         finishProductTestRepository.findById(finishProductTestCode).get();
-    Long noOfTrial = finishProductTest.getNoOfTrial();
     List<Double> trialValue = new ArrayList<Double>();
     if (testParameterService.checkEqutaionExistsForTest(
         finishProductTest.getTestConfigure().getId()) == Constants.CHECK_EQUATION_TRUE) {
@@ -411,10 +410,11 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       }
     }
     double sumOfValue = 0.0;
-    for (int i = 0; i < noOfTrial; i++) {
+
+    for (int i = 0; i < trialValue.size(); i++) {
       sumOfValue = sumOfValue + trialValue.get(i);
     }
-    return (sumOfValue / noOfTrial);
+    return (sumOfValue / trialValue.size());
   }
 
   @Transactional
@@ -1038,5 +1038,10 @@ public class FinishProductTrialServiceImpl implements FinishProductTrialService 
       emailNotification.sendFinishProductTestEmail(finishProductTestObj);
     }
     updateFinishProductSampleAndMixDesignStatus(finishProductTestCode, request);
+  }
+
+  @Transactional
+  public void deleteFinishProductTrialsByTestCode(String code, Long trialNo) {
+    finishProductTrialRepository.deleteByFinishProductTestCodeAndTrialNo(code, trialNo);
   }
 }

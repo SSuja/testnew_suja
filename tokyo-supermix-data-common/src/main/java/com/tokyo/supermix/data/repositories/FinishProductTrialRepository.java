@@ -38,4 +38,6 @@ public interface FinishProductTrialRepository extends JpaRepository<FinishProduc
   List<FinishProductTrial> findByFinishProductTestCodeAndTestParameterIdAndTrialNo(
       String finishProductTestCode, Long testParameterId, Long trialNo);
 
+  Long deleteByFinishProductTestCodeAndTrialNo(String finishProductTestCode, Long trialNo);
+
 }
